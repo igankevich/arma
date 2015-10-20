@@ -1,11 +1,12 @@
-#ifndef NONLINEAR_OMP_HH
-#define NONLINEAR_OMP_HH
+#ifndef NONLINEAR_HH
+#define NONLINEAR_HH
 
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_cdf.h>
 #include "emath.hh"
 #include "valarray_ext.hh"
 
+/// @file
 /// Implementations of nonlinear inertialess transform (NIT)
 /// to capture asymmetry of z-coordinate distribution 
 /// of ocean waves.
@@ -33,37 +34,6 @@ struct Skew_normal {
 private:
 	T skewness;
 	T kurtosis;
-};
-
-/// Skew normal distribution. Approximation with coefficient @a
-/// that governs both skewness and kurtosis.
-template<class T>
-class Skew_normal_2 {
-
-	explicit Skew_normal_2(T c): alpha(c) {}
-
-	T operator()(T x) const
-	{
-		return gsl_cdf_ugaussian(x) - T(2)*owenT(x, alpha);
-	}
-
-private:
-	T alpha;
-};
-
-/// Weibull distribution. Mostly for fun, ocean waves have different shape :-)
-template<class T>
-struct Weibull {
-
-	Weibull(T a, T b): alpha(a), beta(b) {}
-
-	T operator()(T x) {
-		return T(1) - exp(-pow(x/beta, alpha));
-	}
-
-private:
-	T alpha;
-	T beta;
 };
 
 /// Skew normal distribution polynomial.
@@ -207,7 +177,7 @@ void transform_acf(std::valarray<T>& interp_coefs,
 // Функция преобразует аппликаты волновой поверхности к асимметричному распределению.
 // Используется либо интерполяция, либо решения уравнения F(y) = Phi(x)
 template<class T, class CDF>
-void transform_water_surface(std::valarray<T>& a,
+void transform_wavy_surface(std::valarray<T>& a,
 							 const size3& zsize,
 							 std::valarray<T>& z,
 							 CDF cdf, 
@@ -231,4 +201,4 @@ void transform_water_surface(std::valarray<T>& a,
 
 }
 
-#endif // NONLINEAR_OMP_HH
+#endif // NONLINEAR_HH

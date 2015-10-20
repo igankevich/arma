@@ -4,7 +4,7 @@
 #include "sysv.hh"
 #include "domain.hh"
 #include "autoreg.hh"
-#include "nonlinear_omp.hh"
+#include "nonlinear.hh"
 #include "autoreg_driver.hh"
 
 int main() {

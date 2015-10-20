@@ -1,6 +1,10 @@
 #ifndef AUTOREG_HH
 #define AUTOREG_HH
 
+/// @file
+/// File with subroutines for AR model, Yule-Walker equations
+/// and some others.
+
 namespace autoreg {
 
 template<class T>
@@ -364,28 +368,13 @@ struct Wave_surface_generator {
 		generate_white_noise(zeta2, zsize2, var_eps);
 		generate_zeta(phi, fsize, zsize2, zeta2);
 		trim_zeta(zeta2, zsize2, zsize, zeta);
-		write_zeta();
 	}
 
-	void write_zeta() {
-		std::ofstream out("zeta");
-		out << Domain<T, 3>(zdelta, zsize) << std::endl;
-		const Index<3> idz(zsize);
-		const int t0 = 0;
-		const int t1 = zsize[0];
-		const int x1 = zsize[1];
-		const int y1 = zsize[2];
-	    for (int t=t0; t<t1; t++) {
-	        for (int x=0; x<x1; x++) {
-	            for (int y=0; y<y1; y++) {
-					out << zeta[idz(t, x, y)] << ' ';
-				}
-				out << '\n';
-			}
-		}
+	const std::valarray<T>& get_wavy_surface() const {
+		return zeta;
 	}
 
-	const std::valarray<T>& get_water_surface() const {
+	std::valarray<T>& get_wavy_surface() {
 		return zeta;
 	}
 
