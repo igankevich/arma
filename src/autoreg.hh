@@ -5,6 +5,7 @@
 #include <iterator>
 #include <functional>
 #include <sstream>
+#include <cassert>
 
 #include <blitz/array.h>
 
@@ -68,12 +69,59 @@ namespace autoreg {
 	}
 
 	template<class T>
+	T sub_abs(T a, T b) {
+	    return (a > b) ? a-b : b-a;
+	}
+
+	template<class T>
+	Matrix
+	ACF_matrix_block(const ACF& acf, int i0, int j0) {
+		const int n = acf.extent(2);
+		blitz::firstIndex i;
+		blitz::secondIndex j;
+		Matrix block(shape(n, n));
+		block = acf(i0, j0, sub_abs(i, j));
+		return block;
+	}
+
+	template<class T>
+	void
+	append_column_block(Matrix<T>& lhs, const Matrix<T>& rhs) {
+		if (lhs.numElements() == 0) {
+			lhs.resize(rhs.shape());
+			lhs = rhs;
+		} else {
+			using blitz::Range;
+			assert(lhs.rows() == rhs.rows());
+			const int old_cols = lhs.columns();
+			lhs.resizeAndPreserve(lhs.rows(), old_cols + rhs.columns());
+			lhs(Range::all(), Range(old_cols, blitz::toEnd)) = rhs;
+		}
+	}
+
+	template<class T>
+	void
+	append_row_block(Matrix<T>& lhs, const Matrix<T>& rhs) {
+		if (lhs.numElements() == 0) {
+			lhs.resize(rhs.shape());
+			lhs = rhs;
+		} else {
+			using blitz::Range;
+			assert(lhs.columns() == rhs.columns());
+			const int old_rows = lhs.rows();
+			lhs.resizeAndPreserve(old_rows + rhs.rows(), lhs.columns());
+			lhs(Range(old_rows, blitz::toEnd), Range::all()) = rhs;
+		}
+	}
+
+	template<class T>
 	AR_coefs<T>
-	compute_AR_coefficients(const ACF& acf) {
+	compute_AR_coefs(const ACF& acf) {
 		AR_coefs phi(acf.shape());
 		phi = acf;
 		const size_t m = phi.numElements();
 		Matrix<T> lhs(blitz::shape(m, m));
+		// TODO generate matrix @lhs
 		sysv<T>('U', m, 1, lhs.data(), m, phi.data(), m);
 		if (!is_stationary(phi)) {
 			throw std::runtime_error("AR process is not stationary (|phi| > 1)");
@@ -81,6 +129,7 @@ namespace autoreg {
 		return phi;
 	}
 
+	/*
 template<class T>
 struct Yule_walker {
 
@@ -123,6 +172,7 @@ private:
 	std::valarray<T>& a;
 	std::valarray<T>& b;
 };
+*/
 
 /*
 template<class T>

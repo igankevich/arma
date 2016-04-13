@@ -40,7 +40,8 @@ public:
 
 	void act() {
 		echo_parameters();
-		compute_autoreg_coefs();
+		ar_coefs = compute_AR_coeffs(acf);
+		{ std::ofstream out("ar_coefs"); out << ar_coefs; }
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
 		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;
 		std::clog << "WN variance = " << var_wn << std::endl;
@@ -152,12 +153,6 @@ private:
 	std::ostream&
 	write_key_value(std::ostream& out, const char* key, V value) {
 		return out << std::setw(20) << key << value << std::endl;
-	}
-
-	void compute_autoreg_coefs() {
-		Autoreg_coefs<T> compute_coefs(acf_model, acf_size, ar_coefs);
-		compute_coefs.act();
-		{ std::ofstream out("ar_coefs"); out << ar_coefs; }
 	}
 
 	void write_zeta(const std::valarray<T>& zeta) {
