@@ -34,8 +34,8 @@ public:
 	acf_delta(zdelta),
 	fsize(acf_size),
 	zsize2(zsize),
-	acf_model(blitz::product(acf_size)),
-	ar_coefs(blitz::product(fsize))
+	acf_model(),
+	ar_coefs()
 	{}
 
 	void act() {
@@ -61,7 +61,7 @@ public:
 		m.read_parameters(in);
 
 		// generate ACF
-		approx_acf<T>(m.alpha, m.beta, m.gamm, m.acf_delta, m.acf_size, m.acf_model);
+		acf_model = approx_acf<T>(m.alpha, m.beta, m.gamm, m.acf_delta, m.acf_size);
 
 		m.validate_parameters();
 
@@ -104,8 +104,6 @@ private:
 		zsize2 = size3(Vector<T,3>(zsize)*size_factor);
 		acf_delta = zdelta;
 		fsize = acf_size;
-		acf_model.resize(blitz::product(acf_size));
-		ar_coefs.resize(blitz::product(fsize));
 	}
 
 	/// Check for common input/logical errors and numerical implementation constraints.
@@ -204,10 +202,10 @@ private:
 	size3 zsize2;
 
 	/// ACF transformed by NIT
-	std::valarray<T> acf_model;
+	ACF<T> acf_model;
 
 	/// AR model coefficients.
-	std::valarray<T> ar_coefs;
+	AR_coefs<T> ar_coefs;
 
 	/// ACF parameters
 	/// @see approx_acf

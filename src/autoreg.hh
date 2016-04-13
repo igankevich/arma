@@ -17,39 +17,32 @@
 
 namespace autoreg {
 
+	template<class T> using ACF = blitz::Array<T,3>;
+	template<class T> using AR_coefs = blitz::Array<T,3>;
+	template<class T> using Matrix = blitz::Array<T,2>;
+
 	template<class T>
-	void approx_acf(const T alpha,
-					const T beta,
-					const T gamm,
-					const Vector<T, 3>& delta,
-					const size3& acf_size,
-					std::valarray<T>& acf)
-	{
-		const Index<3> id(acf_size);
-		for (size_t t=0; t<acf_size[0]; t++) {
-			for (size_t x=0; x<acf_size[1]; x++) {
-				for (size_t y=0; y<acf_size[2]; y++) {
-					const T k1 = t*delta[0] + x*delta[1] + y*delta[2];
-					acf[id(t, x, y)] = gamm*exp(-alpha*k1)*cos(beta*t*delta[0])*cos(beta*x*delta[1]);//*cos(beta*y*delta[2]);
-				}
-			}
-		}
+	ACF<T> approx_acf(T alpha, T beta, T gamm, const Vec3<T>& delta, const size3& acf_size) {
+		ACF<T> acf(acf_size);
+		blitz::firstIndex t;
+		blitz::secondIndex x;
+		blitz::thirdIndex y;
+		acf = gamm
+			* std::exp(-alpha * (t*delta[0] + x*delta[1] + y*delta[2]))
+			* std::cos(beta*t*delta[0]
+			* std::cos(beta*x*delta[1]);
+			//*cos(beta*y*delta[2]);
+		return acf;
 	}
 
 	template<class T>
-	T white_noise_variance(const std::valarray<T>& ar_coefs, const std::valarray<T>& acf) {
-		const int n = ar_coefs.size();
-		T sum = 0;
-		for (int i=0; i<n; ++i) {
-			sum += ar_coefs[i]*acf[i];
-		}
-		sum = acf[0] - sum;
-		return sum;
+	T white_noise_variance(const AR_coefs<T>& ar_coefs, const ACF<T>& acf) {
+		return acf(0,0,0) - blitz::sum(ar_coefs * acf);
 	}
 
 	template<class T>
-	T ACF_variance(std::valarray<T>& acf) {
-		return acf[0];
+	T ACF_variance(const ACF<T>& acf) {
+		return acf(0,0,0);
 	}
 
 	/// Удаление участков разгона из реализации.
@@ -67,6 +60,25 @@ namespace autoreg {
 			{1, 1, 1}
 		};
 		zeta = zeta2[end_part];
+	}
+
+	template<class T>
+	bool is_stationary(AR_coefs<T>& phi) {
+		return blitz::all(std::abs(phi) > T(1));
+	}
+
+	template<class T>
+	AR_coefs<T>
+	compute_AR_coefficients(const ACF& acf) {
+		AR_coefs phi(acf.shape());
+		phi = acf;
+		const size_t m = phi.numElements();
+		Matrix<T> lhs(blitz::shape(m, m));
+		sysv<T>('U', m, 1, lhs.data(), m, phi.data(), m);
+		if (!is_stationary(phi)) {
+			throw std::runtime_error("AR process is not stationary (|phi| > 1)");
+		}
+		return phi;
 	}
 
 template<class T>
@@ -112,14 +124,7 @@ private:
 	std::valarray<T>& b;
 };
 
-	template<class T>
-	bool is_stationary(std::valarray<T>& ar_coefs) {
-		return std::end(ar_coefs) == std::find_if(
-			std::begin(ar_coefs), std::end(ar_coefs),
-			[] (T val) { return std::abs(val) > T(1); }
-		);
-	}
-
+/*
 template<class T>
 struct Solve_Yule_Walker {
 
@@ -167,30 +172,7 @@ private:
 	std::valarray<T>& b;
 	const size3& _acf_size;
 };
-
-template<class T>
-struct Autoreg_coefs {
-	Autoreg_coefs(const std::valarray<T>& acf_model_,
-				   const size3& acf_size_,
-				   std::valarray<T>& ar_coefs_):
-		acf_model(acf_model_), acf_size(acf_size_), ar_coefs(ar_coefs_),
-		a((ar_coefs.size()-1)*(ar_coefs.size()-1)), b(ar_coefs.size()-1)
-	{}
-
-	void act() {
-		Yule_walker<T> generate_yule_walker_equations(acf_model, acf_size, a, b);
-		generate_yule_walker_equations.act();
-		Solve_Yule_Walker<T> solve_yule_walker_equations(ar_coefs, a, b, acf_size);
-		solve_yule_walker_equations.act();
-	}
-
-private:
-	const std::valarray<T>& acf_model;
-	const size3& acf_size;
-	std::valarray<T>& ar_coefs;
-	std::valarray<T> a;
-	std::valarray<T> b;
-};
+*/
 
 	/// Генерация белого шума по алгоритму Вихря Мерсенна и
 	/// преобразование его к нормальному распределению по алгоритму Бокса-Мюллера.

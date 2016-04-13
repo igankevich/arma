@@ -12,6 +12,9 @@ typedef Vector<size_t, 3> size3;
 typedef Vector<size_t, 2> size2;
 typedef Vector<size_t, 1> size1;
 
+template<class T> using Vec3 = Vector<T, 3>;
+template<class T> using Vec2 = Vector<T, 2>;
+template<class T> using Vec1 = Vector<T, 1>;
 
 template<size_t n=3> class Index;
 //template<size_t n=3> class Index_r;
