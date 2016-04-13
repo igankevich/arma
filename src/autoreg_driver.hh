@@ -1,10 +1,15 @@
 #ifndef AUTOREG_DRIVER_HH
 #define AUTOREG_DRIVER_HH
 
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+
+#include "valarray_ext.hh"
+
 /// @file
 /// Some abbreviations used throughout the programme.
 /// AR      autoregressive
-/// NIT     nonlinear intertialess transformation
 /// ACF     auto-covariate function
 /// zeta    ocean wavy surface
 /// phi     AR model coefficients
@@ -29,15 +34,13 @@ public:
 	fsize(acf_size),
 	zsize2(zsize),
 	acf_model(acf_size.count()),
-	acf_pure(acf_size.count()),
-	ar_coefs(fsize.count()),
-	interp_coefs(NIT_INTERPOLATION_POLYNOMIAL_ORDER)
+	ar_coefs(fsize.count())
 	{
 		validate_parameters();
 	}
 
-	void act() { 
-	
+	void act() {
+
 		echo_parameters();
 		compute_autoreg_coefs();
 		Variance_WN<T> compute_variance(ar_coefs, acf_model);
@@ -49,10 +52,6 @@ public:
 			zsize2, zsize, zdelta);
 		wavy_surface_generator.act();
 		std::valarray<T>& wavy_surface = wavy_surface_generator.get_wavy_surface();
-		if (!linear) {
-			Skew_normal<T> cdf(skewness, kurtosis);
-			transform_wavy_surface(interp_coefs, zsize, wavy_surface, cdf, nit_x0, nit_x1);
-		}
 		write_zeta(wavy_surface);
 		std::exit(0);
 	}
@@ -67,7 +66,7 @@ public:
 
 		// generate ACF
 		approx_acf<T>(m.alpha, m.beta, m.gamm, m.acf_delta, m.acf_size, m.acf_model);
-		
+
 		m.validate_parameters();
 
 		return in;
@@ -83,9 +82,6 @@ private:
 		T size_factor = 1.2;
 		while (!getline(in, name, '=').eof()) {
 			if (name.size() > 0 && name[0] == '#') in.ignore(1024*1024, '\n');
-			else if (name == "linear"      ) in >> linear;
-			else if (name == "skewness"    ) in >> skewness;
-			else if (name == "kurtosis"    ) in >> kurtosis;
 			else if (name == "zsize"       ) in >> zsize;
 			else if (name == "zdelta"      ) in >> zdelta;
 			else if (name == "acf_size"    ) in >> acf_size;
@@ -112,7 +108,6 @@ private:
 		acf_delta = zdelta;
 		fsize = acf_size;
 		acf_model.resize(acf_size.count());
-		acf_pure.resize(acf_size.count());
 		ar_coefs.resize(fsize.count());
 	}
 
@@ -154,9 +149,6 @@ private:
 		write_key_value(std::clog, "zsize:"      , zsize);
 		write_key_value(std::clog, "zsize2:"     , zsize2);
 		write_key_value(std::clog, "zdelta:"     , zdelta);
-		write_key_value(std::clog, "linear:"     , linear);
-		write_key_value(std::clog, "skewness:"   , skewness);
-		write_key_value(std::clog, "kurtosis:"   , kurtosis);
 		write_key_value(std::clog, "size_factor:", size_factor());
 	}
 
@@ -180,20 +172,6 @@ private:
 	}
 
 	void compute_autoreg_coefs() {
-		acf_pure = acf_model;
-		if (!linear) {
-			Skew_normal<T> cdf(skewness, kurtosis);
-			//Skew_normal_2<T> cdf(COEF);
-			//Weibull<T> cdf(3, 1);
-			T breadth = NIT_SIGMA_COUNT*sqrt(var_acf(acf_model));
-			nit_x0 = -breadth;
-			nit_x1 =  breadth;
-#ifdef DEBUG
-			write_wave_distribution(cdf);
-#endif
-			interpolation_coefs<T>(nit_x0, nit_x1, NIT_INTERPOLATION_NODES, interp_coefs, cdf);
-			transform_acf<T>(interp_coefs, NIT_MAX_COEFS, acf_model);
-		}
 		Autoreg_coefs<T> compute_coefs(acf_model, acf_size, ar_coefs);
 		compute_coefs.act();
 		{ std::ofstream out("ar_coefs"); out << ar_coefs; }
@@ -236,36 +214,18 @@ private:
 	/// by size_factor read from input file.
 	size3 zsize2;
 
-	/// Parameters used in nonlinear inertialess transfromation.
-	bool linear = false;
-	T skewness = 0;
-	T kurtosis = 0;
-	T nit_x0 = 0;
-	T nit_x1 = 0;
-
-	/// ACF transformed by NIT (equals to @acf_pure when linear=true).
+	/// ACF transformed by NIT
 	std::valarray<T> acf_model;
-
-	/// Initial ACF which is not transformed by NIT (equals to @acf_model when linear=true).
-	std::valarray<T> acf_pure;
 
 	/// AR model coefficients.
 	std::valarray<T> ar_coefs;
 
-	/// NIT interpolations coefficients.
-	std::valarray<T> interp_coefs;
-	
 	/// ACF parameters
 	/// @see approx_acf
 	T alpha = 0.05;
 	T beta = 0.8;
 	T gamm = 1.0;
 
-	/// Some constants for nonlinear inertialess transfromation.
-	static const std::size_t NIT_INTERPOLATION_POLYNOMIAL_ORDER = 12;
-	static const std::size_t NIT_INTERPOLATION_NODES            = 100;
-	static const std::size_t NIT_MAX_COEFS                      = 10;
-	static constexpr T       NIT_SIGMA_COUNT                    = 3.0;
 };
 
 }

@@ -71,7 +71,7 @@ private:
 	int sub_abs(int a, int b) {
 	    return (a > b) ? a-b : b-a;
 	}
-		
+
 	const std::valarray<T>& acf;
 	const size3& acf_size;
 	std::valarray<T>& a;
@@ -113,7 +113,7 @@ struct Solve_Yule_Walker {
 	Solve_Yule_Walker(std::valarray<T>& ar_coefs2, std::valarray<T>& aa, std::valarray<T>& bb, const size3& acf_size):
 		ar_coefs(ar_coefs2), a(aa), b(bb), _acf_size(acf_size)
 	{}
-		
+
 	void act() {
 
 		int m = ar_coefs.size()-1;
@@ -124,10 +124,10 @@ struct Solve_Yule_Walker {
 			s << "ssysv error, D(" << info << ", " << info << ")=0";
 			throw std::invalid_argument(s.str());
 		}
-		
+
 		std::copy(&b[0], &b[m], &ar_coefs[1]);
 		ar_coefs[0] = 0;
-	
+
 		if (!is_stationary(ar_coefs)) {
 			std::stringstream msg;
 			msg << "Process is not stationary: |f(i)| > 1\n";
@@ -147,7 +147,7 @@ struct Solve_Yule_Walker {
 //			}
 		}
 	}
-	
+
 private:
 	std::valarray<T>& ar_coefs;
 	std::valarray<T>& a;
