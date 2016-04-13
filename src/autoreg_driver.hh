@@ -35,25 +35,20 @@ public:
 	zsize2(zsize),
 	acf_model(acf_size.count()),
 	ar_coefs(fsize.count())
-	{
-		validate_parameters();
-	}
+	{}
 
 	void act() {
-
 		echo_parameters();
 		compute_autoreg_coefs();
-		Variance_WN<T> compute_variance(ar_coefs, acf_model);
-		compute_variance.act();
-		T var_wn = compute_variance.getsum();
-		std::clog << "var_acf=" << var_acf(acf_model) << std::endl;
-		std::clog << "var_wn=" << var_wn << std::endl;
-		Wave_surface_generator<T> wavy_surface_generator(ar_coefs, fsize, var_wn,
-			zsize2, zsize, zdelta);
-		wavy_surface_generator.act();
-		std::valarray<T>& wavy_surface = wavy_surface_generator.get_wavy_surface();
-		write_zeta(wavy_surface);
-		std::exit(0);
+		T var_wn = white_noise_variance(ar_coefs, acf_model);
+		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;
+		std::clog << "WN variance = " << var_wn << std::endl;
+		std::valarray<T> zeta(zsize.count());
+		std::valarray<T> zeta2(zsize2.count());
+		generate_white_noise(zeta2, var_wn);
+		generate_zeta(ar_coefs, fsize, zsize2, zeta2);
+		trim_zeta(zeta2, zsize2, zsize, zeta);
+		write_zeta(zeta);
 	}
 
 	/// Read AR model parameters from an input stream, generate default ACF and
@@ -77,7 +72,8 @@ private:
 	T size_factor() const { return T(zsize2[0]) / T(zsize[0]); }
 
 	/// Read AR model parameters from an input stream.
-	void read_parameters(std::istream& in) {
+	void
+	read_parameters(std::istream& in) {
 		std::string name;
 		T size_factor = 1.2;
 		while (!getline(in, name, '=').eof()) {
@@ -156,19 +152,6 @@ private:
 	std::ostream&
 	write_key_value(std::ostream& out, const char* key, V value) {
 		return out << std::setw(20) << key << value << std::endl;
-	}
-
-	template<class CDF>
-	void write_wave_distribution(CDF cdf) {
-		std::ofstream out("skew_normal");
-		int count = 100;
-		T x0 = -5;
-		T x1 = 5;
-		T dx = (x1-x0)/count;
-		for (int i=0; i<100; ++i) {
-			T x = x0 + i*dx;
-			out << x << ' ' << cdf(x) << std::endl;
-		}
 	}
 
 	void compute_autoreg_coefs() {

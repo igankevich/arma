@@ -1,15 +1,14 @@
-CXX = g++
+CXX       = g++
 
-DEFINES  = -DDISABLE_RANDOM_SEED
+DEFINES   = -DDISABLE_RANDOM_SEED
 
-CXXFLAGS =
-CXXFLAGS += -std=c++11 -O3
+CXXFLAGS  =
+CXXFLAGS += -std=c++11 -O2
 CXXFLAGS += -Wall -Wextra
 CXXFLAGS += $(DEFINES)
 
-LDFLAGS = 
-LDFLAGS += -lgsl -lgslcblas
-LDFLAGS += -llapack -lblas -lgfortran
+LDFLAGS   = 
+LDFLAGS  += -llapack -lblas -lgfortran
 
 SOURCES   = main.cc
 BINARY    = autoreg
