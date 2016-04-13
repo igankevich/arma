@@ -6,6 +6,7 @@
 #include <fstream>
 
 #include "valarray_ext.hh"
+#include "vector_n.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -33,8 +34,8 @@ public:
 	acf_delta(zdelta),
 	fsize(acf_size),
 	zsize2(zsize),
-	acf_model(acf_size.count()),
-	ar_coefs(fsize.count())
+	acf_model(blitz::product(acf_size)),
+	ar_coefs(blitz::product(fsize))
 	{}
 
 	void act() {
@@ -43,8 +44,8 @@ public:
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
 		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;
 		std::clog << "WN variance = " << var_wn << std::endl;
-		std::valarray<T> zeta(zsize.count());
-		std::valarray<T> zeta2(zsize2.count());
+		std::valarray<T> zeta(blitz::product(zsize));
+		std::valarray<T> zeta2(blitz::product(zsize2));
 		generate_white_noise(zeta2, var_wn);
 		generate_zeta(ar_coefs, fsize, zsize2, zeta2);
 		trim_zeta(zeta2, zsize2, zsize, zeta);
@@ -103,8 +104,8 @@ private:
 		zsize2 = size3(Vector<T,3>(zsize)*size_factor);
 		acf_delta = zdelta;
 		fsize = acf_size;
-		acf_model.resize(acf_size.count());
-		ar_coefs.resize(fsize.count());
+		acf_model.resize(blitz::product(acf_size));
+		ar_coefs.resize(blitz::product(fsize));
 	}
 
 	/// Check for common input/logical errors and numerical implementation constraints.
@@ -132,15 +133,16 @@ private:
 	/// i.e. it is valid size specification.
 	template<class V>
 	void check_non_zero(const Vector<V, 3>& sz, const char* var_name) {
-		if (sz.reduce(std::multiplies<T>()) == 0) {
+		if (blitz::product(sz) == 0) {
 			std::stringstream str;
 			str << "Invalid " << var_name << ": " << sz;
 			throw std::runtime_error(str.str().c_str());
 		}
 	}
 
-	void echo_parameters() {
-		std::clog << std::left << std::boolalpha;
+	void
+	echo_parameters() {
+		std::clog << std::left;
 		write_key_value(std::clog, "acf_size:"   , acf_size);
 		write_key_value(std::clog, "zsize:"      , zsize);
 		write_key_value(std::clog, "zsize2:"     , zsize2);
@@ -162,7 +164,11 @@ private:
 
 	void write_zeta(const std::valarray<T>& zeta) {
 		std::ofstream out("zeta");
-		out << Domain<T, 3>(zdelta, zsize) << std::endl;
+		const Vector<T,3> lower(0, 0, 0);
+		const Vector<T,3> upper = zdelta * (zsize - Vector<T,3>(1, 1, 1));
+		out << lower << '\n';
+		out << upper << '\n';
+		out << zsize << '\n';
 		const Index<3> idz(zsize);
 		const int t0 = 0;
 		const int t1 = zsize[0];

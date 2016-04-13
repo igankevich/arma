@@ -6,7 +6,10 @@
 #include <functional>
 #include <sstream>
 
+#include <blitz/array.h>
+
 #include "stdx.hh"
+#include "vector_n.hh"
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations
@@ -57,7 +60,7 @@ namespace autoreg {
 	               std::valarray<T>& zeta)
 	{
 		const size3 delta = zsize2-zsize;
-		const size_t offset = delta[0]*delta[1]*delta[2];
+		const size_t offset = blitz::product(delta);
 		const std::gslice end_part{
 			offset,
 			{delta[0], delta[1], delta[2]},

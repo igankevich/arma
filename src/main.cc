@@ -1,7 +1,6 @@
 #include <fstream>
 
 #include "sysv.hh"
-#include "domain.hh"
 #include "autoreg.hh"
 #include "autoreg_driver.hh"
 
