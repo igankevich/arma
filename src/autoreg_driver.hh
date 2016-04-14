@@ -39,17 +39,19 @@ public:
 	void act() {
 		echo_parameters();
 		ACF<T> acf_model = approx_acf<T>(alpha, beta, gamm, acf_delta, acf_size);
+		{ std::ofstream out("acf"); out << acf_model; }
 		AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
-		{ std::ofstream out("ar_coefs"); out << ar_coefs; }
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
 		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;
 		std::clog << "WN variance = " << var_wn << std::endl;
 		Zeta<T> zeta2 = generate_white_noise(zsize2, var_wn);
-		generate_zeta(ar_coefs, fsize, zsize2, zeta2);
+		std::clog << "mean(eps) = " << mean(zeta2) << std::endl;
+		std::clog << "variance(eps) = " << variance(zeta2) << std::endl;
+		generate_zeta(ar_coefs, zeta2);
+		std::clog << "mean(zeta) = " << mean(zeta2) << std::endl;
+		std::clog << "variance(zeta) = " << variance(zeta2) << std::endl;
 		Zeta<T> zeta = trim_zeta(zeta2, zsize);
 		write_zeta(zeta);
-		std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
-		std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
 	}
 
 	/// Read AR model parameters from an input stream, generate default ACF and
@@ -174,8 +176,8 @@ private:
 
 	/// ACF parameters
 	/// @see approx_acf
-	T alpha = 0.04;
-	T beta = 0.1;
+	T alpha = 0.06;
+	T beta = 0.8;
 	T gamm = 1.0;
 
 };

@@ -18,7 +18,7 @@ BINARY    = autoreg
 
 VISUAL    = visual
 VISUAL_SOURCES = visual.cc
-VISUAL_LDFLAGS = -lglut -lGL
+VISUAL_LDFLAGS = $(shell pkg-config --libs freeglut) -lGL
 
 $(BINARY): $(SOURCES) *.hh Makefile
 	$(CXX) $(CXXFLAGS) $(SOURCES) $(LDFLAGS) -o $(BINARY)
@@ -44,4 +44,4 @@ debug: $(BINARY)
 	cp ../input/MersenneTwister.dat ../tests
 
 clean:
-	rm -f $(BINARY)
+	rm -f $(BINARY) $(VISUAL)
