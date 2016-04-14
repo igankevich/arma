@@ -32,7 +32,7 @@ namespace autoreg {
 		blitz::thirdIndex y;
 		acf = gamm
 			* blitz::exp(-alpha * (t*delta[0] + x*delta[1] + y*delta[2]))
-			* blitz::cos(beta * (t*delta[0] + x*delta[1] + y*delta[2]));
+	 		* blitz::cos(beta * (t*delta[0] + x*delta[1] + y*delta[2]));
 		return acf;
 	}
 
@@ -62,11 +62,6 @@ namespace autoreg {
 	template<class T>
 	bool is_stationary(AR_coefs<T>& phi) {
 		return blitz::all(blitz::abs(phi) > T(1));
-	}
-
-	template<class T>
-	T sub_abs(T a, T b) {
-	    return (a > b) ? a-b : b-a;
 	}
 
 	template<class T>
@@ -120,7 +115,7 @@ namespace autoreg {
 		for (int i=0; i<n; ++i) {
 			Matrix<T> row;
 			for (int j=0; j<n; ++j) {
-				append_column_block(row, AC_matrix_block(acf, i0, sub_abs(i, j)));
+				append_column_block(row, AC_matrix_block(acf, i0, std::abs(i-j)));
 			}
 			append_row_block(result, row);
 		}
@@ -135,7 +130,7 @@ namespace autoreg {
 		for (int i=0; i<n; ++i) {
 			Matrix<T> row;
 			for (int j=0; j<n; ++j) {
-				append_column_block(row, AC_matrix_block(acf, sub_abs(i, j)));
+				append_column_block(row, AC_matrix_block(acf, std::abs(i-j)));
 			}
 			append_row_block(result, row);
 		}
@@ -151,6 +146,7 @@ namespace autoreg {
 		Matrix<T> lhs = generate_AC_matrix(acf);
 		sysv<T>('U', m, 1, lhs.data(), m, phi.data(), m);
 		if (!is_stationary(phi)) {
+			std::cerr << "phi.shape() = " << phi.shape() << std::endl;
 			throw std::runtime_error("AR process is not stationary (|phi| > 1)");
 		}
 		return phi;

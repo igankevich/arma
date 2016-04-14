@@ -60,6 +60,7 @@ public:
 		m.read_parameters(in);
 
 		// generate ACF
+		m.acf_model.resize(m.acf_size);
 		m.acf_model = approx_acf<T>(m.alpha, m.beta, m.gamm, m.acf_delta, m.acf_size);
 
 		m.validate_parameters();
