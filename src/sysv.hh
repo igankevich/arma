@@ -13,7 +13,7 @@ extern "C" void ssysv_(char*, int*, int*, float*, int*, int*, float*, int*, floa
 extern "C" void dsysv_(char*, int*, int*, double*, int*, int*, double*, int*, double*, int*, int*);
 
 template<class T>
-void sysv(char type, int m, int nrhs, T* a, int lda, T* b, int ldb, int* info);
+void sysv(char type, int m, int nrhs, T* a, int lda, T* b, int ldb);
 
 
 void

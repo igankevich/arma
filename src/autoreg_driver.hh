@@ -40,16 +40,14 @@ public:
 
 	void act() {
 		echo_parameters();
-		ar_coefs = compute_AR_coeffs(acf);
+		ar_coefs = compute_AR_coefs(acf_model);
 		{ std::ofstream out("ar_coefs"); out << ar_coefs; }
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
 		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;
 		std::clog << "WN variance = " << var_wn << std::endl;
-		std::valarray<T> zeta(blitz::product(zsize));
-		std::valarray<T> zeta2(blitz::product(zsize2));
-		generate_white_noise(zeta2, var_wn);
+		Zeta<T> zeta2 = generate_white_noise(zsize2, var_wn);
 		generate_zeta(ar_coefs, fsize, zsize2, zeta2);
-		trim_zeta(zeta2, zsize2, zsize, zeta);
+		Zeta<T> zeta = trim_zeta(zeta2, zsize);
 		write_zeta(zeta);
 	}
 
@@ -62,7 +60,7 @@ public:
 		m.read_parameters(in);
 
 		// generate ACF
-		acf_model = approx_acf<T>(m.alpha, m.beta, m.gamm, m.acf_delta, m.acf_size);
+		m.acf_model = approx_acf<T>(m.alpha, m.beta, m.gamm, m.acf_delta, m.acf_size);
 
 		m.validate_parameters();
 
@@ -155,14 +153,13 @@ private:
 		return out << std::setw(20) << key << value << std::endl;
 	}
 
-	void write_zeta(const std::valarray<T>& zeta) {
+	void write_zeta(const Zeta<T>& zeta) {
 		std::ofstream out("zeta");
 		const Vector<T,3> lower(0, 0, 0);
 		const Vector<T,3> upper = zdelta * (zsize - Vector<T,3>(1, 1, 1));
 		out << lower << '\n';
 		out << upper << '\n';
 		out << zsize << '\n';
-		const Index<3> idz(zsize);
 		const int t0 = 0;
 		const int t1 = zsize[0];
 		const int x1 = zsize[1];
@@ -170,7 +167,7 @@ private:
 	    for (int t=t0; t<t1; t++) {
 	        for (int x=0; x<x1; x++) {
 	            for (int y=0; y<y1; y++) {
-					out << zeta[idz(t, x, y)] << ' ';
+					out << zeta(t, x, y) << ' ';
 				}
 				out << '\n';
 			}
