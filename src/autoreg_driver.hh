@@ -33,14 +33,13 @@ public:
 	acf_size(10, 10, 10),
 	acf_delta(zdelta),
 	fsize(acf_size),
-	zsize2(zsize),
-	acf_model(),
-	ar_coefs()
+	zsize2(zsize)
 	{}
 
 	void act() {
 		echo_parameters();
-		ar_coefs = compute_AR_coefs(acf_model);
+		ACF<T> acf_model = approx_acf<T>(alpha, beta, gamm, acf_delta, acf_size);
+		AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
 		{ std::ofstream out("ar_coefs"); out << ar_coefs; }
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
 		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;
@@ -49,6 +48,8 @@ public:
 		generate_zeta(ar_coefs, fsize, zsize2, zeta2);
 		Zeta<T> zeta = trim_zeta(zeta2, zsize);
 		write_zeta(zeta);
+		std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
+		std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
 	}
 
 	/// Read AR model parameters from an input stream, generate default ACF and
@@ -56,15 +57,8 @@ public:
 	template<class V>
 	friend std::istream&
 	operator>>(std::istream& in, Autoreg_model<V>& m) {
-
 		m.read_parameters(in);
-
-		// generate ACF
-		m.acf_model.resize(m.acf_size);
-		m.acf_model = approx_acf<T>(m.alpha, m.beta, m.gamm, m.acf_delta, m.acf_size);
-
 		m.validate_parameters();
-
 		return in;
 	}
 
@@ -77,7 +71,7 @@ private:
 	read_parameters(std::istream& in) {
 		std::string name;
 		T size_factor = 1.2;
-		while (!getline(in, name, '=').eof()) {
+		while (std::getline(in, name, '=')) {
 			if (name.size() > 0 && name[0] == '#') in.ignore(1024*1024, '\n');
 			else if (name == "zsize"       ) in >> zsize;
 			else if (name == "zdelta"      ) in >> zdelta;
@@ -101,7 +95,7 @@ private:
 			throw std::runtime_error(str.str().c_str());
 		}
 
-		zsize2 = size3(Vector<T,3>(zsize)*size_factor);
+		zsize2 = size3(zsize*size_factor);
 		acf_delta = zdelta;
 		fsize = acf_size;
 	}
@@ -156,23 +150,7 @@ private:
 
 	void write_zeta(const Zeta<T>& zeta) {
 		std::ofstream out("zeta");
-		const Vector<T,3> lower(0, 0, 0);
-		const Vector<T,3> upper = zdelta * (zsize - Vector<T,3>(1, 1, 1));
-		out << lower << '\n';
-		out << upper << '\n';
-		out << zsize << '\n';
-		const int t0 = 0;
-		const int t1 = zsize[0];
-		const int x1 = zsize[1];
-		const int y1 = zsize[2];
-	    for (int t=t0; t<t1; t++) {
-	        for (int x=0; x<x1; x++) {
-	            for (int y=0; y<y1; y++) {
-					out << zeta(t, x, y) << ' ';
-				}
-				out << '\n';
-			}
-		}
+		out << zeta;
 	}
 
 	/// Wavy surface size.
@@ -193,12 +171,6 @@ private:
 	/// Size of enlarged wavy surface. Equals to @zsize multiplied
 	/// by size_factor read from input file.
 	size3 zsize2;
-
-	/// ACF transformed by NIT
-	ACF<T> acf_model;
-
-	/// AR model coefficients.
-	AR_coefs<T> ar_coefs;
 
 	/// ACF parameters
 	/// @see approx_acf

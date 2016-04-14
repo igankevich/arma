@@ -52,16 +52,17 @@ namespace autoreg {
 	trim_zeta(const Zeta<T>& zeta2, const size3& zsize) {
 		using blitz::Range;
 		using blitz::toEnd;
+		size3 zsize2 = zeta2.shape();
 		return zeta2(
-			Range(zsize(0), toEnd),
-			Range(zsize(1), toEnd),
-			Range(zsize(2), toEnd)
+			Range(zsize2(0) - zsize(0), toEnd),
+			Range(zsize2(1) - zsize(1), toEnd),
+			Range(zsize2(2) - zsize(2), toEnd)
 		);
 	}
 
 	template<class T>
 	bool is_stationary(AR_coefs<T>& phi) {
-		return blitz::all(blitz::abs(phi) > T(1));
+		return !blitz::any(blitz::abs(phi) > T(1));
 	}
 
 	template<class T>
@@ -125,7 +126,7 @@ namespace autoreg {
 	template<class T>
 	Matrix<T>
 	generate_AC_matrix(const ACF<T>& acf) {
-		const int n = acf.extent(1);
+		const int n = acf.extent(0);
 		Matrix<T> result;
 		for (int i=0; i<n; ++i) {
 			Matrix<T> row;
@@ -147,6 +148,15 @@ namespace autoreg {
 		sysv<T>('U', m, 1, lhs.data(), m, phi.data(), m);
 		if (!is_stationary(phi)) {
 			std::cerr << "phi.shape() = " << phi.shape() << std::endl;
+			std::for_each(
+				phi.begin(),
+				phi.end(),
+				[] (T val) {
+					if (std::abs(val) > T(1)) {
+						std::cerr << val << std::endl;
+					}
+				}
+			);
 			throw std::runtime_error("AR process is not stationary (|phi| > 1)");
 		}
 		return phi;
@@ -202,6 +212,16 @@ namespace autoreg {
 				}
 			}
 		}
+	}
+
+	template<class T, int N>
+	T mean(const blitz::Array<T,N>& rhs) {
+		return blitz::sum(rhs) / rhs.numElements();
+	}
+
+	template<class T, int N>
+	T variance(const blitz::Array<T,N>& rhs) {
+		return blitz::sum(blitz::pow(rhs, 2)) / rhs.numElements();
 	}
 
 }
