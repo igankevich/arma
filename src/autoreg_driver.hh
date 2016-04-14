@@ -174,8 +174,8 @@ private:
 
 	/// ACF parameters
 	/// @see approx_acf
-	T alpha = 0.05;
-	T beta = 0.8;
+	T alpha = 0.04;
+	T beta = 0.1;
 	T gamm = 1.0;
 
 };

@@ -16,8 +16,15 @@ LDFLAGS  += $(shell pkg-config --libs blitz)
 SOURCES   = main.cc
 BINARY    = autoreg
 
+VISUAL    = visual
+VISUAL_SOURCES = visual.cc
+VISUAL_LDFLAGS = -lglut -lGL
+
 $(BINARY): $(SOURCES) *.hh Makefile
 	$(CXX) $(CXXFLAGS) $(SOURCES) $(LDFLAGS) -o $(BINARY)
+
+$(VISUAL): Makefile *.hh $(VISUAL_SOURCES)
+	$(CXX) $(CXXFLAGS) $(VISUAL_SOURCES) $(VISUAL_LDFLAGS) -o $(VISUAL)
 
 run: ../tests ../tests/autoreg.model ../tests/MersenneTwister.dat
 run: $(BINARY)

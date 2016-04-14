@@ -33,6 +33,9 @@ namespace autoreg {
 		acf = gamm
 			* blitz::exp(-alpha * (t*delta[0] + x*delta[1] + y*delta[2]))
 	 		* blitz::cos(beta * (t*delta[0] + x*delta[1] + y*delta[2]));
+//	 		* blitz::cos(beta * t * delta[0])
+//	 		* blitz::cos(beta * x * delta[1])
+//	 		* blitz::cos(beta * y * delta[2]);
 		return acf;
 	}
 
@@ -146,6 +149,7 @@ namespace autoreg {
 		const size_t m = phi.numElements();
 		Matrix<T> lhs = generate_AC_matrix(acf);
 		sysv<T>('U', m, 1, lhs.data(), m, phi.data(), m);
+		phi(0,0,0) = 0;
 		if (!is_stationary(phi)) {
 			std::cerr << "phi.shape() = " << phi.shape() << std::endl;
 			std::for_each(
