@@ -1,12 +1,14 @@
 #ifndef AUTOREG_DRIVER_HH
 #define AUTOREG_DRIVER_HH
 
-#include <iostream>
-#include <iomanip>
-#include <fstream>
+#include <iostream>     // for operator<<, basic_ostream, clog
+#include <iomanip>      // for operator<<, setw
+#include <fstream>      // for ofstream
+#include <stdexcept>    // for runtime_error
+#include <string>       // for operator==, basic_string, string, getline
 
-#include "valarray_ext.hh"
-#include "vector_n.hh"
+#include "types.hh"     // for size3, Vector, Zeta, ACF, AR_coefs
+#include "autoreg.hh"   // for mean, variance, ACF_variance, approx_acf, comp...
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -24,8 +26,7 @@ namespace autoreg {
 /// Class that reads paramters from the input files,
 /// calls all subroutines, and prints the result.
 template<class T>
-class Autoreg_model {
-public:
+struct Autoreg_model {
 
 	Autoreg_model():
 	zsize(768, 24, 24),
@@ -39,7 +40,7 @@ public:
 	void act() {
 		echo_parameters();
 		ACF<T> acf_model = approx_acf<T>(alpha, beta, gamm, acf_delta, acf_size);
-		{ std::ofstream out("acf"); out << acf_model; }
+		//{ std::ofstream out("acf"); out << acf_model; }
 		AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
 		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;

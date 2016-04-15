@@ -2,14 +2,12 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
-#include <algorithm>
-#include <valarray>
 
-//#include <GL/glew.h>
-#include <GL/glut.h>
 #include <GL/gl.h>
+#include <GL/freeglut.h>
+#include <GL/freeglut_ext.h>
 
-#include "vector_n.hh"
+#include "types.hh"
 
 using namespace autoreg;
 
@@ -22,56 +20,47 @@ enum Projection {
 	PROJECTION_NONE = -1
 };
 
-blitz::Array<Real,3> func;
+Zeta<Real> func;
 Vector<Real,3> delta(1,1,1);
 
 const Real ROT_STEP = 90;
 
 Projection proj = PROJECTION_NONE;
 bool paused = true;
-size_t timer = 0;     // таймер для демонстрации в реальном времени
+int timer = 0;     // таймер для демонстрации в реальном времени
 int dragX = 0;
 int dragY = 0;
-size_t rotation = 0; /// dimension rotation
-size_t part_count = 4;
+int rotation = 0; /// dimension rotation
+int part_count = 4;
 Real interval_factor = 0;
-size_t tail = 0;
+int tail = 0;
 
 
 
-void draw_vertex(const size3& c, float alpha) {
-	size_t tt = c[rotation];
-	size_t tsize = func.extent(rotation);
-	size_t part_size = std::max(size_t(1), tsize / part_count);
-	size_t interval = part_size*interval_factor;
-	size_t part = tt/part_size + 1;
-	size_t border = part*part_size;
+void
+draw_vertex(const size3& c, const size3& offset, float alpha) {
 	glColor4f(0.85, 0.85, 0.85, alpha);
-	if ((tt >= border - interval && tt < border && part != part_count) || (tt%part_size < interval && part != 1)) {
-		glColor4f(0.45, 0.8, 0.4, alpha);
-	}
-	if (tt%part_size == 0 && part != 1) {
-		glColor4f(0.85, 0, 0, alpha);
-	}
-	glVertex3f(c[1], c[2], func(c));
+	glVertex3f(c[1]+offset[1], c[2]+offset[2], func(c));
 }
 
-void drawSeries(size_t t, Projection p, float alpha) {
+void
+drawSeries(size_t t, Projection p, float alpha) {
 	const size3& size = func.shape();
-	size_t x1 = size[1];
-	size_t y1 = size[2];
+	const size3 offset = -size/2;
+	int x1 = size[1];
+	int y1 = size[2];
 	if (p == PROJECTION_NONE) {
-		for (size_t i=0; i<x1; i++) {
+		for (int i=0; i<x1; i++) {
 			glBegin(GL_LINE_STRIP);
-			for (size_t j=0; j<y1; j++) {
-				draw_vertex(size3(t, i, j), alpha);
+			for (int j=0; j<y1; j++) {
+				draw_vertex(size3(t, i, j), offset, alpha);
 			}
 			glEnd();
 		}
-		for (size_t j=0; j<y1; j++) {
+		for (int j=0; j<y1; j++) {
 			glBegin(GL_LINE_STRIP);
-			for (size_t i=0; i<x1; i++)
-				draw_vertex(size3(t, i, j), alpha);
+			for (int i=0; i<x1; i++)
+				draw_vertex(size3(t, i, j), offset, alpha);
 			glEnd();
 		}
 	} else {
@@ -98,7 +87,7 @@ void resetView() {
 	glLoadIdentity();
 	glScalef(delta[0], delta[1], 1.0f);
 	//float3 offset = (dom.max() - dom.min())*-0.5;
-	//glTranslatef(offset[0], offset[1], -100.0f);
+//	glTranslatef(offset[1], offset[2], -100.0f);
 	glTranslatef(0, 0, -100.0f);
 	glRotatef(-30.0f, 1, 0, 0);
 }
@@ -120,25 +109,38 @@ void rotate_dimensions() {
 void onDisplay() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.25, 0.25, 0.25, 1.0);
+
 	const int tl = std::min(tail, timer);
-	for (size_t t=timer-tl, i=1; t<=timer; ++t, ++i) {
+	for (int t=timer-tl, i=1; t<=timer; ++t, ++i) {
 		drawSeries(t, proj, i/(tl+1.0));
 		//clog << i/(tail+1.0) << endl;
 	}
-	//GLfloat axis_x[3] = {10, 0, 0};
-	//GLfloat axis_y[3] = {0, 10, 0};
-	//GLfloat axis_z[3] = {0, 0, 10};
-	//draw_axis(axis_x);
-	//draw_axis(axis_y);
-	//draw_axis(axis_z);
-	glColor3f(0, 0, 0);
+
+	std::stringstream str;
+	str << "t=" << timer << '/' << func.extent(2)-1;
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	glDisable(GL_DEPTH_TEST);
+
+	glRasterPos2i(-1, -1);
+	glColor3f(1, 1, 1);
+	glutBitmapString(GLUT_BITMAP_HELVETICA_18, (const unsigned char*)str.str().c_str());
+
+	glEnable(GL_DEPTH_TEST);
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
 	glutSwapBuffers();
-	std::ostringstream str;
-	str << "visual " << (timer) << "/" << func.extent(2)-1 << std::endl;
-	glutSetWindowTitle(str.str().c_str());
 }
 
-void onMouseButton(int button, int state, int x, int y) {
+void onMouseButton(int, int, int x, int y) {
 	dragX = x;
 	dragY = y;
 }
@@ -170,7 +172,7 @@ void onResize(int w, int h) {
 //	resetView();
 }
 
-void onKeyPressed(unsigned char key, int x, int y) {
+void onKeyPressed(unsigned char key, int, int) {
 	if (key == 27) exit(0);
 	if (key == 32) paused = !paused;
 
@@ -200,7 +202,7 @@ void onKeyPressed(unsigned char key, int x, int y) {
 	glutPostRedisplay();
 }
 
-void onSpecialKeyPressed(int key, int x, int y) {
+void onSpecialKeyPressed(int key, int, int) {
 
 	int mods = glutGetModifiers();
 	float lag = 1.0f;
@@ -265,7 +267,6 @@ void initOpenGL(int argc, char** argv) {
 	glutInitWindowSize(wnd_w, wnd_h);
 	glutInitWindowPosition((screen_w-wnd_w)/2, (screen_h-wnd_h)/2);
     glutCreateWindow("visual");
-	glutSetWindowTitle("Pattern");
     glutReshapeFunc(onResize);
     glutDisplayFunc(onDisplay);
     glutKeyboardFunc(onKeyPressed);
@@ -292,12 +293,10 @@ void parse_cmdline(int argc, char** argv) {
 	stringstream cmdline;
 	for (int i=1; i<argc; i++)
 		cmdline << argv[i] << ' ';
-	bool unit_delta = false;
 	string file_name;
 	string ar;
 	while (!(cmdline >> ar).eof()) {
-		if (ar == "-n") unit_delta = true;
-		else if (ar == "-r") cmdline >> tail;
+		if (ar == "-r") cmdline >> tail;
 		else if (ar == "-t") cmdline >> timer;
 		else {
 			file_name = ar;

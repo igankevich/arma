@@ -1,7 +1,5 @@
 #include <fstream>
 
-#include "sysv.hh"
-#include "autoreg.hh"
 #include "autoreg_driver.hh"
 
 int main() {

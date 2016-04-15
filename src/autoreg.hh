@@ -1,28 +1,28 @@
 #ifndef AUTOREG_HH
 #define AUTOREG_HH
 
-#include <random>
-#include <iterator>
-#include <functional>
-#include <sstream>
-#include <cassert>
+#include <algorithm>             // for min, any_of, copy_n, for_each, generate
+#include <cassert>               // for assert
+#include <chrono>                // for duration, steady_clock, steady_clock...
+#include <cmath>                 // for isnan
+#include <cstdlib>               // for abs
+#include <functional>            // for bind
+#include <iostream>              // for operator<<, cerr, endl
+#include <fstream>               // for ofstream
+#include <random>                // for mt19937, normal_distribution
+#include <stdexcept>             // for runtime_error
 
-#include <blitz/array.h>
+#include <blitz/array.h>         // for Array, Range, shape, any
 
-#include "stdx.hh"
-#include "vector_n.hh"
+#include "sysv.hh"               // for sysv
+#include "types.hh"              // for size3, ACF, AR_coefs, Zeta, Array2D
+#include "voodoo.hh"             // for generate_AC_matrix
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations
 /// and some others.
 
 namespace autoreg {
-
-	template<class T> using ACF = blitz::Array<T,3>;
-	template<class T> using AR_coefs = blitz::Array<T,3>;
-	template<class T> using Zeta = blitz::Array<T,3>;
-	template<class T> using Array2D = blitz::Array<T,2>;
-	template<class T> using Array1D = blitz::Array<T,1>;
 
 	template<class T>
 	ACF<T>
@@ -70,86 +70,13 @@ namespace autoreg {
 	}
 
 	template<class T>
-	Array2D<T>
-	AC_matrix_block(const ACF<T>& acf, int i0, int j0) {
-		const int n = acf.extent(2);
-		Array2D<T> block(blitz::shape(n, n));
-		for (int i=0; i<n; ++i) {
-			for (int j=0; j<n; ++j) {
-				block(i, j) = acf(i0, j0, std::abs(i-j));
-			}
-		}
-		return block;
-	}
-
-	template<class T>
-	void
-	append_column_block(Array2D<T>& lhs, const Array2D<T>& rhs) {
-		if (lhs.numElements() == 0) {
-			lhs.resize(rhs.shape());
-			lhs = rhs;
-		} else {
-			using blitz::Range;
-			assert(lhs.rows() == rhs.rows());
-			const int old_cols = lhs.columns();
-			lhs.resizeAndPreserve(lhs.rows(), old_cols + rhs.columns());
-			lhs(Range::all(), Range(old_cols, blitz::toEnd)) = rhs;
-		}
-	}
-
-	template<class T>
-	void
-	append_row_block(Array2D<T>& lhs, const Array2D<T>& rhs) {
-		if (lhs.numElements() == 0) {
-			lhs.resize(rhs.shape());
-			lhs = rhs;
-		} else {
-			using blitz::Range;
-			assert(lhs.columns() == rhs.columns());
-			const int old_rows = lhs.rows();
-			lhs.resizeAndPreserve(old_rows + rhs.rows(), lhs.columns());
-			lhs(Range(old_rows, blitz::toEnd), Range::all()) = rhs;
-		}
-	}
-
-	template<class T>
-	Array2D<T>
-	AC_matrix_block(const ACF<T>& acf, int i0) {
-		const int n = acf.extent(1);
-		Array2D<T> result;
-		for (int i=0; i<n; ++i) {
-			Array2D<T> row;
-			for (int j=0; j<n; ++j) {
-				append_column_block(row, AC_matrix_block(acf, i0, std::abs(i-j)));
-			}
-			append_row_block(result, row);
-		}
-		return result;
-	}
-
-	template<class T>
-	Array2D<T>
-	generate_AC_matrix(const ACF<T>& acf) {
-		const int n = acf.extent(0);
-		Array2D<T> result;
-		for (int i=0; i<n; ++i) {
-			Array2D<T> row;
-			for (int j=0; j<n; ++j) {
-				append_column_block(row, AC_matrix_block(acf, std::abs(i-j)));
-			}
-			append_row_block(result, row);
-		}
-		return result;
-	}
-
-	template<class T>
 	AR_coefs<T>
 	compute_AR_coefs(const ACF<T>& acf) {
 		using blitz::Range;
 		using blitz::toEnd;
 		const int m = acf.numElements()-1;
 		Array2D<T> acm = generate_AC_matrix(acf);
-		{ std::ofstream out("acm"); out << acm; }
+		//{ std::ofstream out("acm"); out << acm; }
 
 		/**
 		eliminate the first equation and move the first column of the remaining
@@ -157,13 +84,13 @@ namespace autoreg {
 		*/
 		Array1D<T> rhs(m);
 		rhs = acm(Range(1, toEnd), 0);
-		{ std::ofstream out("rhs"); out << rhs; }
+		//{ std::ofstream out("rhs"); out << rhs; }
 
 		// lhs is the autocovariance matrix without first
 		// column and row
 		Array2D<T> lhs(blitz::shape(m,m));
 		lhs = acm(Range(1, toEnd), Range(1, toEnd));
-		{ std::ofstream out("lhs"); out << lhs; }
+		//{ std::ofstream out("lhs"); out << lhs; }
 
 		assert(lhs.extent(0) == m);
 		assert(lhs.extent(1) == m);
@@ -173,7 +100,7 @@ namespace autoreg {
 		assert(phi.numElements() == rhs.numElements() + 1);
 		phi(0,0,0) = 0;
 		std::copy_n(rhs.data(), rhs.numElements(), phi.data()+1);
-		{ std::ofstream out("ar_coefs"); out << phi; }
+		//{ std::ofstream out("ar_coefs"); out << phi; }
 		if (!is_stationary(phi)) {
 			std::cerr << "phi.shape() = " << phi.shape() << std::endl;
 			std::for_each(
@@ -188,6 +115,12 @@ namespace autoreg {
 			throw std::runtime_error("AR process is not stationary, i.e. |phi| > 1");
 		}
 		return phi;
+	}
+
+	template<class T>
+	bool
+	isnan(T rhs) noexcept {
+		return std::isnan(rhs);
 	}
 
 	/// Генерация белого шума по алгоритму Вихря Мерсенна и
@@ -209,7 +142,7 @@ namespace autoreg {
 		// генерация и проверка
 		Zeta<T> eps(size);
 		std::generate(std::begin(eps), std::end(eps), std::bind(normal, generator));
-		if (std::any_of(std::begin(eps), std::end(eps), &stdx::isnan<T>)) {
+		if (std::any_of(std::begin(eps), std::end(eps), &::autoreg::isnan<T>)) {
 			throw std::runtime_error("white noise generator produced some NaNs");
 		}
 		return eps;

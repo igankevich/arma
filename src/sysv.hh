@@ -1,10 +1,9 @@
 #ifndef SYSV_HH
 #define SYSV_HH
 
-#include <valarray>
-#include <iostream>
-#include <sstream>
-#include <stdexcept>
+#include <sstream>    // for operator<<, basic_ostream::operator<<, basic_os...
+#include <stdexcept>  // for invalid_argument
+#include <valarray>   // for valarray
 
 /// @file
 /// C/C++ interface to ``sysv'' LAPACK routine.
