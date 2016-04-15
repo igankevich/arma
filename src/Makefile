@@ -28,22 +28,19 @@ $(BINARY): $(SOURCES) *.hh Makefile
 $(VISUAL): Makefile *.hh $(VISUAL_SOURCES)
 	$(CXX) $(CXXFLAGS) $(VISUAL_SOURCES) $(VISUAL_LDFLAGS) -o $(VISUAL)
 
-run: ../tests ../tests/autoreg.model ../tests/MersenneTwister.dat
+run: ../tests autoreg.model
 run: $(BINARY)
 	(cd ../tests; $(PWD)/$(BINARY))
 
-debug: ../tests ../tests/autoreg.model ../tests/MersenneTwister.dat
+debug: ../tests autoreg.model
 debug: $(BINARY)
 	(cd ../tests; gdb $(PWD)/$(BINARY))
 
 ../tests:
 	mkdir -p ../tests
 
-../tests/autoreg.model: ../input/autoreg.model
+../tests/autoreg.model: autoreg.model
 	cp ../input/autoreg.model ../tests
-
-../tests/MersenneTwister.dat: ../input/MersenneTwister.dat
-	cp ../input/MersenneTwister.dat ../tests
 
 clean:
 	rm -f $(BINARY) $(VISUAL)
