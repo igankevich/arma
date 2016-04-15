@@ -2,6 +2,7 @@ CXX       = g++
 
 DEFINES   = -DDISABLE_RANDOM_SEED
 
+# флаги компиляции
 CXXFLAGS  =
 CXXFLAGS += -std=c++11 -O2
 CXXFLAGS += -g
@@ -9,6 +10,7 @@ CXXFLAGS += -Wall -Wextra
 CXXFLAGS += $(DEFINES)
 CXXFLAGS += $(shell pkg-config --cflags blitz)
 
+# флаги сборки (библиотеки)
 LDFLAGS   = 
 LDFLAGS  += -llapack -lblas -lgfortran
 LDFLAGS  += $(shell pkg-config --libs blitz)
