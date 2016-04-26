@@ -27,9 +27,17 @@ namespace autoreg {
 	template<class T>
 	ACF<T>
 	standing_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
-		T alpha = 0.06;
-		T beta = 0.8;
-		T gamm = 1.0;
+
+		// guessed
+//		T alpha = 0.06;
+//		T beta = 0.8;
+//		T gamm = 1.0;
+
+		/// from Mathematica
+		T alpha = 0.394279;
+		T beta = 0.885028;
+		T gamm = 0.0106085 * 100;
+
 		ACF<T> acf(acf_size);
 		blitz::firstIndex t;
 		blitz::secondIndex x;
@@ -38,7 +46,8 @@ namespace autoreg {
 			* blitz::exp(-alpha*(t*delta[0] + x*delta[1] + y*delta[2]))
 	 		* blitz::cos(beta * t * delta[0])
 	 		* blitz::cos(beta * x * delta[1])
-	 		* blitz::cos(beta * y * delta[2]);
+	 		* blitz::cos(beta * y * delta[2])
+			;
 		return acf;
 	}
 
@@ -46,16 +55,29 @@ namespace autoreg {
 	ACF<T>
 	propagating_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
 		/// values from Mathematica
-		T alpha = 0.177652;
-		T beta = -0.105817;
-		T gamm = 0.109203;
-//		T alpha = 0.06;
-//		T beta = 0.8;
-//		T gamm = 1.0;
+//		T alpha = 0.177652;
+//		T beta = -0.105817;
+//		T gamm = 0.109203;
+		/// values from Mathematica
+//		T alpha = 1.32802;
+//		T beta = 0.340238;
+//		T gamm = 0.878945;
+
+		// exp(-0.2*(|x| + |y| + |t|)
+//		T alpha = 1.87405;
+//		T beta = 3.04553e-9;
+//		T gamm = 1.98831;
+
+		/// from Mathematica
+		T alpha = 0.163215;
+		T beta = -0.0659017;
+		T gamm = 0.0222666 * 100;
+
 		ACF<T> acf(acf_size);
 		blitz::firstIndex t;
 		blitz::secondIndex x;
 		blitz::thirdIndex y;
+		/*
 		acf = gamm
 			* blitz::exp(-alpha*(
 				t*delta[0]
@@ -65,8 +87,13 @@ namespace autoreg {
 	 		* blitz::cos(beta*(
 				 t*delta[0]
 				 + x*delta[1]
-//				 + y*delta[2]
+				 + y*delta[2]
 			));
+		*/
+		acf = gamm
+			* blitz::exp(-alpha * (t*delta[0] + x*delta[1] + y*delta[2]))
+			* blitz::cos(beta * (t*delta[0] + x*delta[1] + y*delta[2]))
+			;
 		return acf;
 	}
 

@@ -21,7 +21,7 @@ enum Projection {
 };
 
 Zeta<Real> func;
-Vector<Real,3> delta(1,1,1);
+Vector<Real,3> delta(0.5,1.0,1.0);
 
 const Real ROT_STEP = 90;
 
@@ -49,26 +49,17 @@ drawSeries(size_t t, Projection p, float alpha) {
 	const size3 offset = -size/2;
 	int x1 = size[1];
 	int y1 = size[2];
-	if (p == PROJECTION_NONE) {
-		for (int i=0; i<x1; i++) {
-			glBegin(GL_LINE_STRIP);
-			for (int j=0; j<y1; j++) {
-				draw_vertex(size3(t, i, j), offset, alpha);
-			}
-			glEnd();
-		}
-		for (int j=0; j<y1; j++) {
-			glBegin(GL_LINE_STRIP);
-			for (int i=0; i<x1; i++)
-				draw_vertex(size3(t, i, j), offset, alpha);
-			glEnd();
-		}
-	} else {
-		int len = size[p];
-		size3 d(0, 0, 0);
+	for (int i=0; i<x1; i++) {
 		glBegin(GL_LINE_STRIP);
-		for (; d[p]<len; d[p]++) {
-			glVertex3f(d[p]*delta[p], func(d), 0);
+		for (int j=0; j<y1; j++) {
+			draw_vertex(size3(t, i, j), offset, alpha);
+		}
+		glEnd();
+	}
+	for (int j=0; j<y1; j++) {
+		glBegin(GL_LINE_STRIP);
+		for (int i=0; i<x1; i++) {
+			draw_vertex(size3(t, i, j), offset, alpha);
 		}
 		glEnd();
 	}
@@ -85,7 +76,7 @@ void draw_axis(const GLfloat v[3]) {
 void resetView() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glScalef(delta[0], delta[1], 1.0f);
+	glScalef(delta[1], delta[2], 1.0f);
 	//float3 offset = (dom.max() - dom.min())*-0.5;
 //	glTranslatef(offset[1], offset[2], -100.0f);
 	glTranslatef(0, 0, -100.0f);
@@ -117,7 +108,7 @@ void onDisplay() {
 	}
 
 	std::stringstream str;
-	str << "t=" << timer << '/' << func.extent(2)-1;
+	str << "t=" << timer << '/' << func.extent(0)-1;
 
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
@@ -246,7 +237,7 @@ void onSpecialKeyPressed(int key, int, int) {
 }
 
 int get_delta_t() {
-	return 1000;
+	return std::floor(1000.0f * delta[0]);
 }
 
 void onTimer(int) {

@@ -39,7 +39,7 @@ struct Autoreg_model {
 
 	void act() {
 		echo_parameters();
-		ACF<T> acf_model = propagating_wave_ACF<T>(acf_delta, acf_size);
+		ACF<T> acf_model = standing_wave_ACF<T>(acf_delta, acf_size);
 		{ std::ofstream out("acf"); out << acf_model; }
 		AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
