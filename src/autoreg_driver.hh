@@ -39,8 +39,8 @@ struct Autoreg_model {
 
 	void act() {
 		echo_parameters();
-		ACF<T> acf_model = approx_acf<T>(alpha, beta, gamm, acf_delta, acf_size);
-		//{ std::ofstream out("acf"); out << acf_model; }
+		ACF<T> acf_model = propagating_wave_ACF<T>(acf_delta, acf_size);
+		{ std::ofstream out("acf"); out << acf_model; }
 		AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
 		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;
@@ -80,9 +80,6 @@ private:
 			else if (name == "zdelta"      ) in >> zdelta;
 			else if (name == "acf_size"    ) in >> acf_size;
 			else if (name == "size_factor" ) in >> size_factor;
-			else if (name == "alpha"       ) in >> alpha;
-			else if (name == "beta"        ) in >> beta;
-			else if (name == "gamma"       ) in >> gamm;
 			else {
 				in.ignore(1024*1024, '\n');
 				std::stringstream str;
@@ -174,12 +171,6 @@ private:
 	/// Size of enlarged wavy surface. Equals to @zsize multiplied
 	/// by size_factor read from input file.
 	size3 zsize2;
-
-	/// ACF parameters
-	/// @see approx_acf
-	T alpha = 0.06;
-	T beta = 0.8;
-	T gamm = 1.0;
 
 };
 

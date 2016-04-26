@@ -28,11 +28,11 @@ $(BINARY): $(SOURCES) *.hh Makefile
 $(VISUAL): Makefile *.hh $(VISUAL_SOURCES)
 	$(CXX) $(CXXFLAGS) $(VISUAL_SOURCES) $(VISUAL_LDFLAGS) -o $(VISUAL)
 
-run: ../tests autoreg.model
+run: ../tests ../tests/autoreg.model
 run: $(BINARY)
 	(cd ../tests; $(PWD)/$(BINARY))
 
-debug: ../tests autoreg.model
+debug: ../tests ../tests/autoreg.model
 debug: $(BINARY)
 	(cd ../tests; gdb $(PWD)/$(BINARY))
 
@@ -40,7 +40,7 @@ debug: $(BINARY)
 	mkdir -p ../tests
 
 ../tests/autoreg.model: autoreg.model
-	cp ../input/autoreg.model ../tests
+	cp autoreg.model ../tests
 
 clean:
 	rm -f $(BINARY) $(VISUAL)

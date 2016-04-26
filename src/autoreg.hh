@@ -26,17 +26,47 @@ namespace autoreg {
 
 	template<class T>
 	ACF<T>
-	approx_acf(T alpha, T beta, T gamm, const Vec3<T>& delta, const size3& acf_size) {
+	standing_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
+		T alpha = 0.06;
+		T beta = 0.8;
+		T gamm = 1.0;
 		ACF<T> acf(acf_size);
 		blitz::firstIndex t;
 		blitz::secondIndex x;
 		blitz::thirdIndex y;
 		acf = gamm
-			* blitz::exp(-alpha * (t*delta[0] + x*delta[1] + y*delta[2]))
-//	 		* blitz::cos(beta * (t*delta[0] + x*delta[1] + y*delta[2]));
+			* blitz::exp(-alpha*(t*delta[0] + x*delta[1] + y*delta[2]))
 	 		* blitz::cos(beta * t * delta[0])
 	 		* blitz::cos(beta * x * delta[1])
 	 		* blitz::cos(beta * y * delta[2]);
+		return acf;
+	}
+
+	template<class T>
+	ACF<T>
+	propagating_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
+		/// values from Mathematica
+		T alpha = 0.177652;
+		T beta = -0.105817;
+		T gamm = 0.109203;
+//		T alpha = 0.06;
+//		T beta = 0.8;
+//		T gamm = 1.0;
+		ACF<T> acf(acf_size);
+		blitz::firstIndex t;
+		blitz::secondIndex x;
+		blitz::thirdIndex y;
+		acf = gamm
+			* blitz::exp(-alpha*(
+				t*delta[0]
+				+ x*delta[1]
+				+ y*delta[2]
+			))
+	 		* blitz::cos(beta*(
+				 t*delta[0]
+				 + x*delta[1]
+//				 + y*delta[2]
+			));
 		return acf;
 	}
 
@@ -71,6 +101,12 @@ namespace autoreg {
 
 	template<class T>
 	AR_coefs<T>
+	clamp_coefficients(AR_coefs<T>& phi) {
+		return AR_coefs<T>(blitz::where(blitz::abs(phi) > T(1), blitz::abs(phi)/phi, phi));
+	}
+
+	template<class T>
+	AR_coefs<T>
 	compute_AR_coefs(const ACF<T>& acf) {
 		using blitz::Range;
 		using blitz::toEnd;
@@ -100,7 +136,8 @@ namespace autoreg {
 		assert(phi.numElements() == rhs.numElements() + 1);
 		phi(0,0,0) = 0;
 		std::copy_n(rhs.data(), rhs.numElements(), phi.data()+1);
-		//{ std::ofstream out("ar_coefs"); out << phi; }
+		{ std::ofstream out("ar_coefs"); out << phi; }
+//		phi = clamp_coefficients(phi);
 		if (!is_stationary(phi)) {
 			std::cerr << "phi.shape() = " << phi.shape() << std::endl;
 			std::for_each(
@@ -112,7 +149,7 @@ namespace autoreg {
 					}
 				}
 			);
-			throw std::runtime_error("AR process is not stationary, i.e. |phi| > 1");
+//			throw std::runtime_error("AR process is not stationary, i.e. |phi| > 1");
 		}
 		return phi;
 	}
