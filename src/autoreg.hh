@@ -158,7 +158,7 @@ namespace autoreg {
 		assert(lhs.extent(0) == m);
 		assert(lhs.extent(1) == m);
 		assert(rhs.extent(0) == m);
-		sysv<T>('U', m, 1, lhs.data(), m, rhs.data(), m);
+		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
 		AR_coefs<T> phi(acf.shape());
 		assert(phi.numElements() == rhs.numElements() + 1);
 		phi(0,0,0) = 0;

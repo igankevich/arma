@@ -10,9 +10,13 @@
 
 extern "C" void ssysv_(char*, int*, int*, float*, int*, int*, float*, int*, float*, int*, int*);
 extern "C" void dsysv_(char*, int*, int*, double*, int*, int*, double*, int*, double*, int*, int*);
+extern "C" void sgesv_(int*, int*, float*, int*, int*, float*, int*, int*);
 
 template<class T>
 void sysv(char type, int m, int nrhs, T* a, int lda, T* b, int ldb);
+
+template<class T>
+void sgesv(int m, int nrhs, T* a, int lda, T* b, int ldb);
 
 
 void
@@ -41,6 +45,14 @@ void sysv<double>(char type, int m, int nrhs, double* a, int lda, double* b, int
 	std::valarray<double> work(lwork);
 	std::valarray<int> ipiv(m);
 	dsysv_(&type, &m, &nrhs, a, &lda, &ipiv[0], b, &ldb, &work[0], &lwork, &info);
+	check_info(info);
+}
+
+template<>
+void sgesv<float>(int m, int nrhs, float* a, int lda, float* b, int ldb) {
+	int info = 0;
+	std::valarray<int> ipiv(m);
+	sgesv_(&m, &nrhs, a, &lda, &ipiv[0], b, &ldb, &info);
 	check_info(info);
 }
 

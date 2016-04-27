@@ -44,7 +44,7 @@ draw_vertex(const size3& c, const size3& offset, float alpha) {
 }
 
 void
-drawSeries(size_t t, Projection p, float alpha) {
+drawSeries(size_t t, float alpha) {
 	const size3& size = func.shape();
 	const size3 offset = -size/2;
 	int x1 = size[1];
@@ -103,7 +103,7 @@ void onDisplay() {
 
 	const int tl = std::min(tail, timer);
 	for (int t=timer-tl, i=1; t<=timer; ++t, ++i) {
-		drawSeries(t, proj, i/(tl+1.0));
+		drawSeries(t, i/(tl+1.0));
 		//clog << i/(tail+1.0) << endl;
 	}
 
