@@ -6,19 +6,25 @@
 #include <iterator>
 #include <algorithm>
 
+extern "C" {
 #include "dc.h"
+}
+
+std::istream&
+operator>>(std::istream& in, mt_struct& rhs) {
+	in.read((char*)&rhs, sizeof(mt_struct));
+	return in;
+}
+
+std::ostream&
+operator<<(std::ostream& out, const mt_struct& rhs) {
+	out.write((char*)&rhs, sizeof(mt_struct));
+	return out;
+}
 
 namespace autoreg {
 
-	struct mt_config: public ::mt_struct {
-
-		friend std::istream&
-		operator>>(std::istream& in, mt_config& rhs) {
-		    in.read((char*)&rhs, sizeof(mt_config));
-			return in;
-		}
-
-	};
+	typedef ::mt_struct mt_config;
 
 	template<int p=521>
 	struct parallel_mt_seq {
@@ -56,7 +62,7 @@ namespace autoreg {
 
 		uint32_t _seed = 0;
 		uint16_t _id = 0;
-		result_type _result = nullptr;
+		result_type _result;
 
 		static const int nbits = 32;
 
