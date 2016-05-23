@@ -5,26 +5,66 @@
 #include <limits>
 #include <iterator>
 #include <algorithm>
+#include <cstring>
 
 extern "C" {
 #include "dc.h"
 }
 
-std::istream&
-operator>>(std::istream& in, mt_struct& rhs) {
-	in.read((char*)&rhs, sizeof(mt_struct));
-	return in;
-}
-
-std::ostream&
-operator<<(std::ostream& out, const mt_struct& rhs) {
-	out.write((char*)&rhs, sizeof(mt_struct));
-	return out;
-}
 
 namespace autoreg {
 
-	typedef ::mt_struct mt_config;
+	struct mt_config: public ::mt_struct {
+
+		mt_config() {
+			std::memset(this, 0, sizeof(mt_config));
+		}
+		~mt_config() { free(this->state); }
+		mt_config(const mt_config& rhs) {
+			std::memset(this, 0, sizeof(mt_config));
+			this->operator=(rhs);
+		}
+
+		mt_config&
+		operator=(const mt_config& rhs) {
+			free_state();
+			std::memcpy(this, &rhs, sizeof(mt_config));
+			init_state();
+			std::copy_n(rhs.state, rhs.nn, this->state);
+			return *this;
+		}
+
+	private:
+
+		void
+		init_state() {
+			this->state = (uint32_t*)malloc(this->nn*sizeof(uint32_t));
+		}
+
+		void
+		free_state() {
+			if (this->state) {
+				free(this->state);
+			}
+		}
+
+		friend std::istream&
+		operator>>(std::istream& in, mt_config& rhs) {
+			rhs.free_state();
+			in.read((char*)&rhs, sizeof(mt_config));
+			rhs.init_state();
+			in.read((char*)rhs.state, rhs.nn*sizeof(uint32_t));
+			return in;
+		}
+
+		friend std::ostream&
+		operator<<(std::ostream& out, const mt_config& rhs) {
+			out.write((char*)&rhs, sizeof(mt_config));
+			out.write((char*)rhs.state, rhs.nn*sizeof(uint32_t));
+			return out;
+		}
+
+	};
 
 	template<int p=521>
 	struct parallel_mt_seq {
@@ -51,7 +91,7 @@ namespace autoreg {
 
 		void
 		generate_mt_struct() {
-			mt_config* ptr = ::get_mt_parameter_id_st(nbits, p, _id, _seed);
+			mt_config* ptr = static_cast<mt_config*>(::get_mt_parameter_id_st(nbits, p, _id, _seed));
 			if (!ptr) {
 				throw std::runtime_error("bad MT");
 			}
