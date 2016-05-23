@@ -22,11 +22,22 @@ VISUAL    = visual
 VISUAL_SOURCES = visual.cc
 VISUAL_LDFLAGS = $(shell pkg-config --libs freeglut) -lGL
 
+# DCMT
+CXXFLAGS += -Idcmt0.6.2/include
+LDFLAGS  += -ldcmt0.6.2/lib/libdcmt.a
+
+DCMT = dcmt
+DCMT_SOURCES = dcmt.cc
+DCMT_LDFLAGS = -Ldcmt0.6.2/lib -ldcmt
+
 $(BINARY): $(SOURCES) *.hh Makefile
 	$(CXX) $(CXXFLAGS) $(SOURCES) $(LDFLAGS) -o $(BINARY)
 
 $(VISUAL): Makefile *.hh $(VISUAL_SOURCES)
 	$(CXX) $(CXXFLAGS) $(VISUAL_SOURCES) $(VISUAL_LDFLAGS) -o $(VISUAL)
+
+$(DCMT): Makefile *.hh $(DCMT_SOURCES)
+	$(CXX) $(CXXFLAGS) $(DCMT_SOURCES) $(DCMT_LDFLAGS) -o $(DCMT)
 
 run: ../tests ../tests/autoreg.model
 run: $(BINARY)
@@ -43,4 +54,4 @@ debug: $(BINARY)
 	cp autoreg.model ../tests
 
 clean:
-	rm -f $(BINARY) $(VISUAL)
+	rm -f $(BINARY) $(VISUAL) $(DCMT)
