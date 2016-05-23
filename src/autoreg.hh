@@ -132,9 +132,43 @@ namespace autoreg {
 		return AR_coefs<T>(blitz::where(blitz::abs(phi) > T(1), blitz::abs(phi)/phi, phi));
 	}
 
+	void
+	dummy_matrix() {
+		size3 sz(3, 3, 3);
+		ACF<size3> acf(sz);
+		for (int i=0; i<sz[0]; ++i) {
+			for (int j=0; j<sz[1]; ++j) {
+				for (int k=0; k<sz[2]; ++k) {
+					acf(i,j,k) = size3(i,j,k);
+				}
+			}
+		}
+		const int m = acf.numElements()-1;
+		Array2D<size3> acm = generate_AC_matrix(acf);
+		{ std::ofstream out("acm_test"); out << acm; }
+		using blitz::Range;
+		using blitz::toEnd;
+		Array1D<size3> rhs(m);
+		rhs = acm(Range(1, toEnd), 0);
+		{ std::ofstream out("rhs_test"); out << rhs; }
+
+		// lhs is the autocovariance matrix without first
+		// column and row
+		Array2D<size3> lhs(blitz::shape(m,m));
+		lhs = acm(Range(1, toEnd), Range(1, toEnd));
+		{ std::ofstream out("lhs_test"); out << lhs; }
+
+		AR_coefs<size3> phi(acf.shape());
+		assert(phi.numElements() == rhs.numElements() + 1);
+		phi(0,0,0) = 0;
+		std::copy_n(rhs.data(), rhs.numElements(), phi.data()+1);
+		{ std::ofstream out("ar_coefs_test"); out << phi; }
+	}
+
 	template<class T>
 	AR_coefs<T>
 	compute_AR_coefs(const ACF<T>& acf) {
+		dummy_matrix();
 		using blitz::Range;
 		using blitz::toEnd;
 		const int m = acf.numElements()-1;
