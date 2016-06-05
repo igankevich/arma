@@ -99,7 +99,7 @@ namespace autoreg {
 
 	template<class T>
 	T white_noise_variance(const AR_coefs<T>& ar_coefs, const ACF<T>& acf) {
-		return -blitz::sum(ar_coefs * acf);
+		return acf(0,0,0) - blitz::sum(ar_coefs * acf);
 	}
 
 	template<class T>
@@ -168,12 +168,12 @@ namespace autoreg {
 	template<class T>
 	AR_coefs<T>
 	compute_AR_coefs(const ACF<T>& acf) {
-		dummy_matrix();
+		//dummy_matrix();
 		using blitz::Range;
 		using blitz::toEnd;
 		const int m = acf.numElements()-1;
 		Array2D<T> acm = generate_AC_matrix(acf);
-		//{ std::ofstream out("acm"); out << acm; }
+		{ std::ofstream out("acm"); out << acm; }
 
 		/**
 		eliminate the first equation and move the first column of the remaining
@@ -195,7 +195,7 @@ namespace autoreg {
 		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
 		AR_coefs<T> phi(acf.shape());
 		assert(phi.numElements() == rhs.numElements() + 1);
-		phi(0,0,0) = -1;
+		phi(0,0,0) = 0;
 		std::copy_n(rhs.data(), rhs.numElements(), phi.data()+1);
 		{ std::ofstream out("ar_coefs"); out << phi; }
 //		phi = clamp_coefficients(phi);
