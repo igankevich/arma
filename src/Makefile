@@ -24,7 +24,7 @@ VISUAL_LDFLAGS = $(shell pkg-config --libs freeglut) -lGL
 
 # DCMT
 CXXFLAGS += -Idcmt0.6.2/include
-LDFLAGS  += -ldcmt0.6.2/lib/libdcmt.a
+LDFLAGS  += -Ldcmt0.6.2/lib -ldcmt
 
 DCMT = dcmt
 DCMT_SOURCES = dcmt.cc

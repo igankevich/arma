@@ -99,7 +99,7 @@ namespace autoreg {
 
 	template<class T>
 	T white_noise_variance(const AR_coefs<T>& ar_coefs, const ACF<T>& acf) {
-		return acf(0,0,0) - blitz::sum(ar_coefs * acf);
+		return -blitz::sum(ar_coefs * acf);
 	}
 
 	template<class T>
@@ -195,7 +195,7 @@ namespace autoreg {
 		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
 		AR_coefs<T> phi(acf.shape());
 		assert(phi.numElements() == rhs.numElements() + 1);
-		phi(0,0,0) = 0;
+		phi(0,0,0) = -1;
 		std::copy_n(rhs.data(), rhs.numElements(), phi.data()+1);
 		{ std::ofstream out("ar_coefs"); out << phi; }
 //		phi = clamp_coefficients(phi);
@@ -249,6 +249,9 @@ namespace autoreg {
 	/// Генерация отдельных частей реализации волновой поверхности.
 	template<class T>
 	void generate_zeta(const AR_coefs<T>& phi, Zeta<T>& zeta) {
+		Zeta<T> eps(zeta.shape());
+		eps = zeta;
+		zeta = 0;
 		const size3 fsize = phi.shape();
 		const size3 zsize = zeta.shape();
 		const int t1 = zsize[0];
@@ -265,7 +268,7 @@ namespace autoreg {
 						for (int i=0; i<m2; i++)
 							for (int j=0; j<m3; j++)
 								sum += phi(k, i, j)*zeta(t-k, x-i, y-j);
-					zeta(t, x, y) += sum;
+					zeta(t, x, y) = sum + eps(t, x, y);
 				}
 			}
 		}
