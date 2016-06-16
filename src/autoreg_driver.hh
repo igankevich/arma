@@ -32,26 +32,32 @@ struct Autoreg_model {
 	zsize(768, 24, 24),
 	zdelta(1, 1, 1),
 	acf_size(10, 10, 10),
-	acf_delta(zdelta),
+	acf_delta(
+		T(0.5),
+		T(0.4),
+		T(0.4)
+//		T(2)*M_PI/acf_size(1),
+//		T(2)*M_PI/acf_size(2)
+	),
 	fsize(acf_size),
 	zsize2(zsize)
 	{}
 
 	void act() {
 		echo_parameters();
-		ACF<T> acf_model = standing_wave_ACF<T>(acf_delta, acf_size);
+		ACF<T> acf_model = propagating_wave_ACF_2<T>(acf_delta, acf_size);
 		{ std::ofstream out("acf"); out << acf_model; }
 		AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
 		std::clog << "ACF variance = " << ACF_variance(acf_model) << std::endl;
 		std::clog << "WN variance = " << var_wn << std::endl;
-		Zeta<T> zeta2 = generate_white_noise(zsize2, var_wn);
-		std::clog << "mean(eps) = " << mean(zeta2) << std::endl;
-		std::clog << "variance(eps) = " << variance(zeta2) << std::endl;
-		generate_zeta(ar_coefs, zeta2);
-		std::clog << "mean(zeta) = " << mean(zeta2) << std::endl;
-		std::clog << "variance(zeta) = " << variance(zeta2) << std::endl;
-		Zeta<T> zeta = trim_zeta(zeta2, zsize);
+		Zeta<T> zeta = generate_white_noise(zsize2, var_wn);
+		std::clog << "mean(eps) = " << mean(zeta) << std::endl;
+		std::clog << "variance(eps) = " << variance(zeta) << std::endl;
+		generate_zeta(ar_coefs, zeta);
+		std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
+		std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
+//		zeta = trim_zeta(zeta, zsize);
 		write_zeta(zeta);
 	}
 
@@ -96,7 +102,7 @@ private:
 		}
 
 		zsize2 = size3(zsize*size_factor);
-		acf_delta = zdelta;
+//		acf_delta = zdelta;
 		fsize = acf_size;
 	}
 

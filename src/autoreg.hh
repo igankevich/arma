@@ -98,6 +98,66 @@ namespace autoreg {
 	}
 
 	template<class T>
+	ACF<T>
+	propagating_wave_ACF_2(const Vec3<T>& delta, const size3& acf_size) {
+
+		// first plain wave
+		T a1 = 1;
+		T k1 = 0.5;
+		T w1 = 0.1;
+
+		// second plain wave
+		T a2 = 1.1;
+		T k2 = 0.4;
+		T w2 = 0.2;
+
+		T damp_x = 0.01;
+		T damp_y = 0.01;
+		T damp_t = 0.30;
+
+		ACF<T> acf(acf_size);
+//		blitz::firstIndex t;
+//		blitz::secondIndex x;
+//		blitz::thirdIndex y;
+
+		const Vec3<T> max = (acf_size-1) * delta;
+		for (int i=0; i<acf_size[0]; ++i) {
+			for (int j=0; j<acf_size[1]; ++j) {
+				for (int k=0; k<acf_size[2]; ++k) {
+					const T t = i*delta[0];
+					const T x = j*delta[1];
+					const T y = k*delta[2];
+					const T r = std::sqrt(x*x + y*y);
+					acf(i,j,k) = std::exp(
+						-damp_t*i*delta[0]
+						-damp_x*j*delta[1]
+						-damp_y*k*delta[2]
+					) * (
+						a1*std::cos(T(2)*M_PI * (k1*r + k1*r - w1*t)) +
+						a2*std::cos(T(2)*M_PI * (k2*r + k2*r - w2*t))
+					);
+					if (r >= max(1) || i == acf_size[0]-1) {
+						acf(i,j,k) = 0;
+					}
+				}
+			}
+		}
+
+		/*
+		acf = blitz::exp(
+			-damp_t*t*delta[0]
+			-damp_x*x*delta[1]
+			-damp_y*y*delta[2]
+		) * (
+			a1*blitz::cos(T(2)*M_PI * (k1*x*delta[1] + k1*y*delta[2] - w1*t*delta[0])) +
+			a2*blitz::cos(T(2)*M_PI * (k2*x*delta[1] + k2*y*delta[2] - w2*t*delta[0]))
+		);
+		*/
+
+		return acf;
+	}
+
+	template<class T>
 	T white_noise_variance(const AR_coefs<T>& ar_coefs, const ACF<T>& acf) {
 		return acf(0,0,0) - blitz::sum(ar_coefs * acf);
 	}
@@ -132,43 +192,9 @@ namespace autoreg {
 		return AR_coefs<T>(blitz::where(blitz::abs(phi) > T(1), blitz::abs(phi)/phi, phi));
 	}
 
-	void
-	dummy_matrix() {
-		size3 sz(3, 3, 3);
-		ACF<size3> acf(sz);
-		for (int i=0; i<sz[0]; ++i) {
-			for (int j=0; j<sz[1]; ++j) {
-				for (int k=0; k<sz[2]; ++k) {
-					acf(i,j,k) = size3(i,j,k);
-				}
-			}
-		}
-		const int m = acf.numElements()-1;
-		Array2D<size3> acm = generate_AC_matrix(acf);
-		{ std::ofstream out("acm_test"); out << acm; }
-		using blitz::Range;
-		using blitz::toEnd;
-		Array1D<size3> rhs(m);
-		rhs = acm(Range(1, toEnd), 0);
-		{ std::ofstream out("rhs_test"); out << rhs; }
-
-		// lhs is the autocovariance matrix without first
-		// column and row
-		Array2D<size3> lhs(blitz::shape(m,m));
-		lhs = acm(Range(1, toEnd), Range(1, toEnd));
-		{ std::ofstream out("lhs_test"); out << lhs; }
-
-		AR_coefs<size3> phi(acf.shape());
-		assert(phi.numElements() == rhs.numElements() + 1);
-		phi(0,0,0) = 0;
-		std::copy_n(rhs.data(), rhs.numElements(), phi.data()+1);
-		{ std::ofstream out("ar_coefs_test"); out << phi; }
-	}
-
 	template<class T>
 	AR_coefs<T>
 	compute_AR_coefs(const ACF<T>& acf) {
-		//dummy_matrix();
 		using blitz::Range;
 		using blitz::toEnd;
 		const int m = acf.numElements()-1;
@@ -210,7 +236,7 @@ namespace autoreg {
 					}
 				}
 			);
-//			throw std::runtime_error("AR process is not stationary, i.e. |phi| > 1");
+			throw std::runtime_error("AR process is not stationary, i.e. |phi| > 1");
 		}
 		return phi;
 	}
@@ -221,11 +247,17 @@ namespace autoreg {
 		return std::isnan(rhs);
 	}
 
+	template<class T>
+	bool
+	isinf(T rhs) noexcept {
+		return std::isinf(rhs);
+	}
+
 	/// Генерация белого шума по алгоритму Вихря Мерсенна и
 	/// преобразование его к нормальному распределению по алгоритму Бокса-Мюллера.
 	template<class T>
 	Zeta<T>
-	generate_white_noise(const size3& size, const T variance) {
+	generate_white_noise(const size3& size, T variance) {
 		if (variance < T(0)) {
 			throw std::runtime_error("variance is less than zero");
 		}
@@ -243,15 +275,15 @@ namespace autoreg {
 		if (std::any_of(std::begin(eps), std::end(eps), &::autoreg::isnan<T>)) {
 			throw std::runtime_error("white noise generator produced some NaNs");
 		}
+		if (std::any_of(std::begin(eps), std::end(eps), &::autoreg::isinf<T>)) {
+			throw std::runtime_error("white noise generator produced infinite numbers");
+		}
 		return eps;
 	}
 
 	/// Генерация отдельных частей реализации волновой поверхности.
 	template<class T>
-	void generate_zeta(const AR_coefs<T>& phi, Zeta<T>& zeta) {
-		Zeta<T> eps(zeta.shape());
-		eps = zeta;
-		zeta = 0;
+	void generate_zeta( AR_coefs<T>& phi, Zeta<T>& zeta) {
 		const size3 fsize = phi.shape();
 		const size3 zsize = zeta.shape();
 		const int t1 = zsize[0];
@@ -268,7 +300,7 @@ namespace autoreg {
 						for (int i=0; i<m2; i++)
 							for (int j=0; j<m3; j++)
 								sum += phi(k, i, j)*zeta(t-k, x-i, y-j);
-					zeta(t, x, y) = sum + eps(t, x, y);
+					zeta(t, x, y) += sum;
 				}
 			}
 		}
