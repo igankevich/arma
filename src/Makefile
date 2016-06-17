@@ -9,11 +9,13 @@ CXXFLAGS += -g
 CXXFLAGS += -Wall -Wextra
 CXXFLAGS += $(DEFINES)
 CXXFLAGS += $(shell pkg-config --cflags blitz)
+CXXFLAGS += $(shell pkg-config --cflags gsl)
 
 # флаги сборки (библиотеки)
 LDFLAGS   = 
 LDFLAGS  += -llapack -lblas -lgfortran
 LDFLAGS  += $(shell pkg-config --libs blitz)
+LDFLAGS  += $(shell pkg-config --libs gsl)
 
 SOURCES   = main.cc
 BINARY    = autoreg

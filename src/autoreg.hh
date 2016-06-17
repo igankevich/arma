@@ -11,12 +11,16 @@
 #include <fstream>               // for ofstream
 #include <random>                // for mt19937, normal_distribution
 #include <stdexcept>             // for runtime_error
+#include <complex>
 
 #include <blitz/array.h>         // for Array, Range, shape, any
 
 #include "sysv.hh"               // for sysv
 #include "types.hh"              // for size3, ACF, AR_coefs, Zeta, Array2D
 #include "voodoo.hh"             // for generate_AC_matrix
+
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_poly.h>
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations
@@ -204,14 +208,29 @@ namespace autoreg {
 	}
 
 	template<class T>
-	bool is_stationary(AR_coefs<T>& phi) {
-		return !blitz::any(blitz::abs(phi) > T(1));
-	}
-
-	template<class T>
-	AR_coefs<T>
-	clamp_coefficients(AR_coefs<T>& phi) {
-		return AR_coefs<T>(blitz::where(blitz::abs(phi) > T(1), blitz::abs(phi)/phi, phi));
+	void
+	check_stationarity(AR_coefs<T>& phi_in) {
+		AR_coefs<double> phi(phi_in.shape());
+		phi = -phi_in;
+		phi(0) = 1;
+		Array1D<std::complex<double>> result(phi.size());
+		gsl_poly_complex_workspace* w = gsl_poly_complex_workspace_alloc(phi.size());
+		int ret = gsl_poly_complex_solve(phi.data(), phi.size(), w, (gsl_complex_packed_ptr)result.data());
+		gsl_poly_complex_workspace_free(w);
+		if (ret != GSL_SUCCESS) {
+			throw std::runtime_error("Can not find roots of the polynomial to verify AR model stationarity.");
+		}
+		bool stationary = true;
+		for (size_t i=0; i<result.size(); ++i) {
+			const double val = std::abs(result(i));
+			if (!(val > 1.0 || val == 0)) {
+				stationary = false;
+				std::clog << "Root #" << i << '=' << result(i) << std::endl;
+			}
+		}
+		if (!stationary) {
+			throw std::runtime_error("AR process is not stationary: some roots lie inside unit circle or on its borderline.");
+		}
 	}
 
 	int adhoc_t(int i, size3 s) { return ((i/s[2])/s[1])%s[0]; }
@@ -269,20 +288,7 @@ namespace autoreg {
 		phi(0,0,0) = 0;
 		std::copy_n(rhs.data(), rhs.numElements(), phi.data()+1);
 		{ std::ofstream out("ar_coefs"); out << phi; }
-//		phi = clamp_coefficients(phi);
-		if (!is_stationary(phi)) {
-			std::cerr << "phi.shape() = " << phi.shape() << std::endl;
-			std::for_each(
-				phi.begin(),
-				phi.end(),
-				[] (T val) {
-					if (std::abs(val) > T(1)) {
-						std::cerr << val << std::endl;
-					}
-				}
-			);
-			throw std::runtime_error("AR process is not stationary, i.e. |phi| > 1");
-		}
+		check_stationarity(phi);
 		return phi;
 	}
 
