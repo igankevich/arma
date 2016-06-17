@@ -207,29 +207,39 @@ namespace autoreg {
 		);
 	}
 
-	template<class T>
+	template <class T>
 	void
 	check_stationarity(AR_coefs<T>& phi_in) {
+		/// Find roots of the polynomial
+		/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
 		AR_coefs<double> phi(phi_in.shape());
 		phi = -phi_in;
 		phi(0) = 1;
 		Array1D<std::complex<double>> result(phi.size());
-		gsl_poly_complex_workspace* w = gsl_poly_complex_workspace_alloc(phi.size());
-		int ret = gsl_poly_complex_solve(phi.data(), phi.size(), w, (gsl_complex_packed_ptr)result.data());
+		gsl_poly_complex_workspace* w =
+		    gsl_poly_complex_workspace_alloc(phi.size());
+		int ret = gsl_poly_complex_solve(phi.data(), phi.size(), w,
+		                                 (gsl_complex_packed_ptr)result.data());
 		gsl_poly_complex_workspace_free(w);
 		if (ret != GSL_SUCCESS) {
-			throw std::runtime_error("Can not find roots of the polynomial to verify AR model stationarity.");
+			throw std::runtime_error("Can not find roots of the polynomial to "
+			                         "verify AR model stationarity.");
 		}
+		/// Check if some roots do not lie outside unit circle.
 		bool stationary = true;
-		for (size_t i=0; i<result.size(); ++i) {
+		for (size_t i = 0; i < result.size(); ++i) {
 			const double val = std::abs(result(i));
+			/// Some AR coefficients are close to nought and polynomial
+			/// solver can produce noughts due to limited numerical
+			/// precision. So we filter val=0 as well.
 			if (!(val > 1.0 || val == 0)) {
 				stationary = false;
 				std::clog << "Root #" << i << '=' << result(i) << std::endl;
 			}
 		}
 		if (!stationary) {
-			throw std::runtime_error("AR process is not stationary: some roots lie inside unit circle or on its borderline.");
+			throw std::runtime_error("AR process is not stationary: some roots lie "
+			                         "inside unit circle or on its borderline.");
 		}
 	}
 
