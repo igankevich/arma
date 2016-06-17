@@ -33,14 +33,14 @@ namespace autoreg {
 	standing_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
 
 		// guessed
-//		T alpha = 0.06;
-//		T beta = 0.8;
-//		T gamm = 1.0;
+		T alpha = 0.06;
+		T beta = 0.8;
+		T gamm = 1.0;
 
 		/// from Mathematica
-		T alpha = 0.394279;
-		T beta = 0.885028;
-		T gamm = 0.0106085 * 100;
+//		T alpha = 0.394279;
+//		T beta = 0.885028;
+//		T gamm = 0.0106085 * 100;
 
 		ACF<T> acf(acf_size);
 		blitz::firstIndex t;

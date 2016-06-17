@@ -40,12 +40,12 @@ struct Autoreg_model {
 //		T(2)*M_PI/acf_size(2)
 	),
 	fsize(acf_size),
-	zsize2(zsize)
+	zsize2(zsize + fsize)
 	{}
 
 	void act() {
 		echo_parameters();
-		ACF<T> acf_model = propagating_wave_ACF_3<T>(acf_delta, acf_size);
+		ACF<T> acf_model = standing_wave_ACF<T>(acf_delta, acf_size);
 		{ std::ofstream out("acf"); out << acf_model; }
 		AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
@@ -55,9 +55,9 @@ struct Autoreg_model {
 		std::clog << "mean(eps) = " << mean(zeta) << std::endl;
 		std::clog << "variance(eps) = " << variance(zeta) << std::endl;
 		generate_zeta(ar_coefs, zeta);
+//		Zeta<T> zeta = trim_zeta(zeta, zsize);
 		std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
 		std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
-//		zeta = trim_zeta(zeta, zsize);
 		write_zeta(zeta);
 	}
 
@@ -73,19 +73,19 @@ struct Autoreg_model {
 
 private:
 
-	T size_factor() const { return T(zsize2[0]) / T(zsize[0]); }
+	T size_factor() const {
+		return T(blitz::product(zsize2)) / T(blitz::product(zsize));
+	}
 
 	/// Read AR model parameters from an input stream.
 	void
 	read_parameters(std::istream& in) {
 		std::string name;
-		T size_factor = 1.2;
 		while (std::getline(in, name, '=')) {
 			if (name.size() > 0 && name[0] == '#') in.ignore(1024*1024, '\n');
 			else if (name == "zsize"       ) in >> zsize;
 			else if (name == "zdelta"      ) in >> zdelta;
 			else if (name == "acf_size"    ) in >> acf_size;
-			else if (name == "size_factor" ) in >> size_factor;
 			else {
 				in.ignore(1024*1024, '\n');
 				std::stringstream str;
@@ -94,16 +94,9 @@ private:
 			}
 			in >> std::ws;
 		}
-
-		if (size_factor < T(1)) {
-			std::stringstream str;
-			str << "Invalid size factor: " << size_factor;
-			throw std::runtime_error(str.str().c_str());
-		}
-
-		zsize2 = size3(zsize*size_factor);
 //		acf_delta = zdelta;
 		fsize = acf_size;
+		zsize2 = zsize + fsize;
 	}
 
 	/// Check for common input/logical errors and numerical implementation constraints.
