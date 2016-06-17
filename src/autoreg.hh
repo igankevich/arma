@@ -59,9 +59,9 @@ namespace autoreg {
 	ACF<T>
 	propagating_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
 		/// values from Mathematica
-//		T alpha = 0.177652;
-//		T beta = -0.105817;
-//		T gamm = 0.109203;
+		T alpha = 0.177652;
+		T beta = -0.105817;
+		T gamm = 0.109203*10;
 		/// values from Mathematica
 //		T alpha = 1.32802;
 //		T beta = 0.340238;
@@ -73,30 +73,17 @@ namespace autoreg {
 //		T gamm = 1.98831;
 
 		/// from Mathematica
-		T alpha = 0.163215;
-		T beta = -0.0659017;
-		T gamm = 0.0222666 * 100;
+//		T alpha = 0.163215;
+//		T beta = 0.0659017 / 16;
+//		T gamm = 2;
 
 		ACF<T> acf(acf_size);
 		blitz::firstIndex t;
 		blitz::secondIndex x;
 		blitz::thirdIndex y;
-		/*
 		acf = gamm
-			* blitz::exp(-alpha*(
-				t*delta[0]
-				+ x*delta[1]
-				+ y*delta[2]
-			))
-	 		* blitz::cos(beta*(
-				 t*delta[0]
-				 + x*delta[1]
-				 + y*delta[2]
-			));
-		*/
-		acf = gamm
-			* blitz::exp(-alpha * (t*delta[0] + x*delta[1] + y*delta[2]))
-			* blitz::cos(beta * (t*delta[0] + x*delta[1] + y*delta[2]))
+			* blitz::exp(-alpha * (t*delta[0] + 4*x*delta[1] + y*delta[2]))
+			* blitz::cos(beta * (t*delta[0] + 0*x*delta[1] + y*delta[2]))
 			;
 		return acf;
 	}
@@ -184,7 +171,6 @@ namespace autoreg {
 
 	template<class T>
 	T white_noise_variance(const AR_coefs<T>& ar_coefs, const ACF<T>& acf) {
-//		return 1e-5;
 		return acf(0,0,0) - blitz::sum(ar_coefs * acf);
 	}
 
