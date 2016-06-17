@@ -158,7 +158,29 @@ namespace autoreg {
 	}
 
 	template<class T>
+	ACF<T>
+	propagating_wave_ACF_3(const Vec3<T>& delta, const size3& acf_size) {
+
+		/// from Mathematica
+		T alpha = 0.21;
+		T beta = -1.775;
+		T gamm = 1.8;
+
+		ACF<T> acf(acf_size);
+		blitz::firstIndex i;
+		blitz::secondIndex j;
+		blitz::thirdIndex k;
+
+		acf = gamm
+			* blitz::exp(-alpha * (4*i*delta[0] + j*delta[1] + k*delta[2]))
+			* blitz::cos(beta * (i*delta[0] + j*delta[1] + k*delta[2]))
+			;
+		return acf;
+	}
+
+	template<class T>
 	T white_noise_variance(const AR_coefs<T>& ar_coefs, const ACF<T>& acf) {
+//		return 1e-5;
 		return acf(0,0,0) - blitz::sum(ar_coefs * acf);
 	}
 
@@ -192,6 +214,10 @@ namespace autoreg {
 		return AR_coefs<T>(blitz::where(blitz::abs(phi) > T(1), blitz::abs(phi)/phi, phi));
 	}
 
+	int adhoc_t(int i, size3 s) { return ((i/s[2])/s[1])%s[0]; }
+	int adhoc_x(int i, size3 s) { return (i/s[2])%s[1]; }
+	int adhoc_y(int i, size3 s) { return i%s[2]; }
+
 	template<class T>
 	AR_coefs<T>
 	compute_AR_coefs(const ACF<T>& acf) {
@@ -214,6 +240,25 @@ namespace autoreg {
 		Array2D<T> lhs(blitz::shape(m,m));
 		lhs = acm(Range(1, toEnd), Range(1, toEnd));
 		//{ std::ofstream out("lhs"); out << lhs; }
+
+		// alternative Yule-Walker matrix constructor
+//		Array2D<T> lhs(blitz::shape(m, m));
+//		Array1D<T> rhs(m);
+//		size3 s = acf.shape();
+//		for (int i=0; i<m; i++) {
+//			for (int j=0; j<m; j++) {
+//				lhs(i,j) = acf(
+//					std::abs(adhoc_t(i+1, s) - adhoc_t(j+1, s)),
+//				    std::abs(adhoc_x(i+1, s) - adhoc_x(j+1, s)),
+//				    std::abs(adhoc_y(i+1, s) - adhoc_y(j+1, s))
+//				);
+//			}
+//			rhs(i) = acf(
+//				adhoc_t(i+1, s),
+//				adhoc_x(i+1, s),
+//				adhoc_y(i+1, s)
+//			);
+//		}
 
 		assert(lhs.extent(0) == m);
 		assert(lhs.extent(1) == m);
@@ -308,12 +353,13 @@ namespace autoreg {
 
 	template<class T, int N>
 	T mean(const blitz::Array<T,N>& rhs) {
+		assert(rhs.numElements() > 0);
 		return blitz::sum(rhs) / rhs.numElements();
 	}
 
 	template<class T, int N>
 	T variance(const blitz::Array<T,N>& rhs) {
-		assert(rhs.numElements() > 0);
+		assert(rhs.numElements() > 1);
 		const T m = mean(rhs);
 		return blitz::sum(blitz::pow(rhs-m, 2)) / (rhs.numElements() - 1);
 	}
