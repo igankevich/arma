@@ -41,19 +41,19 @@ $(VISUAL): Makefile *.hh $(VISUAL_SOURCES)
 $(DCMT): Makefile *.hh $(DCMT_SOURCES)
 	$(CXX) $(CXXFLAGS) $(DCMT_SOURCES) $(DCMT_LDFLAGS) -o $(DCMT)
 
-run: ../tests ../tests/autoreg.model
+run: ../build ../build/autoreg.model
 run: $(BINARY)
-	(cd ../tests; $(PWD)/$(BINARY))
+	(cd ../build; $(PWD)/$(BINARY))
 
-debug: ../tests ../tests/autoreg.model
+debug: ../build ../build/autoreg.model
 debug: $(BINARY)
-	(cd ../tests; gdb $(PWD)/$(BINARY))
+	(cd ../build; gdb $(PWD)/$(BINARY))
 
-../tests:
-	mkdir -p ../tests
+../build:
+	mkdir -p ../build
 
-../tests/autoreg.model: autoreg.model
-	cp autoreg.model ../tests
+../build/autoreg.model: autoreg.model
+	cp autoreg.model ../build
 
 clean:
 	rm -f $(BINARY) $(VISUAL) $(DCMT)

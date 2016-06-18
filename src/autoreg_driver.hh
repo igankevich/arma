@@ -33,9 +33,9 @@ struct Autoreg_model {
 	zdelta(1, 1, 1),
 	acf_size(10, 10, 10),
 	acf_delta(
-		T(1),
-		T(1),
-		T(1)
+		T(0.5/2),
+		T(0.5),
+		T(0.5)
 //		T(2)*M_PI/acf_size(1),
 //		T(2)*M_PI/acf_size(2)
 	),
@@ -45,7 +45,7 @@ struct Autoreg_model {
 
 	void act() {
 		echo_parameters();
-		ACF<T> acf_model = propagating_wave_ACF<T>(acf_delta, acf_size);
+		ACF<T> acf_model = standing_wave_ACF<T>(acf_delta, acf_size);
 		{ std::ofstream out("acf"); out << acf_model; }
 		AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
 		T var_wn = white_noise_variance(ar_coefs, acf_model);
@@ -59,6 +59,7 @@ struct Autoreg_model {
 		std::clog << "mean(zeta) = " << mean(zeta2) << std::endl;
 		std::clog << "variance(zeta) = " << variance(zeta2) << std::endl;
 		write_zeta(zeta2);
+		{ std::ofstream out("zdelta"); out << acf_delta; }
 	}
 
 	/// Read AR model parameters from an input stream, generate default ACF and

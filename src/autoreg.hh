@@ -35,7 +35,7 @@ namespace autoreg {
 		// guessed
 		T alpha = 0.06;
 		T beta = 0.8;
-		T gamm = 1.0;
+		T gamm = 5.0;
 
 		/// from Mathematica
 //		T alpha = 0.394279;
@@ -47,10 +47,10 @@ namespace autoreg {
 		blitz::secondIndex x;
 		blitz::thirdIndex y;
 		acf = gamm
-			* blitz::exp(-alpha*(t*delta[0] + x*delta[1] + y*delta[2]))
-	 		* blitz::cos(beta * t * delta[0])
+			* blitz::exp(-alpha*(4*t*delta[0] + x*delta[1] + y*delta[2]))
+	 		* blitz::cos(2*beta * t * delta[0])
 	 		* blitz::cos(beta * x * delta[1])
-	 		* blitz::cos(beta * y * delta[2])
+	 		* blitz::cos(0*beta * y * delta[2])
 			;
 		return acf;
 	}
@@ -153,9 +153,9 @@ namespace autoreg {
 	propagating_wave_ACF_3(const Vec3<T>& delta, const size3& acf_size) {
 
 		/// from Mathematica
-		T alpha = 0.21;
-		T beta = -1.775;
-		T gamm = 1.8;
+		T alpha = 2.3;
+		T beta = 0;
+		T gamm = 5.5;
 
 		ACF<T> acf(acf_size);
 		blitz::firstIndex i;
@@ -163,7 +163,7 @@ namespace autoreg {
 		blitz::thirdIndex k;
 
 		acf = gamm
-			* blitz::exp(-alpha * (4*i*delta[0] + j*delta[1] + k*delta[2]))
+			* blitz::exp(-alpha * (i*delta[0] + 0.1*j*delta[1] + k*delta[2]))
 			* blitz::cos(beta * (i*delta[0] + j*delta[1] + k*delta[2]))
 			;
 		return acf;
@@ -212,18 +212,19 @@ namespace autoreg {
 			                         "verify AR model stationarity.");
 		}
 		/// Check if some roots do not lie outside unit circle.
-		bool stationary = true;
+		size_t num_bad_roots = 0;
 		for (size_t i = 0; i < result.size(); ++i) {
 			const double val = std::abs(result(i));
 			/// Some AR coefficients are close to nought and polynomial
 			/// solver can produce noughts due to limited numerical
 			/// precision. So we filter val=0 as well.
 			if (!(val > 1.0 || val == 0)) {
-				stationary = false;
+				++num_bad_roots;
 				std::clog << "Root #" << i << '=' << result(i) << std::endl;
 			}
 		}
-		if (!stationary) {
+		if (num_bad_roots > 0) {
+			std::clog << "No. of bad roots = " << num_bad_roots << std::endl;
 			throw std::runtime_error("AR process is not stationary: some roots lie "
 			                         "inside unit circle or on its borderline.");
 		}

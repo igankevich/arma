@@ -1,4 +1,1 @@
-size_factor=1.4
-zsize=(1000,40,40)
-zdelta=(1,1,1)
-acf_size=(10,10,10)
+zsize=(200,100,40)

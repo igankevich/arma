@@ -279,6 +279,16 @@ void read_valarray(std::istream& in) {
 	in >> func;
 }
 
+void
+read_delta() {
+	std::ifstream in("zdelta");
+	if (in.is_open()) {
+		in >> delta;
+		delta(1) = 1;
+		delta(2) = 1;
+	}
+}
+
 void parse_cmdline(int argc, char** argv) {
 	using namespace std;
 	stringstream cmdline;
@@ -301,6 +311,7 @@ void parse_cmdline(int argc, char** argv) {
 	} else {
 		read_valarray(cin);
 	}
+	read_delta();
 	if (timer >= func.extent(0)) {
 		timer = func.extent(0)-1;
 	}
