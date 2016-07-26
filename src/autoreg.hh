@@ -18,6 +18,7 @@
 #include "sysv.hh"               // for sysv
 #include "types.hh"              // for size3, ACF, AR_coefs, Zeta, Array2D
 #include "voodoo.hh"             // for generate_AC_matrix
+#include "linalg.hh"
 
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_poly.h>
