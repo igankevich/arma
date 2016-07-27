@@ -246,7 +246,7 @@ namespace autoreg {
 
 	template <class T>
 	AR_coefs<T>
-	compute_AR_coefs(const ACF<T>& acf) {
+	compute_AR_coefs(const ACF<T>& acf, const size3& ar_order) {
 		using blitz::Range;
 		using blitz::toEnd;
 		const int m = acf.numElements() - 1;

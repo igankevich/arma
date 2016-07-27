@@ -33,7 +33,7 @@ namespace autoreg {
 		Autoreg_model()
 		    : _outgrid{{768, 24, 24}},
 		      _acfgrid{{10, 10, 10}, {T(2.5), T(5), T(5)}},
-		      fsize(_acfgrid.size()) {}
+		      _arorder(_acfgrid.size()) {}
 
 		void
 		act() {
@@ -44,7 +44,7 @@ namespace autoreg {
 				std::ofstream out("acf");
 				out << acf_model;
 			}
-			AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model);
+			AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model, _arorder);
 			T var_wn = white_noise_variance(ar_coefs, acf_model);
 			std::clog << "ACF variance = " << ACF_variance(acf_model)
 			          << std::endl;
@@ -75,10 +75,10 @@ namespace autoreg {
 			sys::parameter_map params({
 			    {"out_grid", sys::make_param(_outgrid)},
 			    {"acf_grid", sys::make_param(_acfgrid)},
-			    //			    {"arcoefs_size", sys::make_param(acf_size)},
+			    {"ar_order", sys::make_param(_arorder)},
 			});
 			in >> params;
-			fsize = _acfgrid.num_points();
+			_arorder = _acfgrid.num_points();
 		}
 
 		/// Check for common input/logical errors and numerical implementation
@@ -90,12 +90,12 @@ namespace autoreg {
 			check_non_zero(_acfgrid.size(), "ACF grid size");
 			check_non_zero(_acfgrid.delta(), "ACF grid patch size");
 			int part_sz = _outgrid.num_points(0);
-			int fsize_t = fsize[0];
+			int fsize_t = _arorder[0];
 			if (fsize_t > part_sz) {
 				std::stringstream tmp;
-				tmp << "fsize[0] > zsize[0], should be 0 < fsize[0] < "
+				tmp << "_arorder[0] > zsize[0], should be 0 < _arorder[0] < "
 				       "zsize[0]\n";
-				tmp << "fsize[0]  = " << fsize_t << '\n';
+				tmp << "_arorder[0]  = " << fsize_t << '\n';
 				tmp << "zsize[0] = " << part_sz << '\n';
 				throw std::runtime_error(tmp.str());
 			}
@@ -136,17 +136,9 @@ namespace autoreg {
 			out << zeta;
 		}
 
-		/// Auto-covariate function size.
-		size3 acf_size;
-
-		/// Wavy surface grid.
-		Grid<T, 3> _outgrid;
-
-		/// Auto-covariate function grid.
-		Grid<T, 3> _acfgrid;
-
-		/// Size of the array of AR coefficients.
-		size3 fsize;
+		Grid<T, 3> _outgrid; //< Wavy surface grid.
+		Grid<T, 3> _acfgrid; //< ACF grid.
+		size3 _arorder;      //< AR model order (no. of coefficients).
 	};
 }
 
