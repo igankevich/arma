@@ -40,6 +40,7 @@ namespace sys {
 		friend std::istream& operator>>(std::istream& in, parameter_map& rhs) {
 			std::string name;
 			while (in >> std::ws && std::getline(in, name, '=')) {
+				trim_right(name);
 				/// ignore lines starting with "#"
 				if (name.size() > 0 && name[0] == '#') {
 					in.ignore(std::numeric_limits<std::streamsize>::max(),
@@ -57,6 +58,14 @@ namespace sys {
 		}
 
 	private:
+
+		static void
+		trim_right(std::string& rhs) {
+			while (!rhs.empty() && rhs.back() <= ' ') {
+				rhs.pop_back();
+			}
+		}
+
 		map_type _params;
 	};
 }
