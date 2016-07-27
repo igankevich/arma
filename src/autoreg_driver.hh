@@ -10,6 +10,7 @@
 #include "types.hh"   // for size3, Vector, Zeta, ACF, AR_coefs
 #include "autoreg.hh" // for mean, variance, ACF_variance, approx_acf, comp...
 #include "params.hh"
+#include "grid.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -30,17 +31,15 @@ namespace autoreg {
 	struct Autoreg_model {
 
 		Autoreg_model()
-		    : zsize(768, 24, 24), zdelta(1, 1, 1), acf_size(10, 10, 10),
-		      acf_delta(T(0.5 / 2), T(0.5), T(0.5)
-		                //		T(2)*M_PI/acf_size(1),
-		                //		T(2)*M_PI/acf_size(2)
-		                ),
-		      fsize(acf_size), zsize2(zsize + fsize) {}
+		    : _outgrid{{768, 24, 24}},
+		      _acfgrid{{10, 10, 10}, {T(2.5), T(5), T(5)}},
+		      fsize(_acfgrid.size()) {}
 
 		void
 		act() {
 			echo_parameters();
-			ACF<T> acf_model = standing_wave_ACF<T>(acf_delta, acf_size);
+			ACF<T> acf_model =
+			    standing_wave_ACF<T>(_acfgrid.delta(), _acfgrid.size());
 			{
 				std::ofstream out("acf");
 				out << acf_model;
@@ -50,18 +49,13 @@ namespace autoreg {
 			std::clog << "ACF variance = " << ACF_variance(acf_model)
 			          << std::endl;
 			std::clog << "WN variance = " << var_wn << std::endl;
-			Zeta<T> zeta = generate_white_noise(zsize2, var_wn);
+			Zeta<T> zeta = generate_white_noise(_outgrid.size(), var_wn);
 			std::clog << "mean(eps) = " << mean(zeta) << std::endl;
 			std::clog << "variance(eps) = " << variance(zeta) << std::endl;
 			generate_zeta(ar_coefs, zeta);
-			Zeta<T> zeta2 = trim_zeta(zeta, zsize);
-			std::clog << "mean(zeta) = " << mean(zeta2) << std::endl;
-			std::clog << "variance(zeta) = " << variance(zeta2) << std::endl;
-			write_zeta(zeta2);
-			{
-				std::ofstream out("zdelta");
-				out << acf_delta;
-			}
+			std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
+			std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
+			write_zeta(zeta);
 		}
 
 		/// Read AR model parameters from an input stream, generate default ACF
@@ -75,38 +69,27 @@ namespace autoreg {
 		}
 
 	private:
-		T
-		size_factor() const {
-			return T(blitz::product(zsize2)) / T(blitz::product(zsize));
-		}
-
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
 			sys::parameter_map params({
-			    {"zsize", sys::make_param(zsize)},
-			    {"zdelta", sys::make_param(zdelta)},
-			    {"acf_size", sys::make_param(acf_size)},
+			    {"out_grid", sys::make_param(_outgrid)},
+			    {"acf_grid", sys::make_param(_acfgrid)},
+			    //			    {"arcoefs_size", sys::make_param(acf_size)},
 			});
 			in >> params;
-			//		acf_delta = zdelta;
-			fsize = acf_size;
-			zsize2 = zsize + fsize;
+			fsize = _acfgrid.num_points();
 		}
 
 		/// Check for common input/logical errors and numerical implementation
 		/// constraints.
 		void
 		validate_parameters() {
-			check_non_zero(zsize, "zsize");
-			check_non_zero(zdelta, "zdelta");
-			check_non_zero(acf_size, "acf_size");
-			for (int i = 0; i < 3; ++i) {
-				if (zsize2[i] < zsize[i]) {
-					throw std::runtime_error("size_factor < 1, zsize2 < zsize");
-				}
-			}
-			int part_sz = zsize[0];
+			check_non_zero(_outgrid.size(), "output grid size");
+			check_non_zero(_outgrid.delta(), "output grid patch size");
+			check_non_zero(_acfgrid.size(), "ACF grid size");
+			check_non_zero(_acfgrid.delta(), "ACF grid patch size");
+			int part_sz = _outgrid.num_points(0);
 			int fsize_t = fsize[0];
 			if (fsize_t > part_sz) {
 				std::stringstream tmp;
@@ -133,17 +116,18 @@ namespace autoreg {
 		void
 		echo_parameters() {
 			std::clog << std::left;
-			write_key_value(std::clog, "acf_size:", acf_size);
-			write_key_value(std::clog, "zsize:", zsize);
-			write_key_value(std::clog, "zsize2:", zsize2);
-			write_key_value(std::clog, "zdelta:", zdelta);
-			write_key_value(std::clog, "size_factor:", size_factor());
+			write_key_value(std::clog, "ACF grid size", _acfgrid.size());
+			write_key_value(std::clog, "ACF grid patch size",
+			                _acfgrid.patch_size());
+			write_key_value(std::clog, "Output grid size", _outgrid.size());
+			write_key_value(std::clog, "Output grid patch size",
+			                _outgrid.patch_size());
 		}
 
 		template <class V>
 		std::ostream&
 		write_key_value(std::ostream& out, const char* key, V value) {
-			return out << std::setw(20) << key << value << std::endl;
+			return out << std::setw(30) << key << " = " << value << std::endl;
 		}
 
 		void
@@ -152,24 +136,17 @@ namespace autoreg {
 			out << zeta;
 		}
 
-		/// Wavy surface size.
-		size3 zsize;
-
-		/// Wavy surface grid granularity.
-		Vector<T, 3> zdelta;
-
 		/// Auto-covariate function size.
 		size3 acf_size;
 
-		/// Auto-covariate function grid granularity.
-		Vector<T, 3> acf_delta;
+		/// Wavy surface grid.
+		Grid<T, 3> _outgrid;
+
+		/// Auto-covariate function grid.
+		Grid<T, 3> _acfgrid;
 
 		/// Size of the array of AR coefficients.
 		size3 fsize;
-
-		/// Size of enlarged wavy surface. Equals to @zsize multiplied
-		/// by size_factor read from input file.
-		size3 zsize2;
 	};
 }
 
