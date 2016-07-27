@@ -14,6 +14,7 @@ endif
 
 cpp = meson.get_compiler('cpp')
 libGL = cpp.find_library('GL')
+libdcmt = cpp.find_library('dcmt')
 libblitz = dependency('blitz')
 libgsl = dependency('gsl')
 libglut = dependency('freeglut')
