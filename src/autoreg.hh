@@ -257,12 +257,14 @@ namespace autoreg {
 
 		using blitz::Range;
 		using blitz::toEnd;
-		const int m = blitz::product(ar_order) - 1;
-		Array2D<T> acm = generate_AC_matrix(acf);
+		AC_matrix_generator<T> generator(acf, ar_order);
+		Array2D<T> acm = generator();
 		{
 			std::ofstream out("acm");
 			out << acm;
 		}
+//		const int m = acf.numElements() - 1;
+		const int m = acm.rows() - 1;
 
 		/**
 		eliminate the first equation and move the first column of the remaining
@@ -302,7 +304,7 @@ namespace autoreg {
 		assert(rhs.extent(0) == m);
 		linalg::cholesky(lhs, rhs);
 		//		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
-		AR_coefs<T> phi(acf.shape());
+		AR_coefs<T> phi(ar_order);
 		assert(phi.numElements() == rhs.numElements() + 1);
 		phi(0, 0, 0) = 0;
 		std::copy_n(rhs.data(), rhs.numElements(), phi.data() + 1);
@@ -310,7 +312,7 @@ namespace autoreg {
 			std::ofstream out("ar_coefs");
 			out << phi;
 		}
-		check_stationarity(phi);
+//		check_stationarity(phi);
 		return phi;
 	}
 

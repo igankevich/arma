@@ -78,7 +78,6 @@ namespace autoreg {
 			    {"ar_order", sys::make_param(_arorder)},
 			});
 			in >> params;
-			_arorder = _acfgrid.num_points();
 		}
 
 		/// Check for common input/logical errors and numerical implementation
@@ -123,6 +122,7 @@ namespace autoreg {
 			write_key_value(std::clog, "Output grid size", _outgrid.size());
 			write_key_value(std::clog, "Output grid patch size",
 			                _outgrid.patch_size());
+			write_key_value(std::clog, "AR order", _arorder);
 		}
 
 		template <class V>
