@@ -2,11 +2,13 @@
 
 #include "autoreg_driver.hh"
 
-int main() {
+int
+main() {
 
 	using namespace autoreg;
 
-	/// floating point type (float, double, long double or multiprecision number C++ class)
+	/// floating point type (float, double, long double or multiprecision number
+	/// C++ class)
 	typedef float Real;
 
 	/// input file with various model parameters

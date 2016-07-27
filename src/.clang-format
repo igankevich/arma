@@ -5,3 +5,12 @@ AlwaysBreakAfterDefinitionReturnType: All
 BinPackArguments: true
 BinPackParameters: true
 PointerAlignment: Left
+AlwaysBreakTemplateDeclarations: true
+IndentCaseLabels: true
+NamespaceIndentation: All
+Language: Cpp
+Cpp11BracedListStyle: true
+AccessModifierOffset: -4
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+AllowShortBlocksOnASingleLine: true
