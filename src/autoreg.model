@@ -10,3 +10,6 @@ out_grid = (200,20,20)
 
 # Grid for ACF function approximations. The format is the same as for out_grid.
 acf_grid = (10,10,10) : (2.5,5,5)
+
+# AR order
+ar_order = (2,2,2)
