@@ -47,7 +47,7 @@ cholesky(Matrix<T>& A, Vector<T>& b) {
 	for (int i = 0; i < n; ++i) {
 		T sum = 0;
 		for (int j = 0; j < i; ++j) {
-			sum += A(i, j) * b[j];
+			sum += A(i, j) * b(j);
 		}
 		b(i) = (b(i) - sum) / A(i, i);
 	}
@@ -55,7 +55,7 @@ cholesky(Matrix<T>& A, Vector<T>& b) {
 	for (int i = n - 1; i >= 0; i--) {
 		T sum = 0;
 		for (int j = i + 1; j < n; ++j) {
-			sum += A(j, i) * b[j];
+			sum += A(j, i) * b(j);
 		}
 		b(i) = (b(i) - sum) / A(i, i);
 	}

@@ -3,7 +3,4 @@ tags
 GPATH
 GRTAGS
 GTAGS
-src/autoreg
-src/dcmt
-src/visual
 src/dcmt0.6.2

@@ -15,7 +15,6 @@
 
 #include <blitz/array.h>         // for Array, Range, shape, any
 
-#include "sysv.hh"               // for sysv
 #include "types.hh"              // for size3, ACF, AR_coefs, Zeta, Array2D
 #include "voodoo.hh"             // for generate_AC_matrix
 #include "linalg.hh"
@@ -48,7 +47,7 @@ namespace autoreg {
 		blitz::secondIndex x;
 		blitz::thirdIndex y;
 		acf = gamm
-			* blitz::exp(-alpha*(4*t*delta[0] + x*delta[1] + y*delta[2]))
+			* blitz::exp(-alpha*(2*t*delta[0] + x*delta[1] + y*delta[2]))
 	 		* blitz::cos(2*beta * t * delta[0])
 	 		* blitz::cos(beta * x * delta[1])
 	 		* blitz::cos(0*beta * y * delta[2])
@@ -280,7 +279,8 @@ namespace autoreg {
 		assert(lhs.extent(0) == m);
 		assert(lhs.extent(1) == m);
 		assert(rhs.extent(0) == m);
-		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
+		linalg::cholesky(lhs, rhs);
+//		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
 		AR_coefs<T> phi(acf.shape());
 		assert(phi.numElements() == rhs.numElements() + 1);
 		phi(0,0,0) = 0;
