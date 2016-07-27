@@ -26,6 +26,7 @@
 /// File with subroutines for AR model, Yule-Walker equations
 /// and some others.
 
+/// Domain-specific classes and functions.
 namespace autoreg {
 
 	template<class T>
