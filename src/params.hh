@@ -29,6 +29,23 @@ namespace sys {
 		return parameter<T>(val);
 	}
 
+	namespace bits {
+
+		/// ignore lines starting with "#"
+		std::istream&
+		comment(std::istream& in) {
+			char ch = 0;
+			while (in >> std::ws >> ch && ch == '#') {
+				in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				ch = 0;
+			}
+			if (ch != 0) {
+				in.putback(ch);
+			}
+			return in;
+		}
+	}
+
 	struct parameter_map {
 
 		typedef std::function<std::istream&(std::istream&, const char*)>
@@ -39,13 +56,8 @@ namespace sys {
 
 		friend std::istream& operator>>(std::istream& in, parameter_map& rhs) {
 			std::string name;
-			while (in >> std::ws && std::getline(in, name, '=')) {
+			while (in >> bits::comment && std::getline(in, name, '=')) {
 				trim_right(name);
-				/// ignore lines starting with "#"
-				if (name.size() > 0 && name[0] == '#') {
-					in.ignore(std::numeric_limits<std::streamsize>::max(),
-					          '\n');
-				}
 				auto result = rhs._params.find(name);
 				if (result == rhs._params.end()) {
 					std::clog << "Unknown parameter: " << name << std::endl;
@@ -58,12 +70,9 @@ namespace sys {
 		}
 
 	private:
-
 		static void
 		trim_right(std::string& rhs) {
-			while (!rhs.empty() && rhs.back() <= ' ') {
-				rhs.pop_back();
-			}
+			while (!rhs.empty() && rhs.back() <= ' ') { rhs.pop_back(); }
 		}
 
 		map_type _params;

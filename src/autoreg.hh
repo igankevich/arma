@@ -247,9 +247,17 @@ namespace autoreg {
 	template <class T>
 	AR_coefs<T>
 	compute_AR_coefs(const ACF<T>& acf, const size3& ar_order) {
+		if (ar_order(0) > acf.extent(0) || ar_order(1) > acf.extent(1) ||
+		    ar_order(2) > acf.extent(2)) {
+			std::stringstream msg;
+			msg << "AR order is larger than ACF size:\n\tAR order = "
+			    << ar_order << "\n\tACF size = " << acf.shape();
+			throw std::runtime_error(msg.str());
+		}
+
 		using blitz::Range;
 		using blitz::toEnd;
-		const int m = acf.numElements() - 1;
+		const int m = blitz::product(ar_order) - 1;
 		Array2D<T> acm = generate_AC_matrix(acf);
 		{
 			std::ofstream out("acm");

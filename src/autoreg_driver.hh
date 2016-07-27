@@ -89,6 +89,7 @@ namespace autoreg {
 			check_non_zero(_outgrid.delta(), "output grid patch size");
 			check_non_zero(_acfgrid.size(), "ACF grid size");
 			check_non_zero(_acfgrid.delta(), "ACF grid patch size");
+			check_non_zero(_arorder, "AR order");
 			int part_sz = _outgrid.num_points(0);
 			int fsize_t = _arorder[0];
 			if (fsize_t > part_sz) {
@@ -103,10 +104,10 @@ namespace autoreg {
 
 		/// Check that all components of vector @sz are non-zero,
 		/// i.e. it is valid size specification.
-		template <class V>
+		template <class V, int N>
 		void
-		check_non_zero(const Vector<V, 3>& sz, const char* var_name) {
-			if (blitz::product(sz) == 0) {
+		check_non_zero(const Vector<V, N>& sz, const char* var_name) {
+			if (blitz::product(sz) == V(0)) {
 				std::stringstream str;
 				str << "Invalid " << var_name << ": " << sz;
 				throw std::runtime_error(str.str().c_str());
