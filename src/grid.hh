@@ -1,13 +1,25 @@
 #ifndef GRID_HH
 #define GRID_HH
 
-#include <iomanip>
-#include <istream>
-#include <ostream>
-#include <blitz/array.h>
+#include <stddef.h>      // for size_t
+#include <istream>       // for istream, ostream, basic_istream::putback
+#include <blitz/array.h> // for TinyVector
 
 namespace autoreg {
 
+	/**
+	\brief
+	Grid is defined by the number of points and the length along each
+	dimension.
+
+	\detail
+	The number of points equals the number of patches plus 1. If length is
+	omitted then it is automatically set to make patch length equal to 1.
+	For example, the following grid has 4 points and 3 patches.
+	\verbatim
+	    o----o----o----o
+	\endverbatim
+	*/
 	template <class T, size_t N>
 	struct Grid {
 
@@ -38,33 +50,33 @@ namespace autoreg {
 		}
 
 		int
-		num_segments(int i) const {
+		num_patches(int i) const {
 			return _npoints(i) - 1;
 		}
 
 		size_type
-		num_segments() const {
+		num_patches() const {
 			return _npoints - 1;
 		}
 
 		T
 		patch_size(int i) const {
-			return _length(i) / num_segments(i);
+			return _length(i) / num_patches(i);
 		}
 
 		length_type
 		patch_size() const {
-			return _length / num_segments();
+			return _length / num_patches();
 		}
 
 		T
 		delta(int i) const {
-			return _length(i) / num_segments(i);
+			return _length(i) / num_patches(i);
 		}
 
 		length_type
 		delta() const {
-			return _length / num_segments();
+			return _length / num_patches();
 		}
 
 		T

@@ -12,6 +12,8 @@ if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')
 endif
 
+run_target('doc', 'scripts/generate-docs')
+
 cpp = meson.get_compiler('cpp')
 libdcmt = cpp.find_library('dcmt')
 libblitz = dependency('blitz')
