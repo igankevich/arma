@@ -18,7 +18,7 @@ namespace autoreg {
 	Grid is defined by the number of points and the length along each
 	dimension.
 
-	\detail
+	\details
 	The number of points equals the number of patches plus 1. If the length is
 	omitted then it is automatically set to make patch length equal to 1.
 	For example, the following grid has 4 points and 3 patches.

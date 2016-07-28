@@ -6,9 +6,22 @@
 #include <blitz/array.h> // for Array, Range, shape, any
 #include "types.hh"      // for Array2D, ACF
 
+/**
+\file
+\author Ivan Gankevich
+\date 2016-07-26
+\brief Non-optimised parts of the implementation.
+\details There exist more efficient ways to compute autoregressive model
+coefficients that take into account autocovariance matrix structure, but they
+seem complex and not wide-spread. So, we settled on "keep it simple" approach.
+*/
+
 namespace autoreg {
 
-	/// Least squares.
+	/**
+	\brief Autocovariate matrix generator which uses least squares
+	approximations to reduce size of autocovariate function grid.
+	*/
 	template <class T>
 	struct AC_matrix_generator_LS {
 
@@ -159,7 +172,10 @@ namespace autoreg {
 		const size3& _arorder;
 	};
 
-	/// Slicing
+	/**
+	\brief Autocovariate matrix generator that reduces the size of ACF to match
+	AR model order.
+	*/
 	template <class T>
 	struct AC_matrix_generator {
 
