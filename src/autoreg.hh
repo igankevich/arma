@@ -7,7 +7,7 @@
 #include <cmath>      // for isnan
 #include <cstdlib>    // for abs
 #include <functional> // for bind
-#include <iostream>   // for operator<<, cerr, endl
+#include <iostream>   // for operator<<, endl
 #include <fstream>    // for ofstream
 #include <random>     // for mt19937, normal_distribution
 #include <stdexcept>  // for runtime_error
@@ -213,12 +213,9 @@ namespace autoreg {
 		                                 (gsl_complex_packed_ptr)result.data());
 		gsl_poly_complex_workspace_free(w);
 		if (ret != GSL_SUCCESS) {
-			std::stringstream msg;
-			msg << "Can not find roots of the polynomial to "
-			       "verify AR model stationarity."
-			       "\nGSL error: "
-			    << gsl_strerror(ret) << '.';
-			throw std::runtime_error(msg.str());
+			std::clog << "GSL error: " << gsl_strerror(ret) << '.';
+			throw std::runtime_error("Can not find roots of the polynomial to "
+			                         "verify AR model stationarity.");
 		}
 		/// Check if some roots do not lie outside unit circle.
 		size_t num_bad_roots = 0;
@@ -240,19 +237,6 @@ namespace autoreg {
 		}
 	}
 
-	int
-	adhoc_t(int i, size3 s) {
-		return ((i / s[2]) / s[1]) % s[0];
-	}
-	int
-	adhoc_x(int i, size3 s) {
-		return (i / s[2]) % s[1];
-	}
-	int
-	adhoc_y(int i, size3 s) {
-		return i % s[2];
-	}
-
 	template <class T>
 	AR_coefs<T>
 	compute_AR_coefs(const ACF<T>& acf, const size3& ar_order,
@@ -260,10 +244,11 @@ namespace autoreg {
 
 		if (ar_order(0) > acf.extent(0) || ar_order(1) > acf.extent(1) ||
 		    ar_order(2) > acf.extent(2)) {
-			std::stringstream msg;
-			msg << "AR order is larger than ACF size:\n\tAR order = "
-			    << ar_order << "\n\tACF size = " << acf.shape();
-			throw std::runtime_error(msg.str());
+			std::clog << "AR model order is larger than ACF size:\n\tAR model "
+			             "order = "
+			          << ar_order << "\n\tACF size = " << acf.shape()
+			          << std::endl;
+			throw std::runtime_error("bad AR model order");
 		}
 
 		using blitz::Range;
@@ -282,7 +267,6 @@ namespace autoreg {
 			std::ofstream out("acm");
 			out << acm;
 		}
-		//		const int m = acf.numElements() - 1;
 		const int m = acm.rows() - 1;
 
 		/**
@@ -299,33 +283,12 @@ namespace autoreg {
 		lhs = acm(Range(1, toEnd), Range(1, toEnd));
 		//{ std::ofstream out("lhs"); out << lhs; }
 
-		// alternative Yule-Walker matrix constructor
-		//		Array2D<T> lhs(blitz::shape(m, m));
-		//		Array1D<T> rhs(m);
-		//		size3 s = acf.shape();
-		//		for (int i=0; i<m; i++) {
-		//			for (int j=0; j<m; j++) {
-		//				lhs(i,j) = acf(
-		//					std::abs(adhoc_t(i+1, s) - adhoc_t(j+1, s)),
-		//				    std::abs(adhoc_x(i+1, s) - adhoc_x(j+1, s)),
-		//				    std::abs(adhoc_y(i+1, s) - adhoc_y(j+1, s))
-		//				);
-		//			}
-		//			rhs(i) = acf(
-		//				adhoc_t(i+1, s),
-		//				adhoc_x(i+1, s),
-		//				adhoc_y(i+1, s)
-		//			);
-		//		}
-
 		assert(lhs.extent(0) == m);
 		assert(lhs.extent(1) == m);
 		assert(rhs.extent(0) == m);
 		assert(linalg::is_symmetric(lhs));
 		assert(linalg::is_positive_definite(lhs));
-		//		assert(linalg::is_toeplitz(lhs));
 		linalg::cholesky(lhs, rhs);
-		//		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
 		AR_coefs<T> phi(ar_order);
 		assert(phi.numElements() == rhs.numElements() + 1);
 		phi(0, 0, 0) = 0;
@@ -411,17 +374,17 @@ namespace autoreg {
 
 	template <class T, int N>
 	T
-	mean(const blitz::Array<T, N>& rhs) {
+	mean(blitz::Array<T, N> rhs) {
 		assert(rhs.numElements() > 0);
 		return blitz::sum(rhs) / rhs.numElements();
 	}
 
 	template <class T, int N>
 	T
-	variance(const blitz::Array<T, N>& rhs) {
+	variance(blitz::Array<T, N> rhs) {
 		assert(rhs.numElements() > 1);
 		const T m = mean(rhs);
-		return blitz::sum(blitz::pow(rhs - m, 2)) / (rhs.numElements() - 1);
+		return blitz::sum(blitz::pow2(rhs - m)) / (rhs.numElements() - 1);
 	}
 }
 
