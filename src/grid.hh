@@ -5,6 +5,12 @@
 #include <istream>       // for istream, ostream, basic_istream::putback
 #include <blitz/array.h> // for TinyVector
 
+/**
+\file
+\author Ivan Gankevich
+\date 2016-07-28
+*/
+
 namespace autoreg {
 
 	/**
@@ -13,12 +19,19 @@ namespace autoreg {
 	dimension.
 
 	\detail
-	The number of points equals the number of patches plus 1. If length is
+	The number of points equals the number of patches plus 1. If the length is
 	omitted then it is automatically set to make patch length equal to 1.
 	For example, the following grid has 4 points and 3 patches.
-	\verbatim
-	    o----o----o----o
-	\endverbatim
+	\dot
+	    graph {
+	        graph [rankdir="LR"];
+	        node [label="",shape="circle",width=0.23];
+	        a--b--c--d;
+	    }
+	\enddot
+
+	\tparam T length type.
+	\tparam N no. of dimensions.
 	*/
 	template <class T, size_t N>
 	struct Grid {
