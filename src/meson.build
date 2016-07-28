@@ -3,8 +3,11 @@ executable(
 	sources: 'autoreg.cc',
 	dependencies: [
 		libblitz,
-		libgsl
-	]
+		libgsl,
+		libblas,
+		liblapack
+	],
+	link_args: '-llapacke'
 )
 
 executable(
@@ -23,4 +26,18 @@ executable(
 		libglut,
 		libGL
 	]
+)
+
+test(
+	'cholesky decomposition',
+	executable(
+		'cholesky-test',
+		sources: 'cholesky-test.cc',
+		dependencies: [
+			libblitz,
+			libblas,
+			liblapack
+		],
+		link_args: '-llapacke'
+	)
 )

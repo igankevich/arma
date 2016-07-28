@@ -13,10 +13,12 @@ if get_option('buildtype') == 'release'
 endif
 
 cpp = meson.get_compiler('cpp')
-libGL = cpp.find_library('GL')
 libdcmt = cpp.find_library('dcmt')
 libblitz = dependency('blitz')
 libgsl = dependency('gsl')
+liblapack = cpp.find_library('lapack')
+libblas = cpp.find_library('blas')
+libGL = cpp.find_library('GL')
 libglut = dependency('freeglut')
 
 subdir('src')

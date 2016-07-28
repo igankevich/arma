@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <blitz/array.h>
+#include <lapacke/lapacke.h>
 
 /**
 \file
@@ -29,33 +30,37 @@ namespace linalg {
 	cholesky(Matrix<T>& A, Vector<T>& b) {
 		assert(A.extent(0) == A.extent(1));
 		assert(A.extent(0) == b.extent(0));
-		Matrix<T> L(A.shape());
-		L = 0;
-		const int n = b.numElements();
-		// A=L*T (T --- transposed L)
-		for (int i = 0; i < n; ++i) {
-			T sum = 0;
-			for (int k = 0; k < i; ++k) { sum += L(i, k) * L(i, k); }
-			L(i, i) = std::sqrt(std::abs(A(i, i) - sum));
-			for (int j = 0; j < i; ++j) {
-				sum = 0;
-				for (int k = 0; k < j; ++k) { sum += L(i, k) * L(j, k); }
-				L(i, j) = (A(i, j) - sum) / L(j, j);
-			}
-		}
-		std::clog << "Cholesky = " << A << std::endl;
-		// L*y=b
-		for (int i = 0; i < n; ++i) {
-			T sum = 0;
-			for (int j = 0; j < i; ++j) { sum += L(i, j) * b(j); }
-			b(i) = (b(i) - sum) / L(i, i);
-		}
-		// T*x=y
-		for (int i = n - 1; i >= 0; --i) {
-			T sum = 0;
-			for (int j = i + 1; j < n; ++j) { sum += L(j, i) * b(j); }
-			b(i) = (b(i) - sum) / L(i, i);
-		}
+		Vector<lapack_int> ipiv(A.rows());
+		LAPACKE_ssysv(LAPACK_ROW_MAJOR, 'U', A.rows(),
+                          1, A.data(), A.cols(),
+                          ipiv.data(), b.data(), 1);
+//		Matrix<T> L(A.shape());
+//		L = 0;
+//		const int n = b.numElements();
+//		// A=L*T (T --- transposed L)
+//		for (int i = 0; i < n; ++i) {
+//			T sum = 0;
+//			for (int k = 0; k < i; ++k) { sum += L(i, k) * L(i, k); }
+//			L(i, i) = std::sqrt(A(i, i) - sum);
+//			for (int j = 0; j < i; ++j) {
+//				sum = 0;
+//				for (int k = 0; k < j; ++k) { sum += L(i, k) * L(j, k); }
+//				L(i, j) = (A(i, j) - sum) / L(j, j);
+//			}
+//		}
+//		std::clog << "Cholesky = " << L << std::endl;
+//		// L*y=b
+//		for (int i = 0; i < n; ++i) {
+//			T sum = 0;
+//			for (int j = 0; j < i; ++j) { sum += L(i, j) * b(j); }
+//			b(i) = (b(i) - sum) / L(i, i);
+//		}
+//		// T*x=y
+//		for (int i = n - 1; i >= 0; --i) {
+//			T sum = 0;
+//			for (int j = i + 1; j < n; ++j) { sum += L(j, i) * b(j); }
+//			b(i) = (b(i) - sum) / L(i, i);
+//		}
 	}
 
 	/**
