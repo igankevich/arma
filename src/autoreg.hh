@@ -302,6 +302,8 @@ namespace autoreg {
 		assert(lhs.extent(0) == m);
 		assert(lhs.extent(1) == m);
 		assert(rhs.extent(0) == m);
+		assert(linalg::is_symmetric(lhs));
+		assert(linalg::is_positive_definite(lhs));
 		linalg::cholesky(lhs, rhs);
 		//		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
 		AR_coefs<T> phi(ar_order);
