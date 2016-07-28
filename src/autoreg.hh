@@ -172,7 +172,12 @@ namespace autoreg {
 	template <class T>
 	T
 	white_noise_variance(const AR_coefs<T>& ar_coefs, const ACF<T>& acf) {
-		return acf(0, 0, 0) - blitz::sum(ar_coefs * acf);
+		using blitz::Range;
+		const Range ar_range_1(0, ar_coefs.extent(0) - 1);
+		const Range ar_range_2(0, ar_coefs.extent(1) - 1);
+		const Range ar_range_3(0, ar_coefs.extent(2) - 1);
+		return acf(0, 0, 0) -
+		       blitz::sum(ar_coefs * acf(ar_range_1, ar_range_2, ar_range_3));
 	}
 
 	template <class T>
@@ -246,7 +251,9 @@ namespace autoreg {
 
 	template <class T>
 	AR_coefs<T>
-	compute_AR_coefs(const ACF<T>& acf, const size3& ar_order) {
+	compute_AR_coefs(const ACF<T>& acf, const size3& ar_order,
+	                 bool do_least_squares) {
+
 		if (ar_order(0) > acf.extent(0) || ar_order(1) > acf.extent(1) ||
 		    ar_order(2) > acf.extent(2)) {
 			std::stringstream msg;
@@ -257,13 +264,21 @@ namespace autoreg {
 
 		using blitz::Range;
 		using blitz::toEnd;
-		AC_matrix_generator<T> generator(acf, ar_order);
+		// normalise ACF to prevent big numbers when multiplying matrices
+		ACF<T> acf_norm(acf.shape());
+		acf_norm = acf / acf(0, 0, 0);
+		std::function<Array2D<T>()> generator;
+		if (do_least_squares) {
+			generator = AC_matrix_generator_LS<T>(acf_norm, ar_order);
+		} else {
+			generator = AC_matrix_generator<T>(acf_norm, ar_order);
+		}
 		Array2D<T> acm = generator();
 		{
 			std::ofstream out("acm");
 			out << acm;
 		}
-//		const int m = acf.numElements() - 1;
+		//		const int m = acf.numElements() - 1;
 		const int m = acm.rows() - 1;
 
 		/**
@@ -304,6 +319,7 @@ namespace autoreg {
 		assert(rhs.extent(0) == m);
 		assert(linalg::is_symmetric(lhs));
 		assert(linalg::is_positive_definite(lhs));
+		//		assert(linalg::is_toeplitz(lhs));
 		linalg::cholesky(lhs, rhs);
 		//		sgesv<T>(m, 1, lhs.data(), m, rhs.data(), m);
 		AR_coefs<T> phi(ar_order);
@@ -314,7 +330,7 @@ namespace autoreg {
 			std::ofstream out("ar_coefs");
 			out << phi;
 		}
-//		check_stationarity(phi);
+		check_stationarity(phi);
 		return phi;
 	}
 

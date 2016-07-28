@@ -39,9 +39,7 @@ namespace sys {
 				in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 				ch = 0;
 			}
-			if (ch != 0) {
-				in.putback(ch);
-			}
+			if (ch != 0) { in.putback(ch); }
 			return in;
 		}
 	}

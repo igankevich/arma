@@ -67,6 +67,20 @@ namespace linalg {
 		return true;
 	}
 
+	template <class T>
+	bool
+	is_toeplitz(Matrix<T>& rhs) {
+		const int nrows = rhs.rows();
+		const int ncols = rhs.cols();
+		// check if rhs(i,j) == rhs(i-1,j-1)
+		for (int i = 1; i < nrows; ++i) {
+			for (int j = 1; j < ncols; ++j) {
+				if (rhs(i, j) != rhs(i - 1, j - 1)) { return false; }
+			}
+		}
+		return true;
+	}
+
 	/**
 	\brief Make matrix square via least squares.
 

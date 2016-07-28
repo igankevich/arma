@@ -18,9 +18,8 @@ namespace autoreg {
 		Grid(const Grid&) = default;
 		Grid(const size_type& npts, const length_type& len)
 		    : _npoints(npts), _length(len) {}
-		explicit
-		Grid(const size_type& npts)
-		    : _npoints(npts), _length(npts-1) {}
+		explicit Grid(const size_type& npts)
+		    : _npoints(npts), _length(npts - 1) {}
 		~Grid() = default;
 
 		int
@@ -89,7 +88,7 @@ namespace autoreg {
 					in >> rhs._length;
 				} else {
 					in.putback(delim);
-					rhs._length = rhs._npoints-1;
+					rhs._length = rhs._npoints - 1;
 				}
 			}
 			return in;

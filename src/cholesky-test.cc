@@ -6,13 +6,13 @@
 
 #include "linalg.hh"
 
-template<class T>
+template <class T>
 bool
 approximately_equals(T lhs, T rhs, T eps) {
-	return std::abs(lhs-rhs) < eps;
+	return std::abs(lhs - rhs) < eps;
 }
 
-template<class T>
+template <class T>
 void
 test_indentity() {
 	int n = 10;
@@ -24,18 +24,16 @@ test_indentity() {
 	rhs = T(1);
 	linalg::cholesky(lhs, rhs);
 	std::cout << __func__ << std::endl << rhs << std::endl;
-	assert(std::all_of(rhs.begin(), rhs.end(), [](T x){ return x == T(1);}));
+	assert(std::all_of(rhs.begin(), rhs.end(), [](T x) { return x == T(1); }));
 }
 
-template<class T>
+template <class T>
 void
 test_matrix_1() {
 	int n = 3;
 	linalg::Matrix<T> lhs(blitz::shape(n, n));
 	linalg::Vector<T> rhs(n);
-	lhs = 1.0, 0.5, 0.0,
-		  0.5, 1.0, 0.5,
-		  0.0, 0.5, 1.0;
+	lhs = 1.0, 0.5, 0.0, 0.5, 1.0, 0.5, 0.0, 0.5, 1.0;
 	rhs = T(1);
 	linalg::cholesky(lhs, rhs);
 	std::cout << __func__ << std::endl << rhs << std::endl;
@@ -44,15 +42,13 @@ test_matrix_1() {
 	assert(approximately_equals(rhs(2), T(1), T(1e-3)));
 }
 
-template<class T>
+template <class T>
 void
 test_matrix_2() {
 	int n = 3;
 	linalg::Matrix<T> lhs(blitz::shape(n, n));
 	linalg::Vector<T> rhs(n);
-	lhs = 1.00, 0.50, 0.33,
-		  0.50, 1.00, 0.50,
-		  0.33, 0.50, 1.00;
+	lhs = 1.00, 0.50, 0.33, 0.50, 1.00, 0.50, 0.33, 0.50, 1.00;
 	rhs = T(1);
 	linalg::cholesky(lhs, rhs);
 	std::cout << __func__ << std::endl << rhs << std::endl;
@@ -61,7 +57,8 @@ test_matrix_2() {
 	assert(approximately_equals(rhs(2), T(0.60241), T(1e-3)));
 }
 
-int main() {
+int
+main() {
 	typedef float T;
 	test_indentity<T>();
 	test_matrix_1<T>();

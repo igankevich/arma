@@ -25,7 +25,7 @@
 
 namespace autoreg {
 
-	/// Class that reads paramters from the input files,
+	/// Class that reads parameters from the input files,
 	/// calls all subroutines, and prints the result.
 	template <class T>
 	struct Autoreg_model {
@@ -44,7 +44,8 @@ namespace autoreg {
 				std::ofstream out("acf");
 				out << acf_model;
 			}
-			AR_coefs<T> ar_coefs = compute_AR_coefs(acf_model, _arorder);
+			AR_coefs<T> ar_coefs =
+			    compute_AR_coefs(acf_model, _arorder, _doleastsquares);
 			T var_wn = white_noise_variance(ar_coefs, acf_model);
 			std::clog << "ACF variance = " << ACF_variance(acf_model)
 			          << std::endl;
@@ -76,6 +77,7 @@ namespace autoreg {
 			    {"out_grid", sys::make_param(_outgrid)},
 			    {"acf_grid", sys::make_param(_acfgrid)},
 			    {"ar_order", sys::make_param(_arorder)},
+			    {"least_squares", sys::make_param(_doleastsquares)},
 			});
 			in >> params;
 		}
@@ -123,6 +125,7 @@ namespace autoreg {
 			write_key_value(std::clog, "Output grid patch size",
 			                _outgrid.patch_size());
 			write_key_value(std::clog, "AR order", _arorder);
+			write_key_value(std::clog, "Do least squares", _doleastsquares);
 		}
 
 		template <class V>
@@ -140,6 +143,7 @@ namespace autoreg {
 		Grid<T, 3> _outgrid; //< Wavy surface grid.
 		Grid<T, 3> _acfgrid; //< ACF grid.
 		size3 _arorder;      //< AR model order (no. of coefficients).
+		bool _doleastsquares = false;
 	};
 }
 
