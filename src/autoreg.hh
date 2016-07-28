@@ -213,8 +213,12 @@ namespace autoreg {
 		                                 (gsl_complex_packed_ptr)result.data());
 		gsl_poly_complex_workspace_free(w);
 		if (ret != GSL_SUCCESS) {
-			throw std::runtime_error("Can not find roots of the polynomial to "
-			                         "verify AR model stationarity.");
+			std::stringstream msg;
+			msg << "Can not find roots of the polynomial to "
+			       "verify AR model stationarity."
+			       "\nGSL error: "
+			    << gsl_strerror(ret) << '.';
+			throw std::runtime_error(msg.str());
 		}
 		/// Check if some roots do not lie outside unit circle.
 		size_t num_bad_roots = 0;
