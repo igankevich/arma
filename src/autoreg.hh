@@ -321,10 +321,56 @@ namespace autoreg {
 
 	template <class T>
 	int
-	moving_average_equation(const gsl_vector* x, void* params, gsl_vector* f) {
-		const equation_params<T>* par = static_cast<const equation_params<T>*>(params);
+	moving_average_equation(const gsl_vector* in_x, void* params,
+	                        gsl_vector* out_f) {
+		const equation_params<T>* par =
+		    static_cast<const equation_params<T>*>(params);
 		const ACF<T>& acf = par->acf;
 		const size3& ar_order = par->ar_order;
+		const int total_size = blitz::product(ar_order);
+		// copy in
+		Vec3<T> x(total_size);
+		{
+			int idx = 0;
+			for (int i = 0; i < ar_order(0); ++i) {
+				for (int j = 0; j < ar_order(1); ++j) {
+					for (int k = 0; k < ar_order(2); ++k) {
+						x(i, j, k) = gsl_vector_get(in_x, idx);
+						++idx;
+					}
+				}
+			}
+		}
+		Vec1<T> f(x.size());
+		int idx = 0;
+		for (int i = 0; i < ar_order(0); ++i) {
+			for (int j = 0; j < ar_order(1); ++j) {
+				for (int k = 0; k < ar_order(2); ++k) {
+					T sum = -acf(i, j, k);
+					for (int l = i + 1; l < ar_order(0); ++l) {
+						for (int m = j + 1; m < ar_order(1); ++m) {
+							for (int n = k + 1; n < ar_order(2); ++n) {
+								sum += acf(l, m, n) *
+								       acf(l - i - 1, m - j - 1, n - k - 1);
+							}
+						}
+					}
+					T denominator = 1;
+					for (int l = 0; l < ar_order(0); ++l) {
+						for (int m = 0; m < ar_order(1); ++m) {
+							for (int n = 0; n < ar_order(2); ++n) {
+								const T a = acf(l, m, n);
+								denominator += a * a;
+							}
+						}
+					}
+					f(idx) = sum / denominator;
+					++idx;
+				}
+			}
+		}
+		// copy out
+		for (size_t i = 0; i < f.size(); ++i) { gsl_vector_set(out_f, f(i)); }
 		return GSL_SUCCESS;
 	}
 
