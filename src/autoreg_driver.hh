@@ -6,6 +6,8 @@
 #include <fstream>   // for ofstream
 #include <stdexcept> // for runtime_error
 #include <string>    // for operator==, basic_string, string, getline
+#include <unordered_map>
+#include <functional>
 
 #include "types.hh"   // for size3, Vector, Zeta, ACF, AR_coefs
 #include "autoreg.hh" // for mean, variance, ACF_variance, approx_acf, comp...
@@ -30,6 +32,8 @@ namespace autoreg {
 	template <class T>
 	struct Autoreg_model {
 
+		typedef std::function<ACF<T>(const Vec3<T>&, const size3&)> ACF_function;
+
 		Autoreg_model()
 		    : _outgrid{{768, 24, 24}},
 		      _acfgrid{{10, 10, 10}, {T(2.5), T(5), T(5)}},
@@ -38,8 +42,8 @@ namespace autoreg {
 		void
 		act() {
 			echo_parameters();
-			ACF<T> acf_model =
-			    standing_wave_ACF<T>(_acfgrid.delta(), _acfgrid.size());
+			ACF_function acf_func = get_acf_function();
+			ACF<T> acf_model = acf_func(_acfgrid.delta(), _acfgrid.size());
 			{
 				std::ofstream out("acf");
 				out << acf_model;
@@ -73,12 +77,12 @@ namespace autoreg {
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
-			sys::parameter_map params({
-			    {"out_grid", sys::make_param(_outgrid)},
-			    {"acf_grid", sys::make_param(_acfgrid)},
-			    {"ar_order", sys::make_param(_arorder)},
-			    {"least_squares", sys::make_param(_doleastsquares)},
-			});
+			sys::parameter_map params(
+			    {{"out_grid", sys::make_param(_outgrid)},
+			     {"acf_grid", sys::make_param(_acfgrid)},
+			     {"ar_order", sys::make_param(_arorder)},
+			     {"least_squares", sys::make_param(_doleastsquares)},
+			     {"acf", sys::make_param(_acffunc)}});
 			in >> params;
 		}
 
@@ -126,6 +130,7 @@ namespace autoreg {
 			                _outgrid.patch_size());
 			write_key_value(std::clog, "AR order", _arorder);
 			write_key_value(std::clog, "Do least squares", _doleastsquares);
+			write_key_value(std::clog, "ACF function", _acffunc);
 		}
 
 		template <class V>
@@ -140,11 +145,36 @@ namespace autoreg {
 			out << zeta;
 		}
 
+		ACF_function
+		get_acf_function() {
+			auto result = acf_functions.find(_acffunc);
+			if (result == acf_functions.end()) {
+				std::clog << "Invalid ACF function name: \"" << _acffunc << '\"' << std::endl;
+				throw std::runtime_error("bad ACF function name");
+			}
+			return result->second;
+		}
+
 		Grid<T, 3> _outgrid; //< Wavy surface grid.
 		Grid<T, 3> _acfgrid; //< ACF grid.
 		size3 _arorder;      //< AR model order (no. of coefficients).
 		bool _doleastsquares = false;
+
+		/// ACF function name (\see acf_functions). Default is "standing_wave".
+		std::string _acffunc = "standing_wave";
+
+		/// Map of names to ACF functions.
+		static const std::unordered_map<
+		    std::string, ACF_function>
+		    acf_functions;
 	};
+
+	template <class T>
+	const std::unordered_map<
+	    std::string, std::function<ACF<T>(const Vec3<T>&, const size3&)>>
+	    Autoreg_model<T>::acf_functions = {
+	        {"standing_wave", standing_wave_ACF<T>},
+	        {"propagating_wave", propagating_wave_ACF_3<T>}};
 }
 
 #endif // AUTOREG_DRIVER_HH

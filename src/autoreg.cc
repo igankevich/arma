@@ -1,5 +1,5 @@
 #include <gsl/gsl_errno.h>   // for gsl_set_error_handler
-#include <cstdlib>           // for abort
+#include <cstdlib>           // for exit
 #include <exception>         // for exception, exception_ptr, current_ex...
 #include <iostream>          // for operator<<, basic_ostream, cerr, endl
 #include "autoreg_driver.hh" // for Autoreg_model, operator>>
@@ -13,7 +13,7 @@ print_exception_and_terminate() {
 			std::cerr << "ERROR: " << e.what() << std::endl;
 		} catch (...) { std::cerr << "UNKNOWN ERROR. Aborting." << std::endl; }
 	}
-	std::abort();
+	std::exit(1);
 }
 
 void

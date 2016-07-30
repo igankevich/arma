@@ -154,8 +154,8 @@ namespace autoreg {
 	propagating_wave_ACF_3(const Vec3<T>& delta, const size3& acf_size) {
 
 		/// from Mathematica
-		T alpha = 2.3;
-		T beta = 0;
+		T alpha = 1.3;
+		T beta = 0.01;
 		T gamm = 5.5;
 
 		ACF<T> acf(acf_size);
@@ -163,8 +163,8 @@ namespace autoreg {
 		blitz::secondIndex j;
 		blitz::thirdIndex k;
 
-		acf = gamm * blitz::exp(-alpha * (i * delta[0] + 0.1 * j * delta[1] +
-		                                  k * delta[2])) *
+		acf = gamm * blitz::exp(-alpha * (0.1*i * delta[0] + j * delta[1] +
+		                                  0.01*k * delta[2])) *
 		      blitz::cos(beta * (i * delta[0] + j * delta[1] + k * delta[2]));
 		return acf;
 	}
@@ -213,7 +213,7 @@ namespace autoreg {
 		                                 (gsl_complex_packed_ptr)result.data());
 		gsl_poly_complex_workspace_free(w);
 		if (ret != GSL_SUCCESS) {
-			std::clog << "GSL error: " << gsl_strerror(ret) << '.';
+			std::clog << "GSL error: " << gsl_strerror(ret) << '.' << std::endl;
 			throw std::runtime_error("Can not find roots of the polynomial to "
 			                         "verify AR model stationarity.");
 		}
