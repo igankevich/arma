@@ -30,7 +30,8 @@ namespace autoreg {
 	template <class T>
 	void
 	write_key_value(std::ostream& out, const char* key, T value) {
-		std::ios::fmtflags oldf = out.setf(std::ios::left, std::ios::adjustfield);
+		std::ios::fmtflags oldf =
+		    out.setf(std::ios::left, std::ios::adjustfield);
 		out << std::setw(30) << key << " = " << value << std::endl;
 		out.setf(oldf);
 	}
@@ -40,7 +41,8 @@ namespace autoreg {
 	template <class T>
 	struct Autoreg_model {
 
-		typedef std::function<ACF<T>(const Vec3<T>&, const size3&)> ACF_function;
+		typedef std::function<ACF<T>(const Vec3<T>&, const size3&)>
+		    ACF_function;
 
 		Autoreg_model()
 		    : _outgrid{{768, 24, 24}},
@@ -56,8 +58,13 @@ namespace autoreg {
 				std::ofstream out("acf");
 				out << acf_model;
 			}
+			{
+				std::ofstream out("zdelta");
+				out << _acfgrid.delta();
+			}
 			AR_coefs<T> ar_coefs =
 			    compute_AR_coefs(acf_model, _arorder, _doleastsquares);
+			check_stationarity(ar_coefs);
 			T var_wn = white_noise_variance(ar_coefs, acf_model);
 			std::clog << "ACF variance = " << ACF_variance(acf_model)
 			          << std::endl;
@@ -90,7 +97,8 @@ namespace autoreg {
 			     {"acf_grid", sys::make_param(_acfgrid)},
 			     {"ar_order", sys::make_param(_arorder)},
 			     {"least_squares", sys::make_param(_doleastsquares)},
-			     {"acf", sys::make_param(_acffunc)}});
+			     {"acf", sys::make_param(_acffunc)},
+			     {"model", sys::make_param(_model)}});
 			in >> params;
 		}
 
@@ -150,7 +158,8 @@ namespace autoreg {
 		get_acf_function() {
 			auto result = acf_functions.find(_acffunc);
 			if (result == acf_functions.end()) {
-				std::clog << "Invalid ACF function name: \"" << _acffunc << '\"' << std::endl;
+				std::clog << "Invalid ACF function name: \"" << _acffunc << '\"'
+				          << std::endl;
 				throw std::runtime_error("bad ACF function name");
 			}
 			return result->second;
@@ -164,9 +173,10 @@ namespace autoreg {
 		/// ACF function name (\see acf_functions). Default is "standing_wave".
 		std::string _acffunc = "standing_wave";
 
+		std::string _model = "AR";
+
 		/// Map of names to ACF functions.
-		static const std::unordered_map<
-		    std::string, ACF_function>
+		static const std::unordered_map<std::string, ACF_function>
 		    acf_functions;
 	};
 

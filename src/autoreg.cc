@@ -44,7 +44,6 @@ main(int argc, char* argv[]) {
 			input_filename = ::optarg;
 		}
 	}
-	write_key_value(std::clog, "Input file", input_filename);
 
 	/// input file with various model parameters
 	Autoreg_model<Real> model;
@@ -53,6 +52,7 @@ main(int argc, char* argv[]) {
 		std::clog << "Cannot open input file \"" << input_filename << "\"." << std::endl;
 		throw std::runtime_error("bad input file");
 	}
+	write_key_value(std::clog, "Input file", input_filename);
 	cfg >> model;
 	model.act();
 	return 0;

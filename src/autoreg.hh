@@ -21,6 +21,8 @@
 
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_poly.h>
+#include <gsl/gsl_vector.h>
+#include <gsl/gsl_multiroots.h> // for gsl_multiroot_fsolver_iterate
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations
@@ -154,18 +156,29 @@ namespace autoreg {
 	propagating_wave_ACF_3(const Vec3<T>& delta, const size3& acf_size) {
 
 		/// from Mathematica
-		T alpha = 1.3;
-		T beta = 0.01;
-		T gamm = 5.5;
+		//		T alpha = 1.3;
+		//		T beta = 0.01;
+		//		T gamm = 4.0;
+
+		// guessed
+		T alpha = 1.1;
+		T beta = 0.8;
+		T gamm = 5.0;
 
 		ACF<T> acf(acf_size);
-		blitz::firstIndex i;
-		blitz::secondIndex j;
-		blitz::thirdIndex k;
+		blitz::firstIndex t;
+		blitz::secondIndex x;
+		blitz::thirdIndex y;
 
-		acf = gamm * blitz::exp(-alpha * (0.1*i * delta[0] + j * delta[1] +
-		                                  0.01*k * delta[2])) *
-		      blitz::cos(beta * (i * delta[0] + j * delta[1] + k * delta[2]));
+		//		acf = gamm * blitz::exp(-alpha * (i * delta[0] + j * delta[1] +
+		//		                                  k * delta[2])) *
+		//		      blitz::cos(beta * (i * delta[0] + j * delta[1] + k *
+		// delta[2]));
+		acf = gamm * blitz::exp(-alpha * (2 * t * delta[0] + x * delta[1] +
+		                                  y * delta[2])) *
+		      blitz::cos(2 * beta * t * delta[0]) *
+		      blitz::cos(beta * x * delta[1]) *
+		      blitz::cos(0 * beta * y * delta[2]);
 		return acf;
 	}
 
@@ -297,8 +310,68 @@ namespace autoreg {
 			std::ofstream out("ar_coefs");
 			out << phi;
 		}
-		check_stationarity(phi);
 		return phi;
+	}
+
+	template <class T>
+	struct equation_params {
+		const ACF<T>& acf;
+		const size3& ar_order;
+	};
+
+	template <class T>
+	int
+	moving_average_equation(const gsl_vector* x, void* params, gsl_vector* f) {
+		const equation_params<T>* par = static_cast<const equation_params<T>*>(params);
+		const ACF<T>& acf = par->acf;
+		const size3& ar_order = par->ar_order;
+		return GSL_SUCCESS;
+	}
+
+	std::ostream& operator<<(std::ostream& out, const gsl_vector* rhs) {
+		out << "[ ";
+		for (size_t i = 0; i < rhs->size; ++i) {
+			out << gsl_vector_get(rhs, i) << ' ';
+		}
+		out << ']';
+		return out;
+	}
+
+	void
+	print_state(size_t iter, gsl_multiroot_fsolver* s) {
+		std::clog << "iteration=" << iter << ", x=" << s->x << std::endl;
+	}
+
+	/// solve nonlinear system to find moving-average coefficients
+	template <class T>
+	AR_coefs<T>
+	compute_MA_coefs(const ACF<T>& acf, const size3& ar_order,
+	                 bool do_least_squares) {
+		/// No. of equations equals MA model order.
+		const size_t n = blitz::product(ar_order);
+		equation_params<T> params = {acf, ar_order};
+		gsl_multiroot_function f = {moving_average_equation, n, &params};
+		gsl_vector* x = gsl_vector_calloc(n);
+		gsl_multiroot_fsolver* solver =
+		    gsl_multiroot_fsolver_alloc(gsl_multiroot_fsolver_hybrids, n);
+		gsl_multiroot_fsolver_set(solver, &f, x);
+		int iter = 0;
+		int status = 0;
+		do {
+			++iter;
+			status = gsl_multiroot_fsolver_iterate(solver);
+
+			print_state(iter, solver);
+
+			if (status) /* check if solver is stuck */
+				break;
+
+			status = gsl_multiroot_test_residual(solver->f, 1e-7);
+		} while (status == GSL_CONTINUE && iter < 1000);
+
+		std::clog << "status = " << gsl_strerror(status) << std::endl;
+		gsl_multiroot_fsolver_free(solver);
+		gsl_vector_free(x);
 	}
 
 	template <class T>

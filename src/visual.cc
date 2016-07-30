@@ -21,7 +21,7 @@ enum Projection {
 };
 
 Zeta<Real> func;
-Vector<Real, 3> delta(0.5, 1.0, 1.0);
+Vector<Real, 3> delta(0.1, 1.0, 1.0);
 
 const Real ROT_STEP = 90;
 
@@ -76,7 +76,8 @@ void
 resetView() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glScalef(delta[1], delta[2], 1.0f);
+	const Real m = std::min(delta[1], delta[2]);
+	glScalef(delta[1]/m, delta[2]/m, 1.0f);
 	// float3 offset = (dom.max() - dom.min())*-0.5;
 	//	glTranslatef(offset[1], offset[2], -100.0f);
 	glTranslatef(0, 0, -100.0f);
@@ -291,8 +292,6 @@ read_delta() {
 	std::ifstream in("zdelta");
 	if (in.is_open()) {
 		in >> delta;
-		delta(1) = 1;
-		delta(2) = 1;
 	}
 }
 
