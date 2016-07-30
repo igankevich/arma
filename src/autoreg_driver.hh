@@ -27,6 +27,14 @@
 
 namespace autoreg {
 
+	template <class T>
+	void
+	write_key_value(std::ostream& out, const char* key, T value) {
+		std::ios::fmtflags oldf = out.setf(std::ios::left, std::ios::adjustfield);
+		out << std::setw(30) << key << " = " << value << std::endl;
+		out.setf(oldf);
+	}
+
 	/// Class that reads parameters from the input files,
 	/// calls all subroutines, and prints the result.
 	template <class T>
@@ -121,7 +129,6 @@ namespace autoreg {
 
 		void
 		echo_parameters() {
-			std::clog << std::left;
 			write_key_value(std::clog, "ACF grid size", _acfgrid.size());
 			write_key_value(std::clog, "ACF grid patch size",
 			                _acfgrid.patch_size());
@@ -131,12 +138,6 @@ namespace autoreg {
 			write_key_value(std::clog, "AR order", _arorder);
 			write_key_value(std::clog, "Do least squares", _doleastsquares);
 			write_key_value(std::clog, "ACF function", _acffunc);
-		}
-
-		template <class V>
-		std::ostream&
-		write_key_value(std::ostream& out, const char* key, V value) {
-			return out << std::setw(30) << key << " = " << value << std::endl;
 		}
 
 		void
