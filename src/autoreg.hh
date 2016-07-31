@@ -346,12 +346,12 @@ namespace autoreg {
 		for (int i = 0; i < ar_order(0); ++i) {
 			for (int j = 0; j < ar_order(1); ++j) {
 				for (int k = 0; k < ar_order(2); ++k) {
-					T sum = -acf(i, j, k);
+					T sum = -x(i, j, k);
 					for (int l = i + 1; l < ar_order(0); ++l) {
 						for (int m = j + 1; m < ar_order(1); ++m) {
 							for (int n = k + 1; n < ar_order(2); ++n) {
-								sum += acf(l, m, n) *
-								       acf(l - i - 1, m - j - 1, n - k - 1);
+								sum += x(l, m, n) *
+								       x(l - i - 1, m - j - 1, n - k - 1);
 							}
 						}
 					}
@@ -359,12 +359,12 @@ namespace autoreg {
 					for (int l = 0; l < ar_order(0); ++l) {
 						for (int m = 0; m < ar_order(1); ++m) {
 							for (int n = 0; n < ar_order(2); ++n) {
-								const T a = acf(l, m, n);
+								const T a = x(l, m, n);
 								denominator += a * a;
 							}
 						}
 					}
-					f(idx) = sum / denominator;
+					f(idx) = sum / denominator - acf(i, j, k);
 					++idx;
 				}
 			}
