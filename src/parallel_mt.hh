@@ -1,14 +1,16 @@
 #ifndef PARALLEL_MT_HH
 #define PARALLEL_MT_HH
 
-#include <cstdint>
-#include <limits>
-#include <iterator>
-#include <algorithm>
-#include <cstring>
+#include <cstdlib>   // for free, malloc
+#include <algorithm> // for copy_n
+#include <cstdint>   // for uint32_t, uint16_t
+#include <cstring>   // for memset, memcpy
+#include <istream>   // for istream, ostream, basic_istream::read, basic_os...
+#include <limits>    // for numeric_limits
+#include <stdexcept> // for runtime_error
 
 extern "C" {
-#include "dc.h"
+#include <dc.h> // for free_mt_struct, genrand_mt, get_mt_parameter_id_st
 }
 
 namespace autoreg {
@@ -16,7 +18,7 @@ namespace autoreg {
 	struct mt_config : public ::mt_struct {
 
 		mt_config() { std::memset(this, 0, sizeof(mt_config)); }
-		~mt_config() { free(this->state); }
+		~mt_config() { std::free(this->state); }
 		mt_config(const mt_config& rhs) {
 			std::memset(this, 0, sizeof(mt_config));
 			this->operator=(rhs);
@@ -33,12 +35,12 @@ namespace autoreg {
 	private:
 		void
 		init_state() {
-			this->state = (uint32_t*)malloc(this->nn * sizeof(uint32_t));
+			this->state = (uint32_t*)std::malloc(this->nn * sizeof(uint32_t));
 		}
 
 		void
 		free_state() {
-			if (this->state) { free(this->state); }
+			if (this->state) { std::free(this->state); }
 		}
 
 		friend std::istream& operator>>(std::istream& in, mt_config& rhs) {
@@ -57,7 +59,7 @@ namespace autoreg {
 		}
 	};
 
-	template <int p = 521>
+	template <int p = 521, int w = 32>
 	struct parallel_mt_seq {
 
 		typedef mt_config result_type;
@@ -80,7 +82,7 @@ namespace autoreg {
 		void
 		generate_mt_struct() {
 			mt_config* ptr = static_cast<mt_config*>(
-			    ::get_mt_parameter_id_st(nbits, p, _id, _seed));
+			    ::get_mt_parameter_id_st(w, p, _id, _seed));
 			if (!ptr) { throw std::runtime_error("bad MT"); }
 			_result = *ptr;
 			::free_mt_struct(ptr);
@@ -90,8 +92,6 @@ namespace autoreg {
 		uint32_t _seed = 0;
 		uint16_t _id = 0;
 		result_type _result;
-
-		static const int nbits = 32;
 	};
 
 	struct parallel_mt {

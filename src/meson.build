@@ -41,3 +41,12 @@ test(
 		link_args: '-llapacke'
 	)
 )
+
+test(
+	'dynamic creation of mersenne twisters',
+	executable(
+		'dcmt-test',
+		sources: 'dcmt-test.cc',
+		dependencies: [ libdcmt ]
+	)
+)
