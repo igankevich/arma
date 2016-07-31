@@ -27,7 +27,7 @@ const Real ROT_STEP = 90;
 
 Projection proj = PROJECTION_NONE;
 bool paused = true;
-int timer = 0; // таймер для демонстрации в реальном времени
+int timer = 0;
 int dragX = 0;
 int dragY = 0;
 int rotation = 0; /// dimension rotation

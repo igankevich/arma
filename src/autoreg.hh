@@ -199,18 +199,6 @@ namespace autoreg {
 		return acf(0, 0, 0);
 	}
 
-	/// Удаление участков разгона из реализации.
-	template <class T>
-	Zeta<T>
-	trim_zeta(const Zeta<T>& zeta2, const size3& zsize) {
-		using blitz::Range;
-		using blitz::toEnd;
-		size3 zsize2 = zeta2.shape();
-		return zeta2(Range(zsize2(0) - zsize(0), toEnd),
-		             Range(zsize2(1) - zsize(1), toEnd),
-		             Range(zsize2(2) - zsize(2), toEnd));
-	}
-
 	template <class T>
 	void
 	check_stationarity(AR_coefs<T>& phi_in) {
@@ -388,7 +376,7 @@ namespace autoreg {
 		std::clog << "iteration=" << iter << ", x=" << s->x << std::endl;
 	}
 
-	/// solve nonlinear system to find moving-average coefficients
+	/// Solve nonlinear system to find moving-average coefficients.
 	template <class T>
 	AR_coefs<T>
 	compute_MA_coefs(const ACF<T>& acf, const size3& ar_order,
@@ -432,9 +420,10 @@ namespace autoreg {
 		return std::isinf(rhs);
 	}
 
-	/// Генерация белого шума по алгоритму Вихря Мерсенна и
-	/// преобразование его к нормальному распределению по алгоритму
-	/// Бокса-Мюллера.
+	/**
+	Generate white noise via Mersenne Twister algorithm. Convert to normal
+	distribution via Box---Muller transform.
+	*/
 	template <class T>
 	Zeta<T>
 	generate_white_noise(const size3& size, T variance) {
@@ -442,7 +431,7 @@ namespace autoreg {
 			throw std::runtime_error("variance is less than zero");
 		}
 
-		// инициализация генератора
+		// initialise generator
 		std::mt19937 generator;
 #if !defined(DISABLE_RANDOM_SEED)
 		generator.seed(
@@ -450,7 +439,7 @@ namespace autoreg {
 #endif
 		std::normal_distribution<T> normal(T(0), std::sqrt(variance));
 
-		// генерация и проверка
+		// generate and check
 		Zeta<T> eps(size);
 		std::generate(std::begin(eps), std::end(eps),
 		              std::bind(normal, generator));
@@ -465,7 +454,9 @@ namespace autoreg {
 		return eps;
 	}
 
-	/// Генерация отдельных частей реализации волновой поверхности.
+	/**
+	Generate wavy surface realisation.
+	*/
 	template <class T>
 	void
 	generate_zeta(AR_coefs<T>& phi, Zeta<T>& zeta) {
