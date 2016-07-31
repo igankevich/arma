@@ -14,6 +14,21 @@
 /// @file
 /// File with auxiliary subroutines.
 
+namespace blitz {
+
+	bool
+	isfinite(float rhs) noexcept {
+		return std::isfinite(rhs);
+	}
+
+	bool
+	isfinite(double rhs) noexcept {
+		return std::isfinite(rhs);
+	}
+
+	BZ_DECLARE_FUNCTION(isfinite);
+}
+
 /// Domain-specific classes and functions.
 namespace autoreg {
 
@@ -21,18 +36,6 @@ namespace autoreg {
 	T
 	ACF_variance(const ACF<T>& acf) {
 		return acf(0, 0, 0);
-	}
-
-	template <class T>
-	bool
-	isnan(T rhs) noexcept {
-		return std::isnan(rhs);
-	}
-
-	template <class T>
-	bool
-	isinf(T rhs) noexcept {
-		return std::isinf(rhs);
 	}
 
 	/**
@@ -58,13 +61,9 @@ namespace autoreg {
 		Zeta<T> eps(size);
 		std::generate(std::begin(eps), std::end(eps),
 		              std::bind(normal, generator));
-		if (std::any_of(std::begin(eps), std::end(eps), &::autoreg::isnan<T>)) {
+		if (!blitz::all(blitz::isfinite(eps))) {
 			throw std::runtime_error(
-			    "white noise generator produced some NaNs");
-		}
-		if (std::any_of(std::begin(eps), std::end(eps), &::autoreg::isinf<T>)) {
-			throw std::runtime_error(
-			    "white noise generator produced infinite numbers");
+			    "white noise generator produced some NaN/Inf");
 		}
 		return eps;
 	}
