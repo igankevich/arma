@@ -11,6 +11,7 @@
 
 #include "types.hh"   // for size3, Vector, Zeta, ACF, AR_coefs
 #include "autoreg.hh" // for mean, variance, ACF_variance, approx_acf, comp...
+#include "acf.hh"     // for standing_wave_ACF, propagating_wave_ACF
 #include "params.hh"
 #include "grid.hh"
 
@@ -54,6 +55,8 @@ namespace autoreg {
 			echo_parameters();
 			ACF_function acf_func = get_acf_function();
 			ACF<T> acf_model = acf_func(_acfgrid.delta(), _acfgrid.size());
+			std::clog << "ACF variance = " << ACF_variance(acf_model)
+			          << std::endl;
 			{
 				std::ofstream out("acf");
 				out << acf_model;
@@ -62,20 +65,35 @@ namespace autoreg {
 				std::ofstream out("zdelta");
 				out << _acfgrid.delta();
 			}
-			AR_coefs<T> ar_coefs =
-			    compute_AR_coefs(acf_model, _arorder, _doleastsquares);
-			check_stationarity(ar_coefs);
-			T var_wn = white_noise_variance(ar_coefs, acf_model);
-			std::clog << "ACF variance = " << ACF_variance(acf_model)
-			          << std::endl;
-			std::clog << "WN variance = " << var_wn << std::endl;
-			Zeta<T> zeta = generate_white_noise(_outgrid.size(), var_wn);
-			std::clog << "mean(eps) = " << mean(zeta) << std::endl;
-			std::clog << "variance(eps) = " << variance(zeta) << std::endl;
-			generate_zeta(ar_coefs, zeta);
-			std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
-			std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
-			write_zeta(zeta);
+			if (_model == "AR") {
+				AR_coefs<T> ar_coefs =
+				    compute_AR_coefs(acf_model, _arorder, _doleastsquares);
+				check_stationarity(ar_coefs);
+				T var_wn = white_noise_variance(ar_coefs, acf_model);
+				std::clog << "WN variance = " << var_wn << std::endl;
+				Zeta<T> zeta = generate_white_noise(_outgrid.size(), var_wn);
+				std::clog << "mean(eps) = " << mean(zeta) << std::endl;
+				std::clog << "variance(eps) = " << variance(zeta) << std::endl;
+				generate_zeta(ar_coefs, zeta);
+				std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
+				std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
+				write_zeta(zeta);
+			} else if (_model == "MA") {
+				Moving_average_model<T> model(acf_model, _arorder,
+				                              _doleastsquares);
+				T var_wn = model.white_noise_variance();
+				std::clog << "WN variance = " << var_wn << std::endl;
+				Zeta<T> eps = generate_white_noise(_outgrid.size(), var_wn);
+				std::clog << "mean(eps) = " << mean(eps) << std::endl;
+				std::clog << "variance(eps) = " << variance(eps) << std::endl;
+				Zeta<T> zeta = model(eps);
+				std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
+				std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
+				write_zeta(zeta);
+			} else {
+				std::clog << "Invalid model: " << _model << std::endl;
+				throw std::runtime_error("bad model");
+			}
 		}
 
 		/// Read AR model parameters from an input stream, generate default ACF
@@ -146,6 +164,7 @@ namespace autoreg {
 			write_key_value(std::clog, "AR order", _arorder);
 			write_key_value(std::clog, "Do least squares", _doleastsquares);
 			write_key_value(std::clog, "ACF function", _acffunc);
+			write_key_value(std::clog, "Model", _model);
 		}
 
 		void
@@ -185,7 +204,7 @@ namespace autoreg {
 	    std::string, std::function<ACF<T>(const Vec3<T>&, const size3&)>>
 	    Autoreg_model<T>::acf_functions = {
 	        {"standing_wave", standing_wave_ACF<T>},
-	        {"propagating_wave", propagating_wave_ACF_3<T>}};
+	        {"propagating_wave", propagating_wave_ACF<T>}};
 }
 
 #endif // AUTOREG_DRIVER_HH
