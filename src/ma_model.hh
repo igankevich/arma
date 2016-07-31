@@ -29,8 +29,9 @@ namespace autoreg {
 	template <class T>
 	struct Moving_average_model {
 
-		Moving_average_model(ACF<T> acf, size3 order, bool)
-		    : _acf(acf / acf(0,0,0)), _order(order), _theta(compute_MA_coefs()) {}
+		Moving_average_model(ACF<T> acf, size3 order)
+		    : _acf(acf / acf(0, 0, 0)), _order(order),
+		      _theta(compute_MA_coefs()) {}
 
 		T
 		white_noise_variance() {
@@ -62,6 +63,10 @@ namespace autoreg {
 			}
 			return zeta;
 		}
+
+		/// TODO
+		void
+		validate() {}
 
 	private:
 		static int

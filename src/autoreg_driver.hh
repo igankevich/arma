@@ -11,6 +11,8 @@
 
 #include "types.hh"   // for size3, Vector, Zeta, ACF, AR_coefs
 #include "autoreg.hh" // for mean, variance, ACF_variance, approx_acf, comp...
+#include "ar_model.hh"
+#include "ma_model.hh"
 #include "acf.hh"     // for standing_wave_ACF, propagating_wave_ACF
 #include "params.hh"
 #include "grid.hh"
@@ -66,21 +68,19 @@ namespace autoreg {
 				out << _acfgrid.delta();
 			}
 			if (_model == "AR") {
-				AR_coefs<T> ar_coefs =
-				    compute_AR_coefs(acf_model, _arorder, _doleastsquares);
-				check_stationarity(ar_coefs);
-				T var_wn = white_noise_variance(ar_coefs, acf_model);
+				Autoregressive_model<T> model(acf_model, _arorder, _doleastsquares);
+				model.validate();
+				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
 				Zeta<T> zeta = generate_white_noise(_outgrid.size(), var_wn);
 				std::clog << "mean(eps) = " << mean(zeta) << std::endl;
 				std::clog << "variance(eps) = " << variance(zeta) << std::endl;
-				generate_zeta(ar_coefs, zeta);
+				model(zeta);
 				std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
 				std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
 				write_zeta(zeta);
 			} else if (_model == "MA") {
-				Moving_average_model<T> model(acf_model, _arorder,
-				                              _doleastsquares);
+				Moving_average_model<T> model(acf_model, _arorder);
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
 				Zeta<T> eps = generate_white_noise(_outgrid.size(), var_wn);
