@@ -17,11 +17,6 @@ namespace autoreg {
 		T beta = 0.8;
 		T gamm = 5.0;
 
-		/// from Mathematica
-		//		T alpha = 0.394279;
-		//		T beta = 0.885028;
-		//		T gamm = 0.0106085 * 100;
-
 		ACF<T> acf(acf_size);
 		blitz::firstIndex t;
 		blitz::secondIndex x;
@@ -38,24 +33,17 @@ namespace autoreg {
 	ACF<T>
 	propagating_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
 
-		// from Mathematica
-		T alpha = 1.3;
-		T beta = 0.01;
-		T gamm = 4.0;
-
 		// guessed
-		//		T alpha = 1.1;
-		//		T beta = 0.8;
-		//		T gamm = 5.0;
+		T alpha = 1.5;
+		T gamm = 5.0;
 
 		ACF<T> acf(acf_size);
 		blitz::firstIndex i;
 		blitz::secondIndex j;
 		blitz::thirdIndex k;
 
-		acf = gamm * blitz::exp(-alpha *
-		                        (i * delta[0] + j * delta[1] + k * delta[2])) *
-		      blitz::cos(beta * (i * delta[0] + j * delta[1] + k * delta[2]));
+		acf = gamm * blitz::exp(-alpha * (i * delta[0] + j * delta[1] +
+		                                  k * delta[2]));
 		return acf;
 	}
 }

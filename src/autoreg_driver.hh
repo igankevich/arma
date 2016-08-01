@@ -81,7 +81,7 @@ namespace autoreg {
 				write_zeta(zeta);
 			} else if (_model == "MA") {
 				Moving_average_model<T> model(acf_model, _arorder);
-				model.determine_coefficients(100, T(1e-5));
+				model.determine_coefficients(100, T(1e-5), T(1e-4));
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;

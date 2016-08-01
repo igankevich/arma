@@ -64,7 +64,7 @@ namespace autoreg {
 			/// Some AR coefficients are close to nought and polynomial
 			/// solver can produce noughts due to limited numerical
 			/// precision. So we filter val=0 as well.
-			if (!(val > 1.0 || val == 0)) {
+			if (!(val > 1.0 || val == 0.0)) {
 				++num_bad_roots;
 				std::clog << "Root #" << i << '=' << result(i) << std::endl;
 			}

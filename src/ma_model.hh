@@ -56,17 +56,31 @@ namespace autoreg {
 								for (int j = 0; j < m3; j++)
 									sum += _theta(k, i, j) *
 									       eps(t - k, x - i, y - j);
-						zeta(t, x, y) = sum;
+						zeta(t, x, y) = T(1) - sum;
 					}
 				}
 			}
 			return zeta;
 		}
 
-		/// Solve nonlinear system with fixed-point iteration algorithm to find
-		/// moving-average coefficients \f$\theta\f$.
+		/**
+		Solve nonlinear system with fixed-point iteration algorithm to find
+		moving-average coefficients \f$\theta\f$.
+
+		\param max_iterations Maximal no. of iterations.
+		\param eps
+		\parblock
+			Maximal difference between values of white
+			noise variance in successive iterations.
+		\endparblock
+		\param min_var_wn
+		\parblock
+		    Maximal value of white noise variance considered to be
+		    nought.
+		\endparblock
+		*/
 		void
-		determine_coefficients(int max_iterations, T eps) {
+		determine_coefficients(int max_iterations, T eps, T min_var_wn) {
 			Array3D<T> theta(_order);
 			theta = 0;
 			const int order_t = _order(0);
@@ -80,8 +94,7 @@ namespace autoreg {
 				/**
 				2. Update coefficients from back to front using the
 				following formula (adapted from G. Box and G. Jenkins (1970)
-				"Time
-				Series Analysis: Forecasting and Control", pp. 226--227).
+				"Time Series Analysis: Forecasting and Control", pp. 226--227).
 				\f[
 				    \theta_{i,j,k} = -\frac{\gamma_0}{\sigma_\alpha^2}
 				        +
@@ -122,7 +135,7 @@ namespace autoreg {
 				old_var_wn = var_wn;
 				var_wn = white_noise_variance(theta);
 				/// 6. Validate white noise variance.
-				if (var_wn == T(0) || !std::isfinite(var_wn)) {
+				if (var_wn <= min_var_wn || !std::isfinite(var_wn)) {
 					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
 					          << ": bad white noise variance = " << var_wn
 					          << std::endl;
