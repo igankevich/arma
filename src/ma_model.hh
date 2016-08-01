@@ -6,36 +6,35 @@
 
 #include "types.hh" // for size3, ACF, AR_coefs, Zeta, Array2D
 
-#include <gsl/gsl_vector.h>
-#include <gsl/gsl_multiroots.h> // for gsl_multiroot_fsolver_iterate
-
 namespace autoreg {
-
-	std::ostream& operator<<(std::ostream& out, const gsl_vector* rhs) {
-		out << "[ ";
-		for (size_t i = 0; i < rhs->size; ++i) {
-			out << gsl_vector_get(rhs, i) << ' ';
-		}
-		out << ']';
-		return out;
-	}
-
-	template <class T>
-	struct equation_params {
-		const ACF<T>& acf;
-		size3 order;
-	};
 
 	template <class T>
 	struct Moving_average_model {
 
 		Moving_average_model(ACF<T> acf, size3 order)
-		    : _acf(acf / acf(0, 0, 0)), _order(order),
-		      _theta(compute_MA_coefs()) {}
+		    : _acf(acf), _order(order), _theta(_order) {}
+
+		/**
+		Compute white noise variance via the following formula.
+		\f[
+		    \sigma_\alpha^2 = \frac{\gamma_0}{
+		        1
+		        +
+		        \sum\limits_{i=0}^{n_1}
+		        \sum\limits_{i=0}^{n_2}
+		        \sum\limits_{k=0}^{n_3}
+		        \theta_{i,j,k}^2
+		    }
+		\f]
+		*/
+		T
+		white_noise_variance(const Array3D<T>& theta) {
+			return _acf(0, 0, 0) / (T(1) + blitz::sum(blitz::pow2(theta)));
+		}
 
 		T
 		white_noise_variance() {
-			return _acf(0, 0, 0) / (T(1) + blitz::sum(blitz::pow2(_theta)));
+			return white_noise_variance(_theta);
 		}
 
 		Zeta<T> operator()(Zeta<T> eps) {
@@ -64,91 +63,66 @@ namespace autoreg {
 			return zeta;
 		}
 
+		/// Solve nonlinear system with fixed-point iteration algorithm to find
+		/// moving-average coefficients \f$\theta\f$.
+		void
+		determine_coefficients(int max_iterations, T eps) {
+			Array3D<T> theta(_order);
+			theta = 0;
+			const int order_t = _order(0);
+			const int order_x = _order(1);
+			const int order_y = _order(2);
+			for (int it = 0; it < max_iterations; ++it) {
+				/// 1. Compute white noise variance.
+				/// \see white_noise_variance
+				const T var_wn = white_noise_variance(theta);
+				/// 2. Validate white noise variance.
+				if (var_wn == T(0) || !std::isfinite(var_wn)) {
+					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+					          << ": bad white noise variance = " << var_wn
+					          << std::endl;
+					throw std::runtime_error("bad white noise variance");
+				}
+				/// 3. Update coefficients from back to front.
+				for (int i = order_t - 1; i >= 0; --i) {
+					for (int j = order_x - 1; j >= 0; --j) {
+						for (int k = order_y - 1; k >= 0; --k) {
+							T sum = -_acf(i, j, k) / var_wn;
+							for (int l = i; l < order_t; ++l) {
+								for (int m = j; m < order_x; ++m) {
+									for (int n = k; n < order_y; ++n) {
+										sum += theta(l, m, n) *
+										       theta(l - i, m - j, n - k);
+									}
+								}
+							}
+							theta(i, j, k) = sum;
+						}
+					}
+				}
+				/// 4. Zero out \f$\theta_0\f$.
+				theta(0, 0, 0) = 0;
+				/// 5. Validate coefficients.
+				if (!blitz::all(blitz::isfinite(theta))) {
+					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+					          << ": bad coefficients = \n" << theta
+					          << std::endl;
+					throw std::runtime_error("bad MA model coefficients");
+				}
+#ifndef NDEBUG
+				/// 5. Print solver state.
+				std::clog << "Iteration=" << it << ", var_wn=" << var_wn
+				          << std::endl;
+#endif
+			}
+			_theta = theta;
+		}
+
 		/// TODO
 		void
 		validate() {}
 
 	private:
-		static int
-		moving_average_equation(const gsl_vector* in_x, void* params,
-		                        gsl_vector* out_f) {
-			std::clog << "eq\n";
-			const equation_params<T>* par =
-			    static_cast<const equation_params<T>*>(params);
-			const ACF<T>& acf = par->acf;
-			const size3& order = par->order;
-			// copy in
-			Array3D<T> x(order);
-			x(0, 0, 0) = T(-1);
-			std::copy_n(in_x->data, in_x->size, x.data() + 1);
-			const T denominator = blitz::sum(blitz::pow2(x));
-			Array1D<T> f(x.size());
-			int idx = 0;
-			for (int i = 0; i < order(0); ++i) {
-				for (int j = 0; j < order(1); ++j) {
-					for (int k = 0; k < order(2); ++k) {
-						T sum = 0;
-						for (int l = i; l < order(0); ++l) {
-							for (int m = j; m < order(1); ++m) {
-								for (int n = k; n < order(2); ++n) {
-									sum += x(l, m, n) * x(l - i, m - j, n - k);
-								}
-							}
-						}
-						f(idx) = sum / denominator - acf(i, j, k);
-						++idx;
-					}
-				}
-			}
-			// copy out
-			std::copy_n(f.data() + 1, out_f->size, out_f->data);
-			return GSL_SUCCESS;
-		}
-
-		void
-		print_state(size_t iter, gsl_multiroot_fsolver* s) {
-			std::clog << "iteration=" << iter << ", x=" << s->x
-			          << ", f(x)=" << s->f << std::endl;
-		}
-
-		/// Solve nonlinear system to find moving-average coefficients.
-		AR_coefs<T>
-		compute_MA_coefs() {
-			/// No. of equations equals MA model order.
-			const size_t n = blitz::product(_order) - 1;
-			assert(n > 0);
-			equation_params<T> params = {_acf, _order};
-			gsl_multiroot_function f = {&moving_average_equation, n, &params};
-			gsl_vector* x = gsl_vector_calloc(n);
-			std::fill_n(x->data, 1, T(-0.5));
-			const gsl_multiroot_fsolver_type* type =
-			    gsl_multiroot_fsolver_hybrids;
-			gsl_multiroot_fsolver* solver =
-			    gsl_multiroot_fsolver_alloc(type, n);
-			gsl_multiroot_fsolver_set(solver, &f, x);
-			int iter = 0;
-			int status = 0;
-			do {
-				++iter;
-				status = gsl_multiroot_fsolver_iterate(solver);
-
-				print_state(iter, solver);
-
-				if (status) /* check if solver is stuck */
-					break;
-
-				status = gsl_multiroot_test_residual(solver->f, 1e-7);
-			} while (status == GSL_CONTINUE && iter < 10);
-			std::clog << "status = " << gsl_strerror(status) << std::endl;
-			// copy out
-			AR_coefs<T> coefs(_order);
-			coefs(0) = 0;
-			std::copy_n(solver->x->data, solver->x->size, coefs.data() + 1);
-			gsl_multiroot_fsolver_free(solver);
-			gsl_vector_free(x);
-			return coefs;
-		}
-
 		ACF<T> _acf;
 		size3 _order;
 		AR_coefs<T> _theta;

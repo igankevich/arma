@@ -23,4 +23,4 @@ least_squares = 0
 # - propagating_wave
 acf = propagating_wave
 
-model = ARMA
+model = MA
