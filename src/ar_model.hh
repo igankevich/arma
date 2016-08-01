@@ -10,10 +10,7 @@
 #include <fstream>    // for operator<<, basic_ostream, clog, endl
 #include <stdexcept>  // for runtime_error
 
-#include <blitz/array.h>     // for Range, toEnd, RectDomain, Array
-#include <gsl/gsl_complex.h> // for gsl_complex_packed_ptr
-#include <gsl/gsl_errno.h>   // for gsl_strerror, ::GSL_SUCCESS
-#include <gsl/gsl_poly.h>    // for gsl_poly_complex_solve, gsl_poly_com...
+#include <blitz/array.h> // for Range, toEnd, RectDomain, Array
 
 #include "linalg.hh" // for cholesky, is_positive_definite, is_s...
 #include "types.hh"  // for size3, Array3D, Array2D, Array1D, Zeta
@@ -65,47 +62,9 @@ namespace autoreg {
 			}
 		}
 
-		/// Check AR process stationarity.
 		void
 		validate() {
-			/// Find roots of the polynomial
-			/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
-			Array3D<double> phi(_phi.shape());
-			phi = -_phi;
-			phi(0) = 1;
-			Array1D<std::complex<double>> result(phi.size());
-			gsl_poly_complex_workspace* w =
-			    gsl_poly_complex_workspace_alloc(phi.size());
-			int ret =
-			    gsl_poly_complex_solve(phi.data(), phi.size(), w,
-			                           (gsl_complex_packed_ptr)result.data());
-			gsl_poly_complex_workspace_free(w);
-			if (ret != GSL_SUCCESS) {
-				std::clog << "GSL error: " << gsl_strerror(ret) << '.'
-				          << std::endl;
-				throw std::runtime_error(
-				    "Can not find roots of the polynomial to "
-				    "verify AR model stationarity.");
-			}
-			/// Check if some roots do not lie outside unit circle.
-			size_t num_bad_roots = 0;
-			for (size_t i = 0; i < result.size(); ++i) {
-				const double val = std::abs(result(i));
-				/// Some AR coefficients are close to nought and polynomial
-				/// solver can produce noughts due to limited numerical
-				/// precision. So we filter val=0 as well.
-				if (!(val > 1.0 || val == 0)) {
-					++num_bad_roots;
-					std::clog << "Root #" << i << '=' << result(i) << std::endl;
-				}
-			}
-			if (num_bad_roots > 0) {
-				std::clog << "No. of bad roots = " << num_bad_roots
-				          << std::endl;
-				throw std::runtime_error(
-				    "AR process is not stationary: some roots lie "
-				    "inside unit circle or on its borderline.");
-			}
+			validate_stationarity(_phi);
 		}
 
 	private:

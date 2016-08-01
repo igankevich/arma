@@ -14,6 +14,11 @@ namespace autoreg {
 		Moving_average_model(ACF<T> acf, size3 order)
 		    : _acf(acf), _order(order), _theta(_order) {}
 
+		T
+		white_noise_variance(const Array3D<T>& theta) {
+			return _acf(0, 0, 0) / (T(1) + blitz::sum(blitz::pow2(theta)));
+		}
+
 		/**
 		Compute white noise variance via the following formula.
 		\f[
@@ -27,11 +32,6 @@ namespace autoreg {
 		    }
 		\f]
 		*/
-		T
-		white_noise_variance(const Array3D<T>& theta) {
-			return _acf(0, 0, 0) / (T(1) + blitz::sum(blitz::pow2(theta)));
-		}
-
 		T
 		white_noise_variance() {
 			return white_noise_variance(_theta);
@@ -72,18 +72,26 @@ namespace autoreg {
 			const int order_t = _order(0);
 			const int order_x = _order(1);
 			const int order_y = _order(2);
-			for (int it = 0; it < max_iterations; ++it) {
-				/// 1. Compute white noise variance.
-				/// \see white_noise_variance
-				const T var_wn = white_noise_variance(theta);
-				/// 2. Validate white noise variance.
-				if (var_wn == T(0) || !std::isfinite(var_wn)) {
-					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
-					          << ": bad white noise variance = " << var_wn
-					          << std::endl;
-					throw std::runtime_error("bad white noise variance");
-				}
-				/// 3. Update coefficients from back to front.
+			/// 1. Precompute white noise variance for the first iteration.
+			T var_wn = _acf(0, 0, 0);
+			T old_var_wn = 0;
+			int it = 0;
+			do {
+				/**
+				2. Update coefficients from back to front using the
+				following formula (adapted from G. Box and G. Jenkins (1970)
+				"Time
+				Series Analysis: Forecasting and Control", pp. 226--227).
+				\f[
+				    \theta_{i,j,k} = -\frac{\gamma_0}{\sigma_\alpha^2}
+				        +
+				        \sum\limits_{l=i}^{n_1}
+				        \sum\limits_{m=j}^{n_2}
+				        \sum\limits_{n=k}^{n_3}
+				        \theta_{l,m,n} \theta_{l-i,m-j,n-k}
+				\f]
+				Here \f$\theta_{0,0,0} \equiv 0\f$.
+				*/
 				for (int i = order_t - 1; i >= 0; --i) {
 					for (int j = order_x - 1; j >= 0; --j) {
 						for (int k = order_y - 1; k >= 0; --k) {
@@ -100,27 +108,41 @@ namespace autoreg {
 						}
 					}
 				}
-				/// 4. Zero out \f$\theta_0\f$.
+				/// 3. Zero out \f$\theta_0\f$.
 				theta(0, 0, 0) = 0;
-				/// 5. Validate coefficients.
+				/// 4. Validate coefficients.
 				if (!blitz::all(blitz::isfinite(theta))) {
 					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
 					          << ": bad coefficients = \n" << theta
 					          << std::endl;
 					throw std::runtime_error("bad MA model coefficients");
 				}
+				/// 5. Compute white noise variance by calling
+				/// \link Moving_average_model::white_noise_variance \endlink.
+				old_var_wn = var_wn;
+				var_wn = white_noise_variance(theta);
+				/// 6. Validate white noise variance.
+				if (var_wn == T(0) || !std::isfinite(var_wn)) {
+					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+					          << ": bad white noise variance = " << var_wn
+					          << std::endl;
+					throw std::runtime_error("bad white noise variance");
+				}
 #ifndef NDEBUG
-				/// 5. Print solver state.
-				std::clog << "Iteration=" << it << ", var_wn=" << var_wn
-				          << std::endl;
+				/// 7. Print solver state.
+				std::clog << __func__ << ':' << "Iteration=" << it
+				          << ", var_wn=" << var_wn << std::endl;
 #endif
-			}
+				++it;
+			} while (it < max_iterations &&
+			         std::abs(var_wn - old_var_wn) > eps);
 			_theta = theta;
 		}
 
-		/// TODO
 		void
-		validate() {}
+		validate() {
+			validate_stationarity(_theta);
+		}
 
 	private:
 		ACF<T> _acf;

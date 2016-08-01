@@ -1,15 +1,20 @@
 #ifndef AUTOREG_HH
 #define AUTOREG_HH
 
-#include <blitz/array.h> // for Array
-#include <algorithm>     // for any_of, generate
-#include <cassert>       // for assert
-#include <chrono>        // for duration, steady_clock, steady_clock::...
-#include <cmath>         // for isinf, isnan
-#include <functional>    // for bind
-#include <random>        // for mt19937, normal_distribution
-#include <stdexcept>     // for runtime_error
-#include "types.hh"      // for Zeta, ACF, size3
+#include <algorithm>  // for any_of, generate
+#include <cassert>    // for assert
+#include <chrono>     // for duration, steady_clock, steady_clock::...
+#include <cmath>      // for isinf, isnan
+#include <functional> // for bind
+#include <random>     // for mt19937, normal_distribution
+#include <stdexcept>  // for runtime_error
+
+#include <blitz/array.h>     // for Array
+#include <gsl/gsl_complex.h> // for gsl_complex_packed_ptr
+#include <gsl/gsl_errno.h>   // for gsl_strerror, ::GSL_SUCCESS
+#include <gsl/gsl_poly.h>    // for gsl_poly_complex_solve, gsl_poly_com...
+
+#include "types.hh" // for Zeta, ACF, size3
 
 /// @file
 /// File with auxiliary subroutines.
@@ -31,6 +36,46 @@ namespace blitz {
 
 /// Domain-specific classes and functions.
 namespace autoreg {
+
+	/// Check AR/MA process stationarity.
+	template<class T, int N>
+	void
+	validate_stationarity(blitz::Array<T,N> _phi) {
+		/// Find roots of the polynomial
+		/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
+		blitz::Array<double,N> phi(_phi.shape());
+		phi = -_phi;
+		phi(0) = 1;
+		blitz::Array<std::complex<double>,1> result(phi.size());
+		gsl_poly_complex_workspace* w =
+		    gsl_poly_complex_workspace_alloc(phi.size());
+		int ret = gsl_poly_complex_solve(phi.data(), phi.size(), w,
+		                                 (gsl_complex_packed_ptr)result.data());
+		gsl_poly_complex_workspace_free(w);
+		if (ret != GSL_SUCCESS) {
+			std::clog << "GSL error: " << gsl_strerror(ret) << '.' << std::endl;
+			throw std::runtime_error("Can not find roots of the polynomial to "
+			                         "verify AR model stationarity.");
+		}
+		/// Check if some roots do not lie outside unit circle.
+		size_t num_bad_roots = 0;
+		for (size_t i = 0; i < result.size(); ++i) {
+			const double val = std::abs(result(i));
+			/// Some AR coefficients are close to nought and polynomial
+			/// solver can produce noughts due to limited numerical
+			/// precision. So we filter val=0 as well.
+			if (!(val > 1.0 || val == 0)) {
+				++num_bad_roots;
+				std::clog << "Root #" << i << '=' << result(i) << std::endl;
+			}
+		}
+		if (num_bad_roots > 0) {
+			std::clog << "No. of bad roots = " << num_bad_roots << std::endl;
+			throw std::runtime_error(
+			    "AR process is not stationary: some roots lie "
+			    "inside unit circle or on its borderline.");
+		}
+	}
 
 	template <class T>
 	T
