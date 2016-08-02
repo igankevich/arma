@@ -76,12 +76,14 @@ namespace autoreg {
 				std::clog << "mean(eps) = " << mean(zeta) << std::endl;
 				std::clog << "variance(eps) = " << variance(zeta) << std::endl;
 				model(zeta);
-				std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
-				std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
+				/// Estimate mean/variance with ramp-up region removed.
+				blitz::RectDomain<3> subdomain(_arorder, zeta.shape() - 1);
+				std::clog << "mean(zeta) = " << mean(zeta(subdomain)) << std::endl;
+				std::clog << "variance(zeta) = " << variance(zeta(subdomain)) << std::endl;
 				write_zeta(zeta);
 			} else if (_model == "MA") {
 				Moving_average_model<T> model(acf_model, _arorder);
-				model.determine_coefficients(100, T(1e-5), T(1e-4));
+				model.determine_coefficients(1000, T(1e-5), T(1e-6));
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
