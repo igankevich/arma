@@ -16,6 +16,7 @@
 #include "acf.hh"     // for standing_wave_ACF, propagating_wave_ACF
 #include "params.hh"
 #include "grid.hh"
+#include "statistics.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -73,13 +74,13 @@ namespace autoreg {
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
 				Zeta<T> zeta = generate_white_noise(_outgrid.size(), var_wn);
-				std::clog << "mean(eps) = " << mean(zeta) << std::endl;
-				std::clog << "variance(eps) = " << variance(zeta) << std::endl;
+				std::clog << "mean(eps) = " << stats::mean(zeta) << std::endl;
+				std::clog << "variance(eps) = " << stats::variance(zeta) << std::endl;
 				model(zeta);
 				/// Estimate mean/variance with ramp-up region removed.
 				blitz::RectDomain<3> subdomain(_arorder, zeta.shape() - 1);
-				std::clog << "mean(zeta) = " << mean(zeta(subdomain)) << std::endl;
-				std::clog << "variance(zeta) = " << variance(zeta(subdomain)) << std::endl;
+				std::clog << "mean(zeta) = " << stats::mean(zeta(subdomain)) << std::endl;
+				std::clog << "variance(zeta) = " << stats::variance(zeta(subdomain)) << std::endl;
 				write_zeta(zeta);
 			} else if (_model == "MA") {
 				Moving_average_model<T> model(acf_model, _arorder);
@@ -88,11 +89,11 @@ namespace autoreg {
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
 				Zeta<T> eps = generate_white_noise(_outgrid.size(), var_wn);
-				std::clog << "mean(eps) = " << mean(eps) << std::endl;
-				std::clog << "variance(eps) = " << variance(eps) << std::endl;
+				std::clog << "mean(eps) = " << stats::mean(eps) << std::endl;
+				std::clog << "variance(eps) = " << stats::variance(eps) << std::endl;
 				Zeta<T> zeta = model(eps);
-				std::clog << "mean(zeta) = " << mean(zeta) << std::endl;
-				std::clog << "variance(zeta) = " << variance(zeta) << std::endl;
+				std::clog << "mean(zeta) = " << stats::mean(zeta) << std::endl;
+				std::clog << "variance(zeta) = " << stats::variance(zeta) << std::endl;
 				write_zeta(zeta);
 			} else {
 				std::clog << "Invalid model: " << _model << std::endl;

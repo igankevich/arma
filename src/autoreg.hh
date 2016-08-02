@@ -59,8 +59,9 @@ namespace autoreg {
 		gsl_poly_complex_workspace_free(w);
 		if (ret != GSL_SUCCESS) {
 			std::clog << "GSL error: " << gsl_strerror(ret) << '.' << std::endl;
-			throw std::runtime_error("Can not find roots of the polynomial to "
-			                         "verify AR/MA model stationarity/invertibility.");
+			throw std::runtime_error(
+			    "Can not find roots of the polynomial to "
+			    "verify AR/MA model stationarity/invertibility.");
 		}
 		/// 3. Check if some roots do not lie outside unit circle.
 		size_t num_bad_roots = 0;
@@ -116,21 +117,6 @@ namespace autoreg {
 			    "white noise generator produced some NaN/Inf");
 		}
 		return eps;
-	}
-
-	template <class T, int N>
-	T
-	mean(blitz::Array<T, N> rhs) {
-		assert(rhs.numElements() > 0);
-		return blitz::sum(rhs) / rhs.numElements();
-	}
-
-	template <class T, int N>
-	T
-	variance(blitz::Array<T, N> rhs) {
-		assert(rhs.numElements() > 1);
-		const T m = mean(rhs);
-		return blitz::sum(blitz::pow2(rhs - m)) / (rhs.numElements() - 1);
 	}
 }
 
