@@ -56,7 +56,7 @@ namespace autoreg {
 								for (int j = 0; j < m3; j++)
 									sum += _theta(k, i, j) *
 									       eps(t - k, x - i, y - j);
-						zeta(t, x, y) = T(1) - sum;
+						zeta(t, x, y) = eps(t, x, y) - sum;
 					}
 				}
 			}
@@ -154,7 +154,7 @@ namespace autoreg {
 
 		void
 		validate() {
-			validate_stationarity(_theta);
+			validate_process(_theta);
 		}
 
 	private:

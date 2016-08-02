@@ -64,7 +64,7 @@ namespace autoreg {
 
 		void
 		validate() {
-			validate_stationarity(_phi);
+			validate_process(_phi);
 		}
 
 	private:

@@ -44,6 +44,7 @@ namespace autoreg {
 
 		acf = gamm * blitz::exp(-alpha * (i * delta[0] + j * delta[1] +
 		                                  k * delta[2]));
+		acf -= blitz::min(acf);
 		return acf;
 	}
 }

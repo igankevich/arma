@@ -37,27 +37,32 @@ namespace blitz {
 /// Domain-specific classes and functions.
 namespace autoreg {
 
-	/// Check AR/MA process stationarity.
-	template<class T, int N>
+	/// Check AR (MA) process stationarity (invertibility).
+	template <class T, int N>
 	void
-	validate_stationarity(blitz::Array<T,N> _phi) {
-		/// Find roots of the polynomial
+	validate_process(blitz::Array<T, N> _phi) {
+		/// 1. Find roots of the polynomial
 		/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
-		blitz::Array<double,N> phi(_phi.shape());
+		blitz::Array<double, N> phi(_phi.shape());
 		phi = -_phi;
 		phi(0) = 1;
-		blitz::Array<std::complex<double>,1> result(phi.size());
+		/// 2. Trim leading zero terms.
+		size_t real_size = 0;
+		while (real_size < phi.numElements() && phi.data()[real_size] != 0.0) {
+			++real_size;
+		}
+		blitz::Array<std::complex<double>, 1> result(real_size);
 		gsl_poly_complex_workspace* w =
-		    gsl_poly_complex_workspace_alloc(phi.size());
-		int ret = gsl_poly_complex_solve(phi.data(), phi.size(), w,
+		    gsl_poly_complex_workspace_alloc(real_size);
+		int ret = gsl_poly_complex_solve(phi.data(), real_size, w,
 		                                 (gsl_complex_packed_ptr)result.data());
 		gsl_poly_complex_workspace_free(w);
 		if (ret != GSL_SUCCESS) {
 			std::clog << "GSL error: " << gsl_strerror(ret) << '.' << std::endl;
 			throw std::runtime_error("Can not find roots of the polynomial to "
-			                         "verify AR model stationarity.");
+			                         "verify AR/MA model stationarity/invertibility.");
 		}
-		/// Check if some roots do not lie outside unit circle.
+		/// 3. Check if some roots do not lie outside unit circle.
 		size_t num_bad_roots = 0;
 		for (size_t i = 0; i < result.size(); ++i) {
 			const double val = std::abs(result(i));
@@ -72,7 +77,7 @@ namespace autoreg {
 		if (num_bad_roots > 0) {
 			std::clog << "No. of bad roots = " << num_bad_roots << std::endl;
 			throw std::runtime_error(
-			    "AR process is not stationary: some roots lie "
+			    "AR/MA process is not stationary/invertible: some roots lie "
 			    "inside unit circle or on its borderline.");
 		}
 	}
