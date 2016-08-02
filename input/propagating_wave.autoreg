@@ -9,7 +9,7 @@
 out_grid = (200,40,40)
 
 # Grid for ACF function approximations. The format is the same as for out_grid.
-acf_grid = (10,10,10) : (2.5,2.5,2.5)
+acf_grid = (10,10,10) : (10,5,5)
 
 # AR model order
 ar_order = (10,10,10)
