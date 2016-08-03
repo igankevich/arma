@@ -88,6 +88,22 @@ namespace stats {
 	quantile(blitz::Array<T, N> rhs, T f) {
 		return quantile(rhs.data(), rhs.numElements(), f);
 	}
+
+	float
+	stdev(const float* data, const size_t n) {
+		return gsl_stats_float_sd(data, 1, n);
+	}
+
+	double
+	stdev(const double* data, const size_t n) {
+		return gsl_stats_sd(data, 1, n);
+	}
+
+	template <class T, int N>
+	T
+	stdev(blitz::Array<T, N> rhs) {
+		return stdev(rhs.data(), rhs.numElements());
+	}
 }
 
 #endif // STATISTICS_HH

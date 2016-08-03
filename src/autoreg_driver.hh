@@ -95,12 +95,42 @@ namespace autoreg {
 				Zeta<T> zeta = model(eps);
 				Stats<T>::print_header(std::clog);
 				std::clog << std::endl;
+				T var_elev = acf(0, 0, 0);
+				Wave_field<T> wave_field(zeta);
+				Array1D<T> heights_x = wave_field.heights_x();
+				Array1D<T> heights_y = wave_field.heights_y();
+				Array1D<T> periods = wave_field.periods();
+				Array1D<T> lengths_x = wave_field.lengths_x();
+				Array1D<T> lengths_y = wave_field.lengths_y();
 				stats::Gaussian<T> eps_dist(0, std::sqrt(var_wn));
-				stats::Gaussian<T> elev_dist(0, std::sqrt(acf(0, 0, 0)));
+				stats::Gaussian<T> elev_dist(0, std::sqrt(var_elev));
+				stats::Weibull<T> wave_period_dist(
+				    stats::mean(periods) / std::tgamma(T(1) + T(1) / T(2.33)),
+				    2.33);
 				std::vector<Stats<T>> stats = {
 				    make_stats(eps, T(0), var_wn, eps_dist, "white noise"),
-				    make_stats(zeta, T(0), acf(0, 0, 0), elev_dist,
-				               "elevation")};
+				    make_stats(zeta, T(0), var_elev, elev_dist, "elevation"),
+				    make_stats(heights_x, approx_wave_height(var_elev), T(0),
+				               stats::Rayleigh<T>(stats::stdev(heights_x)),
+				               "wave height x"),
+				    make_stats(heights_y, approx_wave_height(var_elev), T(0),
+				               stats::Rayleigh<T>(stats::stdev(heights_y)),
+				               "wave height y"),
+				    make_stats(
+				        lengths_x, T(0), T(0),
+				        stats::Weibull<T>(stats::mean(lengths_x) /
+				                              std::tgamma(T(1) + T(1) / T(2.0)),
+				                          2.0),
+				        "wave length x"),
+				    make_stats(
+				        lengths_y, T(0), T(0),
+				        stats::Weibull<T>(stats::mean(lengths_y) /
+				                              std::tgamma(T(1) + T(1) / T(2.0)),
+				                          2.0),
+				        "wave length y"),
+				    make_stats(periods, approx_wave_period(var_elev), T(0),
+				               wave_period_dist, "wave period"),
+				};
 				std::copy(stats.begin(), stats.end(),
 				          std::ostream_iterator<Stats<T>>(std::clog, "\n"));
 				write_zeta(zeta);

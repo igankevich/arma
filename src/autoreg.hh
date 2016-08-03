@@ -9,6 +9,7 @@
 #include <random>     // for mt19937, normal_distribution
 #include <stdexcept>  // for runtime_error
 #include <ostream>
+#include <type_traits>
 
 #include <blitz/array.h>     // for Array
 #include <gsl/gsl_complex.h> // for gsl_complex_packed_ptr
@@ -129,23 +130,23 @@ namespace autoreg {
 		Stats(blitz::Array<T, N> rhs, T m, T var, D dist, std::string name)
 		    : _expected_mean(m), _mean(::stats::mean(rhs)),
 		      _expected_variance(var), _variance(::stats::variance(rhs)),
-		      _distance(dist.distance(rhs)), _name(name) {}
+		      _distance(distance(dist, rhs)), _name(name) {}
 
 		friend std::ostream& operator<<(std::ostream& out, const Stats& rhs) {
 			out.precision(5);
-			out << std::setw(colw+2) << rhs._name << std::setw(colw) << rhs._mean
-			    << std::setw(colw) << rhs._variance << std::setw(colw)
-			    << rhs._expected_mean << std::setw(colw)
+			out << std::setw(colw + 2) << rhs._name << std::setw(colw)
+			    << rhs._mean << std::setw(colw) << rhs._variance
+			    << std::setw(colw) << rhs._expected_mean << std::setw(colw)
 			    << rhs._expected_variance << std::setw(colw) << rhs._distance;
 			return out;
 		}
 
 		static void
 		print_header(std::ostream& out) {
-			out << std::setw(colw+2) << "Property" << std::setw(colw) << "Mean"
-			    << std::setw(colw) << "Var" << std::setw(colw) << "ModelMean"
-			    << std::setw(colw) << "ModelVar" << std::setw(colw)
-			    << "QDistance";
+			out << std::setw(colw + 2) << "Property" << std::setw(colw)
+			    << "Mean" << std::setw(colw) << "Var" << std::setw(colw)
+			    << "ModelMean" << std::setw(colw) << "ModelVar"
+			    << std::setw(colw) << "QDistance";
 		}
 
 	private:
@@ -189,7 +190,7 @@ namespace autoreg {
 	template <class It, class Result>
 	void
 	copy_waves(It elevation, size_t n, Result result) {
-		typedef decltype(*elevation) T;
+		typedef typename std::decay<decltype(*elevation)>::type T;
 		int trough_first = -1;
 		int crest = -1;
 		int trough_last = -1;
@@ -255,9 +256,37 @@ namespace autoreg {
 		}
 
 		Array1D<T>
+		lengths_x() {
+			Array1D<T> result(_wavesx.size());
+			periods(_wavesx, result.begin());
+			return result;
+		}
+
+		Array1D<T>
+		lengths_y() {
+			Array1D<T> result(_wavesy.size());
+			periods(_wavesy, result.begin());
+			return result;
+		}
+
+		Array1D<T>
 		heights() {
 			Array1D<T> result(_wavesx.size() + _wavesy.size());
 			heights(_wavesy, heights(_wavesx, result.begin()));
+			return result;
+		}
+
+		Array1D<T>
+		heights_x() {
+			Array1D<T> result(_wavesx.size());
+			heights(_wavesx, result.begin());
+			return result;
+		}
+
+		Array1D<T>
+		heights_y() {
+			Array1D<T> result(_wavesy.size());
+			heights(_wavesy, result.begin());
 			return result;
 		}
 
@@ -324,6 +353,18 @@ namespace autoreg {
 		wave_vector _wavesx;
 		wave_vector _wavesy;
 	};
+
+	template <class T>
+	T
+	approx_wave_height(T variance) {
+		return std::sqrt(T(2) * M_PI * (variance));
+	}
+
+	template <class T>
+	T
+	approx_wave_period(T variance) {
+		return T(4.8) * std::sqrt(approx_wave_height(variance));
+	}
 }
 
 #endif // AUTOREG_HH
