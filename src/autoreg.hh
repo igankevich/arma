@@ -133,16 +133,16 @@ namespace autoreg {
 
 		friend std::ostream& operator<<(std::ostream& out, const Stats& rhs) {
 			out.precision(5);
-			out << std::setw(colw) << rhs._name << std::setw(colw) << rhs._mean
+			out << std::setw(colw+2) << rhs._name << std::setw(colw) << rhs._mean
 			    << std::setw(colw) << rhs._variance << std::setw(colw)
-			    << rhs._expected_mean << std::setw(colw) << rhs._expected_variance
-			    << std::setw(colw) << rhs._distance;
+			    << rhs._expected_mean << std::setw(colw)
+			    << rhs._expected_variance << std::setw(colw) << rhs._distance;
 			return out;
 		}
 
 		static void
 		print_header(std::ostream& out) {
-			out << std::setw(colw) << "Property" << std::setw(colw) << "Mean"
+			out << std::setw(colw+2) << "Property" << std::setw(colw) << "Mean"
 			    << std::setw(colw) << "Var" << std::setw(colw) << "ModelMean"
 			    << std::setw(colw) << "ModelVar" << std::setw(colw)
 			    << "QDistance";
@@ -164,6 +164,166 @@ namespace autoreg {
 	make_stats(blitz::Array<T, N> rhs, T m, T var, D dist, std::string name) {
 		return Stats<T>(rhs, m, var, dist, name);
 	}
+
+	template <class T>
+	struct Wave {
+
+		Wave() = default;
+		Wave(T height, T period) : _height(height), _period(period) {}
+
+		T
+		height() const {
+			return _height;
+		}
+
+		T
+		period() const {
+			return _period;
+		}
+
+	private:
+		T _height = 0;
+		T _period = 0;
+	};
+
+	template <class It, class Result>
+	void
+	copy_waves(It elevation, size_t n, Result result) {
+		typedef decltype(*elevation) T;
+		int trough_first = -1;
+		int crest = -1;
+		int trough_last = -1;
+		T elev0 = *elevation;
+		++elevation;
+		T elev1 = *elevation;
+		++elevation;
+		T elev_trough_first, elev_trough_last, elev_crest;
+		for (size_t j = 2; j < n; ++j) {
+			T elev2 = *elevation;
+			if (elev0 < elev1 && elev2 < elev1) {
+				crest = j - 1;
+				elev_crest = elev1;
+			} else if (elev1 < elev0 && elev1 < elev2) {
+				if (trough_first == -1) {
+					trough_first = j - 1;
+					elev_trough_first = elev1;
+				} else {
+					trough_last = j - 1;
+					elev_trough_last = elev1;
+				}
+			}
+			if (trough_first != -1 && crest != -1 && trough_last != -1) {
+				const T height =
+				    (T(2) * elev_crest - elev_trough_first - elev_trough_last) *
+				    T(0.5);
+				const T period = trough_last - trough_first;
+				*result = Wave<T>(height, period);
+				++result;
+				trough_first = trough_last;
+				crest = -1;
+				trough_last = -1;
+			}
+			elev0 = elev1;
+			elev1 = elev2;
+			++elevation;
+		}
+	}
+
+	template <class T>
+	struct Wave_field {
+
+		typedef std::vector<Wave<T>> wave_vector;
+
+		explicit Wave_field(Array3D<T> elevation) {
+			extract_waves_t(elevation);
+			extract_waves_x(elevation);
+			extract_waves_y(elevation);
+		}
+
+		Array1D<T>
+		periods() {
+			Array1D<T> result(_wavest.size());
+			periods(_wavest, result.begin());
+			return result;
+		}
+
+		Array1D<T>
+		lengths() {
+			Array1D<T> result(_wavesx.size() + _wavesy.size());
+			periods(_wavesy, periods(_wavesx, result.begin()));
+			return result;
+		}
+
+		Array1D<T>
+		heights() {
+			Array1D<T> result(_wavesx.size() + _wavesy.size());
+			heights(_wavesy, heights(_wavesx, result.begin()));
+			return result;
+		}
+
+	private:
+		template <class Result>
+		Result
+		heights(const wave_vector& rhs, Result result) {
+			return std::transform(
+			    rhs.begin(), rhs.end(), result,
+			    [](const Wave<T>& wave) { return wave.height(); });
+		}
+
+		template <class Result>
+		Result
+		periods(const wave_vector& rhs, Result result) {
+			return std::transform(
+			    rhs.begin(), rhs.end(), result,
+			    [](const Wave<T>& wave) { return wave.period(); });
+		}
+
+		void
+		extract_waves_t(Array3D<T> elevation) {
+			using blitz::Range;
+			const int nx = elevation.extent(1);
+			const int ny = elevation.extent(2);
+			auto ins = std::back_inserter(_wavest);
+			for (int i = 0; i < nx; ++i) {
+				for (int j = 0; j < ny; ++j) {
+					Array1D<T> elev1d = elevation(Range::all(), i, j);
+					copy_waves(elev1d.begin(), elev1d.numElements(), ins);
+				}
+			}
+		}
+
+		void
+		extract_waves_x(Array3D<T> elevation) {
+			using blitz::Range;
+			const int nt = elevation.extent(0);
+			const int ny = elevation.extent(2);
+			auto ins = std::back_inserter(_wavesx);
+			for (int i = 0; i < nt; ++i) {
+				for (int j = 0; j < ny; ++j) {
+					Array1D<T> elev1d = elevation(i, Range::all(), j);
+					copy_waves(elev1d.begin(), elev1d.numElements(), ins);
+				}
+			}
+		}
+
+		void
+		extract_waves_y(Array3D<T> elevation) {
+			using blitz::Range;
+			const int nt = elevation.extent(0);
+			const int nx = elevation.extent(1);
+			auto ins = std::back_inserter(_wavesy);
+			for (int i = 0; i < nt; ++i) {
+				for (int j = 0; j < nx; ++j) {
+					Array1D<T> elev1d = elevation(i, j, Range::all());
+					copy_waves(elev1d.begin(), elev1d.numElements(), ins);
+				}
+			}
+		}
+
+		wave_vector _wavest;
+		wave_vector _wavesx;
+		wave_vector _wavesy;
+	};
 }
 
 #endif // AUTOREG_HH

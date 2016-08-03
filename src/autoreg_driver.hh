@@ -95,16 +95,14 @@ namespace autoreg {
 				Zeta<T> zeta = model(eps);
 				Stats<T>::print_header(std::clog);
 				std::clog << std::endl;
-				std::clog << make_stats(
-				                 eps, T(0), var_wn,
-				                 stats::Gaussian<T>(0, std::sqrt(var_wn)),
-				                 "white noise")
-				          << std::endl;
-				T stdev = std::sqrt(acf(0, 0, 0));
-				std::clog << make_stats(zeta, T(0), acf(0, 0, 0),
-				                        stats::Gaussian<T>(0, stdev),
-				                        "elevation")
-				          << std::endl;
+				stats::Gaussian<T> eps_dist(0, std::sqrt(var_wn));
+				stats::Gaussian<T> elev_dist(0, std::sqrt(acf(0, 0, 0)));
+				std::vector<Stats<T>> stats = {
+				    make_stats(eps, T(0), var_wn, eps_dist, "white noise"),
+				    make_stats(zeta, T(0), acf(0, 0, 0), elev_dist,
+				               "elevation")};
+				std::copy(stats.begin(), stats.end(),
+				          std::ostream_iterator<Stats<T>>(std::clog, "\n"));
 				write_zeta(zeta);
 			} else {
 				std::clog << "Invalid model: " << _model << std::endl;
