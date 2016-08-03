@@ -13,10 +13,11 @@
 #include "autoreg.hh" // for mean, variance, ACF_variance, approx_acf, comp...
 #include "ar_model.hh"
 #include "ma_model.hh"
-#include "acf.hh"     // for standing_wave_ACF, propagating_wave_ACF
+#include "acf.hh" // for standing_wave_ACF, propagating_wave_ACF
 #include "params.hh"
 #include "grid.hh"
 #include "statistics.hh"
+#include "distribution.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -57,43 +58,53 @@ namespace autoreg {
 		act() {
 			echo_parameters();
 			ACF_function acf_func = get_acf_function();
-			ACF<T> acf_model = acf_func(_acfgrid.delta(), _acfgrid.size());
-			std::clog << "ACF variance = " << ACF_variance(acf_model)
-			          << std::endl;
+			ACF<T> acf = acf_func(_acfgrid.delta(), _acfgrid.size());
+			std::clog << "ACF variance = " << ACF_variance(acf) << std::endl;
 			{
 				std::ofstream out("acf");
-				out << acf_model;
+				out << acf;
 			}
 			{
 				std::ofstream out("zdelta");
 				out << _acfgrid.delta();
 			}
 			if (_model == "AR") {
-				Autoregressive_model<T> model(acf_model, _arorder, _doleastsquares);
+				Autoregressive_model<T> model(acf, _arorder, _doleastsquares);
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
 				Zeta<T> zeta = generate_white_noise(_outgrid.size(), var_wn);
 				std::clog << "mean(eps) = " << stats::mean(zeta) << std::endl;
-				std::clog << "variance(eps) = " << stats::variance(zeta) << std::endl;
+				std::clog << "variance(eps) = " << stats::variance(zeta)
+				          << std::endl;
 				model(zeta);
 				/// Estimate mean/variance with ramp-up region removed.
 				blitz::RectDomain<3> subdomain(_arorder, zeta.shape() - 1);
-				std::clog << "mean(zeta) = " << stats::mean(zeta(subdomain)) << std::endl;
-				std::clog << "variance(zeta) = " << stats::variance(zeta(subdomain)) << std::endl;
+				std::clog << "mean(zeta) = " << stats::mean(zeta(subdomain))
+				          << std::endl;
+				std::clog << "variance(zeta) = "
+				          << stats::variance(zeta(subdomain)) << std::endl;
 				write_zeta(zeta);
 			} else if (_model == "MA") {
-				Moving_average_model<T> model(acf_model, _arorder);
+				Moving_average_model<T> model(acf, _arorder);
 				model.determine_coefficients(1000, T(1e-5), T(1e-6));
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
 				Zeta<T> eps = generate_white_noise(_outgrid.size(), var_wn);
-				std::clog << "mean(eps) = " << stats::mean(eps) << std::endl;
-				std::clog << "variance(eps) = " << stats::variance(eps) << std::endl;
 				Zeta<T> zeta = model(eps);
-				std::clog << "mean(zeta) = " << stats::mean(zeta) << std::endl;
-				std::clog << "variance(zeta) = " << stats::variance(zeta) << std::endl;
+				Stats<T>::print_header(std::clog);
+				std::clog << std::endl;
+				std::clog << make_stats(
+				                 eps, T(0), var_wn,
+				                 stats::Gaussian<T>(0, std::sqrt(var_wn)),
+				                 "white noise")
+				          << std::endl;
+				T stdev = std::sqrt(acf(0, 0, 0));
+				std::clog << make_stats(zeta, T(0), acf(0, 0, 0),
+				                        stats::Gaussian<T>(0, stdev),
+				                        "elevation")
+				          << std::endl;
 				write_zeta(zeta);
 			} else {
 				std::clog << "Invalid model: " << _model << std::endl;
@@ -101,9 +112,10 @@ namespace autoreg {
 			}
 		}
 
-		/// Read AR model parameters from an input stream, generate default ACF
-		/// and
-		/// validate all the parameters.
+		/**
+		Read AR model parameters from an input stream, generate default ACF
+		and validate all the parameters.
+		*/
 		template <class V>
 		friend std::istream& operator>>(std::istream& in, Autoreg_model<V>& m) {
 			m.read_parameters(in);

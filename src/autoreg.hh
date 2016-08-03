@@ -8,6 +8,7 @@
 #include <functional> // for bind
 #include <random>     // for mt19937, normal_distribution
 #include <stdexcept>  // for runtime_error
+#include <ostream>
 
 #include <blitz/array.h>     // for Array
 #include <gsl/gsl_complex.h> // for gsl_complex_packed_ptr
@@ -15,6 +16,8 @@
 #include <gsl/gsl_poly.h>    // for gsl_poly_complex_solve, gsl_poly_com...
 
 #include "types.hh" // for Zeta, ACF, size3
+#include "statistics.hh"
+#include "distribution.hh"
 
 /// @file
 /// File with auxiliary subroutines.
@@ -117,6 +120,49 @@ namespace autoreg {
 			    "white noise generator produced some NaN/Inf");
 		}
 		return eps;
+	}
+
+	template <class T>
+	struct Stats {
+
+		template <int N, class D>
+		Stats(blitz::Array<T, N> rhs, T m, T var, D dist, std::string name)
+		    : _expected_mean(m), _mean(::stats::mean(rhs)),
+		      _expected_variance(var), _variance(::stats::variance(rhs)),
+		      _distance(dist.distance(rhs)), _name(name) {}
+
+		friend std::ostream& operator<<(std::ostream& out, const Stats& rhs) {
+			out.precision(5);
+			out << std::setw(colw) << rhs._name << std::setw(colw) << rhs._mean
+			    << std::setw(colw) << rhs._variance << std::setw(colw)
+			    << rhs._expected_mean << std::setw(colw) << rhs._expected_variance
+			    << std::setw(colw) << rhs._distance;
+			return out;
+		}
+
+		static void
+		print_header(std::ostream& out) {
+			out << std::setw(colw) << "Property" << std::setw(colw) << "Mean"
+			    << std::setw(colw) << "Var" << std::setw(colw) << "ModelMean"
+			    << std::setw(colw) << "ModelVar" << std::setw(colw)
+			    << "QDistance";
+		}
+
+	private:
+		T _expected_mean;
+		T _mean;
+		T _expected_variance;
+		T _variance;
+		T _distance;
+		std::string _name;
+
+		static const int colw = 13;
+	};
+
+	template <class T, int N, class D>
+	Stats<T>
+	make_stats(blitz::Array<T, N> rhs, T m, T var, D dist, std::string name) {
+		return Stats<T>(rhs, m, var, dist, name);
 	}
 }
 
