@@ -25,14 +25,18 @@ namespace autoreg {
 	template <class T>
 	struct Autoregressive_model {
 
-		Autoregressive_model(Array3D<T> acf, size3 order, bool do_least_squares)
-		    : _acf(acf), _order(order),
-		      _phi(compute_coefficients(_acf, do_least_squares)) {}
+		Autoregressive_model(Array3D<T> acf, size3 order)
+		    : _acf(acf), _order(order), _phi(_order) {}
 
 		T
 		white_noise_variance() {
-			blitz::RectDomain<3> subdomain(size3(0, 0, 0), _phi.shape() - 1);
-			return _acf(0, 0, 0) - blitz::sum(_phi * _acf(subdomain));
+			return white_noise_variance(_phi);
+		}
+
+		T
+		white_noise_variance(Array3D<T> phi) {
+			blitz::RectDomain<3> subdomain(size3(0, 0, 0), phi.shape() - 1);
+			return _acf(0, 0, 0) - blitz::sum(phi * _acf(subdomain));
 		}
 
 		/**
@@ -67,21 +71,25 @@ namespace autoreg {
 			validate_process(_phi);
 		}
 
-	private:
-		Array3D<T>
-		compute_coefficients(Array3D<T> acf, bool do_least_squares) {
+		void
+		determine_coefficients(bool do_least_squares) {
+			determine_coefficients_iteratively();
+		}
 
-			if (_order(0) > acf.extent(0) || _order(1) > acf.extent(1) ||
-			    _order(2) > acf.extent(2)) {
+		void
+		determine_coefficients_old(bool do_least_squares) {
+
+			if (_order(0) > _acf.extent(0) || _order(1) > _acf.extent(1) ||
+			    _order(2) > _acf.extent(2)) {
 				std::clog << "AR model order is larger than ACF "
 				             "size:\n\tAR model "
 				             "order = "
-				          << _order << "\n\tACF size = " << acf.shape()
+				          << _order << "\n\tACF size = " << _acf.shape()
 				          << std::endl;
 				throw std::runtime_error("bad AR model order");
 			}
 
-			//acf = acf / acf(0, 0, 0);
+			//_acf = _acf / _acf(0, 0, 0);
 
 			using blitz::Range;
 			using blitz::toEnd;
@@ -89,9 +97,9 @@ namespace autoreg {
 			// matrices
 			std::function<Array2D<T>()> generator;
 			if (do_least_squares) {
-				generator = AC_matrix_generator_LS<T>(acf, _order);
+				generator = AC_matrix_generator_LS<T>(_acf, _order);
 			} else {
-				generator = AC_matrix_generator<T>(acf, _order);
+				generator = AC_matrix_generator<T>(_acf, _order);
 			}
 			Array2D<T> acm = generator();
 			{
@@ -121,15 +129,71 @@ namespace autoreg {
 			assert(linalg::is_symmetric(lhs));
 			assert(linalg::is_positive_definite(lhs));
 			linalg::cholesky(lhs, rhs);
-			Array3D<T> phi(_order);
-			assert(phi.numElements() == rhs.numElements() + 1);
-			phi(0, 0, 0) = 0;
-			std::copy_n(rhs.data(), rhs.numElements(), phi.data() + 1);
+			assert(_phi.numElements() == rhs.numElements() + 1);
+			_phi(0, 0, 0) = 0;
+			std::copy_n(rhs.data(), rhs.numElements(), _phi.data() + 1);
 			{
 				std::ofstream out("ar_coefs");
-				out << phi;
+				out << _phi;
 			}
-			return phi;
+		}
+
+	private:
+		/**
+		Darbin algorithm. Partial autocovariation function \f$\phi_{k,j}\f$,
+		where k --- AR process order, j --- coefficient index.
+		*/
+		void
+		determine_coefficients_iteratively() {
+			Array3D<T> r(_acf / _acf(0, 0, 0));
+			Array3D<T> phi0(_order), phi1(_order);
+			phi0 = 0;
+			phi1 = 0;
+			const int max_order = _order(0);
+			phi0(0, 0, 0) = r(0, 0, 0);
+			for (int p = 1; p < max_order; ++p) {
+				size3 order(p + 1, p + 1, p + 1);
+				T sum1 = 0;
+				for (int i = 0; i < p; ++i) {
+					for (int j = 0; j < p; ++j) {
+						for (int k = 0; k < p; ++k) {
+							sum1 += phi0(i, j, k) *
+							        r(p - i - 1, p - j - 1, p - k - 1);
+						}
+					}
+				}
+				blitz::RectDomain<3> sub2(size3(0, 0, 0),
+				                          size3(p - 1, p - 1, p - 1));
+				T sum2 = blitz::sum(phi0(sub2) * r(sub2));
+				/// Compute the last coefficient.
+				T last_coef = (r(p, p, p) - sum1) / (T(1) - sum2);
+				phi1(p, p, p) = last_coef;
+				for (int i = 0; i < p + 1; ++i) {
+					for (int j = 0; j < p + 1; ++j) {
+						for (int k = 0; k < p + 1; ++k) {
+							phi1(i, j, k) =
+							    phi0(i, j, k) -
+							    last_coef * phi0(p - i, p - j, p - k);
+						}
+					}
+				}
+				/// Restore the last coefficient.
+				phi1(p, p, p) = last_coef;
+				phi0 = phi1;
+
+				std::clog << __func__
+				          << ": var_wn=" << white_noise_variance(phi1)
+				          << std::endl;
+
+				if (!blitz::all(blitz::isfinite(phi1))) {
+					std::clog << "sum1 = " << sum1 << std::endl;
+					std::clog << "sum2 = " << sum2 << std::endl;
+					std::clog << "last = " << last_coef << std::endl;
+					blitz::RectDomain<3> subdomain(size3(0, 0, 0), order - 1);
+					std::clog << "phi1 = \n" << phi1(subdomain) << std::endl;
+					break;
+				}
+			}
 		}
 
 		Array3D<T> _acf;

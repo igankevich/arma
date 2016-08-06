@@ -72,7 +72,8 @@ namespace autoreg {
 			Zeta<T> eps(_outgrid.size());
 			Zeta<T> zeta(_outgrid.size());
 			if (_model == "AR") {
-				Autoregressive_model<T> model(acf, _arorder, _doleastsquares);
+				Autoregressive_model<T> model(acf, _arorder);
+				model.determine_coefficients(_doleastsquares);
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
