@@ -81,7 +81,7 @@ namespace autoreg {
 				throw std::runtime_error("bad AR model order");
 			}
 
-			acf = acf / acf(0, 0, 0);
+			//acf = acf / acf(0, 0, 0);
 
 			using blitz::Range;
 			using blitz::toEnd;

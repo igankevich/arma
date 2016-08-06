@@ -13,6 +13,7 @@
 #include "autoreg.hh" // for mean, variance, ACF_variance, approx_acf, comp...
 #include "ar_model.hh"
 #include "ma_model.hh"
+#include "arma_model.hh"
 #include "acf.hh" // for standing_wave_ACF, propagating_wave_ACF
 #include "params.hh"
 #include "grid.hh"
@@ -68,72 +69,34 @@ namespace autoreg {
 				std::ofstream out("zdelta");
 				out << _acfgrid.delta();
 			}
+			Zeta<T> eps(_outgrid.size());
+			Zeta<T> zeta(_outgrid.size());
 			if (_model == "AR") {
 				Autoregressive_model<T> model(acf, _arorder, _doleastsquares);
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
-				Zeta<T> zeta = generate_white_noise(_outgrid.size(), var_wn);
-				std::clog << "mean(eps) = " << stats::mean(zeta) << std::endl;
-				std::clog << "variance(eps) = " << stats::variance(zeta)
-				          << std::endl;
-				model(zeta);
+				eps = generate_white_noise(_outgrid.size(), var_wn);
+				Zeta<T> tmp = eps.copy();
+				model(tmp);
+				write_zeta(tmp);
 				/// Estimate mean/variance with ramp-up region removed.
-				blitz::RectDomain<3> subdomain(_arorder, zeta.shape() - 1);
-				std::clog << "mean(zeta) = " << stats::mean(zeta(subdomain))
-				          << std::endl;
-				std::clog << "variance(zeta) = "
-				          << stats::variance(zeta(subdomain)) << std::endl;
-				write_zeta(zeta);
+				blitz::RectDomain<3> subdomain(_arorder, tmp.shape() - 1);
+				zeta.resize(subdomain[0], subdomain[1], subdomain[2]);
+				std::clog << "Zeta size = " << zeta.shape() << std::endl;
+				zeta = tmp(subdomain);
+				zeta = tmp;
+				gather_statistics(acf, eps, zeta, model);
 			} else if (_model == "MA") {
 				Moving_average_model<T> model(acf, _arorder);
 				model.determine_coefficients(1000, T(1e-5), T(1e-6));
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
-				Zeta<T> eps = generate_white_noise(_outgrid.size(), var_wn);
-				Zeta<T> zeta = model(eps);
-				Stats<T>::print_header(std::clog);
-				std::clog << std::endl;
-				T var_elev = acf(0, 0, 0);
-				Wave_field<T> wave_field(zeta);
-				Array1D<T> heights_x = wave_field.heights_x();
-				Array1D<T> heights_y = wave_field.heights_y();
-				Array1D<T> periods = wave_field.periods();
-				Array1D<T> lengths_x = wave_field.lengths_x();
-				Array1D<T> lengths_y = wave_field.lengths_y();
-				stats::Gaussian<T> eps_dist(0, std::sqrt(var_wn));
-				stats::Gaussian<T> elev_dist(0, std::sqrt(var_elev));
-				stats::Weibull<T> wave_period_dist(
-				    stats::mean(periods) / std::tgamma(T(1) + T(1) / T(2.33)),
-				    2.33);
-				std::vector<Stats<T>> stats = {
-				    make_stats(eps, T(0), var_wn, eps_dist, "white noise"),
-				    make_stats(zeta, T(0), var_elev, elev_dist, "elevation"),
-				    make_stats(heights_x, approx_wave_height(var_elev), T(0),
-				               stats::Rayleigh<T>(stats::stdev(heights_x)),
-				               "wave height x"),
-				    make_stats(heights_y, approx_wave_height(var_elev), T(0),
-				               stats::Rayleigh<T>(stats::stdev(heights_y)),
-				               "wave height y"),
-				    make_stats(
-				        lengths_x, T(0), T(0),
-				        stats::Weibull<T>(stats::mean(lengths_x) /
-				                              std::tgamma(T(1) + T(1) / T(2.0)),
-				                          2.0),
-				        "wave length x"),
-				    make_stats(
-				        lengths_y, T(0), T(0),
-				        stats::Weibull<T>(stats::mean(lengths_y) /
-				                              std::tgamma(T(1) + T(1) / T(2.0)),
-				                          2.0),
-				        "wave length y"),
-				    make_stats(periods, approx_wave_period(var_elev), T(0),
-				               wave_period_dist, "wave period"),
-				};
-				std::copy(stats.begin(), stats.end(),
-				          std::ostream_iterator<Stats<T>>(std::clog, "\n"));
+				eps = generate_white_noise(_outgrid.size(), var_wn);
+				zeta = model(eps);
 				write_zeta(zeta);
+				gather_statistics(acf, eps, zeta, model);
 			} else {
 				std::clog << "Invalid model: " << _model << std::endl;
 				throw std::runtime_error("bad model");
@@ -152,6 +115,54 @@ namespace autoreg {
 		}
 
 	private:
+		template <class Model>
+		void
+		gather_statistics(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta, Model model) {
+			const T var_wn = model.white_noise_variance();
+			Stats<T>::print_header(std::clog);
+			std::clog << std::endl;
+			T var_elev = acf(0, 0, 0);
+			Wave_field<T> wave_field(zeta);
+			Array1D<T> heights_x = wave_field.heights_x();
+			Array1D<T> heights_y = wave_field.heights_y();
+			Array1D<T> periods = wave_field.periods();
+			Array1D<T> lengths_x = wave_field.lengths_x();
+			Array1D<T> lengths_y = wave_field.lengths_y();
+			stats::Gaussian<T> eps_dist(0, std::sqrt(var_wn));
+			stats::Gaussian<T> elev_dist(0, std::sqrt(var_elev));
+			stats::Weibull<T> wave_period_dist(
+			    stats::mean(periods) / std::tgamma(T(1) + T(1) / T(2.33)),
+			    2.33);
+			std::vector<Stats<T>> stats = {
+			    make_stats(eps, T(0), var_wn, eps_dist, "white noise"),
+			    make_stats(zeta, T(0), var_elev, elev_dist, "elevation"),
+			    make_stats(heights_x, approx_wave_height(var_elev), T(0),
+			               stats::Rayleigh<T>(stats::stdev(heights_x)),
+			               "wave height x"),
+			    make_stats(heights_y, approx_wave_height(var_elev), T(0),
+			               stats::Rayleigh<T>(stats::stdev(heights_y)),
+			               "wave height y"),
+			    make_stats(
+			        lengths_x, T(0), T(0),
+			        stats::Weibull<T>(stats::mean(lengths_x) /
+			                              std::tgamma(T(1) + T(1) / T(2.0)),
+			                          2.0),
+			        "wave length x"),
+			    make_stats(
+			        lengths_y, T(0), T(0),
+			        stats::Weibull<T>(stats::mean(lengths_y) /
+			                              std::tgamma(T(1) + T(1) / T(2.0)),
+			                          2.0),
+			        "wave length y"),
+			    make_stats(periods, approx_wave_period(var_elev), T(0),
+			               wave_period_dist, "wave period"),
+			};
+			std::copy(stats.begin(), stats.end(),
+			          std::ostream_iterator<Stats<T>>(std::clog, "\n"));
+			std::for_each(stats.begin(), stats.end(),
+			              std::mem_fn(&Stats<T>::write_quantile_graph));
+		}
+
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {

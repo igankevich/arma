@@ -9,6 +9,7 @@
 #include <random>     // for mt19937, normal_distribution
 #include <stdexcept>  // for runtime_error
 #include <ostream>
+#include <fstream>
 #include <type_traits>
 
 #include <blitz/array.h>     // for Array
@@ -130,14 +131,29 @@ namespace autoreg {
 		Stats(blitz::Array<T, N> rhs, T m, T var, D dist, std::string name)
 		    : _expected_mean(m), _mean(::stats::mean(rhs)),
 		      _expected_variance(var), _variance(::stats::variance(rhs)),
-		      _distance(distance(dist, rhs)), _name(name) {}
+		      _graph(dist, rhs), _name(name) {}
+
+		T
+		qdistance() const {
+			return _graph.distance();
+		}
+
+		void
+		write_quantile_graph() {
+			std::string filename;
+			std::transform(
+			    _name.begin(), _name.end(), std::back_inserter(filename),
+			    [](char ch) { return !std::isalnum(ch) ? '-' : ch; });
+			std::ofstream out(filename);
+			out << _graph;
+		}
 
 		friend std::ostream& operator<<(std::ostream& out, const Stats& rhs) {
 			out.precision(5);
 			out << std::setw(colw + 2) << rhs._name << std::setw(colw)
 			    << rhs._mean << std::setw(colw) << rhs._variance
 			    << std::setw(colw) << rhs._expected_mean << std::setw(colw)
-			    << rhs._expected_variance << std::setw(colw) << rhs._distance;
+			    << rhs._expected_variance << std::setw(colw) << rhs.qdistance();
 			return out;
 		}
 
@@ -154,7 +170,7 @@ namespace autoreg {
 		T _mean;
 		T _expected_variance;
 		T _variance;
-		T _distance;
+		stats::Quantile_graph<T> _graph;
 		std::string _name;
 
 		static const int colw = 13;
