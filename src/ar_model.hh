@@ -73,7 +73,8 @@ namespace autoreg {
 
 		void
 		determine_coefficients(bool do_least_squares) {
-			determine_coefficients_iteratively();
+			// determine_coefficients_iteratively();
+			determine_coefficients_old(do_least_squares);
 		}
 
 		void
@@ -145,53 +146,68 @@ namespace autoreg {
 		*/
 		void
 		determine_coefficients_iteratively() {
+			using blitz::all;
+			using blitz::isfinite;
+			using blitz::sum;
+			using blitz::RectDomain;
+			const size3 _0(0, 0, 0);
 			Array3D<T> r(_acf / _acf(0, 0, 0));
 			Array3D<T> phi0(_order), phi1(_order);
 			phi0 = 0;
 			phi1 = 0;
 			const int max_order = _order(0);
-			phi0(0, 0, 0) = r(0, 0, 0);
+			//			phi0(0, 0, 0) = r(0, 0, 0);
 			for (int p = 1; p < max_order; ++p) {
-				size3 order(p + 1, p + 1, p + 1);
-				T sum1 = 0;
-				for (int i = 0; i < p; ++i) {
-					for (int j = 0; j < p; ++j) {
-						for (int k = 0; k < p; ++k) {
-							sum1 += phi0(i, j, k) *
-							        r(p - i - 1, p - j - 1, p - k - 1);
-						}
-					}
+				const size3 order(p + 1, p + 1, p + 1);
+				/// In three dimensions there are many "last" coefficients. We
+				/// collect all their indices into a container to iterate over
+				/// them.
+				std::vector<size3> indices;
+				// for (int i = 0; i < p; ++i) indices.emplace_back(i, p, p);
+				// for (int i = 0; i < p; ++i) indices.emplace_back(p, i, p);
+				// for (int i = 0; i < p; ++i) indices.emplace_back(p, p, i);
+				indices.emplace_back(p, p, p);
+				/// Compute coefficients on all three borders.
+				for (const size3& idx : indices) {
+					const RectDomain<3> sub1(_0, idx), rsub1(idx, _0);
+					const T sum1 = sum(phi0(sub1) * r(rsub1));
+					const T sum2 = sum(phi0(sub1) * r(sub1));
+					phi0(idx) = (r(idx) - sum1) / (T(1) - sum2);
 				}
-				blitz::RectDomain<3> sub2(size3(0, 0, 0),
-				                          size3(p - 1, p - 1, p - 1));
-				T sum2 = blitz::sum(phi0(sub2) * r(sub2));
-				/// Compute the last coefficient.
-				T last_coef = (r(p, p, p) - sum1) / (T(1) - sum2);
-				phi1(p, p, p) = last_coef;
-				for (int i = 0; i < p + 1; ++i) {
-					for (int j = 0; j < p + 1; ++j) {
-						for (int k = 0; k < p + 1; ++k) {
-							phi1(i, j, k) =
-							    phi0(i, j, k) -
-							    last_coef * phi0(p - i, p - j, p - k);
-						}
-					}
+				phi1 = phi0;
+				/// Compute all other coefficients.
+				{
+					using namespace blitz::tensor;
+					const size3 idx(p, p, p);
+					const RectDomain<3> sub(_0, idx), rsub(idx, _0);
+					phi1(sub) = phi0(sub) - phi1(p, p, p) * phi0(rsub);
 				}
-				/// Restore the last coefficient.
-				phi1(p, p, p) = last_coef;
 				phi0 = phi1;
 
-				std::clog << __func__
-				          << ": var_wn=" << white_noise_variance(phi1)
-				          << std::endl;
-
-				if (!blitz::all(blitz::isfinite(phi1))) {
-					std::clog << "sum1 = " << sum1 << std::endl;
-					std::clog << "sum2 = " << sum2 << std::endl;
-					std::clog << "last = " << last_coef << std::endl;
-					blitz::RectDomain<3> subdomain(size3(0, 0, 0), order - 1);
+				/// Validate white noise variance.
+				const T var_wn = white_noise_variance(phi1);
+				if (!std::isfinite(var_wn)) {
+					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+					          << ": bad white noise variance = " << var_wn
+					          << std::endl;
+					std::clog << "Indices: \n";
+					std::copy(indices.begin(), indices.end(),
+					          std::ostream_iterator<size3>(std::clog, "\n"));
+					std::clog << std::endl;
+					RectDomain<3> subdomain(_0, order - 1);
 					std::clog << "phi1 = \n" << phi1(subdomain) << std::endl;
-					break;
+					throw std::runtime_error("bad white noise variance");
+				}
+#ifndef NDEBUG
+				/// Print solver state.
+				std::clog << __func__ << ':' << "Iteration=" << p
+				          << ", var_wn=" << var_wn << std::endl;
+#endif
+
+				if (!all(isfinite(phi1))) {
+					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+					          << ": bad coefficients = \n" << phi1 << std::endl;
+					throw std::runtime_error("bad AR model coefficients");
 				}
 			}
 		}
