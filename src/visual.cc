@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
+#include <algorithm>
 
 #include <GL/gl.h>
 #include <GL/freeglut.h>
@@ -22,6 +23,8 @@ enum Projection {
 
 Zeta<Real> func;
 Vector<Real, 3> delta(0.1, 1.0, 1.0);
+Vector<int, 3> dimensions(blitz::firstDim, blitz::secondDim, blitz::thirdDim);
+Vector<char, 3> dimension_names('t', 'x', 'y');
 
 const Real ROT_STEP = 90;
 
@@ -30,7 +33,7 @@ bool paused = true;
 int timer = 0;
 int dragX = 0;
 int dragY = 0;
-int rotation = 0; /// dimension rotation
+int dimension_order = 0; /// dimension dimension_order
 int part_count = 4;
 Real interval_factor = 0;
 int tail = 0;
@@ -77,25 +80,28 @@ resetView() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	const Real m = std::min(delta[1], delta[2]);
-	glScalef(delta[1]/m, delta[2]/m, 1.0f);
+	glScalef(delta[1] / m, delta[2] / m, 1.0f);
 	// float3 offset = (dom.max() - dom.min())*-0.5;
 	//	glTranslatef(offset[1], offset[2], -100.0f);
 	glTranslatef(0, 0, -100.0f);
 	glRotatef(-30.0f, 1, 0, 0);
 }
 
+template<class T, int N>
+void
+rotate(blitz::TinyVector<T, N>& rhs) {
+	std::rotate(rhs.begin(), rhs.end()-1, rhs.end());
+}
+
 void
 rotate_dimensions() {
-	std::clog << "Rotation is disabled" << std::endl;
-	/*
-	    dom.min().rot(rotation);
-	    dom.max().rot(rotation);
-	    dom.count().rot(rotation);
-	    timer = min(timer, dom.count()[0]);
-	    resetView();
-	    clog << "Rot = " << rotation << endl;
-	    clog << "Rotated domain = " << dom << endl;
-	*/
+	rotate(delta);
+	rotate(dimensions);
+	rotate(dimension_names);
+	func.transposeSelf(dimensions(0), dimensions(1), dimensions(2));
+	timer = std::min(timer, func.extent(0));
+	resetView();
+	std::clog << "Dimensions = " << dimension_names << std::endl;
 }
 
 void
@@ -190,13 +196,11 @@ onKeyPressed(unsigned char key, int, int) {
 	if (key == 'k') glTranslatef(0.0f, 2.0f, 0.0f);
 	if (key == 'j') glTranslatef(0.0f, -2.0f, 0.0f);
 
-	/*
-	    if (key == 'r') {
-	        rotation++;
-	        rotation %= 3;
-	        rotate_dimensions();
-	    }
-	*/
+	if (key == 'r') {
+		++dimension_order;
+		dimension_order %= 3;
+		rotate_dimensions();
+	}
 	glutPostRedisplay();
 }
 
@@ -218,11 +222,11 @@ onSpecialKeyPressed(int key, int, int) {
 	if (key == GLUT_KEY_DOWN) glScalef(0.9f, 0.9f, 0.9f);
 
 	/*
-	    // dim rotation
+	    // dim dimension_order
 	    if (GLUT_ACTIVE_SHIFT == (mods & GLUT_ACTIVE_SHIFT)) {
-	        if (key == GLUT_KEY_LEFT)  if (rotation > 0) rotation--;
-	        if (key == GLUT_KEY_RIGHT) rotation++;
-	        rotation %= 3;
+	        if (key == GLUT_KEY_LEFT)  if (dimension_order > 0) dimension_order--;
+	        if (key == GLUT_KEY_RIGHT) dimension_order++;
+	        dimension_order %= 3;
 	        rotate_dimensions();
 	    }
 	*/
@@ -290,9 +294,7 @@ read_valarray(std::istream& in) {
 void
 read_delta() {
 	std::ifstream in("zdelta");
-	if (in.is_open()) {
-		in >> delta;
-	}
+	if (in.is_open()) { in >> delta; }
 }
 
 void
