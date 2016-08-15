@@ -14,6 +14,7 @@
 #include "ar_model.hh"
 #include "ma_model.hh"
 #include "arma_model.hh"
+#include "simulation_model.hh"
 #include "acf.hh" // for standing_wave_ACF, propagating_wave_ACF
 #include "params.hh"
 #include "grid.hh"
@@ -71,7 +72,7 @@ namespace autoreg {
 			}
 			Zeta<T> eps(_outgrid.size());
 			Zeta<T> zeta(_outgrid.size());
-			if (_model == "AR") {
+			if (_model == Simulation_model::Autoregressive) {
 				Autoregressive_model<T> model(acf, _arorder);
 				model.determine_coefficients(_doleastsquares);
 				model.validate();
@@ -88,7 +89,7 @@ namespace autoreg {
 				zeta = tmp(subdomain);
 				zeta = tmp;
 				gather_statistics(acf, eps, zeta, model);
-			} else if (_model == "MA") {
+			} else if (_model == Simulation_model::Moving_average) {
 				Moving_average_model<T> model(acf, _arorder);
 				model.determine_coefficients(1000, T(1e-5), T(1e-6));
 				model.validate();
@@ -98,9 +99,6 @@ namespace autoreg {
 				zeta = model(eps);
 				write_zeta(zeta);
 				gather_statistics(acf, eps, zeta, model);
-			} else {
-				std::clog << "Invalid model: " << _model << std::endl;
-				throw std::runtime_error("bad model");
 			}
 		}
 
@@ -249,7 +247,7 @@ namespace autoreg {
 		/// ACF function name (\see acf_functions). Default is "standing_wave".
 		std::string _acffunc = "standing_wave";
 
-		std::string _model = "AR";
+		Simulation_model _model = Simulation_model::Autoregressive;
 
 		/// Map of names to ACF functions.
 		static const std::unordered_map<std::string, ACF_function>

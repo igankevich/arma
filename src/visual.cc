@@ -177,7 +177,7 @@ onResize(int w, int h) {
 
 void
 onKeyPressed(unsigned char key, int, int) {
-	if (key == 27) exit(0);
+	if (key == 'q') exit(0);
 	if (key == 32) paused = !paused;
 
 	if (key == 'a') glRotatef(ROT_STEP, 1, 0, 0);

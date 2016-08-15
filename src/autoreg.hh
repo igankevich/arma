@@ -381,6 +381,7 @@ namespace autoreg {
 	approx_wave_period(T variance) {
 		return T(4.8) * std::sqrt(approx_wave_height(variance));
 	}
+
 }
 
 #endif // AUTOREG_HH
