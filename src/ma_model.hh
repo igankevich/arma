@@ -6,6 +6,8 @@
 
 #include "types.hh" // for size3, ACF, AR_coefs, Zeta, Array2D
 #include "linalg.hh"
+#include "ma_algorithm.hh"
+#include "voodoo.hh"
 
 namespace autoreg {
 
@@ -64,6 +66,19 @@ namespace autoreg {
 			return zeta;
 		}
 
+		void
+		determine_coefficients(int max_iterations, T eps, T min_var_wn,
+		                       MA_algorithm algo) {
+			switch (algo) {
+				case MA_algorithm::Fixed_point_iteration:
+					fixed_point_iteration(max_iterations, eps, min_var_wn);
+					break;
+				case MA_algorithm::Newton_Raphson:
+					newton_raphson(max_iterations, eps, min_var_wn);
+					break;
+			}
+		}
+
 		/**
 		Solve nonlinear system with fixed-point iteration algorithm to find
 		moving-average coefficients \f$\theta\f$.
@@ -81,7 +96,8 @@ namespace autoreg {
 		\endparblock
 		*/
 		void
-		determine_coefficients(int max_iterations, T eps, T min_var_wn) {
+		fixed_point_iteration(int max_iterations, T eps, T min_var_wn) {
+			using blitz::RectDomain;
 			Array3D<T> theta(_order);
 			theta = 0;
 			const int order_t = _order(0);
@@ -109,16 +125,12 @@ namespace autoreg {
 				for (int i = order_t - 1; i >= 0; --i) {
 					for (int j = order_x - 1; j >= 0; --j) {
 						for (int k = order_y - 1; k >= 0; --k) {
-							T sum = -_acf(i, j, k) / var_wn;
-							for (int l = i; l < order_t; ++l) {
-								for (int m = j; m < order_x; ++m) {
-									for (int n = k; n < order_y; ++n) {
-										sum += theta(l, m, n) *
-										       theta(l - i, m - j, n - k);
-									}
-								}
-							}
-							theta(i, j, k) = sum;
+							RectDomain<3> sub1(size3(i, j, k), _order - 1);
+							RectDomain<3> sub2(size3(0, 0, 0),
+							                   _order - size3(i, j, k) - 1);
+							theta(i, j, k) =
+							    -_acf(i, j, k) / var_wn +
+							    blitz::sum(theta(sub1) * theta(sub2));
 						}
 					}
 				}
@@ -159,8 +171,7 @@ namespace autoreg {
 		}
 
 		void
-		determine_coefficients_newton_raphson(int max_iterations, T eps,
-		                                      T min_var_wn) {
+		newton_raphson(int max_iterations, T eps, T min_var_wn) {
 			using blitz::RectDomain;
 			using blitz::TinyVector;
 			using blitz::sum;
@@ -186,38 +197,45 @@ namespace autoreg {
 				and Control", p. 227).
 				\f[
 				    \theta_{i,j,k} = -\frac{\tau_{i,j,k}}{\tau{0,0,0}},
-					f_{i,j,k} =
+				    f_{i,j,k} =
 				        \sum\limits_{l=0}^{n_1-i}
 				        \sum\limits_{m=0}^{n_2-j}
 				        \sum\limits_{n=0}^{n_3-k}
-						\tau_{l,m,n} \tau_{l+i,m+j,n+k} - r_{i,j,k}.
+				        \tau_{l,m,n} \tau_{l+i,m+j,n+k} - r_{i,j,k}.
 				\f]
 				Here \f$\tau_{0,0,0}^2 = \sigma_\alpha^2\f$.
 				*/
-				{
-					using namespace blitz::tensor;
-					RectDomain<3> sub1(size3(0, 0, 0),
-					                   _order - size3(i, j, k) - 1);
-					RectDomain<3> sub2(size3(i, j, k), _order - 1);
-					f = sum(tau(sub1) * tau(sub2)) - _acf;
-				}
-				{
-					using namespace blitz::tensor;
-					tau_matrix = 0;
-					for (int i=0; i<n; ++i) {
-						for (int j=0; j<n-i; ++j) {
-							tau_matrix(i,j) = tau.data()[i + j];
-						}
-					}
-					for (int i=0; i<n; ++i) {
-						for (int j=i; j<n; ++j) {
-							tau_matrix(i,j) += tau.data()[j - i];
+				for (int i = 0; i < order_t; ++i) {
+					for (int j = 0; j < order_x; ++j) {
+						for (int k = 0; k < order_y; ++k) {
+							RectDomain<3> sub1(size3(0, 0, 0),
+							                   _order - size3(i, j, k) - 1);
+							RectDomain<3> sub2(size3(i, j, k), _order - 1);
+							f(i, j, k) =
+							    sum(tau(sub1) * tau(sub2)) - _acf(i, j, k);
 						}
 					}
 				}
-				linalg::invert(tau_matrix);
+				{
+					Tau_matrix_generator<T> gen(tau);
+					tau_matrix = gen();
+//					tau_matrix = 0;
+//					for (int i = 0; i < n; ++i) {
+//						for (int j = 0; j < n - i; ++j) {
+//							tau_matrix(i, j) = tau.data()[i + j];
+//						}
+//					}
+//					for (int i = 0; i < n; ++i) {
+//						for (int j = i; j < n; ++j) {
+//							tau_matrix(i, j) += tau.data()[j - i];
+//						}
+//					}
+				}
+				linalg::inverse(tau_matrix);
 				tau -= linalg::operator*(tau_matrix, f);
 				theta = -tau / tau(0, 0, 0);
+				/// 3. Zero out \f$\theta_0\f$.
+				theta(0, 0, 0) = 0;
 				/// 4. Validate coefficients.
 				if (!all(isfinite(theta))) {
 					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
@@ -229,7 +247,7 @@ namespace autoreg {
 				/// \link Moving_average_model::white_noise_variance \endlink.
 				old_var_wn = var_wn;
 				var_wn = white_noise_variance(theta);
-				tau(0,0,0) = std::sqrt(var_wn);
+				tau(0, 0, 0) = std::sqrt(var_wn);
 				/// 6. Validate white noise variance.
 				if (var_wn <= min_var_wn || !std::isfinite(var_wn)) {
 					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__

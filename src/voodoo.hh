@@ -22,6 +22,39 @@ seem complex and not wide-spread. So, we settled on "keep it simple" approach.
 
 namespace autoreg {
 
+	namespace bits {
+
+		template <class T>
+		void
+		append_column_block(Array2D<T>& lhs, const Array2D<T>& rhs) {
+			if (lhs.numElements() == 0) {
+				lhs.resize(rhs.shape());
+				lhs = rhs;
+			} else {
+				using blitz::Range;
+				assert(lhs.rows() == rhs.rows());
+				const int old_cols = lhs.columns();
+				lhs.resizeAndPreserve(lhs.rows(), old_cols + rhs.columns());
+				lhs(Range::all(), Range(old_cols, blitz::toEnd)) = rhs;
+			}
+		}
+
+		template <class T>
+		void
+		append_row_block(Array2D<T>& lhs, const Array2D<T>& rhs) {
+			if (lhs.numElements() == 0) {
+				lhs.resize(rhs.shape());
+				lhs = rhs;
+			} else {
+				using blitz::Range;
+				assert(lhs.columns() == rhs.columns());
+				const int old_rows = lhs.rows();
+				lhs.resizeAndPreserve(old_rows + rhs.rows(), lhs.columns());
+				lhs(Range(old_rows, blitz::toEnd), Range::all()) = rhs;
+			}
+		}
+	}
+
 	/**
 	\brief Autocovariate matrix generator which uses least squares
 	approximations to reduce size of autocovariate function grid.
@@ -81,9 +114,9 @@ namespace autoreg {
 			for (int i = 0; i < n; ++i) {
 				Array2D<T> row;
 				for (int j = 0; j < n; ++j) {
-					append_column_block(row, small_block(i, j));
+					bits::append_column_block(row, small_block(i, j));
 				}
-				append_row_block(result, row);
+				bits::append_row_block(result, row);
 			}
 			return result;
 		}
@@ -118,9 +151,9 @@ namespace autoreg {
 			for (int i = 0; i < n; ++i) {
 				Array2D<T> row;
 				for (int j = 0; j < n; ++j) {
-					append_column_block(row, small_block(i, j));
+					bits::append_column_block(row, small_block(i, j));
 				}
-				append_row_block(result, row);
+				bits::append_row_block(result, row);
 			}
 			return result;
 		}
@@ -142,34 +175,6 @@ namespace autoreg {
 			}
 			assert(blitz::product(result.shape()) > 0);
 			return result;
-		}
-
-		void
-		append_column_block(Array2D<T>& lhs, const Array2D<T>& rhs) {
-			if (lhs.numElements() == 0) {
-				lhs.resize(rhs.shape());
-				lhs = rhs;
-			} else {
-				using blitz::Range;
-				assert(lhs.rows() == rhs.rows());
-				const int old_cols = lhs.columns();
-				lhs.resizeAndPreserve(lhs.rows(), old_cols + rhs.columns());
-				lhs(Range::all(), Range(old_cols, blitz::toEnd)) = rhs;
-			}
-		}
-
-		void
-		append_row_block(Array2D<T>& lhs, const Array2D<T>& rhs) {
-			if (lhs.numElements() == 0) {
-				lhs.resize(rhs.shape());
-				lhs = rhs;
-			} else {
-				using blitz::Range;
-				assert(lhs.columns() == rhs.columns());
-				const int old_rows = lhs.rows();
-				lhs.resizeAndPreserve(old_rows + rhs.rows(), lhs.columns());
-				lhs(Range(old_rows, blitz::toEnd), Range::all()) = rhs;
-			}
 		}
 
 		const ACF<T>& _acf;
@@ -206,9 +211,9 @@ namespace autoreg {
 				Array2D<T> row;
 				for (int j = 0; j < n; ++j) {
 					Array2D<T> tmp = AC_matrix_block(i0, std::abs(i - j));
-					append_column_block(row, tmp);
+					bits::append_column_block(row, tmp);
 				}
-				append_row_block(result, row);
+				bits::append_row_block(result, row);
 			}
 			return result;
 		}
@@ -220,44 +225,74 @@ namespace autoreg {
 				Array2D<T> row;
 				for (int j = 0; j < n; ++j) {
 					Array2D<T> tmp = AC_matrix_block(std::abs(i - j));
-					append_column_block(row, tmp);
+					bits::append_column_block(row, tmp);
 				}
-				append_row_block(result, row);
+				bits::append_row_block(result, row);
 			}
 			return result;
 		}
 
 	private:
-		void
-		append_column_block(Array2D<T>& lhs, const Array2D<T>& rhs) {
-			if (lhs.numElements() == 0) {
-				lhs.resize(rhs.shape());
-				lhs = rhs;
-			} else {
-				using blitz::Range;
-				assert(lhs.rows() == rhs.rows());
-				const int old_cols = lhs.columns();
-				lhs.resizeAndPreserve(lhs.rows(), old_cols + rhs.columns());
-				lhs(Range::all(), Range(old_cols, blitz::toEnd)) = rhs;
-			}
-		}
-
-		void
-		append_row_block(Array2D<T>& lhs, const Array2D<T>& rhs) {
-			if (lhs.numElements() == 0) {
-				lhs.resize(rhs.shape());
-				lhs = rhs;
-			} else {
-				using blitz::Range;
-				assert(lhs.columns() == rhs.columns());
-				const int old_rows = lhs.rows();
-				lhs.resizeAndPreserve(old_rows + rhs.rows(), lhs.columns());
-				lhs(Range(old_rows, blitz::toEnd), Range::all()) = rhs;
-			}
-		}
-
 		const ACF<T>& _acf;
 		const size3& _arorder;
+	};
+
+	template <class T>
+	struct Tau_matrix_generator {
+
+		Tau_matrix_generator(Array3D<T> tau) : _tau(tau) {}
+
+		Array2D<T>
+		tau_matrix_block(int i0, int j0) {
+			const int n = _tau.extent(2);
+			Array2D<T> block(blitz::shape(n, n));
+			block = 0;
+			for (int i = 0; i < n; ++i) {
+				for (int j = 0; j < n - i; ++j) {
+					block(i, j) += _tau(i0, j0, (i + j) % n);
+				}
+			}
+			for (int i = 0; i < n; ++i) {
+				for (int j = i; j < n; ++j) {
+					block(i, j) += _tau(i0, j0, std::abs(j - i));
+				}
+			}
+			return block;
+		}
+
+		Array2D<T>
+		tau_matrix_block(int i0) {
+			const int n = _tau.extent(1);
+			Array2D<T> result;
+			for (int i = 0; i < n; ++i) {
+				Array2D<T> row;
+				for (int j = 0; j < n; ++j) {
+					Array2D<T> tmp(tau_matrix_block(i0, std::abs(i - j)) +
+					               tau_matrix_block(i0, (i + j) % n));
+					bits::append_column_block(row, tmp);
+				}
+				bits::append_row_block(result, row);
+			}
+			return result;
+		}
+
+		Array2D<T> operator()() {
+			const int n = _tau.extent(0);
+			Array2D<T> result;
+			for (int i = 0; i < n; ++i) {
+				Array2D<T> row;
+				for (int j = 0; j < n; ++j) {
+					Array2D<T> tmp(tau_matrix_block(std::abs(i - j)) +
+					               tau_matrix_block((i + j) % n));
+					bits::append_column_block(row, tmp);
+				}
+				bits::append_row_block(result, row);
+			}
+			return result;
+		}
+
+	private:
+		Array3D<T> _tau;
 	};
 }
 

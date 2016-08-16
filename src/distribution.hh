@@ -26,20 +26,6 @@ namespace stats {
 	};
 
 	template <class T>
-	struct Rayleigh {
-
-		Rayleigh(T sigma) : _sigma(sigma) {}
-
-		T
-		quantile(T f) {
-			return gsl_cdf_rayleigh_Pinv(f, _sigma);
-		}
-
-	private:
-		T _sigma;
-	};
-
-	template <class T>
 	struct Weibull {
 
 		Weibull(T a, T b) : _a(a), _b(b) {}
@@ -47,12 +33,86 @@ namespace stats {
 		T
 		quantile(T f) {
 			return gsl_cdf_weibull_Pinv(f, _a, _b);
+//			return _a * std::pow(-std::log(T(1)-f), T(1)/_b);
 		}
 
 	private:
-		T _a;
-		T _b;
+		T _a; //< lambda
+		T _b; //< k
 	};
+
+	enum struct Characteristic {
+		Wave_height,
+		Wave_length,
+		Crest_length,
+		Wave_period,
+		Wave_slope,
+		Threedimensionality
+	};
+
+	template <Characteristic c, class T>
+	struct Weibull_shape {};
+
+	template <class T>
+	struct Weibull_shape<Characteristic::Wave_height, T> {
+		constexpr static const T shape = 2.0;
+	};
+
+	template <class T>
+	struct Weibull_shape<Characteristic::Wave_length, T> {
+		constexpr static const T shape = 2.3;
+	};
+
+	template <class T>
+	struct Weibull_shape<Characteristic::Crest_length, T> {
+		constexpr static const T shape = 2.3;
+	};
+
+	template <class T>
+	struct Weibull_shape<Characteristic::Wave_period, T> {
+		constexpr static const T shape = 3.0;
+	};
+
+	template <class T>
+	struct Weibull_shape<Characteristic::Wave_slope, T> {
+		constexpr static const T shape = 2.5;
+	};
+
+	template <class T>
+	struct Weibull_shape<Characteristic::Threedimensionality, T> {
+		constexpr static const T shape = 2.5;
+	};
+
+	template <class T, Characteristic C>
+	struct Wave_characteristic_distribution : public Weibull<T> {
+		Wave_characteristic_distribution(T mean)
+		    : Weibull<T>(mean / std::tgamma(T(1) + T(1) / shape), shape) {}
+		constexpr static const T shape = Weibull_shape<C, T>::shape;
+	};
+
+	template <class T>
+	using Wave_heights_dist =
+	    Wave_characteristic_distribution<T, Characteristic::Wave_height>;
+
+	template <class T>
+	using Wave_lengths_dist =
+	    Wave_characteristic_distribution<T, Characteristic::Wave_length>;
+
+	template <class T>
+	using Crest_lengths_dist =
+	    Wave_characteristic_distribution<T, Characteristic::Crest_length>;
+
+	template <class T>
+	using Wave_periods_dist =
+	    Wave_characteristic_distribution<T, Characteristic::Wave_period>;
+
+	template <class T>
+	using Wave_slopes_dist =
+	    Wave_characteristic_distribution<T, Characteristic::Wave_slope>;
+
+	template <class T>
+	using Threedimensionality_dist =
+	    Wave_characteristic_distribution<T, Characteristic::Threedimensionality>;
 
 	template <class T, int N>
 	T

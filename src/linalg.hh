@@ -38,20 +38,20 @@ namespace linalg {
 
 	template <class T>
 	void
-	invert(Matrix<T>& A) {
+	inverse(Matrix<T>& A) {
 		const int m = A.rows(), n = A.cols();
 		Vector<lapack_int> ipiv(std::min(m, n));
 		LAPACKE_sgetrf(LAPACK_ROW_MAJOR, m, n, A.data(), m, ipiv.data());
 		LAPACKE_sgetri(LAPACK_ROW_MAJOR, m, A.data(), m, ipiv.data());
 	}
 
-	template <class T>
-	Vector<T> operator*(Matrix<T> lhs, Vector<T> rhs) {
+	template <class T, class Vec>
+	Vec operator*(Matrix<T> lhs, Vec rhs) {
 		const int m = lhs.rows(), n = lhs.cols();
-		Vector<T> result(rhs.copy()), y(rhs.numElements());
-		y = 0;
+		Vec result(rhs.shape());
+		result = 0;
 		cblas_sgemv(CblasRowMajor, CblasNoTrans, m, n, T(1), lhs.data(), m,
-		            result.data(), 1, T(0), y.data(), 1);
+		            rhs.data(), 1, T(0), result.data(), 1);
 		return result;
 	}
 

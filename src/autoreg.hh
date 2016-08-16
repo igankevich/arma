@@ -373,7 +373,7 @@ namespace autoreg {
 	template <class T>
 	T
 	approx_wave_height(T variance) {
-		return std::sqrt(T(2) * M_PI * (variance));
+		return std::sqrt(T(2) * M_PI * variance);
 	}
 
 	template <class T>

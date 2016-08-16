@@ -91,7 +91,8 @@ namespace autoreg {
 				gather_statistics(acf, eps, zeta, model);
 			} else if (_model == Simulation_model::Moving_average) {
 				Moving_average_model<T> model(acf, _arorder);
-				model.determine_coefficients(1000, T(1e-5), T(1e-6));
+				model.determine_coefficients(1000, T(1e-5), T(1e-6),
+				                             _ma_algorithm);
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
@@ -129,32 +130,24 @@ namespace autoreg {
 			Array1D<T> lengths_y = wave_field.lengths_y();
 			stats::Gaussian<T> eps_dist(0, std::sqrt(var_wn));
 			stats::Gaussian<T> elev_dist(0, std::sqrt(var_elev));
-			stats::Weibull<T> wave_period_dist(
-			    stats::mean(periods) / std::tgamma(T(1) + T(1) / T(2.33)),
-			    2.33);
+			stats::Wave_periods_dist<T> periods_dist(stats::mean(periods));
+			stats::Wave_heights_dist<T> heights_x_dist(stats::mean(heights_x));
+			stats::Wave_heights_dist<T> heights_y_dist(stats::mean(heights_y));
+			stats::Wave_lengths_dist<T> lengths_x_dist(stats::mean(lengths_x));
+			stats::Wave_lengths_dist<T> lengths_y_dist(stats::mean(lengths_y));
 			std::vector<Stats<T>> stats = {
 			    make_stats(eps, T(0), var_wn, eps_dist, "white noise"),
 			    make_stats(zeta, T(0), var_elev, elev_dist, "elevation"),
 			    make_stats(heights_x, approx_wave_height(var_elev), T(0),
-			               stats::Rayleigh<T>(stats::stdev(heights_x)),
-			               "wave height x"),
+			               heights_x_dist, "wave height x"),
 			    make_stats(heights_y, approx_wave_height(var_elev), T(0),
-			               stats::Rayleigh<T>(stats::stdev(heights_y)),
-			               "wave height y"),
-			    make_stats(
-			        lengths_x, T(0), T(0),
-			        stats::Weibull<T>(stats::mean(lengths_x) /
-			                              std::tgamma(T(1) + T(1) / T(2.0)),
-			                          2.0),
-			        "wave length x"),
-			    make_stats(
-			        lengths_y, T(0), T(0),
-			        stats::Weibull<T>(stats::mean(lengths_y) /
-			                              std::tgamma(T(1) + T(1) / T(2.0)),
-			                          2.0),
-			        "wave length y"),
+			               heights_y_dist, "wave height y"),
+			    make_stats(lengths_x, T(0), T(0), lengths_x_dist,
+			               "wave length x"),
+			    make_stats(lengths_y, T(0), T(0), lengths_y_dist,
+			               "wave length y"),
 			    make_stats(periods, approx_wave_period(var_elev), T(0),
-			               wave_period_dist, "wave period"),
+			               periods_dist, "wave period"),
 			};
 			std::copy(stats.begin(), stats.end(),
 			          std::ostream_iterator<Stats<T>>(std::clog, "\n"));
@@ -222,6 +215,7 @@ namespace autoreg {
 			write_key_value(std::clog, "Do least squares", _doleastsquares);
 			write_key_value(std::clog, "ACF function", _acffunc);
 			write_key_value(std::clog, "Model", _model);
+			write_key_value(std::clog, "MA algorithm", _ma_algorithm);
 		}
 
 		void
@@ -250,7 +244,7 @@ namespace autoreg {
 		std::string _acffunc = "standing_wave";
 
 		Simulation_model _model = Simulation_model::Autoregressive;
-		std::string _ma_algorithm = "fixed_point_iteration";
+		MA_algorithm _ma_algorithm = MA_algorithm::Fixed_point_iteration;
 
 		/// Map of names to ACF functions.
 		static const std::unordered_map<std::string, ACF_function>

@@ -43,6 +43,35 @@ test(
 )
 
 test(
+	'inverse matrix',
+	executable(
+		'inverse-test',
+		sources: 'inverse-test.cc',
+		dependencies: [
+			libblitz,
+			libblas,
+			liblapack
+		],
+		link_args: '-llapacke'
+	)
+)
+
+test(
+	'matrix vector multiply',
+	executable(
+		'multiply-test',
+		sources: 'multiply-test.cc',
+		dependencies: [
+			libblitz,
+			libblas,
+			liblapack,
+			libgsl
+		],
+		link_args: '-llapacke'
+	)
+)
+
+test(
 	'dynamic creation of mersenne twisters',
 	executable(
 		'dcmt-test',
