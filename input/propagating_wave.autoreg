@@ -24,3 +24,8 @@ least_squares = 0
 acf = propagating_wave
 
 model = MA
+
+# Algorithm that determines MA coefficients. Possible values:
+# - fixed_point_iteration
+# - newton_raphson
+ma_algorithm = fixed_point_iteration

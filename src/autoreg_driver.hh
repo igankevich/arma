@@ -165,13 +165,15 @@ namespace autoreg {
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
-			sys::parameter_map params(
-			    {{"out_grid", sys::make_param(_outgrid)},
-			     {"acf_grid", sys::make_param(_acfgrid)},
-			     {"ar_order", sys::make_param(_arorder)},
-			     {"least_squares", sys::make_param(_doleastsquares)},
-			     {"acf", sys::make_param(_acffunc)},
-			     {"model", sys::make_param(_model)}});
+			sys::parameter_map params({
+			    {"out_grid", sys::make_param(_outgrid)},
+			    {"acf_grid", sys::make_param(_acfgrid)},
+			    {"ar_order", sys::make_param(_arorder)},
+			    {"least_squares", sys::make_param(_doleastsquares)},
+			    {"acf", sys::make_param(_acffunc)},
+			    {"model", sys::make_param(_model)},
+			    {"ma_algorithm", sys::make_param(_ma_algorithm)},
+			});
 			in >> params;
 		}
 
@@ -248,6 +250,7 @@ namespace autoreg {
 		std::string _acffunc = "standing_wave";
 
 		Simulation_model _model = Simulation_model::Autoregressive;
+		std::string _ma_algorithm = "fixed_point_iteration";
 
 		/// Map of names to ACF functions.
 		static const std::unordered_map<std::string, ACF_function>

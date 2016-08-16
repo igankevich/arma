@@ -5,6 +5,7 @@
 #include <algorithm> // for copy_n
 
 #include "types.hh" // for size3, ACF, AR_coefs, Zeta, Array2D
+#include "linalg.hh"
 
 namespace autoreg {
 
@@ -70,8 +71,8 @@ namespace autoreg {
 		\param max_iterations Maximal no. of iterations.
 		\param eps
 		\parblock
-			Maximal difference between values of white
-			noise variance in successive iterations.
+		    Maximal difference between values of white
+		    noise variance in successive iterations.
 		\endparblock
 		\param min_var_wn
 		\parblock
@@ -155,6 +156,96 @@ namespace autoreg {
 		void
 		validate() {
 			validate_process(_theta);
+		}
+
+		void
+		determine_coefficients_newton_raphson(int max_iterations, T eps,
+		                                      T min_var_wn) {
+			using blitz::RectDomain;
+			using blitz::TinyVector;
+			using blitz::sum;
+			using blitz::all;
+			using blitz::isfinite;
+			const int n = blitz::product(_order);
+			Array3D<T> theta(_order), tau(_order), f(_order);
+			Array2D<T> tau_matrix(n, n);
+			theta = 0;
+			tau = 0;
+			const int order_t = _order(0);
+			const int order_x = _order(1);
+			const int order_y = _order(2);
+			/// 1. Precompute white noise variance for the first iteration.
+			T var_wn = _acf(0, 0, 0);
+			tau(0, 0, 0) = std::sqrt(var_wn);
+			T old_var_wn = 0;
+			int it = 0;
+			do {
+				/**
+				2. Update coefficients using the following formula (adapted from
+				G. Box and G. Jenkins (1970) "Time Series Analysis: Forecasting
+				and Control", p. 227).
+				\f[
+				    \theta_{i,j,k} = -\frac{\tau_{i,j,k}}{\tau{0,0,0}},
+					f_{i,j,k} =
+				        \sum\limits_{l=0}^{n_1-i}
+				        \sum\limits_{m=0}^{n_2-j}
+				        \sum\limits_{n=0}^{n_3-k}
+						\tau_{l,m,n} \tau_{l+i,m+j,n+k} - r_{i,j,k}.
+				\f]
+				Here \f$\tau_{0,0,0}^2 = \sigma_\alpha^2\f$.
+				*/
+				{
+					using namespace blitz::tensor;
+					RectDomain<3> sub1(size3(0, 0, 0),
+					                   _order - size3(i, j, k) - 1);
+					RectDomain<3> sub2(size3(i, j, k), _order - 1);
+					f = sum(tau(sub1) * tau(sub2)) - _acf;
+				}
+				{
+					using namespace blitz::tensor;
+					tau_matrix = 0;
+					for (int i=0; i<n; ++i) {
+						for (int j=0; j<n-i; ++j) {
+							tau_matrix(i,j) = tau.data()[i + j];
+						}
+					}
+					for (int i=0; i<n; ++i) {
+						for (int j=i; j<n; ++j) {
+							tau_matrix(i,j) += tau.data()[j - i];
+						}
+					}
+				}
+				linalg::invert(tau_matrix);
+				tau -= linalg::operator*(tau_matrix, f);
+				theta = -tau / tau(0, 0, 0);
+				/// 4. Validate coefficients.
+				if (!all(isfinite(theta))) {
+					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+					          << ": bad coefficients = \n" << theta
+					          << std::endl;
+					throw std::runtime_error("bad MA model coefficients");
+				}
+				/// 5. Compute white noise variance by calling
+				/// \link Moving_average_model::white_noise_variance \endlink.
+				old_var_wn = var_wn;
+				var_wn = white_noise_variance(theta);
+				tau(0,0,0) = std::sqrt(var_wn);
+				/// 6. Validate white noise variance.
+				if (var_wn <= min_var_wn || !std::isfinite(var_wn)) {
+					std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+					          << ": bad white noise variance = " << var_wn
+					          << std::endl;
+					throw std::runtime_error("bad white noise variance");
+				}
+#ifndef NDEBUG
+				/// 7. Print solver state.
+				std::clog << __func__ << ':' << "Iteration=" << it
+				          << ", var_wn=" << var_wn << std::endl;
+#endif
+				++it;
+			} while (it < max_iterations &&
+			         std::abs(var_wn - old_var_wn) > eps);
+			_theta = theta;
 		}
 
 	private:
