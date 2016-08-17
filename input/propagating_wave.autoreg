@@ -9,10 +9,11 @@
 out_grid = (200,40,40)
 
 # Grid for ACF function approximations. The format is the same as for out_grid.
-acf_grid = (10,10,10) : (10,5,5)
+acf_grid = (20,10,10) : (10,5,5)
 
-# AR model order
-ar_order = (10,10,10)
+# MA model order
+ar_order = (1,10,10)
+ma_order = (20,10,10)
 
 # turn on/off least squares for AC matrix
 # (as of 2016-07-28 it is broken)
@@ -23,7 +24,7 @@ least_squares = 0
 # - propagating_wave
 acf = propagating_wave
 
-model = MA
+model = ARMA
 
 # Algorithm that determines MA coefficients. Possible values:
 # - fixed_point_iteration

@@ -80,7 +80,7 @@ namespace autoreg {
 				std::clog << "WN variance = " << var_wn << std::endl;
 				eps = generate_white_noise(_outgrid.size(), var_wn);
 				Zeta<T> tmp = eps.copy();
-				model(tmp);
+				tmp = model(tmp);
 				write_zeta(tmp);
 				/// Estimate mean/variance with ramp-up region removed.
 				blitz::RectDomain<3> subdomain(_arorder, tmp.shape() - 1);
@@ -90,9 +90,19 @@ namespace autoreg {
 				zeta = tmp;
 				gather_statistics(acf, eps, zeta, model);
 			} else if (_model == Simulation_model::Moving_average) {
-				Moving_average_model<T> model(acf, _arorder);
+				Moving_average_model<T> model(acf, _maorder);
 				model.determine_coefficients(1000, T(1e-5), T(1e-6),
 				                             _ma_algorithm);
+				model.validate();
+				T var_wn = model.white_noise_variance();
+				std::clog << "WN variance = " << var_wn << std::endl;
+				eps = generate_white_noise(_outgrid.size(), var_wn);
+				zeta = model(eps);
+				write_zeta(zeta);
+				gather_statistics(acf, eps, zeta, model);
+			} else if (_model == Simulation_model::ARMA) {
+				ARMA_model<T> model(acf, _arorder, _maorder);
+				model.determine_coefficients();
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
@@ -162,6 +172,7 @@ namespace autoreg {
 			    {"out_grid", sys::make_param(_outgrid)},
 			    {"acf_grid", sys::make_param(_acfgrid)},
 			    {"ar_order", sys::make_param(_arorder)},
+			    {"ma_order", sys::make_param(_maorder)},
 			    {"least_squares", sys::make_param(_doleastsquares)},
 			    {"acf", sys::make_param(_acffunc)},
 			    {"model", sys::make_param(_model)},
@@ -178,7 +189,6 @@ namespace autoreg {
 			check_non_zero(_outgrid.delta(), "output grid patch size");
 			check_non_zero(_acfgrid.size(), "ACF grid size");
 			check_non_zero(_acfgrid.delta(), "ACF grid patch size");
-			check_non_zero(_arorder, "AR order");
 			int part_sz = _outgrid.num_points(0);
 			int fsize_t = _arorder[0];
 			if (fsize_t > part_sz) {
@@ -238,6 +248,7 @@ namespace autoreg {
 		Grid<T, 3> _outgrid; //< Wavy surface grid.
 		Grid<T, 3> _acfgrid; //< ACF grid.
 		size3 _arorder;      //< AR model order (no. of coefficients).
+		size3 _maorder;      //< MA model order (no. of coefficients).
 		bool _doleastsquares = false;
 
 		/// ACF function name (\see acf_functions). Default is "standing_wave".

@@ -4,7 +4,7 @@
 #include <cassert>   // for assert
 #include <algorithm> // for copy_n
 
-#include "types.hh" // for size3, ACF, AR_coefs, Zeta, Array2D
+#include "types.hh" // for size3, ACF, AR_coefs, Array3D, Array2D
 #include "linalg.hh"
 #include "ma_algorithm.hh"
 #include "voodoo.hh"
@@ -14,11 +14,36 @@ namespace autoreg {
 	template <class T>
 	struct Moving_average_model {
 
-		Moving_average_model(ACF<T> acf, size3 order)
+		Moving_average_model() = default;
+
+		Moving_average_model(Array3D<T> acf, size3 order)
 		    : _acf(acf), _order(order), _theta(_order) {}
 
+		void
+		init(Array3D<T> acf, size3 order) {
+			_acf.resize(acf.shape());
+			_acf = acf;
+			_order = order;
+			_theta.resize(_order);
+		}
+
 		T
-		white_noise_variance(const Array3D<T>& theta) {
+		acf_variance() const {
+			return _acf(0, 0, 0);
+		}
+
+		Array3D<T>
+		coefficients() const {
+			return _theta;
+		}
+
+		const size3&
+		order() const {
+			return _order;
+		}
+
+		T
+		white_noise_variance(const Array3D<T>& theta) const {
 			return _acf(0, 0, 0) / (T(1) + blitz::sum(blitz::pow2(theta)));
 		}
 
@@ -36,12 +61,17 @@ namespace autoreg {
 		\f]
 		*/
 		T
-		white_noise_variance() {
+		white_noise_variance() const {
 			return white_noise_variance(_theta);
 		}
 
-		Zeta<T> operator()(Zeta<T> eps) {
-			Zeta<T> zeta(eps.shape());
+		void
+		validate() const {
+			validate_process(_theta);
+		}
+
+		Array3D<T> operator()(Array3D<T> eps) {
+			Array3D<T> zeta(eps.shape());
 			const size3 fsize = _theta.shape();
 			const size3 zsize = zeta.shape();
 			const int t1 = zsize[0];
@@ -166,11 +196,6 @@ namespace autoreg {
 		}
 
 		void
-		validate() {
-			validate_process(_theta);
-		}
-
-		void
 		newton_raphson(int max_iterations, T eps, T min_var_wn) {
 			using blitz::RectDomain;
 			using blitz::TinyVector;
@@ -219,17 +244,21 @@ namespace autoreg {
 				{
 					Tau_matrix_generator<T> gen(tau);
 					tau_matrix = gen();
-//					tau_matrix = 0;
-//					for (int i = 0; i < n; ++i) {
-//						for (int j = 0; j < n - i; ++j) {
-//							tau_matrix(i, j) = tau.data()[i + j];
-//						}
-//					}
-//					for (int i = 0; i < n; ++i) {
-//						for (int j = i; j < n; ++j) {
-//							tau_matrix(i, j) += tau.data()[j - i];
-//						}
-//					}
+					//					tau_matrix = 0;
+					//					for (int i = 0; i < n; ++i) {
+					//						for (int j = 0; j < n - i; ++j) {
+					//							tau_matrix(i, j) = tau.data()[i
+					//+
+					// j];
+					//						}
+					//					}
+					//					for (int i = 0; i < n; ++i) {
+					//						for (int j = i; j < n; ++j) {
+					//							tau_matrix(i, j) += tau.data()[j
+					//-
+					// i];
+					//						}
+					//					}
 				}
 				linalg::inverse(tau_matrix);
 				tau -= linalg::operator*(tau_matrix, f);
@@ -266,8 +295,49 @@ namespace autoreg {
 			_theta = theta;
 		}
 
+		void
+		recompute_acf(Array3D<T> acf_orig, Array3D<T> phi) {
+			using blitz::sum;
+			using blitz::pow2;
+			using blitz::RectDomain;
+			using blitz::abs;
+			const size3 _0(0, 0, 0);
+			const size3 ar_order = phi.shape();
+			const T sum_phi_1 = sum(pow2(phi));
+			const int ma_order_t = _order(0);
+			const int ma_order_x = _order(1);
+			const int ma_order_y = _order(2);
+			const int ar_order_t = ar_order(0);
+			const int ar_order_x = ar_order(1);
+			const int ar_order_y = ar_order(2);
+			for (int i = 0; i < ma_order_t; ++i) {
+				for (int j = 0; j < ma_order_x; ++j) {
+					for (int k = 0; k < ma_order_y; ++k) {
+						const size3 ijk(i, j, k);
+						T sum_phi_2 = 0;
+						for (int l = 0; l < ar_order_t; ++l) {
+							for (int m = 0; m < ar_order_x; ++m) {
+								for (int n = 0; n < ar_order_y; ++n) {
+									const size3 lmn(l, m, n);
+									const size3 ijk_plus_lmn(ijk + lmn);
+									const size3 ijk_minus_lmn(abs(ijk - lmn));
+									RectDomain<3> sub1(_0, ar_order - lmn - 1),
+									    sub2(lmn, ar_order - 1);
+									sum_phi_2 += sum(phi(sub1) * phi(sub2)) *
+									             (acf_orig(ijk_plus_lmn) +
+									              acf_orig(ijk_minus_lmn));
+								}
+							}
+						}
+						_acf(i, j, k) =
+						    sum_phi_1 * acf_orig(i, j, k) + sum_phi_2;
+					}
+				}
+			}
+		}
+
 	private:
-		ACF<T> _acf;
+		Array3D<T> _acf;
 		size3 _order;
 		AR_coefs<T> _theta;
 	};

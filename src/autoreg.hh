@@ -46,6 +46,9 @@ namespace autoreg {
 	template <class T, int N>
 	void
 	validate_process(blitz::Array<T, N> _phi) {
+		if (blitz::product(_phi.shape()) <= 1) {
+			return;
+		}
 		/// 1. Find roots of the polynomial
 		/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
 		blitz::Array<double, N> phi(_phi.shape());

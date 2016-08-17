@@ -13,7 +13,7 @@
 #include <blitz/array.h> // for Range, toEnd, RectDomain, Array
 
 #include "linalg.hh" // for cholesky, is_positive_definite, is_s...
-#include "types.hh"  // for size3, Array3D, Array2D, Array1D, Zeta
+#include "types.hh"  // for size3, Array3D, Array2D, Array1D, Array3D
 #include "voodoo.hh" // for AC_matrix_generator, AC_matrix_gener...
 
 /// @file
@@ -29,20 +29,40 @@ namespace autoreg {
 		    : _acf(acf), _order(order), _phi(_order) {}
 
 		T
-		white_noise_variance() {
+		acf_variance() const {
+			return _acf(0, 0, 0);
+		}
+
+		Array3D<T>
+		coefficients() const {
+			return _phi;
+		}
+
+		const size3&
+		order() const {
+			return _order;
+		}
+
+		T
+		white_noise_variance() const {
 			return white_noise_variance(_phi);
 		}
 
 		T
-		white_noise_variance(Array3D<T> phi) {
+		white_noise_variance(Array3D<T> phi) const {
 			blitz::RectDomain<3> subdomain(size3(0, 0, 0), phi.shape() - 1);
 			return _acf(0, 0, 0) - blitz::sum(phi * _acf(subdomain));
+		}
+
+		void
+		validate() const {
+			validate_process(_phi);
 		}
 
 		/**
 		Generate wavy surface realisation.
 		*/
-		void operator()(Zeta<T>& zeta) {
+		Array3D<T> operator()(Array3D<T> zeta) {
 			const size3 fsize = _phi.shape();
 			const size3 zsize = zeta.shape();
 			const int t1 = zsize[0];
@@ -64,11 +84,7 @@ namespace autoreg {
 					}
 				}
 			}
-		}
-
-		void
-		validate() {
-			validate_process(_phi);
+			return zeta;
 		}
 
 		void
@@ -80,8 +96,9 @@ namespace autoreg {
 		void
 		determine_coefficients_old(bool do_least_squares) {
 
-			if (_order(0) > _acf.extent(0) || _order(1) > _acf.extent(1) ||
-			    _order(2) > _acf.extent(2)) {
+			using blitz::all;
+
+			if (!all(_order <= _acf.shape())) {
 				std::clog << "AR model order is larger than ACF "
 				             "size:\n\tAR model "
 				             "order = "
@@ -131,7 +148,9 @@ namespace autoreg {
 			assert(linalg::is_positive_definite(lhs));
 			linalg::cholesky(lhs, rhs);
 			assert(_phi.numElements() == rhs.numElements() + 1);
-			_phi(0, 0, 0) = 0;
+			if (_phi.numElements() > 1) {
+				_phi(0, 0, 0) = 0;
+			}
 			std::copy_n(rhs.data(), rhs.numElements(), _phi.data() + 1);
 			{
 				std::ofstream out("ar_coefs");
