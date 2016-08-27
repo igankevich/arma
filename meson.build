@@ -14,6 +14,7 @@ endif
 
 run_target('doc', 'scripts/generate-docs')
 run_target('graphs', 'gnuplot', '--persist', '-c', 'scripts/target-graphs', meson.build_root())
+run_target('slices', 'scripts/target-slices')
 
 cpp = meson.get_compiler('cpp')
 libdcmt = cpp.find_library('dcmt')

@@ -41,7 +41,7 @@ namespace autoreg {
 //		T gamm = 1.0;
 
 		// from mathematica
-		T alpha = 0.42, beta = -1.8, gamm = 1.62;
+		T alpha = 0.42, beta = -1.8, gamm = 5.0;
 
 		ACF<T> acf(acf_size);
 		blitz::firstIndex i;
