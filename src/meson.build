@@ -28,6 +28,12 @@ executable(
 	]
 )
 
+executable(
+	'slice',
+	sources: 'slice.cc',
+	dependencies: [ libblitz ]
+)
+
 test(
 	'cholesky decomposition',
 	executable(
