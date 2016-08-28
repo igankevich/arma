@@ -241,6 +241,62 @@ namespace autoreg {
 		workspace_type _workspace;
 	};
 
+	template <>
+	struct Basic_fourier_transform<double, Fourier_domain::Real> {
+
+		typedef Fourier_wavetable<double, Fourier_domain::Real> wavetable_type;
+		typedef Fourier_workspace<double, Fourier_domain::Real> workspace_type;
+
+		explicit Basic_fourier_transform(size_t n)
+		    : _wavetable(n), _workspace(n) {}
+
+		template <class T>
+		void
+		forward(T* rhs, size_t stride) {
+			gsl_fft_real_transform(rhs, stride, _wavetable.size(), _wavetable,
+			                       _workspace);
+		}
+
+		template <class T>
+		void
+		backward(T* rhs, size_t stride) {
+			gsl_fft_real_transform_backward(rhs, stride, _wavetable.size(),
+			                                _wavetable, _workspace);
+		}
+
+	private:
+		wavetable_type _wavetable;
+		workspace_type _workspace;
+	};
+
+	template <>
+	struct Basic_fourier_transform<float, Fourier_domain::Real> {
+
+		typedef Fourier_wavetable<float, Fourier_domain::Real> wavetable_type;
+		typedef Fourier_workspace<float, Fourier_domain::Real> workspace_type;
+
+		explicit Basic_fourier_transform(size_t n)
+		    : _wavetable(n), _workspace(n) {}
+
+		template <class T>
+		void
+		forward(T* rhs, size_t stride) {
+			gsl_fft_real_float_transform(rhs, stride, _wavetable.size(),
+			                             _wavetable, _workspace);
+		}
+
+		template <class T>
+		void
+		backward(T* rhs, size_t stride) {
+			gsl_fft_real_float_transform_backward(
+			    rhs, stride, _wavetable.size(), _wavetable, _workspace);
+		}
+
+	private:
+		wavetable_type _wavetable;
+		workspace_type _workspace;
+	};
+
 	template <class T, int N, Fourier_domain D>
 	struct Fourier_transform {
 
@@ -254,6 +310,16 @@ namespace autoreg {
 			blitz::Array<X, N> result(rhs.copy());
 			for (int i = 0; i < N; ++i) {
 				_transforms[i].forward(result.data(), result.stride(i));
+			}
+			return result;
+		}
+
+		template <class X>
+		blitz::Array<X, N>
+		backward(blitz::Array<X, N> rhs) {
+			blitz::Array<X, N> result(rhs.copy());
+			for (int i = 0; i < N; ++i) {
+				_transforms[i].backward(result.data(), result.stride(i));
 			}
 			return result;
 		}
