@@ -87,7 +87,7 @@ namespace autoreg {
 				zeta.resize(subdomain[0], subdomain[1], subdomain[2]);
 				std::clog << "Zeta size = " << zeta.shape() << std::endl;
 				zeta = tmp(subdomain);
-				zeta = tmp;
+//				zeta = tmp;
 				gather_statistics(acf, eps, zeta, model);
 			} else if (_model == Simulation_model::Moving_average) {
 				Moving_average_model<T> model(acf, _maorder);
@@ -138,8 +138,9 @@ namespace autoreg {
 			Array1D<T> periods = wave_field.periods();
 			Array1D<T> lengths_x = wave_field.lengths_x();
 			Array1D<T> lengths_y = wave_field.lengths_y();
+			const T est_var_elev = stats::variance(zeta);
 			stats::Gaussian<T> eps_dist(0, std::sqrt(var_wn));
-			stats::Gaussian<T> elev_dist(0, std::sqrt(var_elev));
+			stats::Gaussian<T> elev_dist(0, std::sqrt(est_var_elev));
 			stats::Wave_periods_dist<T> periods_dist(stats::mean(periods));
 			stats::Wave_heights_dist<T> heights_x_dist(stats::mean(heights_x));
 			stats::Wave_heights_dist<T> heights_y_dist(stats::mean(heights_y));

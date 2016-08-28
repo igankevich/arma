@@ -205,53 +205,70 @@ namespace autoreg {
 		T _period = 0;
 	};
 
-	template <class It, class Result>
+	template <class T, class Result>
 	void
-	copy_waves(It elevation, size_t n, Result result) {
-		typedef typename std::decay<decltype(*elevation)>::type T;
+	copy_waves_t(const T* elevation, size_t n, Result result) {
+		enum Type { Crest, Trough };
+		std::vector<std::tuple<T, T, Type>> peaks;
+		for (size_t i = 1; i < n - 1; ++i) {
+			const T x1 = T(i - 1) / (n - 1);
+			const T x2 = T(i) / (n - 1);
+			const T x3 = T(i + 1) / (n - 1);
+			const T z1 = elevation[i - 1];
+			const T z2 = elevation[i];
+			const T z3 = elevation[i + 1];
+			const T dz1 = z2 - z1;
+			const T dz2 = z2 - z3;
+			const T dz3 = z1 - z3;
+			if ((dz1 > 0 && dz2 > 0) || (dz1 < 0 && dz2 < 0)) {
+				const T a = T(-0.5) * (x3 * dz1 + x2 * dz3 - x1 * dz2);
+				const T b =
+				    T(-0.5) * (-x3 * x3 * dz1 + x1 * x1 * dz2 - x2 * x2 * dz3);
+				const T c = T(-0.5) *
+				            (x1 * x3 * 2 * z2 + x2 * x2 * (x3 * z1 - x1 * z3) +
+				             x2 * (-x3 * x3 * z1 + x1 * x1 * z3));
+				peaks.emplace_back(-b / (T(2) * a),
+				                   -(b * b - T(4) * a * c) / (T(4) * a),
+				                   dz1 < 0 ? Crest : Trough);
+			}
+		}
 		int trough_first = -1;
 		int crest = -1;
 		int trough_last = -1;
-		T elev0 = *elevation;
-		++elevation;
-		T elev1 = *elevation;
-		++elevation;
-		T elev_trough_first, elev_trough_last, elev_crest;
-		for (size_t j = 2; j < n; ++j) {
-			T elev2 = *elevation;
-			if (elev0 < elev1 && elev2 < elev1) {
-				crest = j - 1;
-				elev_crest = elev1;
-			} else if (elev1 < elev0 && elev1 < elev2) {
+		int npeaks = peaks.size();
+		for (int i = 0; i < npeaks; ++i) {
+			const auto& peak = peaks[i];
+			if (std::get<2>(peak) == Trough) {
 				if (trough_first == -1) {
-					trough_first = j - 1;
-					elev_trough_first = elev1;
-				} else {
-					trough_last = j - 1;
-					elev_trough_last = elev1;
+					trough_first = i;
+				} else if (crest != -1) {
+					trough_last = i;
 				}
+			} else {
+				if (trough_first != -1) { crest = i; }
 			}
 			if (trough_first != -1 && crest != -1 && trough_last != -1) {
+				const T elev_trough_first = std::get<1>(peaks[trough_first]);
+				const T elev_crest = std::get<1>(peaks[crest]);
+				const T elev_trough_last = std::get<1>(peaks[trough_last]);
 				const T height =
-				    (T(2) * elev_crest - elev_trough_first - elev_trough_last) *
-				    T(0.5);
-				const T period = trough_last - trough_first;
-				*result = Wave<T>(height, period);
+				    std::max(std::abs(elev_crest - elev_trough_first),
+				             std::abs(elev_crest - elev_trough_last));
+				const T time_first = std::get<0>(peaks[trough_first]);
+				const T time_last = std::get<0>(peaks[trough_last]);
+				const T period = time_last - time_first;
+				*result = Wave<T>(height, period * (n - 1));
 				++result;
 				trough_first = trough_last;
 				crest = -1;
 				trough_last = -1;
 			}
-			elev0 = elev1;
-			elev1 = elev2;
-			++elevation;
 		}
 	}
 
-	template <class It, class Result>
+	template <class T, class Result>
 	void
-	copy_waves_old(It elevation, size_t n, Result result) {
-		typedef typename std::decay<decltype(*elevation)>::type T;
+	copy_waves_x(const T* elevation, size_t n, Result result) {
 		const T dt = 1;
 		std::vector<T> Tex, Wex;
 		for (size_t i = 1; i < n - 1; ++i) {
@@ -267,14 +284,9 @@ namespace autoreg {
 				Tex.push_back(tex);
 				Wex.push_back(wex);
 				if (std::isnan(tex) || std::isnan(wex)) {
-					std::clog << "NaN: " << tex
-						<< ", " << wex
-						<< ", " << a
-						<< ", " << b
-						<< ", " << c
-						<< ", " << dw1
-						<< ", " << dw2
-						<< std::endl;
+					std::clog << "NaN: " << tex << ", " << wex << ", " << a
+					          << ", " << b << ", " << c << ", " << dw1 << ", "
+					          << dw2 << std::endl;
 				}
 			}
 		}
@@ -315,6 +327,8 @@ namespace autoreg {
 			extract_waves_t(elevation);
 			extract_waves_x(elevation);
 			extract_waves_y(elevation);
+			extract_waves_x2(elevation);
+			extract_waves_y2(elevation);
 		}
 
 		Array1D<T>
@@ -326,22 +340,22 @@ namespace autoreg {
 
 		Array1D<T>
 		lengths() {
-			Array1D<T> result(_wavesx.size() + _wavesy.size());
-			periods(_wavesy, periods(_wavesx, result.begin()));
+			Array1D<T> result(_wavesx2.size() + _wavesy2.size());
+			periods(_wavesy2, periods(_wavesx2, result.begin()));
 			return result;
 		}
 
 		Array1D<T>
 		lengths_x() {
-			Array1D<T> result(_wavesx.size());
-			periods(_wavesx, result.begin());
+			Array1D<T> result(_wavesx2.size());
+			periods(_wavesx2, result.begin());
 			return result;
 		}
 
 		Array1D<T>
 		lengths_y() {
-			Array1D<T> result(_wavesy.size());
-			periods(_wavesy, result.begin());
+			Array1D<T> result(_wavesy2.size());
+			periods(_wavesy2, result.begin());
 			return result;
 		}
 
@@ -392,7 +406,7 @@ namespace autoreg {
 			for (int i = 0; i < nx; ++i) {
 				for (int j = 0; j < ny; ++j) {
 					Array1D<T> elev1d = elevation(Range::all(), i, j);
-					copy_waves(elev1d.data(), elev1d.numElements(), ins);
+					copy_waves_t(elev1d.data(), elev1d.numElements(), ins);
 				}
 			}
 		}
@@ -406,7 +420,7 @@ namespace autoreg {
 			for (int i = 0; i < nt; ++i) {
 				for (int j = 0; j < ny; ++j) {
 					Array1D<T> elev1d = elevation(i, Range::all(), j);
-					copy_waves(elev1d.data(), elev1d.numElements(), ins);
+					copy_waves_x(elev1d.data(), elev1d.numElements(), ins);
 				}
 			}
 		}
@@ -420,7 +434,35 @@ namespace autoreg {
 			for (int i = 0; i < nt; ++i) {
 				for (int j = 0; j < nx; ++j) {
 					Array1D<T> elev1d = elevation(i, j, Range::all());
-					copy_waves(elev1d.data(), elev1d.numElements(), ins);
+					copy_waves_x(elev1d.data(), elev1d.numElements(), ins);
+				}
+			}
+		}
+
+		void
+		extract_waves_x2(Array3D<T> elevation) {
+			using blitz::Range;
+			const int nt = elevation.extent(0);
+			const int ny = elevation.extent(2);
+			auto ins = std::back_inserter(_wavesx2);
+			for (int i = 0; i < nt; ++i) {
+				for (int j = 0; j < ny; ++j) {
+					Array1D<T> elev1d = elevation(i, Range::all(), j);
+					copy_waves_t(elev1d.data(), elev1d.numElements(), ins);
+				}
+			}
+		}
+
+		void
+		extract_waves_y2(Array3D<T> elevation) {
+			using blitz::Range;
+			const int nt = elevation.extent(0);
+			const int nx = elevation.extent(1);
+			auto ins = std::back_inserter(_wavesy2);
+			for (int i = 0; i < nt; ++i) {
+				for (int j = 0; j < nx; ++j) {
+					Array1D<T> elev1d = elevation(i, j, Range::all());
+					copy_waves_t(elev1d.data(), elev1d.numElements(), ins);
 				}
 			}
 		}
@@ -428,6 +470,8 @@ namespace autoreg {
 		wave_vector _wavest;
 		wave_vector _wavesx;
 		wave_vector _wavesy;
+		wave_vector _wavesx2;
+		wave_vector _wavesy2;
 	};
 
 	template <class T>

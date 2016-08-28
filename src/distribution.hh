@@ -17,7 +17,7 @@ namespace stats {
 
 		T
 		quantile(T f) {
-			return gsl_cdf_gaussian_Pinv(f, _sigma) - _mean;
+			return gsl_cdf_gaussian_Pinv(f, _sigma) + _mean;
 		}
 
 	private:
