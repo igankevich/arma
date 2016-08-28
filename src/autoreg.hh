@@ -20,6 +20,7 @@
 #include "types.hh" // for Zeta, ACF, size3
 #include "statistics.hh"
 #include "distribution.hh"
+#include "fourier.hh"
 
 /// @file
 /// File with auxiliary subroutines.
@@ -46,9 +47,7 @@ namespace autoreg {
 	template <class T, int N>
 	void
 	validate_process(blitz::Array<T, N> _phi) {
-		if (blitz::product(_phi.shape()) <= 1) {
-			return;
-		}
+		if (blitz::product(_phi.shape()) <= 1) { return; }
 		/// 1. Find roots of the polynomial
 		/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
 		blitz::Array<double, N> phi(_phi.shape());
@@ -249,6 +248,64 @@ namespace autoreg {
 		}
 	}
 
+	template <class It, class Result>
+	void
+	copy_waves_old(It elevation, size_t n, Result result) {
+		typedef typename std::decay<decltype(*elevation)>::type T;
+		const T dt = 1;
+		std::vector<T> Tex, Wex;
+		for (size_t i = 1; i < n - 1; ++i) {
+			const T e0 = elevation[i];
+			const T dw1 = e0 - elevation[i - 1];
+			const T dw2 = e0 - elevation[i + 1];
+			if ((dw1 > 0 && dw2 > 0) || (dw1 < 0 && dw2 < 0)) {
+				T a = -T(0.5) * (dw1 + dw2) / (dt * dt);
+				T b = dw1 / dt - a * dt * (2 * i - 1);
+				T c = e0 - i * dt * (a * i * dt + b);
+				T tex = -T(0.5) * b / a;
+				T wex = c + tex * (b + a * tex);
+				Tex.push_back(tex);
+				Wex.push_back(wex);
+				if (std::isnan(tex) || std::isnan(wex)) {
+					std::clog << "NaN: " << tex
+						<< ", " << wex
+						<< ", " << a
+						<< ", " << b
+						<< ", " << c
+						<< ", " << dw1
+						<< ", " << dw2
+						<< std::endl;
+				}
+			}
+		}
+		//		const int N = Tex.size() - 1;
+		const int N = std::min(Tex.size() - 1, size_t(100));
+		T Wexp1 = Wex[0];
+		T Texp1 = Tex[0];
+		T Wexp2 = 0, Texp2 = 0;
+		int j = 0;
+		for (int i = 1; i < N; ++i) {
+			if (!((Wexp1 > T(0)) ^ (Wex[i] > T(0)))) {
+				if (std::abs(Wexp1) < std::abs(Wex[i])) {
+					Wexp1 = Wex[i];
+					Texp1 = Tex[i];
+				}
+			} else {
+				if (j >= 1) {
+					T period = (Texp1 - Texp2) * T(2);
+					T height = std::abs(Wexp1 - Wexp2);
+					*result = Wave<T>(height, period);
+					++result;
+				}
+				Wexp2 = Wexp1;
+				Texp2 = Texp1;
+				Wexp1 = Wex[i];
+				Texp1 = Tex[i];
+				j++;
+			}
+		}
+	}
+
 	template <class T>
 	struct Wave_field {
 
@@ -335,7 +392,7 @@ namespace autoreg {
 			for (int i = 0; i < nx; ++i) {
 				for (int j = 0; j < ny; ++j) {
 					Array1D<T> elev1d = elevation(Range::all(), i, j);
-					copy_waves(elev1d.begin(), elev1d.numElements(), ins);
+					copy_waves(elev1d.data(), elev1d.numElements(), ins);
 				}
 			}
 		}
@@ -349,7 +406,7 @@ namespace autoreg {
 			for (int i = 0; i < nt; ++i) {
 				for (int j = 0; j < ny; ++j) {
 					Array1D<T> elev1d = elevation(i, Range::all(), j);
-					copy_waves(elev1d.begin(), elev1d.numElements(), ins);
+					copy_waves(elev1d.data(), elev1d.numElements(), ins);
 				}
 			}
 		}
@@ -363,7 +420,7 @@ namespace autoreg {
 			for (int i = 0; i < nt; ++i) {
 				for (int j = 0; j < nx; ++j) {
 					Array1D<T> elev1d = elevation(i, j, Range::all());
-					copy_waves(elev1d.begin(), elev1d.numElements(), ins);
+					copy_waves(elev1d.data(), elev1d.numElements(), ins);
 				}
 			}
 		}
@@ -384,7 +441,6 @@ namespace autoreg {
 	approx_wave_period(T variance) {
 		return T(4.8) * std::sqrt(approx_wave_height(variance));
 	}
-
 }
 
 #endif // AUTOREG_HH
