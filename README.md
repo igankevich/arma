@@ -7,5 +7,5 @@
 # Run
 
 	cd build
-	./src/autoreg -c standind_wave.autoreg # generate wavy surface
-	./visual zeta                          # visualise wavy surface
+	./src/arma -c standind_wave.arma # generate wavy surface
+	./visual zeta                    # visualise wavy surface
