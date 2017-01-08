@@ -23,6 +23,14 @@ print_error_and_continue(const char* reason, const char* file, int line,
 	std::cerr << "GSL error reason: " << reason << '.' << std::endl;
 }
 
+void
+usage(char* argv0) {
+	std::cout
+		<< "USAGE: "
+		<< (argv0 == nullptr ? "arma" : argv0)
+		<< " -c CONFIGFILE\n";
+}
+
 int
 main(int argc, char* argv[]) {
 
@@ -37,23 +45,33 @@ main(int argc, char* argv[]) {
 	/// C++ class)
 	typedef float Real;
 
-	std::string input_filename = "input.autoreg";
+	std::string input_filename;
+	bool help_requested = false;
 	int opt = 0;
-	while ((opt = ::getopt(argc, argv, "c:")) != -1) {
-		if (opt == 'c') {
-			input_filename = ::optarg;
+	while ((opt = ::getopt(argc, argv, "c:h")) != -1) {
+		switch (opt) {
+			case 'c':
+				input_filename = ::optarg;
+				break;
+			case 'h':
+				help_requested = true;
+				break;
 		}
 	}
 
-	/// input file with various model parameters
-	Autoreg_model<Real> model;
-	std::ifstream cfg(input_filename);
-	if (!cfg.is_open()) {
-		std::clog << "Cannot open input file \"" << input_filename << "\"." << std::endl;
-		throw std::runtime_error("bad input file");
+	if (help_requested || input_filename.empty()) {
+		usage(argv[0]);
+	} else {
+		/// input file with various model parameters
+		Autoreg_model<Real> model;
+		std::ifstream cfg(input_filename);
+		if (!cfg.is_open()) {
+			std::clog << "Cannot open input file \"" << input_filename << "\"." << std::endl;
+			throw std::runtime_error("bad input file");
+		}
+		write_key_value(std::clog, "Input file", input_filename);
+		cfg >> model;
+		model.act();
 	}
-	write_key_value(std::clog, "Input file", input_filename);
-	cfg >> model;
-	model.act();
 	return 0;
 }

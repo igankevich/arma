@@ -7,7 +7,8 @@ executable(
 		libblas,
 		liblapack
 	],
-	link_args: '-llapacke'
+	link_args: '-llapacke',
+	install: true
 )
 
 executable(
