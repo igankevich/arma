@@ -63,6 +63,9 @@ namespace autoreg {
 			ACF_function acf_func = get_acf_function();
 			ACF<T> acf = acf_func(_acfgrid.delta(), _acfgrid.size());
 			std::clog << "ACF variance = " << ACF_variance(acf) << std::endl;
+			if (_vscheme == Verification_scheme::Manual) {
+				write_csv("acf.csv", acf);
+			}
 			{
 				std::ofstream out("acf");
 				out << acf;
@@ -284,6 +287,34 @@ namespace autoreg {
 				x.end(),
 				std::ostream_iterator<T>(out, "\n")
 			);
+		}
+
+		template<class X>
+		void
+		write_csv(
+			const char* filename,
+			const blitz::Array<X, 3>& data,
+			const char separator=','
+		) {
+			std::ofstream out(filename);
+			out << 't' << separator
+			   << 'x' << separator
+			   << 'y' << separator
+			   << 'z' << '\n';
+			const int nt = data.extent(0);
+			const int nx = data.extent(1);
+			const int ny = data.extent(2);
+			for (int i=0; i<nt; ++i) {
+				for (int j=0; j<nx; ++j) {
+					for (int k=0; k<ny; ++k) {
+						out << i << separator
+							<< j << separator
+							<< k << separator
+							<< data(i, j, k)
+							<< '\n';
+					}
+				}
+			}
 		}
 
 		ACF_function
