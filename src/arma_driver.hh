@@ -1,5 +1,5 @@
-#ifndef AUTOREG_DRIVER_HH
-#define AUTOREG_DRIVER_HH
+#ifndef ARMA_DRIVER_HH
+#define ARMA_DRIVER_HH
 
 #include <iostream>  // for operator<<, basic_ostream, clog
 #include <iomanip>   // for operator<<, setw
@@ -10,11 +10,12 @@
 #include <functional>
 
 #include "types.hh"   // for size3, Vector, Zeta, ACF, AR_coefs
-#include "autoreg.hh" // for mean, variance, ACF_variance, approx_acf, comp...
+#include "arma.hh"    // for mean, variance, ACF_variance, approx_acf, comp...
 #include "ar_model.hh"
 #include "ma_model.hh"
 #include "arma_model.hh"
 #include "simulation_model.hh"
+#include "verification_scheme.hh" // for Verification_scheme
 #include "acf.hh" // for standing_wave_ACF, propagating_wave_ACF
 #include "params.hh"
 #include "grid.hh"
@@ -88,7 +89,7 @@ namespace autoreg {
 				std::clog << "Zeta size = " << zeta.shape() << std::endl;
 				zeta = tmp(subdomain);
 //				zeta = tmp;
-				gather_statistics(acf, eps, zeta, model);
+				verify(acf, eps, zeta, model);
 			} else if (_model == Simulation_model::Moving_average) {
 				Moving_average_model<T> model(acf, _maorder);
 				model.determine_coefficients(1000, T(1e-5), T(1e-6),
@@ -99,7 +100,7 @@ namespace autoreg {
 				eps = generate_white_noise(_outgrid.size(), var_wn);
 				zeta = model(eps);
 				write_zeta(zeta);
-				gather_statistics(acf, eps, zeta, model);
+				verify(acf, eps, zeta, model);
 			} else if (_model == Simulation_model::ARMA) {
 				ARMA_model<T> model(acf, _arorder, _maorder);
 				model.determine_coefficients();
@@ -109,7 +110,7 @@ namespace autoreg {
 				eps = generate_white_noise(_outgrid.size(), var_wn);
 				zeta = model(eps);
 				write_zeta(zeta);
-				gather_statistics(acf, eps, zeta, model);
+				verify(acf, eps, zeta, model);
 			}
 		}
 
@@ -118,7 +119,8 @@ namespace autoreg {
 		and validate all the parameters.
 		*/
 		template <class V>
-		friend std::istream& operator>>(std::istream& in, Autoreg_model<V>& m) {
+		friend std::istream&
+		operator>>(std::istream& in, Autoreg_model<V>& m) {
 			m.read_parameters(in);
 			m.validate_parameters();
 			return in;
@@ -127,7 +129,23 @@ namespace autoreg {
 	private:
 		template <class Model>
 		void
-		gather_statistics(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta, Model model) {
+		verify(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta, Model model) {
+			switch (_vscheme) {
+				case Verification_scheme::None:
+					break;
+				case Verification_scheme::Summary:
+				case Verification_scheme::Quantile:
+					show_statistics(acf, eps, zeta, model);
+					break;
+				case Verification_scheme::Manual:
+					write_everything_to_files(acf, eps, zeta);
+					break;
+			}
+		}
+
+		template<class Model>
+		void
+		show_statistics(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta, Model model) {
 			const T var_wn = model.white_noise_variance();
 			Stats<T>::print_header(std::clog);
 			std::clog << std::endl;
@@ -160,10 +178,30 @@ namespace autoreg {
 			    make_stats(periods, approx_wave_period(var_elev), T(0),
 			               periods_dist, "wave period"),
 			};
-			std::copy(stats.begin(), stats.end(),
-			          std::ostream_iterator<Stats<T>>(std::clog, "\n"));
-			std::for_each(stats.begin(), stats.end(),
-			              std::mem_fn(&Stats<T>::write_quantile_graph));
+			std::copy(
+				stats.begin(),
+				stats.end(),
+				std::ostream_iterator<Stats<T>>(std::clog, "\n")
+			);
+			if (_vscheme == Verification_scheme::Quantile) {
+				std::for_each(
+					stats.begin(),
+					stats.end(),
+					std::mem_fn(&Stats<T>::write_quantile_graph)
+				);
+			}
+		}
+
+		void
+		write_everything_to_files(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta) {
+			Wave_field<T> wave_field(zeta);
+			write_raw("heights_x", wave_field.heights_x());
+			write_raw("heights_y", wave_field.heights_y());
+			write_raw("periods", wave_field.periods());
+			write_raw("lengths_x", wave_field.lengths_x());
+			write_raw("lengths_y", wave_field.lengths_y());
+			write_raw("elevation", zeta);
+			write_raw("white_noise", eps);
 		}
 
 		/// Read AR model parameters from an input stream.
@@ -178,6 +216,7 @@ namespace autoreg {
 			    {"acf", sys::make_param(_acffunc)},
 			    {"model", sys::make_param(_model)},
 			    {"ma_algorithm", sys::make_param(_ma_algorithm)},
+			    {"verification", sys::make_param(_vscheme)},
 			});
 			in >> params;
 		}
@@ -227,12 +266,24 @@ namespace autoreg {
 			write_key_value(std::clog, "ACF function", _acffunc);
 			write_key_value(std::clog, "Model", _model);
 			write_key_value(std::clog, "MA algorithm", _ma_algorithm);
+			write_key_value(std::clog, "Verification scheme", _vscheme);
 		}
 
 		void
 		write_zeta(const Zeta<T>& zeta) {
 			std::ofstream out("zeta");
 			out << zeta;
+		}
+
+		template<class X, int N>
+		void
+		write_raw(const char* filename, const blitz::Array<X,N>& x) {
+			std::ofstream out(filename);
+			std::copy(
+				x.begin(),
+				x.end(),
+				std::ostream_iterator<T>(out, "\n")
+			);
 		}
 
 		ACF_function
@@ -257,6 +308,7 @@ namespace autoreg {
 
 		Simulation_model _model = Simulation_model::Autoregressive;
 		MA_algorithm _ma_algorithm = MA_algorithm::Fixed_point_iteration;
+		Verification_scheme _vscheme = Verification_scheme::Summary;
 
 		/// Map of names to ACF functions.
 		static const std::unordered_map<std::string, ACF_function>
@@ -271,4 +323,4 @@ namespace autoreg {
 	        {"propagating_wave", propagating_wave_ACF<T>}};
 }
 
-#endif // AUTOREG_DRIVER_HH
+#endif // ARMA_DRIVER_HH

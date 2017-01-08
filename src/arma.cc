@@ -3,7 +3,7 @@
 #include <exception>         // for exception, exception_ptr, current_ex...
 #include <iostream>          // for operator<<, basic_ostream, cerr, endl
 #include <unistd.h>          // for getopt
-#include "autoreg_driver.hh" // for Autoreg_model, operator>>
+#include "arma_driver.hh"    // for Autoreg_model, operator>>
 
 void
 print_exception_and_terminate() {

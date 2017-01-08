@@ -1,6 +1,6 @@
 executable(
-	'autoreg',
-	sources: 'autoreg.cc',
+	'arma',
+	sources: 'arma.cc',
 	dependencies: [
 		libblitz,
 		libgsl,

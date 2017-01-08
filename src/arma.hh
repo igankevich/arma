@@ -1,5 +1,5 @@
-#ifndef AUTOREG_HH
-#define AUTOREG_HH
+#ifndef ARMA_HH
+#define ARMA_HH
 
 #include <algorithm>  // for any_of, generate
 #include <cassert>    // for assert
@@ -487,4 +487,4 @@ namespace autoreg {
 	}
 }
 
-#endif // AUTOREG_HH
+#endif // ARMA_HH

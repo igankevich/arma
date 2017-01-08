@@ -1,24 +1,8 @@
-# Grid is defined by the no. of points along each dimension and the length
-# of the output wavy surface. It has the following format:
-#
-# 	out_grid = (npoints_t,npoints_x,npoints_y) : (length_t,length_x,length_y)
-#
-# If the length is omitted, it is automatically calculated
-# to make patch size of equal to 1 (i.e. length=npoints-1).
-# NB: No. of patches equals to the no. of points minus 1.
 out_grid = (200,40,40)
-
-# Grid for ACF function approximations. The format is the same as for out_grid.
 acf_grid = (10,10,10) : (2.5,5,5)
-
-# AR model order
 ar_order = (7,7,7)
 
-# turn on/off least squares for AC matrix
-# (as of 2016-07-28 it is broken)
 least_squares = 0
-
-# ACF function approximation. Possible values:
-# - standing_wave
-# - propagating_wave
 acf = standing_wave
+model = AR
+verification = manual

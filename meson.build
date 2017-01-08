@@ -1,5 +1,5 @@
 project(
-	'autoreg',
+	'arma',
 	'cpp',
 	version: '0.9',
 	meson_version: '>=0.31',
