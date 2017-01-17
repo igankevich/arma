@@ -276,6 +276,9 @@ namespace autoreg {
 		write_zeta(const Zeta<T>& zeta) {
 			std::ofstream out("zeta");
 			out << zeta;
+			if (_vscheme == Verification_scheme::Manual) {
+				write_csv("zeta.csv", zeta);
+			}
 		}
 
 		template<class X, int N>
