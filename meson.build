@@ -14,16 +14,16 @@ endif
 
 framework = get_option('framework')
 if framework == 'openmp'
-	add_global_arguments('-DARMA_FRAMEWORK=OPENMP', language: 'cpp')
+	add_global_arguments('-DARMA_OPENMP=1', language: 'cpp')
 	add_global_arguments('-fopenmp', language: 'cpp')
 	add_global_link_arguments('-fopenmp', language: 'cpp')
 elif framework == 'opencl'
-	add_global_arguments('-DARMA_FRAMEWORK=OPENCL', language: 'cpp')
+	add_global_arguments('-DARMA_OPENCL=1', language: 'cpp')
 	add_global_link_arguments('-lOpenCL', language: 'cpp')
 elif framework == 'mpi'
-	add_global_arguments('-DARMA_FRAMEWORK=MPI', language: 'cpp')
+	add_global_arguments('-DARMA_MPI=1', language: 'cpp')
 else
-	add_global_arguments('-DARMA_FRAMEWORK=NONE', language: 'cpp')
+	add_global_arguments('-DARMA_NONE=1', language: 'cpp')
 endif
 
 if get_option('noseed')
