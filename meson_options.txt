@@ -1,0 +1,6 @@
+option(
+	'framework',
+	type: 'combo',
+	choices: ['none', 'openmp', 'opencl', 'mpi'],
+	value: 'none'
+)

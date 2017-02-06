@@ -12,9 +12,20 @@ if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')
 endif
 
-run_target('doc', 'scripts/generate-docs')
-run_target('graphs', 'gnuplot', '--persist', '-c', 'scripts/target-graphs', meson.build_root())
-run_target('slices', 'scripts/target-slices')
+framework = get_option('framework')
+if framework == 'openmp'
+	add_global_arguments('-DARMA_OPENMP', language: 'cpp')
+	add_global_arguments('-fopenmp', language: 'cpp')
+elif framework == 'opencl'
+	add_global_arguments('-DARMA_OPENCL', language: 'cpp')
+	add_global_link_arguments('-lOpenCL', language: 'cpp')
+elif framework == 'mpi'
+	add_global_arguments('-DARMA_MPI', language: 'cpp')
+endif
+
+run_target('doc', command: 'scripts/generate-docs')
+run_target('graphs', command: ['gnuplot', '--persist', '-c', 'scripts/target-graphs', meson.build_root()])
+run_target('slices', command: 'scripts/target-slices')
 
 cpp = meson.get_compiler('cpp')
 libdcmt = cpp.find_library('dcmt')
