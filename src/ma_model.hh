@@ -27,6 +27,11 @@ namespace arma {
 			_theta.resize(_order);
 		}
 
+		ACF<T>
+		acf() const {
+			return _acf;
+		}
+
 		T
 		acf_variance() const {
 			return _acf(0, 0, 0);
@@ -96,15 +101,23 @@ namespace arma {
 			return zeta;
 		}
 
+		template<class Options>
 		void
-		determine_coefficients(int max_iterations, T eps, T min_var_wn,
-		                       MA_algorithm algo) {
-			switch (algo) {
+		determine_coefficients(Options opts) {
+			switch (opts.algo) {
 				case MA_algorithm::Fixed_point_iteration:
-					fixed_point_iteration(max_iterations, eps, min_var_wn);
+					fixed_point_iteration(
+						opts.max_iterations,
+						opts.eps,
+						opts.min_var_wn
+					);
 					break;
 				case MA_algorithm::Newton_Raphson:
-					newton_raphson(max_iterations, eps, min_var_wn);
+					newton_raphson(
+						opts.max_iterations,
+						opts.eps,
+						opts.min_var_wn
+					);
 					break;
 			}
 		}

@@ -17,6 +17,11 @@ namespace arma {
 		      Moving_average_model<T>(slice_back(acf, ma_order).copy(), ma_order),
 		      _acf_orig(acf) {}
 
+		ACF<T>
+		acf() const {
+			return _acf_orig;
+		}
+
 		size3
 		order() const {
 			return ar_model::order() + ma_model::order();
@@ -46,15 +51,15 @@ namespace arma {
 			return ar_model::operator()(ma_model::operator()(eps));
 		}
 
+		template<class Options>
 		void
-		determine_coefficients() {
+		determine_coefficients(Options opts) {
 			using namespace blitz;
 			if (product(ar_model::order()) > 0) {
-				ar_model::determine_coefficients(false);
+				ar_model::determine_coefficients(opts);
 			}
 //			ma_model::recompute_acf(_acf_orig, ar_model::coefficients());
-			ma_model::determine_coefficients(
-			    1000, T(1e-5), T(1e-6), MA_algorithm::Fixed_point_iteration);
+			ma_model::determine_coefficients(opts);
 		}
 
 	private:

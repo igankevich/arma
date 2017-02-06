@@ -28,6 +28,11 @@ namespace arma {
 		Autoregressive_model(Array3D<T> acf, size3 order)
 		    : _acf(acf), _order(order), _phi(_order) {}
 
+		ACF<T>
+		acf() const {
+			return _acf;
+		}
+
 		T
 		acf_variance() const {
 			return _acf(0, 0, 0);
@@ -87,10 +92,11 @@ namespace arma {
 			return zeta;
 		}
 
+		template<class Options>
 		void
-		determine_coefficients(bool do_least_squares) {
+		determine_coefficients(Options opts) {
 			// determine_coefficients_iteratively();
-			determine_coefficients_old(do_least_squares);
+			determine_coefficients_old(opts.least_squares);
 		}
 
 		void

@@ -8,6 +8,7 @@
 #include <string>    // for operator==, basic_string, string, getline
 #include <unordered_map>
 #include <functional>
+#include <type_traits>
 
 #include "types.hh"   // for size3, Vector, Zeta, ACF, AR_coefs
 #include "arma.hh"    // for mean, variance, ACF_variance, approx_acf, comp...
@@ -76,59 +77,27 @@ namespace arma {
 				std::ofstream out("zdelta");
 				out << _acfgrid.delta();
 			}
-			Zeta<T> eps(_outgrid.size());
-			Zeta<T> zeta(_outgrid.size());
-			#if ARMA_FRAMEWORK != NONE
-			parallel_mt prng;
-			std::vector<arma::mt_config> prng_config;
-			read_parallel_mt_config(
-				"parallel_mt.dat",
-				std::back_inserter(prng_config)
-			);
-			#else
-			std::mt19937 prng;
-			#if !defined(ARMA_NO_PRNG_SEED)
-			prng.seed(clock_type::now().time_since_epoch().count());
-			#endif
-			#endif
+			struct {
+				bool least_squares;
+				int max_iterations;
+			   	T eps;
+			   	T min_var_wn;
+				MA_algorithm algo;
+			} opts;
+			opts.max_iterations = 1000;
+			opts.eps = T(1e-5);
+			opts.min_var_wn = T(1e-6);
+			opts.algo = _ma_algorithm;
+			opts.least_squares = _doleastsquares;
 			if (_model == Simulation_model::Autoregressive) {
 				Autoregressive_model<T> model(acf, _arorder);
-				model.determine_coefficients(_doleastsquares);
-				model.validate();
-				T var_wn = model.white_noise_variance();
-				std::clog << "WN variance = " << var_wn << std::endl;
-				eps = generate_white_noise(_outgrid.size(), var_wn, std::ref(prng));
-				Zeta<T> tmp = eps.copy();
-				tmp = model(tmp);
-				write_zeta(tmp);
-				/// Estimate mean/variance with ramp-up region removed.
-				blitz::RectDomain<3> subdomain(_arorder, tmp.shape() - 1);
-				zeta.resize(subdomain[0], subdomain[1], subdomain[2]);
-				std::clog << "Zeta size = " << zeta.shape() << std::endl;
-				zeta = tmp(subdomain);
-//				zeta = tmp;
-				verify(acf, eps, zeta, model);
+				generate_wavy_surface(model, opts);
 			} else if (_model == Simulation_model::Moving_average) {
 				Moving_average_model<T> model(acf, _maorder);
-				model.determine_coefficients(1000, T(1e-5), T(1e-6),
-				                             _ma_algorithm);
-				model.validate();
-				T var_wn = model.white_noise_variance();
-				std::clog << "WN variance = " << var_wn << std::endl;
-				eps = generate_white_noise(_outgrid.size(), var_wn, std::ref(prng));
-				zeta = model(eps);
-				write_zeta(zeta);
-				verify(acf, eps, zeta, model);
+				generate_wavy_surface(model, opts);
 			} else if (_model == Simulation_model::ARMA) {
 				ARMA_model<T> model(acf, _arorder, _maorder);
-				model.determine_coefficients();
-				model.validate();
-				T var_wn = model.white_noise_variance();
-				std::clog << "WN variance = " << var_wn << std::endl;
-				eps = generate_white_noise(_outgrid.size(), var_wn, std::ref(prng));
-				zeta = model(eps);
-				write_zeta(zeta);
-				verify(acf, eps, zeta, model);
+				generate_wavy_surface(model, opts);
 			}
 		}
 
@@ -145,6 +114,44 @@ namespace arma {
 		}
 
 	private:
+		template <class Model, class Options>
+		void
+		generate_wavy_surface(Model& model, const Options& opts) {
+			model.determine_coefficients(opts);
+			model.validate();
+			T var_wn = model.white_noise_variance();
+			std::clog << "WN variance = " << var_wn << std::endl;
+			#if ARMA_FRAMEWORK != NONE
+			parallel_mt prng;
+			std::vector<arma::mt_config> prng_config;
+			read_parallel_mt_config(
+				"parallel_mt.dat",
+				std::back_inserter(prng_config)
+			);
+			#else
+			std::mt19937 prng;
+			#if !defined(ARMA_NO_PRNG_SEED)
+			prng.seed(clock_type::now().time_since_epoch().count());
+			#endif
+			#endif
+			Zeta<T> eps = generate_white_noise(
+				_outgrid.size(),
+				var_wn,
+				std::ref(prng)
+			);
+			Zeta<T> zeta = model(eps.copy());
+			write_zeta(zeta);
+			if (std::is_same<Model,Autoregressive_model<T>>::value) {
+				/// Estimate mean/variance with ramp-up region removed.
+				blitz::RectDomain<3> subdomain(model.order(), zeta.shape() - 1);
+				size3 zeta_size = subdomain.ubound() - subdomain.lbound();
+				std::clog << "Zeta size = " << zeta_size << std::endl;
+				verify(model.acf(), eps, zeta(subdomain), model);
+			} else {
+				verify(model.acf(), eps, zeta, model);
+			}
+		}
+
 		template <class Model>
 		void
 		verify(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta, Model model) {
