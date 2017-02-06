@@ -9,7 +9,12 @@
 #include <unordered_map>
 #include <functional>
 #include <type_traits>
+#include <iterator>
+#if ARMA_OPENMP
+#include <omp.h>
+#endif
 
+#include "config.hh"
 #include "types.hh"   // for size3, Vector, Zeta, ACF, AR_coefs
 #include "arma.hh"    // for mean, variance, ACF_variance, approx_acf, comp...
 #include "ar_model.hh"
@@ -22,6 +27,7 @@
 #include "grid.hh"
 #include "statistics.hh"
 #include "distribution.hh"
+#include "parallel_mt.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -121,25 +127,8 @@ namespace arma {
 			model.validate();
 			T var_wn = model.white_noise_variance();
 			std::clog << "WN variance = " << var_wn << std::endl;
-			#if ARMA_FRAMEWORK != NONE
-			parallel_mt prng;
-			std::vector<arma::mt_config> prng_config;
-			read_parallel_mt_config(
-				"parallel_mt.dat",
-				std::back_inserter(prng_config)
-			);
-			#else
-			std::mt19937 prng;
-			#if !defined(ARMA_NO_PRNG_SEED)
-			prng.seed(clock_type::now().time_since_epoch().count());
-			#endif
-			#endif
-			Zeta<T> eps = generate_white_noise(
-				_outgrid.size(),
-				var_wn,
-				std::ref(prng)
-			);
-			Zeta<T> zeta = model(eps.copy());
+			Zeta<T> eps;
+			Zeta<T> zeta = do_generate_wavy_surface(model, opts, var_wn, eps);
 			write_zeta(zeta);
 			if (std::is_same<Model,Autoregressive_model<T>>::value) {
 				/// Estimate mean/variance with ramp-up region removed.
@@ -150,6 +139,44 @@ namespace arma {
 			} else {
 				verify(model.acf(), eps, zeta, model);
 			}
+		}
+
+		template <class Model, class Options>
+		Zeta<T>
+		do_generate_wavy_surface(
+			Model& model,
+			const Options& opts,
+			T var_wn,
+			Zeta<T>& out_eps
+		) {
+			#if !ARMA_NONE
+			std::vector<arma::mt_config> prng_config;
+			read_parallel_mt_config(
+				arma::config::mt_config_file,
+				std::back_inserter(prng_config)
+			);
+			#if ARMA_OPENMP
+			if (prng_config.size() < size_t(omp_get_max_threads())) {
+				throw std::logic_error("bad number of MT configs");
+			}
+			#endif
+			//parallel_mt prng;
+			std::mt19937 prng;
+			#else
+			std::mt19937 prng;
+			#if !defined(ARMA_NO_PRNG_SEED)
+			prng.seed(newseed());
+			#endif
+			#endif
+			Zeta<T> eps = generate_white_noise(
+				_outgrid.size(),
+				var_wn,
+				std::ref(prng)
+			);
+			out_eps.resize(eps.shape());
+			out_eps = eps;
+			Zeta<T> zeta = model(eps);
+			return zeta;
 		}
 
 		template <class Model>
@@ -342,26 +369,11 @@ namespace arma {
 			}
 		}
 
-		#if ARMA_FRAMEWORK != NONE
-		void
-		write_parallel_mt_config(const char* filename) {
-			std::ofstream out(filename);
-			if (!in.is_open()) {
-				throw std::runtime_error("bad file");
-			}
-			std::ostream_iterator<arma::mt_config> out_it(out);
-			arma::parallel_mt_seq<> seq(seed);
-			std::generate_n(out_it, n, std::ref(seq));
-		}
-
+		#if !ARMA_NONE
 		template<class Result>
 		void
 		read_parallel_mt_config(const char* filename, Result result) {
 			std::ifstream in(filename);
-			if (!in.is_open()) {
-				write_parallel_mt_config(filename);
-				in.open(filename);
-			}
 			if (!in.is_open()) {
 				throw std::runtime_error("bad file");
 			}
@@ -382,6 +394,11 @@ namespace arma {
 				throw std::runtime_error("bad ACF function name");
 			}
 			return result->second;
+		}
+
+		static clock_type::rep
+		newseed() noexcept {
+			return clock_type::now().time_since_epoch().count();
 		}
 
 		Grid<T, 3> _outgrid; //< Wavy surface grid.

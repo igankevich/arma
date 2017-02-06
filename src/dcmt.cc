@@ -7,6 +7,8 @@
 #include <fstream>        // for ofstream, ifstream
 #include <iterator>       // for ostream_iterator
 #include <string>         // for string, operator<<
+
+#include "config.hh"
 #include "parallel_mt.hh" // for parallel_mt_seq, mt_config (ptr only), ope...
 
 void
@@ -20,8 +22,8 @@ generate_mersenne_twisters(std::string filename, size_t num_generators) {
 
 int
 main(int argc, char* argv[]) {
-	size_t ngenerators = 100;
-	std::string filename = "MersenneTwister.dat";
+	size_t ngenerators = 128;
+	std::string filename = arma::config::mt_config_file;
 	int opt = 0;
 	while ((opt = ::getopt(argc, argv, "n:o:")) != -1) {
 		if (opt == 'n') {
@@ -35,7 +37,11 @@ main(int argc, char* argv[]) {
 		return 1;
 	}
 	generate_mersenne_twisters(filename, ngenerators);
-	std::clog << "Save " << ngenerators << " MT configs in " << filename
-	          << std::endl;
+	std::clog
+		<< "Saved "
+		<< ngenerators
+		<< " MT configs in \""
+		<< filename << "\""
+		<< std::endl;
 	return 0;
 }
