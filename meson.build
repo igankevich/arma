@@ -16,11 +16,16 @@ framework = get_option('framework')
 if framework == 'openmp'
 	add_global_arguments('-DARMA_OPENMP', language: 'cpp')
 	add_global_arguments('-fopenmp', language: 'cpp')
+	add_global_link_arguments('-fopenmp', language: 'cpp')
 elif framework == 'opencl'
 	add_global_arguments('-DARMA_OPENCL', language: 'cpp')
 	add_global_link_arguments('-lOpenCL', language: 'cpp')
 elif framework == 'mpi'
 	add_global_arguments('-DARMA_MPI', language: 'cpp')
+endif
+
+if get_option('noseed')
+	add_global_arguments('-DARMA_NO_PRNG_SEED', language: 'cpp')
 endif
 
 run_target('doc', command: 'scripts/generate-docs')

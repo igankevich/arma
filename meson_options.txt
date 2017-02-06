@@ -4,3 +4,9 @@ option(
 	choices: ['none', 'openmp', 'opencl', 'mpi'],
 	value: 'none'
 )
+
+option(
+	'noseed',
+	type: 'boolean',
+	value: false
+)
