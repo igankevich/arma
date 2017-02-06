@@ -52,6 +52,8 @@ namespace arma {
 		typedef std::function<ACF<T>(const Vec3<T>&, const size3&)>
 		    ACF_function;
 
+		typedef std::chrono::high_resolution_clock clock_type;
+
 		Autoreg_model()
 		    : _outgrid{{768, 24, 24}},
 		      _acfgrid{{10, 10, 10}, {T(2.5), T(5), T(5)}},
@@ -76,13 +78,17 @@ namespace arma {
 			}
 			Zeta<T> eps(_outgrid.size());
 			Zeta<T> zeta(_outgrid.size());
+			std::mt19937 prng;
+			#if !defined(ARMA_NO_PRNG_SEED)
+			prng.seed(clock_type::now().time_since_epoch().count());
+			#endif
 			if (_model == Simulation_model::Autoregressive) {
 				Autoregressive_model<T> model(acf, _arorder);
 				model.determine_coefficients(_doleastsquares);
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
-				eps = generate_white_noise(_outgrid.size(), var_wn);
+				eps = generate_white_noise(_outgrid.size(), var_wn, std::ref(prng));
 				Zeta<T> tmp = eps.copy();
 				tmp = model(tmp);
 				write_zeta(tmp);
@@ -100,7 +106,7 @@ namespace arma {
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
-				eps = generate_white_noise(_outgrid.size(), var_wn);
+				eps = generate_white_noise(_outgrid.size(), var_wn, std::ref(prng));
 				zeta = model(eps);
 				write_zeta(zeta);
 				verify(acf, eps, zeta, model);
@@ -110,7 +116,7 @@ namespace arma {
 				model.validate();
 				T var_wn = model.white_noise_variance();
 				std::clog << "WN variance = " << var_wn << std::endl;
-				eps = generate_white_noise(_outgrid.size(), var_wn);
+				eps = generate_white_noise(_outgrid.size(), var_wn, std::ref(prng));
 				zeta = model(eps);
 				write_zeta(zeta);
 				verify(acf, eps, zeta, model);

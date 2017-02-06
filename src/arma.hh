@@ -100,19 +100,13 @@ namespace arma {
 	Generate white noise via Mersenne Twister algorithm. Convert to normal
 	distribution via Box---Muller transform.
 	*/
-	template <class T>
+	template <class T, class Generator>
 	Zeta<T>
-	generate_white_noise(const size3& size, T variance) {
+	generate_white_noise(const size3& size, T variance, Generator generator) {
 		if (variance < T(0)) {
 			throw std::runtime_error("variance is less than zero");
 		}
 
-		// initialise generator
-		std::mt19937 generator;
-#if !defined(DISABLE_RANDOM_SEED)
-		generator.seed(
-		    std::chrono::steady_clock::now().time_since_epoch().count());
-#endif
 		std::normal_distribution<T> normal(T(0), std::sqrt(variance));
 
 		// generate and check
