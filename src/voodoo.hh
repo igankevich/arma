@@ -20,7 +20,7 @@ coefficients that take into account autocovariance matrix structure, but they
 seem complex and not wide-spread. So, we settled on "keep it simple" approach.
 */
 
-namespace autoreg {
+namespace arma {
 
 	namespace bits {
 

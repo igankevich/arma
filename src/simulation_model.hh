@@ -7,7 +7,7 @@
 #include <string>
 #include <stdexcept>
 
-namespace autoreg {
+namespace arma {
 
 	enum struct Simulation_model {
 		Autoregressive,

@@ -11,7 +11,7 @@
 \date 2016-07-28
 */
 
-namespace autoreg {
+namespace arma {
 
 	/**
 	\brief

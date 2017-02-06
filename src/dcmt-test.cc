@@ -16,26 +16,26 @@ struct MT_generator {
 	void
 	generate_and_write_to_file() {
 		auto seed = std::chrono::system_clock::now().time_since_epoch().count();
-		autoreg::parallel_mt_seq<> seq(seed);
+		arma::parallel_mt_seq<> seq(seed);
 		std::ofstream out(_filename);
-		std::ostream_iterator<autoreg::mt_config> out_it(out);
+		std::ostream_iterator<arma::mt_config> out_it(out);
 		std::generate_n(out_it, _ngenerators, std::ref(seq));
 	}
 
 	void
 	read_from_file_and_test() {
 		std::ifstream in(_filename);
-		std::vector<autoreg::mt_config> params;
-		std::copy(std::istream_iterator<autoreg::mt_config>(in),
-		          std::istream_iterator<autoreg::mt_config>(),
+		std::vector<arma::mt_config> params;
+		std::copy(std::istream_iterator<arma::mt_config>(in),
+		          std::istream_iterator<arma::mt_config>(),
 		          std::back_inserter(params));
 		std::cout << "No. of generators = " << params.size() << std::endl;
 		assert(params.size() == _ngenerators);
 		std::for_each(
-		    params.begin(), params.end(), [](autoreg::mt_config& conf) {
-			    autoreg::parallel_mt mt(conf);
+		    params.begin(), params.end(), [](arma::mt_config& conf) {
+			    arma::parallel_mt mt(conf);
 			    std::generate_n(
-			        std::ostream_iterator<autoreg::parallel_mt::result_type>(
+			        std::ostream_iterator<arma::parallel_mt::result_type>(
 			            std::cout, "\n"),
 			        3, std::ref(mt));
 			});

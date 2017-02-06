@@ -41,7 +41,7 @@ namespace blitz {
 }
 
 /// Domain-specific classes and functions.
-namespace autoreg {
+namespace arma {
 
 	/// Check AR (MA) process stationarity (invertibility).
 	template <class T, int N>
@@ -117,8 +117,11 @@ namespace autoreg {
 
 		// generate and check
 		Zeta<T> eps(size);
-		std::generate(std::begin(eps), std::end(eps),
-		              std::bind(normal, generator));
+		std::generate(
+			std::begin(eps),
+			std::end(eps),
+			std::bind(normal, generator)
+		);
 		if (!blitz::all(blitz::isfinite(eps))) {
 			throw std::runtime_error(
 			    "white noise generator produced some NaN/Inf");

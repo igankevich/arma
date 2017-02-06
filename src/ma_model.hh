@@ -9,7 +9,7 @@
 #include "ma_algorithm.hh"
 #include "voodoo.hh"
 
-namespace autoreg {
+namespace arma {
 
 	template <class T>
 	struct Moving_average_model {

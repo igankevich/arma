@@ -33,7 +33,7 @@
 /// var     variance
 /// MT      Mersenne Twister (pseudo-random number generator)
 
-namespace autoreg {
+namespace arma {
 
 	template <class T>
 	void

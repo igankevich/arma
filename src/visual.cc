@@ -10,7 +10,7 @@
 
 #include "types.hh"
 
-using namespace autoreg;
+using namespace arma;
 
 typedef float Real;
 

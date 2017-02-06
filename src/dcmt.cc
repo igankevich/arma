@@ -12,9 +12,9 @@
 void
 generate_mersenne_twisters(std::string filename, size_t num_generators) {
 	auto seed = std::chrono::system_clock::now().time_since_epoch().count();
-	autoreg::parallel_mt_seq<> seq(seed);
+	arma::parallel_mt_seq<> seq(seed);
 	std::ofstream out(filename);
-	std::ostream_iterator<autoreg::mt_config> out_it(out);
+	std::ostream_iterator<arma::mt_config> out_it(out);
 	std::generate_n(out_it, num_generators, std::ref(seq));
 }
 

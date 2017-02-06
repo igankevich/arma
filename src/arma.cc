@@ -39,7 +39,7 @@ main(int argc, char* argv[]) {
 	gsl_set_error_handler(print_error_and_continue);
 	std::set_terminate(print_exception_and_terminate);
 
-	using namespace autoreg;
+	using namespace arma;
 
 	/// floating point type (float, double, long double or multiprecision number
 	/// C++ class)

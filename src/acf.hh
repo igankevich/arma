@@ -6,7 +6,7 @@
 /// @file
 /// Mini-database of ACF approximations.
 
-namespace autoreg {
+namespace arma {
 
 	template <class T>
 	ACF<T>

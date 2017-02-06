@@ -3,7 +3,7 @@
 
 #include "types.hh" // for size3, Array3D, Array2D, Array1D, Zeta
 
-namespace autoreg {
+namespace arma {
 
 	template <class T>
 	struct ARMA_model : public Autoregressive_model<T>,

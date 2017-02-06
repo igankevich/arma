@@ -7,7 +7,7 @@
 @file domain-specific types and templates
 */
 
-namespace autoreg {
+namespace arma {
 
 	template <class T, size_t N>
 	using Vector = blitz::TinyVector<T, N>;

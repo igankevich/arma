@@ -13,7 +13,7 @@ extern "C" {
 #include <dc.h> // for free_mt_struct, genrand_mt, get_mt_parameter_id_st
 }
 
-namespace autoreg {
+namespace arma {
 
 	struct mt_config : public ::mt_struct {
 

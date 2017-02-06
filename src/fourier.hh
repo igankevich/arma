@@ -4,7 +4,7 @@
 #include <gsl/gsl_fft_real_float.h>
 #include <blitz/array.h>
 
-namespace autoreg {
+namespace arma {
 
 	enum struct Fourier_domain { Real, Complex };
 

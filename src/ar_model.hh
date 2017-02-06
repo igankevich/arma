@@ -20,7 +20,7 @@
 /// File with subroutines for AR model, Yule-Walker equations
 /// and some others.
 
-namespace autoreg {
+namespace arma {
 
 	template <class T>
 	struct Autoregressive_model {

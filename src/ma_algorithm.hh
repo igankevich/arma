@@ -7,7 +7,7 @@
 #include <string>
 #include <stdexcept>
 
-namespace autoreg {
+namespace arma {
 
 	enum struct MA_algorithm {
 		Fixed_point_iteration = 0,
