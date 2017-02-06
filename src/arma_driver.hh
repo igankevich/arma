@@ -78,9 +78,18 @@ namespace arma {
 			}
 			Zeta<T> eps(_outgrid.size());
 			Zeta<T> zeta(_outgrid.size());
+			#if ARMA_FRAMEWORK != NONE
+			parallel_mt prng;
+			std::vector<arma::mt_config> prng_config;
+			read_parallel_mt_config(
+				"parallel_mt.dat",
+				std::back_inserter(prng_config)
+			);
+			#else
 			std::mt19937 prng;
 			#if !defined(ARMA_NO_PRNG_SEED)
 			prng.seed(clock_type::now().time_since_epoch().count());
+			#endif
 			#endif
 			if (_model == Simulation_model::Autoregressive) {
 				Autoregressive_model<T> model(acf, _arorder);
@@ -325,6 +334,37 @@ namespace arma {
 				}
 			}
 		}
+
+		#if ARMA_FRAMEWORK != NONE
+		void
+		write_parallel_mt_config(const char* filename) {
+			std::ofstream out(filename);
+			if (!in.is_open()) {
+				throw std::runtime_error("bad file");
+			}
+			std::ostream_iterator<arma::mt_config> out_it(out);
+			arma::parallel_mt_seq<> seq(seed);
+			std::generate_n(out_it, n, std::ref(seq));
+		}
+
+		template<class Result>
+		void
+		read_parallel_mt_config(const char* filename, Result result) {
+			std::ifstream in(filename);
+			if (!in.is_open()) {
+				write_parallel_mt_config(filename);
+				in.open(filename);
+			}
+			if (!in.is_open()) {
+				throw std::runtime_error("bad file");
+			}
+			std::copy(
+				std::istream_iterator<arma::mt_config>(in),
+				std::istream_iterator<arma::mt_config>(),
+				result
+			);
+		}
+		#endif
 
 		ACF_function
 		get_acf_function() {

@@ -15,7 +15,8 @@ struct MT_generator {
 
 	void
 	generate_and_write_to_file() {
-		auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+		typedef std::chrono::high_resolution_clock clock_type;
+		auto seed = clock_type::now().time_since_epoch().count();
 		arma::parallel_mt_seq<> seq(seed);
 		std::ofstream out(_filename);
 		std::ostream_iterator<arma::mt_config> out_it(out);
