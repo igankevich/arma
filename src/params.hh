@@ -13,9 +13,10 @@ namespace sys {
 	template <class T>
 	struct parameter {
 
-		parameter(T& val) : _value(val) {}
+		parameter(T& val): _value(val) {}
 
-		std::istream& operator()(std::istream& in, const char* name) {
+		std::istream&
+		operator()(std::istream& in, const char* name) {
 			return in >> _value;
 		}
 
@@ -42,6 +43,19 @@ namespace sys {
 			if (ch != 0) { in.putback(ch); }
 			return in;
 		}
+
+		template<char CH>
+		struct const_char {
+			friend std::istream&
+			operator>>(std::istream& in, const const_char& rhs) {
+				char ch;
+				if ((ch = in.get()) != CH) {
+					in.putback(ch);
+					in.setstate(std::ios::failbit);
+				}
+				return in;
+			}
+		};
 	}
 
 	struct parameter_map {
@@ -50,11 +64,28 @@ namespace sys {
 		    read_param;
 		typedef std::unordered_map<std::string, read_param> map_type;
 
-		explicit parameter_map(map_type&& rhs) : _params(rhs) {}
+		explicit
+		parameter_map(map_type&& rhs, bool parens=false):
+		_params(rhs),
+		_parens(parens)
+		{}
 
-		friend std::istream& operator>>(std::istream& in, parameter_map& rhs) {
+		friend std::istream&
+		operator>>(std::istream& in, parameter_map& rhs) {
+			if (rhs._parens && !(in >> std::ws >> bits::const_char<'{'>())) {
+				std::clog << "Expecting \"{\"." << std::endl;
+			}
 			std::string name;
-			while (in >> bits::comment && std::getline(in, name, '=')) {
+			while (in >> bits::comment) {
+				if (rhs._parens) {
+					if (in >> std::ws >> bits::const_char<'}'>()) {
+						break;
+					}
+					in.clear();
+				}
+				if (!(in >> std::ws && std::getline(in, name, '='))) {
+					break;
+				}
 				trim_right(name);
 				auto result = rhs._params.find(name);
 				if (result == rhs._params.end()) {
@@ -74,6 +105,7 @@ namespace sys {
 		}
 
 		map_type _params;
+		bool _parens;
 	};
 }
 

@@ -61,9 +61,6 @@ namespace arma {
 	template <class T>
 	struct Autoreg_model {
 
-		typedef std::function<ACF<T>(const Vec3<T>&, const size3&)>
-		    ACF_function;
-
 		typedef std::chrono::high_resolution_clock clock_type;
 
 		Autoreg_model()
@@ -74,8 +71,7 @@ namespace arma {
 		void
 		act() {
 			echo_parameters();
-			ACF_function acf_func = get_acf_function();
-			ACF<T> acf = acf_func(_acfgrid.delta(), _acfgrid.size());
+			ACF<T> acf = _acf;
 			std::clog << "ACF variance = " << ACF_variance(acf) << std::endl;
 			if (_vscheme == Verification_scheme::Manual) {
 				write_csv("acf.csv", acf);
@@ -409,13 +405,13 @@ namespace arma {
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
+			ACF_wrapper<T> acf_wrapper(_acf);
 			sys::parameter_map params({
 			    {"out_grid", sys::make_param(_outgrid)},
-			    {"acf_grid", sys::make_param(_acfgrid)},
 			    {"ar_order", sys::make_param(_arorder)},
 			    {"ma_order", sys::make_param(_maorder)},
 			    {"least_squares", sys::make_param(_doleastsquares)},
-			    {"acf", sys::make_param(_acffunc)},
+			    {"acf", sys::make_param(acf_wrapper)},
 			    {"model", sys::make_param(_model)},
 			    {"ma_algorithm", sys::make_param(_ma_algorithm)},
 			    {"verification", sys::make_param(_vscheme)},
@@ -459,14 +455,12 @@ namespace arma {
 		void
 		echo_parameters() {
 			write_key_value(std::clog, "ACF grid size", _acfgrid.size());
-			write_key_value(std::clog, "ACF grid patch size",
-			                _acfgrid.patch_size());
+			write_key_value(std::clog, "ACF grid patch size", _acfgrid.patch_size());
 			write_key_value(std::clog, "Output grid size", _outgrid.size());
 			write_key_value(std::clog, "Output grid patch size",
 			                _outgrid.patch_size());
 			write_key_value(std::clog, "AR order", _arorder);
 			write_key_value(std::clog, "Do least squares", _doleastsquares);
-			write_key_value(std::clog, "ACF function", _acffunc);
 			write_key_value(std::clog, "Model", _model);
 			write_key_value(std::clog, "MA algorithm", _ma_algorithm);
 			write_key_value(std::clog, "Verification scheme", _vscheme);
@@ -536,17 +530,6 @@ namespace arma {
 		}
 		#endif
 
-		ACF_function
-		get_acf_function() {
-			auto result = acf_functions.find(_acffunc);
-			if (result == acf_functions.end()) {
-				std::clog << "Invalid ACF function name: \"" << _acffunc << '\"'
-				          << std::endl;
-				throw std::runtime_error("bad ACF function name");
-			}
-			return result->second;
-		}
-
 		inline static clock_type::rep
 		newseed() noexcept {
 			#if defined(ARMA_NO_PRNG_SEED)
@@ -562,25 +545,15 @@ namespace arma {
 		size3 _maorder;      //< MA model order (no. of coefficients).
 		bool _doleastsquares = false;
 
-		/// ACF function name (\see acf_functions). Default is "standing_wave".
-		std::string _acffunc = "standing_wave";
+		/// ACF function (\see ACF_wrapper).
+		ACF<T> _acf;
 
 		Simulation_model _model = Simulation_model::Autoregressive;
 		MA_algorithm _ma_algorithm = MA_algorithm::Fixed_point_iteration;
 		Verification_scheme _vscheme = Verification_scheme::Summary;
 		size3 _partition; //< The size of partitions that are computed in parallel.
-
-		/// Map of names to ACF functions.
-		static const std::unordered_map<std::string, ACF_function>
-		    acf_functions;
 	};
 
-	template <class T>
-	const std::unordered_map<
-	    std::string, std::function<ACF<T>(const Vec3<T>&, const size3&)>>
-	    Autoreg_model<T>::acf_functions = {
-	        {"standing_wave", standing_wave_ACF<T>},
-	        {"propagating_wave", propagating_wave_ACF<T>}};
 }
 
 #endif // ARMA_DRIVER_HH
