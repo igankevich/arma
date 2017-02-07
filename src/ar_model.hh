@@ -15,6 +15,7 @@
 #include "linalg.hh" // for cholesky, is_positive_definite, is_s...
 #include "types.hh"  // for size3, Array3D, Array2D, Array1D, Array3D
 #include "voodoo.hh" // for AC_matrix_generator, AC_matrix_gener...
+#include "arma.hh"
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations
@@ -64,18 +65,35 @@ namespace arma {
 			validate_process(_phi);
 		}
 
+		void
+		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
+			operator()(zeta, eps, zeta.domain());
+		}
+
 		/**
 		Generate wavy surface realisation.
 		*/
-		Array3D<T> operator()(Array3D<T> zeta) {
+		void
+		operator()(
+			Array3D<T>& zeta,
+			Array3D<T>& eps,
+			const Domain3D& subdomain
+		) {
+			if (std::addressof(zeta) != std::addressof(eps)) {
+				zeta(subdomain) = eps(subdomain);
+			}
 			const size3 fsize = _phi.shape();
-			const size3 zsize = zeta.shape();
-			const int t1 = zsize[0];
-			const int x1 = zsize[1];
-			const int y1 = zsize[2];
-			for (int t = 0; t < t1; t++) {
-				for (int x = 0; x < x1; x++) {
-					for (int y = 0; y < y1; y++) {
+			const size3& lbound = subdomain.lbound();
+			const size3& ubound = subdomain.ubound();
+			const int t0 = lbound(0);
+			const int x0 = lbound(1);
+			const int y0 = lbound(2);
+			const int t1 = ubound(0);
+			const int x1 = ubound(1);
+			const int y1 = ubound(2);
+			for (int t = t0; t <= t1; t++) {
+				for (int x = x0; x <= x1; x++) {
+					for (int y = y0; y <= y1; y++) {
 						const int m1 = std::min(t + 1, fsize[0]);
 						const int m2 = std::min(x + 1, fsize[1]);
 						const int m3 = std::min(y + 1, fsize[2]);
@@ -89,7 +107,6 @@ namespace arma {
 					}
 				}
 			}
-			return zeta;
 		}
 
 		template<class Options>

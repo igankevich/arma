@@ -47,8 +47,19 @@ namespace arma {
 			ma_model::validate();
 		}
 
-		Array3D<T> operator()(Array3D<T> eps) {
-			return ar_model::operator()(ma_model::operator()(eps));
+		void
+		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
+			operator()(zeta, eps, zeta.domain());
+		}
+
+		void
+		operator()(
+			Array3D<T>& zeta,
+			Array3D<T>& eps,
+			const Domain3D& subdomain
+		) {
+			ma_model::operator()(zeta, eps, subdomain);
+			ar_model::operator()(zeta, zeta, subdomain);
 		}
 
 		template<class Options>

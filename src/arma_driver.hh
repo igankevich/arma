@@ -12,6 +12,10 @@
 #include <iterator>
 #if ARMA_OPENMP
 #include <omp.h>
+#include <condition_variable>
+#include <mutex>
+#include <atomic>
+#include <cmath>
 #endif
 
 #include "config.hh"
@@ -28,6 +32,7 @@
 #include "statistics.hh"
 #include "distribution.hh"
 #include "parallel_mt.hh"
+#include "errors.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -127,77 +132,224 @@ namespace arma {
 			model.validate();
 			T var_wn = model.white_noise_variance();
 			std::clog << "WN variance = " << var_wn << std::endl;
-			Zeta<T> eps;
-			Zeta<T> zeta = do_generate_wavy_surface(model, opts, var_wn, eps);
+			Zeta<T> zeta = do_generate_wavy_surface(model, opts, var_wn);
 			write_zeta(zeta);
 			if (std::is_same<Model,Autoregressive_model<T>>::value) {
 				/// Estimate mean/variance with ramp-up region removed.
 				blitz::RectDomain<3> subdomain(model.order(), zeta.shape() - 1);
 				size3 zeta_size = subdomain.ubound() - subdomain.lbound();
 				std::clog << "Zeta size = " << zeta_size << std::endl;
-				verify(model.acf(), eps, zeta(subdomain), model);
+				verify(model.acf(), zeta(subdomain), model);
 			} else {
-				verify(model.acf(), eps, zeta, model);
+				verify(model.acf(), zeta, model);
 			}
 		}
+
+		#if ARMA_NONE
 
 		template <class Model, class Options>
 		Zeta<T>
 		do_generate_wavy_surface(
 			Model& model,
 			const Options& opts,
-			T var_wn,
-			Zeta<T>& out_eps
+			T var_wn
 		) {
-			#if !ARMA_NONE
-			std::vector<arma::mt_config> prng_config;
-			read_parallel_mt_config(
-				arma::config::mt_config_file,
-				std::back_inserter(prng_config)
-			);
-			#if ARMA_OPENMP
-			if (prng_config.size() < size_t(omp_get_max_threads())) {
-				throw std::logic_error("bad number of MT configs");
-			}
-			#endif
-			//parallel_mt prng;
 			std::mt19937 prng;
-			#else
-			std::mt19937 prng;
-			#if !defined(ARMA_NO_PRNG_SEED)
 			prng.seed(newseed());
-			#endif
-			#endif
 			Zeta<T> eps = generate_white_noise(
 				_outgrid.size(),
 				var_wn,
 				std::ref(prng)
 			);
-			out_eps.resize(eps.shape());
-			out_eps = eps;
-			Zeta<T> zeta = model(eps);
+			Zeta<T> zeta(eps.shape());
+			model(zeta, eps);
 			return zeta;
+		}
+
+		#elif ARMA_OPENMP
+
+		struct Partition {
+
+			Partition() = default;
+
+			Partition(size3 ijk_, const blitz::RectDomain<3>& r, const mt_config& conf):
+			ijk(ijk_), rect(r), prng(conf)
+			{}
+
+			friend std::ostream&
+			operator<<(std::ostream& out, const Partition& rhs) {
+				return out << rhs.ijk << ": " << rhs.rect;
+			}
+
+			size3
+			shape() const {
+				return get_shape(rect);
+			}
+
+			size3 ijk;
+			blitz::RectDomain<3> rect;
+			parallel_mt prng;
+		};
+
+		template <class Model, class Options>
+		Zeta<T>
+		do_generate_wavy_surface(
+			Model& model,
+			const Options& opts,
+			T var_wn
+		) {
+			using blitz::RectDomain;
+			/// 1. Read parallel Mersenne Twister states.
+			std::vector<mt_config> prng_config;
+			read_parallel_mt_config(
+				config::mt_config_file,
+				std::back_inserter(prng_config)
+			);
+			const int nprngs = prng_config.size();
+			if (nprngs == 0) {
+				throw prng_error("bad number of MT configs", nprngs, 0);
+			}
+			/// 2. Partition the data.
+			const size3 shape = _outgrid.size();
+			const size3 partshape = get_partition_shape(model.order(), nprngs);
+			const size3 nparts = blitz::div_ceil(shape, partshape);
+			const int ntotal = blitz::product(nparts);
+			if (prng_config.size() < size_t(blitz::product(nparts))) {
+				throw prng_error("bad number of MT configs", nprngs, ntotal);
+			}
+			write_key_value(std::clog, "Partition size", partshape);
+			std::vector<Partition> parts = partition(
+				nparts,
+				partshape,
+				shape,
+				prng_config
+			);
+			Array3D<bool> completed(nparts);
+			Zeta<T> zeta(shape), eps(shape);
+			std::condition_variable cv;
+			std::mutex mtx;
+			std::atomic<int> nfinished(0);
+			/// 3. Put all partitions in a queue and process them in parallel.
+			/// Each thread traverses the queue looking for partitions depedent
+			/// partitions of which has been computed. When eligible partition is
+			/// found, it is removed from the queue and computed and its status is
+			/// updated in a separate map.
+			#pragma omp parallel
+			{
+				std::unique_lock<std::mutex> lock(mtx);
+				while (!parts.empty()) {
+					typename std::vector<Partition>::iterator result;
+					cv.wait(lock, [&result,&parts,&completed] () {
+						result = std::find_if(
+							parts.begin(),
+							parts.end(),
+							[&completed] (const Partition& part) {
+								completed(part.ijk) = true;
+								size3 ijk0 = blitz::max(0, part.ijk - 1);
+								bool all_completed = blitz::all(
+									completed(blitz::RectDomain<3>(ijk0, part.ijk))
+								);
+								completed(part.ijk) = false;
+								return all_completed;
+							}
+						);
+						return result != parts.end() || parts.empty();
+					});
+					if (parts.empty()) {
+						break;
+					}
+					Partition part = *result;
+					parts.erase(result);
+					lock.unlock();
+					eps(part.rect) = generate_white_noise(
+						part.shape(),
+						var_wn,
+						std::ref(part.prng)
+					);
+					model(zeta, eps, part.rect);
+					lock.lock();
+					std::clog
+						<< "Finished part ["
+						<< ++nfinished << '/' << ntotal << ']'
+						<< std::endl;
+					completed(part.ijk) = true;
+					cv.notify_all();
+				}
+			}
+			return zeta;
+		}
+
+		std::vector<Partition>
+		partition(
+			size3 nparts,
+			size3 partshape,
+			size3 shape,
+			const std::vector<mt_config>& prng_config
+		) {
+			std::vector<Partition> parts;
+			const int nt = nparts(0);
+			const int nx = nparts(1);
+			const int ny = nparts(2);
+			for (int i=0; i<nt; ++i) {
+				for (int j=0; j<nx; ++j) {
+					for (int k=0; k<ny; ++k) {
+						const size3 ijk(i, j, k);
+						const size3 lower = blitz::min(ijk * partshape, shape);
+						const size3 upper = blitz::min((ijk+1) * partshape, shape) - 1;
+						parts.emplace_back(
+							ijk,
+							blitz::RectDomain<3>(lower, upper),
+							prng_config[parts.size()]
+						);
+					}
+				}
+			}
+			return std::move(parts);
+		}
+
+		#endif
+
+		size3
+		get_partition_shape(size3 order, int nprngs) {
+			size3 ret;
+			if (blitz::product(_partition) > 0) {
+				ret = _partition;
+			} else {
+				const size3 shape = _outgrid.size();
+				const size3 guess1 = blitz::max(
+					order * 2,
+					size3(10, 10, 10)
+				);
+				const int parallelism = std::min(omp_get_max_threads(), nprngs);
+				const int npar = std::max(1, 7*int(std::cbrt(parallelism)));
+				const size3 guess2 = blitz::div_ceil(
+					shape,
+					size3(npar, npar, npar)
+				);
+				ret = blitz::min(guess1, guess2) + blitz::abs(guess1 - guess2) / 2;
+			}
+			return ret;
 		}
 
 		template <class Model>
 		void
-		verify(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta, Model model) {
+		verify(ACF<T> acf, Zeta<T> zeta, Model model) {
 			switch (_vscheme) {
 				case Verification_scheme::None:
 					break;
 				case Verification_scheme::Summary:
 				case Verification_scheme::Quantile:
-					show_statistics(acf, eps, zeta, model);
+					show_statistics(acf, zeta, model);
 					break;
 				case Verification_scheme::Manual:
-					write_everything_to_files(acf, eps, zeta);
+					write_everything_to_files(acf, zeta);
 					break;
 			}
 		}
 
 		template<class Model>
 		void
-		show_statistics(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta, Model model) {
+		show_statistics(ACF<T> acf, Zeta<T> zeta, Model model) {
 			const T var_wn = model.white_noise_variance();
 			Stats<T>::print_header(std::clog);
 			std::clog << std::endl;
@@ -217,7 +369,6 @@ namespace arma {
 			stats::Wave_lengths_dist<T> lengths_x_dist(stats::mean(lengths_x));
 			stats::Wave_lengths_dist<T> lengths_y_dist(stats::mean(lengths_y));
 			std::vector<Stats<T>> stats = {
-			    make_stats(eps, T(0), var_wn, eps_dist, "white noise"),
 			    make_stats(zeta, T(0), var_elev, elev_dist, "elevation"),
 			    make_stats(heights_x, approx_wave_height(var_elev), T(0),
 			               heights_x_dist, "wave height x"),
@@ -245,7 +396,7 @@ namespace arma {
 		}
 
 		void
-		write_everything_to_files(ACF<T> acf, Zeta<T> eps, Zeta<T> zeta) {
+		write_everything_to_files(ACF<T> acf, Zeta<T> zeta) {
 			Wave_field<T> wave_field(zeta);
 			write_raw("heights_x", wave_field.heights_x());
 			write_raw("heights_y", wave_field.heights_y());
@@ -253,7 +404,6 @@ namespace arma {
 			write_raw("lengths_x", wave_field.lengths_x());
 			write_raw("lengths_y", wave_field.lengths_y());
 			write_raw("elevation", zeta);
-			write_raw("white_noise", eps);
 		}
 
 		/// Read AR model parameters from an input stream.
@@ -269,6 +419,7 @@ namespace arma {
 			    {"model", sys::make_param(_model)},
 			    {"ma_algorithm", sys::make_param(_ma_algorithm)},
 			    {"verification", sys::make_param(_vscheme)},
+			    {"partition", sys::make_param(_partition)},
 			});
 			in >> params;
 		}
@@ -396,9 +547,13 @@ namespace arma {
 			return result->second;
 		}
 
-		static clock_type::rep
+		inline static clock_type::rep
 		newseed() noexcept {
+			#if defined(ARMA_NO_PRNG_SEED)
+			return clock_type::rep(0);
+			#else
 			return clock_type::now().time_since_epoch().count();
+			#endif
 		}
 
 		Grid<T, 3> _outgrid; //< Wavy surface grid.
@@ -413,6 +568,7 @@ namespace arma {
 		Simulation_model _model = Simulation_model::Autoregressive;
 		MA_algorithm _ma_algorithm = MA_algorithm::Fixed_point_iteration;
 		Verification_scheme _vscheme = Verification_scheme::Summary;
+		size3 _partition; //< The size of partitions that are computed in parallel.
 
 		/// Map of names to ACF functions.
 		static const std::unordered_map<std::string, ACF_function>

@@ -38,6 +38,19 @@ namespace blitz {
 	}
 
 	BZ_DECLARE_FUNCTION(isfinite);
+
+	int
+	div_ceil(int lhs, int rhs) noexcept {
+		return lhs/rhs + (lhs%rhs == 0 ? 0 : 1);
+	}
+
+	BZ_DECLARE_FUNCTION2(div_ceil);
+
+	template<int n>
+	std::ostream&
+	operator<<(std::ostream& out, const RectDomain<n>& rhs) {
+		return out << rhs.lbound() << " : " << rhs.ubound();
+	}
 }
 
 /// Domain-specific classes and functions.
@@ -287,30 +300,31 @@ namespace arma {
 				}
 			}
 		}
-		//		const int N = Tex.size() - 1;
-		const int N = std::min(Tex.size() - 1, size_t(100));
-		T Wexp1 = Wex[0];
-		T Texp1 = Tex[0];
-		T Wexp2 = 0, Texp2 = 0;
-		int j = 0;
-		for (int i = 1; i < N; ++i) {
-			if (!((Wexp1 > T(0)) ^ (Wex[i] > T(0)))) {
-				if (std::abs(Wexp1) < std::abs(Wex[i])) {
+		if (!Tex.empty()) {
+			const int N = std::min(Tex.size() - 1, size_t(100));
+			T Wexp1 = Wex[0];
+			T Texp1 = Tex[0];
+			T Wexp2 = 0, Texp2 = 0;
+			int j = 0;
+			for (int i = 1; i < N; ++i) {
+				if (!((Wexp1 > T(0)) ^ (Wex[i] > T(0)))) {
+					if (std::abs(Wexp1) < std::abs(Wex[i])) {
+						Wexp1 = Wex[i];
+						Texp1 = Tex[i];
+					}
+				} else {
+					if (j >= 1) {
+						T period = (Texp1 - Texp2) * T(2);
+						T height = std::abs(Wexp1 - Wexp2);
+						*result = Wave<T>(height, period);
+						++result;
+					}
+					Wexp2 = Wexp1;
+					Texp2 = Texp1;
 					Wexp1 = Wex[i];
 					Texp1 = Tex[i];
+					j++;
 				}
-			} else {
-				if (j >= 1) {
-					T period = (Texp1 - Texp2) * T(2);
-					T height = std::abs(Wexp1 - Wexp2);
-					*result = Wave<T>(height, period);
-					++result;
-				}
-				Wexp2 = Wexp1;
-				Texp2 = Texp1;
-				Wexp1 = Wex[i];
-				Texp1 = Tex[i];
-				j++;
 			}
 		}
 	}
@@ -482,6 +496,13 @@ namespace arma {
 	approx_wave_period(T variance) {
 		return T(4.8) * std::sqrt(approx_wave_height(variance));
 	}
+
+	template<int n>
+	blitz::TinyVector<int, n>
+	get_shape(const blitz::RectDomain<n>& rhs) {
+		return rhs.ubound() - rhs.lbound() + 1;
+	}
+
 }
 
 #endif // ARMA_HH

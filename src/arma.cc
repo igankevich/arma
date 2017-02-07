@@ -71,7 +71,19 @@ main(int argc, char* argv[]) {
 		}
 		write_key_value(std::clog, "Input file", input_filename);
 		cfg >> model;
-		model.act();
+		try {
+			model.act();
+		} catch (const prng_error& err) {
+			if (err.ngenerators() == 0) {
+				std::cerr << "No parallel Mersenne Twisters configuration is found. "
+					"Please, generate sufficient number of MTs with dcmt programme."
+					<< std::endl;
+			} else {
+				std::cerr << "Insufficient number of parallel Mersenne Twisters found. "
+					"Please, generate at least " << err.nparts() << " MTs for this run."
+					<< std::endl;
+			}
+		}
 	}
 	return 0;
 }

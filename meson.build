@@ -8,15 +8,26 @@ project(
 
 meson.add_postconf_script('scripts/copy-input-files')
 
+cpp = meson.get_compiler('cpp')
+libdcmt = cpp.find_library('dcmt')
+libblitz = dependency('blitz')
+libgsl = dependency('gsl')
+liblapack = cpp.find_library('lapack')
+libblas = cpp.find_library('blas')
+libGL = cpp.find_library('GL')
+libglut = dependency('freeglut')
+
 if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')
 endif
 
+parallel_deps = []
 framework = get_option('framework')
 if framework == 'openmp'
 	add_global_arguments('-DARMA_OPENMP=1', language: 'cpp')
 	add_global_arguments('-fopenmp', language: 'cpp')
 	add_global_link_arguments('-fopenmp', language: 'cpp')
+	parallel_deps += libdcmt
 elif framework == 'opencl'
 	add_global_arguments('-DARMA_OPENCL=1', language: 'cpp')
 	add_global_link_arguments('-lOpenCL', language: 'cpp')
@@ -33,14 +44,5 @@ endif
 run_target('doc', command: 'scripts/generate-docs')
 run_target('graphs', command: ['gnuplot', '--persist', '-c', 'scripts/target-graphs', meson.build_root()])
 run_target('slices', command: 'scripts/target-slices')
-
-cpp = meson.get_compiler('cpp')
-libdcmt = cpp.find_library('dcmt')
-libblitz = dependency('blitz')
-libgsl = dependency('gsl')
-liblapack = cpp.find_library('lapack')
-libblas = cpp.find_library('blas')
-libGL = cpp.find_library('GL')
-libglut = dependency('freeglut')
 
 subdir('src')

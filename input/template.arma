@@ -44,3 +44,10 @@ ma_algorithm = fixed_point_iteration
 # - quantile (do everything from summary and write quantile plots to files)
 # - manual (write raw data to files)
 verification = manual
+
+# The size of wavy surface partition. Each partition is computed
+# in parallel, given that all dependent partitions has been computed as well.
+# The smaller the size, the higher is parallelism. If partition size is not set 
+# or is invalid, the programme tries to guess optimal size based on the number
+# of threads and the number of coefficients in the model.
+#partition = (0,0,0)

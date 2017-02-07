@@ -102,11 +102,13 @@ namespace arma {
 			return _length;
 		}
 
-		friend std::ostream& operator<<(std::ostream& out, const Grid& rhs) {
+		friend std::ostream&
+		operator<<(std::ostream& out, const Grid& rhs) {
 			return out << rhs._npoints << ':' << rhs._length;
 		}
 
-		friend std::istream& operator>>(std::istream& in, Grid& rhs) {
+		friend std::istream&
+		operator>>(std::istream& in, Grid& rhs) {
 			char delim;
 			if (in >> rhs._npoints >> std::ws >> delim) {
 				if (delim == ':') {
@@ -123,6 +125,7 @@ namespace arma {
 		size_type _npoints;
 		length_type _length;
 	};
+
 }
 
 #endif // GRID_HH

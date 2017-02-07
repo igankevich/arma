@@ -8,6 +8,7 @@
 #include "linalg.hh"
 #include "ma_algorithm.hh"
 #include "voodoo.hh"
+#include "arma.hh"
 
 namespace arma {
 
@@ -75,16 +76,29 @@ namespace arma {
 			validate_process(_theta);
 		}
 
-		Array3D<T> operator()(Array3D<T> eps) {
-			Array3D<T> zeta(eps.shape());
+		void
+		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
+			operator()(zeta, eps, zeta.domain());
+		}
+
+		void
+		operator()(
+			Array3D<T>& zeta,
+			Array3D<T>& eps,
+			const Domain3D& subdomain
+		) {
 			const size3 fsize = _theta.shape();
-			const size3 zsize = zeta.shape();
-			const int t1 = zsize[0];
-			const int x1 = zsize[1];
-			const int y1 = zsize[2];
-			for (int t = 0; t < t1; t++) {
-				for (int x = 0; x < x1; x++) {
-					for (int y = 0; y < y1; y++) {
+			const size3& lbound = subdomain.lbound();
+			const size3& ubound = subdomain.ubound();
+			const int t0 = lbound(0);
+			const int x0 = lbound(1);
+			const int y0 = lbound(2);
+			const int t1 = ubound(0);
+			const int x1 = ubound(1);
+			const int y1 = ubound(2);
+			for (int t = t0; t <= t1; t++) {
+				for (int x = x0; x <= x1; x++) {
+					for (int y = y0; y <= y1; y++) {
 						const int m1 = std::min(t + 1, fsize[0]);
 						const int m2 = std::min(x + 1, fsize[1]);
 						const int m3 = std::min(y + 1, fsize[2]);
@@ -98,7 +112,6 @@ namespace arma {
 					}
 				}
 			}
-			return zeta;
 		}
 
 		template<class Options>

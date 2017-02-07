@@ -6,7 +6,7 @@ executable(
 		libgsl,
 		libblas,
 		liblapack
-	],
+	] + parallel_deps,
 	link_args: '-llapacke',
 	install: true
 )

@@ -98,7 +98,9 @@ namespace arma {
 
 		typedef uint32_t result_type;
 
+		parallel_mt() = default;
 		explicit parallel_mt(mt_config conf) : _config(conf) { init(0); }
+		parallel_mt& operator=(const parallel_mt&) = default;
 
 		result_type operator()() noexcept { return ::genrand_mt(&_config); }
 
