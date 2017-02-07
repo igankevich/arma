@@ -4,6 +4,7 @@
 #include <stddef.h>      // for size_t
 #include <istream>       // for istream, ostream, basic_istream::putback
 #include <blitz/array.h> // for TinyVector
+#include "validators.hh"
 
 /**
 \file
@@ -125,6 +126,13 @@ namespace arma {
 		size_type _npoints;
 		length_type _length;
 	};
+
+	template<class T, int n>
+	void
+	validate_grid(const Grid<T,n>& rhs, const char* name) {
+		validate_shape(rhs.num_points(), name);
+		validate_shape(rhs.length(), name);
+	}
 
 }
 

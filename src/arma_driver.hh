@@ -63,10 +63,10 @@ namespace arma {
 
 		typedef std::chrono::high_resolution_clock clock_type;
 
-		Autoreg_model()
-		    : _outgrid{{768, 24, 24}},
-		      _acfgrid{{10, 10, 10}, {T(2.5), T(5), T(5)}},
-		      _arorder(_acfgrid.size()) {}
+		Autoreg_model():
+		_outgrid{{768, 24, 24}},
+		_arorder(7, 7, 7)
+		{}
 
 		void
 		act() {
@@ -79,10 +79,6 @@ namespace arma {
 			{
 				std::ofstream out("acf");
 				out << acf;
-			}
-			{
-				std::ofstream out("zdelta");
-				out << _acfgrid.delta();
 			}
 			struct {
 				bool least_squares;
@@ -116,7 +112,6 @@ namespace arma {
 		friend std::istream&
 		operator>>(std::istream& in, Autoreg_model<V>& m) {
 			m.read_parameters(in);
-			m.validate_parameters();
 			return in;
 		}
 
@@ -407,9 +402,9 @@ namespace arma {
 		read_parameters(std::istream& in) {
 			ACF_wrapper<T> acf_wrapper(_acf);
 			sys::parameter_map params({
-			    {"out_grid", sys::make_param(_outgrid)},
-			    {"ar_order", sys::make_param(_arorder)},
-			    {"ma_order", sys::make_param(_maorder)},
+			    {"out_grid", sys::make_param(_outgrid, validate_grid<T,3>)},
+			    {"ar_order", sys::make_param(_arorder, validate_shape<int,3>)},
+			    {"ma_order", sys::make_param(_maorder, validate_shape<int,3>)},
 			    {"least_squares", sys::make_param(_doleastsquares)},
 			    {"acf", sys::make_param(acf_wrapper)},
 			    {"model", sys::make_param(_model)},
@@ -420,42 +415,9 @@ namespace arma {
 			in >> params;
 		}
 
-		/// Check for common input/logical errors and numerical implementation
-		/// constraints.
-		void
-		validate_parameters() {
-			check_non_zero(_outgrid.size(), "output grid size");
-			check_non_zero(_outgrid.delta(), "output grid patch size");
-			check_non_zero(_acfgrid.size(), "ACF grid size");
-			check_non_zero(_acfgrid.delta(), "ACF grid patch size");
-			int part_sz = _outgrid.num_points(0);
-			int fsize_t = _arorder[0];
-			if (fsize_t > part_sz) {
-				std::stringstream tmp;
-				tmp << "_arorder[0] > zsize[0], should be 0 < _arorder[0] < "
-				       "zsize[0]\n";
-				tmp << "_arorder[0]  = " << fsize_t << '\n';
-				tmp << "zsize[0] = " << part_sz << '\n';
-				throw std::runtime_error(tmp.str());
-			}
-		}
-
-		/// Check that all components of vector @sz are non-zero,
-		/// i.e. it is valid size specification.
-		template <class V, int N>
-		void
-		check_non_zero(const Vector<V, N>& sz, const char* var_name) {
-			if (blitz::product(sz) == V(0)) {
-				std::stringstream str;
-				str << "Invalid " << var_name << ": " << sz;
-				throw std::runtime_error(str.str().c_str());
-			}
-		}
-
 		void
 		echo_parameters() {
-			write_key_value(std::clog, "ACF grid size", _acfgrid.size());
-			write_key_value(std::clog, "ACF grid patch size", _acfgrid.patch_size());
+			write_key_value(std::clog, "ACF grid size", _acf.shape());
 			write_key_value(std::clog, "Output grid size", _outgrid.size());
 			write_key_value(std::clog, "Output grid patch size",
 			                _outgrid.patch_size());
@@ -540,7 +502,6 @@ namespace arma {
 		}
 
 		Grid<T, 3> _outgrid; //< Wavy surface grid.
-		Grid<T, 3> _acfgrid; //< ACF grid.
 		size3 _arorder;      //< AR model order (no. of coefficients).
 		size3 _maorder;      //< MA model order (no. of coefficients).
 		bool _doleastsquares = false;

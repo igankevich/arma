@@ -13,21 +13,38 @@ namespace sys {
 	template <class T>
 	struct parameter {
 
-		parameter(T& val): _value(val) {}
+		parameter(T& val):
+		parameter(val, [](const T&,const char*){})
+		{}
+
+		template<class Validate>
+		parameter(T& val, Validate validate):
+		_value(val), _validate(validate)
+		{}
 
 		std::istream&
 		operator()(std::istream& in, const char* name) {
-			return in >> _value;
+			if (in >> _value) {
+				_validate(_value, name);
+			}
+			return in;
 		}
 
 	private:
 		T& _value;
+		std::function<void(const T&, const char*)> _validate;
 	};
 
 	template <class T>
 	parameter<T>
 	make_param(T& val) {
 		return parameter<T>(val);
+	}
+
+	template <class T, class Validate>
+	parameter<T>
+	make_param(T& val, Validate validate) {
+		return parameter<T>(val, validate);
 	}
 
 	namespace bits {

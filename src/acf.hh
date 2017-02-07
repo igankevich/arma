@@ -7,6 +7,7 @@
 #include "types.hh" // for ACF, Vec3, size3
 #include "params.hh"
 #include "grid.hh"
+#include "validators.hh"
 
 /// @file
 /// Mini-database of ACF approximations.
@@ -73,8 +74,7 @@ namespace arma {
 		get_acf_function(std::string func) {
 			auto result = acf_functions.find(func);
 			if (result == acf_functions.end()) {
-				std::clog << "Invalid ACF function name: \"" << func << '\"'
-				          << std::endl;
+				std::clog << "Bad ACF function name: \"" << func << '\"' << std::endl;
 				throw std::runtime_error("bad ACF function name");
 			}
 			return result->second;
@@ -96,7 +96,7 @@ namespace arma {
 			std::string func;
 			Grid<T,3> grid;
 			sys::parameter_map params({
-			    {"grid", sys::make_param(grid)},
+			    {"grid", sys::make_param(grid, validate_grid<T,3>)},
 			    {"func", sys::make_param(func)},
 			}, true);
 			in >> params;
