@@ -8,9 +8,6 @@
 # NB: No. of patches equals to the no. of points minus 1.
 out_grid = (200,40,40)
 
-# Grid for ACF function approximations. The format is the same as for out_grid.
-acf_grid = (10,10,10) : (2.5,5,5)
-
 # AR model order
 ar_order = (7,7,7)
 
@@ -21,15 +18,23 @@ ma_order = (20,10,10)
 # (as of 2016-07-28 it is broken)
 least_squares = 0
 
-# ACF function approximation. Possible values:
-# - standing_wave
-# - propagating_wave
-acf = propagating_wave
+acf = {
+	# ACF function approximation. Possible values:
+	# - standing_wave
+	# - propagating_wave
+	func = propagating_wave
+
+	# Grid for ACF function approximations. The format is the same as for out_grid.
+	grid = (10,10,10) : (2.5,5,5)
+}
+
 
 # Model to use. Possible values:
 # - AR
 # - MA
 # - ARMA
+# - LH
+# - plain_wave
 model = MA
 
 # Algorithm that determines MA coefficients. Possible values:
