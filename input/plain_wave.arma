@@ -1,0 +1,11 @@
+out_grid = (200,40,40)
+
+model = plain_wave
+plain_wave = {
+	func = cos
+	amplitudes = [5]
+	wavenumbers = [0.2]
+	phases = [2]
+	velocity = 0.5
+}
+verification = manual

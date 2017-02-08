@@ -24,6 +24,7 @@
 #include "ar_model.hh"
 #include "ma_model.hh"
 #include "arma_model.hh"
+#include "models/plain_wave.hh"
 #include "simulation_model.hh"
 #include "verification_scheme.hh" // for Verification_scheme
 #include "acf.hh" // for standing_wave_ACF, propagating_wave_ACF
@@ -77,6 +78,10 @@ namespace arma {
 				generate_wavy_surface(_mamodel);
 			} else if (_model == Simulation_model::ARMA) {
 				generate_wavy_surface(_armamodel);
+			} else if (_model == Simulation_model::Plain_wave) {
+				Zeta<T> zeta(_outgrid.size());
+			   	_plainwavemodel(zeta);
+				write_zeta(zeta);
 			}
 		}
 
@@ -382,6 +387,7 @@ namespace arma {
 			    {"ar_model", sys::make_param(_armodel)},
 			    {"ma_model", sys::make_param(_mamodel)},
 			    {"arma_model", sys::make_param(_armamodel)},
+			    {"plain_wave", sys::make_param(_plainwavemodel)},
 			    {"model", sys::make_param(_model)},
 			    {"verification", sys::make_param(_vscheme)},
 			    {"partition", sys::make_param(_partition)},
@@ -394,10 +400,19 @@ namespace arma {
 			write_key_value(std::clog, "Output grid size", _outgrid.size());
 			write_key_value(std::clog, "Output grid patch size",
 			                _outgrid.patch_size());
-			write_key_value(std::clog, "AR model", _armodel);
-			write_key_value(std::clog, "MA model", _mamodel);
 			write_key_value(std::clog, "Model", _model);
 			write_key_value(std::clog, "Verification scheme", _vscheme);
+			switch (_model) {
+				case Simulation_model::Autoregressive:
+					write_key_value(std::clog, "AR model", _armodel);
+					break;
+				case Simulation_model::Moving_average:
+					write_key_value(std::clog, "MA model", _mamodel);
+					break;
+				case Simulation_model::Plain_wave:
+					write_key_value(std::clog, "Plain wave model", _plainwavemodel);
+					break;
+			}
 		}
 
 		void
@@ -482,6 +497,7 @@ namespace arma {
 		Autoregressive_model<T> _armodel;
 		Moving_average_model<T> _mamodel;
 		ARMA_model<T> _armamodel;
+		Plain_wave_model<T> _plainwavemodel;
 	};
 
 }
