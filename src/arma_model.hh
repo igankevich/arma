@@ -6,11 +6,13 @@
 namespace arma {
 
 	template <class T>
-	struct ARMA_model : public Autoregressive_model<T>,
-	                    public Moving_average_model<T> {
+	struct ARMA_model: public Autoregressive_model<T>,
+	                   public Moving_average_model<T> {
 
 		typedef Autoregressive_model<T> ar_model;
 		typedef Moving_average_model<T> ma_model;
+
+		ARMA_model() = default;
 
 		ARMA_model(Array3D<T> acf, size3 ar_order, size3 ma_order)
 		    : Autoregressive_model<T>(slice_front(acf, ar_order).copy(), ar_order),
@@ -60,6 +62,21 @@ namespace arma {
 		) {
 			ma_model::operator()(zeta, eps, subdomain);
 			ar_model::operator()(zeta, zeta, subdomain);
+		}
+
+		friend std::istream&
+		operator>>(std::istream& in, ARMA_model& rhs) {
+			ACF_wrapper<T> acf_wrapper(rhs._acf_orig);
+			sys::parameter_map params({
+			    {"acf", sys::make_param(acf_wrapper)},
+			    {"ar_model", sys::make_param(static_cast<ar_model&>(rhs))},
+			    {"ma_model", sys::make_param(static_cast<ma_model&>(rhs))},
+			}, true);
+			in >> params;
+			validate_shape(rhs._acf_orig.shape(), "ma_model.acf.shape");
+			rhs.ar_model::setacf(slice_front(rhs._acf_orig, rhs.ar_model::order()));
+			rhs.ma_model::setacf(slice_back(rhs._acf_orig, rhs.ma_model::order()));
+			return in;
 		}
 
 		template<class Options>

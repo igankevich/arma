@@ -65,42 +65,26 @@ namespace arma {
 
 		Autoreg_model():
 		_outgrid{{768, 24, 24}},
-		_arorder(7, 7, 7)
+		_partition(0,0,0)
 		{}
 
 		void
 		act() {
 			echo_parameters();
-			ACF<T> acf = _acf;
-			std::clog << "ACF variance = " << ACF_variance(acf) << std::endl;
-			if (_vscheme == Verification_scheme::Manual) {
-				write_csv("acf.csv", acf);
-			}
-			{
-				std::ofstream out("acf");
-				out << acf;
-			}
 			struct {
-				bool least_squares;
 				int max_iterations;
 			   	T eps;
 			   	T min_var_wn;
-				MA_algorithm algo;
 			} opts;
 			opts.max_iterations = 1000;
 			opts.eps = T(1e-5);
 			opts.min_var_wn = T(1e-6);
-			opts.algo = _ma_algorithm;
-			opts.least_squares = _doleastsquares;
 			if (_model == Simulation_model::Autoregressive) {
-				Autoregressive_model<T> model(acf, _arorder);
-				generate_wavy_surface(model, opts);
+				generate_wavy_surface(_armodel, opts);
 			} else if (_model == Simulation_model::Moving_average) {
-				Moving_average_model<T> model(acf, _maorder);
-				generate_wavy_surface(model, opts);
+				generate_wavy_surface(_mamodel, opts);
 			} else if (_model == Simulation_model::ARMA) {
-				ARMA_model<T> model(acf, _arorder, _maorder);
-				generate_wavy_surface(model, opts);
+				generate_wavy_surface(_armamodel, opts);
 			}
 		}
 
@@ -119,6 +103,15 @@ namespace arma {
 		template <class Model, class Options>
 		void
 		generate_wavy_surface(Model& model, const Options& opts) {
+			ACF<T> acf = model.acf();
+			std::clog << "ACF variance = " << ACF_variance(acf) << std::endl;
+			if (_vscheme == Verification_scheme::Manual) {
+				write_csv("acf.csv", acf);
+			}
+			{
+				std::ofstream out("acf");
+				out << acf;
+			}
 			model.determine_coefficients(opts);
 			model.validate();
 			T var_wn = model.white_noise_variance();
@@ -400,15 +393,12 @@ namespace arma {
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
-			ACF_wrapper<T> acf_wrapper(_acf);
 			sys::parameter_map params({
 			    {"out_grid", sys::make_param(_outgrid, validate_grid<T,3>)},
-			    {"ar_order", sys::make_param(_arorder, validate_shape<int,3>)},
-			    {"ma_order", sys::make_param(_maorder, validate_shape<int,3>)},
-			    {"least_squares", sys::make_param(_doleastsquares)},
-			    {"acf", sys::make_param(acf_wrapper)},
+			    {"ar_model", sys::make_param(_armodel)},
+			    {"ma_model", sys::make_param(_mamodel)},
+			    {"arma_model", sys::make_param(_armamodel)},
 			    {"model", sys::make_param(_model)},
-			    {"ma_algorithm", sys::make_param(_ma_algorithm)},
 			    {"verification", sys::make_param(_vscheme)},
 			    {"partition", sys::make_param(_partition)},
 			});
@@ -417,14 +407,12 @@ namespace arma {
 
 		void
 		echo_parameters() {
-			write_key_value(std::clog, "ACF grid size", _acf.shape());
 			write_key_value(std::clog, "Output grid size", _outgrid.size());
 			write_key_value(std::clog, "Output grid patch size",
 			                _outgrid.patch_size());
-			write_key_value(std::clog, "AR order", _arorder);
-			write_key_value(std::clog, "Do least squares", _doleastsquares);
+			write_key_value(std::clog, "AR model", _armodel);
+			write_key_value(std::clog, "MA model", _mamodel);
 			write_key_value(std::clog, "Model", _model);
-			write_key_value(std::clog, "MA algorithm", _ma_algorithm);
 			write_key_value(std::clog, "Verification scheme", _vscheme);
 		}
 
@@ -502,17 +490,14 @@ namespace arma {
 		}
 
 		Grid<T, 3> _outgrid; //< Wavy surface grid.
-		size3 _arorder;      //< AR model order (no. of coefficients).
-		size3 _maorder;      //< MA model order (no. of coefficients).
-		bool _doleastsquares = false;
-
-		/// ACF function (\see ACF_wrapper).
-		ACF<T> _acf;
 
 		Simulation_model _model = Simulation_model::Autoregressive;
-		MA_algorithm _ma_algorithm = MA_algorithm::Fixed_point_iteration;
 		Verification_scheme _vscheme = Verification_scheme::Summary;
 		size3 _partition; //< The size of partitions that are computed in parallel.
+
+		Autoregressive_model<T> _armodel;
+		Moving_average_model<T> _mamodel;
+		ARMA_model<T> _armamodel;
 	};
 
 }

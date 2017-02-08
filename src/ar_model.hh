@@ -16,6 +16,9 @@
 #include "types.hh"  // for size3, Array3D, Array2D, Array1D, Array3D
 #include "voodoo.hh" // for AC_matrix_generator, AC_matrix_gener...
 #include "arma.hh"
+#include "models/model.hh"
+#include "params.hh"
+#include "acf.hh"
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations
@@ -24,14 +27,23 @@
 namespace arma {
 
 	template <class T>
-	struct Autoregressive_model {
+	struct Autoregressive_model: public virtual Basic_ARMA_model<T> {
 
-		Autoregressive_model(Array3D<T> acf, size3 order)
-		    : _acf(acf), _order(order), _phi(_order) {}
+		Autoregressive_model() = default;
+
+		Autoregressive_model(Array3D<T> acf, size3 order):
+		_acf(acf), _phi(order)
+		{}
 
 		ACF<T>
 		acf() const {
 			return _acf;
+		}
+
+		void
+		setacf(ACF<T> acf) {
+			_acf.resize(acf.shape());
+			_acf = acf;
 		}
 
 		T
@@ -46,11 +58,11 @@ namespace arma {
 
 		const size3&
 		order() const {
-			return _order;
+			return _phi.shape();
 		}
 
 		T
-		white_noise_variance() const {
+		white_noise_variance() const override {
 			return white_noise_variance(_phi);
 		}
 
@@ -61,13 +73,8 @@ namespace arma {
 		}
 
 		void
-		validate() const {
+		validate() const override {
 			validate_process(_phi);
-		}
-
-		void
-		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
-			operator()(zeta, eps, zeta.domain());
 		}
 
 		/**
@@ -78,7 +85,7 @@ namespace arma {
 			Array3D<T>& zeta,
 			Array3D<T>& eps,
 			const Domain3D& subdomain
-		) {
+		) override {
 			if (std::addressof(zeta) != std::addressof(eps)) {
 				zeta(subdomain) = eps(subdomain);
 			}
@@ -109,11 +116,15 @@ namespace arma {
 			}
 		}
 
+		void
+		determine_coefficients() override {
+		}
+
 		template<class Options>
 		void
 		determine_coefficients(Options opts) {
 			// determine_coefficients_iteratively();
-			determine_coefficients_old(opts.least_squares);
+			determine_coefficients_old(_doleastsquares);
 		}
 
 		void
@@ -121,11 +132,11 @@ namespace arma {
 
 			using blitz::all;
 
-			if (!all(_order <= _acf.shape())) {
+			if (!all(order() <= _acf.shape())) {
 				std::clog << "AR model order is larger than ACF "
 				             "size:\n\tAR model "
 				             "order = "
-				          << _order << "\n\tACF size = " << _acf.shape()
+				          << order() << "\n\tACF size = " << _acf.shape()
 				          << std::endl;
 				throw std::runtime_error("bad AR model order");
 			}
@@ -138,9 +149,9 @@ namespace arma {
 			// matrices
 			std::function<Array2D<T>()> generator;
 			if (do_least_squares) {
-				generator = AC_matrix_generator_LS<T>(_acf, _order);
+				generator = AC_matrix_generator_LS<T>(_acf, order());
 			} else {
-				generator = AC_matrix_generator<T>(_acf, _order);
+				generator = AC_matrix_generator<T>(_acf, order());
 			}
 			Array2D<T> acm = generator();
 			{
@@ -181,6 +192,28 @@ namespace arma {
 			}
 		}
 
+		friend std::istream&
+		operator>>(std::istream& in, Autoregressive_model& rhs) {
+			ACF_wrapper<T> acf_wrapper(rhs._acf);
+			size3 order(0,0,0);
+			sys::parameter_map params({
+			    {"order", sys::make_param(order)},
+			    {"least_squares", sys::make_param(rhs._doleastsquares)},
+			    {"acf", sys::make_param(acf_wrapper)},
+			}, true);
+			in >> params;
+			validate_shape(order, "ar_model.order");
+			validate_shape(rhs._acf.shape(), "ar_model.acf.shape");
+			rhs._phi.resize(order);
+			return in;
+		}
+
+		friend std::ostream&
+		operator<<(std::ostream& out, const Autoregressive_model& rhs) {
+			return out << "order=" << rhs.order()
+				<< ",acf.shape=" << rhs._acf.shape();
+		}
+
 	private:
 		/**
 		Darbin algorithm. Partial autocovariation function \f$\phi_{k,j}\f$,
@@ -194,10 +227,11 @@ namespace arma {
 			using blitz::RectDomain;
 			const size3 _0(0, 0, 0);
 			Array3D<T> r(_acf / _acf(0, 0, 0));
-			Array3D<T> phi0(_order), phi1(_order);
+			const size3 order = this->order();
+			Array3D<T> phi0(order), phi1(order);
 			phi0 = 0;
 			phi1 = 0;
-			const int max_order = _order(0);
+			const int max_order = order(0);
 			//			phi0(0, 0, 0) = r(0, 0, 0);
 			for (int p = 1; p < max_order; ++p) {
 				const size3 order(p + 1, p + 1, p + 1);
@@ -255,8 +289,8 @@ namespace arma {
 		}
 
 		Array3D<T> _acf;
-		size3 _order;
 		Array3D<T> _phi;
+		bool _doleastsquares = false;
 	};
 }
 

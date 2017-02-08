@@ -9,6 +9,7 @@
 #include "ma_algorithm.hh"
 #include "voodoo.hh"
 #include "arma.hh"
+#include "acf.hh"
 
 namespace arma {
 
@@ -18,19 +19,24 @@ namespace arma {
 		Moving_average_model() = default;
 
 		Moving_average_model(Array3D<T> acf, size3 order)
-		    : _acf(acf), _order(order), _theta(_order) {}
+		    : _acf(acf), _theta(order) {}
 
 		void
 		init(Array3D<T> acf, size3 order) {
 			_acf.resize(acf.shape());
 			_acf = acf;
-			_order = order;
-			_theta.resize(_order);
+			_theta.resize(order);
 		}
 
 		ACF<T>
 		acf() const {
 			return _acf;
+		}
+
+		void
+		setacf(ACF<T> acf) {
+			_acf.resize(acf.shape());
+			_acf = acf;
 		}
 
 		T
@@ -45,7 +51,7 @@ namespace arma {
 
 		const size3&
 		order() const {
-			return _order;
+			return _theta.shape();
 		}
 
 		T
@@ -114,10 +120,33 @@ namespace arma {
 			}
 		}
 
+		friend std::istream&
+		operator>>(std::istream& in, Moving_average_model& rhs) {
+			ACF_wrapper<T> acf_wrapper(rhs._acf);
+			size3 order(0,0,0);
+			sys::parameter_map params({
+			    {"order", sys::make_param(order)},
+			    {"acf", sys::make_param(acf_wrapper)},
+			    {"algorithm", sys::make_param(rhs._algo)},
+			}, true);
+			in >> params;
+			validate_shape(order, "ma_model.order");
+			validate_shape(rhs._acf.shape(), "ma_model.acf.shape");
+			rhs._theta.resize(order);
+			return in;
+		}
+
+		friend std::ostream&
+		operator<<(std::ostream& out, const Moving_average_model& rhs) {
+			return out << "order=" << rhs.order()
+				<< ",acf.shape=" << rhs._acf.shape()
+				<< ",algorithm=" << rhs._algo;
+		}
+
 		template<class Options>
 		void
 		determine_coefficients(Options opts) {
-			switch (opts.algo) {
+			switch (_algo) {
 				case MA_algorithm::Fixed_point_iteration:
 					fixed_point_iteration(
 						opts.max_iterations,
@@ -154,11 +183,12 @@ namespace arma {
 		void
 		fixed_point_iteration(int max_iterations, T eps, T min_var_wn) {
 			using blitz::RectDomain;
-			Array3D<T> theta(_order);
+			const size3 order = this->order();
+			Array3D<T> theta(order);
 			theta = 0;
-			const int order_t = _order(0);
-			const int order_x = _order(1);
-			const int order_y = _order(2);
+			const int order_t = order(0);
+			const int order_x = order(1);
+			const int order_y = order(2);
 			/// 1. Precompute white noise variance for the first iteration.
 			T var_wn = _acf(0, 0, 0);
 			T old_var_wn = 0;
@@ -181,9 +211,9 @@ namespace arma {
 				for (int i = order_t - 1; i >= 0; --i) {
 					for (int j = order_x - 1; j >= 0; --j) {
 						for (int k = order_y - 1; k >= 0; --k) {
-							RectDomain<3> sub1(size3(i, j, k), _order - 1);
+							RectDomain<3> sub1(size3(i, j, k), order - 1);
 							RectDomain<3> sub2(size3(0, 0, 0),
-							                   _order - size3(i, j, k) - 1);
+							                   order - size3(i, j, k) - 1);
 							theta(i, j, k) =
 							    -_acf(i, j, k) / var_wn +
 							    blitz::sum(theta(sub1) * theta(sub2));
@@ -228,14 +258,15 @@ namespace arma {
 			using blitz::sum;
 			using blitz::all;
 			using blitz::isfinite;
-			const int n = blitz::product(_order);
-			Array3D<T> theta(_order), tau(_order), f(_order);
+			const size3& order = this->order();
+			const int n = blitz::product(order);
+			Array3D<T> theta(order), tau(order), f(order);
 			Array2D<T> tau_matrix(n, n);
 			theta = 0;
 			tau = 0;
-			const int order_t = _order(0);
-			const int order_x = _order(1);
-			const int order_y = _order(2);
+			const int order_t = order(0);
+			const int order_x = order(1);
+			const int order_y = order(2);
 			/// 1. Precompute white noise variance for the first iteration.
 			T var_wn = _acf(0, 0, 0);
 			tau(0, 0, 0) = std::sqrt(var_wn);
@@ -260,8 +291,8 @@ namespace arma {
 					for (int j = 0; j < order_x; ++j) {
 						for (int k = 0; k < order_y; ++k) {
 							RectDomain<3> sub1(size3(0, 0, 0),
-							                   _order - size3(i, j, k) - 1);
-							RectDomain<3> sub2(size3(i, j, k), _order - 1);
+							                   order - size3(i, j, k) - 1);
+							RectDomain<3> sub2(size3(i, j, k), order - 1);
 							f(i, j, k) =
 							    sum(tau(sub1) * tau(sub2)) - _acf(i, j, k);
 						}
@@ -329,10 +360,11 @@ namespace arma {
 			using blitz::abs;
 			const size3 _0(0, 0, 0);
 			const size3 ar_order = phi.shape();
+			const size3& order = this->order();
 			const T sum_phi_1 = sum(pow2(phi));
-			const int ma_order_t = _order(0);
-			const int ma_order_x = _order(1);
-			const int ma_order_y = _order(2);
+			const int ma_order_t = order(0);
+			const int ma_order_x = order(1);
+			const int ma_order_y = order(2);
 			const int ar_order_t = ar_order(0);
 			const int ar_order_x = ar_order(1);
 			const int ar_order_y = ar_order(2);
@@ -364,8 +396,8 @@ namespace arma {
 
 	private:
 		Array3D<T> _acf;
-		size3 _order;
 		AR_coefs<T> _theta;
+		MA_algorithm _algo = MA_algorithm::Fixed_point_iteration;
 	};
 }
 

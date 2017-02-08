@@ -8,27 +8,6 @@
 # NB: No. of patches equals to the no. of points minus 1.
 out_grid = (200,40,40)
 
-# AR model order
-ar_order = (7,7,7)
-
-# MA model order
-ma_order = (20,10,10)
-
-# turn on/off least squares for AC matrix
-# (as of 2016-07-28 it is broken)
-least_squares = 0
-
-acf = {
-	# ACF function approximation. Possible values:
-	# - standing_wave
-	# - propagating_wave
-	func = propagating_wave
-
-	# Grid for ACF function approximations. The format is the same as for out_grid.
-	grid = (10,10,10) : (2.5,5,5)
-}
-
-
 # Model to use. Possible values:
 # - AR
 # - MA
@@ -36,12 +15,6 @@ acf = {
 # - LH
 # - plain_wave
 model = MA
-
-# Algorithm that determines MA coefficients. Possible values:
-# - fixed_point_iteration
-# - newton_raphson
-# As of 2016-08-16 newton_raphson is broken.
-ma_algorithm = fixed_point_iteration
 
 # Verification scheme. Possible values:
 # - none (perform no verification of the resulting wavy surface)
@@ -56,3 +29,36 @@ verification = manual
 # or is invalid, the programme tries to guess optimal size based on the number
 # of threads and the number of coefficients in the model.
 #partition = (0,0,0)
+
+# Autoregressive model configuration.
+ar_model = {
+	# ACF function.
+	acf = {
+		# ACF function approximation. Possible values:
+		# - standing_wave
+		# - propagating_wave
+		func = standing_wave
+		# Grid for ACF function approximations. The format is the same as for out_grid.
+		grid = (10,10,10) : (2.5,5,5)
+	}
+	# turn on/off least squares for AC matrix
+	# (as of 2016-07-28 it is broken)
+	least_squares = 0
+	# AR model order
+	order = (7,7,7)
+}
+
+# Moving average model configuration.
+ma_model = {
+	acf = {
+		func = propagating_wave
+		grid = (20,10,10) : (10,5,5)
+	}
+	# MA model order
+	order = (20,10,10)
+	# Algorithm that determines MA coefficients. Possible values:
+	# - fixed_point_iteration
+	# - newton_raphson
+	# As of 2016-08-16 newton_raphson is broken.
+	algorithm = fixed_point_iteration
+}
