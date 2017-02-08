@@ -128,10 +128,16 @@ namespace arma {
 			    {"order", sys::make_param(order)},
 			    {"acf", sys::make_param(acf_wrapper)},
 			    {"algorithm", sys::make_param(rhs._algo)},
+			    {"max_iterations", sys::make_param(rhs._maxiter)},
+			    {"eps", sys::make_param(rhs._eps)},
+			    {"min_var_wn", sys::make_param(rhs._minvarwn)},
 			}, true);
 			in >> params;
 			validate_shape(order, "ma_model.order");
 			validate_shape(rhs._acf.shape(), "ma_model.acf.shape");
+			validate_positive(rhs._maxiter, "ma_model.algo.max_iterations");
+			validate_positive(rhs._eps, "ma_model.algo.eps");
+			validate_positive(rhs._minvarwn, "ma_model.algo.min_var_wn");
 			rhs._theta.resize(order);
 			return in;
 		}
@@ -143,23 +149,14 @@ namespace arma {
 				<< ",algorithm=" << rhs._algo;
 		}
 
-		template<class Options>
 		void
-		determine_coefficients(Options opts) {
+		determine_coefficients() {
 			switch (_algo) {
 				case MA_algorithm::Fixed_point_iteration:
-					fixed_point_iteration(
-						opts.max_iterations,
-						opts.eps,
-						opts.min_var_wn
-					);
+					fixed_point_iteration(_maxiter, _eps, _minvarwn);
 					break;
 				case MA_algorithm::Newton_Raphson:
-					newton_raphson(
-						opts.max_iterations,
-						opts.eps,
-						opts.min_var_wn
-					);
+					newton_raphson(_maxiter, _eps, _minvarwn);
 					break;
 			}
 		}
@@ -398,6 +395,9 @@ namespace arma {
 		Array3D<T> _acf;
 		AR_coefs<T> _theta;
 		MA_algorithm _algo = MA_algorithm::Fixed_point_iteration;
+		int _maxiter = 1000;
+		T _eps = T(1e-5);
+		T _minvarwn = T(1e-6);
 	};
 }
 

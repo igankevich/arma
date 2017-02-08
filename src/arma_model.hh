@@ -79,15 +79,14 @@ namespace arma {
 			return in;
 		}
 
-		template<class Options>
 		void
-		determine_coefficients(Options opts) {
+		determine_coefficients() {
 			using namespace blitz;
 			if (product(ar_model::order()) > 0) {
-				ar_model::determine_coefficients(opts);
+				ar_model::determine_coefficients();
 			}
 //			ma_model::recompute_acf(_acf_orig, ar_model::coefficients());
-			ma_model::determine_coefficients(opts);
+			ma_model::determine_coefficients();
 		}
 
 	private:

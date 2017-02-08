@@ -118,11 +118,6 @@ namespace arma {
 
 		void
 		determine_coefficients() override {
-		}
-
-		template<class Options>
-		void
-		determine_coefficients(Options opts) {
 			// determine_coefficients_iteratively();
 			determine_coefficients_old(_doleastsquares);
 		}

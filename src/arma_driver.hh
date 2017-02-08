@@ -71,20 +71,12 @@ namespace arma {
 		void
 		act() {
 			echo_parameters();
-			struct {
-				int max_iterations;
-			   	T eps;
-			   	T min_var_wn;
-			} opts;
-			opts.max_iterations = 1000;
-			opts.eps = T(1e-5);
-			opts.min_var_wn = T(1e-6);
 			if (_model == Simulation_model::Autoregressive) {
-				generate_wavy_surface(_armodel, opts);
+				generate_wavy_surface(_armodel);
 			} else if (_model == Simulation_model::Moving_average) {
-				generate_wavy_surface(_mamodel, opts);
+				generate_wavy_surface(_mamodel);
 			} else if (_model == Simulation_model::ARMA) {
-				generate_wavy_surface(_armamodel, opts);
+				generate_wavy_surface(_armamodel);
 			}
 		}
 
@@ -100,9 +92,9 @@ namespace arma {
 		}
 
 	private:
-		template <class Model, class Options>
+		template <class Model>
 		void
-		generate_wavy_surface(Model& model, const Options& opts) {
+		generate_wavy_surface(Model& model) {
 			ACF<T> acf = model.acf();
 			std::clog << "ACF variance = " << ACF_variance(acf) << std::endl;
 			if (_vscheme == Verification_scheme::Manual) {
@@ -112,11 +104,11 @@ namespace arma {
 				std::ofstream out("acf");
 				out << acf;
 			}
-			model.determine_coefficients(opts);
+			model.determine_coefficients();
 			model.validate();
 			T var_wn = model.white_noise_variance();
 			std::clog << "WN variance = " << var_wn << std::endl;
-			Zeta<T> zeta = do_generate_wavy_surface(model, opts, var_wn);
+			Zeta<T> zeta = do_generate_wavy_surface(model, var_wn);
 			write_zeta(zeta);
 			if (std::is_same<Model,Autoregressive_model<T>>::value) {
 				/// Estimate mean/variance with ramp-up region removed.
@@ -131,13 +123,9 @@ namespace arma {
 
 		#if ARMA_NONE
 
-		template <class Model, class Options>
+		template <class Model>
 		Zeta<T>
-		do_generate_wavy_surface(
-			Model& model,
-			const Options& opts,
-			T var_wn
-		) {
+		do_generate_wavy_surface(Model& model, T var_wn) {
 			std::mt19937 prng;
 			prng.seed(newseed());
 			Zeta<T> eps = generate_white_noise(
@@ -175,13 +163,9 @@ namespace arma {
 			parallel_mt prng;
 		};
 
-		template <class Model, class Options>
+		template <class Model>
 		Zeta<T>
-		do_generate_wavy_surface(
-			Model& model,
-			const Options& opts,
-			T var_wn
-		) {
+		do_generate_wavy_surface(Model& model, T var_wn) {
 			using blitz::RectDomain;
 			/// 1. Read parallel Mersenne Twister states.
 			std::vector<mt_config> prng_config;
