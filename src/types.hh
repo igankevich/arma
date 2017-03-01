@@ -32,6 +32,8 @@ namespace arma {
 	template <class T>
 	using Array3D = blitz::Array<T, 3>;
 	template <class T>
+	using Array4D = blitz::Array<T, 4>;
+	template <class T>
 	using Array2D = blitz::Array<T, 2>;
 	template <class T>
 	using Array1D = blitz::Array<T, 1>;

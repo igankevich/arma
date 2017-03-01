@@ -22,17 +22,12 @@ namespace arma {
 		\param[in] idx_t     a time point in which to compute velocity potential,
 		                     specified as index of zeta
 		*/
-		virtual Array2D<T>
-		operator()(
-			Array3D<T>& zeta,
-			const Domain3D& subdomain,
-			const T z,
-			const int idx_t
-		) = 0;
+		virtual Array4D<T>
+		operator()(Array3D<T>& zeta, const Domain3D& subdomain) = 0;
 
-		Array2D<T>
-		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
-			return operator()(zeta, eps, zeta.domain());
+		Array4D<T>
+		operator()(Array3D<T>& zeta) {
+			return operator()(zeta, zeta.domain());
 		}
 
 	};

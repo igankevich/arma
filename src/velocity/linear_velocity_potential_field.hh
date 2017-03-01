@@ -5,29 +5,63 @@
 #include "velocity_potential_field.hh"
 #include "fourier.hh"
 #include "grid.hh"
+#include "domain.hh"
 
 namespace arma {
 
+	/// Linear wave theory formula to compute velocity potential field.
 	template<class T>
 	class Linear_velocity_potential_field: public Velocity_potential_field<T> {
 
 		Vec2<T> _wnmax;
 		T _depth;
+		Fourier_transform<T, 2, Fourier_domain::Complex> _fft;
+		Domain2<T> _domain;
 		static constexpr const T _2pi = T(2) * M_PI;
 
 	public:
 
-		Array2D<T>
-		operator()(
-			Array3D<T>& zeta,
-			const Domain3D& subdomain,
-			const T z,
-			const int idx_t
-		) override {
+		Array4D<T>
+		operator()(Array3D<T>& zeta, const Domain3D& subdomain) override {
+			using blitz::Range;
 			const size3 zeta_size = subdomain.ubound() - subdomain.lbound();
 			const size2 arr_size(zeta_size(1), zeta_size(2));
-			Array2D<T> phi(arr_size);
-			/// 1. Compute wave numbers and multiplier.
+			const int nt = _domain.num_points(0);
+			const int nz = _domain.num_points(1);
+			Array4D<T> result(blitz::shape(
+				nt, nz,
+				zeta_size(1), zeta_size(2)
+			));
+			for (int i=0; i<nt; ++i) {
+				for (int j=0; j<nz; ++j) {
+					const Vec2<T> p = _domain({i,j});
+					const T t = p(0);
+					const T z = p(1);
+					result(i, j, Range::all(), Range::all()) = compute_velocity_field_2d(
+						zeta, arr_size,
+						z, t
+					);
+				}
+			}
+			return result;
+		}
+
+	private:
+		Array2D<T>
+		compute_velocity_field_2d(
+			Array3D<T>& zeta,
+			const size2 arr_size,
+			const T z,
+			const int idx_t
+		) {
+			/**
+			1. Compute multiplier.
+			\f[
+			\text{mult}(u, v) =
+				- \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
+				       { |\vec{k}|\cosh\left(|\vec{k}|h\right) }
+			\f]
+			*/
 			const Grid<T,2> wngrid(arr_size, _wnmax);
 			Array2D<T> mult(wngrid.num_points());
 			const int nx = wngrid.num_points(0);
@@ -37,19 +71,31 @@ namespace arma {
 					const T u = wngrid.delta(i) * i;
 					const T v = wngrid.delta(j) * j;
 					const T l = _2pi * std::sqrt(u*u + v*v);
-					mult(i, j) = std::cosh(l * (z + _depth))
+					mult(i, j) = - std::cosh(l * (z + _depth))
 						/ (l * std::cosh(l * _depth));
 				}
 			}
 			/// 2. Compute \f$\zeta_t\f$.
+			Array2D<T> phi(arr_size);
 			// TODO Implement it in a separate function with proper handling of borders.
-			Array2D<T> zeta_t(arr_size);
-			for (int i=1; i<nx-1; ++i) {
-				for (int j=1; j<ny-1; ++j) {
-					zeta_t(i, j) = zeta(i-1,j) - T(2) * zeta(i,j) + zeta(i+1,j);
+			for (int i=0; i<nx; ++i) {
+				for (int j=0; j<ny; ++j) {
+					phi(i, j) = zeta(idx_t-1,i,j)
+						- T(2) * zeta(idx_t,i,j)
+						+ zeta(idx_t+1,i,j);
 				}
 			}
-			return phi;
+			/**
+			3. Compute Fourier transforms.
+			\f[
+			\phi(x,y,z,t) =
+				\mathcal{F}_{x,y}^{-1}\left\{
+					\text{mult}(u, v) \mathcal{F}_{u,v}\left\{\zeta_t\right\}
+				\right\}
+			\f]
+			*/
+			_fft.init(arr_size);
+			return _fft.backward(_fft.forward(phi) *= mult);
 		}
 
 		friend std::istream&
@@ -57,6 +103,7 @@ namespace arma {
 			sys::parameter_map params({
 			    {"wnmax", sys::make_param(rhs._wnmax)},
 			    {"depth", sys::make_param(rhs._depth)},
+			    {"domain", sys::make_param(rhs._domain)},
 			}, true);
 			in >> params;
 			return in;

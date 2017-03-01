@@ -147,6 +147,8 @@ namespace arma {
 			} else {
 				verify(model.acf(), zeta, model);
 			}
+			Array4D<T> vpotentials = _velocityfield->operator()(zeta);
+			write_csv("phi.csv", vpotentials);
 		}
 
 		#if ARMA_NONE
@@ -494,6 +496,39 @@ namespace arma {
 							<< k << separator
 							<< data(i, j, k)
 							<< '\n';
+					}
+				}
+			}
+		}
+
+		template<class X>
+		void
+		write_csv(
+			const char* filename,
+			const blitz::Array<X, 4>& data,
+			const char separator=','
+		) {
+			std::ofstream out(filename);
+			out << 't' << separator
+			   << 'x' << separator
+			   << 'y' << separator
+			   << 'z' << separator
+			   << "phi" << '\n';
+			const int nt = data.extent(0);
+			const int nz = data.extent(1);
+			const int nx = data.extent(2);
+			const int ny = data.extent(3);
+			for (int i=0; i<nt; ++i) {
+				for (int j=0; j<nz; ++j) {
+					for (int k=0; k<nx; ++k) {
+						for (int l=0; l<ny; ++l) {
+							out << i << separator
+								<< j << separator
+								<< k << separator
+								<< l << separator
+								<< data(i, j, k, l)
+								<< '\n';
+						}
 					}
 				}
 			}

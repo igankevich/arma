@@ -69,3 +69,19 @@ ma_model = {
 	# Maximal value of white noise variance considered to be nought.
 	min_var_wn = 1e-6
 }
+
+# Velocity potential field formula and configuration.
+velocity_field = linear {
+	# Maximal wave number for each spatial dimension.
+	# Defines a range from (0,0) to wnmax over which 
+	# integration is done.
+	wnmax = (2,2)
+	# Water depth.
+	depth = 10
+	# A compound range of t and z coordinates over which to compute
+	# velocity potentials. Z lower bound must be greater
+	# than water depth to make calculations precise, and
+	# z upper bound should be greater or equal maximal wavy
+	# surface elevation to compute potentials inside waves.
+	domain = from (10,-5) to (10,4) npoints (1,10)
+}
