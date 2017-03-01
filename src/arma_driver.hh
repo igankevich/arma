@@ -65,7 +65,9 @@ namespace arma {
 		std::string name;
 		in >> std::ws >> name;
 		if (name == "linear") {
-			rhs = new Linear_velocity_potential_field<T>;
+			auto tmp = new Linear_velocity_potential_field<T>;
+			in >> *tmp;
+			rhs = tmp;
 		} else {
 			in.setstate(std::ios::failbit);
 			std::clog << "Invalid velocity field: " << name << std::endl;
