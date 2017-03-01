@@ -198,14 +198,14 @@ namespace arma {
 		template <class T>
 		void
 		forward(T* rhs, size_t stride) {
-			gsl_fft_complex_transform(rhs, stride, _wavetable.size(),
+			gsl_fft_complex_forward(rhs, stride, _wavetable.size(),
 			                          _wavetable, _workspace);
 		}
 
 		template <class T>
 		void
 		backward(T* rhs, size_t stride) {
-			gsl_fft_complex_transform_backward(rhs, stride, _wavetable.size(),
+			gsl_fft_complex_backward(rhs, stride, _wavetable.size(),
 			                                   _wavetable, _workspace);
 		}
 
@@ -228,14 +228,14 @@ namespace arma {
 		template <class T>
 		void
 		forward(T* rhs, size_t stride) {
-			gsl_fft_complex_float_transform(rhs, stride, _wavetable.size(),
+			gsl_fft_complex_float_forward(rhs, stride, _wavetable.size(),
 			                                _wavetable, _workspace);
 		}
 
 		template <class T>
 		void
 		backward(T* rhs, size_t stride) {
-			gsl_fft_complex_float_transform_backward(
+			gsl_fft_complex_float_backward(
 			    rhs, stride, _wavetable.size(), _wavetable, _workspace);
 		}
 
@@ -256,14 +256,14 @@ namespace arma {
 		template <class T>
 		void
 		forward(T* rhs, size_t stride) {
-			gsl_fft_real_transform(rhs, stride, _wavetable.size(), _wavetable,
+			gsl_fft_real_forward(rhs, stride, _wavetable.size(), _wavetable,
 			                       _workspace);
 		}
 
 		template <class T>
 		void
 		backward(T* rhs, size_t stride) {
-			gsl_fft_real_transform_backward(rhs, stride, _wavetable.size(),
+			gsl_fft_real_backward(rhs, stride, _wavetable.size(),
 			                                _wavetable, _workspace);
 		}
 
@@ -291,8 +291,13 @@ namespace arma {
 		template <class T>
 		void
 		backward(T* rhs, size_t stride) {
-			gsl_fft_real_float_transform_backward(
+			gsl_fft_real_float_backward(
 			    rhs, stride, _wavetable.size(), _wavetable, _workspace);
+		}
+
+		size_t
+		size() const noexcept {
+			return _workspace.size();
 		}
 
 	private:
@@ -303,8 +308,24 @@ namespace arma {
 	template <class T, int N, Fourier_domain D>
 	struct Fourier_transform {
 
-		explicit Fourier_transform(blitz::TinyVector<int, N> shape) {
-			for (int i = 0; i < N; ++i) _transforms.emplace_back(shape(i));
+		typedef blitz::TinyVector<int, N> shape_type;
+
+		Fourier_transform() = default;
+
+		explicit
+		Fourier_transform(const shape_type& shape) {
+			init(shape);
+		}
+
+		void
+		init(const shape_type& shape) {
+			if (blitz::any(shape != _shape)) {
+				_transforms.clear();
+				_shape = shape;
+				for (int i = 0; i < N; ++i) {
+					_transforms.emplace_back(shape(i));
+				}
+			}
 		}
 
 		template <class X>
@@ -328,6 +349,7 @@ namespace arma {
 		}
 
 	private:
+		shape_type _shape;
 		std::vector<Basic_fourier_transform<T, D>> _transforms;
 	};
 }
