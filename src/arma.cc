@@ -3,7 +3,7 @@
 #include <exception>         // for exception, exception_ptr, current_ex...
 #include <iostream>          // for operator<<, basic_ostream, cerr, endl
 #include <unistd.h>          // for getopt
-#include "arma_driver.hh"    // for Autoreg_model, operator>>
+#include "arma_driver.hh"    // for ARMA_driver, operator>>
 
 void
 print_exception_and_terminate() {
@@ -63,7 +63,7 @@ main(int argc, char* argv[]) {
 		usage(argv[0]);
 	} else {
 		/// input file with various model parameters
-		Autoreg_model<Real> model;
+		ARMA_driver<Real> model;
 		std::ifstream cfg(input_filename);
 		if (!cfg.is_open()) {
 			std::clog << "Cannot open input file \"" << input_filename << "\"." << std::endl;

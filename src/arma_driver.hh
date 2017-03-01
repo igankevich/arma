@@ -60,11 +60,11 @@ namespace arma {
 	/// Class that reads parameters from the input files,
 	/// calls all subroutines, and prints the result.
 	template <class T>
-	struct Autoreg_model {
+	struct ARMA_driver {
 
 		typedef std::chrono::high_resolution_clock clock_type;
 
-		Autoreg_model():
+		ARMA_driver():
 		_outgrid{{768, 24, 24}},
 		_partition(0,0,0)
 		{}
@@ -91,7 +91,7 @@ namespace arma {
 		*/
 		template <class V>
 		friend std::istream&
-		operator>>(std::istream& in, Autoreg_model<V>& m) {
+		operator>>(std::istream& in, ARMA_driver<V>& m) {
 			m.read_parameters(in);
 			return in;
 		}
@@ -409,8 +409,14 @@ namespace arma {
 				case Simulation_model::Moving_average:
 					write_key_value(std::clog, "MA model", _mamodel);
 					break;
+				case Simulation_model::ARMA:
+					write_key_value(std::clog, "ARMA model", "<not implemented>");
+					break;
 				case Simulation_model::Plain_wave:
 					write_key_value(std::clog, "Plain wave model", _plainwavemodel);
+					break;
+				case Simulation_model::Longuet_Higgins:
+					write_key_value(std::clog, "Longuet-Higgins model",  "<not implemented>");
 					break;
 			}
 		}
