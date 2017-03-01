@@ -87,3 +87,12 @@ test(
 		dependencies: [ libdcmt ]
 	)
 )
+
+test(
+	'arma::Domain',
+	executable(
+		'domain-test',
+		sources: 'domain-test.cc',
+		dependencies: [libblitz]
+	)
+)
