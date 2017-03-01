@@ -8,9 +8,9 @@
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
-#include "../params.hh"
-#include "../types.hh"
-#include "../validators.hh"
+#include "params.hh"
+#include "types.hh"
+#include "validators.hh"
 
 namespace arma {
 

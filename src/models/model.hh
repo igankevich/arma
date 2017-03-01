@@ -1,7 +1,7 @@
 #ifndef MODELS_MODEL_HH
 #define MODELS_MODEL_HH
 
-#include "../types.hh"
+#include "types.hh"
 
 namespace arma {
 

@@ -45,4 +45,5 @@ run_target('doc', command: 'scripts/generate-docs')
 run_target('graphs', command: ['gnuplot', '--persist', '-c', 'scripts/target-graphs', meson.build_root()])
 run_target('slices', command: 'scripts/target-slices')
 
+incdirs = include_directories('src')
 subdir('src')

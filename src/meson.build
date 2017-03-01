@@ -1,6 +1,7 @@
 executable(
 	'arma',
 	sources: 'arma.cc',
+	include_directories: incdirs,
 	dependencies: [
 		libblitz,
 		libgsl,

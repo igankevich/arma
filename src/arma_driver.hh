@@ -34,6 +34,8 @@
 #include "distribution.hh"
 #include "parallel_mt.hh"
 #include "errors.hh"
+#include "velocity/velocity_potential_field.hh"
+#include "velocity/linear_velocity_potential_field.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -57,6 +59,21 @@ namespace arma {
 		out.setf(oldf);
 	}
 
+	template<class T>
+	std::istream&
+	operator>>(std::istream& in, Velocity_potential_field<T>*& rhs) {
+		std::string name;
+		in >> std::ws >> name;
+		if (name == "linear") {
+			rhs = new Linear_velocity_potential_field<T>;
+		} else {
+			in.setstate(std::ios::failbit);
+			std::clog << "Invalid velocity field: " << name << std::endl;
+			throw std::runtime_error("bad velocity field");
+		}
+		return in;
+	}
+
 	/// Class that reads parameters from the input files,
 	/// calls all subroutines, and prints the result.
 	template <class T>
@@ -68,6 +85,10 @@ namespace arma {
 		_outgrid{{768, 24, 24}},
 		_partition(0,0,0)
 		{}
+
+		~ARMA_driver() {
+			delete _velocityfield;
+		}
 
 		void
 		act() {
@@ -391,6 +412,9 @@ namespace arma {
 			    {"model", sys::make_param(_model)},
 			    {"verification", sys::make_param(_vscheme)},
 			    {"partition", sys::make_param(_partition)},
+			    {"velocity_field", sys::make_param(
+					static_cast<Velocity_potential_field<T>*&>(_velocityfield)
+			    )},
 			});
 			in >> params;
 		}
@@ -416,7 +440,11 @@ namespace arma {
 					write_key_value(std::clog, "Plain wave model", _plainwavemodel);
 					break;
 				case Simulation_model::Longuet_Higgins:
-					write_key_value(std::clog, "Longuet-Higgins model",  "<not implemented>");
+					write_key_value(
+						std::clog,
+						"Longuet-Higgins model",
+						"<not implemented>"
+					);
 					break;
 			}
 		}
@@ -504,6 +532,8 @@ namespace arma {
 		Moving_average_model<T> _mamodel;
 		ARMA_model<T> _armamodel;
 		Plain_wave_model<T> _plainwavemodel;
+
+		Velocity_potential_field<T>* _velocityfield = nullptr;
 	};
 
 }

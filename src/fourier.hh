@@ -1,3 +1,6 @@
+#ifndef FOURIER_HH
+#define FOURIER_HH
+
 #include <gsl/gsl_fft_complex.h>
 #include <gsl/gsl_fft_complex_float.h>
 #include <gsl/gsl_fft_real.h>
@@ -328,3 +331,5 @@ namespace arma {
 		std::vector<Basic_fourier_transform<T, D>> _transforms;
 	};
 }
+
+#endif // FOURIER_HH
