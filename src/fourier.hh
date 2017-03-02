@@ -25,8 +25,9 @@ namespace arma {
 
 		operator const workspace_type*() const { return _workspace; }
 		operator workspace_type*() { return _workspace; }
+
 		size_t
-		size() const {
+		size() const noexcept {
 			return _workspace->n;
 		}
 
@@ -47,8 +48,9 @@ namespace arma {
 
 		operator const workspace_type*() const { return _workspace; }
 		operator workspace_type*() { return _workspace; }
+
 		size_t
-		size() const {
+		size() const noexcept {
 			return _workspace->n;
 		}
 
@@ -67,8 +69,9 @@ namespace arma {
 
 		operator const workspace_type*() const { return _workspace; }
 		operator workspace_type*() { return _workspace; }
+
 		size_t
-		size() const {
+		size() const noexcept {
 			return _workspace->n;
 		}
 
@@ -87,8 +90,9 @@ namespace arma {
 
 		operator const workspace_type*() const { return _workspace; }
 		operator workspace_type*() { return _workspace; }
+
 		size_t
-		size() const {
+		size() const noexcept {
 			return _workspace->n;
 		}
 
@@ -110,8 +114,9 @@ namespace arma {
 
 		operator const wavetable_type*() const { return _wavetable; }
 		operator wavetable_type*() { return _wavetable; }
+
 		size_t
-		size() const {
+		size() const noexcept {
 			return _wavetable->n;
 		}
 
@@ -132,8 +137,9 @@ namespace arma {
 
 		operator const wavetable_type*() const { return _wavetable; }
 		operator wavetable_type*() { return _wavetable; }
+
 		size_t
-		size() const {
+		size() const noexcept {
 			return _wavetable->n;
 		}
 
@@ -152,8 +158,9 @@ namespace arma {
 
 		operator const wavetable_type*() const { return _wavetable; }
 		operator wavetable_type*() { return _wavetable; }
+
 		size_t
-		size() const {
+		size() const noexcept {
 			return _wavetable->n;
 		}
 
@@ -172,8 +179,9 @@ namespace arma {
 
 		operator const wavetable_type*() const { return _wavetable; }
 		operator wavetable_type*() { return _wavetable; }
+
 		size_t
-		size() const {
+		size() const noexcept {
 			return _wavetable->n;
 		}
 
@@ -209,6 +217,11 @@ namespace arma {
 			                                   _wavetable, _workspace);
 		}
 
+		size_t
+		size() const noexcept {
+			return _wavetable.size();
+		}
+
 	private:
 		wavetable_type _wavetable;
 		workspace_type _workspace;
@@ -239,6 +252,11 @@ namespace arma {
 			    rhs, stride, _wavetable.size(), _wavetable, _workspace);
 		}
 
+		size_t
+		size() const noexcept {
+			return _wavetable.size();
+		}
+
 	private:
 		wavetable_type _wavetable;
 		workspace_type _workspace;
@@ -265,6 +283,11 @@ namespace arma {
 		backward(T* rhs, size_t stride) {
 			gsl_fft_real_backward(rhs, stride, _wavetable.size(),
 			                                _wavetable, _workspace);
+		}
+
+		size_t
+		size() const noexcept {
+			return _wavetable.size();
 		}
 
 	private:
@@ -297,7 +320,7 @@ namespace arma {
 
 		size_t
 		size() const noexcept {
-			return _workspace.size();
+			return _wavetable.size();
 		}
 
 	private:
@@ -318,14 +341,22 @@ namespace arma {
 		}
 
 		void
-		init(const shape_type& shape) {
-			if (blitz::any(shape != _shape)) {
+		init(const shape_type& shp) {
+			if (blitz::any(shp != shape())) {
 				_transforms.clear();
-				_shape = shape;
 				for (int i = 0; i < N; ++i) {
-					_transforms.emplace_back(shape(i));
+					_transforms.emplace_back(shp(i));
 				}
 			}
+		}
+
+		shape_type
+		shape() const noexcept {
+			shape_type result;
+			for (int i = 0; i < N; ++i) {
+				result(i) = _transforms[i].size();
+			}
+			return result;
 		}
 
 		template <class X>
@@ -348,8 +379,12 @@ namespace arma {
 			return result;
 		}
 
+		friend std::ostream&
+		operator<<(std::ostream& out, const Fourier_transform& rhs) {
+			return out << "shape=" << rhs.shape();
+		}
+
 	private:
-		shape_type _shape;
 		std::vector<Basic_fourier_transform<T, D>> _transforms;
 	};
 }

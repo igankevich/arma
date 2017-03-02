@@ -52,7 +52,7 @@ namespace arma {
 
 	template <class T>
 	void
-	write_key_value(std::ostream& out, const char* key, T value) {
+	write_key_value(std::ostream& out, const char* key, const T& value) {
 		std::ios::fmtflags oldf =
 		    out.setf(std::ios::left, std::ios::adjustfield);
 		out << std::setw(30) << key << " = " << value << std::endl;
@@ -105,6 +105,8 @@ namespace arma {
 				Zeta<T> zeta(_outgrid.size());
 			   	_plainwavemodel(zeta);
 				write_zeta(zeta);
+				Array4D<T> vpotentials = _velocityfield->operator()(zeta);
+				write_csv("phi.csv", vpotentials);
 			}
 		}
 
@@ -450,6 +452,9 @@ namespace arma {
 						"<not implemented>"
 					);
 					break;
+			}
+			if (_velocityfield) {
+				write_key_value(std::clog, "Velocity potential field", *_velocityfield);
 			}
 		}
 

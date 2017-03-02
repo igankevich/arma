@@ -30,6 +30,15 @@ namespace arma {
 			return operator()(zeta, zeta.domain());
 		}
 
+		virtual void
+		write(std::ostream& out) const = 0;
+
+		friend std::ostream&
+		operator<<(std::ostream& out, const Velocity_potential_field& rhs) {
+			rhs.write(out);
+			return out;
+		}
+
 	};
 
 }

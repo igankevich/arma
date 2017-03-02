@@ -37,7 +37,8 @@ namespace arma {
 					const Vec2<T> p = _domain({i,j});
 					const T t = p(0);
 					const T z = p(1);
-					result(i, j, Range::all(), Range::all()) = compute_velocity_field_2d(
+					result(i, j, Range::all(), Range::all()) =
+					compute_velocity_field_2d(
 						zeta, arr_size,
 						z, t
 					);
@@ -95,6 +96,8 @@ namespace arma {
 			\f]
 			*/
 			_fft.init(arr_size);
+			std::clog << "arr_size=" << arr_size << std::endl;
+			std::clog << "_fft.shape()=" << _fft.shape() << std::endl;
 			return _fft.backward(_fft.forward(phi) *= mult);
 		}
 
@@ -107,6 +110,13 @@ namespace arma {
 			}, true);
 			in >> params;
 			return in;
+		}
+
+		void
+		write(std::ostream& out) const override {
+			out << "wnmax=" << _wnmax << ','
+				<< "depth=" << _depth << ','
+				<< "domain=" << _domain;
 		}
 
 	};
