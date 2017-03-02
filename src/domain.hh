@@ -99,22 +99,24 @@ namespace arma {
 
 		T
 		patch_size(int i) const {
-			return length(i) / num_patches(i);
+			const int npatches = num_patches(i);
+			return npatches == 0 ? T(0) : (length(i) / npatches);
 		}
 
 		length_type
 		patch_size() const {
-			return length() / num_patches();
+			const size_type npatches = num_patches();
+			return blitz::where(npatches == 0, T(0), npatches);
 		}
 
 		T
 		delta(int i) const {
-			return length(i) / num_patches(i);
+			return patch_size(i);
 		}
 
 		length_type
 		delta() const {
-			return length() / num_patches();
+			return patch_size();
 		}
 
 		length_type
