@@ -12,7 +12,6 @@
 #include <fstream>
 #include <type_traits>
 
-#include <blitz/array.h>     // for Array
 #include <gsl/gsl_complex.h> // for gsl_complex_packed_ptr
 #include <gsl/gsl_errno.h>   // for gsl_strerror, ::GSL_SUCCESS
 #include <gsl/gsl_poly.h>    // for gsl_poly_complex_solve, gsl_poly_com...
@@ -21,37 +20,11 @@
 #include "statistics.hh"
 #include "distribution.hh"
 #include "fourier.hh"
+#include "blitz.hh"
 
 /// @file
 /// File with auxiliary subroutines.
 
-namespace blitz {
-
-	bool
-	isfinite(float rhs) noexcept {
-		return std::isfinite(rhs);
-	}
-
-	bool
-	isfinite(double rhs) noexcept {
-		return std::isfinite(rhs);
-	}
-
-	BZ_DECLARE_FUNCTION(isfinite);
-
-	int
-	div_ceil(int lhs, int rhs) noexcept {
-		return lhs/rhs + (lhs%rhs == 0 ? 0 : 1);
-	}
-
-	BZ_DECLARE_FUNCTION2(div_ceil);
-
-	template<int n>
-	std::ostream&
-	operator<<(std::ostream& out, const RectDomain<n>& rhs) {
-		return out << rhs.lbound() << " : " << rhs.ubound();
-	}
-}
 
 /// Domain-specific classes and functions.
 namespace arma {

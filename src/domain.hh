@@ -162,7 +162,8 @@ namespace arma {
 	void
 	validate_domain(const Domain<T,n>& rhs, const char* name) {
 		validate_shape(rhs.num_points(), name);
-		validate_shape(rhs.length(), name);
+		validate_finite(rhs.lbound(), name);
+		validate_finite(rhs.ubound(), name);
 	}
 
 	template<class T> using Domain2 = Domain<T,2>;

@@ -132,6 +132,7 @@ namespace arma {
 	validate_grid(const Grid<T,n>& rhs, const char* name) {
 		validate_shape(rhs.num_points(), name);
 		validate_shape(rhs.length(), name);
+		validate_finite(rhs.length(), name);
 	}
 
 }

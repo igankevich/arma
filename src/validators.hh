@@ -2,7 +2,7 @@
 #define VALIDATORS_HH
 
 #include <stdexcept>
-#include <blitz/array.h>
+#include "blitz.hh"
 
 namespace arma {
 
@@ -22,6 +22,31 @@ namespace arma {
 	void
 	validate_positive(T rhs, const char* name) {
 		if (!(rhs > T(0))) {
+			std::clog
+				<< "Bad \"" << name << "\": "
+				<< rhs
+				<< std::endl;
+			throw std::runtime_error("bad parameter");
+		}
+	}
+
+	template<class T, int n>
+	void
+	validate_finite(const blitz::TinyVector<T,n>& rhs, const char* name) {
+		using blitz::all;
+		using blitz::isfinite;
+		if (!all(isfinite(rhs))) {
+			std::clog
+				<< "Bad \"" << name << "\": "
+				<< rhs
+				<< std::endl;
+			throw std::runtime_error("bad parameter");
+		}
+	}
+	template<class T>
+	void
+	validate_finite(T rhs, const char* name) {
+		if (!std::isfinite(rhs)) {
 			std::clog
 				<< "Bad \"" << name << "\": "
 				<< rhs

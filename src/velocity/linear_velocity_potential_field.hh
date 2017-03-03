@@ -59,6 +59,8 @@ namespace arma {
 			const T z,
 			const int idx_t
 		) {
+			using blitz::all;
+			using blitz::isfinite;
 			/**
 			1. Compute multiplier.
 			\f[
@@ -79,6 +81,8 @@ namespace arma {
 					mult(i, j) = T(-2) * std::cosh(l * (z + _depth))
 						/ (l * std::cosh(l * _depth));
 				}
+			}
+			if (!all(isfinite(mult))) {
 			}
 			/// 2. Compute \f$\zeta_t\f$.
 			Array2D<std::complex<T>> phi(arr_size);
@@ -106,9 +110,9 @@ namespace arma {
 		friend std::istream&
 		operator>>(std::istream& in, Linear_velocity_potential_field& rhs) {
 			sys::parameter_map params({
-			    {"wnmax", sys::make_param(rhs._wnmax)},
-			    {"depth", sys::make_param(rhs._depth)},
-			    {"domain", sys::make_param(rhs._domain)},
+			    {"wnmax", sys::make_param(rhs._wnmax, validate_finite<T,2>)},
+			    {"depth", sys::make_param(rhs._depth, validate_finite<T>)},
+			    {"domain", sys::make_param(rhs._domain, validate_domain<T,2>)},
 			}, true);
 			in >> params;
 			return in;
