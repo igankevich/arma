@@ -43,7 +43,7 @@ main(int argc, char* argv[]) {
 
 	/// floating point type (float, double, long double or multiprecision number
 	/// C++ class)
-	typedef float Real;
+	typedef double Real;
 
 	std::string input_filename;
 	bool help_requested = false;

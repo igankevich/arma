@@ -21,6 +21,79 @@ namespace linalg {
 	template <class T>
 	using Vector = blitz::Array<T, 1>;
 
+	namespace bits {
+
+		template<
+			class T,
+			lapack_int (*sysv)(int matrix_layout, char uplo, lapack_int n,
+                               lapack_int nrhs, T* a, lapack_int lda,
+                               lapack_int* ipiv, T* b, lapack_int ldb)
+		>
+		void
+		cholesky(Matrix<T>& A, Vector<T>& b) {
+			assert(A.extent(0) == A.extent(1));
+			assert(A.extent(0) == b.extent(0));
+			Vector<lapack_int> ipiv(A.rows());
+			sysv(LAPACK_ROW_MAJOR, 'U', A.rows(), 1, A.data(), A.cols(),
+			     ipiv.data(), b.data(), 1);
+		}
+
+		template<
+			class T,
+			class Vec,
+			void (*gemv_ptr)(
+				OPENBLAS_CONST enum CBLAS_ORDER order,
+				OPENBLAS_CONST enum CBLAS_TRANSPOSE trans,
+				OPENBLAS_CONST blasint m,
+				OPENBLAS_CONST blasint n,
+				OPENBLAS_CONST T alpha,
+				OPENBLAS_CONST T *a,
+				OPENBLAS_CONST blasint lda,
+				OPENBLAS_CONST T *x,
+				OPENBLAS_CONST blasint incx,
+				OPENBLAS_CONST T beta,
+				T *y,
+				OPENBLAS_CONST blasint incy
+			)
+		>
+		Vec
+		gemv(Matrix<T> lhs, Vec rhs) {
+			const int m = lhs.rows(), n = lhs.cols();
+			Vec result(rhs.shape());
+			result = 0;
+			gemv_ptr(CblasRowMajor, CblasNoTrans, m, n, T(1), lhs.data(), m,
+			     rhs.data(), 1, T(0), result.data(), 1);
+			return result;
+		}
+
+		template <
+			class T,
+			lapack_int (*getrf)(
+				int matrix_layout,
+				lapack_int m,
+				lapack_int n,
+				T* a,
+				lapack_int lda,
+				lapack_int* ipiv
+			),
+			lapack_int (*getri)(
+				int matrix_layout,
+				lapack_int n,
+				T* a,
+				lapack_int lda,
+				const lapack_int* ipiv
+			)
+		>
+		void
+		inverse(Matrix<T>& A) {
+			const int m = A.rows(), n = A.cols();
+			Vector<lapack_int> ipiv(std::min(m, n));
+			getrf(LAPACK_ROW_MAJOR, m, n, A.data(), m, ipiv.data());
+			getri(LAPACK_ROW_MAJOR, m, A.data(), m, ipiv.data());
+		}
+
+	}
+
 	/**
 	\brief Solve linear system \f$A x=b\f$ via Cholesky decomposition.
 	\param[in]    A input matrix (lhs).
@@ -28,31 +101,46 @@ namespace linalg {
 	*/
 	template <class T>
 	void
-	cholesky(Matrix<T>& A, Vector<T>& b) {
-		assert(A.extent(0) == A.extent(1));
-		assert(A.extent(0) == b.extent(0));
-		Vector<lapack_int> ipiv(A.rows());
-		LAPACKE_ssysv(LAPACK_ROW_MAJOR, 'U', A.rows(), 1, A.data(), A.cols(),
-		              ipiv.data(), b.data(), 1);
+	cholesky(Matrix<T>& A, Vector<T>& b);
+
+	template <>
+	void
+	cholesky<float>(Matrix<float>& A, Vector<float>& b) {
+		bits::cholesky<float,LAPACKE_ssysv>(A, b);
+	}
+
+	template <>
+	void
+	cholesky<double>(Matrix<double>& A, Vector<double>& b) {
+		bits::cholesky<double,LAPACKE_dsysv>(A, b);
 	}
 
 	template <class T>
 	void
-	inverse(Matrix<T>& A) {
-		const int m = A.rows(), n = A.cols();
-		Vector<lapack_int> ipiv(std::min(m, n));
-		LAPACKE_sgetrf(LAPACK_ROW_MAJOR, m, n, A.data(), m, ipiv.data());
-		LAPACKE_sgetri(LAPACK_ROW_MAJOR, m, A.data(), m, ipiv.data());
+	inverse(Matrix<T>& A);
+
+	template <>
+	void
+	inverse(Matrix<float>& A) {
+		bits::inverse<float,LAPACKE_sgetrf,LAPACKE_sgetri>(A);
 	}
 
-	template <class T, class Vec>
-	Vec operator*(Matrix<T> lhs, Vec rhs) {
-		const int m = lhs.rows(), n = lhs.cols();
-		Vec result(rhs.shape());
-		result = 0;
-		cblas_sgemv(CblasRowMajor, CblasNoTrans, m, n, T(1), lhs.data(), m,
-		            rhs.data(), 1, T(0), result.data(), 1);
-		return result;
+	template <>
+	void
+	inverse(Matrix<double>& A) {
+		bits::inverse<double,LAPACKE_dgetrf,LAPACKE_dgetri>(A);
+	}
+
+	template <int N>
+	blitz::Array<float,N>
+	operator*(Matrix<float> lhs, blitz::Array<float,N> rhs) {
+		return bits::gemv<float,blitz::Array<float,N>,cblas_sgemv>(lhs, rhs);
+	}
+
+	template <int N>
+	blitz::Array<double,N>
+	operator*(Matrix<double> lhs, blitz::Array<double,N> rhs) {
+		return bits::gemv<double,blitz::Array<double,N>,cblas_dgemv>(lhs, rhs);
 	}
 
 	template <class T>

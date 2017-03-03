@@ -515,9 +515,9 @@ namespace arma {
 		) {
 			std::ofstream out(filename);
 			out << 't' << separator
+			   << 'z' << separator
 			   << 'x' << separator
 			   << 'y' << separator
-			   << 'z' << separator
 			   << "phi" << '\n';
 			const int nt = data.extent(0);
 			const int nz = data.extent(1);

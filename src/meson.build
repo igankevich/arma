@@ -43,6 +43,7 @@ test(
 		sources: 'cholesky-test.cc',
 		dependencies: [
 			libblitz,
+			libgsl,
 			libblas,
 			liblapack
 		],
@@ -57,6 +58,7 @@ test(
 		sources: 'inverse-test.cc',
 		dependencies: [
 			libblitz,
+			libgsl,
 			libblas,
 			liblapack
 		],
@@ -71,6 +73,7 @@ test(
 		sources: 'multiply-test.cc',
 		dependencies: [
 			libblitz,
+			libgsl,
 			libblas,
 			liblapack,
 			libgsl
