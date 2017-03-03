@@ -1,7 +1,8 @@
-#include <blitz/array.h>
-
 #ifndef BLITZ_HH
 #define BLITZ_HH
+
+#include <cmath>
+#include <blitz/array.h>
 
 namespace blitz {
 
@@ -28,6 +29,14 @@ namespace blitz {
 	std::ostream&
 	operator<<(std::ostream& out, const RectDomain<n>& rhs) {
 		return out << rhs.lbound() << " : " << rhs.ubound();
+	}
+
+	template <class T>
+	T
+	length(const TinyVector<T,2>& rhs) noexcept {
+		const T u = rhs(0);
+		const T v = rhs(1);
+		return std::sqrt(u*u + v*v);
 	}
 }
 

@@ -3,12 +3,27 @@
 
 #include <cmath>
 #include <complex>
+#include <stdexcept>
 #include "velocity_potential_field.hh"
 #include "fourier.hh"
 #include "grid.hh"
 #include "domain.hh"
 
 namespace arma {
+
+	namespace bits {
+
+		template <class T>
+		inline T
+		div_or_nought(T lhs, T rhs) noexcept {
+			T result = lhs / rhs;
+			if (!std::isfinite(result)) {
+				result = T(0);
+			}
+			return result;
+		}
+
+	}
 
 	/// Linear wave theory formula to compute velocity potential field.
 	template<class T>
@@ -51,7 +66,6 @@ namespace arma {
 			return result;
 		}
 
-	private:
 		Array2D<T>
 		compute_velocity_field_2d(
 			Array3D<T>& zeta,
@@ -66,27 +80,35 @@ namespace arma {
 			\f[
 			\text{mult}(u, v) =
 				-2 \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
-				       { |\vec{k}|\cosh\left(|\vec{k}|h\right) }
+				        { |\vec{k}|\cosh\left(|\vec{k}|h\right) }
+				=
+				-2 \frac{ e^{-|\vec{k}|z} + e^{-|\vec{k}|(z + h)} }
+				        { |\vec{k}| \left(1 + e^{-2|\vec{k}|h}\right) }
 			\f]
 			*/
-			const Grid<T,2> wngrid(arr_size, _wnmax);
+			const Domain<T,2> wngrid(_wnmax, arr_size);
 			Array2D<T> mult(wngrid.num_points());
 			const int nx = wngrid.num_points(0);
 			const int ny = wngrid.num_points(1);
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
-					const T u = wngrid.delta(i) * i;
-					const T v = wngrid.delta(j) * j;
-					const T l = _2pi * std::sqrt(u*u + v*v);
-					mult(i, j) = T(-2) * std::cosh(l * (z + _depth))
-						/ (l * std::cosh(l * _depth));
+					const T l = _2pi * blitz::length(wngrid({i,j}));
+					const T numerator = std::exp(-l*z) + std::exp(-l*(z + l*_depth));
+					const T denominator = l*(T(1) + std::exp(T(-2)*l*_depth));
+					mult(i, j) = T(-2) * bits::div_or_nought(numerator, denominator);
 				}
 			}
 			if (!all(isfinite(mult))) {
+				std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+					<< ": infinite/NaN multiplier. Try to increase minimal z "
+					"coordinate at which velocity potential is calculated, or "
+					"decrease water depth. Here z="
+					<< z << ",depth=" << _depth << '.' << std::endl;
+				throw std::runtime_error("bad multiplier");
 			}
 			/// 2. Compute \f$\zeta_t\f$.
 			Array2D<std::complex<T>> phi(arr_size);
-			// TODO Implement it in a separate function with proper handling of borders.
+			// TODO Implement in a separate function with proper handling of borders.
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
 					phi(i, j) = zeta(idx_t-1,i,j)
