@@ -6,8 +6,6 @@
 #include <stdexcept>
 #include "velocity_potential_field.hh"
 #include "fourier.hh"
-#include "grid.hh"
-#include "domain.hh"
 
 namespace arma {
 
@@ -29,50 +27,17 @@ namespace arma {
 	template<class T>
 	class Linear_velocity_potential_field: public Velocity_potential_field<T> {
 
-		Vec2<T> _wnmax;
-		T _depth;
 		Fourier_transform<std::complex<T>, 2> _fft;
-		Domain2<T> _domain;
 		static constexpr const T _2pi = T(2) * M_PI;
 
-	public:
-
-		Array4D<T>
-		operator()(Array3D<T>& zeta, const Domain3D& subdomain) override {
-			using blitz::Range;
-			const size3 zeta_size = subdomain.ubound() - subdomain.lbound();
-			const size2 arr_size(zeta_size(1), zeta_size(2));
-			const int nt = _domain.num_points(0);
-			const int nz = _domain.num_points(1);
-			Array4D<T> result(blitz::shape(
-				nt, nz,
-				zeta_size(1), zeta_size(2)
-			));
-			for (int i=0; i<nt; ++i) {
-				for (int j=0; j<nz; ++j) {
-					const Vec2<T> p = _domain({i,j});
-					const T t = p(0);
-					const T z = p(1);
-					result(i, j, Range::all(), Range::all()) =
-					compute_velocity_field_2d(
-						zeta, arr_size,
-						z, t
-					);
-				}
-				std::clog << "Finished time slice ["
-					<< (i+1) << '/' << nt << ']'
-					<< std::endl;
-			}
-			return result;
-		}
-
+	protected:
 		Array2D<T>
 		compute_velocity_field_2d(
 			Array3D<T>& zeta,
 			const size2 arr_size,
 			const T z,
 			const int idx_t
-		) {
+		) override {
 			using blitz::all;
 			using blitz::isfinite;
 			/**
@@ -82,23 +47,23 @@ namespace arma {
 				-2 \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
 				        { |\vec{k}|\cosh\left(|\vec{k}|h\right) }
 				=
-				-2 \frac{ e^{-|\vec{k}|z} + e^{-|\vec{k}|(z + h)} }
+				-2 \frac{ e^{|\vec{k}|z} + e^{-|\vec{k}|(z + 2h)} }
 				        { |\vec{k}| \left(1 + e^{-2|\vec{k}|h}\right) }
-				=
-				-2 \frac{ 1 + e^{-|\vec{k}|h} }
-				        { |\vec{k}| \left(1 + e^{-2|\vec{k}|h}\right) e^{|\vec{k}|z} }
 			\f]
 			*/
-			const Domain<T,2> wngrid(_wnmax, arr_size);
+			const Domain<T,2> wngrid(this->_wnmax, arr_size);
+			const T h = this->_depth;
 			Array2D<T> mult(wngrid.num_points());
 			const int nx = wngrid.num_points(0);
 			const int ny = wngrid.num_points(1);
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
 					const T l = _2pi * blitz::length(wngrid({i,j}));
-					const T numerator = T(1) + std::exp(-l*_depth);
-					const T explz = std::exp(l*z);
-					const T denominator = l*(explz + std::exp(T(-2)*l*(z + _depth)));
+					const T expm2lh = std::exp(T(-2)*l*h);
+					const T expmlz = std::exp(-l*z);
+					const T explz = T(1)/expmlz;
+					const T numerator = explz + expmlz*expm2lh;
+					const T denominator = l*(T(1) + expm2lh);
 					mult(i, j) = T(-2) * bits::div_or_nought(numerator, denominator);
 				}
 			}
@@ -107,7 +72,7 @@ namespace arma {
 					<< ": infinite/NaN multiplier. Try to increase minimal z "
 					"coordinate at which velocity potential is calculated, or "
 					"decrease water depth. Here z="
-					<< z << ",depth=" << _depth << '.' << std::endl;
+					<< z << ",depth=" << h << '.' << std::endl;
 				throw std::runtime_error("bad multiplier");
 			}
 			/// 2. Compute \f$\zeta_t\f$.
@@ -131,24 +96,6 @@ namespace arma {
 			*/
 			_fft.init(arr_size);
 			return blitz::real(_fft.backward(_fft.forward(phi) *= mult));
-		}
-
-		friend std::istream&
-		operator>>(std::istream& in, Linear_velocity_potential_field& rhs) {
-			sys::parameter_map params({
-			    {"wnmax", sys::make_param(rhs._wnmax, validate_finite<T,2>)},
-			    {"depth", sys::make_param(rhs._depth, validate_finite<T>)},
-			    {"domain", sys::make_param(rhs._domain, validate_domain<T,2>)},
-			}, true);
-			in >> params;
-			return in;
-		}
-
-		void
-		write(std::ostream& out) const override {
-			out << "wnmax=" << _wnmax << ','
-				<< "depth=" << _depth << ','
-				<< "domain=" << _domain;
 		}
 
 	};
