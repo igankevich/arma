@@ -2,6 +2,7 @@
 #define LINEAR_VELOCITY_FIELD_HH
 
 #include <cmath>
+#include <complex>
 #include "velocity_potential_field.hh"
 #include "fourier.hh"
 #include "grid.hh"
@@ -15,7 +16,7 @@ namespace arma {
 
 		Vec2<T> _wnmax;
 		T _depth;
-		Fourier_transform<T, 2, Fourier_domain::Complex> _fft;
+		Fourier_transform<std::complex<T>, 2> _fft;
 		Domain2<T> _domain;
 		static constexpr const T _2pi = T(2) * M_PI;
 
@@ -43,6 +44,9 @@ namespace arma {
 						z, t
 					);
 				}
+				std::clog << "Finished time slice ["
+					<< (i+1) << '/' << nt << ']'
+					<< std::endl;
 			}
 			return result;
 		}
@@ -59,7 +63,7 @@ namespace arma {
 			1. Compute multiplier.
 			\f[
 			\text{mult}(u, v) =
-				- \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
+				-2 \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
 				       { |\vec{k}|\cosh\left(|\vec{k}|h\right) }
 			\f]
 			*/
@@ -72,12 +76,12 @@ namespace arma {
 					const T u = wngrid.delta(i) * i;
 					const T v = wngrid.delta(j) * j;
 					const T l = _2pi * std::sqrt(u*u + v*v);
-					mult(i, j) = - std::cosh(l * (z + _depth))
+					mult(i, j) = T(-2) * std::cosh(l * (z + _depth))
 						/ (l * std::cosh(l * _depth));
 				}
 			}
 			/// 2. Compute \f$\zeta_t\f$.
-			Array2D<T> phi(arr_size);
+			Array2D<std::complex<T>> phi(arr_size);
 			// TODO Implement it in a separate function with proper handling of borders.
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
@@ -96,9 +100,7 @@ namespace arma {
 			\f]
 			*/
 			_fft.init(arr_size);
-			std::clog << "arr_size=" << arr_size << std::endl;
-			std::clog << "_fft.shape()=" << _fft.shape() << std::endl;
-			return _fft.backward(_fft.forward(phi) *= mult);
+			return blitz::real(_fft.backward(_fft.forward(phi) *= mult));
 		}
 
 		friend std::istream&

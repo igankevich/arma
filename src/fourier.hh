@@ -3,337 +3,222 @@
 
 #include <gsl/gsl_fft_complex.h>
 #include <gsl/gsl_fft_complex_float.h>
-#include <gsl/gsl_fft_real.h>
-#include <gsl/gsl_fft_real_float.h>
 #include <blitz/array.h>
+#include <complex>
+#include <type_traits>
 
 namespace arma {
 
-	enum struct Fourier_domain { Real, Complex };
+	template<
+		class Workspace,
+		Workspace* (*Alloc)(size_t),
+		void (*Free)(Workspace*)
+	>
+	class Fourier_building_block {
 
-	template <class T, Fourier_domain D>
-	struct Fourier_workspace;
+		typedef Workspace workspace_type;
+		workspace_type* _workspace;
 
-	template <>
-	struct Fourier_workspace<double, Fourier_domain::Complex> {
+	public:
 
-		typedef gsl_fft_complex_workspace workspace_type;
+		typedef Workspace gsl_type;
 
-		explicit Fourier_workspace(size_t n)
-		    : _workspace(gsl_fft_complex_workspace_alloc(n)) {}
-		~Fourier_workspace() { gsl_fft_complex_workspace_free(_workspace); }
+		explicit
+		Fourier_building_block(size_t n):
+		_workspace(Alloc(n))
+		{}
+
+		Fourier_building_block() = delete;
+
+		Fourier_building_block(const Fourier_building_block& rhs) = delete;
+
+		Fourier_building_block&
+		operator=(const Fourier_building_block& rhs) = delete;
+
+		Fourier_building_block(Fourier_building_block&& rhs):
+		_workspace(rhs._workspace)
+		{ rhs._workspace = nullptr; }
+
+		~Fourier_building_block() {
+			Free(_workspace);
+			_workspace = nullptr;
+		}
 
 		operator const workspace_type*() const { return _workspace; }
 		operator workspace_type*() { return _workspace; }
 
 		size_t
 		size() const noexcept {
-			return _workspace->n;
+			return _workspace ? _workspace->n : 0;
 		}
 
-	private:
-		workspace_type* _workspace;
 	};
 
-	template <>
-	struct Fourier_workspace<float, Fourier_domain::Complex> {
+	template<
+		class Wavetable,
+		class Workspace,
+		class Array,
+		class Value,
+		int (*Transform)(
+			Array,
+			const size_t,
+			const size_t,
+			const typename Wavetable::gsl_type*,
+			typename Workspace::gsl_type*,
+			const gsl_fft_direction
+		)
+	>
+	class Basic_fourier_transform {
 
-		typedef gsl_fft_complex_workspace_float workspace_type;
+		typedef Wavetable wavetable_type;
+		typedef Workspace workspace_type;
+		typedef Array array_type;
+		typedef Value value_type;
 
-		explicit Fourier_workspace(size_t n)
-		    : _workspace(gsl_fft_complex_workspace_float_alloc(n)) {}
-		~Fourier_workspace() {
-			gsl_fft_complex_workspace_float_free(_workspace);
-		}
+		wavetable_type _wavetable;
+		workspace_type _workspace;
 
-		operator const workspace_type*() const { return _workspace; }
-		operator workspace_type*() { return _workspace; }
+	public:
+		explicit
+		Basic_fourier_transform(size_t n):
+		_wavetable(n), _workspace(n) {}
 
-		size_t
-		size() const noexcept {
-			return _workspace->n;
-		}
+		Basic_fourier_transform() = delete;
 
-	private:
-		workspace_type* _workspace;
-	};
+		Basic_fourier_transform(const Basic_fourier_transform&) = delete;
 
-	template <>
-	struct Fourier_workspace<double, Fourier_domain::Real> {
+		Basic_fourier_transform&
+		operator=(const Basic_fourier_transform&) = delete;
 
-		typedef gsl_fft_real_workspace workspace_type;
+		Basic_fourier_transform(Basic_fourier_transform&& rhs):
+		_wavetable(std::move(rhs._wavetable)),
+		_workspace(std::move(rhs._workspace))
+		{}
 
-		explicit Fourier_workspace(size_t n)
-		    : _workspace(gsl_fft_real_workspace_alloc(n)) {}
-		~Fourier_workspace() { gsl_fft_real_workspace_free(_workspace); }
-
-		operator const workspace_type*() const { return _workspace; }
-		operator workspace_type*() { return _workspace; }
-
-		size_t
-		size() const noexcept {
-			return _workspace->n;
-		}
-
-	private:
-		workspace_type* _workspace;
-	};
-
-	template <>
-	struct Fourier_workspace<float, Fourier_domain::Real> {
-
-		typedef gsl_fft_real_workspace_float workspace_type;
-
-		explicit Fourier_workspace(size_t n)
-		    : _workspace(gsl_fft_real_workspace_float_alloc(n)) {}
-		~Fourier_workspace() { gsl_fft_real_workspace_float_free(_workspace); }
-
-		operator const workspace_type*() const { return _workspace; }
-		operator workspace_type*() { return _workspace; }
-
-		size_t
-		size() const noexcept {
-			return _workspace->n;
-		}
-
-	private:
-		workspace_type* _workspace;
-	};
-
-	template <class T, Fourier_domain D>
-	struct Fourier_wavetable;
-
-	template <>
-	struct Fourier_wavetable<double, Fourier_domain::Complex> {
-
-		typedef gsl_fft_complex_wavetable wavetable_type;
-
-		explicit Fourier_wavetable(size_t n)
-		    : _wavetable(gsl_fft_complex_wavetable_alloc(n)) {}
-		~Fourier_wavetable() { gsl_fft_complex_wavetable_free(_wavetable); }
-
-		operator const wavetable_type*() const { return _wavetable; }
-		operator wavetable_type*() { return _wavetable; }
-
-		size_t
-		size() const noexcept {
-			return _wavetable->n;
-		}
-
-	private:
-		wavetable_type* _wavetable;
-	};
-
-	template <>
-	struct Fourier_wavetable<float, Fourier_domain::Complex> {
-
-		typedef gsl_fft_complex_wavetable_float wavetable_type;
-
-		explicit Fourier_wavetable(size_t n)
-		    : _wavetable(gsl_fft_complex_wavetable_float_alloc(n)) {}
-		~Fourier_wavetable() {
-			gsl_fft_complex_wavetable_float_free(_wavetable);
-		}
-
-		operator const wavetable_type*() const { return _wavetable; }
-		operator wavetable_type*() { return _wavetable; }
-
-		size_t
-		size() const noexcept {
-			return _wavetable->n;
-		}
-
-	private:
-		wavetable_type* _wavetable;
-	};
-
-	template <>
-	struct Fourier_wavetable<double, Fourier_domain::Real> {
-
-		typedef gsl_fft_real_wavetable wavetable_type;
-
-		explicit Fourier_wavetable(size_t n)
-		    : _wavetable(gsl_fft_real_wavetable_alloc(n)) {}
-		~Fourier_wavetable() { gsl_fft_real_wavetable_free(_wavetable); }
-
-		operator const wavetable_type*() const { return _wavetable; }
-		operator wavetable_type*() { return _wavetable; }
-
-		size_t
-		size() const noexcept {
-			return _wavetable->n;
-		}
-
-	private:
-		wavetable_type* _wavetable;
-	};
-
-	template <>
-	struct Fourier_wavetable<float, Fourier_domain::Real> {
-
-		typedef gsl_fft_real_wavetable_float wavetable_type;
-
-		explicit Fourier_wavetable(size_t n)
-		    : _wavetable(gsl_fft_real_wavetable_float_alloc(n)) {}
-		~Fourier_wavetable() { gsl_fft_real_wavetable_float_free(_wavetable); }
-
-		operator const wavetable_type*() const { return _wavetable; }
-		operator wavetable_type*() { return _wavetable; }
-
-		size_t
-		size() const noexcept {
-			return _wavetable->n;
-		}
-
-	private:
-		wavetable_type* _wavetable;
-	};
-
-	template <class T, Fourier_domain D>
-	struct Basic_fourier_transform;
-
-	template <>
-	struct Basic_fourier_transform<double, Fourier_domain::Complex> {
-
-		typedef Fourier_wavetable<double, Fourier_domain::Complex>
-		    wavetable_type;
-		typedef Fourier_workspace<double, Fourier_domain::Complex>
-		    workspace_type;
-
-		explicit Basic_fourier_transform(size_t n)
-		    : _wavetable(n), _workspace(n) {}
+		~Basic_fourier_transform() = default;
 
 		template <class T>
 		void
 		forward(T* rhs, size_t stride) {
-			gsl_fft_complex_forward(rhs, stride, _wavetable.size(),
-			                          _wavetable, _workspace);
+			typedef typename std::remove_pointer<array_type>::type elem_type;
+			static_assert(
+				(
+					std::is_same<std::complex<elem_type>, T>::value
+					and
+					sizeof(T) == sizeof(value_type)
+					and
+					alignof(T) == alignof(value_type)
+				)
+				or
+				!std::is_same<std::complex<elem_type>, T>::value
+			);
+			Transform(
+				reinterpret_cast<array_type>(rhs),
+				stride,
+				_wavetable.size(),
+				_wavetable,
+				_workspace,
+				gsl_fft_forward
+			);
 		}
 
 		template <class T>
 		void
 		backward(T* rhs, size_t stride) {
-			gsl_fft_complex_backward(rhs, stride, _wavetable.size(),
-			                                   _wavetable, _workspace);
+			typedef typename std::remove_pointer<array_type>::type elem_type;
+			static_assert(
+				(
+					std::is_same<std::complex<elem_type>, T>::value
+					and
+					sizeof(T) == sizeof(value_type)
+					and
+					alignof(T) == alignof(value_type)
+				)
+				or
+				!std::is_same<std::complex<elem_type>, T>::value
+			);
+			Transform(
+				reinterpret_cast<array_type>(rhs),
+				stride,
+				_wavetable.size(),
+				_wavetable,
+				_workspace,
+				gsl_fft_backward
+			);
 		}
 
 		size_t
 		size() const noexcept {
 			return _wavetable.size();
 		}
+	};
 
-	private:
-		wavetable_type _wavetable;
-		workspace_type _workspace;
+	// {{{ FFT type mappings
+
+	template <class T>
+	struct Fourier_config {};
+
+	template <>
+	struct Fourier_config<std::complex<double>> {
+		typedef Fourier_building_block<
+			gsl_fft_complex_workspace,
+			gsl_fft_complex_workspace_alloc,
+			gsl_fft_complex_workspace_free
+		> workspace_type;
+		typedef Fourier_building_block<
+			gsl_fft_complex_wavetable,
+			gsl_fft_complex_wavetable_alloc,
+			gsl_fft_complex_wavetable_free
+		> wavetable_type;
+		typedef Basic_fourier_transform<
+			wavetable_type,
+			workspace_type,
+			gsl_complex_packed_array,
+			gsl_complex,
+			gsl_fft_complex_transform
+		> transform_type;
 	};
 
 	template <>
-	struct Basic_fourier_transform<float, Fourier_domain::Complex> {
-
-		typedef Fourier_wavetable<float, Fourier_domain::Complex>
-		    wavetable_type;
-		typedef Fourier_workspace<float, Fourier_domain::Complex>
-		    workspace_type;
-
-		explicit Basic_fourier_transform(size_t n)
-		    : _wavetable(n), _workspace(n) {}
-
-		template <class T>
-		void
-		forward(T* rhs, size_t stride) {
-			gsl_fft_complex_float_forward(rhs, stride, _wavetable.size(),
-			                                _wavetable, _workspace);
-		}
-
-		template <class T>
-		void
-		backward(T* rhs, size_t stride) {
-			gsl_fft_complex_float_backward(
-			    rhs, stride, _wavetable.size(), _wavetable, _workspace);
-		}
-
-		size_t
-		size() const noexcept {
-			return _wavetable.size();
-		}
-
-	private:
-		wavetable_type _wavetable;
-		workspace_type _workspace;
+	struct Fourier_config<std::complex<float>> {
+		typedef Fourier_building_block<
+			gsl_fft_complex_workspace_float,
+			gsl_fft_complex_workspace_float_alloc,
+			gsl_fft_complex_workspace_float_free
+		> workspace_type;
+		typedef Fourier_building_block<
+			gsl_fft_complex_wavetable_float,
+			gsl_fft_complex_wavetable_float_alloc,
+			gsl_fft_complex_wavetable_float_free
+		> wavetable_type;
+		typedef Basic_fourier_transform<
+			wavetable_type,
+			workspace_type,
+			gsl_complex_packed_array_float,
+			gsl_complex_float,
+			gsl_fft_complex_float_transform
+		> transform_type;
 	};
 
-	template <>
-	struct Basic_fourier_transform<double, Fourier_domain::Real> {
+	template <class T, int N>
+	class Fourier_transform {
 
-		typedef Fourier_wavetable<double, Fourier_domain::Real> wavetable_type;
-		typedef Fourier_workspace<double, Fourier_domain::Real> workspace_type;
+		typedef typename Fourier_config<T>::transform_type transform_type;
+		typedef blitz::TinyVector<int,N> shape_type;
+		typedef blitz::Array<T,N> array_type;
 
-		explicit Basic_fourier_transform(size_t n)
-		    : _wavetable(n), _workspace(n) {}
+		std::vector<transform_type> _transforms;
 
-		template <class T>
-		void
-		forward(T* rhs, size_t stride) {
-			gsl_fft_real_forward(rhs, stride, _wavetable.size(), _wavetable,
-			                       _workspace);
-		}
-
-		template <class T>
-		void
-		backward(T* rhs, size_t stride) {
-			gsl_fft_real_backward(rhs, stride, _wavetable.size(),
-			                                _wavetable, _workspace);
-		}
-
-		size_t
-		size() const noexcept {
-			return _wavetable.size();
-		}
-
-	private:
-		wavetable_type _wavetable;
-		workspace_type _workspace;
-	};
-
-	template <>
-	struct Basic_fourier_transform<float, Fourier_domain::Real> {
-
-		typedef Fourier_wavetable<float, Fourier_domain::Real> wavetable_type;
-		typedef Fourier_workspace<float, Fourier_domain::Real> workspace_type;
-
-		explicit Basic_fourier_transform(size_t n)
-		    : _wavetable(n), _workspace(n) {}
-
-		template <class T>
-		void
-		forward(T* rhs, size_t stride) {
-			gsl_fft_real_float_transform(rhs, stride, _wavetable.size(),
-			                             _wavetable, _workspace);
-		}
-
-		template <class T>
-		void
-		backward(T* rhs, size_t stride) {
-			gsl_fft_real_float_backward(
-			    rhs, stride, _wavetable.size(), _wavetable, _workspace);
-		}
-
-		size_t
-		size() const noexcept {
-			return _wavetable.size();
-		}
-
-	private:
-		wavetable_type _wavetable;
-		workspace_type _workspace;
-	};
-
-	template <class T, int N, Fourier_domain D>
-	struct Fourier_transform {
-
-		typedef blitz::TinyVector<int, N> shape_type;
+	public:
 
 		Fourier_transform() = default;
+
+		Fourier_transform(Fourier_transform&&) = default;
+
+		Fourier_transform(const Fourier_transform&) = delete;
+
+		Fourier_transform&
+		operator=(const Fourier_transform&) = delete;
 
 		explicit
 		Fourier_transform(const shape_type& shape) {
@@ -353,30 +238,34 @@ namespace arma {
 		shape_type
 		shape() const noexcept {
 			shape_type result;
-			for (int i = 0; i < N; ++i) {
+			const int n = _transforms.size();
+			for (int i = 0; i < n; ++i) {
 				result(i) = _transforms[i].size();
 			}
 			return result;
 		}
 
-		template <class X>
-		blitz::Array<X, N>
-		forward(blitz::Array<X, N> rhs) {
-			blitz::Array<X, N> result(rhs.copy());
-			for (int i = 0; i < N; ++i) {
-				_transforms[i].forward(result.data(), result.stride(i));
-			}
-			return result;
+		static int
+		dimensions() noexcept {
+			return N;
 		}
 
-		template <class X>
-		blitz::Array<X, N>
-		backward(blitz::Array<X, N> rhs) {
-			blitz::Array<X, N> result(rhs.copy());
-			for (int i = 0; i < N; ++i) {
-				_transforms[i].backward(result.data(), result.stride(i));
+		array_type
+		forward(array_type rhs) {
+			const int n = _transforms.size();
+			for (int i = 0; i < n; ++i) {
+				_transforms[i].forward(rhs.data(), rhs.stride(i));
 			}
-			return result;
+			return rhs;
+		}
+
+		array_type
+		backward(array_type rhs) {
+			const int n = _transforms.size();
+			for (int i = 0; i < n; ++i) {
+				_transforms[i].backward(rhs.data(), rhs.stride(i));
+			}
+			return rhs;
 		}
 
 		friend std::ostream&
@@ -384,9 +273,8 @@ namespace arma {
 			return out << "shape=" << rhs.shape();
 		}
 
-	private:
-		std::vector<Basic_fourier_transform<T, D>> _transforms;
 	};
+
 }
 
 #endif // FOURIER_HH
