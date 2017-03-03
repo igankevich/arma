@@ -84,6 +84,9 @@ namespace arma {
 				=
 				-2 \frac{ e^{-|\vec{k}|z} + e^{-|\vec{k}|(z + h)} }
 				        { |\vec{k}| \left(1 + e^{-2|\vec{k}|h}\right) }
+				=
+				-2 \frac{ 1 + e^{-|\vec{k}|h} }
+				        { |\vec{k}| \left(1 + e^{-2|\vec{k}|h}\right) e^{|\vec{k}|z} }
 			\f]
 			*/
 			const Domain<T,2> wngrid(_wnmax, arr_size);
@@ -93,8 +96,9 @@ namespace arma {
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
 					const T l = _2pi * blitz::length(wngrid({i,j}));
-					const T numerator = std::exp(-l*z) + std::exp(-l*(z + l*_depth));
-					const T denominator = l*(T(1) + std::exp(T(-2)*l*_depth));
+					const T numerator = T(1) + std::exp(-l*_depth);
+					const T explz = std::exp(l*z);
+					const T denominator = l*(explz + std::exp(T(-2)*l*(z + _depth)));
 					mult(i, j) = T(-2) * bits::div_or_nought(numerator, denominator);
 				}
 			}

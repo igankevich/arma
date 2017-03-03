@@ -4,14 +4,14 @@ model = plain_wave
 plain_wave = {
 	func = cos
 	amplitudes = [5]
-	wavenumbers = [0.2]
+	wavenumbers = [0.5]
 	phases = [2]
 	velocity = 0.5
 }
 verification = manual
 
 velocity_field = linear {
-	wnmax = (2,2)
+	wnmax = (1,1)
 	depth = 10
 	domain = from (10,-5) to (10,4) npoints (1,10)
 }
