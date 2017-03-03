@@ -106,7 +106,7 @@ namespace arma {
 			   	_plainwavemodel(zeta);
 				write_zeta(zeta);
 				Array4D<T> vpotentials = _velocityfield->operator()(zeta);
-				write_csv("phi.csv", vpotentials);
+				write_4d_csv("phi.csv", vpotentials, _velocityfield->domain());
 			}
 		}
 
@@ -150,7 +150,7 @@ namespace arma {
 				verify(model.acf(), zeta, model);
 			}
 			Array4D<T> vpotentials = _velocityfield->operator()(zeta);
-			write_csv("phi.csv", vpotentials);
+			write_4d_csv("phi.csv", vpotentials, _velocityfield->domain());
 		}
 
 		#if ARMA_NONE
@@ -508,9 +508,10 @@ namespace arma {
 
 		template<class X>
 		void
-		write_csv(
+		write_4d_csv(
 			const char* filename,
 			const blitz::Array<X, 4>& data,
+			const Domain2<T>& domain,
 			const char separator=','
 		) {
 			std::ofstream out(filename);
@@ -525,10 +526,11 @@ namespace arma {
 			const int ny = data.extent(3);
 			for (int i=0; i<nt; ++i) {
 				for (int j=0; j<nz; ++j) {
+					const Vec2<T> p = domain({i,j});
 					for (int k=0; k<nx; ++k) {
 						for (int l=0; l<ny; ++l) {
-							out << i << separator
-								<< j << separator
+							out << p(0) << separator
+								<< p(1) << separator
 								<< k << separator
 								<< l << separator
 								<< data(i, j, k, l)
