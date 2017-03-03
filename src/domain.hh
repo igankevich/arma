@@ -26,11 +26,16 @@ namespace arma {
 		Domain() = default;
 		Domain(const Domain&) = default;
 		Domain(Domain&&) = default;
+
 		Domain(
 			const length_type& lbound,
 			const length_type& ubound,
 			const size_type& npts
 		): _lbound(lbound), _ubound(ubound), _npoints(npts)
+		{}
+
+		Domain(const length_type& ubound, const size_type& npts):
+		_lbound(), _ubound(ubound), _npoints(npts)
 		{}
 
 		explicit
@@ -106,7 +111,7 @@ namespace arma {
 		length_type
 		patch_size() const {
 			const size_type npatches = num_patches();
-			return blitz::where(npatches == 0, T(0), npatches);
+			return blitz::where(npatches == 0, T(0), length() / npatches);
 		}
 
 		T
