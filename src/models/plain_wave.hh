@@ -26,6 +26,11 @@ namespace arma {
 		_arr(arr)
 		{}
 
+		explicit
+		Array_wrapper(const Array1D<T>& arr):
+		_arr(const_cast<Array1D<T>&>(arr))
+		{}
+
 		friend std::istream&
 		operator>>(std::istream& in, Array_wrapper& rhs) {
 			char ch = 0;
@@ -45,6 +50,20 @@ namespace arma {
 			rhs._arr.resize(values.size());
 			std::copy(values.begin(), values.end(), rhs._arr.begin());
 			return in;
+		}
+
+		friend std::ostream&
+		operator<<(std::ostream& out, const Array_wrapper& rhs) {
+			out << '[';
+			const int n = rhs._arr.extent(0);
+			if (n > 0) {
+				out << rhs._arr(0);
+				for (int i=1; i<n; ++i) {
+					out << ' ' << rhs._arr(i);
+				}
+			}
+			out << ']';
+			return out;
 		}
 	};
 
@@ -132,14 +151,13 @@ namespace arma {
 		operator<<(std::ostream& out, const Plain_wave_model& rhs) {
 			return out
 				<< "func=" << rhs._func
-				<< ",amplitudes=" << rhs._amplitudes
-				<< ",wavenumbers=" << rhs._wavenumbers
-				<< ",phases=" << rhs._phases
+				<< ",amplitudes=" << Array_wrapper<T>(rhs._amplitudes)
+				<< ",wavenumbers=" << Array_wrapper<T>(rhs._wavenumbers)
+				<< ",phases=" << Array_wrapper<T>(rhs._phases)
 				<< ",velocity=" << rhs._velocity;
 		}
 
 	private:
-
 
 		void
 		generate(Array3D<T>& zeta, const Domain3D& subdomain) {
