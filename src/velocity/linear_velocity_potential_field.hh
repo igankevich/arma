@@ -83,9 +83,7 @@ namespace arma {
 			// TODO Implement in a separate function with proper handling of borders.
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
-					phi(i, j) = zeta(idx_t-1,i,j)
-						- T(2) * zeta(idx_t,i,j)
-						+ zeta(idx_t+1,i,j);
+					phi(i,j) = T(0.5)*(zeta(idx_t+1,i,j) - zeta(idx_t-1,i,j));
 				}
 			}
 			/**
