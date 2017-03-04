@@ -36,6 +36,7 @@
 #include "errors.hh"
 #include "velocity/velocity_potential_field.hh"
 #include "velocity/linear_velocity_potential_field.hh"
+#include "velocity/plain_wave_velocity_field.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -65,9 +66,11 @@ namespace arma {
 		std::string name;
 		in >> std::ws >> name;
 		if (name == "linear") {
-			auto tmp = new Linear_velocity_potential_field<T>;
-			in >> *tmp;
-			rhs = tmp;
+			rhs = new Linear_velocity_potential_field<T>;
+			in >> *rhs;
+		} else if (name == "plain") {
+			rhs = new Plain_wave_velocity_field<T>;
+			in >> *rhs;
 		} else {
 			in.setstate(std::ios::failbit);
 			std::clog << "Invalid velocity field: " << name << std::endl;
@@ -575,7 +578,7 @@ namespace arma {
 		Autoregressive_model<T> _armodel;
 		Moving_average_model<T> _mamodel;
 		ARMA_model<T> _armamodel;
-		Plain_wave_model<T> _plainwavemodel;
+		Plain_wave<T> _plainwavemodel;
 
 		Velocity_potential_field<T>* _velocityfield = nullptr;
 	};

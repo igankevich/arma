@@ -6,12 +6,24 @@ plain_wave = {
 	amplitudes = [0.5]
 	wavenumbers = [0.125]
 	phases = [0]
-	velocity = 0.5
+	velocities = [0.5]
 }
 verification = manual
 
-velocity_field = linear {
-	wnmax = (0.0,0.25)
+#velocity_field = linear {
+#	wnmax = (0.0,0.25)
+#	depth = 12
+#	domain = from (10,-12) to (10,1) npoints (1,128)
+#}
+
+velocity_field = plain {
+	waves = {
+		func = cos
+		amplitudes = [0.5]
+		wavenumbers = [0.125]
+		phases = [0]
+		velocities = [0.5]
+	}
 	depth = 12
 	domain = from (10,-12) to (10,1) npoints (1,128)
 }

@@ -11,6 +11,7 @@
 #include "params.hh"
 #include "types.hh"
 #include "validators.hh"
+#include "blitz.hh"
 
 namespace arma {
 
@@ -107,16 +108,21 @@ namespace arma {
 	}
 
 	template<class T>
-	class Plain_wave_model {
-
-		bits::Function _func = bits::Function::Cosine;
-		Array1D<T> _amplitudes;
-		Array1D<T> _wavenumbers;
-		Array1D<T> _phases;
-		T _velocity = T(0.5);
+	class Plain_wave {
 
 	public:
+		typedef Array1D<T> array_type;
+		typedef bits::Function function_type;
 
+	private:
+		function_type _func = function_type::Cosine;
+		array_type _amplitudes;
+		array_type _wavenumbers;
+		array_type _phases;
+		array_type _velocities;
+		static constexpr const T _2pi = T(2) * M_PI;
+
+	public:
 		void
 		operator()(Array3D<T>& zeta) {
 			operator()(zeta, zeta.domain());
@@ -127,34 +133,66 @@ namespace arma {
 			generate(zeta, subdomain);
 		}
 
+		function_type
+		get_function() const noexcept {
+			return _func;
+		}
+
+		const array_type&
+		amplitudes() const noexcept {
+			return _amplitudes;
+		}
+
+		const array_type&
+		phases() const noexcept {
+			return _phases;
+		}
+
+		const array_type&
+		wavenumbers() const noexcept {
+			return _wavenumbers;
+		}
+
+		const array_type&
+		velocities() const noexcept {
+			return _velocities;
+		}
+
+		int
+		num_waves() const noexcept {
+			return _amplitudes.size();
+		}
+
 		friend std::istream&
-		operator>>(std::istream& in, Plain_wave_model& rhs) {
+		operator>>(std::istream& in, Plain_wave& rhs) {
 			std::string func;
 			Array_wrapper<T> wamplitudes(rhs._amplitudes);
 			Array_wrapper<T> wwavenumbers(rhs._wavenumbers);
 			Array_wrapper<T> wphases(rhs._phases);
+			Array_wrapper<T> wvelocitites(rhs._velocities);
 			sys::parameter_map params({
 			    {"func", sys::make_param(rhs._func)},
 			    {"amplitudes", sys::make_param(wamplitudes)},
 			    {"wavenumbers", sys::make_param(wwavenumbers)},
 			    {"phases", sys::make_param(wphases)},
-			    {"velocity", sys::make_param(rhs._velocity)},
+			    {"velocities", sys::make_param(wvelocitites)},
 			}, true);
 			in >> params;
 			validate_shape(rhs._amplitudes.shape(), "plain_wave.amplitudes");
 			validate_shape(rhs._wavenumbers.shape(), "plain_wave.wavenumbers");
 			validate_shape(rhs._phases.shape(), "plain_wave.phases");
+			validate_shape(rhs._velocities.shape(), "plain_wave.velocities");
 			return in;
 		}
 
 		friend std::ostream&
-		operator<<(std::ostream& out, const Plain_wave_model& rhs) {
+		operator<<(std::ostream& out, const Plain_wave& rhs) {
 			return out
 				<< "func=" << rhs._func
 				<< ",amplitudes=" << Array_wrapper<T>(rhs._amplitudes)
 				<< ",wavenumbers=" << Array_wrapper<T>(rhs._wavenumbers)
 				<< ",phases=" << Array_wrapper<T>(rhs._phases)
-				<< ",velocity=" << rhs._velocity;
+				<< ",velocities=" << Array_wrapper<T>(rhs._velocities);
 		}
 
 	private:
@@ -182,7 +220,7 @@ namespace arma {
 						zeta(t, x, y) = blitz::sum(
 							_amplitudes *
 							blitz::sin(
-								_wavenumbers * (x - _velocity*t)
+								_2pi*_wavenumbers*x - _velocities*t
 								+ _phases + shift
 							)
 						);

@@ -29,6 +29,16 @@ namespace arma {
 				<< "domain=" << _domain;
 		}
 
+		virtual void
+		read(std::istream& in) {
+			sys::parameter_map params({
+			    {"wnmax", sys::make_param(_wnmax, validate_finite<T,2>)},
+			    {"depth", sys::make_param(_depth, validate_finite<T>)},
+			    {"domain", sys::make_param(_domain, validate_domain<T,2>)},
+			}, true);
+			in >> params;
+		}
+
 	public:
 		Velocity_potential_field() = default;
 		Velocity_potential_field(const Velocity_potential_field&) = default;
@@ -90,12 +100,7 @@ namespace arma {
 
 		friend std::istream&
 		operator>>(std::istream& in, Velocity_potential_field& rhs) {
-			sys::parameter_map params({
-			    {"wnmax", sys::make_param(rhs._wnmax, validate_finite<T,2>)},
-			    {"depth", sys::make_param(rhs._depth, validate_finite<T>)},
-			    {"domain", sys::make_param(rhs._domain, validate_domain<T,2>)},
-			}, true);
-			in >> params;
+			rhs.read(in);
 			return in;
 		}
 
