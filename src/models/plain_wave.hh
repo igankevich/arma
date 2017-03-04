@@ -138,6 +138,15 @@ namespace arma {
 			return _func;
 		}
 
+		T
+		get_shift() const noexcept {
+			T shift = 0;
+			if (_func == function_type::Cosine) {
+				shift = T(0.5) * T(M_PI);
+			}
+			return shift;
+		}
+
 		const array_type&
 		amplitudes() const noexcept {
 			return _amplitudes;
@@ -199,10 +208,7 @@ namespace arma {
 
 		void
 		generate(Array3D<T>& zeta, const Domain3D& subdomain) {
-			T shift = 0;
-			if (_func == bits::Function::Cosine) {
-				shift = T(0.5) * T(M_PI);
-			}
+			const T shift = get_shift();
 			const size3& lbound = subdomain.lbound();
 			const size3& ubound = subdomain.ubound();
 			const int t0 = lbound(0);

@@ -27,6 +27,8 @@ namespace arma {
 			const array_type& A = _waves.amplitudes();
 			const array_type& omega = _waves.velocities();
 			const array_type& k = _waves.wavenumbers();
+			const array_type& phases = _waves.phases();
+			const T shift = _waves.get_shift();
 			Array2D<T> phi(arr_size);
 			const int nx = arr_size(0);
 			const int ny = arr_size(1);
@@ -34,8 +36,8 @@ namespace arma {
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
 					phi(i,j) = blitz::sum(
-						T(-2)*A*omega
-						*blitz::sin(_2pi*k*i - omega*idx_t)
+						T(2)*A*omega
+						*blitz::cos(_2pi*k*i - omega*idx_t + shift + phases)
 						*blitz::sinh(_2pi*k*(z + h))
 						/k
 						/blitz::sinh(_2pi*k*h)
