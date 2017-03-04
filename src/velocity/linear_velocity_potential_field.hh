@@ -66,9 +66,10 @@ namespace arma {
 //					const T denominator = l*(T(1) + expm2lh);
 					const T numerator = std::cosh(l*(z + h));
 					const T denominator = l*std::cosh(l*h);
-					mult(i, j) = T(-2) * bits::div_or_nought(numerator, denominator);
+					mult(i, j) = _2pi *T(-2) * bits::div_or_nought(numerator, denominator);
 				}
 			}
+			//blitz::rotate(mult, mult.extent()/2);
 			if (!all(isfinite(mult))) {
 				std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
 					<< ": infinite/NaN multiplier. Try to increase minimal z "
