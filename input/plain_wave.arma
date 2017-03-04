@@ -13,5 +13,5 @@ verification = manual
 velocity_field = linear {
 	wnmax = (0.0,0.25)
 	depth = 12
-	domain = from (10,-12) to (10,0.5) npoints (1,128)
+	domain = from (10,-12) to (10,1) npoints (1,128)
 }

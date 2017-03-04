@@ -46,7 +46,7 @@ namespace arma {
 		Array4D<T>
 		operator()(Array3D<T>& zeta, const Domain3D& subdomain) {
 			using blitz::Range;
-			const size3 zeta_size = subdomain.ubound() - subdomain.lbound();
+			const size3 zeta_size = blitz::get_shape(subdomain);
 			const size2 arr_size(zeta_size(1), zeta_size(2));
 			const int nt = _domain.num_points(0);
 			const int nz = _domain.num_points(1);
@@ -63,10 +63,7 @@ namespace arma {
 					const T t = p(0);
 					const T z = p(1);
 					result(i, j, Range::all(), Range::all()) =
-					compute_velocity_field_2d(
-						zeta, arr_size,
-						z, t
-					);
+					compute_velocity_field_2d(zeta, arr_size, z, t);
 				}
 //				std::clog << "Finished time slice ["
 //					<< (i+1) << '/' << nt << ']'

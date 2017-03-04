@@ -470,12 +470,6 @@ namespace arma {
 		return T(4.8) * std::sqrt(approx_wave_height(variance));
 	}
 
-	template<int n>
-	blitz::TinyVector<int, n>
-	get_shape(const blitz::RectDomain<n>& rhs) {
-		return rhs.ubound() - rhs.lbound() + 1;
-	}
-
 }
 
 #endif // ARMA_HH

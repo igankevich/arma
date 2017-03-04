@@ -38,6 +38,12 @@ namespace blitz {
 		const T v = rhs(1);
 		return std::sqrt(u*u + v*v);
 	}
+
+	template<int n>
+	TinyVector<int, n>
+	get_shape(const RectDomain<n>& rhs) {
+		return rhs.ubound() - rhs.lbound() + 1;
+	}
 }
 
 #endif // BLITZ_HH
