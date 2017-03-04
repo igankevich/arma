@@ -59,11 +59,13 @@ namespace arma {
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
 					const T l = _2pi * blitz::length(wngrid({i,j}));
-					const T expm2lh = std::exp(T(-2)*l*h);
-					const T expmlz = std::exp(-l*z);
-					const T explz = T(1)/expmlz;
-					const T numerator = explz + expmlz*expm2lh;
-					const T denominator = l*(T(1) + expm2lh);
+//					const T expm2lh = std::exp(T(-2)*l*h);
+//					const T expmlz = std::exp(-l*z);
+//					const T explz = std::exp(l*z);
+//					const T numerator = explz + expmlz*expm2lh;
+//					const T denominator = l*(T(1) + expm2lh);
+					const T numerator = std::cosh(l*(z + h));
+					const T denominator = l*std::cosh(l*h);
 					mult(i, j) = T(-2) * bits::div_or_nought(numerator, denominator);
 				}
 			}
@@ -94,6 +96,9 @@ namespace arma {
 				\right\}
 			\f]
 			*/
+			#if ARMA_OPENMP
+			#pragma omp critical
+			#endif
 			_fft.init(arr_size);
 			return blitz::real(_fft.backward(_fft.forward(phi) *= mult));
 		}

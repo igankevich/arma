@@ -1,17 +1,17 @@
-out_grid = (200,40,40)
+out_grid = (200,128,40)
 
 model = plain_wave
 plain_wave = {
 	func = cos
-	amplitudes = [2]
-	wavenumbers = [0.5]
-	phases = [2]
+	amplitudes = [0.5]
+	wavenumbers = [0.125]
+	phases = [0]
 	velocity = 0.5
 }
 verification = manual
 
 velocity_field = linear {
-	wnmax = (0.5,0.5)
-	depth = 10
-	domain = from (10,-5) to (10,2) npoints (1,10)
+	wnmax = (0.0,0.25)
+	depth = 12
+	domain = from (10,-12) to (10,0.5) npoints (1,128)
 }

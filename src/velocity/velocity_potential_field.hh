@@ -54,6 +54,9 @@ namespace arma {
 				nt, nz,
 				zeta_size(1), zeta_size(2)
 			));
+			#if ARMA_OPENMP
+			#pragma omp parallel for collapse(2)
+			#endif
 			for (int i=0; i<nt; ++i) {
 				for (int j=0; j<nz; ++j) {
 					const Vec2<T> p = _domain({i,j});
@@ -65,9 +68,9 @@ namespace arma {
 						z, t
 					);
 				}
-				std::clog << "Finished time slice ["
-					<< (i+1) << '/' << nt << ']'
-					<< std::endl;
+//				std::clog << "Finished time slice ["
+//					<< (i+1) << '/' << nt << ']'
+//					<< std::endl;
 			}
 			return result;
 		}
