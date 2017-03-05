@@ -1,17 +1,18 @@
-#include <algorithm>      // for generate_n, copy, for_each
-#include <chrono>         // for duration, system_clock, system_clock::time...
-#include <functional>     // for reference_wrapper, ref
-#include <iostream>       // for cout, operator<<, basi...
-#include <iterator>       // for istream_iterator, back_insert_iterator
-#include <vector>         // for vector
-#include <fstream>        // for ofstream, ifstream
-#include <cassert>        // for assert
-#include "parallel_mt.hh" // for mt_config, parallel_mt, operator>>, parall...
+#include <algorithm>
+#include <chrono>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <vector>
+#include <fstream>
+#include <gtest/gtest.h>
+#include "parallel_mt.hh"
 
 struct MT_generator {
 
-	MT_generator(const char* filename, size_t nmts)
-	    : _filename(filename), _ngenerators(nmts) {}
+	MT_generator(const char* filename, size_t nmts):
+	_filename(filename), _ngenerators(nmts)
+	{}
 
 	void
 	generate_and_write_to_file() {
@@ -31,7 +32,7 @@ struct MT_generator {
 		          std::istream_iterator<arma::mt_config>(),
 		          std::back_inserter(params));
 		std::cout << "No. of generators = " << params.size() << std::endl;
-		assert(params.size() == _ngenerators);
+		EXPECT_EQ(_ngenerators, params.size());
 		std::for_each(
 		    params.begin(), params.end(), [](arma::mt_config& conf) {
 			    arma::parallel_mt mt(conf);
@@ -46,10 +47,8 @@ struct MT_generator {
 	size_t _ngenerators;
 };
 
-int
-main() {
+TEST(DCMT, IO) {
 	MT_generator gen("mts.tmp", 7);
 	gen.generate_and_write_to_file();
 	gen.read_from_file_and_test();
-	return 0;
 }

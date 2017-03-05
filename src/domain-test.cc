@@ -1,9 +1,8 @@
-#include <iostream>
 #include <sstream>
 #include "domain.hh"
+#include <gtest/gtest.h>
 
-void
-test_simple_io() {
+TEST(DomainTest, SimpleIO) {
 	typedef arma::Domain<float, 3> domain_type;
 	domain_type dom{
 		{1.f, 2.f, 3.f},
@@ -19,28 +18,16 @@ test_simple_io() {
 	tmp.str("");
 	tmp << dom2;
 	std::string actual = tmp.str();
-	if (actual != orig) {
-		std::cerr << "Bad Domain i/o: "
-			"orig=\"" << orig << "\""
-			",actual=\"" << actual << "\""
-			<< std::endl;
-	}
-	assert(actual == orig);
+	EXPECT_EQ(orig, actual);
 }
 
-void
-test_zero_patch() {
+TEST(DomainTest, ZeroPatchSize) {
 	arma::Domain<float, 2> dom{
 		{1.f, 2.f},
 		{1.f, 10.f},
 		{1, 5}
 	};
-	assert(!(dom.patch_size(0) < 0.f) && !(dom.patch_size(0) < 0.f));
-	assert(dom.patch_size(1) > 0.f);
-}
-
-int main() {
-	test_simple_io();
-	test_zero_patch();
-	return 0;
+	EXPECT_FALSE(dom.patch_size(0) < 0.f);
+	EXPECT_FALSE(dom.patch_size(0) > 0.f);
+	EXPECT_GE(dom.patch_size(1), 0.f);
 }

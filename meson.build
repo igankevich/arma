@@ -16,6 +16,7 @@ liblapack = cpp.find_library('lapack')
 libblas = cpp.find_library('blas')
 libGL = cpp.find_library('GL')
 libglut = dependency('freeglut')
+gtest = dependency('gtest', main: true)
 
 if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')

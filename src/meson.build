@@ -15,9 +15,7 @@ executable(
 executable(
 	'dcmt',
 	sources: 'dcmt.cc',
-	dependencies: [
-		libdcmt
-	]
+	dependencies: [libdcmt]
 )
 
 executable(
@@ -33,61 +31,31 @@ executable(
 executable(
 	'slice',
 	sources: 'slice.cc',
-	dependencies: [ libblitz ]
+	dependencies: [libblitz]
 )
 
 test(
-	'cholesky decomposition',
+	'linalg::*',
 	executable(
-		'cholesky-test',
-		sources: 'cholesky-test.cc',
-		dependencies: [
-			libblitz,
-			libgsl,
-			libblas,
-			liblapack
-		],
-		link_args: '-llapacke'
-	)
-)
-
-test(
-	'inverse matrix',
-	executable(
-		'inverse-test',
-		sources: 'inverse-test.cc',
-		dependencies: [
-			libblitz,
-			libgsl,
-			libblas,
-			liblapack
-		],
-		link_args: '-llapacke'
-	)
-)
-
-test(
-	'matrix vector multiply',
-	executable(
-		'multiply-test',
-		sources: 'multiply-test.cc',
+		'linalg-test',
+		sources: 'linalg-test.cc',
 		dependencies: [
 			libblitz,
 			libgsl,
 			libblas,
 			liblapack,
-			libgsl
+			gtest
 		],
 		link_args: '-llapacke'
 	)
 )
 
 test(
-	'dynamic creation of mersenne twisters',
+	'arma::parallel_mt',
 	executable(
 		'dcmt-test',
 		sources: 'dcmt-test.cc',
-		dependencies: [ libdcmt ]
+		dependencies: [libdcmt, gtest]
 	)
 )
 
@@ -96,6 +64,6 @@ test(
 	executable(
 		'domain-test',
 		sources: 'domain-test.cc',
-		dependencies: [libblitz]
+		dependencies: [libblitz, gtest]
 	)
 )
