@@ -8,11 +8,6 @@
 
 typedef float T;
 
-bool
-approximately_equals(T lhs, T rhs, T eps) {
-	return std::abs(lhs - rhs) < eps;
-}
-
 TEST(Multiply, IdentityMatrix) {
 	using namespace blitz::tensor;
 	using blitz::all;
@@ -32,8 +27,8 @@ TEST(Multiply, Matrix2) {
 	lhs = 1.0, 2.0, 3.0, 4.0;
 	rhs = 1.0, 2.0;
 	rhs = linalg::operator*(lhs, rhs);
-	EXPECT_TRUE(approximately_equals(rhs(0), T(5), T(1e-3)));
-	EXPECT_TRUE(approximately_equals(rhs(1), T(11), T(1e-3)));
+	EXPECT_NEAR(rhs(0), T(5), T(1e-3));
+	EXPECT_NEAR(rhs(1), T(11), T(1e-3));
 }
 
 TEST(Cholesky, IdentityMatrix) {
@@ -55,9 +50,9 @@ TEST(Cholesky, Matrix2) {
 	lhs = 1.0, 0.5, 0.0, 0.5, 1.0, 0.5, 0.0, 0.5, 1.0;
 	rhs = T(1);
 	linalg::cholesky(lhs, rhs);
-	EXPECT_TRUE(approximately_equals(rhs(0), T(1), T(1e-3)));
-	EXPECT_TRUE(approximately_equals(rhs(1), T(0), T(1e-3)));
-	EXPECT_TRUE(approximately_equals(rhs(2), T(1), T(1e-3)));
+	EXPECT_NEAR(rhs(0), T(1), T(1e-3));
+	EXPECT_NEAR(rhs(1), T(0), T(1e-3));
+	EXPECT_NEAR(rhs(2), T(1), T(1e-3));
 }
 
 TEST(Cholesky, Matrix3) {
@@ -67,9 +62,9 @@ TEST(Cholesky, Matrix3) {
 	lhs = 1.00, 0.50, 0.33, 0.50, 1.00, 0.50, 0.33, 0.50, 1.00;
 	rhs = T(1);
 	linalg::cholesky(lhs, rhs);
-	EXPECT_TRUE(approximately_equals(rhs(0), T(0.60241), T(1e-3)));
-	EXPECT_TRUE(approximately_equals(rhs(1), T(0.39759), T(1e-3)));
-	EXPECT_TRUE(approximately_equals(rhs(2), T(0.60241), T(1e-3)));
+	EXPECT_NEAR(rhs(0), T(0.60241), T(1e-3));
+	EXPECT_NEAR(rhs(1), T(0.39759), T(1e-3));
+	EXPECT_NEAR(rhs(2), T(0.60241), T(1e-3));
 }
 
 TEST(Inverse, IdentityMatrix) {
@@ -87,8 +82,8 @@ TEST(Inverse, Matrix2) {
 	linalg::Matrix<T> lhs(blitz::shape(n, n));
 	lhs = 1.0, 2.0, 3.0, 4.0;
 	linalg::inverse(lhs);
-	EXPECT_TRUE(approximately_equals(lhs(0,0), T(-2), T(1e-3)));
-	EXPECT_TRUE(approximately_equals(lhs(0,1), T(1), T(1e-3)));
-	EXPECT_TRUE(approximately_equals(lhs(1,0), T(1.5), T(1e-3)));
-	EXPECT_TRUE(approximately_equals(lhs(1,1), T(-0.5), T(1e-3)));
+	EXPECT_NEAR(lhs(0,0), T(-2), T(1e-3));
+	EXPECT_NEAR(lhs(0,1), T(1), T(1e-3));
+	EXPECT_NEAR(lhs(1,0), T(1.5), T(1e-3));
+	EXPECT_NEAR(lhs(1,1), T(-0.5), T(1e-3));
 }
