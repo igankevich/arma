@@ -37,6 +37,7 @@
 #include "velocity/velocity_potential_field.hh"
 #include "velocity/linear_velocity_potential_field.hh"
 #include "velocity/plain_wave_velocity_field.hh"
+#include "velocity/high_amplitude_velocity_potential_field.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -71,6 +72,8 @@ namespace arma {
 		} else if (name == "plain") {
 			rhs = new Plain_wave_velocity_field<T>;
 			in >> *rhs;
+		} else if (name == "high_amplitude") {
+			rhs = new High_amplitude_velocity_potential_field<T>;
 		} else {
 			in.setstate(std::ios::failbit);
 			std::clog << "Invalid velocity field: " << name << std::endl;
