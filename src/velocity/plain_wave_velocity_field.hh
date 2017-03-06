@@ -4,6 +4,7 @@
 #include "velocity_potential_field.hh"
 #include "models/plain_wave.hh"
 #include "validators.hh"
+#include "physical_constants.hh"
 #include "blitz.hh"
 
 namespace arma {
@@ -13,7 +14,6 @@ namespace arma {
 
 		typedef Plain_wave<T> wave_type;
 		wave_type _waves;
-		static constexpr const T _2pi = T(2) * M_PI;
 
 	protected:
 		Array2D<T>
@@ -23,6 +23,7 @@ namespace arma {
 			const T z,
 			const int idx_t
 		) override {
+			using constants::_2pi;
 			typedef typename wave_type::array_type array_type;
 			const array_type& A = _waves.amplitudes();
 			const array_type& omega = _waves.velocities();
@@ -37,10 +38,10 @@ namespace arma {
 				for (int j=0; j<ny; ++j) {
 					phi(i,j) = blitz::sum(
 						T(2)*A*omega
-						*blitz::cos(_2pi*k*i - omega*idx_t + shift + phases)
-						*blitz::sinh(_2pi*k*(z + h))
+						*blitz::cos(_2pi<T>*k*i - omega*idx_t + shift + phases)
+						*blitz::sinh(_2pi<T>*k*(z + h))
 						/k
-						/blitz::sinh(_2pi*k*h)
+						/blitz::sinh(_2pi<T>*k*h)
 					);
 				}
 			}

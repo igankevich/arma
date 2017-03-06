@@ -12,6 +12,7 @@
 #include "types.hh"
 #include "validators.hh"
 #include "blitz.hh"
+#include "physical_constants.hh"
 
 namespace arma {
 
@@ -208,6 +209,7 @@ namespace arma {
 
 		void
 		generate(Array3D<T>& zeta, const Domain3D& subdomain) {
+			using constants::_2pi;
 			const T shift = get_shift();
 			const size3& lbound = subdomain.lbound();
 			const size3& ubound = subdomain.ubound();
@@ -226,7 +228,7 @@ namespace arma {
 						zeta(t, x, y) = blitz::sum(
 							_amplitudes *
 							blitz::sin(
-								_2pi*_wavenumbers*x - _velocities*t
+								_2pi<T>*_wavenumbers*x - _velocities*t
 								+ _phases + shift
 							)
 						);

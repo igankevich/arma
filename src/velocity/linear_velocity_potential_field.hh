@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include "velocity_potential_field.hh"
 #include "fourier.hh"
+#include "physical_constants.hh"
 
 namespace arma {
 
@@ -28,7 +29,6 @@ namespace arma {
 	class Linear_velocity_potential_field: public Velocity_potential_field<T> {
 
 		Fourier_transform<std::complex<T>, 2> _fft;
-		static constexpr const T _2pi = T(2) * M_PI;
 
 	protected:
 		Array2D<T>
@@ -40,6 +40,7 @@ namespace arma {
 		) override {
 			using blitz::all;
 			using blitz::isfinite;
+			using constants::_2pi;
 			/**
 			1. Compute multiplier.
 			\f[
@@ -55,7 +56,7 @@ namespace arma {
 			const int ny = wngrid.num_points(1);
 			for (int i=0; i<nx; ++i) {
 				for (int j=0; j<ny; ++j) {
-					const T l = _2pi * blitz::length(wngrid({i,j}));
+					const T l = _2pi<T> * blitz::length(wngrid({i,j}));
 //					const T expm2lh = std::exp(T(-2)*l*h);
 //					const T expmlz = std::exp(-l*z);
 //					const T explz = std::exp(l*z);
@@ -63,7 +64,7 @@ namespace arma {
 //					const T denominator = l*(T(1) + expm2lh);
 					const T numerator = std::cosh(l*(z + h));
 					const T denominator = l*std::cosh(l*h);
-					mult(i, j) = _2pi *T(-2) * bits::div_or_nought(numerator, denominator);
+					mult(i, j) = _2pi<T> *T(-2) * bits::div_or_nought(numerator, denominator);
 				}
 			}
 			//blitz::rotate(mult, mult.extent()/2);

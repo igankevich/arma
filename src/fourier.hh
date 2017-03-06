@@ -153,8 +153,6 @@ namespace arma {
 		}
 	};
 
-	// {{{ FFT type mappings
-
 	template <class T>
 	struct Fourier_config {};
 

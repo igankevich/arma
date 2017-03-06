@@ -11,10 +11,10 @@
 namespace arma {
 
 	template <class T>
-	class High_amplitude_velocity_potential_field: public Velocity_potential_field<T> {
-
+	class High_amplitude_velocity_potential_field:
+	public Velocity_potential_field<T>
+	{
 		Fourier_transform<std::complex<T>, 2> _fft;
-		static constexpr const T _2pi = T(2) * M_PI;
 
 	protected:
 		Array2D<T>
