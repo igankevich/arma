@@ -44,11 +44,8 @@ namespace arma {
 			1. Compute multiplier.
 			\f[
 			\text{mult}(u, v) =
-				-2 \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
+				-4\pi \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
 				        { |\vec{k}|\cosh\left(|\vec{k}|h\right) }
-				=
-				-2 \frac{ e^{|\vec{k}|z} + e^{-|\vec{k}|(z + 2h)} }
-				        { |\vec{k}| \left(1 + e^{-2|\vec{k}|h}\right) }
 			\f]
 			*/
 			const Domain<T,2> wngrid(this->_wnmax, arr_size);
@@ -90,8 +87,10 @@ namespace arma {
 			3. Compute Fourier transforms.
 			\f[
 			\phi(x,y,z,t) =
-				\mathcal{F}_{x,y}^{-1}\left\{
-					\text{mult}(u, v) \mathcal{F}_{u,v}\left\{\zeta_t\right\}
+				\text{Re}\left\{
+					\mathcal{F}_{x,y}^{-1}\left\{
+						\text{mult}(u, v) \mathcal{F}_{u,v}\left\{\zeta_t\right\}
+					\right\}
 				\right\}
 			\f]
 			*/
