@@ -1,6 +1,9 @@
 #ifndef VELOCITY_POTENTIAL_FIELD_HH
 #define VELOCITY_POTENTIAL_FIELD_HH
 
+#if ARMA_OPENMP
+#include <omp.h>
+#endif
 #include "types.hh"
 #include "domain.hh"
 
@@ -13,6 +16,12 @@ namespace arma {
 		Vec2<T> _wnmax;
 		T _depth;
 		Domain2<T> _domain;
+
+		virtual void
+		precompute(const Array3D<T>& zeta) {}
+
+		virtual void
+		precompute(const Array3D<T>& zeta, const int idx_t) {}
 
 		virtual Array2D<T>
 		compute_velocity_field_2d(
@@ -45,9 +54,6 @@ namespace arma {
 		Velocity_potential_field(Velocity_potential_field&&) = default;
 		virtual ~Velocity_potential_field() = default;
 
-		virtual void
-		precompute(const Array3D<T>& zeta) {}
-
 		/**
 		\param[in] zeta      ocean wavy surface
 		\param[in] subdomain region of zeta
@@ -68,14 +74,14 @@ namespace arma {
 				zeta_size(1), zeta_size(2)
 			));
 			precompute(zeta);
-			#if ARMA_OPENMP
-			#pragma omp parallel for collapse(2)
-			#endif
 			for (int i=0; i<nt; ++i) {
+				const T t = _domain(i, 0);
+				precompute(zeta, t);
+				#if ARMA_OPENMP
+				#pragma omp parallel for
+				#endif
 				for (int j=0; j<nz; ++j) {
-					const Vec2<T> p = _domain({i,j});
-					const T t = p(0);
-					const T z = p(1);
+					const T z = _domain(j, 1);
 					result(i, j, Range::all(), Range::all()) =
 					compute_velocity_field_2d(zeta, arr_size, z, t);
 				}

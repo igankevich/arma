@@ -129,6 +129,11 @@ namespace arma {
 			return _lbound + delta() * i;
 		}
 
+		T
+		operator()(const int idx, const int dim) const noexcept {
+			return _lbound(dim) + delta(dim) * idx;
+		}
+
 		friend std::ostream&
 		operator<<(std::ostream& out, const Domain& rhs) {
 			return out << "from" << ' ' << rhs._lbound << ' '

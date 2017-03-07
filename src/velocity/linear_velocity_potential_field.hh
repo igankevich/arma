@@ -31,11 +31,19 @@ namespace arma {
 	class Linear_velocity_potential_field: public Velocity_potential_field<T> {
 
 		Fourier_transform<std::complex<T>, 2> _fft;
+		Array3D<T> _zeta_t;
 
 	protected:
 		void
 		precompute(const Array3D<T>& zeta) override {
 			_fft.init(size2(zeta.extent(1), zeta.extent(2)));
+		}
+
+		void
+		precompute(const Array3D<T>& zeta, const int idx_t) override {
+			using blitz::Range;
+			_zeta_t.resize(zeta.shape());
+			_zeta_t(idx_t, Range::all(), Range::all()) = derivative<0,T>(zeta, idx_t);
 		}
 
 		Array2D<T>
@@ -47,6 +55,7 @@ namespace arma {
 		) override {
 			using blitz::all;
 			using blitz::isfinite;
+			using blitz::Range;
 			typedef std::complex<T> Cmplx;
 			/**
 			1. Compute multiplier.
@@ -66,7 +75,8 @@ namespace arma {
 				throw std::runtime_error("bad multiplier");
 			}
 			/// 2. Compute \f$\zeta_t\f$.
-			Array2D<Cmplx> phi = derivative<0,T,Cmplx>(zeta, idx_t);
+			Array2D<Cmplx> phi(arr_size);
+			phi = _zeta_t(idx_t, Range::all(), Range::all());
 			/**
 			3. Compute Fourier transforms.
 			\f[
