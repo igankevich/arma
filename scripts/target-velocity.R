@@ -31,8 +31,8 @@ u <- with(phi_slice, {
 # get wave profile
 zeta <- read.csv('zeta.csv')
 zeta_slice <- zeta[zeta$t == slice_t & zeta$y == slice_y & zeta$x >= 10,]
-print(zeta_slice)
-print(x)
+#print(zeta_slice)
+#print(x)
 
 
 # plot the image
@@ -46,4 +46,3 @@ contour(
 lines(zeta_slice$x, zeta_slice$z, lwd=4)
 #image(x, z, u, c(-2,2), col=heat.colors(128))
 box()
-dev.off()
