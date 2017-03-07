@@ -16,7 +16,7 @@ namespace arma {
 
 		virtual Array2D<T>
 		compute_velocity_field_2d(
-			Array3D<T>& zeta,
+			const Array3D<T>& zeta,
 			const size2 arr_size,
 			const T z,
 			const int idx_t
@@ -45,6 +45,9 @@ namespace arma {
 		Velocity_potential_field(Velocity_potential_field&&) = default;
 		virtual ~Velocity_potential_field() = default;
 
+		virtual void
+		precompute(const Array3D<T>& zeta) {}
+
 		/**
 		\param[in] zeta      ocean wavy surface
 		\param[in] subdomain region of zeta
@@ -54,9 +57,9 @@ namespace arma {
 		                     specified as index of zeta
 		*/
 		Array4D<T>
-		operator()(Array3D<T>& zeta, const Domain3D& subdomain) {
+		operator()(const Array3D<T>& zeta) {
 			using blitz::Range;
-			const size3 zeta_size = blitz::get_shape(subdomain);
+			const size3& zeta_size = zeta.shape();
 			const size2 arr_size(zeta_size(1), zeta_size(2));
 			const int nt = _domain.num_points(0);
 			const int nz = _domain.num_points(1);
@@ -64,6 +67,7 @@ namespace arma {
 				nt, nz,
 				zeta_size(1), zeta_size(2)
 			));
+			precompute(zeta);
 			#if ARMA_OPENMP
 			#pragma omp parallel for collapse(2)
 			#endif
@@ -80,11 +84,6 @@ namespace arma {
 //					<< std::endl;
 			}
 			return result;
-		}
-
-		Array4D<T>
-		operator()(Array3D<T>& zeta) {
-			return operator()(zeta, zeta.domain());
 		}
 
 		const Domain2<T>

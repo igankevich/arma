@@ -18,7 +18,7 @@ namespace arma {
 	protected:
 		Array2D<T>
 		compute_velocity_field_2d(
-			Array3D<T>& zeta,
+			const Array3D<T>& zeta,
 			const size2 arr_size,
 			const T z,
 			const int idx_t

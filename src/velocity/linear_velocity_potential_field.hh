@@ -33,16 +33,21 @@ namespace arma {
 		Fourier_transform<std::complex<T>, 2> _fft;
 
 	protected:
+		void
+		precompute(const Array3D<T>& zeta) override {
+			_fft.init(size2(zeta.extent(1), zeta.extent(2)));
+		}
+
 		Array2D<T>
 		compute_velocity_field_2d(
-			Array3D<T>& zeta,
+			const Array3D<T>& zeta,
 			const size2 arr_size,
 			const T z,
 			const int idx_t
 		) override {
 			using blitz::all;
 			using blitz::isfinite;
-			using constants::_2pi;
+			typedef std::complex<T> Cmplx;
 			/**
 			1. Compute multiplier.
 			\f[
@@ -52,34 +57,16 @@ namespace arma {
 			\f]
 			*/
 			const Domain<T,2> wngrid(this->_wnmax, arr_size);
-			const T h = this->_depth;
-			Array2D<T> mult(wngrid.num_points());
-			const int nx = wngrid.num_points(0);
-			const int ny = wngrid.num_points(1);
-			for (int i=0; i<nx; ++i) {
-				for (int j=0; j<ny; ++j) {
-					const T l = _2pi<T> * blitz::length(wngrid({i,j}));
-//					const T expm2lh = std::exp(T(-2)*l*h);
-//					const T expmlz = std::exp(-l*z);
-//					const T explz = std::exp(l*z);
-//					const T numerator = explz + expmlz*expm2lh;
-//					const T denominator = l*(T(1) + expm2lh);
-					const T numerator = std::cosh(l*(z + h));
-					const T denominator = l*std::cosh(l*h);
-					mult(i, j) = _2pi<T> *T(-2) * bits::div_or_nought(numerator, denominator);
-				}
-			}
-			//blitz::rotate(mult, mult.extent()/2);
+			Array2D<T> mult = low_amp_window_function(wngrid, z);
 			if (!all(isfinite(mult))) {
-				std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
-					<< ": infinite/NaN multiplier. Try to increase minimal z "
+				std::clog << "Infinite/NaN multiplier. Try to increase minimal z "
 					"coordinate at which velocity potential is calculated, or "
 					"decrease water depth. Here z="
-					<< z << ",depth=" << h << '.' << std::endl;
+					<< z << ",depth=" << this->_depth << '.' << std::endl;
 				throw std::runtime_error("bad multiplier");
 			}
 			/// 2. Compute \f$\zeta_t\f$.
-			Array2D<std::complex<T>> phi = derivative<0,T,std::complex<T>>(zeta, idx_t);
+			Array2D<Cmplx> phi = derivative<0,T,Cmplx>(zeta, idx_t);
 			/**
 			3. Compute Fourier transforms.
 			\f[
@@ -91,12 +78,32 @@ namespace arma {
 				\right\}
 			\f]
 			*/
-			#if ARMA_OPENMP
-			#pragma omp critical
-			#endif
-			_fft.init(arr_size);
 			return blitz::real(_fft.backward(_fft.forward(phi) *= mult));
 		}
+
+	private:
+		Array2D<T>
+		low_amp_window_function(const Domain<T,2>& wngrid, const T z) {
+			using std::cosh;
+			using blitz::length;
+			using constants::_2pi;
+			const T h = this->_depth;
+			Array2D<T> result(wngrid.num_points());
+			const int nx = wngrid.num_points(0);
+			const int ny = wngrid.num_points(1);
+			for (int i=0; i<nx; ++i) {
+				for (int j=0; j<ny; ++j) {
+					const T l = _2pi<T> * length(wngrid({i,j}));
+					const T numerator = cosh(l*(z + h));
+					const T denominator = l*cosh(l*h);
+					result(i, j) = _2pi<T>
+						* T(-2)
+						* bits::div_or_nought(numerator, denominator);
+				}
+			}
+			return result;
+		}
+
 
 	};
 
