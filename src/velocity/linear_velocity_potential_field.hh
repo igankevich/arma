@@ -4,9 +4,11 @@
 #include <cmath>
 #include <complex>
 #include <stdexcept>
+#include <cassert>
 #include "velocity_potential_field.hh"
 #include "fourier.hh"
 #include "physical_constants.hh"
+#include "derivative.hh"
 
 namespace arma {
 
@@ -77,13 +79,7 @@ namespace arma {
 				throw std::runtime_error("bad multiplier");
 			}
 			/// 2. Compute \f$\zeta_t\f$.
-			Array2D<std::complex<T>> phi(arr_size);
-			// TODO Implement in a separate function with proper handling of borders.
-			for (int i=0; i<nx; ++i) {
-				for (int j=0; j<ny; ++j) {
-					phi(i,j) = T(0.5)*(zeta(idx_t+1,i,j) - zeta(idx_t-1,i,j));
-				}
-			}
+			Array2D<std::complex<T>> phi = derivative<0,T,std::complex<T>>(zeta, idx_t);
 			/**
 			3. Compute Fourier transforms.
 			\f[
