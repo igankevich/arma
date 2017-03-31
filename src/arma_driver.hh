@@ -74,6 +74,7 @@ namespace arma {
 			in >> *rhs;
 		} else if (name == "high_amplitude") {
 			rhs = new High_amplitude_velocity_potential_field<T>;
+			in >> *rhs;
 		} else {
 			in.setstate(std::ios::failbit);
 			std::clog << "Invalid velocity field: " << name << std::endl;

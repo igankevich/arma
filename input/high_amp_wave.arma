@@ -1,0 +1,17 @@
+out_grid = (200,128,40)
+
+model = plain_wave
+plain_wave = {
+	func = cos
+	amplitudes = [0.5]
+	wavenumbers = [0.125]
+	phases = [0]
+	velocities = [0.5]
+}
+verification = manual
+
+velocity_field = high_amplitude {
+	wnmax = (0.0,0.25)
+	depth = 12
+	domain = from (10,-12) to (10,1) npoints (1,128)
+}

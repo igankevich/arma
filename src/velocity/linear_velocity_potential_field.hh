@@ -30,20 +30,22 @@ namespace arma {
 	template<class T>
 	class Linear_velocity_potential_field: public Velocity_potential_field<T> {
 
-		Fourier_transform<std::complex<T>, 2> _fft;
-		Array3D<T> _zeta_t;
+	protected:
+		typedef std::complex<T> Cmplx;
+		Fourier_transform<Cmplx,2> _fft;
+		Array3D<Cmplx> _zeta_t;
 
 	protected:
 		void
 		precompute(const Array3D<T>& zeta) override {
 			_fft.init(size2(zeta.extent(1), zeta.extent(2)));
+			_zeta_t.resize(zeta.shape());
 		}
 
 		void
 		precompute(const Array3D<T>& zeta, const int idx_t) override {
 			using blitz::Range;
-			_zeta_t.resize(zeta.shape());
-			_zeta_t(idx_t, Range::all(), Range::all()) = derivative<0,T>(zeta, idx_t);
+			_zeta_t(idx_t, Range::all(), Range::all()) = -derivative<0,T>(zeta, idx_t);
 		}
 
 		Array2D<T>
@@ -56,12 +58,11 @@ namespace arma {
 			using blitz::all;
 			using blitz::isfinite;
 			using blitz::Range;
-			typedef std::complex<T> Cmplx;
 			/**
-			1. Compute multiplier.
+			1. Compute window function.
 			\f[
-			\text{mult}(u, v) =
-				-4\pi \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
+			\mathcal{W}(u, v) =
+				4\pi \frac{ \cosh\left(|\vec{k}|(z + h)\right) }
 				        { |\vec{k}|\cosh\left(|\vec{k}|h\right) }
 			\f]
 			*/
@@ -83,7 +84,7 @@ namespace arma {
 			\phi(x,y,z,t) =
 				\text{Re}\left\{
 					\mathcal{F}_{x,y}^{-1}\left\{
-						\text{mult}(u, v) \mathcal{F}_{u,v}\left\{\zeta_t\right\}
+						\mathcal{W}(u, v) \mathcal{F}_{u,v}\left\{\zeta_t\right\}
 					\right\}
 				\right\}
 			\f]
@@ -107,7 +108,7 @@ namespace arma {
 					const T numerator = cosh(l*(z + h));
 					const T denominator = l*cosh(l*h);
 					result(i, j) = _2pi<T>
-						* T(-2)
+						* T(2)
 						* bits::div_or_nought(numerator, denominator);
 				}
 			}
