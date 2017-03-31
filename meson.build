@@ -46,6 +46,11 @@ run_target('doc', command: 'scripts/generate-docs')
 run_target('graphs', command: ['gnuplot', '--persist', '-c', 'scripts/target-graphs', meson.build_root()])
 run_target('slices', command: 'scripts/target-slices')
 run_target('velocity', command: 'scripts/target-velocity.R')
+run_target('archive', command: [
+	'scripts/target-archive',
+	meson.project_name(),
+	meson.project_version()
+])
 
 incdirs = include_directories('src')
 subdir('src')

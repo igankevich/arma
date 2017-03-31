@@ -327,7 +327,11 @@ namespace arma {
 					order * 2,
 					size3(10, 10, 10)
 				);
+				#if ARMA_OPENMP
 				const int parallelism = std::min(omp_get_max_threads(), nprngs);
+				#else
+				const int parallelism = nprngs;
+				#endif
 				const int npar = std::max(1, 7*int(std::cbrt(parallelism)));
 				const size3 guess2 = blitz::div_ceil(
 					shape,
