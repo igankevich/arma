@@ -35,7 +35,7 @@
 #include "distribution.hh"
 #include "errors.hh"
 #include "output_format.hh"
-#include "velocity/velocity_potential_field.hh"
+#include "velocity/basic_solver.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -100,7 +100,8 @@ namespace arma {
 	struct ARMA_driver {
 
 		typedef std::chrono::high_resolution_clock clock_type;
-		typedef Velocity_potential_field<T> velocity_potential_field_type;
+		typedef velocity::Velocity_potential_solver<T>
+			velocity_potential_solver_type;
 
 		ARMA_driver():
 		_outgrid{{768, 24, 24}},
@@ -108,7 +109,7 @@ namespace arma {
 		{}
 
 		~ARMA_driver() {
-			delete _velocityfield;
+			delete _vpsolver;
 		}
 
 		const Array3D<T>&
@@ -126,14 +127,14 @@ namespace arma {
 			return _vpotentials;
 		}
 
-		const velocity_potential_field_type*
-		velocity_potential_field_solver() const noexcept {
-			return _velocityfield;
+		const velocity_potential_solver_type*
+		velocity_potential_solver() const noexcept {
+			return _vpsolver;
 		}
 
-		velocity_potential_field_type*
-		velocity_potential_field_solver() noexcept {
-			return _velocityfield;
+		velocity_potential_solver_type*
+		velocity_potential_solver() noexcept {
+			return _vpsolver;
 		}
 
 		Verification_scheme
@@ -165,7 +166,7 @@ namespace arma {
 					write_4d_csv(
 						filename,
 						_vpotentials,
-						_velocityfield->domain()
+						_vpsolver->domain()
 					);
 					break;
 				default:
@@ -190,7 +191,7 @@ namespace arma {
 
 		void
 		compute_velocity_potentials() {
-			this->_vpotentials.reference(_velocityfield->operator()(_zeta));
+			this->_vpotentials.reference(_vpsolver->operator()(_zeta));
 		}
 
 		template<class Type>
@@ -499,8 +500,8 @@ namespace arma {
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
-			Solver_wrapper<Velocity_potential_field<T>> vpsolver_wrapper(
-				_velocityfield,
+			Solver_wrapper<velocity_potential_solver_type> vpsolver_wrapper(
+				_vpsolver,
 				_vpsolvers
 			);
 			sys::parameter_map params({
@@ -512,7 +513,7 @@ namespace arma {
 			    {"model", sys::make_param(_model)},
 			    {"verification", sys::make_param(_vscheme)},
 			    {"partition", sys::make_param(_partition)},
-			    {"velocity_field", sys::make_param(vpsolver_wrapper)},
+			    {"velocity_potential_solver", sys::make_param(vpsolver_wrapper)},
 			});
 			in >> params;
 		}
@@ -545,8 +546,8 @@ namespace arma {
 					);
 					break;
 			}
-			if (_velocityfield) {
-				write_key_value(std::clog, "Velocity potential field", *_velocityfield);
+			if (_vpsolver) {
+				write_key_value(std::clog, "Velocity potential field", *_vpsolver);
 			}
 		}
 
@@ -662,12 +663,12 @@ namespace arma {
 		ARMA_model<T> _armamodel;
 		Plain_wave<T> _plainwavemodel;
 
-		Velocity_potential_field<T>* _velocityfield = nullptr;
+		velocity_potential_solver_type* _vpsolver = nullptr;
 
 		Array3D<T> _zeta;
 		Array4D<T> _vpotentials;
 
-		typedef std::function<Velocity_potential_field<T>*()> vpsolver_ctr;
+		typedef std::function<velocity_potential_solver_type*()> vpsolver_ctr;
 		std::unordered_map<std::string, vpsolver_ctr> _vpsolvers;
 	};
 

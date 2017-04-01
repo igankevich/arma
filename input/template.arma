@@ -71,7 +71,7 @@ ma_model = {
 }
 
 # Velocity potential field formula and configuration.
-velocity_field = linear {
+velocity_potential_solver = linear {
 	# Maximal wave number for each spatial dimension.
 	# Defines a range from (0,0) to wnmax over which 
 	# integration is done.

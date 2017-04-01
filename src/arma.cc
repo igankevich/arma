@@ -1,12 +1,13 @@
-#include <gsl/gsl_errno.h>   // for gsl_set_error_handler
-#include <cstdlib>           // for exit
-#include <exception>         // for exception, exception_ptr, current_ex...
-#include <iostream>          // for operator<<, basic_ostream, cerr, endl
-#include <unistd.h>          // for getopt
-#include "arma_driver.hh"    // for ARMA_driver, operator>>
-#include "velocity/linear_velocity_potential_field.hh"
-#include "velocity/plain_wave_velocity_field.hh"
-#include "velocity/high_amplitude_velocity_potential_field.hh"
+#include <gsl/gsl_errno.h>
+#include <cstdlib>
+#include <exception>
+#include <iostream>
+#include <unistd.h>
+
+#include "arma_driver.hh"
+#include "velocity/linear_solver.hh"
+#include "velocity/high_amplitude_solver.hh"
+#include "velocity/plain_wave_solver.hh"
 
 void
 print_exception_and_terminate() {
@@ -75,14 +76,12 @@ main(int argc, char* argv[]) {
 	if (help_requested || input_filename.empty()) {
 		usage(argv[0]);
 	} else {
-		typedef Linear_velocity_potential_field<Real> linear_solver;
-		typedef Plain_wave_velocity_field<Real> plain_wave_solver;
-		typedef High_amplitude_velocity_potential_field<Real> highamp_solver;
 		/// input file with various driver parameters
 		ARMA_driver<Real> driver;
-		register_vpsolver<linear_solver>(driver, "linear");
-		register_vpsolver<plain_wave_solver>(driver, "plain");
-		register_vpsolver<highamp_solver>(driver, "high_amplitude");
+		using namespace velocity;
+		register_vpsolver<Linear_solver<Real>>(driver, "linear");
+		register_vpsolver<Plain_wave_solver<Real>>(driver, "plain");
+		register_vpsolver<High_amplitude_solver<Real>>(driver, "high_amplitude");
 		std::ifstream cfg(input_filename);
 		if (!cfg.is_open()) {
 			std::clog << "Cannot open input file "
