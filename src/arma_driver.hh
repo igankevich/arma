@@ -1,11 +1,11 @@
 #ifndef ARMA_DRIVER_HH
 #define ARMA_DRIVER_HH
 
-#include <iostream>  // for operator<<, basic_ostream, clog
-#include <iomanip>   // for operator<<, setw
-#include <fstream>   // for ofstream
-#include <stdexcept> // for runtime_error
-#include <string>    // for operator==, basic_string, string, getline
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <stdexcept>
+#include <string>
 #include <unordered_map>
 #include <functional>
 #include <type_traits>
@@ -16,29 +16,26 @@
 #include <mutex>
 #include <atomic>
 #include <cmath>
+#include "parallel_mt.hh"
 #endif
 
 #include "config.hh"
-#include "types.hh"   // for Shape3D, Vector, Array3D, ACF, AR_coefs
-#include "arma.hh"    // for mean, variance, ACF_variance, approx_acf, comp...
+#include "types.hh"
+#include "arma.hh"
 #include "ar_model.hh"
 #include "ma_model.hh"
 #include "arma_model.hh"
 #include "models/plain_wave.hh"
 #include "simulation_model.hh"
-#include "verification_scheme.hh" // for Verification_scheme
-#include "acf.hh" // for standing_wave_ACF, propagating_wave_ACF
+#include "verification_scheme.hh"
+#include "acf.hh"
 #include "params.hh"
 #include "grid.hh"
 #include "statistics.hh"
 #include "distribution.hh"
-#include "parallel_mt.hh"
 #include "errors.hh"
-#include "velocity/velocity_potential_field.hh"
-#include "velocity/linear_velocity_potential_field.hh"
-#include "velocity/plain_wave_velocity_field.hh"
-#include "velocity/high_amplitude_velocity_potential_field.hh"
 #include "output_format.hh"
+#include "velocity/velocity_potential_field.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -62,27 +59,40 @@ namespace arma {
 		out.setf(oldf);
 	}
 
-	template<class T>
-	std::istream&
-	operator>>(std::istream& in, Velocity_potential_field<T>*& rhs) {
-		std::string name;
-		in >> std::ws >> name;
-		if (name == "linear") {
-			rhs = new Linear_velocity_potential_field<T>;
-			in >> *rhs;
-		} else if (name == "plain") {
-			rhs = new Plain_wave_velocity_field<T>;
-			in >> *rhs;
-		} else if (name == "high_amplitude") {
-			rhs = new High_amplitude_velocity_potential_field<T>;
-			in >> *rhs;
-		} else {
-			in.setstate(std::ios::failbit);
-			std::clog << "Invalid velocity field: " << name << std::endl;
-			throw std::runtime_error("bad velocity field");
+	template <class Solver>
+	class Solver_wrapper {
+		typedef Solver solver_type;
+		typedef std::string key_type;
+		typedef std::function<solver_type*()> value_type;
+		typedef std::unordered_map<std::string, value_type> map_type;
+		solver_type*& _solver;
+		const map_type& _constructors;
+
+	public:
+		explicit
+		Solver_wrapper(solver_type*& solver, const map_type& constructors):
+		_solver(solver),
+		_constructors(constructors)
+		{}
+
+		friend std::istream&
+		operator>>(std::istream& in, Solver_wrapper& rhs) {
+			std::string name;
+			in >> std::ws >> name;
+			auto result = rhs._constructors.find(name);
+			if (result == rhs._constructors.end()) {
+				in.setstate(std::ios::failbit);
+				std::clog << "Invalid solver: " << name << std::endl;
+				throw std::runtime_error("bad solver");
+			} else {
+				rhs._solver = result->second();
+				in >> *rhs._solver;
+			}
+			return in;
 		}
-		return in;
-	}
+	};
+
+
 
 	/// Class that reads parameters from the input files,
 	/// calls all subroutines, and prints the result.
@@ -90,6 +100,7 @@ namespace arma {
 	struct ARMA_driver {
 
 		typedef std::chrono::high_resolution_clock clock_type;
+		typedef Velocity_potential_field<T> velocity_potential_field_type;
 
 		ARMA_driver():
 		_outgrid{{768, 24, 24}},
@@ -105,9 +116,24 @@ namespace arma {
 			return _zeta;
 		}
 
+		const Grid<T,3>&
+		wavy_surface_grid() const noexcept {
+			return _outgrid;
+		}
+
 		const Array4D<T>&
 		velocity_potentials() const noexcept {
 			return _vpotentials;
+		}
+
+		const velocity_potential_field_type*
+		velocity_potential_field_solver() const noexcept {
+			return _velocityfield;
+		}
+
+		velocity_potential_field_type*
+		velocity_potential_field_solver() noexcept {
+			return _velocityfield;
 		}
 
 		Verification_scheme
@@ -167,9 +193,14 @@ namespace arma {
 			this->_vpotentials.reference(_velocityfield->operator()(_zeta));
 		}
 
+		template<class Type>
+		void
+		register_velocity_potential_solver(std::string key) {
+			_vpsolvers.emplace(key, [] () { return new Type; });
+		}
+
 		/**
-		Read AR model parameters from an input stream, generate default ACF
-		and validate all the parameters.
+		Read and validate driver parameters from an input stream.
 		*/
 		template <class V>
 		friend std::istream&
@@ -468,6 +499,10 @@ namespace arma {
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
+			Solver_wrapper<Velocity_potential_field<T>> vpsolver_wrapper(
+				_velocityfield,
+				_vpsolvers
+			);
 			sys::parameter_map params({
 			    {"out_grid", sys::make_param(_outgrid, validate_grid<T,3>)},
 			    {"ar_model", sys::make_param(_armodel)},
@@ -477,9 +512,7 @@ namespace arma {
 			    {"model", sys::make_param(_model)},
 			    {"verification", sys::make_param(_vscheme)},
 			    {"partition", sys::make_param(_partition)},
-			    {"velocity_field", sys::make_param(
-					static_cast<Velocity_potential_field<T>*&>(_velocityfield)
-			    )},
+			    {"velocity_field", sys::make_param(vpsolver_wrapper)},
 			});
 			in >> params;
 		}
@@ -620,7 +653,9 @@ namespace arma {
 
 		Simulation_model _model = Simulation_model::Autoregressive;
 		Verification_scheme _vscheme = Verification_scheme::Summary;
-		Shape3D _partition; //< The size of partitions that are computed in parallel.
+
+		/// The size of partitions that are computed in parallel.
+		Shape3D _partition;
 
 		Autoregressive_model<T> _armodel;
 		Moving_average_model<T> _mamodel;
@@ -631,6 +666,9 @@ namespace arma {
 
 		Array3D<T> _zeta;
 		Array4D<T> _vpotentials;
+
+		typedef std::function<Velocity_potential_field<T>*()> vpsolver_ctr;
+		std::unordered_map<std::string, vpsolver_ctr> _vpsolvers;
 	};
 
 }
