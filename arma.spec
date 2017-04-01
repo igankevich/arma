@@ -46,6 +46,8 @@ ninja-build -C build test
 
 %files
 %{_bindir}/arma
+%{_bindir}/arma-dcmt
+%{_bindir}/arma-visual
 
 %files devel
 

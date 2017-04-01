@@ -8,6 +8,8 @@ project(
 
 meson.add_postconf_script('scripts/copy-input-files')
 
+executable_prefix = 'arma'
+
 cpp = meson.get_compiler('cpp')
 libdcmt = cpp.find_library('dcmt')
 libblitz = dependency('blitz')

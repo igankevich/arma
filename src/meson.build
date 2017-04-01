@@ -1,5 +1,5 @@
 executable(
-	'arma',
+	executable_prefix,
 	sources: 'arma.cc',
 	include_directories: incdirs,
 	dependencies: [
@@ -13,25 +13,21 @@ executable(
 )
 
 executable(
-	'dcmt',
+	executable_prefix + '-dcmt',
 	sources: 'dcmt.cc',
-	dependencies: [libdcmt]
+	dependencies: [libdcmt],
+	install: true
 )
 
 executable(
-	'visual',
+	executable_prefix + '-visual',
 	sources: 'visual.cc',
 	dependencies: [
 		libblitz,
 		libglut,
 		libGL
-	]
-)
-
-executable(
-	'slice',
-	sources: 'slice.cc',
-	dependencies: [libblitz]
+	],
+	install: true
 )
 
 test(
