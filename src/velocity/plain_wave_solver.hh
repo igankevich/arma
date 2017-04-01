@@ -2,7 +2,7 @@
 #define VELOCITY_PLAIN_WAVE_VELOCITY_FIELD_HH
 
 #include "basic_solver.hh"
-#include "models/plain_wave.hh"
+#include "generator/plain_wave.hh"
 #include "validators.hh"
 #include "physical_constants.hh"
 #include "blitz.hh"

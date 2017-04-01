@@ -16,7 +16,7 @@
 #include "types.hh"  // for Shape3D, Array3D, Array2D, Array1D, Array3D
 #include "voodoo.hh" // for AC_matrix_generator, AC_matrix_gener...
 #include "arma.hh"
-#include "models/model.hh"
+#include "generator/model.hh"
 #include "params.hh"
 #include "acf.hh"
 
