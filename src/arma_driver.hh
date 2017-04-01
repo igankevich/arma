@@ -547,7 +547,12 @@ namespace arma {
 					break;
 			}
 			if (_vpsolver) {
-				write_key_value(std::clog, "Velocity potential field", *_vpsolver);
+				write_key_value(
+					std::clog,
+					"Velocity potential solver name",
+					typeid(*_vpsolver).name()
+				);
+				write_key_value(std::clog, "Velocity potential solver", *_vpsolver);
 			}
 		}
 

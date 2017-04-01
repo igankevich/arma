@@ -5,8 +5,9 @@
 #include <unistd.h>
 
 #include "arma_driver.hh"
-#include "velocity/linear_solver.hh"
+#include "velocity/high_amplitude_realtime_solver.hh"
 #include "velocity/high_amplitude_solver.hh"
+#include "velocity/linear_solver.hh"
 #include "velocity/plain_wave_solver.hh"
 
 void
@@ -82,6 +83,10 @@ main(int argc, char* argv[]) {
 		register_vpsolver<Linear_solver<Real>>(driver, "linear");
 		register_vpsolver<Plain_wave_solver<Real>>(driver, "plain");
 		register_vpsolver<High_amplitude_solver<Real>>(driver, "high_amplitude");
+		register_vpsolver<High_amplitude_realtime_solver<Real>>(
+			driver,
+			"high_amplitude_realtime"
+		);
 		std::ifstream cfg(input_filename);
 		if (!cfg.is_open()) {
 			std::clog << "Cannot open input file "
