@@ -62,17 +62,26 @@ main(int argc, char* argv[]) {
 	if (help_requested || input_filename.empty()) {
 		usage(argv[0]);
 	} else {
-		/// input file with various model parameters
-		ARMA_driver<Real> model;
+		/// input file with various driver parameters
+		ARMA_driver<Real> driver;
 		std::ifstream cfg(input_filename);
 		if (!cfg.is_open()) {
-			std::clog << "Cannot open input file \"" << input_filename << "\"." << std::endl;
+			std::clog << "Cannot open input file "
+				"\"" << input_filename << "\"."
+				<< std::endl;
 			throw std::runtime_error("bad input file");
 		}
 		write_key_value(std::clog, "Input file", input_filename);
-		cfg >> model;
+		cfg >> driver;
 		try {
-			model.act();
+			driver.generate_wavy_surface();
+			driver.compute_velocity_potentials();
+			driver.write_wavy_surface("zeta", Output_format::Blitz);
+			driver.write_velocity_potentials("phi", Output_format::Blitz);
+			if (driver.vscheme() == Verification_scheme::Manual) {
+				driver.write_wavy_surface("zeta.csv", Output_format::CSV);
+				driver.write_velocity_potentials("phi.csv", Output_format::CSV);
+			}
 		} catch (const prng_error& err) {
 			if (err.ngenerators() == 0) {
 				std::cerr << "No parallel Mersenne Twisters configuration is found. "

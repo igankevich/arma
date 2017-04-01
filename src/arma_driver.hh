@@ -110,8 +110,13 @@ namespace arma {
 			return _vpotentials;
 		}
 
+		Verification_scheme
+		vscheme() const noexcept {
+			return _vscheme;
+		}
+
 		void
-		write_zeta(std::string filename, Output_format fmt) {
+		write_wavy_surface(std::string filename, Output_format fmt) {
 			switch (fmt) {
 				case Output_format::Blitz:
 					std::ofstream(filename) << _zeta;
@@ -143,7 +148,7 @@ namespace arma {
 		}
 
 		void
-		act() {
+		generate_wavy_surface() {
 			echo_parameters();
 			if (_model == Simulation_model::Autoregressive) {
 				generate_wavy_surface(_armodel);
@@ -152,12 +157,14 @@ namespace arma {
 			} else if (_model == Simulation_model::ARMA) {
 				generate_wavy_surface(_armamodel);
 			} else if (_model == Simulation_model::Plain_wave) {
-				Array3D<T> zeta(_outgrid.size());
-			   	_plainwavemodel(zeta);
-				write_zeta(zeta);
-				Array4D<T> vpotentials = _velocityfield->operator()(zeta);
-				write_4d_csv("phi.csv", vpotentials, _velocityfield->domain());
+				_zeta.resize(_outgrid.size());
+			   	_plainwavemodel(_zeta);
 			}
+		}
+
+		void
+		compute_velocity_potentials() {
+			this->_vpotentials.reference(_velocityfield->operator()(_zeta));
 		}
 
 		/**
@@ -190,7 +197,6 @@ namespace arma {
 			std::clog << "WN variance = " << var_wn << std::endl;
 			Array3D<T> zeta = do_generate_wavy_surface(model, var_wn);
 			this->_zeta.reference(zeta);
-			write_zeta(zeta);
 			if (std::is_same<Model,Autoregressive_model<T>>::value) {
 				/// Estimate mean/variance with ramp-up region removed.
 				blitz::RectDomain<3> subdomain(model.order(), zeta.shape() - 1);
@@ -200,9 +206,6 @@ namespace arma {
 			} else {
 				verify(model.acf(), zeta, model);
 			}
-			Array4D<T> vpotentials = _velocityfield->operator()(zeta);
-			write_4d_csv("phi.csv", vpotentials, _velocityfield->domain());
-			this->_vpotentials.reference(vpotentials);
 		}
 
 		#if ARMA_NONE
@@ -514,15 +517,6 @@ namespace arma {
 			}
 		}
 
-		void
-		write_zeta(const Array3D<T>& zeta) {
-			std::ofstream out("zeta");
-			out << zeta;
-			if (_vscheme == Verification_scheme::Manual) {
-				write_csv("zeta.csv", zeta);
-			}
-		}
-
 		template<class X, int N>
 		void
 		write_raw(const char* filename, const blitz::Array<X,N>& x) {
@@ -537,7 +531,7 @@ namespace arma {
 		template<class X>
 		void
 		write_csv(
-			const char* filename,
+			std::string filename,
 			const blitz::Array<X, 3>& data,
 			const char separator=','
 		) {
