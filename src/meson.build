@@ -13,6 +13,23 @@ executable(
 )
 
 executable(
+	executable_prefix + '-realtime',
+	sources: 'arma_realtime.cc',
+	include_directories: incdirs,
+	dependencies: [
+		libblitz,
+		libgsl,
+		libblas,
+		liblapack,
+		libglut,
+		libGL
+	] + parallel_deps,
+	link_args: '-llapacke',
+	install: true
+)
+
+
+executable(
 	executable_prefix + '-dcmt',
 	sources: 'dcmt.cc',
 	dependencies: [libdcmt],
