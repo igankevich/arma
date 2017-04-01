@@ -1,10 +1,10 @@
 #ifndef MA_MODEL_HH
 #define MA_MODEL_HH
 
-#include <cassert>   // for assert
-#include <algorithm> // for copy_n
+#include <cassert>
+#include <algorithm>
 
-#include "types.hh" // for size3, ACF, AR_coefs, Array3D, Array2D
+#include "types.hh"
 #include "linalg.hh"
 #include "ma_algorithm.hh"
 #include "voodoo.hh"
@@ -18,23 +18,23 @@ namespace arma {
 
 		Moving_average_model() = default;
 
-		Moving_average_model(Array3D<T> acf, size3 order)
+		Moving_average_model(Array3D<T> acf, Shape3D order)
 		    : _acf(acf), _theta(order) {}
 
 		void
-		init(Array3D<T> acf, size3 order) {
+		init(Array3D<T> acf, Shape3D order) {
 			_acf.resize(acf.shape());
 			_acf = acf;
 			_theta.resize(order);
 		}
 
-		ACF<T>
+		Array3D<T>
 		acf() const {
 			return _acf;
 		}
 
 		void
-		setacf(ACF<T> acf) {
+		setacf(Array3D<T> acf) {
 			_acf.resize(acf.shape());
 			_acf = acf;
 		}
@@ -49,7 +49,7 @@ namespace arma {
 			return _theta;
 		}
 
-		const size3&
+		const Shape3D&
 		order() const {
 			return _theta.shape();
 		}
@@ -93,9 +93,9 @@ namespace arma {
 			Array3D<T>& eps,
 			const Domain3D& subdomain
 		) {
-			const size3 fsize = _theta.shape();
-			const size3& lbound = subdomain.lbound();
-			const size3& ubound = subdomain.ubound();
+			const Shape3D fsize = _theta.shape();
+			const Shape3D& lbound = subdomain.lbound();
+			const Shape3D& ubound = subdomain.ubound();
 			const int t0 = lbound(0);
 			const int x0 = lbound(1);
 			const int y0 = lbound(2);
@@ -123,7 +123,7 @@ namespace arma {
 		friend std::istream&
 		operator>>(std::istream& in, Moving_average_model& rhs) {
 			ACF_wrapper<T> acf_wrapper(rhs._acf);
-			size3 order(0,0,0);
+			Shape3D order(0,0,0);
 			sys::parameter_map params({
 			    {"order", sys::make_param(order)},
 			    {"acf", sys::make_param(acf_wrapper)},
@@ -180,7 +180,7 @@ namespace arma {
 		void
 		fixed_point_iteration(int max_iterations, T eps, T min_var_wn) {
 			using blitz::RectDomain;
-			const size3 order = this->order();
+			const Shape3D order = this->order();
 			Array3D<T> theta(order);
 			theta = 0;
 			const int order_t = order(0);
@@ -208,9 +208,9 @@ namespace arma {
 				for (int i = order_t - 1; i >= 0; --i) {
 					for (int j = order_x - 1; j >= 0; --j) {
 						for (int k = order_y - 1; k >= 0; --k) {
-							RectDomain<3> sub1(size3(i, j, k), order - 1);
-							RectDomain<3> sub2(size3(0, 0, 0),
-							                   order - size3(i, j, k) - 1);
+							RectDomain<3> sub1(Shape3D(i, j, k), order - 1);
+							RectDomain<3> sub2(Shape3D(0, 0, 0),
+							                   order - Shape3D(i, j, k) - 1);
 							theta(i, j, k) =
 							    -_acf(i, j, k) / var_wn +
 							    blitz::sum(theta(sub1) * theta(sub2));
@@ -255,7 +255,7 @@ namespace arma {
 			using blitz::sum;
 			using blitz::all;
 			using blitz::isfinite;
-			const size3& order = this->order();
+			const Shape3D& order = this->order();
 			const int n = blitz::product(order);
 			Array3D<T> theta(order), tau(order), f(order);
 			Array2D<T> tau_matrix(n, n);
@@ -287,9 +287,9 @@ namespace arma {
 				for (int i = 0; i < order_t; ++i) {
 					for (int j = 0; j < order_x; ++j) {
 						for (int k = 0; k < order_y; ++k) {
-							RectDomain<3> sub1(size3(0, 0, 0),
-							                   order - size3(i, j, k) - 1);
-							RectDomain<3> sub2(size3(i, j, k), order - 1);
+							RectDomain<3> sub1(Shape3D(0, 0, 0),
+							                   order - Shape3D(i, j, k) - 1);
+							RectDomain<3> sub2(Shape3D(i, j, k), order - 1);
 							f(i, j, k) =
 							    sum(tau(sub1) * tau(sub2)) - _acf(i, j, k);
 						}
@@ -355,9 +355,9 @@ namespace arma {
 			using blitz::pow2;
 			using blitz::RectDomain;
 			using blitz::abs;
-			const size3 _0(0, 0, 0);
-			const size3 ar_order = phi.shape();
-			const size3& order = this->order();
+			const Shape3D _0(0, 0, 0);
+			const Shape3D ar_order = phi.shape();
+			const Shape3D& order = this->order();
 			const T sum_phi_1 = sum(pow2(phi));
 			const int ma_order_t = order(0);
 			const int ma_order_x = order(1);
@@ -368,14 +368,14 @@ namespace arma {
 			for (int i = 0; i < ma_order_t; ++i) {
 				for (int j = 0; j < ma_order_x; ++j) {
 					for (int k = 0; k < ma_order_y; ++k) {
-						const size3 ijk(i, j, k);
+						const Shape3D ijk(i, j, k);
 						T sum_phi_2 = 0;
 						for (int l = 0; l < ar_order_t; ++l) {
 							for (int m = 0; m < ar_order_x; ++m) {
 								for (int n = 0; n < ar_order_y; ++n) {
-									const size3 lmn(l, m, n);
-									const size3 ijk_plus_lmn(ijk + lmn);
-									const size3 ijk_minus_lmn(abs(ijk - lmn));
+									const Shape3D lmn(l, m, n);
+									const Shape3D ijk_plus_lmn(ijk + lmn);
+									const Shape3D ijk_minus_lmn(abs(ijk - lmn));
 									RectDomain<3> sub1(_0, ar_order - lmn - 1),
 									    sub2(lmn, ar_order - 1);
 									sum_phi_2 += sum(phi(sub1) * phi(sub2)) *
@@ -393,7 +393,7 @@ namespace arma {
 
 	private:
 		Array3D<T> _acf;
-		AR_coefs<T> _theta;
+		Array3D<T> _theta;
 		MA_algorithm _algo = MA_algorithm::Fixed_point_iteration;
 		int _maxiter = 1000;
 		T _eps = T(1e-5);

@@ -19,7 +19,7 @@
 #endif
 
 #include "config.hh"
-#include "types.hh"   // for size3, Vector, Zeta, ACF, AR_coefs
+#include "types.hh"   // for Shape3D, Vector, Array3D, ACF, AR_coefs
 #include "arma.hh"    // for mean, variance, ACF_variance, approx_acf, comp...
 #include "ar_model.hh"
 #include "ma_model.hh"
@@ -38,6 +38,7 @@
 #include "velocity/linear_velocity_potential_field.hh"
 #include "velocity/plain_wave_velocity_field.hh"
 #include "velocity/high_amplitude_velocity_potential_field.hh"
+#include "output_format.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -99,6 +100,48 @@ namespace arma {
 			delete _velocityfield;
 		}
 
+		const Array3D<T>&
+		wavy_surface() const noexcept {
+			return _zeta;
+		}
+
+		const Array4D<T>&
+		velocity_potentials() const noexcept {
+			return _vpotentials;
+		}
+
+		void
+		write_zeta(std::string filename, Output_format fmt) {
+			switch (fmt) {
+				case Output_format::Blitz:
+					std::ofstream(filename) << _zeta;
+					break;
+				case Output_format::CSV:
+					write_csv(filename, _zeta);
+					break;
+				default:
+					throw std::runtime_error("bad format");
+			}
+		}
+
+		void
+		write_velocity_potentials(std::string filename, Output_format fmt) {
+			switch (fmt) {
+				case Output_format::Blitz:
+					std::ofstream(filename) << _vpotentials;
+					break;
+				case Output_format::CSV:
+					write_4d_csv(
+						filename,
+						_vpotentials,
+						_velocityfield->domain()
+					);
+					break;
+				default:
+					throw std::runtime_error("bad format");
+			}
+		}
+
 		void
 		act() {
 			echo_parameters();
@@ -109,7 +152,7 @@ namespace arma {
 			} else if (_model == Simulation_model::ARMA) {
 				generate_wavy_surface(_armamodel);
 			} else if (_model == Simulation_model::Plain_wave) {
-				Zeta<T> zeta(_outgrid.size());
+				Array3D<T> zeta(_outgrid.size());
 			   	_plainwavemodel(zeta);
 				write_zeta(zeta);
 				Array4D<T> vpotentials = _velocityfield->operator()(zeta);
@@ -132,7 +175,7 @@ namespace arma {
 		template <class Model>
 		void
 		generate_wavy_surface(Model& model) {
-			ACF<T> acf = model.acf();
+			Array3D<T> acf = model.acf();
 			std::clog << "ACF variance = " << ACF_variance(acf) << std::endl;
 			if (_vscheme == Verification_scheme::Manual) {
 				write_csv("acf.csv", acf);
@@ -145,12 +188,13 @@ namespace arma {
 			model.validate();
 			T var_wn = model.white_noise_variance();
 			std::clog << "WN variance = " << var_wn << std::endl;
-			Zeta<T> zeta = do_generate_wavy_surface(model, var_wn);
+			Array3D<T> zeta = do_generate_wavy_surface(model, var_wn);
+			this->_zeta.reference(zeta);
 			write_zeta(zeta);
 			if (std::is_same<Model,Autoregressive_model<T>>::value) {
 				/// Estimate mean/variance with ramp-up region removed.
 				blitz::RectDomain<3> subdomain(model.order(), zeta.shape() - 1);
-				size3 zeta_size = subdomain.ubound() - subdomain.lbound();
+				Shape3D zeta_size = subdomain.ubound() - subdomain.lbound();
 				std::clog << "Zeta size = " << zeta_size << std::endl;
 				verify(model.acf(), zeta(subdomain), model);
 			} else {
@@ -158,21 +202,22 @@ namespace arma {
 			}
 			Array4D<T> vpotentials = _velocityfield->operator()(zeta);
 			write_4d_csv("phi.csv", vpotentials, _velocityfield->domain());
+			this->_vpotentials.reference(vpotentials);
 		}
 
 		#if ARMA_NONE
 
 		template <class Model>
-		Zeta<T>
+		Array3D<T>
 		do_generate_wavy_surface(Model& model, T var_wn) {
 			std::mt19937 prng;
 			prng.seed(newseed());
-			Zeta<T> eps = generate_white_noise(
+			Array3D<T> eps = generate_white_noise(
 				_outgrid.size(),
 				var_wn,
 				std::ref(prng)
 			);
-			Zeta<T> zeta(eps.shape());
+			Array3D<T> zeta(eps.shape());
 			model(zeta, eps);
 			return zeta;
 		}
@@ -183,7 +228,7 @@ namespace arma {
 
 			Partition() = default;
 
-			Partition(size3 ijk_, const blitz::RectDomain<3>& r, const mt_config& conf):
+			Partition(Shape3D ijk_, const blitz::RectDomain<3>& r, const mt_config& conf):
 			ijk(ijk_), rect(r), prng(conf)
 			{}
 
@@ -192,18 +237,18 @@ namespace arma {
 				return out << rhs.ijk << ": " << rhs.rect;
 			}
 
-			size3
+			Shape3D
 			shape() const {
 				return get_shape(rect);
 			}
 
-			size3 ijk;
+			Shape3D ijk;
 			blitz::RectDomain<3> rect;
 			parallel_mt prng;
 		};
 
 		template <class Model>
-		Zeta<T>
+		Array3D<T>
 		do_generate_wavy_surface(Model& model, T var_wn) {
 			using blitz::RectDomain;
 			/// 1. Read parallel Mersenne Twister states.
@@ -217,9 +262,9 @@ namespace arma {
 				throw prng_error("bad number of MT configs", nprngs, 0);
 			}
 			/// 2. Partition the data.
-			const size3 shape = _outgrid.size();
-			const size3 partshape = get_partition_shape(model.order(), nprngs);
-			const size3 nparts = blitz::div_ceil(shape, partshape);
+			const Shape3D shape = _outgrid.size();
+			const Shape3D partshape = get_partition_shape(model.order(), nprngs);
+			const Shape3D nparts = blitz::div_ceil(shape, partshape);
 			const int ntotal = blitz::product(nparts);
 			if (prng_config.size() < size_t(blitz::product(nparts))) {
 				throw prng_error("bad number of MT configs", nprngs, ntotal);
@@ -232,7 +277,7 @@ namespace arma {
 				prng_config
 			);
 			Array3D<bool> completed(nparts);
-			Zeta<T> zeta(shape), eps(shape);
+			Array3D<T> zeta(shape), eps(shape);
 			std::condition_variable cv;
 			std::mutex mtx;
 			std::atomic<int> nfinished(0);
@@ -252,7 +297,7 @@ namespace arma {
 							parts.end(),
 							[&completed] (const Partition& part) {
 								completed(part.ijk) = true;
-								size3 ijk0 = blitz::max(0, part.ijk - 1);
+								Shape3D ijk0 = blitz::max(0, part.ijk - 1);
 								bool all_completed = blitz::all(
 									completed(blitz::RectDomain<3>(ijk0, part.ijk))
 								);
@@ -288,9 +333,9 @@ namespace arma {
 
 		std::vector<Partition>
 		partition(
-			size3 nparts,
-			size3 partshape,
-			size3 shape,
+			Shape3D nparts,
+			Shape3D partshape,
+			Shape3D shape,
 			const std::vector<mt_config>& prng_config
 		) {
 			std::vector<Partition> parts;
@@ -300,9 +345,9 @@ namespace arma {
 			for (int i=0; i<nt; ++i) {
 				for (int j=0; j<nx; ++j) {
 					for (int k=0; k<ny; ++k) {
-						const size3 ijk(i, j, k);
-						const size3 lower = blitz::min(ijk * partshape, shape);
-						const size3 upper = blitz::min((ijk+1) * partshape, shape) - 1;
+						const Shape3D ijk(i, j, k);
+						const Shape3D lower = blitz::min(ijk * partshape, shape);
+						const Shape3D upper = blitz::min((ijk+1) * partshape, shape) - 1;
 						parts.emplace_back(
 							ijk,
 							blitz::RectDomain<3>(lower, upper),
@@ -316,16 +361,16 @@ namespace arma {
 
 		#endif
 
-		size3
-		get_partition_shape(size3 order, int nprngs) {
-			size3 ret;
+		Shape3D
+		get_partition_shape(Shape3D order, int nprngs) {
+			Shape3D ret;
 			if (blitz::product(_partition) > 0) {
 				ret = _partition;
 			} else {
-				const size3 shape = _outgrid.size();
-				const size3 guess1 = blitz::max(
+				const Shape3D shape = _outgrid.size();
+				const Shape3D guess1 = blitz::max(
 					order * 2,
-					size3(10, 10, 10)
+					Shape3D(10, 10, 10)
 				);
 				#if ARMA_OPENMP
 				const int parallelism = std::min(omp_get_max_threads(), nprngs);
@@ -333,9 +378,9 @@ namespace arma {
 				const int parallelism = nprngs;
 				#endif
 				const int npar = std::max(1, 7*int(std::cbrt(parallelism)));
-				const size3 guess2 = blitz::div_ceil(
+				const Shape3D guess2 = blitz::div_ceil(
 					shape,
-					size3(npar, npar, npar)
+					Shape3D(npar, npar, npar)
 				);
 				ret = blitz::min(guess1, guess2) + blitz::abs(guess1 - guess2) / 2;
 			}
@@ -344,7 +389,7 @@ namespace arma {
 
 		template <class Model>
 		void
-		verify(ACF<T> acf, Zeta<T> zeta, Model model) {
+		verify(Array3D<T> acf, Array3D<T> zeta, Model model) {
 			switch (_vscheme) {
 				case Verification_scheme::None:
 					break;
@@ -360,7 +405,7 @@ namespace arma {
 
 		template<class Model>
 		void
-		show_statistics(ACF<T> acf, Zeta<T> zeta, Model model) {
+		show_statistics(Array3D<T> acf, Array3D<T> zeta, Model model) {
 			const T var_wn = model.white_noise_variance();
 			Stats<T>::print_header(std::clog);
 			std::clog << std::endl;
@@ -407,7 +452,7 @@ namespace arma {
 		}
 
 		void
-		write_everything_to_files(ACF<T> acf, Zeta<T> zeta) {
+		write_everything_to_files(Array3D<T> acf, Array3D<T> zeta) {
 			Wave_field<T> wave_field(zeta);
 			write_raw("heights_x", wave_field.heights_x());
 			write_raw("heights_y", wave_field.heights_y());
@@ -470,7 +515,7 @@ namespace arma {
 		}
 
 		void
-		write_zeta(const Zeta<T>& zeta) {
+		write_zeta(const Array3D<T>& zeta) {
 			std::ofstream out("zeta");
 			out << zeta;
 			if (_vscheme == Verification_scheme::Manual) {
@@ -520,7 +565,7 @@ namespace arma {
 		template<class X>
 		void
 		write_4d_csv(
-			const char* filename,
+			const std::string& filename,
 			const blitz::Array<X, 4>& data,
 			const Domain2<T>& domain,
 			const char separator=','
@@ -537,7 +582,7 @@ namespace arma {
 			const int ny = data.extent(3);
 			for (int i=0; i<nt; ++i) {
 				for (int j=0; j<nz; ++j) {
-					const Vec2<T> p = domain({i,j});
+					const Vec2D<T> p = domain({i,j});
 					for (int k=0; k<nx; ++k) {
 						for (int l=0; l<ny; ++l) {
 							out << p(0) << separator
@@ -581,7 +626,7 @@ namespace arma {
 
 		Simulation_model _model = Simulation_model::Autoregressive;
 		Verification_scheme _vscheme = Verification_scheme::Summary;
-		size3 _partition; //< The size of partitions that are computed in parallel.
+		Shape3D _partition; //< The size of partitions that are computed in parallel.
 
 		Autoregressive_model<T> _armodel;
 		Moving_average_model<T> _mamodel;
@@ -589,6 +634,9 @@ namespace arma {
 		Plain_wave<T> _plainwavemodel;
 
 		Velocity_potential_field<T>* _velocityfield = nullptr;
+
+		Array3D<T> _zeta;
+		Array4D<T> _vpotentials;
 	};
 
 }

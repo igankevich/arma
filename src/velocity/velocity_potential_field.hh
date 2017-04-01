@@ -13,7 +13,7 @@ namespace arma {
 	class Velocity_potential_field {
 
 	protected:
-		Vec2<T> _wnmax;
+		Vec2D<T> _wnmax;
 		T _depth;
 		Domain2<T> _domain;
 
@@ -26,7 +26,7 @@ namespace arma {
 		virtual Array2D<T>
 		compute_velocity_field_2d(
 			const Array3D<T>& zeta,
-			const size2 arr_size,
+			const Shape2D arr_size,
 			const T z,
 			const int idx_t
 		) = 0;
@@ -65,8 +65,8 @@ namespace arma {
 		Array4D<T>
 		operator()(const Array3D<T>& zeta) {
 			using blitz::Range;
-			const size3& zeta_size = zeta.shape();
-			const size2 arr_size(zeta_size(1), zeta_size(2));
+			const Shape3D& zeta_size = zeta.shape();
+			const Shape2D arr_size(zeta_size(1), zeta_size(2));
 			const int nt = _domain.num_points(0);
 			const int nz = _domain.num_points(1);
 			Array4D<T> result(blitz::shape(

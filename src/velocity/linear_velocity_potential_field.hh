@@ -38,7 +38,7 @@ namespace arma {
 	protected:
 		void
 		precompute(const Array3D<T>& zeta) override {
-			_fft.init(size2(zeta.extent(1), zeta.extent(2)));
+			_fft.init(Shape2D(zeta.extent(1), zeta.extent(2)));
 			_zeta_t.resize(zeta.shape());
 		}
 
@@ -51,7 +51,7 @@ namespace arma {
 		Array2D<T>
 		compute_velocity_field_2d(
 			const Array3D<T>& zeta,
-			const size2 arr_size,
+			const Shape2D arr_size,
 			const T z,
 			const int idx_t
 		) override {

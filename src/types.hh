@@ -12,27 +12,21 @@ namespace arma {
 	template <class T, size_t N>
 	using Vector = blitz::TinyVector<T, N>;
 
-	typedef Vector<int, 3> size3;
-	typedef Vector<int, 2> size2;
-	typedef Vector<int, 1> size1;
+	typedef Vector<int, 3> Shape3D;
+	typedef Vector<int, 2> Shape2D;
+	typedef Vector<int, 1> Shape1D;
 
 	template <class T>
-	using Vec3 = Vector<T, 3>;
+	using Vec3D = Vector<T, 3>;
 	template <class T>
-	using Vec2 = Vector<T, 2>;
+	using Vec2D = Vector<T, 2>;
 	template <class T>
-	using Vec1 = Vector<T, 1>;
+	using Vec1D = Vector<T, 1>;
 
-	template <class T>
-	using ACF = blitz::Array<T, 3>;
-	template <class T>
-	using AR_coefs = blitz::Array<T, 3>;
-	template <class T>
-	using Zeta = blitz::Array<T, 3>;
-	template <class T>
-	using Array3D = blitz::Array<T, 3>;
 	template <class T>
 	using Array4D = blitz::Array<T, 4>;
+	template <class T>
+	using Array3D = blitz::Array<T, 3>;
 	template <class T>
 	using Array2D = blitz::Array<T, 2>;
 	template <class T>

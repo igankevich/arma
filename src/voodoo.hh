@@ -4,7 +4,7 @@
 #include <assert.h>      // for assert
 #include <blitz/array.h> // for Range, toEnd, shape
 #include <cstdlib>       // for abs
-#include "types.hh"      // for Array2D, ACF, size3
+#include "types.hh"      // for Array2D, Shape3D
 
 /**
 \file
@@ -62,7 +62,7 @@ namespace arma {
 	template <class T>
 	struct AC_matrix_generator_LS {
 
-		AC_matrix_generator_LS(const ACF<T>& acf, const size3& ar_order)
+		AC_matrix_generator_LS(const Array3D<T>& acf, const Shape3D& ar_order)
 		    : _acf(acf), _arorder(ar_order) {}
 
 		Array2D<T>
@@ -177,8 +177,8 @@ namespace arma {
 			return result;
 		}
 
-		const ACF<T>& _acf;
-		const size3& _arorder;
+		const Array3D<T>& _acf;
+		const Shape3D& _arorder;
 	};
 
 	/**
@@ -188,7 +188,7 @@ namespace arma {
 	template <class T>
 	struct AC_matrix_generator {
 
-		AC_matrix_generator(const ACF<T>& acf, const size3& ar_order)
+		AC_matrix_generator(const Array3D<T>& acf, const Shape3D& ar_order)
 		    : _acf(acf), _arorder(ar_order) {}
 
 		Array2D<T>
@@ -233,8 +233,8 @@ namespace arma {
 		}
 
 	private:
-		const ACF<T>& _acf;
-		const size3& _arorder;
+		const Array3D<T>& _acf;
+		const Shape3D& _arorder;
 	};
 
 	template <class T>

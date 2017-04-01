@@ -4,7 +4,7 @@
 #include <functional>
 #include <unordered_map>
 #include <string>
-#include "types.hh" // for ACF, Vec3, size3
+#include "types.hh"
 #include "params.hh"
 #include "grid.hh"
 #include "validators.hh"
@@ -15,8 +15,8 @@
 namespace arma {
 
 	template <class T>
-	ACF<T>
-	standing_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
+	Array3D<T>
+	standing_wave_ACF(const Vec3D<T>& delta, const Shape3D& acf_size) {
 
 		// guessed
 		T alpha = 0.06;
@@ -26,7 +26,7 @@ namespace arma {
 		// from mathematica
 //		T alpha = 2.31906, beta = -5.49873, gamm = 0.0680413;
 
-		ACF<T> acf(acf_size);
+		Array3D<T> acf(acf_size);
 		blitz::firstIndex t;
 		blitz::secondIndex x;
 		blitz::thirdIndex y;
@@ -39,8 +39,8 @@ namespace arma {
 	}
 
 	template <class T>
-	ACF<T>
-	propagating_wave_ACF(const Vec3<T>& delta, const size3& acf_size) {
+	Array3D<T>
+	propagating_wave_ACF(const Vec3D<T>& delta, const Shape3D& acf_size) {
 
 		// guessed
 //		T alpha = 1.5;
@@ -49,7 +49,7 @@ namespace arma {
 		// from mathematica
 		T alpha = 0.42, beta = -1.8, gamm = 5.0;
 
-		ACF<T> acf(acf_size);
+		Array3D<T> acf(acf_size);
 		blitz::firstIndex i;
 		blitz::secondIndex j;
 		blitz::thirdIndex k;
@@ -65,10 +65,10 @@ namespace arma {
 	template<class T>
 	class ACF_wrapper {
 
-		typedef std::function<ACF<T>(const Vec3<T>&, const size3&)>
+		typedef std::function<Array3D<T>(const Vec3D<T>&, const Shape3D&)>
 		    ACF_function;
 
-		ACF<T>& _acf;
+		Array3D<T>& _acf;
 
 		static ACF_function
 		get_acf_function(std::string func) {
@@ -87,7 +87,7 @@ namespace arma {
 	public:
 
 		explicit
-		ACF_wrapper(ACF<T>& acf):
+		ACF_wrapper(Array3D<T>& acf):
 		_acf(acf)
 		{}
 
@@ -110,7 +110,7 @@ namespace arma {
 
 	template <class T>
 	const std::unordered_map<
-	    std::string, std::function<ACF<T>(const Vec3<T>&, const size3&)>>
+	    std::string, std::function<Array3D<T>(const Vec3D<T>&, const Shape3D&)>>
 	    ACF_wrapper<T>::acf_functions = {
 	        {"standing_wave", standing_wave_ACF<T>},
 	        {"propagating_wave", propagating_wave_ACF<T>}};

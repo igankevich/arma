@@ -211,8 +211,8 @@ namespace arma {
 		generate(Array3D<T>& zeta, const Domain3D& subdomain) {
 			using constants::_2pi;
 			const T shift = get_shift();
-			const size3& lbound = subdomain.lbound();
-			const size3& ubound = subdomain.ubound();
+			const Shape3D& lbound = subdomain.lbound();
+			const Shape3D& ubound = subdomain.ubound();
 			const int t0 = lbound(0);
 			const int x0 = lbound(1);
 			const int y0 = lbound(2);

@@ -13,7 +13,7 @@
 #include <blitz/array.h> // for Range, toEnd, RectDomain, Array
 
 #include "linalg.hh" // for cholesky, is_positive_definite, is_s...
-#include "types.hh"  // for size3, Array3D, Array2D, Array1D, Array3D
+#include "types.hh"  // for Shape3D, Array3D, Array2D, Array1D, Array3D
 #include "voodoo.hh" // for AC_matrix_generator, AC_matrix_gener...
 #include "arma.hh"
 #include "models/model.hh"
@@ -31,17 +31,17 @@ namespace arma {
 
 		Autoregressive_model() = default;
 
-		Autoregressive_model(Array3D<T> acf, size3 order):
+		Autoregressive_model(Array3D<T> acf, Shape3D order):
 		_acf(acf), _phi(order)
 		{}
 
-		ACF<T>
+		Array3D<T>
 		acf() const {
 			return _acf;
 		}
 
 		void
-		setacf(ACF<T> acf) {
+		setacf(Array3D<T> acf) {
 			_acf.resize(acf.shape());
 			_acf = acf;
 		}
@@ -56,7 +56,7 @@ namespace arma {
 			return _phi;
 		}
 
-		const size3&
+		const Shape3D&
 		order() const {
 			return _phi.shape();
 		}
@@ -68,7 +68,7 @@ namespace arma {
 
 		T
 		white_noise_variance(Array3D<T> phi) const {
-			blitz::RectDomain<3> subdomain(size3(0, 0, 0), phi.shape() - 1);
+			blitz::RectDomain<3> subdomain(Shape3D(0, 0, 0), phi.shape() - 1);
 			return _acf(0, 0, 0) - blitz::sum(phi * _acf(subdomain));
 		}
 
@@ -89,9 +89,9 @@ namespace arma {
 			if (std::addressof(zeta) != std::addressof(eps)) {
 				zeta(subdomain) = eps(subdomain);
 			}
-			const size3 fsize = _phi.shape();
-			const size3& lbound = subdomain.lbound();
-			const size3& ubound = subdomain.ubound();
+			const Shape3D fsize = _phi.shape();
+			const Shape3D& lbound = subdomain.lbound();
+			const Shape3D& ubound = subdomain.ubound();
 			const int t0 = lbound(0);
 			const int x0 = lbound(1);
 			const int y0 = lbound(2);
@@ -190,7 +190,7 @@ namespace arma {
 		friend std::istream&
 		operator>>(std::istream& in, Autoregressive_model& rhs) {
 			ACF_wrapper<T> acf_wrapper(rhs._acf);
-			size3 order(0,0,0);
+			Shape3D order(0,0,0);
 			sys::parameter_map params({
 			    {"order", sys::make_param(order)},
 			    {"least_squares", sys::make_param(rhs._doleastsquares)},
@@ -220,26 +220,26 @@ namespace arma {
 			using blitz::isfinite;
 			using blitz::sum;
 			using blitz::RectDomain;
-			const size3 _0(0, 0, 0);
+			const Shape3D _0(0, 0, 0);
 			Array3D<T> r(_acf / _acf(0, 0, 0));
-			const size3 order = this->order();
+			const Shape3D order = this->order();
 			Array3D<T> phi0(order), phi1(order);
 			phi0 = 0;
 			phi1 = 0;
 			const int max_order = order(0);
 			//			phi0(0, 0, 0) = r(0, 0, 0);
 			for (int p = 1; p < max_order; ++p) {
-				const size3 order(p + 1, p + 1, p + 1);
+				const Shape3D order(p + 1, p + 1, p + 1);
 				/// In three dimensions there are many "last" coefficients. We
 				/// collect all their indices into a container to iterate over
 				/// them.
-				std::vector<size3> indices;
+				std::vector<Shape3D> indices;
 				// for (int i = 0; i < p; ++i) indices.emplace_back(i, p, p);
 				// for (int i = 0; i < p; ++i) indices.emplace_back(p, i, p);
 				// for (int i = 0; i < p; ++i) indices.emplace_back(p, p, i);
 				indices.emplace_back(p, p, p);
 				/// Compute coefficients on all three borders.
-				for (const size3& idx : indices) {
+				for (const Shape3D& idx : indices) {
 					const RectDomain<3> sub1(_0, idx), rsub1(idx, _0);
 					const T sum1 = sum(phi0(sub1) * r(rsub1));
 					const T sum2 = sum(phi0(sub1) * r(sub1));
@@ -249,7 +249,7 @@ namespace arma {
 				/// Compute all other coefficients.
 				{
 					using namespace blitz::tensor;
-					const size3 idx(p, p, p);
+					const Shape3D idx(p, p, p);
 					const RectDomain<3> sub(_0, idx), rsub(idx, _0);
 					phi1(sub) = phi0(sub) - phi1(p, p, p) * phi0(rsub);
 				}
@@ -263,7 +263,7 @@ namespace arma {
 					          << std::endl;
 					std::clog << "Indices: \n";
 					std::copy(indices.begin(), indices.end(),
-					          std::ostream_iterator<size3>(std::clog, "\n"));
+					          std::ostream_iterator<Shape3D>(std::clog, "\n"));
 					std::clog << std::endl;
 					RectDomain<3> subdomain(_0, order - 1);
 					std::clog << "phi1 = \n" << phi1(subdomain) << std::endl;

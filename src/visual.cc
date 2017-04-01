@@ -21,7 +21,7 @@ enum Projection {
 	PROJECTION_NONE = -1
 };
 
-Zeta<Real> func;
+Array3D<Real> func;
 Vector<Real, 3> delta(0.1, 1.0, 1.0);
 Vector<int, 3> dimensions(blitz::firstDim, blitz::secondDim, blitz::thirdDim);
 Vector<char, 3> dimension_names('t', 'x', 'y');
@@ -39,28 +39,28 @@ Real interval_factor = 0;
 int tail = 0;
 
 void
-draw_vertex(const size3& c, const size3& offset, float alpha) {
+draw_vertex(const Shape3D& c, const Shape3D& offset, float alpha) {
 	glColor4f(0.85, 0.85, 0.85, alpha);
 	glVertex3f(c[1] + offset[1], c[2] + offset[2], func(c));
 }
 
 void
 drawSeries(size_t t, float alpha) {
-	const size3& size = func.shape();
-	const size3 offset = -size / 2;
+	const Shape3D& size = func.shape();
+	const Shape3D offset = -size / 2;
 	int x1 = size[1];
 	int y1 = size[2];
 	for (int i = 0; i < x1; i++) {
 		glBegin(GL_LINE_STRIP);
 		for (int j = 0; j < y1; j++) {
-			draw_vertex(size3(t, i, j), offset, alpha);
+			draw_vertex(Shape3D(t, i, j), offset, alpha);
 		}
 		glEnd();
 	}
 	for (int j = 0; j < y1; j++) {
 		glBegin(GL_LINE_STRIP);
 		for (int i = 0; i < x1; i++) {
-			draw_vertex(size3(t, i, j), offset, alpha);
+			draw_vertex(Shape3D(t, i, j), offset, alpha);
 		}
 		glEnd();
 	}

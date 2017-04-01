@@ -1,7 +1,7 @@
 #ifndef ARMA_MODEL_HH
 #define ARMA_MODEL_HH
 
-#include "types.hh" // for size3, Array3D, Array2D, Array1D, Zeta
+#include "types.hh" // for Shape3D, Array3D, Array2D, Array1D, Array3D
 
 namespace arma {
 
@@ -14,17 +14,17 @@ namespace arma {
 
 		ARMA_model() = default;
 
-		ARMA_model(Array3D<T> acf, size3 ar_order, size3 ma_order)
+		ARMA_model(Array3D<T> acf, Shape3D ar_order, Shape3D ma_order)
 		    : Autoregressive_model<T>(slice_front(acf, ar_order).copy(), ar_order),
 		      Moving_average_model<T>(slice_back(acf, ma_order).copy(), ma_order),
 		      _acf_orig(acf) {}
 
-		ACF<T>
+		Array3D<T>
 		acf() const {
 			return _acf_orig;
 		}
 
-		size3
+		Shape3D
 		order() const {
 			return ar_model::order() + ma_model::order();
 		}
@@ -91,14 +91,14 @@ namespace arma {
 
 	private:
 		static Array3D<T>
-		slice_back(Array3D<T> arr, size3 amount) {
-			const size3 last = arr.shape() - 1;
+		slice_back(Array3D<T> arr, Shape3D amount) {
+			const Shape3D last = arr.shape() - 1;
 			return arr(blitz::RectDomain<3>(arr.shape() - amount, last));
 		}
 
 		static Array3D<T>
-		slice_front(Array3D<T> arr, size3 amount) {
-			return arr(blitz::RectDomain<3>(size3(0, 0, 0), amount - 1));
+		slice_front(Array3D<T> arr, Shape3D amount) {
+			return arr(blitz::RectDomain<3>(Shape3D(0, 0, 0), amount - 1));
 		}
 
 		Array3D<T> _acf_orig;

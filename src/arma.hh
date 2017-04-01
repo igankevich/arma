@@ -16,7 +16,7 @@
 #include <gsl/gsl_errno.h>   // for gsl_strerror, ::GSL_SUCCESS
 #include <gsl/gsl_poly.h>    // for gsl_poly_complex_solve, gsl_poly_com...
 
-#include "types.hh" // for Zeta, ACF, size3
+#include "types.hh" // for Array3D, ACF, Shape3D
 #include "statistics.hh"
 #include "distribution.hh"
 #include "fourier.hh"
@@ -78,7 +78,7 @@ namespace arma {
 
 	template <class T>
 	T
-	ACF_variance(const ACF<T>& acf) {
+	ACF_variance(const Array3D<T>& acf) {
 		return acf(0, 0, 0);
 	}
 
@@ -87,8 +87,8 @@ namespace arma {
 	distribution via Box---Muller transform.
 	*/
 	template <class T, class Generator>
-	Zeta<T>
-	generate_white_noise(const size3& size, T variance, Generator generator) {
+	Array3D<T>
+	generate_white_noise(const Shape3D& size, T variance, Generator generator) {
 		if (variance < T(0)) {
 			throw std::runtime_error("variance is less than zero");
 		}
@@ -96,7 +96,7 @@ namespace arma {
 		std::normal_distribution<T> normal(T(0), std::sqrt(variance));
 
 		// generate and check
-		Zeta<T> eps(size);
+		Array3D<T> eps(size);
 		std::generate(
 			std::begin(eps),
 			std::end(eps),
