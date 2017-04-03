@@ -7,19 +7,19 @@
 
 namespace blitz {
 
-	bool
+	inline bool
 	isfinite(float rhs) noexcept {
 		return std::isfinite(rhs);
 	}
 
-	bool
+	inline bool
 	isfinite(double rhs) noexcept {
 		return std::isfinite(rhs);
 	}
 
 	BZ_DECLARE_FUNCTION(isfinite);
 
-	int
+	inline int
 	div_ceil(int lhs, int rhs) noexcept {
 		return lhs/rhs + (lhs%rhs == 0 ? 0 : 1);
 	}

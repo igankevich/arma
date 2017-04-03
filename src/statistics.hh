@@ -9,12 +9,12 @@
 /// Convenience mappings of C++ templates to GSL functions.
 namespace stats {
 
-	float
+	inline float
 	mean(const float* data, const size_t n) {
 		return gsl_stats_float_mean(data, 1, n);
 	}
 
-	double
+	inline double
 	mean(const double* data, const size_t n) {
 		return gsl_stats_mean(data, 1, n);
 	}
@@ -25,12 +25,12 @@ namespace stats {
 		return mean(rhs.data(), rhs.numElements());
 	}
 
-	float
+	inline float
 	variance(const float* data, const size_t n) {
 		return gsl_stats_float_variance(data, 1, n);
 	}
 
-	double
+	inline double
 	variance(const double* data, const size_t n) {
 		return gsl_stats_variance(data, 1, n);
 	}
@@ -41,12 +41,12 @@ namespace stats {
 		return variance(rhs.data(), rhs.numElements());
 	}
 
-	float
+	inline float
 	skew(const float* data, const size_t n) {
 		return gsl_stats_float_skew(data, 1, n);
 	}
 
-	double
+	inline double
 	skew(const double* data, const size_t n) {
 		return gsl_stats_skew(data, 1, n);
 	}
@@ -57,12 +57,12 @@ namespace stats {
 		return skew(rhs.data(), rhs.numElements());
 	}
 
-	float
+	inline float
 	kurtosis(const float* data, const size_t n) {
 		return gsl_stats_float_kurtosis(data, 1, n);
 	}
 
-	double
+	inline double
 	kurtosis(const double* data, const size_t n) {
 		return gsl_stats_kurtosis(data, 1, n);
 	}
@@ -73,12 +73,12 @@ namespace stats {
 		return kurtosis(rhs.data(), rhs.numElements());
 	}
 
-	float
+	inline float
 	quantile(const float* data, const size_t n, const float f) {
 		return gsl_stats_float_quantile_from_sorted_data(data, 1, n, f);
 	}
 
-	double
+	inline double
 	quantile(const double* data, const size_t n, const double f) {
 		return gsl_stats_quantile_from_sorted_data(data, 1, n, f);
 	}
@@ -89,12 +89,12 @@ namespace stats {
 		return quantile(rhs.data(), rhs.numElements(), f);
 	}
 
-	float
+	inline float
 	stdev(const float* data, const size_t n) {
 		return gsl_stats_float_sd(data, 1, n);
 	}
 
-	double
+	inline double
 	stdev(const double* data, const size_t n) {
 		return gsl_stats_sd(data, 1, n);
 	}

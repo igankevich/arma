@@ -5,6 +5,7 @@
 #include <gsl/gsl_fft_complex_float.h>
 #include <blitz/array.h>
 #include <complex>
+#include <vector>
 #include <type_traits>
 
 namespace arma {

@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <blitz/array.h>
 
+#include "validators.hh"
+
 namespace arma {
 
 	/**

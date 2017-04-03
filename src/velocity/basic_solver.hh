@@ -1,5 +1,5 @@
-#ifndef VELOCITY_POTENTIAL_FIELD_HH
-#define VELOCITY_POTENTIAL_FIELD_HH
+#ifndef VELOCITY_BASIC_SOLVER_HH
+#define VELOCITY_BASIC_SOLVER_HH
 
 #if ARMA_OPENMP
 #include <omp.h>
@@ -31,24 +31,13 @@ namespace arma {
 				const Shape2D arr_size,
 				const T z,
 				const int idx_t
-			) = 0;
+			) { return Array2D<T>(); };
 
 			virtual void
-			write(std::ostream& out) const {
-				out << "wnmax=" << _wnmax << ','
-					<< "depth=" << _depth << ','
-					<< "domain=" << _domain;
-			}
+			write(std::ostream& out) const;
 
 			virtual void
-			read(std::istream& in) {
-				sys::parameter_map params({
-					{"wnmax", sys::make_param(_wnmax, validate_finite<T,2>)},
-					{"depth", sys::make_param(_depth, validate_finite<T>)},
-					{"domain", sys::make_param(_domain, validate_domain<T,2>)},
-				}, true);
-				in >> params;
-			}
+			read(std::istream& in);
 
 		public:
 			Velocity_potential_solver() = default;
@@ -64,48 +53,21 @@ namespace arma {
 			\param[in] idx_t     a time point in which to compute velocity potential,
 								 specified as index of zeta
 			*/
-			Array4D<T>
-			operator()(const Array3D<T>& zeta) {
-				using blitz::Range;
-				const Shape3D& zeta_size = zeta.shape();
-				const Shape2D arr_size(zeta_size(1), zeta_size(2));
-				const int nt = _domain.num_points(0);
-				const int nz = _domain.num_points(1);
-				Array4D<T> result(blitz::shape(
-					nt, nz,
-					zeta_size(1), zeta_size(2)
-				));
-				precompute(zeta);
-				for (int i=0; i<nt; ++i) {
-					const T t = _domain(i, 0);
-					precompute(zeta, t);
-					#if ARMA_OPENMP
-					#pragma omp parallel for
-					#endif
-					for (int j=0; j<nz; ++j) {
-						const T z = _domain(j, 1);
-						result(i, j, Range::all(), Range::all()) =
-						compute_velocity_field_2d(zeta, arr_size, z, t);
-					}
-	//				std::clog << "Finished time slice ["
-	//					<< (i+1) << '/' << nt << ']'
-	//					<< std::endl;
-				}
-				return result;
-			}
+			virtual Array4D<T>
+			operator()(const Array3D<T>& zeta);
 
-			const Domain2<T>
+			inline const Domain2<T>
 			domain() const noexcept {
 				return _domain;
 			}
 
-			friend std::ostream&
+			inline friend std::ostream&
 			operator<<(std::ostream& out, const Velocity_potential_solver& rhs) {
 				rhs.write(out);
 				return out;
 			}
 
-			friend std::istream&
+			inline friend std::istream&
 			operator>>(std::istream& in, Velocity_potential_solver& rhs) {
 				rhs.read(in);
 				return in;
@@ -116,4 +78,4 @@ namespace arma {
 	}
 }
 
-#endif // VELOCITY_POTENTIAL_FIELD_HH
+#endif // VELOCITY_BASIC_SOLVER_HH

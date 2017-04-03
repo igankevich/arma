@@ -1,5 +1,5 @@
-#ifndef MODELS_MODEL_HH
-#define MODELS_MODEL_HH
+#ifndef GENERATOR_MODEL_HH
+#define GENERATOR_MODEL_HH
 
 #include "types.hh"
 
@@ -25,7 +25,7 @@ namespace arma {
 			const Domain3D& subdomain
 		) = 0;
 
-		void
+		inline void
 		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
 			operator()(zeta, eps, zeta.domain());
 		}
@@ -34,4 +34,4 @@ namespace arma {
 
 }
 
-#endif // MODELS_MODEL_HH
+#endif // GENERATOR_MODEL_HH

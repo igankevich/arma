@@ -1,121 +1,51 @@
-#include <gsl/gsl_errno.h>
-#include <cstdlib>
-#include <exception>
-#include <iostream>
-#include <unistd.h>
+#include "arma.hh"
 
-#include "arma_driver.hh"
-#include "velocity/high_amplitude_realtime_solver.hh"
-#include "velocity/high_amplitude_solver.hh"
-#include "velocity/linear_solver.hh"
-#include "velocity/plain_wave_solver.hh"
-
+template <class T, int N>
 void
-print_exception_and_terminate() {
-	if (std::exception_ptr ptr = std::current_exception()) {
-		try {
-			std::rethrow_exception(ptr);
-		} catch (const std::exception& e) {
-			std::cerr << "ERROR: " << e.what() << std::endl;
-		} catch (...) { std::cerr << "UNKNOWN ERROR. Aborting." << std::endl; }
+arma::validate_process(blitz::Array<T, N> _phi) {
+	if (blitz::product(_phi.shape()) <= 1) { return; }
+	/// 1. Find roots of the polynomial
+	/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
+	blitz::Array<double, N> phi(_phi.shape());
+	phi = -_phi;
+	phi(0) = 1;
+	/// 2. Trim leading zero terms.
+	size_t real_size = 0;
+	while (real_size < phi.numElements() && phi.data()[real_size] != 0.0) {
+		++real_size;
 	}
-	std::exit(1);
-}
-
-void
-print_error_and_continue(
-	const char* reason,
-	const char* file,
-	int line,
-	int gsl_errno
-) {
-	std::cerr << "GSL error reason: " << reason << '.' << std::endl;
-}
-
-void
-usage(char* argv0) {
-	std::cout
-		<< "USAGE: "
-		<< (argv0 == nullptr ? "arma" : argv0)
-		<< " -c CONFIGFILE\n";
-}
-
-template<class Solver, class Driver>
-void
-register_vpsolver(Driver& drv, std::string key) {
-	drv.template register_velocity_potential_solver<Solver>(key);
-}
-
-int
-main(int argc, char* argv[]) {
-
-	/// Print GSL errors and proceed execution.
-	/// Throw domain-specific exception later.
-	gsl_set_error_handler(print_error_and_continue);
-	std::set_terminate(print_exception_and_terminate);
-
-	using namespace arma;
-
-	/// floating point type (float, double, long double or multiprecision number
-	/// C++ class)
-	typedef double Real;
-
-	std::string input_filename;
-	bool help_requested = false;
-	int opt = 0;
-	while ((opt = ::getopt(argc, argv, "c:h")) != -1) {
-		switch (opt) {
-			case 'c':
-				input_filename = ::optarg;
-				break;
-			case 'h':
-				help_requested = true;
-				break;
+	blitz::Array<std::complex<double>, 1> result(real_size);
+	gsl_poly_complex_workspace* w =
+		gsl_poly_complex_workspace_alloc(real_size);
+	int ret = gsl_poly_complex_solve(phi.data(), real_size, w,
+									 (gsl_complex_packed_ptr)result.data());
+	gsl_poly_complex_workspace_free(w);
+	if (ret != GSL_SUCCESS) {
+		std::clog << "GSL error: " << gsl_strerror(ret) << '.' << std::endl;
+		throw std::runtime_error(
+			"Can not find roots of the polynomial to "
+			"verify AR/MA model stationarity/invertibility.");
+	}
+	/// 3. Check if some roots do not lie outside unit circle.
+	size_t num_bad_roots = 0;
+	for (size_t i = 0; i < result.size(); ++i) {
+		const double val = std::abs(result(i));
+		/// Some AR coefficients are close to nought and polynomial
+		/// solver can produce noughts due to limited numerical
+		/// precision. So we filter val=0 as well.
+		if (!(val > 1.0 || val == 0.0)) {
+			++num_bad_roots;
+			std::clog << "Root #" << i << '=' << result(i) << std::endl;
 		}
 	}
-
-	if (help_requested || input_filename.empty()) {
-		usage(argv[0]);
-	} else {
-		/// input file with various driver parameters
-		ARMA_driver<Real> driver;
-		using namespace velocity;
-		register_vpsolver<Linear_solver<Real>>(driver, "linear");
-		register_vpsolver<Plain_wave_solver<Real>>(driver, "plain");
-		register_vpsolver<High_amplitude_solver<Real>>(driver, "high_amplitude");
-		register_vpsolver<High_amplitude_realtime_solver<Real>>(
-			driver,
-			"high_amplitude_realtime"
-		);
-		std::ifstream cfg(input_filename);
-		if (!cfg.is_open()) {
-			std::clog << "Cannot open input file "
-				"\"" << input_filename << "\"."
-				<< std::endl;
-			throw std::runtime_error("bad input file");
-		}
-		write_key_value(std::clog, "Input file", input_filename);
-		cfg >> driver;
-		try {
-			driver.generate_wavy_surface();
-			driver.compute_velocity_potentials();
-			driver.write_wavy_surface("zeta", Output_format::Blitz);
-			driver.write_velocity_potentials("phi", Output_format::Blitz);
-			if (driver.vscheme() == Verification_scheme::Manual) {
-				driver.write_wavy_surface("zeta.csv", Output_format::CSV);
-				driver.write_velocity_potentials("phi.csv", Output_format::CSV);
-			}
-		} catch (const prng_error& err) {
-			if (err.ngenerators() == 0) {
-				std::cerr << "No parallel Mersenne Twisters configuration is found. "
-					"Please, generate sufficient number of MTs with dcmt programme."
-					<< std::endl;
-			} else {
-				std::cerr << "Insufficient number of parallel Mersenne Twisters found. "
-					"Please, generate at least " << err.nparts() << " MTs for this run."
-					<< std::endl;
-			}
-		}
+	if (num_bad_roots > 0) {
+		std::clog << "No. of bad roots = " << num_bad_roots << std::endl;
+		throw std::runtime_error(
+			"AR/MA process is not stationary/invertible: some roots lie "
+			"inside unit circle or on its borderline.");
 	}
-	return 0;
 }
+
+template void arma::validate_process<ARMA_REAL_TYPE,3>(
+	blitz::Array<ARMA_REAL_TYPE,3> _phi
+);
