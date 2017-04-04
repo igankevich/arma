@@ -3,7 +3,7 @@
 template <class T>
 arma::Array4D<T>
 arma::velocity::High_amplitude_realtime_solver<T>::operator()(
-	const Array3D<T>& zeta
+	const Discrete_function<T,3>& zeta
 ) {
 	return Array4D<T>();
 }

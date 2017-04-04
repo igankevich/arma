@@ -25,7 +25,7 @@ arma::velocity::Velocity_potential_solver<T>::read(std::istream& in) {
 
 template <class T>
 arma::Array4D<T>
-arma::velocity::Velocity_potential_solver<T>::operator()(const Array3D<T>& zeta) {
+arma::velocity::Velocity_potential_solver<T>::operator()(const Discrete_function<T,3>& zeta) {
 	using blitz::Range;
 	const Shape3D& zeta_size = zeta.shape();
 	const Shape2D arr_size(zeta_size(1), zeta_size(2));

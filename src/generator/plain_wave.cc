@@ -2,6 +2,7 @@
 #include "physical_constants.hh"
 #include "validators.hh"
 #include "params.hh"
+#include "domain.hh"
 
 #include <algorithm>
 #include <stdexcept>
@@ -95,24 +96,33 @@ arma::bits::to_string(Function rhs) {
 
 template <class T>
 void
-arma::Plain_wave<T>::generate(Array3D<T>& zeta, const Domain3D& subdomain) {
+arma::Plain_wave<T>::generate(
+	Discrete_function<T,3>& zeta,
+	const Domain3D& subdomain
+) {
 	using constants::_2pi;
 	const T shift = get_shift();
 	const Shape3D& lbound = subdomain.lbound();
 	const Shape3D& ubound = subdomain.ubound();
 	const int t0 = lbound(0);
-	const int x0 = lbound(1);
-	const int y0 = lbound(2);
+	const int j0 = lbound(1);
+	const int k0 = lbound(2);
 	const int t1 = ubound(0);
-	const int x1 = ubound(1);
-	const int y1 = ubound(2);
+	const int j1 = ubound(1);
+	const int k1 = ubound(2);
+	const Domain<T,3> dom(
+		zeta.grid().length() * (ubound-lbound) / zeta.grid().num_points(),
+		ubound-lbound+1
+	);
 	#if ARMA_OPENMP
 	#pragma omp parallel for collapse(3)
 	#endif
 	for (int t = t0; t <= t1; t++) {
-		for (int x = x0; x <= x1; x++) {
-			for (int y = y0; y <= y1; y++) {
-				zeta(t, x, y) = blitz::sum(
+		for (int j = j0; j <= j1; j++) {
+			for (int k = k0; k <= k1; k++) {
+				const T x = dom(j, 1);
+				const T y = dom(k, 2);
+				zeta(t, j, k) = blitz::sum(
 					_amplitudes *
 					blitz::sin(
 						_2pi<T>*_wavenumbers*x - _velocities*t

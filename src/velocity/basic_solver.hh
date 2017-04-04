@@ -6,6 +6,7 @@
 #endif
 #include "types.hh"
 #include "domain.hh"
+#include "discrete_function.hh"
 
 namespace arma {
 
@@ -20,14 +21,14 @@ namespace arma {
 			Domain2<T> _domain;
 
 			virtual void
-			precompute(const Array3D<T>& zeta) {}
+			precompute(const Discrete_function<T,3>& zeta) {}
 
 			virtual void
-			precompute(const Array3D<T>& zeta, const int idx_t) {}
+			precompute(const Discrete_function<T,3>& zeta, const int idx_t) {}
 
 			virtual Array2D<T>
 			compute_velocity_field_2d(
-				const Array3D<T>& zeta,
+				const Discrete_function<T,3>& zeta,
 				const Shape2D arr_size,
 				const T z,
 				const int idx_t
@@ -54,7 +55,7 @@ namespace arma {
 								 specified as index of zeta
 			*/
 			virtual Array4D<T>
-			operator()(const Array3D<T>& zeta);
+			operator()(const Discrete_function<T,3>& zeta);
 
 			inline const Domain2<T>
 			domain() const noexcept {

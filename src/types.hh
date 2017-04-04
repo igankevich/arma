@@ -35,6 +35,7 @@ namespace arma {
 	typedef blitz::RectDomain<1> Domain1D;
 	typedef blitz::RectDomain<2> Domain2D;
 	typedef blitz::RectDomain<3> Domain3D;
+
 }
 
 #endif // VECTOR_N_HH

@@ -20,14 +20,14 @@ namespace arma {
 
 		protected:
 			void
-			precompute(const Array3D<T>& zeta) override;
+			precompute(const Discrete_function<T,3>& zeta) override;
 
 			void
-			precompute(const Array3D<T>& zeta, const int idx_t) override;
+			precompute(const Discrete_function<T,3>& zeta, const int idx_t) override;
 
 			Array2D<T>
 			compute_velocity_field_2d(
-				const Array3D<T>& zeta,
+				const Discrete_function<T,3>& zeta,
 				const Shape2D arr_size,
 				const T z,
 				const int idx_t

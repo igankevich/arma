@@ -4,6 +4,7 @@
 #include <istream>
 #include <ostream>
 #include "types.hh"
+#include "discrete_function.hh"
 
 namespace arma {
 
@@ -43,12 +44,12 @@ namespace arma {
 
 	public:
 		inline void
-		operator()(Array3D<T>& zeta) {
+		operator()(Discrete_function<T,3>& zeta) {
 			operator()(zeta, zeta.domain());
 		}
 
 		inline void
-		operator()(Array3D<T>& zeta, const Domain3D& subdomain) {
+		operator()(Discrete_function<T,3>& zeta, const Domain3D& subdomain) {
 			generate(zeta, subdomain);
 		}
 
@@ -101,7 +102,7 @@ namespace arma {
 
 	private:
 		void
-		generate(Array3D<T>& zeta, const Domain3D& subdomain);
+		generate(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
 
 	};
 

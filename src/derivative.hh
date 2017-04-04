@@ -7,7 +7,7 @@ namespace arma {
 
 	template <int dimension, class T, class O=T>
 	Array2D<O>
-	derivative(const Array3D<T>& rhs, const int idx_t) {
+	derivative(const Array3D<T>& rhs, const Vec3D<T>& delta, const int idx_t) {
 		assert(dimension >= 0);
 		assert(dimension < 3);
 		const int min_d = 0;
@@ -26,42 +26,54 @@ namespace arma {
 					/**
 					1. Compute forward differences on the left border.
 					\f[
-						f'_i = \frac{-f_{i+2} + 4f_{i+1} - 3f_{i}}{2}
+						f'_i = \frac{-f_{i+2} + 4f_{i+1} - 3f_{i}}{2\Delta f}
 					\f]
 					*/
 					Shape3D idx1(idx);
 					++idx1(dimension);
 					Shape3D idx2(idx1);
 					++idx2(dimension);
-					result(i,j) = T(0.5)*(-rhs(idx2) + T(4)*rhs(idx1) - T(3)*rhs(idx));
+					result(i,j) = T(0.5)
+						* (-rhs(idx2) + T(4)*rhs(idx1) - T(3)*rhs(idx))
+						* delta(dimension);
 				} else if (d == max_d) {
 					/**
 					2. Compute backward differences on the right border.
 					\f[
-						f'_i = \frac{3f_{i} - 4f_{i-1} + f_{i-2}}{2}
+						f'_i = \frac{3f_{i} - 4f_{i-1} + f_{i-2}}{2\Delta f}
 					\f]
 					*/
 					Shape3D idx1(idx);
 					--idx1(dimension);
 					Shape3D idx2(idx1);
 					--idx2(dimension);
-					result(i,j) = T(0.5)*(rhs(idx) - T(4)*rhs(idx1) + rhs(idx2));
+					result(i,j) = T(0.5)
+						* (rhs(idx) - T(4)*rhs(idx1) + rhs(idx2))
+						* delta(dimension);
 				} else {
 					/**
 					3. Compute central differences in all other points.
 					\f[
-						f'_i = \frac{f_{i+1} - f_{i-1}}{2}
+						f'_i = \frac{f_{i+1} - f_{i-1}}{2\Delta f}
 					\f]
 					*/
 					Shape3D idx0(idx);
 					--idx0(dimension);
 					Shape3D idx1(idx);
 					++idx1(dimension);
-					result(i,j) = T(0.5)*(rhs(idx1) - rhs(idx0));
+					result(i,j) = T(0.5)
+						* (rhs(idx1) - rhs(idx0))
+						* delta(dimension);
 				}
 			}
 		}
 		return result;
+	}
+
+	template <int dimension, class T, class O=T>
+	Array2D<O>
+	derivative(const Array3D<T>& rhs, const int idx_t) {
+		return derivative<dimension,T,O>(rhs, Vec3D<T>(1,1,1), idx_t);
 	}
 
 }

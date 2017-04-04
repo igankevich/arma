@@ -103,6 +103,16 @@ namespace arma {
 			return _length;
 		}
 
+		length_type
+		operator()(const size_type& i) const noexcept {
+			return delta() * i;
+		}
+
+		T
+		operator()(const int idx, const int dim) const noexcept {
+			return delta(dim) * idx;
+		}
+
 		friend std::ostream&
 		operator<<(std::ostream& out, const Grid& rhs) {
 			return out << rhs._npoints << ':' << rhs._length;

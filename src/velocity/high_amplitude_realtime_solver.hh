@@ -13,7 +13,7 @@ namespace arma {
 
 		public:
 			Array4D<T>
-			operator()(const Array3D<T>& zeta) override;
+			operator()(const Discrete_function<T,3>& zeta) override;
 		};
 
 	}

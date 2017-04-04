@@ -36,6 +36,7 @@
 #include "errors.hh"
 #include "output_format.hh"
 #include "velocity/basic_solver.hh"
+#include "discrete_function.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -185,12 +186,14 @@ namespace arma {
 				generate_wavy_surface(_armamodel);
 			} else if (_model == Simulation_model::Plain_wave) {
 				_zeta.resize(_outgrid.size());
+				_zeta.setgrid(_outgrid);
 			   	_plainwavemodel(_zeta);
 			}
 		}
 
 		void
 		compute_velocity_potentials() {
+			_zeta.setgrid(_outgrid);
 			this->_vpotentials.reference(_vpsolver->operator()(_zeta));
 		}
 
@@ -585,9 +588,11 @@ namespace arma {
 			for (int i=0; i<nt; ++i) {
 				for (int j=0; j<nx; ++j) {
 					for (int k=0; k<ny; ++k) {
+						const T x = _outgrid(j, 1);
+						const T y = _outgrid(k, 2);
 						out << i << separator
-							<< j << separator
-							<< k << separator
+							<< x << separator
+							<< y << separator
 							<< data(i, j, k)
 							<< '\n';
 					}
@@ -618,10 +623,12 @@ namespace arma {
 					const Vec2D<T> p = domain({i,j});
 					for (int k=0; k<nx; ++k) {
 						for (int l=0; l<ny; ++l) {
+							const T x = _outgrid(k, 1);
+							const T y = _outgrid(l, 2);
 							out << p(0) << separator
 								<< p(1) << separator
-								<< k << separator
-								<< l << separator
+								<< x << separator
+								<< y << separator
 								<< data(i, j, k, l)
 								<< '\n';
 						}
@@ -670,7 +677,7 @@ namespace arma {
 
 		velocity_potential_solver_type* _vpsolver = nullptr;
 
-		Array3D<T> _zeta;
+		Discrete_function<T,3> _zeta;
 		Array4D<T> _vpotentials;
 
 		typedef std::function<velocity_potential_solver_type*()> vpsolver_ctr;

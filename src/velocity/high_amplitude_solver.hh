@@ -15,7 +15,7 @@ namespace arma {
 			/**
 			Compute multiplier function as
 			\f[
-				F(x, y) = -\frac{ \zeta_t }{
+				F(x, y) = \frac{ \zeta_t }{
 					(\zeta_x + \zeta_y) /
 					\sqrt{\smash[b]{1 + \zeta_x^2 + \zeta_y^2}}
 					- \zeta_x - \zeta_y - 1
@@ -24,7 +24,7 @@ namespace arma {
 			instead of \f$F(x,y)=\zeta_t\f$ as in linear case.
 			*/
 			void
-			precompute(const Array3D<T>& zeta, const int idx_t) override;
+			precompute(const Discrete_function<T,3>& zeta, const int idx_t) override;
 
 		};
 

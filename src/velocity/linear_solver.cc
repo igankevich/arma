@@ -22,22 +22,30 @@ namespace {
 
 template <class T>
 void
-arma::velocity::Linear_solver<T>::precompute(const Array3D<T>& zeta) {
+arma::velocity::Linear_solver<T>::precompute(const Discrete_function<T,3>& zeta) {
 	_fft.init(Shape2D(zeta.extent(1), zeta.extent(2)));
 	_zeta_t.resize(zeta.shape());
 }
 
 template <class T>
 void
-arma::velocity::Linear_solver<T>::precompute(const Array3D<T>& zeta, const int idx_t) {
+arma::velocity::Linear_solver<T>::precompute(
+	const Discrete_function<T,
+	3>& zeta,
+	const int idx_t
+) {
 	using blitz::Range;
-	_zeta_t(idx_t, Range::all(), Range::all()) = -derivative<0,T>(zeta, idx_t);
+	_zeta_t(idx_t, Range::all(), Range::all()) = -derivative<0,T>(
+		zeta,
+		zeta.grid().delta(),
+		idx_t
+	);
 }
 
 template <class T>
 arma::Array2D<T>
 arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
-	const Array3D<T>& zeta,
+	const Discrete_function<T,3>& zeta,
 	const Shape2D arr_size,
 	const T z,
 	const int idx_t
