@@ -3,7 +3,7 @@
 
 #include "types.hh"
 #include "arma.hh"
-#include "generator/model.hh"
+#include "model.hh"
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations

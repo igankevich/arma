@@ -3,7 +3,10 @@ common_src = [
 	'params.cc',
 	'linalg.cc',
 	'generator/plain_wave.cc',
-	'generator/ar_model.cc'
+	'generator/ar_model.cc',
+	'generator/ma_model.cc',
+	'generator/arma_model.cc',
+	'ma_algorithm.cc',
 ]
 
 arma_src = common_src + [

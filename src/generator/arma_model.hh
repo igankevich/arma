@@ -1,7 +1,9 @@
 #ifndef ARMA_MODEL_HH
 #define ARMA_MODEL_HH
 
-#include "types.hh" // for Shape3D, Array3D, Array2D, Array1D, Array3D
+#include "types.hh"
+#include "ar_model.hh"
+#include "ma_model.hh"
 
 namespace arma {
 
@@ -14,42 +16,30 @@ namespace arma {
 
 		ARMA_model() = default;
 
-		ARMA_model(Array3D<T> acf, Shape3D ar_order, Shape3D ma_order)
-		    : Autoregressive_model<T>(slice_front(acf, ar_order).copy(), ar_order),
-		      Moving_average_model<T>(slice_back(acf, ma_order).copy(), ma_order),
-		      _acf_orig(acf) {}
+		inline explicit
+		ARMA_model(Array3D<T> acf, Shape3D ar_order, Shape3D ma_order):
+		ar_model(slice_front(acf, ar_order).copy(), ar_order),
+		ma_model(slice_back(acf, ma_order).copy(), ma_order),
+		_acf_orig(acf)
+		{}
 
-		Array3D<T>
+		inline Array3D<T>
 		acf() const {
 			return _acf_orig;
 		}
 
-		Shape3D
+		inline Shape3D
 		order() const {
 			return ar_model::order() + ma_model::order();
 		}
 
 		T
-		white_noise_variance(Array3D<T> phi, Array3D<T> theta) const {
-			return ar_model::white_noise_variance(phi) *
-			       ma_model::white_noise_variance(theta) /
-			       ar_model::acf_variance();
-		}
-
-		T
-		white_noise_variance() const {
-			return white_noise_variance(ar_model::coefficients(),
-			                            ma_model::coefficients());
-		}
+		white_noise_variance() const override;
 
 		void
-		validate() const {
-			ar_model::validate();
-			std::clog << "AR process is OK." << std::endl;
-			ma_model::validate();
-		}
+		validate() const override;
 
-		void
+		inline void
 		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
 			operator()(zeta, eps, zeta.domain());
 		}
@@ -59,50 +49,37 @@ namespace arma {
 			Array3D<T>& zeta,
 			Array3D<T>& eps,
 			const Domain3D& subdomain
-		) {
-			ma_model::operator()(zeta, eps, subdomain);
-			ar_model::operator()(zeta, zeta, subdomain);
-		}
+		) override;
 
+		template <class X>
 		friend std::istream&
-		operator>>(std::istream& in, ARMA_model& rhs) {
-			ACF_wrapper<T> acf_wrapper(rhs._acf_orig);
-			sys::parameter_map params({
-			    {"acf", sys::make_param(acf_wrapper)},
-			    {"ar_model", sys::make_param(static_cast<ar_model&>(rhs))},
-			    {"ma_model", sys::make_param(static_cast<ma_model&>(rhs))},
-			}, true);
-			in >> params;
-			validate_shape(rhs._acf_orig.shape(), "ma_model.acf.shape");
-			rhs.ar_model::setacf(slice_front(rhs._acf_orig, rhs.ar_model::order()));
-			rhs.ma_model::setacf(slice_back(rhs._acf_orig, rhs.ma_model::order()));
-			return in;
-		}
+		operator>>(std::istream& in, ARMA_model<X>& rhs);
 
 		void
-		determine_coefficients() {
-			using namespace blitz;
-			if (product(ar_model::order()) > 0) {
-				ar_model::determine_coefficients();
-			}
-//			ma_model::recompute_acf(_acf_orig, ar_model::coefficients());
-			ma_model::determine_coefficients();
-		}
+		determine_coefficients() override;
+
+	protected:
+		T
+		white_noise_variance(Array3D<T> phi, Array3D<T> theta) const;
 
 	private:
-		static Array3D<T>
+		inline static Array3D<T>
 		slice_back(Array3D<T> arr, Shape3D amount) {
 			const Shape3D last = arr.shape() - 1;
 			return arr(blitz::RectDomain<3>(arr.shape() - amount, last));
 		}
 
-		static Array3D<T>
+		inline static Array3D<T>
 		slice_front(Array3D<T> arr, Shape3D amount) {
 			return arr(blitz::RectDomain<3>(Shape3D(0, 0, 0), amount - 1));
 		}
 
 		Array3D<T> _acf_orig;
 	};
+
+	template <class T>
+	std::istream&
+	operator>>(std::istream& in, ARMA_model<T>& rhs);
 }
 
 #endif // ARMA_MODEL_HH
