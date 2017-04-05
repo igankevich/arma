@@ -40,13 +40,15 @@ zeta_slice <- zeta[zeta$t == slice_t & zeta$y == slice_y & zeta$x >= left_top_x,
 #print(x)
 
 
-# plot the image
-require(grDevices)
+phi_range <- range(phi_slice[phi_slice$z <= zeta_slice$z, "phi"])
+print(phi_range)
 
+# plot the image
 cairo_pdf(filename="u.pdf")
 #par(pty="s")
 contour(
-	x, z, u, nlevels=20,
+	x, z, u,
+	levels=pretty(phi_range, 10),
 	asp=1
 #	color.palette=colorRampPalette( c("blue", "white", "red") )
 )
