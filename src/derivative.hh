@@ -35,7 +35,7 @@ namespace arma {
 					++idx2(dimension);
 					result(i,j) = T(0.5)
 						* (-rhs(idx2) + T(4)*rhs(idx1) - T(3)*rhs(idx))
-						* delta(dimension);
+						/ delta(dimension);
 				} else if (d == max_d) {
 					/**
 					2. Compute backward differences on the right border.
@@ -49,7 +49,7 @@ namespace arma {
 					--idx2(dimension);
 					result(i,j) = T(0.5)
 						* (rhs(idx) - T(4)*rhs(idx1) + rhs(idx2))
-						* delta(dimension);
+						/ delta(dimension);
 				} else {
 					/**
 					3. Compute central differences in all other points.
@@ -63,7 +63,7 @@ namespace arma {
 					++idx1(dimension);
 					result(i,j) = T(0.5)
 						* (rhs(idx1) - rhs(idx0))
-						* delta(dimension);
+						/ delta(dimension);
 				}
 			}
 		}

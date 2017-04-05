@@ -22,11 +22,17 @@ arma::velocity::Plain_wave_solver<T>::compute_velocity_field_2d(
 	const int nx = arr_size(0);
 	const int ny = arr_size(1);
 	const T h = this->_depth;
+	const Domain<T,3> dom(
+		zeta.grid().length(),
+		zeta.shape()
+	);
 	for (int i=0; i<nx; ++i) {
 		for (int j=0; j<ny; ++j) {
+			const T x = dom(i, 1);
+			const T y = dom(j, 2);
 			phi(i,j) = blitz::sum(
 				T(2)*A*omega
-				*blitz::cos(_2pi<T>*k*i - omega*idx_t + shift + phases)
+				*blitz::cos(_2pi<T>*k*x - omega*idx_t + shift + phases)
 				*blitz::sinh(_2pi<T>*k*(z + h))
 				/k
 				/blitz::sinh(_2pi<T>*k*h)

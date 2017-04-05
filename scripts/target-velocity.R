@@ -43,9 +43,11 @@ zeta_slice <- zeta[zeta$t == slice_t & zeta$y == slice_y & zeta$x >= left_top_x,
 # plot the image
 require(grDevices)
 
-cairo_pdf(filename="u.pdf",width=10,height=4)
+cairo_pdf(filename="u.pdf")
+#par(pty="s")
 contour(
 	x, z, u, nlevels=20,
+	asp=1
 #	color.palette=colorRampPalette( c("blue", "white", "red") )
 )
 
