@@ -84,7 +84,7 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 		\right\}
 	\f]
 	*/
-	return blitz::real(_fft.backward(_fft.forward(phi) *= mult));
+	return blitz::real(_fft.backward(_fft.forward(phi) *= mult)).copy();
 }
 
 template <class T>
