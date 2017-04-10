@@ -43,19 +43,23 @@ zeta_slice <- zeta[zeta$t == slice_t & zeta$y == slice_y & zeta$x >= left_top_x,
 phi_range <- range(phi_slice[phi_slice$z <= zeta_slice$z, "phi"])
 print(phi_range)
 
+rx <- range(x)
+rz <- range(z)
+aspect_ratio <- (rx[[2]] - rx[[1]]) / (rz[[2]] - rz[[1]])
+print(aspect_ratio)
 # plot the image
-cairo_pdf(filename="u.pdf")
+cairo_pdf(filename="u.pdf", width=2.5*aspect_ratio, height=5)
 #par(pty="s")
 contour(
 	x, z, u,
-	levels=pretty(phi_range, 10),
+	levels=pretty(phi_range, 40),
 	asp=1
 #	color.palette=colorRampPalette( c("blue", "white", "red") )
 )
 
 top_area_x <- c(left_top_x*0.99, zeta_slice$x, right_top_x*1.01)
 top_area_z <- c(left_top_z*1.10, zeta_slice$z, right_top_z*1.10)
-#polygon(top_area_x, top_area_z, lwd=4, border=NA, col='white')
+polygon(top_area_x, top_area_z, lwd=4, border=NA, col='white')
 lines(zeta_slice$x, zeta_slice$z, lwd=4)
 #image(x, z, u, c(-2,2), col=heat.colors(128))
 box()
