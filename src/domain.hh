@@ -29,6 +29,7 @@ namespace arma {
 		Domain(const Domain&) = default;
 		Domain(Domain&&) = default;
 
+		inline
 		Domain(
 			const length_type& lbound,
 			const length_type& ubound,
@@ -36,8 +37,14 @@ namespace arma {
 		): _lbound(lbound), _ubound(ubound), _npoints(npts)
 		{}
 
+		inline
 		Domain(const length_type& ubound, const size_type& npts):
 		_lbound(), _ubound(ubound), _npoints(npts)
+		{}
+
+		inline
+		Domain(const Domain& d, const size_type& npts):
+		_lbound(d._lbound), _ubound(d._ubound), _npoints(npts)
 		{}
 
 		explicit
@@ -145,9 +152,12 @@ namespace arma {
 
 		friend std::istream&
 		operator>>(std::istream& in, Domain& rhs) {
+			rhs._lbound = T(0);
+			rhs._ubound = T(0);
+			rhs._npoints = 1;
 			int ntokens = 0;
 			std::string prefix;
-			while (in >> std::ws >> prefix && ntokens < 3) {
+			while (ntokens < 3 && in >> std::ws >> prefix) {
 				++ntokens;
 				if (prefix == "from") {
 					in >> rhs._lbound;

@@ -1,24 +1,10 @@
 #include "linear_solver.hh"
 #include "physical_constants.hh"
 #include "derivative.hh"
+#include "interpolate.hh"
 
 #include <stdexcept>
 #include <cmath>
-
-namespace {
-
-	template <class T>
-	inline T
-	div_or_nought(T lhs, T rhs) noexcept {
-		T result = lhs / rhs;
-		if (!std::isfinite(result)) {
-			result = T(0);
-		}
-		return result;
-	}
-
-}
-
 
 template <class T>
 void
@@ -30,8 +16,7 @@ arma::velocity::Linear_solver<T>::precompute(const Discrete_function<T,3>& zeta)
 template <class T>
 void
 arma::velocity::Linear_solver<T>::precompute(
-	const Discrete_function<T,
-	3>& zeta,
+	const Discrete_function<T,3>& zeta,
 	const int idx_t
 ) {
 	using blitz::Range;
@@ -94,6 +79,7 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 	const T z
 ) {
 	using std::cosh;
+	using std::isfinite;
 	using blitz::length;
 	using constants::_2pi;
 	const T h = this->_depth;
@@ -105,9 +91,25 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 			const T l = _2pi<T> * length(wngrid({i,j}));
 			const T numerator = cosh(l*(z + h));
 			const T denominator = l*cosh(l*h);
-			result(i, j) = _2pi<T>
-				* T(2)
-				* div_or_nought(numerator, denominator);
+			result(i, j) = _2pi<T> * T(2) * numerator / denominator;
+		}
+	}
+	// replace infinite value with values from neighbouring points
+	result(0,0) = T(0);
+	int n = 0;
+	if (isfinite(result(1,1))) {
+		result(0,0) += result(1,1);
+		++n;
+	}
+	result(0,0) /= n;
+	for (int i=1; i<nx; ++i) {
+		if (!isfinite(result(i,0))) {
+			result(i,0) = interpolate({i-1,1}, {i,1}, {i-1,2}, result, {i,0});
+		}
+	}
+	for (int j=1; j<ny; ++j) {
+		if (!isfinite(result(0,j))) {
+			result(0,j) = interpolate({1,j-1}, {1,j}, {2,j-1}, result, {0,j});
 		}
 	}
 	return result;

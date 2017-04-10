@@ -16,7 +16,7 @@ namespace arma {
 		class Velocity_potential_solver {
 
 		protected:
-			Vec2D<T> _wnmax;
+			Domain2<T> _wnmax;
 			T _depth;
 			Domain2<T> _domain;
 

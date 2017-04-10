@@ -7,6 +7,7 @@ common_src = [
 	'generator/ma_model.cc',
 	'generator/arma_model.cc',
 	'ma_algorithm.cc',
+	'interpolate.cc',
 ]
 
 arma_src = common_src + [

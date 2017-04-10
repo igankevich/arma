@@ -9,7 +9,7 @@ if (!is.null(build_dir) & build_dir != '') {
 	setwd(build_dir)
 }
 phi <- read.csv('phi.csv')
-left_top_x <- 0.1
+left_top_x <- 0
 right_top_x <- max(phi$x)
 # slice time and Y ranges through the center
 slice_t <- middle_element(unique(phi$t))

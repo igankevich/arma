@@ -57,7 +57,7 @@ sys::operator>>(std::istream& in, parameter_map& rhs) {
 		trim_right(name);
 		auto result = rhs._params.find(name);
 		if (result == rhs._params.end()) {
-			std::clog << "Unknown parameter: " << name << std::endl;
+			std::clog << "Unknown parameter: \"" << name << "\"." << std::endl;
 			in.setstate(std::ios::failbit);
 		} else {
 			result->second(in, name.data());
