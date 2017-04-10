@@ -26,6 +26,7 @@
 #include "generator/ma_model.hh"
 #include "generator/arma_model.hh"
 #include "generator/plain_wave.hh"
+#include "generator/lh_model.hh"
 #include "simulation_model.hh"
 #include "verification_scheme.hh"
 #include "acf.hh"
@@ -184,6 +185,13 @@ namespace arma {
 				generate_wavy_surface(_mamodel);
 			} else if (_model == Simulation_model::ARMA) {
 				generate_wavy_surface(_armamodel);
+			} else if (_model == Simulation_model::Longuet_Higgins) {
+				_lhmodel.determine_coefficients();
+				_lhmodel.generate_white_noise();
+				_zeta.resize(_outgrid.size());
+				_zeta.setgrid(_outgrid);
+				_lhmodel.setgrid(_outgrid);
+				_lhmodel(_zeta);
 			} else if (_model == Simulation_model::Plain_wave) {
 				_zeta.resize(_outgrid.size());
 				_zeta.setgrid(_outgrid);
@@ -513,6 +521,7 @@ namespace arma {
 			    {"ma_model", sys::make_param(_mamodel)},
 			    {"arma_model", sys::make_param(_armamodel)},
 			    {"plain_wave", sys::make_param(_plainwavemodel)},
+			    {"lh_model", sys::make_param(_lhmodel)},
 			    {"model", sys::make_param(_model)},
 			    {"verification", sys::make_param(_vscheme)},
 			    {"partition", sys::make_param(_partition)},
@@ -542,11 +551,7 @@ namespace arma {
 					write_key_value(std::clog, "Plain wave model", _plainwavemodel);
 					break;
 				case Simulation_model::Longuet_Higgins:
-					write_key_value(
-						std::clog,
-						"Longuet-Higgins model",
-						"<not implemented>"
-					);
+					write_key_value(std::clog, "Longuet-Higgins model", _lhmodel);
 					break;
 			}
 			if (_vpsolver) {
@@ -674,6 +679,7 @@ namespace arma {
 		Moving_average_model<T> _mamodel;
 		ARMA_model<T> _armamodel;
 		Plain_wave<T> _plainwavemodel;
+		Longuet_Higgins_model<T> _lhmodel;
 
 		velocity_potential_solver_type* _vpsolver = nullptr;
 

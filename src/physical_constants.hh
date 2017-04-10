@@ -13,6 +13,9 @@ namespace arma {
 		template <class T>
 		constexpr const T _2pi = T(2)*pi<T>;
 
+		template <class T>
+		constexpr const T g = T(9.82);
+
 	}
 
 }
