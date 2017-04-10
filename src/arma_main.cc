@@ -8,6 +8,9 @@
 #include "velocity/high_amplitude_solver.hh"
 #include "velocity/linear_solver.hh"
 #include "velocity/plain_wave_solver.hh"
+#if defined(WITH_SMALL_AMPLITUDE_SOLVER)
+#include "velocity/small_amplitude_solver.hh"
+#endif
 
 void
 print_exception_and_terminate() {
@@ -82,6 +85,9 @@ main(int argc, char* argv[]) {
 		register_vpsolver<Linear_solver<Real>>(driver, "linear");
 		register_vpsolver<Plain_wave_solver<Real>>(driver, "plain");
 		register_vpsolver<High_amplitude_solver<Real>>(driver, "high_amplitude");
+		#if defined(WITH_SMALL_AMPLITUDE_SOLVER)
+		register_vpsolver<Small_amplitude_solver<Real>>(driver, "small_amplitude");
+		#endif
 		std::ifstream cfg(input_filename);
 		if (!cfg.is_open()) {
 			std::clog << "Cannot open input file "

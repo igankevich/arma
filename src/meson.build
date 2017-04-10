@@ -16,6 +16,24 @@ arma_src = common_src + [
 	'velocity/high_amplitude_solver.cc',
 ]
 
+arma_cpp_args = []
+arma_deps = [
+	libblitz,
+	libgsl,
+	libblas,
+	liblapack
+]
+
+if get_option('with_small_amplitude_solver')
+	arma_src += [
+		'velocity/small_amplitude_solver.cc',
+		'velocity/small_amplitude_solver/wave.cc',
+		'velocity/small_amplitude_solver/linear_interpolation.cc',
+	]
+	arma_cpp_args += '-DWITH_SMALL_AMPLITUDE_SOLVER' 
+	arma_deps += [libCGAL, libgmp]
+endif
+
 arma_realtime_src = common_src + [
 	'velocity/basic_solver.cc',
 	'velocity/high_amplitude_realtime_solver.cc',
@@ -25,12 +43,8 @@ executable(
 	executable_prefix,
 	sources: arma_src + ['arma_main.cc'],
 	include_directories: incdirs,
-	dependencies: [
-		libblitz,
-		libgsl,
-		libblas,
-		liblapack
-	] + parallel_deps,
+	dependencies: arma_deps + parallel_deps,
+	cpp_args: arma_cpp_args,
 	link_args: '-llapacke',
 	install: true
 )

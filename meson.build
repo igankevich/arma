@@ -19,6 +19,14 @@ libblas = cpp.find_library('blas')
 libGL = cpp.find_library('GL')
 libglut = dependency('freeglut')
 gtest = dependency('gtest', main: true)
+libCGAL = cpp.find_library(
+	'CGAL',
+	required: get_option('with_small_amplitude_solver')
+)
+libgmp = cpp.find_library(
+	'gmp',
+	required: get_option('with_small_amplitude_solver')
+)
 
 if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')
