@@ -264,8 +264,7 @@ namespace {
 		get_kernel(const char* name) const {
 		    auto it = _kernels.find(name);
 		    if (it == _kernels.end()) {
-				std::cerr << "OpenCL kernel not found: " << name << std::endl;
-		        throw std::runtime_error("bad kernel");
+				return nullptr;
 		    }
 		    return it->second;
 		}
@@ -347,6 +346,15 @@ arma::opencl::compile(const char* src) {
 }
 
 cl_kernel
-arma::opencl::get_kernel(const char* name) {
-	return __opencl_instance.get_kernel(name);
+arma::opencl::get_kernel(const char* name, const char* src) {
+	cl_kernel kernel = __opencl_instance.get_kernel(name);
+	if (!kernel) {
+		compile(src);
+	}
+	kernel = __opencl_instance.get_kernel(name);
+	if (!kernel) {
+		std::cerr << "OpenCL kernel not found: " << name << std::endl;
+		throw std::runtime_error("bad kernel");
+	}
+	return kernel;
 }

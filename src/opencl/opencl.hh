@@ -15,7 +15,7 @@ namespace arma {
 
 		void compile(const char* src);
 
-		cl_kernel get_kernel(const char* name);
+		cl_kernel get_kernel(const char* name, const char* src);
 
 	}
 

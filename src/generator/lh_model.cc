@@ -89,6 +89,8 @@ arma::Longuet_Higgins_model<T>::determine_coefficients(
 
 #if ARMA_OPENCL
 
+#include "lh_model_opencl.cc"
+
 template <class T>
 void
 arma::Longuet_Higgins_model<T>::generate_surface(
@@ -96,6 +98,7 @@ arma::Longuet_Higgins_model<T>::generate_surface(
 	const Domain3D& subdomain
 ) {
 	cl_context ctx = opencl::context();
+	cl_kernel kernel = opencl::get_kernel("generate_surface", LH_MODEL_SRC);
 }
 
 #else
