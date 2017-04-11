@@ -1,7 +1,11 @@
 #include "lh_model.hh"
 #include "physical_constants.hh"
 #include "params.hh"
-#include "opencl/opencl.hh"
+#if ARMA_OPENCL
+#include "opencl/kernel.hh"
+#include "opencl/buffer.hh"
+#include "opencl/vec.hh"
+#endif
 
 #include <cmath>
 #include <random>
@@ -97,8 +101,27 @@ arma::Longuet_Higgins_model<T>::generate_surface(
 	Discrete_function<T,3>& zeta,
 	const Domain3D& subdomain
 ) {
-	cl_context ctx = opencl::context();
-	cl_kernel kernel = opencl::get_kernel("generate_surface", LH_MODEL_SRC);
+	Vec3D<size_t> shp = subdomain.ubound() - subdomain.lbound() + 1;
+	opencl::Buffer<T> bcoef(_coef.data(), _coef.numElements(), CL_MEM_READ_ONLY);
+	opencl::Buffer<T> beps(_eps.data(), _eps.numElements(), CL_MEM_READ_ONLY);
+	opencl::Buffer<T> bzeta(zeta.numElements(), CL_MEM_WRITE_ONLY);
+	opencl::Kernel kernel(
+		"generate_surface",
+		LH_MODEL_SRC,
+		{shp(0), shp(1), shp(2)},
+		{}
+	);
+	typedef opencl::Vec<Vec2D<T>,T,2> Vec2;
+	typedef opencl::Vec<Vec2D<int>,int,2> Int2;
+	typedef opencl::Vec<Vec3D<T>,T,3> Vec3;
+	kernel(
+		bcoef, beps, bzeta,
+		Vec2(_spec_domain.lbound()),
+		Vec2(_spec_domain.ubound()),
+		Int2(_spec_domain.num_patches()),
+		Vec3(_outgrid.length())
+	);
+	bzeta.copy_out(zeta.data(), zeta.numElements());
 }
 
 #else
@@ -121,8 +144,8 @@ arma::Longuet_Higgins_model<T>::generate_surface(
 	const int i1 = ubound(0);
 	const int j1 = ubound(1);
 	const int k1 = ubound(2);
-	const int nomega2 = _spec_domain.num_points(0);
-	const int ntheta2 = _spec_domain.num_points(1);
+	const int nomega = _spec_domain.num_patches(0);
+	const int ntheta = _spec_domain.num_patches(1);
 	std::atomic<int> counter(0);
 	const int total_count = product(ubound - lbound + 1);
 	const int time_slice_count = total_count / (i1-i0+1);
@@ -136,8 +159,8 @@ arma::Longuet_Higgins_model<T>::generate_surface(
 				const T x = _outgrid(j, 1);
 				const T y = _outgrid(k, 2);
 				T sum = 0;
-				for (int l=0; l<nomega2; ++l) {
-					for (int m=0; m<ntheta2; ++m) {
+				for (int l=0; l<nomega; ++l) {
+					for (int m=0; m<ntheta; ++m) {
 						const T omega = _spec_domain(l, 0);
 						const T theta = _spec_domain(m, 1);
 						const T omega_squared = omega*omega;

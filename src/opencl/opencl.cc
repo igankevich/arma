@@ -17,17 +17,6 @@ namespace {
 	#include "get_opencl_error_string.cc"
 
 	void
-	check_err(cl_int err, const char* description) {
-		if (err != CL_SUCCESS) {
-			std::cerr
-				<< "OpenCL error " << err << " in " << description << ':'
-				<< " error_code=" << get_opencl_error_string(err)
-				<< std::endl;
-			std::exit(err);
-		}
-	}
-
-	void
 	onError(const char *errinfo, const void*, size_t, void*) {
 		std::cerr << "Error from OpenCL. " << errinfo << std::endl;
 		std::exit(1);
@@ -159,6 +148,7 @@ namespace {
 
 	public:
 		OpenCL() {
+			using arma::opencl::check_err;
 			cl_int err = CL_SUCCESS;
 			std::string platform_name;
 			Device_type device_type = Device_type::Default;
@@ -253,6 +243,11 @@ namespace {
 			return _context;
 		}
 
+		cl_command_queue
+		command_queue() const noexcept {
+			return _cmdqueue;
+		}
+
 		void
 		compile(const char* src) {
 			cl_program prg = new_program(src);
@@ -281,9 +276,9 @@ namespace {
 				0,
 				&err
 			);
-			check_err(err, "clCreateProgramWithSource");
+			arma::opencl::check_err(err, "clCreateProgramWithSource");
 			err = clBuildProgram(program, 1, &_device, _options.data(), 0, 0);
-			if (err != CL_SUCCESS) {
+			if (err == CL_BUILD_PROGRAM_FAILURE) {
 				size_t log_size = 0;
 				err = clGetProgramBuildInfo(
 					program,
@@ -304,6 +299,8 @@ namespace {
 				);
 				std::cerr << ocl_log.get();
 				std::exit(1);
+			} else {
+				arma::opencl::check_err(err, "clBuildProgram");
 			}
 			return program;
 		}
@@ -326,7 +323,7 @@ namespace {
 				);
 				_kernels.emplace(name, all_kernels[i]);
 			}
-			check_err(err, "createKernels");
+			arma::opencl::check_err(err, "createKernels");
 		}
 
 
@@ -338,6 +335,11 @@ namespace {
 cl_context
 arma::opencl::context() {
 	return __opencl_instance.context();
+}
+
+cl_command_queue
+arma::opencl::command_queue() {
+	return __opencl_instance.command_queue();
 }
 
 void
@@ -357,4 +359,15 @@ arma::opencl::get_kernel(const char* name, const char* src) {
 		throw std::runtime_error("bad kernel");
 	}
 	return kernel;
+}
+
+void
+arma::opencl::check_err(cl_int err, const char* description) {
+	if (err != CL_SUCCESS) {
+		std::cerr
+			<< "OpenCL error " << err << " in " << description << ':'
+			<< " error_code=" << get_opencl_error_string(err)
+			<< std::endl;
+		std::exit(err);
+	}
 }

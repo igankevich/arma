@@ -13,9 +13,13 @@ namespace arma {
 
 		cl_context context();
 
+		cl_command_queue command_queue();
+
 		void compile(const char* src);
 
 		cl_kernel get_kernel(const char* name, const char* src);
+
+		void check_err(cl_int err, const char* description);
 
 	}
 

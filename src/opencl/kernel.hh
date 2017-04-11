@@ -2,7 +2,10 @@
 #define OPENCL_KERNEL_HH
 
 #include "opencl.hh"
+#include "buffer.hh"
+
 #include <vector>
+#include <string>
 
 namespace arma {
 
@@ -29,6 +32,12 @@ namespace arma {
 		}
 
 		template<class T>
+		inline size_t
+		get_size_of(const Buffer<T>& rhs) {
+		    return sizeof(cl_mem);
+		}
+
+		template<class T>
 		inline const void*
 		get_addr_of(const T& obj) {
 		    return &obj;
@@ -40,11 +49,18 @@ namespace arma {
 		    return 0;
 		}
 
+		template<class T>
+		inline const void*
+		get_addr_of(const Buffer<T>& rhs) {
+		    return rhs.ptr();
+		}
+
 		class Kernel {
 			typedef std::vector<size_t> size_type;
-			size_type _globalsize;
-			size_type _globalsize;
 			cl_kernel _kernel;
+			size_type _globalsize;
+			size_type _localsize;
+			std::string _name;
 
 		public:
 			explicit
@@ -55,55 +71,50 @@ namespace arma {
 			):
 			_kernel(k),
 			_globalsize(global),
-			_localsize(local)
+			_localsize(local),
+			_name(get_function_name(k))
 			{}
 
-			explicit
+			inline explicit
 			Kernel(
 				const char* name,
 				const char* src,
 				const size_type& global,
 				const size_type& local
 			):
-			_kernel(get_kernel(name, src)),
-			_globalsize(global),
-			_localsize(local)
+			Kernel(get_kernel(name, src), global, local)
 			{}
 
-    		template<class T>
-    		inline void operator()(const T& arg0) {
-    		    check(clSetKernelArg(_kernel, 0, get_size_of(arg0), get_addr_of(arg0)), 0);
+			template<class ... Args>
+			inline void
+			operator()(const Args& ... args) {
+				call(0, args...);
+			}
+
+		private:
+    		inline void
+			call(cl_uint) {
     		    run();
     		}
 
 			template<class T, class ... Args>
 			inline void
-			operator()(const T& argN, const Args& ... args) const {
-				check(clSetKernelArg(kernel, sizeof...(args), get_size_of(args), get_addr_of(args)), sizeof...(args));
-				operator()(args...);
+			call(cl_uint idx, const T& argN, const Args& ... args) {
+				check(clSetKernelArg(
+					_kernel,
+					idx,
+					get_size_of(argN),
+					get_addr_of(argN)
+				), idx);
+				call(idx+1, args...);
 			}
 
-		private:
+			static std::string
+			get_function_name(cl_kernel kernel);
 
-			void
-			run() {
-				cl_event evt;
-				err |= clEnqueueNDRangeKernel(commandQueue, kernel, m, 0, &global_size[0], &local_size[0], 0, 0, &evt);
-				err |= clWaitForEvents(1, &evt);
-				err |= clReleaseEvent(evt);
-				char funcName2[100];
-				err |= clGetKernelInfo(kernel, CL_KERNEL_FUNCTION_NAME, 100, funcName2, 0);
-				check_err(err, funcName2);
-			}
+			void run();
 
-			void check(cl_int err, cl_int arg) {
-				if (err != CL_SUCCESS) {
-					char funcName[4096];
-					err |= clGetKernelInfo(kernel, CL_KERNEL_FUNCTION_NAME, sizeof(funcName), funcName, 0);
-					std::cerr << "OpenCL error=" << err << ", kernel=" << funcName << ", argument=" << arg << std::endl;
-					std::exit(err);
-				}
-			}
+			void check(cl_int err, cl_int arg);
 
 		};
 

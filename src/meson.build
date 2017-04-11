@@ -12,7 +12,10 @@ common_src = [
 ]
 
 if get_option('framework') == 'opencl'
-	common_src += 'opencl/opencl.cc'
+	common_src += [
+		'opencl/opencl.cc',
+		'opencl/kernel.cc',
+	]
 endif
 
 arma_src = common_src + [
