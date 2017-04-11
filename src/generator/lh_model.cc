@@ -1,6 +1,7 @@
 #include "lh_model.hh"
 #include "physical_constants.hh"
 #include "params.hh"
+#include "opencl/opencl.hh"
 
 #include <cmath>
 #include <random>
@@ -86,6 +87,19 @@ arma::Longuet_Higgins_model<T>::determine_coefficients(
 	return result;
 }
 
+#if ARMA_OPENCL
+
+template <class T>
+void
+arma::Longuet_Higgins_model<T>::generate_surface(
+	Discrete_function<T,3>& zeta,
+	const Domain3D& subdomain
+) {
+	cl_context ctx = opencl::context();
+}
+
+#else
+
 template <class T>
 void
 arma::Longuet_Higgins_model<T>::generate_surface(
@@ -143,6 +157,7 @@ arma::Longuet_Higgins_model<T>::generate_surface(
 		}
 	}
 }
+#endif
 
 template <class T>
 void

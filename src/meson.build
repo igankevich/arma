@@ -11,6 +11,10 @@ common_src = [
 	'interpolate.cc',
 ]
 
+if get_option('framework') == 'opencl'
+	common_src += 'opencl/opencl.cc'
+endif
+
 arma_src = common_src + [
 	'velocity/basic_solver.cc',
 	'velocity/plain_wave_solver.cc',
@@ -36,6 +40,10 @@ if get_option('with_small_amplitude_solver')
 	arma_deps += [libCGAL, libgmp]
 endif
 
+if get_option('framework') == 'opencl'
+	arma_deps += [libOpenCL, libpthread]
+endif
+
 arma_realtime_src = common_src + [
 	'velocity/basic_solver.cc',
 	'velocity/high_amplitude_realtime_solver.cc',
@@ -55,11 +63,7 @@ executable(
 	executable_prefix + '-realtime',
 	sources: arma_realtime_src + ['arma_realtime.cc'],
 	include_directories: incdirs,
-	dependencies: [
-		libblitz,
-		libgsl,
-		libblas,
-		liblapack,
+	dependencies: arma_deps + [
 		libglut,
 		libGL
 	] + parallel_deps,

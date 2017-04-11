@@ -27,6 +27,14 @@ libgmp = cpp.find_library(
 	'gmp',
 	required: get_option('with_small_amplitude_solver')
 )
+libOpenCL = dependency(
+	'OpenCL',
+	required: get_option('framework') == 'opencl'
+)
+libpthread = cpp.find_library(
+	'pthread',
+	required: get_option('framework') == 'opencl'
+)
 
 if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')
@@ -37,11 +45,12 @@ framework = get_option('framework')
 if framework == 'openmp'
 	add_global_arguments('-DARMA_OPENMP=1', language: 'cpp')
 	add_global_arguments('-fopenmp', language: 'cpp')
+	# make Blitz++ reference counters thread-safe
+	add_global_arguments('-DBZ_THREADSAFE', language: 'cpp')
 	add_global_link_arguments('-fopenmp', language: 'cpp')
 	parallel_deps += libdcmt
 elif framework == 'opencl'
 	add_global_arguments('-DARMA_OPENCL=1', language: 'cpp')
-	add_global_link_arguments('-lOpenCL', language: 'cpp')
 elif framework == 'mpi'
 	add_global_arguments('-DARMA_MPI=1', language: 'cpp')
 else
@@ -53,11 +62,15 @@ if get_option('noseed')
 endif
 
 add_global_arguments('-DARMA_REAL_TYPE=double', language: 'cpp')
-# make Blitz++ reference counters thread-safe
-add_global_arguments('-DBZ_THREADSAFE', language: 'cpp')
 
 run_target('doc', command: 'scripts/generate-docs')
-run_target('graphs', command: ['gnuplot', '--persist', '-c', 'scripts/target-graphs', meson.build_root()])
+run_target('graphs', command: [
+	'gnuplot',
+	'--persist',
+	'-c',
+	'scripts/target-graphs',
+	meson.build_root()
+])
 run_target('slices', command: 'scripts/target-slices')
 run_target('velocity', command: 'scripts/target-velocity.R')
 run_target('archive', command: [

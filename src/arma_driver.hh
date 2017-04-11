@@ -38,6 +38,7 @@
 #include "output_format.hh"
 #include "velocity/basic_solver.hh"
 #include "discrete_function.hh"
+#include "util.hh"
 
 /// @file
 /// Some abbreviations used throughout the programme.
@@ -51,15 +52,6 @@
 /// MT      Mersenne Twister (pseudo-random number generator)
 
 namespace arma {
-
-	template <class T>
-	void
-	write_key_value(std::ostream& out, const char* key, const T& value) {
-		std::ios::fmtflags oldf =
-		    out.setf(std::ios::left, std::ios::adjustfield);
-		out << std::setw(30) << key << " = " << value << std::endl;
-		out.setf(oldf);
-	}
 
 	template <class Solver>
 	class Solver_wrapper {
@@ -222,6 +214,14 @@ namespace arma {
 		}
 
 	private:
+		#if ARMA_OPENCL
+		template <class Model>
+		void
+		generate_wavy_surface(Model& model) {
+			std::cerr << "OpenCL is enabled for LH model only." << std::endl;
+			std::exit(1);
+		}
+		#else
 		template <class Model>
 		void
 		generate_wavy_surface(Model& model) {
@@ -250,6 +250,7 @@ namespace arma {
 				verify(model.acf(), zeta, model);
 			}
 		}
+		#endif
 
 		#if ARMA_NONE
 
@@ -642,7 +643,7 @@ namespace arma {
 			}
 		}
 
-		#if !ARMA_NONE
+		#if ARMA_OPENMP
 		template<class Result>
 		void
 		read_parallel_mt_config(const char* filename, Result result) {
