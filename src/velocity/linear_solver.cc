@@ -57,7 +57,7 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 	}
 	/// 2. Compute \f$\zeta_t\f$.
 	Array2D<Cmplx> phi(arr_size);
-	phi = _zeta_t(idx_t, Range::all(), Range::all()).copy();
+	phi = _zeta_t(idx_t, Range::all(), Range::all());
 	/**
 	3. Compute Fourier transforms.
 	\f[

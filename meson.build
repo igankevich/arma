@@ -53,6 +53,8 @@ if get_option('noseed')
 endif
 
 add_global_arguments('-DARMA_REAL_TYPE=double', language: 'cpp')
+# make Blitz++ reference counters thread-safe
+add_global_arguments('-DBZ_THREADSAFE', language: 'cpp')
 
 run_target('doc', command: 'scripts/generate-docs')
 run_target('graphs', command: ['gnuplot', '--persist', '-c', 'scripts/target-graphs', meson.build_root()])
