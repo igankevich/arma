@@ -8,6 +8,9 @@
 #include <fstream>
 #include <algorithm>
 #include <iterator>
+#include <unordered_map>
+#include <stdexcept>
+#include <memory>
 
 namespace {
 
@@ -151,6 +154,8 @@ namespace {
 		cl_context _context = nullptr;
 		cl_device_id _device = nullptr;
 		cl_command_queue _cmdqueue = nullptr;
+		std::string _options;
+		std::unordered_map<std::string,cl_kernel> _kernels;
 
 	public:
 		OpenCL() {
@@ -163,6 +168,7 @@ namespace {
 					sys::parameter_map params({
 						{"platform_name", sys::make_param(platform_name)},
 						{"device_type", sys::make_param(device_type)},
+						{"options", sys::make_param(_options)},
 					}, false);
 					in >> params;
 				}
@@ -237,12 +243,93 @@ namespace {
 			if (_context) {
 				clReleaseContext(_context);
 			}
+			for (const auto& pair : _kernels) {
+				clReleaseKernel(pair.second);
+			}
 		}
 
 		cl_context
 		context() const noexcept {
 			return _context;
 		}
+
+		void
+		compile(const char* src) {
+			cl_program prg = new_program(src);
+			createKernels(prg);
+			clReleaseProgram(prg);
+		}
+
+		cl_kernel
+		get_kernel(const char* name) const {
+		    auto it = _kernels.find(name);
+		    if (it == _kernels.end()) {
+				std::cerr << "OpenCL kernel not found: " << name << std::endl;
+		        throw std::runtime_error("bad kernel");
+		    }
+		    return it->second;
+		}
+
+	private:
+
+		cl_program
+		new_program(const char* src) {
+			cl_int err = CL_SUCCESS;
+			cl_program program = clCreateProgramWithSource(
+				_context,
+				1,
+				&src,
+				0,
+				&err
+			);
+			check_err(err, "clCreateProgramWithSource");
+			err = clBuildProgram(program, 1, &_device, _options.data(), 0, 0);
+			if (err != CL_SUCCESS) {
+				size_t log_size = 0;
+				err = clGetProgramBuildInfo(
+					program,
+					_device,
+					CL_PROGRAM_BUILD_LOG,
+					0,
+					0,
+					&log_size
+				);
+				std::unique_ptr<char[]> ocl_log(new char[log_size]);
+				err = clGetProgramBuildInfo(
+					program,
+					_device,
+					CL_PROGRAM_BUILD_LOG,
+					log_size,
+					ocl_log.get(),
+					0
+				);
+				std::cerr << ocl_log.get();
+				std::exit(1);
+			}
+			return program;
+		}
+
+		void
+		createKernels(cl_program program) {
+			cl_int err = CL_SUCCESS;
+			unsigned int nkernels = 0;
+			clCreateKernelsInProgram(program, 0, 0, &nkernels);
+			std::vector<cl_kernel> all_kernels(nkernels);
+			clCreateKernelsInProgram(program, nkernels, all_kernels.data(), 0);
+			for (uint i=0; i<nkernels; i++) {
+				char name[4096];
+				clGetKernelInfo(
+					all_kernels[i],
+					CL_KERNEL_FUNCTION_NAME,
+					sizeof(name),
+					name,
+					0
+				);
+				_kernels.emplace(name, all_kernels[i]);
+			}
+			check_err(err, "createKernels");
+		}
+
 
 	} __opencl_instance;
 
@@ -252,4 +339,14 @@ namespace {
 cl_context
 arma::opencl::context() {
 	return __opencl_instance.context();
+}
+
+void
+arma::opencl::compile(const char* src) {
+	__opencl_instance.compile(src);
+}
+
+cl_kernel
+arma::opencl::get_kernel(const char* name) {
+	return __opencl_instance.get_kernel(name);
 }
