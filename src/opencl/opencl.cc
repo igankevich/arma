@@ -132,6 +132,7 @@ namespace {
 					}, false);
 					in >> params;
 				}
+				_options += " -DARMA_REAL_TYPE=" ARMA_STRINGIFY(ARMA_REAL_TYPE);
 			}
 			std::vector<cl::Platform> platforms;
 			cl::Platform::get(&platforms);
