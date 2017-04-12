@@ -9,8 +9,8 @@ const char* LH_MODEL_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 
 	kernel void
 	generate_surface(
-		constant const T* coef,
-		constant const T* eps,
+		global const T* coef,
+		global const T* eps,
 		global T* zeta,
 		const T2 spec_domain_lbound,
 		const T2 spec_domain_ubound,
