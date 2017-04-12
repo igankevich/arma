@@ -16,3 +16,9 @@ option(
 	type: 'boolean',
 	value: false
 )
+
+option(
+	'with_high_amplitude_realtime_solver',
+	type: 'boolean',
+	value: false
+)

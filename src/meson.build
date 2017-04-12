@@ -46,11 +46,6 @@ if get_option('framework') == 'opencl'
 	arma_deps += [libOpenCL, libpthread]
 endif
 
-arma_realtime_src = common_src + [
-	'velocity/basic_solver.cc',
-	'velocity/high_amplitude_realtime_solver.cc',
-]
-
 executable(
 	executable_prefix,
 	sources: arma_src + ['arma_main.cc'],
@@ -61,17 +56,21 @@ executable(
 	install: true
 )
 
-executable(
-	executable_prefix + '-realtime',
-	sources: arma_realtime_src + ['arma_realtime.cc'],
-	include_directories: incdirs,
-	dependencies: arma_deps + [
-		libglut,
-		libGL
-	] + parallel_deps,
-	link_args: '-llapacke',
-	install: true
-)
+if get_option('with_high_amplitude_realtime_solver')
+	arma_realtime_src = common_src + [
+		'velocity/basic_solver.cc',
+		'velocity/high_amplitude_realtime_solver.cc',
+	]
+	arma_realtime_deps = arma_deps + [libglut, libGL, libclFFT] + parallel_deps
+	executable(
+		executable_prefix + '-realtime',
+		sources: arma_realtime_src + ['arma_realtime.cc'],
+		include_directories: incdirs,
+		dependencies: arma_realtime_deps,
+		link_args: '-llapacke',
+		install: true
+	)
+endif
 
 
 executable(

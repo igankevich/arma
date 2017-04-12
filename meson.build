@@ -35,6 +35,10 @@ libpthread = cpp.find_library(
 	'pthread',
 	required: get_option('framework') == 'opencl'
 )
+libclFFT = dependency(
+	'clFFT',
+	required: get_option('with_high_amplitude_realtime_solver')
+)
 
 if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')
