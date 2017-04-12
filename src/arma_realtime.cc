@@ -55,7 +55,7 @@ main(int argc, char* argv[]) {
 
 	/// floating point type (float, double, long double or multiprecision number
 	/// C++ class)
-	typedef double Real;
+	typedef ARMA_REAL_TYPE T;
 
 	std::string input_filename;
 	bool help_requested = false;
@@ -75,9 +75,9 @@ main(int argc, char* argv[]) {
 		usage(argv[0]);
 	} else {
 		/// input file with various driver parameters
-		ARMA_driver<Real> driver;
+		ARMA_driver<T> driver;
 		using namespace velocity;
-		register_vpsolver<High_amplitude_realtime_solver<Real>>(
+		register_vpsolver<High_amplitude_realtime_solver<T>>(
 			driver,
 			"high_amplitude_realtime"
 		);

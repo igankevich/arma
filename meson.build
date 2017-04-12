@@ -65,7 +65,10 @@ if get_option('noseed')
 	add_global_arguments('-DARMA_NO_PRNG_SEED', language: 'cpp')
 endif
 
-add_global_arguments('-DARMA_REAL_TYPE=double', language: 'cpp')
+add_global_arguments(
+	'-DARMA_REAL_TYPE=' + get_option('real_type'),
+	language: 'cpp'
+)
 
 run_target('doc', command: 'scripts/generate-docs')
 run_target('graphs', command: [

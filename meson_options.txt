@@ -22,3 +22,10 @@ option(
 	type: 'boolean',
 	value: false
 )
+
+option(
+	'real_type',
+	type: 'combo',
+	choices: ['float', 'double'],
+	value: 'double'
+)

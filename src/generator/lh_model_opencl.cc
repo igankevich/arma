@@ -1,4 +1,4 @@
-const char* LH_MODEL_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
+const char* LH_MODEL_SRC = CL_PROGRAM_STRING_DEBUG_INFO R"OpenCL(
 
 	#define NEW_VEC_IMPL(x,y) x##y
 	#define NEW_VEC(x,y) NEW_VEC_IMPL(x, y)
@@ -45,5 +45,4 @@ const char* LH_MODEL_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 		}
 		zeta[i*nx*ny + j*ny + k] = sum;
 	}
-
-);
+)OpenCL";
