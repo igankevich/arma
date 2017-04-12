@@ -19,16 +19,7 @@ namespace arma {
 		virtual void determine_coefficients() = 0;
 
 		virtual void
-		operator()(
-			Array3D<T>& zeta,
-			Array3D<T>& eps,
-			const Domain3D& subdomain
-		) = 0;
-
-		inline void
-		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
-			operator()(zeta, eps, zeta.domain());
-		}
+		operator()(Array3D<T>& zeta, Array3D<T>& eps) = 0;
 
 	};
 

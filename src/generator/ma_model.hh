@@ -68,17 +68,8 @@ namespace arma {
 			validate_process(_theta);
 		}
 
-		inline void
-		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
-			operator()(zeta, eps, zeta.domain());
-		}
-
 		void
-		operator()(
-			Array3D<T>& zeta,
-			Array3D<T>& eps,
-			const Domain3D& subdomain
-		) override;
+		operator()(Array3D<T>& zeta, Array3D<T>& eps) override;
 
 		template <class X>
 		friend std::istream&

@@ -23,12 +23,7 @@ namespace arma {
 	public:
 		inline void
 		operator()(Discrete_function<T,3>& zeta) {
-			operator()(zeta, zeta.domain());
-		}
-
-		inline void
-		operator()(Discrete_function<T,3>& zeta, const Domain3D& subdomain) {
-			generate(zeta, subdomain);
+			generate(zeta);
 		}
 
 		void
@@ -61,10 +56,10 @@ namespace arma {
 		determine_coefficients(const Domain<T,2>& sdom, T wave_height);
 
 		void
-		generate_surface(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
+		generate_surface(Discrete_function<T,3>& zeta);
 
 		void
-		generate(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
+		generate(Discrete_function<T,3>& zeta);
 	};
 
 	template <class T>

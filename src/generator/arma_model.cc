@@ -40,13 +40,9 @@ arma::ARMA_model<T>::white_noise_variance(Array3D<T> phi, Array3D<T> theta) cons
 
 template <class T>
 void
-arma::ARMA_model<T>::operator()(
-	Array3D<T>& zeta,
-	Array3D<T>& eps,
-	const Domain3D& subdomain
-) {
-	Moving_average_model<T>::operator()(zeta, eps, subdomain);
-	Autoregressive_model<T>::operator()(zeta, zeta, subdomain);
+arma::ARMA_model<T>::operator()(Array3D<T>& zeta, Array3D<T>& eps) {
+	Moving_average_model<T>::operator()(zeta, eps);
+	Autoregressive_model<T>::operator()(zeta, zeta);
 }
 
 template <class T>

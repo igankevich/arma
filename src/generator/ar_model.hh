@@ -61,11 +61,7 @@ namespace arma {
 		Generate wavy surface realisation.
 		*/
 		void
-		operator()(
-			Array3D<T>& zeta,
-			Array3D<T>& eps,
-			const Domain3D& subdomain
-		) override;
+		operator()(Array3D<T>& zeta, Array3D<T>& eps) override;
 
 		inline void
 		determine_coefficients() override {

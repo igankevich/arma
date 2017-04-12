@@ -21,23 +21,14 @@ arma::Moving_average_model<T>::white_noise_variance(
 
 template <class T>
 void
-arma::Moving_average_model<T>::operator()(
-	Array3D<T>& zeta,
-	Array3D<T>& eps,
-	const Domain3D& subdomain
-) {
+arma::Moving_average_model<T>::operator()(Array3D<T>& zeta, Array3D<T>& eps) {
 	const Shape3D fsize = _theta.shape();
-	const Shape3D& lbound = subdomain.lbound();
-	const Shape3D& ubound = subdomain.ubound();
-	const int t0 = lbound(0);
-	const int x0 = lbound(1);
-	const int y0 = lbound(2);
-	const int t1 = ubound(0);
-	const int x1 = ubound(1);
-	const int y1 = ubound(2);
-	for (int t = t0; t <= t1; t++) {
-		for (int x = x0; x <= x1; x++) {
-			for (int y = y0; y <= y1; y++) {
+	const int nt = zeta.extent(0);
+	const int nx = zeta.extent(1);
+	const int ny = zeta.extent(2);
+	for (int t = 0; t < nt; t++) {
+		for (int x = 0; x < nx; x++) {
+			for (int y = 0; y < ny; y++) {
 				const int m1 = std::min(t + 1, fsize[0]);
 				const int m2 = std::min(x + 1, fsize[1]);
 				const int m3 = std::min(y + 1, fsize[2]);

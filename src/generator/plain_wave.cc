@@ -96,30 +96,19 @@ arma::bits::to_string(Function rhs) {
 
 template <class T>
 void
-arma::Plain_wave<T>::generate(
-	Discrete_function<T,3>& zeta,
-	const Domain3D& subdomain
-) {
+arma::Plain_wave<T>::generate(Discrete_function<T, 3>& zeta) {
 	using constants::_2pi;
 	const T shift = get_shift();
-	const Shape3D& lbound = subdomain.lbound();
-	const Shape3D& ubound = subdomain.ubound();
-	const int t0 = lbound(0);
-	const int j0 = lbound(1);
-	const int k0 = lbound(2);
-	const int t1 = ubound(0);
-	const int j1 = ubound(1);
-	const int k1 = ubound(2);
-	const Domain<T,3> dom(
-		zeta.grid().length() * (ubound-lbound) / zeta.grid().num_points(),
-		ubound-lbound+1
-	);
+	const int nt = zeta.extent(0);
+	const int nx = zeta.extent(1);
+	const int ny = zeta.extent(2);
+	const Domain<T,3> dom(zeta.grid().length(), zeta.shape());
 	#if ARMA_OPENMP
 	#pragma omp parallel for collapse(3)
 	#endif
-	for (int t = t0; t <= t1; t++) {
-		for (int j = j0; j <= j1; j++) {
-			for (int k = k0; k <= k1; k++) {
+	for (int t = 0; t < nt; t++) {
+		for (int j = 0; j < nx; j++) {
+			for (int k = 0; k < ny; k++) {
 				const T x = dom(j, 1);
 				const T y = dom(k, 2);
 				zeta(t, j, k) = blitz::sum(
