@@ -14,7 +14,6 @@ common_src = [
 if get_option('framework') == 'opencl'
 	common_src += [
 		'opencl/opencl.cc',
-		'opencl/kernel.cc',
 	]
 endif
 
@@ -40,7 +39,7 @@ if get_option('with_small_amplitude_solver')
 		'velocity/small_amplitude_solver/linear_interpolation.cc',
 	]
 	arma_cpp_args += '-DWITH_SMALL_AMPLITUDE_SOLVER' 
-	arma_deps += [libCGAL, libgmp]
+	arma_depn += [libCGAL, libgmp]
 endif
 
 if get_option('framework') == 'opencl'

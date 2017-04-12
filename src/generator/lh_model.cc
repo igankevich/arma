@@ -2,8 +2,7 @@
 #include "physical_constants.hh"
 #include "params.hh"
 #if ARMA_OPENCL
-#include "opencl/kernel.hh"
-#include "opencl/buffer.hh"
+#include "opencl/opencl.hh"
 #include "opencl/vec.hh"
 #endif
 
@@ -98,27 +97,49 @@ arma::Longuet_Higgins_model<T>::determine_coefficients(
 template <class T>
 void
 arma::Longuet_Higgins_model<T>::generate_surface(Discrete_function<T, 3>& zeta) {
-	Vec3D<size_t> shp = zeta.shape();
-	opencl::Buffer<T> bcoef(_coef.data(), _coef.numElements(), CL_MEM_READ_ONLY);
-	opencl::Buffer<T> beps(_eps.data(), _eps.numElements(), CL_MEM_READ_ONLY);
-	opencl::Buffer<T> bzeta(zeta.numElements(), CL_MEM_WRITE_ONLY);
-	opencl::Kernel kernel(
-		"generate_surface",
-		LH_MODEL_SRC,
-		{shp(0), shp(1), shp(2)},
-		{}
-	);
+	using opencl::context;
+	using opencl::command_queue;
+	using opencl::get_kernel;
 	typedef opencl::Vec<Vec2D<T>,T,2> Vec2;
 	typedef opencl::Vec<Vec2D<int>,int,2> Int2;
 	typedef opencl::Vec<Vec3D<T>,T,3> Vec3;
-	kernel(
-		bcoef, beps, bzeta,
-		Vec2(_spec_domain.lbound()),
-		Vec2(_spec_domain.ubound()),
-		Int2(_spec_domain.num_patches()),
-		Vec3(_outgrid.length())
+	Vec3D<size_t> shp = zeta.shape();
+	cl::Buffer bcoef(
+		context(),
+		_coef.data(),
+		_coef.data() + _coef.numElements(),
+		true
 	);
-	bzeta.copy_out(zeta.data(), zeta.numElements());
+	cl::Buffer beps(
+		context(),
+		_eps.data(),
+		_eps.data() + _eps.numElements(),
+		true
+	);
+	cl::Buffer bzeta(
+		context(),
+		CL_MEM_WRITE_ONLY,
+		zeta.numElements()*sizeof(T)
+	);
+	cl::Kernel kernel = get_kernel("generate_surface", LH_MODEL_SRC);
+	kernel.setArg(0, bcoef);
+	kernel.setArg(1, beps);
+	kernel.setArg(2, bzeta);
+	kernel.setArg(3, Vec2(_spec_domain.lbound()));
+	kernel.setArg(4, Vec2(_spec_domain.ubound()));
+	kernel.setArg(5, Int2(_spec_domain.num_patches()));
+	kernel.setArg(6, Vec3(_outgrid.length()));
+	command_queue().enqueueNDRangeKernel(
+		kernel,
+		cl::NullRange,
+		cl::NDRange(shp(0), shp(1), shp(2))
+	);
+	cl::copy(
+		command_queue(),
+		bzeta,
+		zeta.data(),
+		zeta.data() + zeta.numElements()
+	);
 }
 
 #else

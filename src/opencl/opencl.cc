@@ -10,7 +10,7 @@
 #include <iterator>
 #include <unordered_map>
 #include <stdexcept>
-#include <memory>
+#include <exception>
 
 namespace cl {
 
@@ -19,6 +19,11 @@ namespace cl {
 		return out
 			<< "name=" << rhs.getInfo<CL_PLATFORM_NAME>()
 			<< ",vendor=" << rhs.getInfo<CL_PLATFORM_VENDOR>();
+	}
+
+	std::ostream&
+	operator<<(std::ostream& out, const cl::Error& err) {
+		return out << "ERROR: " << err.what() << '(' << err.err() << ')';
 	}
 
 }
@@ -32,17 +37,9 @@ namespace {
 
 	[[noreturn]] void
 	print_error_and_exit(cl::Error err) {
-		std::cerr
-			<< "ERROR: "
-			<< err.what()
-			<< '('
-			<< err.err()
-			<< ')'
-			<< std::endl;
+		std::cerr << err << std::endl;
 		std::exit(1);
 	}
-
-	#include "get_opencl_error_string.cc"
 
 	enum struct Device_type: cl_device_type {
 		Default = CL_DEVICE_TYPE_DEFAULT,
@@ -184,14 +181,14 @@ namespace {
 			_cmdqueue = cl::CommandQueue(_context, _devices[0], 0);
 		}
 
-		cl_context
+		cl::Context
 		context() const noexcept {
-			return _context();
+			return _context;
 		}
 
-		cl_command_queue
+		cl::CommandQueue
 		command_queue() const noexcept {
-			return _cmdqueue();
+			return _cmdqueue;
 		}
 
 		void
@@ -248,12 +245,12 @@ namespace {
 }
 
 
-cl_context
+cl::Context
 arma::opencl::context() {
 	return __opencl_instance.context();
 }
 
-cl_command_queue
+cl::CommandQueue
 arma::opencl::command_queue() {
 	return __opencl_instance.command_queue();
 }
@@ -263,7 +260,7 @@ arma::opencl::compile(const char* src) {
 	__opencl_instance.compile(src);
 }
 
-cl_kernel
+cl::Kernel
 arma::opencl::get_kernel(const char* name, const char* src) {
 	cl_kernel kernel = __opencl_instance.get_kernel(name);
 	if (!kernel) {
@@ -274,16 +271,5 @@ arma::opencl::get_kernel(const char* name, const char* src) {
 		std::cerr << "OpenCL kernel not found: " << name << std::endl;
 		throw std::runtime_error("bad kernel");
 	}
-	return kernel;
-}
-
-void
-arma::opencl::check_err(cl_int err, const char* description) {
-	if (err != CL_SUCCESS) {
-		std::cerr
-			<< "OpenCL error " << err << " in " << description << ':'
-			<< " error_code=" << get_opencl_error_string(err)
-			<< std::endl;
-		std::exit(err);
-	}
+	return cl::Kernel(kernel);
 }

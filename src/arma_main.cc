@@ -12,16 +12,28 @@
 #include "velocity/small_amplitude_solver.hh"
 #endif
 
+#if ARMA_OPENCL
+#include "opencl/opencl.hh"
+#endif
+
 void
 print_exception_and_terminate() {
 	if (std::exception_ptr ptr = std::current_exception()) {
 		try {
 			std::rethrow_exception(ptr);
+		#if ARMA_OPENCL
+		} catch (cl::Error err) {
+			std::cerr << err << std::endl;
+			std::abort();
+		#endif
 		} catch (const std::exception& e) {
 			std::cerr << "ERROR: " << e.what() << std::endl;
-		} catch (...) { std::cerr << "UNKNOWN ERROR. Aborting." << std::endl; }
+			std::abort();
+		} catch (...) {
+			std::cerr << "UNKNOWN ERROR. Aborting." << std::endl;
+		}
 	}
-	std::exit(1);
+	std::abort();
 }
 
 void
