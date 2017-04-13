@@ -19,13 +19,6 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 	} int3_union;
 
 	kernel void
-	compute_velocity_field(
-		global const T* phi,
-		const T4 outgrid_length
-	) {
-	}
-
-	kernel void
 	compute_window_function(
 		const T3 grid_length,
 		const T h,
