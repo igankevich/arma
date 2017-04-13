@@ -206,7 +206,15 @@ namespace {
 			};
 			_context = cl::Context(cl_device_type(device_type), props);
 			_devices = _context.getInfo<CL_CONTEXT_DEVICES>();
-			_cmdqueue = cl::CommandQueue(_context, _devices[0], 0);
+			cl_command_queue_properties qprops = 0;
+			auto supported = _devices[0].getInfo<CL_DEVICE_QUEUE_PROPERTIES>();
+			if (supported & CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE) {
+				qprops |= CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE;
+			}
+			#if ARMA_PROFILE
+			qprops |= CL_QUEUE_PROFILING_ENABLE;
+			#endif
+			_cmdqueue = cl::CommandQueue(_context, _devices[0], qprops);
 		}
 
 		cl::Context
