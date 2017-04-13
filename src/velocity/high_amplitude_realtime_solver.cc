@@ -73,10 +73,10 @@ arma::velocity::High_amplitude_realtime_solver<T>::setup(
 	cl::detail::errHandler(err, "clfftSetLayout");
 	err = clfftSetResultLocation(_fftplan, CLFFT_INPLACE);
 	cl::detail::errHandler(err, "clfftSetResultLocation");
-	err = clfftBakePlan(_fftplan, 1, &command_queue()(), nullptr, nullptr);
-	cl::detail::errHandler(err, "clfftBakePlan");
 	err = clfftSetPlanBatchSize(_fftplan, grid.num_points(0));
 	cl::detail::errHandler(err, "clfftSetPlanBatchSize");
+	err = clfftBakePlan(_fftplan, 1, &command_queue()(), nullptr, nullptr);
+	cl::detail::errHandler(err, "clfftBakePlan");
 }
 
 template <class T>
