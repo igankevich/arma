@@ -16,9 +16,18 @@ namespace arma {
 		public Velocity_potential_solver<T> {
 
 		#if ARMA_OPENCL
-		cl::BufferGL _phi;
-		cl::BufferGL _wfunc;
+			#if ARMA_OPENGL
+				typedef cl::BufferGL buffer_type;
+			#else
+				typedef cl::Buffer buffer_type;
+			#endif
+		#else
+			typedef cl::Buffer buffer_type;
 		#endif
+
+		buffer_type _phi;
+		cl::Buffer _wfunc;
+		cl::Buffer _sfunc;
 
 		public:
 			Array4D<T>
@@ -27,6 +36,12 @@ namespace arma {
 		private:
 			void
 			compute_window_function(const Grid<T,3>& domain);
+
+			void
+			compute_second_function(const Discrete_function<T,3>& zeta);
+
+			void
+			compute_velocity_field(const Grid<T,3>& domain);
 		};
 
 	}

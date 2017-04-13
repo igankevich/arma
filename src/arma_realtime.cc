@@ -62,6 +62,7 @@ init_opencl() {
 	::arma::opencl::init();
 }
 
+#if ARMA_OPENGL
 void
 init_opengl(int argc, char* argv[]) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
@@ -74,6 +75,10 @@ init_opengl(int argc, char* argv[]) {
 	glutInitWindowPosition((screen_w - wnd_w) / 2, (screen_h - wnd_h) / 2);
 	glutCreateWindow("arma-realtime");
 }
+#else
+inline void
+init_opengl(int, char**) {}
+#endif
 
 int
 main(int argc, char* argv[]) {
