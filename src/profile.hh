@@ -29,15 +29,6 @@ namespace arma {
 	::arma::__profile(name, [&](){ block; })
 
 #else
-namespace arma {
-
-	template <class Func>
-	inline void
-	__profile(const char*, Func func) {
-		func();
-	}
-
-}
 #define ARMA_PROFILE_FUNC(func) func;
 #define ARMA_PROFILE_BLOCK(name, block) block
 #endif
