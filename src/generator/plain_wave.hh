@@ -45,7 +45,12 @@ namespace arma {
 	public:
 		inline void
 		operator()(Discrete_function<T,3>& zeta) {
-			generate(zeta);
+			operator()(zeta, zeta.domain());
+		}
+
+		inline void
+		operator()(Discrete_function<T,3>& zeta, const Domain3D& subdomain) {
+			generate(zeta, subdomain);
 		}
 
 		inline function_type
@@ -97,7 +102,7 @@ namespace arma {
 
 	private:
 		void
-		generate(Discrete_function<T,3>& zeta);
+		generate(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
 
 	};
 

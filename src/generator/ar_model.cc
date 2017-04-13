@@ -20,17 +20,26 @@ arma::Autoregressive_model<T>::white_noise_variance(Array3D<T> phi) const {
 
 template <class T>
 void
-arma::Autoregressive_model<T>::operator()(Array3D<T>& zeta, Array3D<T>& eps) {
+arma::Autoregressive_model<T>::operator()(
+	Array3D<T>& zeta,
+	Array3D<T>& eps,
+	const Domain3D& subdomain
+) {
 	if (std::addressof(zeta) != std::addressof(eps)) {
-		zeta = eps;
+		zeta(subdomain) = eps(subdomain);
 	}
 	const Shape3D fsize = _phi.shape();
-	const int nt = zeta.extent(0);
-	const int nx = zeta.extent(1);
-	const int ny = zeta.extent(2);
-	for (int t = 0; t < nt; t++) {
-		for (int x = 0; x < nx; x++) {
-			for (int y = 0; y < ny; y++) {
+	const Shape3D& lbound = subdomain.lbound();
+	const Shape3D& ubound = subdomain.ubound();
+	const int t0 = lbound(0);
+	const int x0 = lbound(1);
+	const int y0 = lbound(2);
+	const int t1 = ubound(0);
+	const int x1 = ubound(1);
+	const int y1 = ubound(2);
+	for (int t = t0; t <= t1; t++) {
+		for (int x = x0; x <= x1; x++) {
+			for (int y = y0; y <= y1; y++) {
 				const int m1 = std::min(t + 1, fsize[0]);
 				const int m2 = std::min(x + 1, fsize[1]);
 				const int m3 = std::min(y + 1, fsize[2]);

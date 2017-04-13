@@ -146,14 +146,22 @@ arma::Longuet_Higgins_model<T>::generate_surface(Discrete_function<T, 3>& zeta) 
 
 template <class T>
 void
-arma::Longuet_Higgins_model<T>::generate_surface(Discrete_function<T, 3>& zeta) {
+arma::Longuet_Higgins_model<T>::generate_surface(
+	Discrete_function<T,3>& zeta,
+	const Domain3D& subdomain
+) {
 	using std::cos;
 	using std::sin;
 	using constants::g;
 	using blitz::product;
-	const int nt = zeta.extent(0);
-	const int nx = zeta.extent(1);
-	const int ny = zeta.extent(2);
+	const Shape3D& lbound = subdomain.lbound();
+	const Shape3D& ubound = subdomain.ubound();
+	const int i0 = lbound(0);
+	const int j0 = lbound(1);
+	const int k0 = lbound(2);
+	const int i1 = ubound(0);
+	const int j1 = ubound(1);
+	const int k1 = ubound(2);
 	const int nomega = _spec_domain.num_patches(0);
 	const int ntheta = _spec_domain.num_patches(1);
 	std::atomic<int> counter(0);
@@ -162,9 +170,9 @@ arma::Longuet_Higgins_model<T>::generate_surface(Discrete_function<T, 3>& zeta) 
 	#if ARMA_OPENMP
 	#pragma omp parallel for collapse(3)
 	#endif
-	for (int i=0; i<nt; ++i) {
-		for (int j=0; j<nx; ++j) {
-			for (int k=0; k<ny; ++k) {
+	for (int i=i0; i<=i1; ++i) {
+		for (int j=j0; j<=j1; ++j) {
+			for (int k=k0; k<=k1; ++k) {
 				const T t = _outgrid(i, 0);
 				const T x = _outgrid(j, 1);
 				const T y = _outgrid(k, 2);
@@ -217,8 +225,11 @@ arma::Longuet_Higgins_model<T>::generate_white_noise() {
 
 template <class T>
 void
-arma::Longuet_Higgins_model<T>::generate(Discrete_function<T, 3>& zeta) {
-	generate_surface(zeta);
+arma::Longuet_Higgins_model<T>::generate(
+	Discrete_function<T,3>& zeta,
+	const Domain3D& subdomain
+) {
+	generate_surface(zeta, subdomain);
 }
 
 template <class T>
