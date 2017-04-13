@@ -12,6 +12,11 @@
 #include <stdexcept>
 #include <exception>
 
+#if ARMA_OPENGL
+#include <GL/glx.h>
+#include <CL/cl_gl.h>
+#endif
+
 namespace cl {
 
 	std::ostream&
@@ -110,16 +115,17 @@ namespace {
 		std::unordered_map<std::string,cl::Kernel> _kernels;
 
 	public:
-		OpenCL() {
+		void
+		init_opencl() {
 			try {
-				init_opencl();
+				do_init_opencl();
 			} catch (cl::Error err) {
 				print_error_and_exit(err);
 			}
 		}
 
 		void
-		init_opencl() {
+		do_init_opencl() {
 			std::string platform_name;
 			Device_type device_type = Device_type::Default;
 			{
@@ -173,8 +179,29 @@ namespace {
 				result->getInfo<CL_PLATFORM_VENDOR>()
 			);
 			arma::write_key_value(std::clog, "OpenCL device type", device_type);
+			#if ARMA_OPENGL
+			const std::string extensions = result->getInfo<CL_PLATFORM_EXTENSIONS>();
+			if (extensions.find("cl_khr_gl_sharing") == std::string::npos) {
+				std::clog << "OpenCL and OpenGL context sharing is not supported. "
+					"Terminating."
+					<< std::endl;
+				std::exit(1);
+			}
+			GLXContext glx_context = ::glXGetCurrentContext();
+			Display* glx_display = ::glXGetCurrentDisplay();
+			if (!glx_context || !glx_display) {
+				std::clog << "Unable to get current GLX display or context. "
+					"Please, initialise OpenGL before OpenCL. "
+					"Terminating." << std::endl;
+				std::exit(1);
+			}
+			#endif
 			cl_context_properties props[] = {
 				CL_CONTEXT_PLATFORM, (cl_context_properties) (*result)(),
+				#if ARMA_OPENGL
+				CL_GL_CONTEXT_KHR, (cl_context_properties) glx_context,
+				CL_GLX_DISPLAY_KHR, (cl_context_properties) glx_display,
+				#endif
 				0
 			};
 			_context = cl::Context(cl_device_type(device_type), props);
@@ -273,4 +300,9 @@ arma::opencl::get_kernel(const char* name, const char* src) {
 		throw std::runtime_error("bad kernel");
 	}
 	return cl::Kernel(kernel);
+}
+
+void
+arma::opencl::init() {
+	__opencl_instance.init_opencl();
 }

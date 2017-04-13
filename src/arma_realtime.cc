@@ -7,11 +7,25 @@
 #include "arma_driver.hh"
 #include "velocity/high_amplitude_realtime_solver.hh"
 
+#if ARMA_OPENGL
+#include <GL/gl.h>
+#include <GL/freeglut.h>
+#endif
+
+#if ARMA_OPENCL
+#include "opencl/opencl.hh"
+#endif
+
 void
 print_exception_and_terminate() {
 	if (std::exception_ptr ptr = std::current_exception()) {
 		try {
 			std::rethrow_exception(ptr);
+		#if ARMA_OPENCL
+		} catch (cl::Error err) {
+			std::cerr << err << std::endl;
+			std::abort();
+		#endif
 		} catch (const std::exception& e) {
 			std::cerr << "ERROR: " << e.what() << std::endl;
 		} catch (...) { std::cerr << "UNKNOWN ERROR. Aborting." << std::endl; }
@@ -43,6 +57,24 @@ register_vpsolver(Driver& drv, std::string key) {
 	drv.template register_velocity_potential_solver<Solver>(key);
 }
 
+void
+init_opencl() {
+	::arma::opencl::init();
+}
+
+void
+init_opengl(int argc, char* argv[]) {
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInit(&argc, argv);
+	int wnd_w = 800;
+	int wnd_h = 600;
+	int screen_w = glutGet(GLUT_SCREEN_WIDTH);
+	int screen_h = glutGet(GLUT_SCREEN_HEIGHT);
+	glutInitWindowSize(wnd_w, wnd_h);
+	glutInitWindowPosition((screen_w - wnd_w) / 2, (screen_h - wnd_h) / 2);
+	glutCreateWindow("arma-realtime");
+}
+
 int
 main(int argc, char* argv[]) {
 
@@ -50,6 +82,9 @@ main(int argc, char* argv[]) {
 	/// Throw domain-specific exception later.
 	gsl_set_error_handler(print_error_and_continue);
 	std::set_terminate(print_exception_and_terminate);
+
+	init_opengl(argc, argv);
+	init_opencl();
 
 	using namespace arma;
 

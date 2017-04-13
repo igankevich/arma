@@ -60,6 +60,11 @@ register_vpsolver(Driver& drv, std::string key) {
 	drv.template register_velocity_potential_solver<Solver>(key);
 }
 
+void
+init_opencl() {
+	::arma::opencl::init();
+}
+
 int
 main(int argc, char* argv[]) {
 
@@ -67,6 +72,8 @@ main(int argc, char* argv[]) {
 	/// Throw domain-specific exception later.
 	gsl_set_error_handler(print_error_and_continue);
 	std::set_terminate(print_exception_and_terminate);
+
+	init_opencl();
 
 	using namespace arma;
 

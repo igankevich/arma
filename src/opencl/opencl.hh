@@ -16,6 +16,8 @@ namespace arma {
 
 	namespace opencl {
 
+		void init();
+
 		cl::Context context();
 
 		cl::CommandQueue command_queue();
