@@ -6,8 +6,6 @@ project(
 	default_options: ['cpp_std=c++14']
 )
 
-meson.add_postconf_script('scripts/copy-input-files')
-
 executable_prefix = 'arma'
 
 cpp = meson.get_compiler('cpp')
