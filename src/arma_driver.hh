@@ -214,14 +214,6 @@ namespace arma {
 		}
 
 	private:
-		#if ARMA_OPENCL
-		template <class Model>
-		void
-		generate_wavy_surface(Model& model) {
-			std::cerr << "OpenCL is enabled for LH model only." << std::endl;
-			std::exit(1);
-		}
-		#else
 		template <class Model>
 		void
 		generate_wavy_surface(Model& model) {
@@ -250,9 +242,8 @@ namespace arma {
 				verify(model.acf(), zeta, model);
 			}
 		}
-		#endif
 
-		#if ARMA_NONE
+		#if ARMA_NONE || ARMA_OPENCL
 
 		template <class Model>
 		Array3D<T>
@@ -265,7 +256,7 @@ namespace arma {
 				std::ref(prng)
 			);
 			Array3D<T> zeta(eps.shape());
-			model(zeta, eps);
+			model(zeta, eps, zeta.domain());
 			return zeta;
 		}
 

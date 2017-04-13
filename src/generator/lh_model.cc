@@ -96,7 +96,10 @@ arma::Longuet_Higgins_model<T>::determine_coefficients(
 
 template <class T>
 void
-arma::Longuet_Higgins_model<T>::generate_surface(Discrete_function<T, 3>& zeta) {
+arma::Longuet_Higgins_model<T>::generate_surface(
+	Discrete_function<T,3>& zeta,
+	const Domain3D& subdomain
+) {
 	using opencl::context;
 	using opencl::command_queue;
 	using opencl::get_kernel;
