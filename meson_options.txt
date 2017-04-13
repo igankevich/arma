@@ -29,3 +29,9 @@ option(
 	choices: ['float', 'double'],
 	value: 'double'
 )
+
+option(
+	'profile',
+	type: 'boolean',
+	value: false
+)

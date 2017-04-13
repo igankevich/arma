@@ -2,6 +2,7 @@
 #include "params.hh"
 #include "validators.hh"
 #include "interpolate.hh"
+#include "profile.hh"
 
 template<class T>
 void
@@ -40,21 +41,23 @@ arma::velocity::Velocity_potential_solver<T>::operator()(
 	precompute(zeta);
 	for (int i=0; i<nt; ++i) {
 		const T t = _domain(i, 0);
-		precompute(zeta, t);
+		ARMA_PROFILE_FUNC(precompute(zeta, t));
 		#if ARMA_OPENMP
 		#pragma omp parallel for
 		#endif
 		for (int j=0; j<nz; ++j) {
 			const T z = _domain(j, 1);
 			Array2D<T> res = compute_velocity_field_2d(zeta, arr_size, z, t);
-			res(0,0) = interpolate({1,1}, {1,2}, {2,1}, res, {0,0});
-			for (int k=1; k<nx; ++k) {
-				res(k,0) = interpolate({k-1,1}, {k,1}, {k-1,2}, res, {k,0});
-			}
-			for (int l=1; l<ny; ++l) {
-				res(0,l) = interpolate({1,l-1}, {1,l}, {2,l-1}, res, {0,l});
-			}
-			result(i, j, Range::all(), Range::all()) = res;
+			ARMA_PROFILE_BLOCK("interpolate",
+				res(0,0) = interpolate({1,1}, {1,2}, {2,1}, res, {0,0});
+				for (int k=1; k<nx; ++k) {
+					res(k,0) = interpolate({k-1,1}, {k,1}, {k-1,2}, res, {k,0});
+				}
+				for (int l=1; l<ny; ++l) {
+					res(0,l) = interpolate({1,l-1}, {1,l}, {2,l-1}, res, {0,l});
+				}
+				result(i, j, Range::all(), Range::all()) = res;
+			);
 		}
 //		std::clog << "Finished time slice ["
 //			<< (i+1) << '/' << nt << ']'

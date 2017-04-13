@@ -70,6 +70,11 @@ add_global_arguments(
 	language: 'cpp'
 )
 
+if get_option('profile')
+	add_global_arguments('-DARMA_PROFILE=1', language: 'cpp')
+endif
+
+
 run_target('doc', command: 'scripts/generate-docs')
 run_target('graphs', command: [
 	'gnuplot',
