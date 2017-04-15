@@ -180,13 +180,6 @@ namespace {
 			);
 			arma::write_key_value(std::clog, "OpenCL device type", device_type);
 			#if ARMA_OPENGL
-			const std::string extensions = result->getInfo<CL_PLATFORM_EXTENSIONS>();
-			if (extensions.find("cl_khr_gl_sharing") == std::string::npos) {
-				std::clog << "OpenCL and OpenGL context sharing is not supported. "
-					"Terminating."
-					<< std::endl;
-				std::exit(1);
-			}
 			GLXContext glx_context = ::glXGetCurrentContext();
 			Display* glx_display = ::glXGetCurrentDisplay();
 			if (!glx_context || !glx_display) {
@@ -206,6 +199,12 @@ namespace {
 			};
 			_context = cl::Context(cl_device_type(device_type), props);
 			_devices = _context.getInfo<CL_CONTEXT_DEVICES>();
+			const std::string extensions = _devices[0].getInfo<CL_DEVICE_EXTENSIONS>();
+			if (extensions.find("cl_khr_gl_sharing") == std::string::npos) {
+				std::clog << "OpenCL and OpenGL context sharing (cl_khr_gl_sharing) "
+					"is not supported. Terminating." << std::endl;
+				std::exit(1);
+			}
 			cl_command_queue_properties qprops = 0;
 			auto supported = _devices[0].getInfo<CL_DEVICE_QUEUE_PROPERTIES>();
 			if (supported & CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE) {
