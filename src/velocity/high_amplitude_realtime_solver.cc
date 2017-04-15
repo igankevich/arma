@@ -74,6 +74,7 @@ arma::Array4D<T>
 arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 	const Discrete_function<T,3>& zeta
 ) {
+	using blitz::shape;
 	const Shape3D& zeta_size = zeta.shape();
 	const Shape2D arr_size(zeta_size(1), zeta_size(2));
 	const int nt = this->_domain.num_points(0);
@@ -84,6 +85,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 		{nz, nx, ny},
 		{this->_domain.length(1), zeta.grid().length(1), zeta.grid().length(2)}
 	);
+	Array4D<T> result(shape(nt, nz, nx, ny));
 	ARMA_PROFILE_BLOCK("setup",
 		setup(zeta, grid);
 	);
@@ -97,8 +99,16 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 		ARMA_PROFILE_BLOCK("fft",
 			compute_velocity_field(grid);
 		);
+		const int stride_t = result.stride(0);
+		std::clog << "stride_t=" << stride_t << std::endl;
+		cl::copy(
+			opencl::command_queue(),
+			_phi,
+			result.data() + i*stride_t,
+			result.data() + (i+1)*stride_t
+		);
 	}
-	return Array4D<T>();
+	return result;
 }
 
 template <class T>
@@ -154,19 +164,34 @@ arma::velocity::High_amplitude_realtime_solver<T>::compute_velocity_field(
 	const Grid<T,3>& domain
 ) {
 	using opencl::command_queue;
-	CHECK(clfftEnqueueTransform(
-		_fftplan,
-		CLFFT_FORWARD,
-		1,
-		&command_queue()(),
-		0,
-		nullptr,
-		nullptr,
-		&_phi(),
-		nullptr,
-		nullptr
-	));
+	const int nz = domain.num_points(0);
+	const int nx = domain.num_points(1);
+	const int ny = domain.num_points(2);
+	const int stride_z = nx*ny;
+	for (int i=0; i<nz; ++i) {
+		cl_buffer_region region;
+		region.origin = i*stride_z*sizeof(T);
+		region.size = stride_z*sizeof(T);
+		cl::Buffer phi_slice_z = _phi.createSubBuffer(
+			CL_MEM_READ_WRITE,
+			CL_BUFFER_CREATE_TYPE_REGION,
+			&region
+		);
+		CHECK(clfftEnqueueTransform(
+			_fftplan,
+			CLFFT_FORWARD,
+			1,
+			&command_queue()(),
+			0,
+			nullptr,
+			nullptr,
+			&phi_slice_z(),
+			nullptr,
+			nullptr
+		));
+	}
 	command_queue().finish();
+	std::clog << "finish" << std::endl;
 }
 
 template class arma::velocity::High_amplitude_realtime_solver<ARMA_REAL_TYPE>;

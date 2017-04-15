@@ -178,7 +178,6 @@ namespace {
 				"OpenCL platform vendor",
 				result->getInfo<CL_PLATFORM_VENDOR>()
 			);
-			arma::write_key_value(std::clog, "OpenCL device type", device_type);
 			#if ARMA_OPENGL
 			GLXContext glx_context = ::glXGetCurrentContext();
 			Display* glx_display = ::glXGetCurrentDisplay();
@@ -210,6 +209,11 @@ namespace {
 			if (supported & CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE) {
 				qprops |= CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE;
 			}
+			arma::write_key_value(
+				std::clog,
+				"OpenCL device type",
+				Device_type(_devices[0].getInfo<CL_DEVICE_TYPE>())
+			);
 			#if ARMA_PROFILE
 			qprops |= CL_QUEUE_PROFILING_ENABLE;
 			#endif
