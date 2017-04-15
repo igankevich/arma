@@ -14,21 +14,18 @@ namespace {
 
 }
 
+#define CHECK(x) ::cl::detail::errHandler((x), #x);
+
 template <class T>
 arma::velocity::High_amplitude_realtime_solver<T>::High_amplitude_realtime_solver() {
-	cl_int err = clfftInitSetupData(&this->_fft);
-	cl::detail::errHandler(err, "clfftInitSetupData");
-	err = clfftSetup(&this->_fft);
-	cl::detail::errHandler(err, "clfftSetup");
+	CHECK(clfftInitSetupData(&this->_fft));
+	CHECK(clfftSetup(&this->_fft));
 }
 
 template <class T>
 arma::velocity::High_amplitude_realtime_solver<T>::~High_amplitude_realtime_solver() {
-	cl_int err = CL_SUCCESS;
-	err = clfftDestroyPlan(&this->_fftplan);
-	cl::detail::errHandler(err, "clfftDestroyPlan");
-	err = clfftTeardown();
-	cl::detail::errHandler(err, "clfftTeardown");
+	CHECK(clfftDestroyPlan(&this->_fftplan));
+	CHECK(clfftTeardown());
 }
 
 template <class T>
@@ -54,29 +51,22 @@ arma::velocity::High_amplitude_realtime_solver<T>::setup(
 			product(grid.num_points())*sizeof(T)*2
 		);
 	}
-	cl_int err = CL_SUCCESS;
 	Vector<size_t,2> lengths(grid.num_points(1), grid.num_points(2));
-	err = clfftCreateDefaultPlan(&_fftplan, context()(), CLFFT_2D, lengths.data());
-	cl::detail::errHandler(err, "clfftCreateDefaultPlan");
+	CHECK(clfftCreateDefaultPlan(&_fftplan, context()(), CLFFT_2D, lengths.data()));
 	clfftPrecision prec = std::conditional<
 		std::is_same<T,float>::value,
 		std::integral_constant<clfftPrecision,CLFFT_SINGLE>,
 		std::integral_constant<clfftPrecision,CLFFT_DOUBLE>
 	>::type::value;
-	err = clfftSetPlanPrecision(_fftplan, prec);
-	cl::detail::errHandler(err, "clfftSetPlanPrecision");
-	err = clfftSetLayout(
+	CHECK(clfftSetPlanPrecision(_fftplan, prec));
+	CHECK(clfftSetLayout(
 		_fftplan,
 		CLFFT_COMPLEX_INTERLEAVED,
 		CLFFT_COMPLEX_INTERLEAVED
-	);
-	cl::detail::errHandler(err, "clfftSetLayout");
-	err = clfftSetResultLocation(_fftplan, CLFFT_INPLACE);
-	cl::detail::errHandler(err, "clfftSetResultLocation");
-	err = clfftSetPlanBatchSize(_fftplan, grid.num_points(0));
-	cl::detail::errHandler(err, "clfftSetPlanBatchSize");
-	err = clfftBakePlan(_fftplan, 1, &command_queue()(), nullptr, nullptr);
-	cl::detail::errHandler(err, "clfftBakePlan");
+	));
+	CHECK(clfftSetResultLocation(_fftplan, CLFFT_INPLACE));
+	CHECK(clfftSetPlanBatchSize(_fftplan, grid.num_points(0)));
+	CHECK(clfftBakePlan(_fftplan, 1, &command_queue()(), nullptr, nullptr));
 }
 
 template <class T>
@@ -164,8 +154,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::compute_velocity_field(
 	const Grid<T,3>& domain
 ) {
 	using opencl::command_queue;
-	cl_int err = CL_SUCCESS;
-	err = clfftEnqueueTransform(
+	CHECK(clfftEnqueueTransform(
 		_fftplan,
 		CLFFT_FORWARD,
 		1,
@@ -176,9 +165,10 @@ arma::velocity::High_amplitude_realtime_solver<T>::compute_velocity_field(
 		&_phi(),
 		nullptr,
 		nullptr
-	);
-	cl::detail::errHandler(err, "clfftEnqueueTransform");
+	));
 	command_queue().finish();
 }
 
 template class arma::velocity::High_amplitude_realtime_solver<ARMA_REAL_TYPE>;
+
+#undef CHECK
