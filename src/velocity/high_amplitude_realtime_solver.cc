@@ -5,6 +5,7 @@
 #include "profile.hh"
 #include "derivative.hh"
 #include "physical_constants.hh"
+#include "util.hh"
 
 #include <complex>
 #include <type_traits>
@@ -12,13 +13,59 @@
 #include <fstream>
 #endif
 
+#define CHECK(x) ::cl::detail::errHandler((x), #x);
+
 namespace {
 
 #include "high_amplitude_realtime_solver_opencl.cc"
 
-}
+	void
+	debug_print(clfftPlanHandle h) {
+		clfftLayout iLayout, oLayout;
+		size_t batchSize;
+		clfftDim dim;
+		cl_uint dimSize;
+		size_t iDist, oDist;
+		CHECK(clfftGetLayout(h, &iLayout, &oLayout));
+		CHECK(clfftGetPlanBatchSize(h, &batchSize));
+		CHECK(clfftGetPlanDim(h, &dim, &dimSize));
+		CHECK(clfftGetPlanDistance(h, &iDist, &oDist));
+		arma::Array1D<size_t> inStrides(blitz::shape(dimSize));
+		CHECK(clfftGetPlanInStride(h, dim, inStrides.data()));
+		arma::Array1D<size_t> outStrides(blitz::shape(dimSize));
+		CHECK(clfftGetPlanOutStride(h, dim, outStrides.data()));
+		arma::Array1D<size_t> lengths(blitz::shape(dimSize));
+		CHECK(clfftGetPlanLength(h, dim, lengths.data()));
+		clfftPrecision precision;
+		CHECK(clfftGetPlanPrecision(h, &precision));
+		cl_float scale_forward, scale_backward;
+		CHECK(clfftGetPlanScale(h, CLFFT_FORWARD, &scale_forward));
+		CHECK(clfftGetPlanScale(h, CLFFT_BACKWARD, &scale_backward));
+		clfftResultTransposed tr;
+		CHECK(clfftGetPlanTransposeResult(h, &tr));
+		clfftResultLocation loc;
+		CHECK(clfftGetResultLocation(h, &loc));
+		size_t tmpbufsize;
+		CHECK(clfftGetTmpBufSize(h, &tmpbufsize));
+		arma::write_key_value(std::clog, "iLayout", iLayout);
+		arma::write_key_value(std::clog, "oLayout", oLayout);
+		arma::write_key_value(std::clog, "batchSize", batchSize);
+		arma::write_key_value(std::clog, "dim", dim);
+		arma::write_key_value(std::clog, "dimSize", dimSize);
+		arma::write_key_value(std::clog, "iDist", iDist);
+		arma::write_key_value(std::clog, "oDist", oDist);
+		arma::write_key_value(std::clog, "inStrides", inStrides);
+		arma::write_key_value(std::clog, "outStrides", outStrides);
+		arma::write_key_value(std::clog, "lengths", lengths);
+		arma::write_key_value(std::clog, "precision", precision);
+		arma::write_key_value(std::clog, "scale_forward", scale_forward);
+		arma::write_key_value(std::clog, "scale_backward", scale_backward);
+		arma::write_key_value(std::clog, "tr", tr);
+		arma::write_key_value(std::clog, "loc", loc);
+		arma::write_key_value(std::clog, "tmpbufsize", tmpbufsize);
+	}
 
-#define CHECK(x) ::cl::detail::errHandler((x), #x);
+}
 
 template <class T>
 arma::velocity::High_amplitude_realtime_solver<T>::High_amplitude_realtime_solver() {
@@ -71,16 +118,15 @@ arma::velocity::High_amplitude_realtime_solver<T>::setup(
 		CLFFT_COMPLEX_INTERLEAVED
 	));
 	CHECK(clfftSetResultLocation(_fftplan, CLFFT_INPLACE));
-	//CHECK(clfftSetPlanBatchSize(_fftplan, grid.num_points(0)));
-	CHECK(clfftSetPlanBatchSize(_fftplan, 1));
+	CHECK(clfftSetPlanBatchSize(_fftplan, grid.num_points(0)));
 	CHECK(clfftSetPlanScale(_fftplan, CLFFT_FORWARD, 1.f));
-	const cl_float scale = 1.f / _2pi<float>
-		/ (grid.num_points(1) * grid.num_points(2));
+	const cl_float scale = 1.f / (grid.num_points(1) * grid.num_points(2));
 	CHECK(clfftSetPlanScale(_fftplan, CLFFT_BACKWARD, scale));
 	size_t strides[2] = {size_t(grid.num_points(2)), 1};
 	CHECK(clfftSetPlanInStride(_fftplan, CLFFT_2D, strides));
 	CHECK(clfftSetPlanOutStride(_fftplan, CLFFT_2D, strides));
 	CHECK(clfftBakePlan(_fftplan, 1, &command_queue()(), nullptr, nullptr));
+	debug_print(_fftplan);
 }
 
 template <class T>

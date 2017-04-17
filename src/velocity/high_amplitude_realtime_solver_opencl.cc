@@ -18,6 +18,11 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 		int elem[sizeof(int3)];
 	} int3_union;
 
+	int
+	rotate_right(const int idx, const int n) {
+		return (idx + n/2)%n;
+	}
+
 	kernel void
 	compute_window_function(
 		const T3 grid_length,
@@ -32,8 +37,8 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 		const int j = get_global_id(1);
 		const int k = get_global_id(2);
 		const T z = min_z + grid_length.s0 / (nz-1) * i;
-		const T kx = grid_length.s1 / (nkx-1) * j;
-		const T ky = grid_length.s2 / (nky-1) * k;
+		const T kx = grid_length.s1 / (nkx-1) * rotate_right(j, nkx);
+		const T ky = grid_length.s2 / (nky-1) * rotate_right(k, nky);
 		const T l = 2 * M_PI * length((T2)(kx,ky));
 		const T numerator = cosh(l*(z + h));
 		const T denominator = l*cosh(l*h);
@@ -99,35 +104,41 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 		const int nkx = get_global_size(1);
 		const int nky = get_global_size(2);
 		const int i = get_global_id(0);
-		const int j = get_global_id(1);
-		const int k = get_global_id(2);
+		const int j = rotate_right(get_global_id(1), nkx);
+		const int k = rotate_right(get_global_id(2), nky);
 		const int idx = i*nkx*nky + j*nky + k;
-		if (j == 0 && k == 0) {
-			result[idx] = result[i*nkx*nky + 1*nky + 1];
+		const int j0 = rotate_right(0, nkx);
+		const int j1 = j0 + 1;
+		const int j2 = j0 + 2;
+		const int k0 = rotate_right(0, nky);
+		const int k1 = k0 + 1;
+		const int k2 = k0 + 2;
+		if (j == j0 && k == k0) {
+			result[idx] = result[i*nkx*nky + (j+1)*nky + (k+1)];
 		}
-		if (j >= 1 && k == 0) {
+		if (j != j0 && k == k0) {
 			result[idx] = interpolate(
-				(int2)(j-1,1),
-				(int2)(j,1),
-				(int2)(j-1,2),
+				(int2)((j-1+nkx)%nkx,k1),
+				(int2)(j,k1),
+				(int2)((j-1+nkx)%nkx,k2),
 				result,
 				i, nz, nkx, nky,
-				(int2)(j,0)
+				(int2)(j,k0)
 			);
 		}
-		if (j == 0 && k >= 1) {
+		if (j == j0 && k != k0) {
 			result[idx] = interpolate(
-				(int2)(1,k-1),
-				(int2)(1,k),
-				(int2)(2,k-1),
+				(int2)(j1,(k-1+nky)%nky),
+				(int2)(j1,k),
+				(int2)(j2,(k-1+nky)%nky),
 				result,
 				i, nz, nkx, nky,
-				(int2)(0,k)
+				(int2)(j0,k)
 			);
 		}
-		if (!isfinite(result[idx])) {
-			printf("result inf at %i,%i,%i\n", i, j, k);
-		}
+		//if (!isfinite(result[idx])) {
+		//	printf("result inf at %i,%i,%i\n", i, j, k);
+		//}
 	}
 
 	kernel void
