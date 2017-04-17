@@ -14,7 +14,7 @@ right_top_x <- max(phi$x)
 # slice time and Y ranges through the center
 slice_t <- middle_element(unique(phi$t))
 slice_y <- middle_element(unique(phi$y))
-print(paste('Middle elements (TY) = ', slice_t, slice_y))
+print(paste('Middle elements of phi (TY) = ', slice_t, slice_y))
 phi_slice <- phi[phi$t == slice_t & phi$y == slice_y & phi$x >= left_top_x & phi$z >= -8,]
 x <- unique(phi_slice$x)
 z <- unique(phi_slice$z)
@@ -35,9 +35,13 @@ u <- with(phi_slice, {
 
 # get wave profile
 zeta <- read.csv('zeta.csv')
-zeta_slice <- zeta[zeta$t == slice_t & zeta$y == slice_y & zeta$x >= left_top_x,]
+slice_t_2 <- slice_t
+slice_y_2 <- middle_element(unique(zeta$y))
+print(paste('Middle elements of zeta (TY) = ', slice_t_2, slice_y_2))
+zeta_slice <- zeta[zeta$t == slice_t_2 & zeta$y == slice_y_2 & zeta$x >= left_top_x,]
 #print(zeta_slice)
 #print(x)
+
 
 
 phi_range <- range(phi_slice[phi_slice$z <= zeta_slice$z, "phi"])
@@ -47,6 +51,7 @@ rx <- range(x)
 rz <- range(z)
 aspect_ratio <- (rx[[2]] - rx[[1]]) / (rz[[2]] - rz[[1]])
 print(aspect_ratio)
+aspect_ratio <- 1
 # plot the image
 cairo_pdf(filename="u.pdf", width=2.5*aspect_ratio, height=5)
 #par(pty="s")

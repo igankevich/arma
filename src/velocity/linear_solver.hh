@@ -17,6 +17,11 @@ namespace arma {
 			typedef std::complex<T> Cmplx;
 			Fourier_transform<Cmplx,2> _fft;
 			Array3D<Cmplx> _zeta_t;
+			#if ARMA_DEBUG_FFT
+			Array3D<T> _wnfunc;
+			Array3D<Cmplx> _fft_1;
+			int _idxz = 0;
+			#endif
 
 		protected:
 			void

@@ -6,12 +6,19 @@
 
 #include <stdexcept>
 #include <cmath>
+#if ARMA_DEBUG_FFT
+#include <fstream>
+#endif
 
 template <class T>
 void
 arma::velocity::Linear_solver<T>::precompute(const Discrete_function<T,3>& zeta) {
 	_fft.init(Shape2D(zeta.extent(1), zeta.extent(2)));
 	_zeta_t.resize(zeta.shape());
+	#if ARMA_DEBUG_FFT
+	_wnfunc.resize(this->_domain.num_points(1), zeta.extent(1), zeta.extent(2));
+	_fft_1.resize(this->_domain.num_points(1), zeta.extent(1), zeta.extent(2));
+	#endif
 }
 
 template <class T>
@@ -56,6 +63,14 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 			<< z << ",depth=" << this->_depth << '.' << std::endl;
 		throw std::runtime_error("bad multiplier");
 	}
+	#if ARMA_DEBUG_FFT
+	_wnfunc(_idxz, Range::all(), Range::all()) = mult;
+	if (_idxz+1 == this->_domain.num_points(1)) {
+		std::ofstream("wn_func_openmp") << _wnfunc;
+		std::ofstream("zeta_t_openmp")
+			<< blitz::real(_zeta_t(idx_t, Range::all(), Range::all()));
+	}
+	#endif
 	Array2D<T> ret(arr_size);
 	ARMA_PROFILE_BLOCK("fft",
 		/// 2. Compute \f$\zeta_t\f$.
@@ -72,8 +87,19 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 			\right\}
 		\f]
 		*/
-		ret = blitz::real(_fft.backward(_fft.forward(phi) *= mult)).copy();
+		phi = _fft.forward(phi);
+		#if ARMA_DEBUG_FFT
+		_fft_1(_idxz, Range::all(), Range::all()) = phi;
+		if (_idxz+1 == this->_domain.num_points(1)) {
+			std::ofstream("fft_1_openmp") << _fft_1;
+		}
+		#endif
+		phi *= mult;
+		ret = blitz::real(_fft.backward(phi)).copy();
 	);
+	#if ARMA_DEBUG_FFT
+	++_idxz;
+	#endif
 	return ret;
 }
 

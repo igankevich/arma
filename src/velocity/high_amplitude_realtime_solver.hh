@@ -41,10 +41,17 @@ namespace arma {
 
 		private:
 			void
-			setup(const Discrete_function<T,3>& zeta, const Grid<T,3>& domain);
+			setup(
+				const Discrete_function<T,3>& zeta,
+				const Grid<T,3>& grid,
+				const Grid<T,3>& wngrid
+			);
 
 			void
 			compute_window_function(const Grid<T,3>& domain);
+
+			void
+			interpolate_window_function(const Grid<T,3>& domain);
 
 			void
 			compute_second_function(
@@ -53,7 +60,10 @@ namespace arma {
 			);
 
 			void
-			compute_velocity_field(const Grid<T,3>& domain);
+			multiply_functions(const Grid<T,3>& grid);
+
+			void
+			fft(const Grid<T,3>& grid, clfftDirection dir);
 		};
 
 	}

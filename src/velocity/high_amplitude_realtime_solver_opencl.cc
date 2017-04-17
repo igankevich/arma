@@ -5,7 +5,7 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 
 	typedef ARMA_REAL_TYPE T;
 	typedef NEW_VEC(ARMA_REAL_TYPE,2) T2;
-	typedef NEW_VEC(ARMA_REAL_TYPE,3) T3;
+	typedef NEW_VEC(ARMA_REAL_TYPE,4) T3; // use cl_double4 instead of cl_double3
 	typedef NEW_VEC(ARMA_REAL_TYPE,4) T4;
 
 	typedef union {
@@ -21,6 +21,7 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 	kernel void
 	compute_window_function(
 		const T3 grid_length,
+		const T min_z,
 		const T h,
 		global T* result
 	) {
@@ -30,13 +31,103 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 		const int i = get_global_id(0);
 		const int j = get_global_id(1);
 		const int k = get_global_id(2);
-		const T z = grid_length.s0 / (nz-1) * i;
+		const T z = min_z + grid_length.s0 / (nz-1) * i;
 		const T kx = grid_length.s1 / (nkx-1) * j;
 		const T ky = grid_length.s2 / (nky-1) * k;
 		const T l = 2 * M_PI * length((T2)(kx,ky));
 		const T numerator = cosh(l*(z + h));
 		const T denominator = l*cosh(l*h);
 		result[i*nkx*nky + j*nky + k] = 4 * M_PI * numerator / denominator;
+	}
+
+	T3
+	interpolation_polynomial(
+		const int2 x1,
+		const int2 x2,
+		const int2 x3,
+		global const T* f,
+		const int i,
+		const int nz,
+		const int nkx,
+		const int nky
+	) {
+		const int idx1 = i*nkx*nky + x1.s0*nky + x1.s1;
+		const int idx2 = i*nkx*nky + x2.s0*nky + x2.s1;
+		const int idx3 = i*nkx*nky + x3.s0*nky + x3.s1;
+		return (T3)(
+ (f[idx2]*x1.s1 - f[idx3]*x1.s1 - f[idx1]*x2.s1 +
+	f[idx3]*x2.s1 + f[idx1]*x3.s1 - f[idx2]*x3.s1)/
+  (x2.s0*x1.s1 - x3.s0*x1.s1 - x1.s0*x2.s1 +
+	x3.s0*x2.s1 + x1.s0*x3.s1 - x2.s0*x3.s1),
+
+(f[idx3]*(-x1.s0 + x2.s0) +
+	f[idx2]*(x1.s0 - x3.s0) +
+	f[idx1]*(-x2.s0 + x3.s0))/
+  (x3.s0*(x1.s1 - x2.s1) +
+	x1.s0*(x2.s1 - x3.s1) +
+	x2.s0*(-x1.s1 + x3.s1)),
+
+(f[idx3]*x2.s0*x1.s1 -
+	f[idx2]*x3.s0*x1.s1 - f[idx3]*x1.s0*x2.s1 +
+	f[idx1]*x3.s0*x2.s1 + f[idx2]*x1.s0*x3.s1 -
+	f[idx1]*x2.s0*x3.s1)/
+  (x2.s0*x1.s1 - x3.s0*x1.s1 - x1.s0*x2.s1 +
+	x3.s0*x2.s1 + x1.s0*x3.s1 - x2.s0*x3.s1),
+  		0
+  		);
+	}
+
+	T
+	interpolate(
+		const int2 x1,
+		const int2 x2,
+		const int2 x3,
+		global const T* f,
+		const int i,
+		const int nz,
+		const int nkx,
+		const int nky,
+		const int2 x
+	) {
+		T3 coef = interpolation_polynomial(x1, x2, x3, f, i, nz, nkx, nky);
+		return coef.s0*x.s0 + coef.s1*x.s1 + coef.s2;
+	}
+
+	kernel void
+	interpolate_window_function(global T* result) {
+		const int nz = get_global_size(0);
+		const int nkx = get_global_size(1);
+		const int nky = get_global_size(2);
+		const int i = get_global_id(0);
+		const int j = get_global_id(1);
+		const int k = get_global_id(2);
+		const int idx = i*nkx*nky + j*nky + k;
+		if (j == 0 && k == 0) {
+			result[idx] = result[i*nkx*nky + 1*nky + 1];
+		}
+		if (j >= 1 && k == 0) {
+			result[idx] = interpolate(
+				(int2)(j-1,1),
+				(int2)(j,1),
+				(int2)(j-1,2),
+				result,
+				i, nz, nkx, nky,
+				(int2)(j,0)
+			);
+		}
+		if (j == 0 && k >= 1) {
+			result[idx] = interpolate(
+				(int2)(1,k-1),
+				(int2)(1,k),
+				(int2)(2,k-1),
+				result,
+				i, nz, nkx, nky,
+				(int2)(0,k)
+			);
+		}
+		if (!isfinite(result[idx])) {
+			printf("result inf at %i,%i,%i\n", i, j, k);
+		}
 	}
 
 	kernel void
@@ -82,6 +173,21 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 			const T zeta2 = zeta[IDX(idx2)];
 			result[off0] = (zeta2 - zeta1) / denominator;
 		}
+	}
+
+	kernel void
+	multiply_functions(
+		global T2* sfunc,
+		global const T* wfunc
+	) {
+		const int nz = get_global_size(0);
+		const int nkx = get_global_size(1);
+		const int nky = get_global_size(2);
+		const int i = get_global_id(0);
+		const int j = get_global_id(1);
+		const int k = get_global_id(2);
+		const int off = i*nkx*nky + j*nky + k;
+		sfunc[off] *= wfunc[off];
 	}
 
 );
