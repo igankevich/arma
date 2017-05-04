@@ -42,7 +42,7 @@ usage(char* argv0) {
 int
 main(int argc, char* argv[]) {
 	size_t ngenerators = 128;
-	std::string filename = arma::config::mt_config_file;
+	std::string filename = MT_CONFIG_FILE;
 	bool help_requested = false;
 	int opt = 0;
 	while ((opt = ::getopt(argc, argv, "n:o:h")) != -1) {

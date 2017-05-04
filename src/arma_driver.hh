@@ -292,7 +292,7 @@ namespace arma {
 			/// 1. Read parallel Mersenne Twister states.
 			std::vector<mt_config> prng_config;
 			read_parallel_mt_config(
-				config::mt_config_file,
+				MT_CONFIG_FILE,
 				std::back_inserter(prng_config)
 			);
 			const int nprngs = prng_config.size();

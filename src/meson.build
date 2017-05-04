@@ -9,6 +9,8 @@ common_src = [
 	'generator/lh_model.cc',
 	'ma_algorithm.cc',
 	'interpolate.cc',
+	'verification_scheme.cc',
+	'simulation_model.cc',
 ]
 
 if get_option('framework') == 'opencl'
