@@ -136,6 +136,21 @@ namespace arma {
 			return _vscheme;
 		}
 
+		Grid<T,3>
+		velocity_potential_grid() const {
+			const int nz = _vpsolver->domain().num_points(1);
+			const int nx = _outgrid.num_points(1);
+			const int ny = _outgrid.num_points(2);
+			return Grid<T,3>(
+				{nz, nx, ny},
+				{
+					_vpsolver->domain().length(1),
+					_outgrid.length(1),
+					_outgrid.length(2)
+				}
+			);
+		}
+
 		void
 		write_wavy_surface(std::string filename, Output_format fmt) {
 			switch (fmt) {
@@ -429,7 +444,7 @@ namespace arma {
 		void
 		verify(Array3D<T> acf, Array3D<T> zeta, Model model) {
 			switch (_vscheme) {
-				case Verification_scheme::None:
+				case Verification_scheme::No_verification:
 					break;
 				case Verification_scheme::Summary:
 				case Verification_scheme::Quantile:

@@ -9,6 +9,10 @@
 #include "opencl/opencl.hh"
 #endif
 
+#if ARMA_OPENGL
+#include "opengl.hh"
+#endif
+
 namespace arma {
 
 	namespace velocity {
@@ -17,18 +21,15 @@ namespace arma {
 		class High_amplitude_realtime_solver:
 		public Velocity_potential_solver<T> {
 
-			#if ARMA_OPENCL
-				#if ARMA_OPENGL
-					typedef cl::BufferGL buffer_type;
-				#else
-					typedef cl::Buffer buffer_type;
-				#endif
-			#else
-				typedef cl::Buffer buffer_type;
-			#endif
-
-			buffer_type _phi;
+			/// Velocity potential scala field.
+			cl::Buffer _phi;
 			cl::Buffer _wfunc;
+
+			/// Velocity potential vector field (CL/GL shared buffer).
+			cl::BufferGL _vphi;
+			/// GL buffer name.
+			GLuint _glphi = 0;
+
 			clfftSetupData _fft;
 			clfftPlanHandle _fftplan;
 
@@ -38,6 +39,13 @@ namespace arma {
 
 			Array4D<T>
 			operator()(const Discrete_function<T,3>& zeta) override;
+
+			#if ARMA_OPENGL
+			inline void
+			set_gl_buffer_name(GLuint name) noexcept {
+				_glphi = name;
+			}
+			#endif
 
 		private:
 			void

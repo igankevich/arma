@@ -4,7 +4,7 @@
 #include <fstream>
 #include <algorithm>
 
-#include <GL/gl.h>
+#include "opengl.hh"
 #include <GL/freeglut.h>
 #include <GL/freeglut_ext.h>
 

@@ -4,11 +4,11 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "arma_driver.hh"
+#include "arma_realtime_driver.hh"
 #include "velocity/high_amplitude_realtime_solver.hh"
 
 #if ARMA_OPENGL
-#include <GL/gl.h>
+#include "opengl.hh"
 #include <GL/freeglut.h>
 #endif
 
@@ -115,7 +115,7 @@ main(int argc, char* argv[]) {
 		usage(argv[0]);
 	} else {
 		/// input file with various driver parameters
-		ARMA_driver<T> driver;
+		ARMA_realtime_driver<T> driver;
 		using namespace velocity;
 		register_vpsolver<High_amplitude_realtime_solver<T>>(
 			driver,

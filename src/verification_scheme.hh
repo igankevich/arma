@@ -7,7 +7,7 @@
 namespace arma {
 
 	enum struct Verification_scheme {
-		None = 0,
+		No_verification = 0,
 		Summary = 1,
 		Quantile = 2,
 		Manual = 3,

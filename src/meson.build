@@ -63,11 +63,14 @@ if get_option('with_high_amplitude_realtime_solver')
 		'velocity/basic_solver.cc',
 		'velocity/high_amplitude_realtime_solver.cc',
 	]
-	arma_realtime_cpp_args = arma_cpp_args + ['-DARMA_OPENGL=0']
+	arma_realtime_cpp_args = arma_cpp_args + ['-DARMA_OPENGL=1']
 	arma_realtime_deps = arma_deps + [libglut, libGL, libclFFT] + parallel_deps
 	executable(
 		executable_prefix + '-realtime',
-		sources: arma_realtime_src + ['arma_realtime.cc'],
+		sources: arma_realtime_src + [
+			'arma_realtime.cc',
+			'arma_realtime_driver.cc'
+		],
 		include_directories: incdirs,
 		dependencies: arma_realtime_deps,
 		cpp_args: arma_realtime_cpp_args,

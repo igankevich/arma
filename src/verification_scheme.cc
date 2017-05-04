@@ -8,7 +8,7 @@ arma::operator>>(std::istream& in, Verification_scheme& rhs) {
 	std::string name;
 	in >> std::ws >> name;
 	if (name == "none") {
-		rhs = Verification_scheme::None;
+		rhs = Verification_scheme::No_verification;
 	} else if (name == "summary") {
 		rhs = Verification_scheme::Summary;
 	} else if (name == "quantile") {
@@ -26,7 +26,7 @@ arma::operator>>(std::istream& in, Verification_scheme& rhs) {
 const char*
 arma::to_string(Verification_scheme rhs) {
 	switch (rhs) {
-		case Verification_scheme::None: return "none";
+		case Verification_scheme::No_verification: return "none";
 		case Verification_scheme::Summary: return "summary";
 		case Verification_scheme::Quantile: return "quantile";
 		case Verification_scheme::Manual: return "manual";

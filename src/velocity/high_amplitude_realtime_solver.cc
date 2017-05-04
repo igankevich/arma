@@ -9,6 +9,7 @@
 
 #include <complex>
 #include <type_traits>
+#include <stdexcept>
 #if ARMA_DEBUG_FFT
 #include <fstream>
 #endif
@@ -91,14 +92,24 @@ arma::velocity::High_amplitude_realtime_solver<T>::setup(
 	using blitz::product;
 	using constants::_2pi;
 	if (!this->_wfunc()) {
-		this->_wfunc = buffer_type(
+		this->_wfunc = cl::Buffer(
 			context(),
 			CL_MEM_READ_WRITE,
 			product(wngrid.num_points())*sizeof(T)
 		);
 	}
 	if (!_phi()) {
-		_phi = buffer_type(
+		#if ARMA_OPENGL
+		if (this->_glphi == 0) {
+			throw std::runtime_error("bad GL buffer name");
+		}
+		_vphi = cl::BufferGL(
+			context(),
+			CL_MEM_READ_WRITE,
+			this->_glphi
+		);
+		#endif
+		_phi = cl::Buffer(
 			context(),
 			CL_MEM_READ_WRITE,
 			product(grid.num_points())*sizeof(std::complex<T>)

@@ -13,7 +13,7 @@
 #include <exception>
 
 #if ARMA_OPENGL
-#include <GL/glx.h>
+#include "opengl.hh"
 #include <CL/cl_gl.h>
 #endif
 
