@@ -102,7 +102,7 @@ namespace arma {
 		_partition(0,0,0)
 		{}
 
-		~ARMA_driver() {
+		virtual ~ARMA_driver() {
 			delete _vpsolver;
 		}
 

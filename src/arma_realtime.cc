@@ -62,11 +62,76 @@ init_opencl() {
 	::arma::opencl::init();
 }
 
+arma::ARMA_realtime_driver<ARMA_REAL_TYPE>* driver_ptr = nullptr;
+
 #if ARMA_OPENGL
+void
+onKeyPressed(unsigned char key, int, int) {
+	if (key == 'q') {
+		glutLeaveMainLoop();
+	}
+	if (key == 'r') {
+		glutPostRedisplay();
+	}
+}
+
+void
+onDisplay() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.25, 0.25, 0.25, 1.0);
+
+	if (driver_ptr) {
+		driver_ptr->on_display();
+	}
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+	glDisable(GL_DEPTH_TEST);
+
+	glRasterPos2i(-1, -1);
+	glColor3f(1, 1, 1);
+	glutBitmapString(GLUT_BITMAP_HELVETICA_18,
+	                 (const unsigned char*)"text");
+
+	glEnable(GL_DEPTH_TEST);
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+
+	glutSwapBuffers();
+}
+
+void
+onResize(int w, int h) {
+	std::clog << __func__ << std::endl;
+	glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	// gluPerspective(30.0, (GLfloat)w / (GLfloat)h, 0.1, 100000.0f);
+	// glOrtho(-10, 10, -10, 10, 0.1, 1000);
+	// The following code is a fancy bit of math that is eqivilant to calling:
+	// // gluPerspective( fieldOfView/2.0f, width/height , 0.1f, 255.0f )
+	// // We do it this way simply to avoid requiring glu.h
+	GLfloat zNear = 0.1f;
+	GLfloat zFar = 25500.0f;
+	GLfloat aspect = float(w) / float(h);
+	GLfloat fH = tan(float(60 / 360.0f * 3.14159f)) * zNear;
+	GLfloat fW = fH * aspect;
+	glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+
 void
 init_opengl(int argc, char* argv[]) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInit(&argc, argv);
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 	int wnd_w = 800;
 	int wnd_h = 600;
 	int screen_w = glutGet(GLUT_SCREEN_WIDTH);
@@ -74,6 +139,15 @@ init_opengl(int argc, char* argv[]) {
 	glutInitWindowSize(wnd_w, wnd_h);
 	glutInitWindowPosition((screen_w - wnd_w) / 2, (screen_h - wnd_h) / 2);
 	glutCreateWindow("arma-realtime");
+	glutDisplayFunc(onDisplay);
+	glutKeyboardFunc(onKeyPressed);
+	glutReshapeFunc(onResize);
+	glEnable(GL_LINE_SMOOTH);
+	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+	glEnable(GL_BLEND);
+	glDisable(GL_DEPTH_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	onResize(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 }
 #else
 inline void
@@ -111,11 +185,11 @@ main(int argc, char* argv[]) {
 		}
 	}
 
+	arma::ARMA_realtime_driver<T> driver;
+	driver_ptr = &driver;
 	if (help_requested || input_filename.empty()) {
 		usage(argv[0]);
 	} else {
-		/// input file with various driver parameters
-		ARMA_realtime_driver<T> driver;
 		using namespace velocity;
 		register_vpsolver<High_amplitude_realtime_solver<T>>(
 			driver,
@@ -133,12 +207,6 @@ main(int argc, char* argv[]) {
 		try {
 			driver.generate_wavy_surface();
 			driver.compute_velocity_potentials();
-			driver.write_wavy_surface("zeta", Output_format::Blitz);
-			driver.write_velocity_potentials("phi", Output_format::Blitz);
-			if (driver.vscheme() == Verification_scheme::Manual) {
-				driver.write_wavy_surface("zeta.csv", Output_format::CSV);
-				driver.write_velocity_potentials("phi.csv", Output_format::CSV);
-			}
 		} catch (const prng_error& err) {
 			if (err.ngenerators() == 0) {
 				std::cerr << "No parallel Mersenne Twisters configuration is found. "
@@ -151,6 +219,8 @@ main(int argc, char* argv[]) {
 			}
 		}
 	}
+	glutPostRedisplay();
+	glutMainLoop();
 	return 0;
 }
 
