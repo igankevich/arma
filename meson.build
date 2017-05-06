@@ -16,6 +16,7 @@ liblapack = cpp.find_library('lapack')
 libblas = cpp.find_library('blas')
 libGL = cpp.find_library('GL')
 libglut = dependency('freeglut')
+libGLU = cpp.find_library('GLU')
 gtest = dependency('gtest', main: true)
 libCGAL = cpp.find_library(
 	'CGAL',

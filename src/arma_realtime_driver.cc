@@ -1,6 +1,10 @@
 #include "arma_realtime_driver.hh"
 #include "velocity/high_amplitude_realtime_solver.hh"
 
+#include <fstream>
+#include <algorithm>
+#include <iterator>
+
 template <class T>
 arma::ARMA_realtime_driver<T>::ARMA_realtime_driver():
 ARMA_driver<T>()
@@ -16,13 +20,17 @@ void
 arma::ARMA_realtime_driver<T>::on_display() {
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo_phi);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo_phi);
-	glColor3f(0.8f, 0.f, 0.f);
+	glColor3f(0.8f, 0, 0);
 	glDrawElements(GL_TRIANGLE_STRIP, _indices.size(), GL_UNSIGNED_INT, nullptr);
+
+	std::clog << __func__ << std::endl;
 }
 
 template <class T>
 void
 arma::ARMA_realtime_driver<T>::init_buffers() {
+	glGenVertexArrays(1, &_vao_phi);
+	glBindVertexArray(_vao_phi);
 	using blitz::product;
 	const GLsizei num_dimensions = 3;
 	GLsizei phi_size = product(this->velocity_potential_grid().num_points())
@@ -30,6 +38,8 @@ arma::ARMA_realtime_driver<T>::init_buffers() {
 	glGenBuffers(1, &_vbo_phi);
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo_phi);
 	glBufferData(GL_ARRAY_BUFFER, phi_size, nullptr, GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	typedef velocity::High_amplitude_realtime_solver<T> solver_type;
 	solver_type* solver = dynamic_cast<solver_type*>(this->velocity_potential_solver());
 	std::clog << "_vbo_phi=" << _vbo_phi << std::endl;
@@ -74,6 +84,14 @@ arma::ARMA_realtime_driver<T>::init_indices() {
 		_indices.data(),
 		GL_STATIC_DRAW
 	);
+	{
+		std::ofstream out("indices");
+		std::copy(
+			_indices.begin(),
+			_indices.end(),
+			std::ostream_iterator<index_type>(out, "\n")
+		);
+	}
 }
 
 template <class T>

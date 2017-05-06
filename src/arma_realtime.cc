@@ -75,62 +75,92 @@ onKeyPressed(unsigned char key, int, int) {
 	}
 }
 
+float ver[8][3] =
+{
+    {-1.0,-1.0,1.0},
+    {-1.0,1.0,1.0},
+    {1.0,1.0,1.0},
+    {1.0,-1.0,1.0},
+    {-1.0,-1.0,-1.0},
+    {-1.0,1.0,-1.0},
+    {1.0,1.0,-1.0},
+    {1.0,-1.0,-1.0},
+};
+
+GLfloat color[8][3] =
+{
+    {0.0,0.0,0.0},
+    {1.0,0.0,0.0},
+    {1.0,1.0,0.0},
+    {0.0,1.0,0.0},
+    {0.0,0.0,1.0},
+    {1.0,0.0,1.0},
+    {1.0,1.0,1.0},
+    {0.0,1.0,1.0},
+};
+
+void quad(int a,int b,int c,int d)
+{
+    glBegin(GL_QUADS);
+    glColor3fv(color[a]);
+    glVertex3fv(ver[a]);
+
+    glColor3fv(color[b]);
+    glVertex3fv(ver[b]);
+
+    glColor3fv(color[c]);
+    glVertex3fv(ver[c]);
+
+    glColor3fv(color[d]);
+    glVertex3fv(ver[d]);
+    glEnd();
+}
+
+void colorcube()
+{
+    quad(0,3,2,1);
+    quad(2,3,7,6);
+    quad(0,4,7,3);
+    quad(1,2,6,5);
+    quad(4,5,6,7);
+    quad(0,1,5,4);
+}
+
+
 void
 onDisplay() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.25, 0.25, 0.25, 1.0);
+	std::clog << __func__ << std::endl;
+	glClearColor(0.25, 0.25, 0.25, 1);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    int w = glutGet( GLUT_WINDOW_WIDTH );
+    int h = glutGet( GLUT_WINDOW_HEIGHT );
+    gluPerspective( 60, float(w) / h, 0.1, 100 );
+
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+	gluLookAt(
+		3, 3, 3,
+		0, 0, 0,
+		0, 0, 1
+	);
+
+	glRotatef( 0, 1.0, 0.0, 0.0 );
+	glRotatef( 0, 0.0, 1.0, 0.0 );
 
 	if (driver_ptr) {
 		driver_ptr->on_display();
 	}
 
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	glDisable(GL_DEPTH_TEST);
-
-	glRasterPos2i(-1, -1);
-	glColor3f(1, 1, 1);
-	glutBitmapString(GLUT_BITMAP_HELVETICA_18,
-	                 (const unsigned char*)"text");
-
-	glEnable(GL_DEPTH_TEST);
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-
 	glutSwapBuffers();
 }
 
 void
-onResize(int w, int h) {
-	std::clog << __func__ << std::endl;
-	glViewport(0, 0, w, h);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	// gluPerspective(30.0, (GLfloat)w / (GLfloat)h, 0.1, 100000.0f);
-	// glOrtho(-10, 10, -10, 10, 0.1, 1000);
-	// The following code is a fancy bit of math that is eqivilant to calling:
-	// // gluPerspective( fieldOfView/2.0f, width/height , 0.1f, 255.0f )
-	// // We do it this way simply to avoid requiring glu.h
-	GLfloat zNear = 0.1f;
-	GLfloat zFar = 25500.0f;
-	GLfloat aspect = float(w) / float(h);
-	GLfloat fH = tan(float(60 / 360.0f * 3.14159f)) * zNear;
-	GLfloat fW = fH * aspect;
-	glFrustum(-fW, fW, -fH, fH, zNear, zFar);
-	glMatrixMode(GL_MODELVIEW);
-}
-
-
-void
 init_opengl(int argc, char* argv[]) {
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 	int wnd_w = 800;
 	int wnd_h = 600;
@@ -141,13 +171,7 @@ init_opengl(int argc, char* argv[]) {
 	glutCreateWindow("arma-realtime");
 	glutDisplayFunc(onDisplay);
 	glutKeyboardFunc(onKeyPressed);
-	glutReshapeFunc(onResize);
-	glEnable(GL_LINE_SMOOTH);
-	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-	glEnable(GL_BLEND);
-	glDisable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	onResize(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	glEnable(GL_DEPTH_TEST);
 }
 #else
 inline void
@@ -219,7 +243,6 @@ main(int argc, char* argv[]) {
 			}
 		}
 	}
-	glutPostRedisplay();
 	glutMainLoop();
 	return 0;
 }

@@ -13,6 +13,7 @@
 #if ARMA_DEBUG_FFT
 #include <fstream>
 #endif
+#include <fstream>
 
 #define CHECK(x) ::cl::detail::errHandler((x), #x);
 
@@ -217,6 +218,19 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 			result.data() + i*stride_t,
 			result.data() + (i+1)*stride_t
 		);
+		ARMA_PROFILE_BLOCK("create_vector_field",
+			create_vector_field(grid);
+		);
+		{
+			Array1D<T> tmp(100);
+			cl::copy(
+				opencl::command_queue(),
+				_vphi,
+				tmp.data(),
+				tmp.data() + tmp.numElements()
+			);
+			std::ofstream("vphi") << tmp;
+		}
 	}
 	return blitz::real(result).copy();
 }
@@ -297,6 +311,25 @@ arma::velocity::High_amplitude_realtime_solver<T>::multiply_functions(
 	cl::Kernel kernel = opencl::get_kernel(__func__, HARTS_SRC);
 	kernel.setArg(0, this->_phi);
 	kernel.setArg(1, this->_wfunc);
+	opencl::command_queue().enqueueNDRangeKernel(
+		kernel,
+		cl::NullRange,
+		cl::NDRange(shp(0), shp(1), shp(2))
+	);
+}
+
+template <class T>
+void
+arma::velocity::High_amplitude_realtime_solver<T>::create_vector_field(
+	const Grid<T,3>& grid
+) {
+	typedef opencl::Vec<Vector<T,3>,T,3> Vec3;
+	const Vector<size_t,3> shp(grid.num_points());
+	cl::Kernel kernel = opencl::get_kernel(__func__, HARTS_SRC);
+	kernel.setArg(0, Vec3(grid.length()));
+	kernel.setArg(1, this->_domain.lbound(1));
+	kernel.setArg(2, this->_vphi);
+	kernel.setArg(3, this->_phi);
 	opencl::command_queue().enqueueNDRangeKernel(
 		kernel,
 		cl::NullRange,

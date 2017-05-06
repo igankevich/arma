@@ -72,6 +72,9 @@ namespace arma {
 
 			void
 			fft(const Grid<T,3>& grid, clfftDirection dir);
+
+			void
+			create_vector_field(const Grid<T,3>& grid);
 		};
 
 	}

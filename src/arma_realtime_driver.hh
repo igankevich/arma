@@ -14,6 +14,7 @@ namespace arma {
 
 		typedef GLuint index_type;
 
+		GLuint _vao_phi;
 		GLuint _vbo_phi;
 		GLuint _ibo_phi;
 		/// Indices of a vertex array for drawing wavy surface
