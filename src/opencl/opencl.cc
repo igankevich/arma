@@ -317,3 +317,12 @@ void
 arma::opencl::init() {
 	__opencl_instance.init_opencl();
 }
+
+arma::opencl::GL_object_guard::GL_object_guard(cl::Memory mem) {
+	_objs.emplace_back(mem);
+	command_queue().enqueueAcquireGLObjects(&_objs);
+}
+
+arma::opencl::GL_object_guard::~GL_object_guard() {
+	command_queue().enqueueReleaseGLObjects(&_objs);
+}

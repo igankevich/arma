@@ -26,6 +26,15 @@ namespace arma {
 
 		cl::Kernel get_kernel(const char* name, const char* src);
 
+		class GL_object_guard {
+			std::vector<cl::Memory> _objs;
+
+		public:
+			GL_object_guard(cl::Memory mem);
+			~GL_object_guard();
+
+		};
+
 	}
 
 }

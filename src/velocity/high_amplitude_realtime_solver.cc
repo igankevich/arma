@@ -7,6 +7,7 @@
 #include "physical_constants.hh"
 #include "util.hh"
 
+#include <vector>
 #include <complex>
 #include <type_traits>
 #include <stdexcept>
@@ -222,7 +223,9 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 			create_vector_field(grid);
 		);
 		{
+
 			Array1D<T> tmp(100);
+			opencl::GL_object_guard guard(_vphi);
 			cl::copy(
 				opencl::command_queue(),
 				_vphi,
