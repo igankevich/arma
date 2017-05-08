@@ -326,6 +326,7 @@ void
 arma::velocity::High_amplitude_realtime_solver<T>::create_vector_field(
 	const Grid<T,3>& grid
 ) {
+	opencl::GL_object_guard guard(_vphi);
 	typedef opencl::Vec<Vector<T,3>,T,3> Vec3;
 	const Vector<size_t,3> shp(grid.num_points());
 	cl::Kernel kernel = opencl::get_kernel(__func__, HARTS_SRC);
