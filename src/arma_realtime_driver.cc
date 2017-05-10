@@ -21,9 +21,7 @@ arma::ARMA_realtime_driver<T>::on_display() {
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo_phi);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo_phi);
 	glColor3f(0.8f, 0, 0);
-	glDrawElements(GL_TRIANGLE_STRIP, _indices.size(), GL_UNSIGNED_INT, nullptr);
-
-	std::clog << __func__ << std::endl;
+	glDrawElements(GL_LINE_STRIP, _indices.size(), GL_UNSIGNED_INT, nullptr);
 }
 
 template <class T>

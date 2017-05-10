@@ -65,12 +65,58 @@ init_opencl() {
 arma::ARMA_realtime_driver<ARMA_REAL_TYPE>* driver_ptr = nullptr;
 
 #if ARMA_OPENGL
+int dragX = 0;
+int dragY = 0;
+float scaleX = 1.0f;
+float rotateX = 0.0f;
+float rotateY = 0.0f;
+
+void
+rescale() {
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+	gluLookAt(
+		3, 3, 3,
+		0, 0, 0,
+		0, 0, 1
+	);
+	glRotatef(rotateX, 0, 1, 0);
+	glRotatef(rotateY, 1, 0, 0);
+	glScalef(scaleX, scaleX, scaleX);
+}
+
 void
 onKeyPressed(unsigned char key, int, int) {
 	if (key == 'q') {
 		glutLeaveMainLoop();
 	}
 	if (key == 'r') {
+		glutPostRedisplay();
+	}
+	const float step = 0.2f;
+	if (key == ']') {
+		if (scaleX >= 1.0f) {
+			if (scaleX < 1.0f + step) {
+				scaleX = 1.0f;
+			}
+			scaleX += step;
+		} else {
+			scaleX *= 2.0f;
+		}
+		rescale();
+		glutPostRedisplay();
+	}
+	if (key == '[') {
+		if (scaleX <= 1.0f) {
+			scaleX *= 0.5f;
+		} else {
+			if (scaleX - step < 1.0f) {
+				scaleX = 1.0f;
+			} else {
+				scaleX -= step;
+			}
+		}
+		rescale();
 		glutPostRedisplay();
 	}
 }
@@ -126,29 +172,35 @@ void colorcube()
     quad(0,1,5,4);
 }
 
+void
+onMouseButton(int, int, int x, int y) {
+	dragX = x;
+	dragY = y;
+}
+
+void
+onMouseDrag(int x, int y) {
+	rotateX += x - dragX;
+	rotateY += y - dragY;
+	dragX = x;
+	dragY = y;
+	rescale();
+	glutPostRedisplay();
+}
+
+void
+onResize(int w, int h) {
+	glViewport(0, 0, w, h);
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    gluPerspective( 60, float(w) / h, 0.1, 100 );
+	rescale();
+}
 
 void
 onDisplay() {
-	std::clog << __func__ << std::endl;
 	glClearColor(0.25, 0.25, 0.25, 1);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-    int w = glutGet( GLUT_WINDOW_WIDTH );
-    int h = glutGet( GLUT_WINDOW_HEIGHT );
-    gluPerspective( 60, float(w) / h, 0.1, 100 );
-
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity();
-	gluLookAt(
-		3, 3, 3,
-		0, 0, 0,
-		0, 0, 1
-	);
-
-	glRotatef( 0, 1.0, 0.0, 0.0 );
-	glRotatef( 0, 0.0, 1.0, 0.0 );
 
 	if (driver_ptr) {
 		driver_ptr->on_display();
@@ -171,6 +223,9 @@ init_opengl(int argc, char* argv[]) {
 	glutCreateWindow("arma-realtime");
 	glutDisplayFunc(onDisplay);
 	glutKeyboardFunc(onKeyPressed);
+	glutReshapeFunc(onResize);
+	glutMouseFunc(onMouseButton);
+	glutMotionFunc(onMouseDrag);
 	glEnable(GL_DEPTH_TEST);
 }
 #else

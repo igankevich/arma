@@ -219,13 +219,12 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 			result.data() + i*stride_t,
 			result.data() + (i+1)*stride_t
 		);
+		opencl::GL_object_guard guard(_vphi);
 		ARMA_PROFILE_BLOCK("create_vector_field",
 			create_vector_field(grid);
 		);
 		{
-
-			Array1D<T> tmp(100);
-			opencl::GL_object_guard guard(_vphi);
+			Array1D<T> tmp(std::min(100, 3*nz*nx*ny));
 			cl::copy(
 				opencl::command_queue(),
 				_vphi,
@@ -326,7 +325,6 @@ void
 arma::velocity::High_amplitude_realtime_solver<T>::create_vector_field(
 	const Grid<T,3>& grid
 ) {
-	opencl::GL_object_guard guard(_vphi);
 	typedef opencl::Vec<Vector<T,3>,T,3> Vec3;
 	const Vector<size_t,3> shp(grid.num_points());
 	cl::Kernel kernel = opencl::get_kernel(__func__, HARTS_SRC);

@@ -219,11 +219,9 @@ const char* HARTS_SRC = CL_PROGRAM_STRING_DEBUG_INFO ARMA_STRINGIFY(
 		const T z = min_z + grid_length.s0 / (nz-1) * i;
 		const T x = grid_length.s1 / (nkx-1) * j;
 		const T y = grid_length.s2 / (nky-1) * k;
-		if (i == 0) {
-			vphi[3*off + 0] = x;
-			vphi[3*off + 1] = y;
-			vphi[3*off + 2] = phi[off];
-		}
+		vphi[3*off + 0] = x;
+		vphi[3*off + 1] = y;
+		vphi[3*off + 2] = phi[off];
 	}
 
 );

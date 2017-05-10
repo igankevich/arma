@@ -30,9 +30,14 @@ namespace arma {
 			std::vector<cl::Memory> _objs;
 
 		public:
+			explicit
 			GL_object_guard(cl::Memory mem);
 			~GL_object_guard();
 
+			GL_object_guard() = delete;
+			GL_object_guard(const GL_object_guard&) = delete;
+			GL_object_guard(GL_object_guard&&) = delete;
+			GL_object_guard& operator=(const GL_object_guard&) = delete;
 		};
 
 	}
