@@ -39,7 +39,8 @@ arma::ARMA_realtime_driver<T>::init_buffers() {
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo_phi);
 	glBufferData(GL_ARRAY_BUFFER, phi_size, nullptr, GL_DYNAMIC_DRAW);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	using opengl::GL_type;
+	glVertexAttribPointer(0, 3, GL_type<T>::value, GL_FALSE, 0, 0);
 	typedef velocity::High_amplitude_realtime_solver<T> solver_type;
 	solver_type* solver = dynamic_cast<solver_type*>(this->velocity_potential_solver());
 	std::clog << "_vbo_phi=" << _vbo_phi << std::endl;
