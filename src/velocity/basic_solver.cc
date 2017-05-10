@@ -3,6 +3,9 @@
 #include "validators.hh"
 #include "interpolate.hh"
 #include "profile.hh"
+#if ARMA_PROFILE
+#include "profile_counters.hh"
+#endif
 
 template<class T>
 void
@@ -41,14 +44,14 @@ arma::velocity::Velocity_potential_solver<T>::operator()(
 	precompute(zeta);
 	for (int i=0; i<nt; ++i) {
 		const T t = _domain(i, 0);
-		ARMA_PROFILE_FUNC(precompute(zeta, t));
+		ARMA_PROFILE_FUNC_CNT(CNT_SECONDFUNC, precompute(zeta, t));
 		#if ARMA_OPENMP
 		#pragma omp parallel for
 		#endif
 		for (int j=0; j<nz; ++j) {
 			const T z = _domain(j, 1);
 			Array2D<T> res = compute_velocity_field_2d(zeta, arr_size, z, t);
-			ARMA_PROFILE_BLOCK("interpolate",
+			ARMA_PROFILE_BLOCK_CNT(CNT_FFT, "interpolate",
 				res(0,0) = interpolate({1,1}, {1,2}, {2,1}, res, {0,0});
 				for (int k=1; k<nx; ++k) {
 					res(k,0) = interpolate({k-1,1}, {k,1}, {k-1,2}, res, {k,0});

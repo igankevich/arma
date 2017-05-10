@@ -15,6 +15,9 @@
 #include <fstream>
 #endif
 #include <fstream>
+#if ARMA_PROFILE
+#include "profile_counters.hh"
+#endif
 
 #define CHECK(x) ::cl::detail::errHandler((x), #x);
 
@@ -170,14 +173,14 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 	);
 	for (int i=0; i<nt; ++i) {
 		const T idx_t = this->_domain(i, 0);
-		ARMA_PROFILE_BLOCK("second_function",
+		ARMA_PROFILE_BLOCK_CNT(CNT_SECONDFUNC, "second_function",
 			compute_second_function(zeta, idx_t);
 		);
-		ARMA_PROFILE_BLOCK("window_function::compute",
+		ARMA_PROFILE_BLOCK_CNT(CNT_WINDOWFUNC, "window_function::compute",
 			compute_window_function(wngrid);
 		);
 		opencl::command_queue().finish();
-		ARMA_PROFILE_BLOCK("window_function::interpolate",
+		ARMA_PROFILE_BLOCK_CNT(CNT_WINDOWFUNC, "window_function::interpolate",
 			interpolate_window_function(wngrid);
 		);
 		#if ARMA_DEBUG_FFT
@@ -192,7 +195,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 			std::ofstream("wn_func_opencl") << tmp;
 		}
 		#endif
-		ARMA_PROFILE_BLOCK("fft_1",
+		ARMA_PROFILE_BLOCK_CNT(CNT_FFT, "fft_1",
 			fft(grid, CLFFT_FORWARD);
 		);
 		#if ARMA_DEBUG_FFT
@@ -207,10 +210,10 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 			std::ofstream("fft_1_opencl") << tmp;
 		}
 		#endif
-		ARMA_PROFILE_BLOCK("multiply_functions",
+		ARMA_PROFILE_BLOCK_CNT(CNT_FFT, "multiply_functions",
 			multiply_functions(grid);
 		);
-		ARMA_PROFILE_BLOCK("fft_2",
+		ARMA_PROFILE_BLOCK_CNT(CNT_FFT, "fft_2",
 			fft(grid, CLFFT_BACKWARD);
 		);
 		cl::copy(
@@ -223,16 +226,16 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 		ARMA_PROFILE_BLOCK("create_vector_field",
 			create_vector_field(grid);
 		);
-		{
-			Array1D<T> tmp(std::min(100, 3*nz*nx*ny));
+		ARMA_PROFILE_BLOCK_CNT(CNT_DEVTOHOST_COPY, "copy_device_to_host",
+			Array1D<T> tmp(3*nz*nx*ny);
 			cl::copy(
 				opencl::command_queue(),
 				_vphi,
 				tmp.data(),
 				tmp.data() + tmp.numElements()
 			);
-			std::ofstream("vphi") << tmp;
-		}
+			//std::ofstream("vphi") << tmp;
+		);
 	}
 	return blitz::real(result).copy();
 }

@@ -13,6 +13,10 @@ common_src = [
 	'simulation_model.cc',
 ]
 
+if get_option('profile')
+	common_src += 'profile.cc'
+endif
+
 if get_option('framework') == 'opencl'
 	common_src += [
 		'opencl/opencl.cc',

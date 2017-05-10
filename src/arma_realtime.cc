@@ -16,6 +16,10 @@
 #include "opencl/opencl.hh"
 #endif
 
+#if ARMA_PROFILE
+#include "profile_counters.hh"
+#endif
+
 void
 print_exception_and_terminate() {
 	if (std::exception_ptr ptr = std::current_exception()) {
@@ -236,6 +240,10 @@ init_opengl(int, char**) {}
 int
 main(int argc, char* argv[]) {
 
+	#if ARMA_PROFILE
+	arma::register_all_counters();
+	#endif
+
 	/// Print GSL errors and proceed execution.
 	/// Throw domain-specific exception later.
 	gsl_set_error_handler(print_error_and_continue);
@@ -298,7 +306,12 @@ main(int argc, char* argv[]) {
 			}
 		}
 	}
+	#if ARMA_PROFILE
+	arma::print_counters(std::clog);
+	std::exit(0);
+	#else
 	glutMainLoop();
+	#endif
 	return 0;
 }
 

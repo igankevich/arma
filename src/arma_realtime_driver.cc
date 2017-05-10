@@ -83,6 +83,7 @@ arma::ARMA_realtime_driver<T>::init_indices() {
 		_indices.data(),
 		GL_STATIC_DRAW
 	);
+	#if ARMA_DEBUG_OPENGL
 	{
 		std::ofstream out("indices");
 		std::copy(
@@ -91,6 +92,7 @@ arma::ARMA_realtime_driver<T>::init_indices() {
 			std::ostream_iterator<index_type>(out, "\n")
 		);
 	}
+	#endif
 }
 
 template <class T>

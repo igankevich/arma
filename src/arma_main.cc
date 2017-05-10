@@ -15,6 +15,9 @@
 #if ARMA_OPENCL
 #include "opencl/opencl.hh"
 #endif
+#if ARMA_PROFILE
+#include "profile_counters.hh"
+#endif
 
 void
 print_exception_and_terminate() {
@@ -60,20 +63,28 @@ register_vpsolver(Driver& drv, std::string key) {
 	drv.template register_velocity_potential_solver<Solver>(key);
 }
 
+#if ARMA_OPENCL
 void
 init_opencl() {
 	::arma::opencl::init();
 }
+#endif
 
 int
 main(int argc, char* argv[]) {
+
+	#if ARMA_PROFILE
+	arma::register_all_counters();
+	#endif
 
 	/// Print GSL errors and proceed execution.
 	/// Throw domain-specific exception later.
 	gsl_set_error_handler(print_error_and_continue);
 	std::set_terminate(print_exception_and_terminate);
 
+	#if ARMA_OPENCL
 	init_opencl();
+	#endif
 
 	using namespace arma;
 
@@ -119,8 +130,10 @@ main(int argc, char* argv[]) {
 		try {
 			driver.generate_wavy_surface();
 			driver.compute_velocity_potentials();
-			driver.write_wavy_surface("zeta", Output_format::Blitz);
-			driver.write_velocity_potentials("phi", Output_format::Blitz);
+			if (driver.vscheme() != Verification_scheme::No_verification) {
+				driver.write_wavy_surface("zeta", Output_format::Blitz);
+				driver.write_velocity_potentials("phi", Output_format::Blitz);
+			}
 			if (driver.vscheme() == Verification_scheme::Manual) {
 				driver.write_wavy_surface("zeta.csv", Output_format::CSV);
 				driver.write_velocity_potentials("phi.csv", Output_format::CSV);
@@ -137,5 +150,8 @@ main(int argc, char* argv[]) {
 			}
 		}
 	}
+	#if ARMA_PROFILE
+	arma::print_counters(std::clog);
+	#endif
 	return 0;
 }
