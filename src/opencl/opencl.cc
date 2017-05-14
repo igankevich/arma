@@ -11,11 +11,18 @@
 #include <unordered_map>
 #include <stdexcept>
 #include <exception>
+#include <memory>
+#include <functional>
 
 #if ARMA_OPENGL
 #include "opengl.hh"
 #include <CL/cl_gl.h>
 #endif
+
+#include <unistd.h>
+#include <pwd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 namespace cl {
 
@@ -108,6 +115,7 @@ namespace {
 	}
 
 	class OpenCL {
+		cl::Platform _platform;
 		cl::Context _context;
 		std::vector<cl::Device> _devices;
 		cl::CommandQueue _cmdqueue;
@@ -168,6 +176,7 @@ namespace {
 					std::exit(1);
 				}
 			}
+			_platform = *result;
 			arma::write_key_value(
 				std::clog,
 				"OpenCL platform",
@@ -196,13 +205,21 @@ namespace {
 				#endif
 				0
 			};
-			_context = cl::Context(cl_device_type(device_type), props);
+			try {
+				_context = cl::Context(cl_device_type(device_type), props);
+			} catch (cl::Error err) {
+				cl_context_properties newprops[] = {
+					CL_CONTEXT_PLATFORM, (cl_context_properties) (*result)(),
+					0
+				};
+				_context = cl::Context(cl_device_type(device_type), newprops);
+			}
 			_devices = _context.getInfo<CL_CONTEXT_DEVICES>();
 			const std::string extensions = _devices[0].getInfo<CL_DEVICE_EXTENSIONS>();
 			if (extensions.find("cl_khr_gl_sharing") == std::string::npos) {
-				std::clog << "OpenCL and OpenGL context sharing (cl_khr_gl_sharing) "
-					"is not supported. Terminating." << std::endl;
-				std::exit(1);
+				std::clog << "WARNING: "
+					"OpenCL and OpenGL context sharing (cl_khr_gl_sharing) "
+					"is not supported." << std::endl;
 			}
 			cl_command_queue_properties qprops = 0;
 			auto supported = _devices[0].getInfo<CL_DEVICE_QUEUE_PROPERTIES>();
@@ -223,6 +240,11 @@ namespace {
 		cl::Context
 		context() const noexcept {
 			return _context;
+		}
+
+		const std::vector<cl::Device>&
+		devices() const noexcept {
+			return _devices;
 		}
 
 		cl::CommandQueue
@@ -247,21 +269,135 @@ namespace {
 
 	private:
 
-		cl::Program
-		new_program(const char* src) {
-			cl::Program program(_context, src);
-			try {
-				program.build({_devices[0]}, _options.data());
-			} catch (cl::Error err) {
-				if (err.err() == CL_BUILD_PROGRAM_FAILURE) {
-					std::string log = program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(
-						_devices[0]
-					);
-					std::clog << log;
-					std::exit(1);
-				} else {
-					print_error_and_exit(err);
+		std::string
+		cache_directory() {
+			std::string result;
+			const char* xdg_cache_home = std::getenv("XDG_CACHE_HOME");
+			if (xdg_cache_home) {
+				result = xdg_cache_home;
+			} else {
+				const char* home = std::getenv("HOME");
+				if (!home) {
+					struct ::passwd* pwd = ::getpwuid(::getuid());
+					if (pwd) {
+						home = pwd->pw_dir;
+					}
 				}
+				if (!home) {
+					std::clog
+						<< "Can not determine neither XDG_CACHE_HOME nor HOME directory. "
+						"Setting OpenCL cache to /tmp."
+						<< std::endl;
+					result = "/tmp";
+				} else {
+					result.append(home);
+					result.append("/.cache");
+				}
+			}
+			result.append("/arma");
+			return result;
+		}
+
+		void
+		init_cache_directory(const std::string& cachedir) {
+			if (::mkdir(cachedir.data(), 0755) == -1 && errno != EEXIST) {
+				std::cerr << "Unable to create cache directory: " << cachedir << std::endl;
+				std::exit(1);
+			}
+		}
+
+		std::string
+		get_binary_filename(cl::Device dev, std::string src) {
+			std::string cachedir = cache_directory();
+			std::hash<std::string> strhash;
+			std::stringstream filename;
+			filename
+				<< cachedir
+				<< '/'
+				<< std::hex
+				<< std::setw(16) << std::setfill('0') << strhash(_platform.getInfo<CL_PLATFORM_NAME>())
+				<< '-'
+				<< std::setw(16) << std::setfill('0') << strhash(_platform.getInfo<CL_PLATFORM_VENDOR>())
+				<< '-'
+				<< std::setw(16) << std::setfill('0') << strhash(dev.getInfo<CL_DEVICE_NAME>())
+				<< '-'
+				<< std::setw(16) << std::setfill('0') << strhash(src);
+			return filename.str();
+		}
+
+		void
+		cache_binary(cl::Program prg, std::string src) {
+			cl_uint ndevices = 0;
+			prg.getInfo(CL_PROGRAM_NUM_DEVICES, &ndevices);
+			std::clog << "ndevices=" << ndevices << std::endl;
+			std::vector<size_t> binary_sizes(ndevices);
+			prg.getInfo(CL_PROGRAM_BINARY_SIZES, binary_sizes.data());
+			std::clog << "binary_sizes[0]=" << binary_sizes[0] << std::endl;
+			std::unique_ptr<unsigned char*,std::function<void(unsigned char**)>>
+			binaries(
+				new unsigned char*[ndevices],
+				[ndevices] (unsigned char** rhs) {
+					for (cl_uint i=0; i<ndevices; ++i) {
+						delete[] rhs[i];
+					}
+					delete[] rhs;
+				}
+			);
+			for (cl_uint i=0; i<ndevices; ++i) {
+				binaries.get()[i] = new unsigned char[binary_sizes[i]];
+			}
+			prg.getInfo(CL_PROGRAM_BINARIES, binaries.get());
+			std::string cachedir = cache_directory();
+			init_cache_directory(cachedir);
+			for (cl_uint i=0; i<ndevices; ++i) {
+				unsigned char* binary = binaries.get()[i];
+				size_t binary_size = binary_sizes[i];
+				std::string fname = get_binary_filename(_devices[i], src);
+				std::clog << "Cache OpenCL kernel " << fname << std::endl;
+				std::ofstream out(fname, std::ios::binary | std::ios::out | std::ios::trunc);
+				out.write(reinterpret_cast<const char*>(binary), binary_size);
+			}
+		}
+
+		std::pair<const void*,size_t>
+		read_binary(const std::string& fname) {
+			std::ifstream in(fname, std::ios::binary | std::ios::in);
+			in.seekg(0, std::ios::end);
+			const size_t binary_size = in.tellg();
+			char* binary = new char[binary_size];
+			in.seekg(0, std::ios::beg);
+			in.read(binary, binary_size);
+			return std::make_pair(binary, binary_size);
+		}
+
+		cl::Program
+		new_program(const char* src0) {
+			std::string src(src0);
+			std::string fname = get_binary_filename(_devices[0], src);
+			std::filebuf buf;
+			buf.open(fname, std::ios::in);
+			cl::Program program;
+			if (!buf.is_open()) {
+				program = cl::Program(_context, src);
+				try {
+					program.build({_devices[0]}, _options.data());
+				} catch (cl::Error err) {
+					if (err.err() == CL_BUILD_PROGRAM_FAILURE) {
+						std::string log = program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(
+							_devices[0]
+						);
+						std::clog << log;
+						std::exit(1);
+					} else {
+						print_error_and_exit(err);
+					}
+				}
+				cache_binary(program, src);
+			} else {
+				std::clog << "Reuse OpenCL kernel " << fname << std::endl;
+				cl::Program::Binaries binaries;
+				binaries.emplace_back(read_binary(fname));
+				program = cl::Program(_context, {_devices[0]}, binaries);
 			}
 			return program;
 		}
@@ -319,10 +455,26 @@ arma::opencl::init() {
 }
 
 arma::opencl::GL_object_guard::GL_object_guard(cl::Memory mem) {
+	_glsharing = supports_gl_sharing(devices()[0]);
 	_objs.emplace_back(mem);
-	command_queue().enqueueAcquireGLObjects(&_objs);
+	if (_glsharing) {
+		command_queue().enqueueAcquireGLObjects(&_objs);
+	}
 }
 
 arma::opencl::GL_object_guard::~GL_object_guard() {
-	command_queue().enqueueReleaseGLObjects(&_objs);
+	if (_glsharing) {
+		command_queue().enqueueReleaseGLObjects(&_objs);
+	}
+}
+
+const std::vector<cl::Device>&
+arma::opencl::devices() {
+	return __opencl_instance.devices();
+}
+
+bool
+arma::opencl::supports_gl_sharing(cl::Device dev) {
+	const std::string extensions = dev.getInfo<CL_DEVICE_EXTENSIONS>();
+	return extensions.find("cl_khr_gl_sharing") != std::string::npos;
 }

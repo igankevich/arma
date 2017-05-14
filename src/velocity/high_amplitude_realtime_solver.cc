@@ -108,11 +108,20 @@ arma::velocity::High_amplitude_realtime_solver<T>::setup(
 		if (this->_glphi == 0) {
 			throw std::runtime_error("bad GL buffer name");
 		}
-		_vphi = cl::BufferGL(
-			context(),
-			CL_MEM_READ_WRITE,
-			this->_glphi
-		);
+		if (opencl::supports_gl_sharing(opencl::devices()[0])) {
+			_vphi = cl::BufferGL(
+				context(),
+				CL_MEM_READ_WRITE,
+				this->_glphi
+			);
+		} else {
+			const size_t num_dimensions = 3;
+			_vphi = cl::Buffer(
+				context(),
+				CL_MEM_READ_WRITE,
+				product(grid.num_points())*sizeof(T)*num_dimensions
+			);
+		}
 		#endif
 		_phi = cl::Buffer(
 			context(),

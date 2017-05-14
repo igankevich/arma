@@ -26,7 +26,7 @@ namespace arma {
 			cl::Buffer _wfunc;
 
 			/// Velocity potential vector field (CL/GL shared buffer).
-			cl::BufferGL _vphi;
+			cl::Buffer _vphi;
 			/// GL buffer name.
 			GLuint _glphi = 0;
 

@@ -20,14 +20,20 @@ namespace arma {
 
 		cl::Context context();
 
+		const std::vector<cl::Device>& devices();
+
 		cl::CommandQueue command_queue();
 
 		void compile(const char* src);
 
 		cl::Kernel get_kernel(const char* name, const char* src);
 
+		bool
+		supports_gl_sharing(cl::Device dev);
+
 		class GL_object_guard {
 			std::vector<cl::Memory> _objs;
+			bool _glsharing;
 
 		public:
 			explicit

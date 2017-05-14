@@ -57,6 +57,8 @@ namespace arma {
 #else
 #define ARMA_PROFILE_FUNC(func) func;
 #define ARMA_PROFILE_BLOCK(name, block) block
+#define ARMA_PROFILE_FUNC_CNT(cnt, func) func;
+#define ARMA_PROFILE_BLOCK_CNT(cnt, name, block) block
 #endif
 
 #endif // PROFILE_HH
