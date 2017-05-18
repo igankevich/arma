@@ -35,3 +35,10 @@ option(
 	type: 'boolean',
 	value: false
 )
+
+option(
+	'opencl_srcdir',
+	type: 'string',
+	value: '',
+	description: 'path to OpenCL kernels source code'
+)

@@ -1,0 +1,7 @@
+#ifndef CONFIG_HH
+#define CONFIG_HH
+
+#define MT_CONFIG_FILE "@mt_config_file@"
+#define ARMA_OPENCL_SRC_DIR "@opencl_srcdir@"
+
+#endif // CONFIG_HH

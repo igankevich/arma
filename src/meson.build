@@ -1,3 +1,9 @@
+configure_file(
+	input: 'config.hh.in',
+	output: 'config.hh',
+	configuration: config
+)
+
 common_src = [
 	'arma.cc',
 	'params.cc',

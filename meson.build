@@ -89,5 +89,15 @@ run_target('archive', command: [
 	meson.project_version()
 ])
 
+datadir = get_option('prefix') + '/' + get_option('datadir')
+opencl_srcdir = get_option('opencl_srcdir')
+if opencl_srcdir.strip() == ''
+	opencl_srcdir = datadir + '/' + meson.project_name() + '/' + 'kernels'
+endif
+config = configuration_data()
+config.set('mt_config_file', 'mt.dat')
+config.set('datadir', datadir)
+config.set('opencl_srcdir', opencl_srcdir)
+
 incdirs = include_directories('src')
 subdir('src')
