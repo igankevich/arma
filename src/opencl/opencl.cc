@@ -398,6 +398,7 @@ namespace {
 				cl::Program::Binaries binaries;
 				binaries.emplace_back(read_binary(fname));
 				program = cl::Program(_context, {_devices[0]}, binaries);
+				program.build({_devices[0]}, _options.data());
 			}
 			return program;
 		}
