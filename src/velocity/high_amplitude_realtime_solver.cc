@@ -25,6 +25,7 @@ namespace {
 
 #include "high_amplitude_realtime_solver_opencl.cc"
 
+	#if ARMA_DEBUG_FFT
 	void
 	debug_print(clfftPlanHandle h) {
 		clfftLayout iLayout, oLayout;
@@ -70,6 +71,7 @@ namespace {
 		arma::write_key_value(std::clog, "loc", loc);
 		arma::write_key_value(std::clog, "tmpbufsize", tmpbufsize);
 	}
+	#endif
 
 }
 
@@ -151,7 +153,9 @@ arma::velocity::High_amplitude_realtime_solver<T>::setup(
 	CHECK(clfftSetPlanInStride(_fftplan, CLFFT_2D, strides));
 	CHECK(clfftSetPlanOutStride(_fftplan, CLFFT_2D, strides));
 	CHECK(clfftBakePlan(_fftplan, 1, &command_queue()(), nullptr, nullptr));
+	#if ARMA_DEBUG_FFT
 	debug_print(_fftplan);
+	#endif
 }
 
 template <class T>
@@ -243,6 +247,16 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 				tmp.data(),
 				tmp.data() + tmp.numElements()
 			);
+			if (!opencl::supports_gl_sharing(opencl::devices()[0])) {
+			std::clog << "_glphi=" << _glphi << std::endl;
+				glBindBuffer(GL_ARRAY_BUFFER, _glphi);
+				glBufferData(
+					GL_ARRAY_BUFFER,
+					tmp.size()*sizeof(T),
+					tmp.data(),
+					GL_DYNAMIC_DRAW
+				);
+			}
 			//std::ofstream("vphi") << tmp;
 		);
 	}
