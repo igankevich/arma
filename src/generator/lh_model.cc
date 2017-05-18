@@ -92,8 +92,6 @@ arma::Longuet_Higgins_model<T>::determine_coefficients(
 
 #if ARMA_OPENCL
 
-#include "lh_model_opencl.cc"
-
 template <class T>
 void
 arma::Longuet_Higgins_model<T>::generate_surface(
@@ -124,7 +122,7 @@ arma::Longuet_Higgins_model<T>::generate_surface(
 		CL_MEM_WRITE_ONLY,
 		zeta.numElements()*sizeof(T)
 	);
-	cl::Kernel kernel = get_kernel("generate_surface", LH_MODEL_SRC);
+	cl::Kernel kernel = get_kernel("lh_generate_surface");
 	kernel.setArg(0, bcoef);
 	kernel.setArg(1, beps);
 	kernel.setArg(2, bzeta);

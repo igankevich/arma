@@ -6,9 +6,9 @@ lh_model = {
 	spec_subdomain = (50,50)
 	wave_height = 4
 }
-verification = manual
+verification = none
 
-velocity_potential_solver = linear {
+velocity_potential_solver = high_amplitude_realtime {
 	wnmax = from (0,0) to (0,0.25) npoints (2,2)
 	depth = 12
 	domain = from (10,-12) to (10,4) npoints (1,128)

@@ -27,6 +27,7 @@ namespace arma {
 		void compile(const char* src);
 
 		cl::Kernel get_kernel(const char* name, const char* src);
+		cl::Kernel get_kernel(const char* name);
 
 		bool
 		supports_gl_sharing(cl::Device dev);

@@ -24,6 +24,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include "config.hh"
+
 namespace cl {
 
 	std::ostream&
@@ -147,6 +149,8 @@ namespace {
 					in >> params;
 				}
 				_options += " -DARMA_REAL_TYPE=" ARMA_STRINGIFY(ARMA_REAL_TYPE);
+				_options += " -I";
+				_options += ARMA_OPENCL_SRC_DIR;
 			}
 			std::vector<cl::Platform> platforms;
 			cl::Platform::get(&platforms);
@@ -329,10 +333,8 @@ namespace {
 		cache_binary(cl::Program prg, std::string src) {
 			cl_uint ndevices = 0;
 			prg.getInfo(CL_PROGRAM_NUM_DEVICES, &ndevices);
-			std::clog << "ndevices=" << ndevices << std::endl;
 			std::vector<size_t> binary_sizes(ndevices);
 			prg.getInfo(CL_PROGRAM_BINARY_SIZES, binary_sizes.data());
-			std::clog << "binary_sizes[0]=" << binary_sizes[0] << std::endl;
 			std::unique_ptr<unsigned char*,std::function<void(unsigned char**)>>
 			binaries(
 				new unsigned char*[ndevices],
@@ -448,6 +450,24 @@ arma::opencl::get_kernel(const char* name, const char* src) {
 		throw std::runtime_error("bad kernel");
 	}
 	return cl::Kernel(kernel);
+}
+
+cl::Kernel
+arma::opencl::get_kernel(const char* name) {
+	std::string path = ARMA_OPENCL_SRC_DIR;
+	path += '/';
+	path += name;
+	path += ".cl";
+	std::ifstream in(path);
+	if (!in.is_open()) {
+		std::cerr << "Unable to load OpenCL kernel " << name
+			<< " from " << path << std::endl;
+		throw std::runtime_error("bad kernel file");
+	}
+	std::stringstream str;
+	str << in.rdbuf();
+	std::string buf(str.str());
+	return get_kernel(name, buf.data());
 }
 
 void

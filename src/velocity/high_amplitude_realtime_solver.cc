@@ -23,8 +23,6 @@
 
 namespace {
 
-#include "high_amplitude_realtime_solver_opencl.cc"
-
 	#if ARMA_DEBUG_FFT
 	void
 	debug_print(clfftPlanHandle h) {
@@ -270,7 +268,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::compute_window_function(
 ) {
 	typedef opencl::Vec<Vector<T,3>,T,3> Vec3;
 	const Vector<size_t,3> shp(grid.num_points());
-	cl::Kernel kernel = opencl::get_kernel(__func__, HARTS_SRC);
+	cl::Kernel kernel = opencl::get_kernel(__func__);
 	kernel.setArg(0, Vec3(grid.length()));
 	kernel.setArg(1, this->_domain.lbound(1));
 	kernel.setArg(2, this->_depth);
@@ -289,7 +287,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::interpolate_window_function(
 	const Grid<T,3>& grid
 ) {
 	const Vector<size_t,3> shp(grid.num_points());
-	cl::Kernel kernel = opencl::get_kernel(__func__, HARTS_SRC);
+	cl::Kernel kernel = opencl::get_kernel(__func__);
 	kernel.setArg(0, this->_wfunc);
 	opencl::command_queue().enqueueNDRangeKernel(
 		kernel,
@@ -336,7 +334,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::multiply_functions(
 	const Grid<T,3>& grid
 ) {
 	const Vector<size_t,3> shp(grid.num_points());
-	cl::Kernel kernel = opencl::get_kernel(__func__, HARTS_SRC);
+	cl::Kernel kernel = opencl::get_kernel(__func__);
 	kernel.setArg(0, this->_phi);
 	kernel.setArg(1, this->_wfunc);
 	opencl::command_queue().enqueueNDRangeKernel(
@@ -353,7 +351,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::create_vector_field(
 ) {
 	typedef opencl::Vec<Vector<T,3>,T,3> Vec3;
 	const Vector<size_t,3> shp(grid.num_points());
-	cl::Kernel kernel = opencl::get_kernel(__func__, HARTS_SRC);
+	cl::Kernel kernel = opencl::get_kernel(__func__);
 	kernel.setArg(0, Vec3(grid.length()));
 	kernel.setArg(1, this->_domain.lbound(1));
 	kernel.setArg(2, this->_vphi);
