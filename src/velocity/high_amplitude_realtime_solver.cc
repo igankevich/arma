@@ -1,6 +1,8 @@
 #include "high_amplitude_realtime_solver.hh"
 #if ARMA_OPENCL
+#include "opencl/opencl.hh"
 #include "opencl/vec.hh"
+#include "opencl/gl_object_guard.hh"
 #endif
 #include "profile.hh"
 #include "derivative.hh"

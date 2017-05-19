@@ -25,6 +25,10 @@
 #include <sys/types.h>
 
 #include "config.hh"
+#include "device_type.hh"
+
+#define ARMA_STRINGIFY_IMPL(x) #x
+#define ARMA_STRINGIFY(x) ARMA_STRINGIFY_IMPL(x)
 
 namespace cl {
 
@@ -44,6 +48,8 @@ namespace cl {
 
 namespace {
 
+	using arma::opencl::Device_type;
+
 	void
 	trim_right(std::string& rhs) {
 		while (!rhs.empty() && rhs.back() <= ' ') { rhs.pop_back(); }
@@ -53,57 +59,6 @@ namespace {
 	print_error_and_exit(cl::Error err) {
 		std::cerr << err << std::endl;
 		std::exit(1);
-	}
-
-	enum struct Device_type: cl_device_type {
-		Default = CL_DEVICE_TYPE_DEFAULT,
-		CPU = CL_DEVICE_TYPE_CPU,
-		GPU = CL_DEVICE_TYPE_GPU,
-		Accelerator = CL_DEVICE_TYPE_ACCELERATOR,
-		Custom = CL_DEVICE_TYPE_CUSTOM,
-		All = CL_DEVICE_TYPE_ALL
-	};
-
-	std::istream&
-	operator>>(std::istream& in, Device_type& rhs) {
-		std::string name;
-		in >> std::ws >> name;
-		if (name == "default") {
-			rhs = Device_type::Default;
-		} else if (name == "CPU") {
-			rhs = Device_type::CPU;
-		} else if (name == "GPU") {
-			rhs = Device_type::GPU;
-		} else if (name == "accelerator") {
-			rhs = Device_type::Accelerator;
-		} else if (name == "custom") {
-			rhs = Device_type::Custom;
-		} else if (name == "all") {
-			rhs = Device_type::All;
-		} else {
-			in.setstate(std::ios::failbit);
-			std::cerr << "Invalid device type: " << name << std::endl;
-			throw std::runtime_error("bad device type");
-		}
-		return in;
-	}
-
-	const char*
-	to_string(Device_type rhs) {
-		switch (rhs) {
-			case Device_type::Default: return "default";
-			case Device_type::CPU: return "CPU";
-			case Device_type::GPU: return "GPU";
-			case Device_type::Accelerator: return "accelerator";
-			case Device_type::Custom: return "custom";
-			case Device_type::All: return "all";
-			default: return "UNKNOWN";
-		}
-	}
-
-	std::ostream&
-	operator<<(std::ostream& out, const Device_type& rhs) {
-		return out << to_string(rhs);
 	}
 
 	std::ostream&
@@ -473,20 +428,6 @@ arma::opencl::get_kernel(const char* name) {
 void
 arma::opencl::init() {
 	__opencl_instance.init_opencl();
-}
-
-arma::opencl::GL_object_guard::GL_object_guard(cl::Memory mem) {
-	_glsharing = supports_gl_sharing(devices()[0]);
-	_objs.emplace_back(mem);
-	if (_glsharing) {
-		command_queue().enqueueAcquireGLObjects(&_objs);
-	}
-}
-
-arma::opencl::GL_object_guard::~GL_object_guard() {
-	if (_glsharing) {
-		command_queue().enqueueReleaseGLObjects(&_objs);
-	}
 }
 
 const std::vector<cl::Device>&

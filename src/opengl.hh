@@ -8,8 +8,12 @@
 
 namespace arma {
 
+	/// \brief OpenGL glue code.
 	namespace opengl {
 
+		/**
+		\brief Maps `GL*` types to the corresponding `GLenum` constants
+		*/
 		template<class T>
 		struct GL_type;
 

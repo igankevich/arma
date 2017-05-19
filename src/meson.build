@@ -29,6 +29,8 @@ endif
 if get_option('framework') == 'opencl'
 	common_src += [
 		'opencl/opencl.cc',
+		'opencl/gl_object_guard.cc',
+		'opencl/device_type.cc',
 	]
 endif
 
