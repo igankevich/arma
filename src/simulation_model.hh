@@ -11,7 +11,7 @@ namespace arma {
 		Moving_average,
 		ARMA,
 		Longuet_Higgins,
-		Plain_wave
+		Plain_wave_model
 	};
 
 	std::istream&

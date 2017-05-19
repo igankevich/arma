@@ -11,7 +11,7 @@
 
 template <class T>
 T
-arma::Moving_average_model<T>::white_noise_variance(
+arma::generator::MA_model<T>::white_noise_variance(
 	const Array3D<T>& theta
 ) const {
 	using blitz::sum;
@@ -21,7 +21,7 @@ arma::Moving_average_model<T>::white_noise_variance(
 
 template <class T>
 void
-arma::Moving_average_model<T>::operator()(
+arma::generator::MA_model<T>::operator()(
 	Array3D<T>& zeta,
 	Array3D<T>& eps,
 	const Domain3D& subdomain
@@ -55,7 +55,7 @@ arma::Moving_average_model<T>::operator()(
 
 template <class T>
 std::istream&
-arma::operator>>(std::istream& in, Moving_average_model<T>& rhs) {
+arma::generator::operator>>(std::istream& in, MA_model<T>& rhs) {
 	ACF_wrapper<T> acf_wrapper(rhs._acf);
 	Shape3D order(0,0,0);
 	sys::parameter_map params({
@@ -78,7 +78,7 @@ arma::operator>>(std::istream& in, Moving_average_model<T>& rhs) {
 
 template <class T>
 std::ostream&
-arma::operator<<(std::ostream& out, const Moving_average_model<T>& rhs) {
+arma::generator::operator<<(std::ostream& out, const MA_model<T>& rhs) {
 	return out << "order=" << rhs.order()
 		<< ",acf.shape=" << rhs._acf.shape()
 		<< ",algorithm=" << rhs._algo;
@@ -86,7 +86,7 @@ arma::operator<<(std::ostream& out, const Moving_average_model<T>& rhs) {
 
 template <class T>
 void
-arma::Moving_average_model<T>::determine_coefficients() {
+arma::generator::MA_model<T>::determine_coefficients() {
 	switch (_algo) {
 		case MA_algorithm::Fixed_point_iteration:
 			fixed_point_iteration(_maxiter, _eps, _minvarwn);
@@ -99,7 +99,7 @@ arma::Moving_average_model<T>::determine_coefficients() {
 
 template <class T>
 void
-arma::Moving_average_model<T>::fixed_point_iteration(
+arma::generator::MA_model<T>::fixed_point_iteration(
 	int max_iterations,
 	T eps,
 	T min_var_wn
@@ -152,7 +152,7 @@ arma::Moving_average_model<T>::fixed_point_iteration(
 			throw std::runtime_error("bad MA model coefficients");
 		}
 		/// 5. Compute white noise variance by calling
-		/// \link Moving_average_model::white_noise_variance \endlink.
+		/// \link MA_model::white_noise_variance \endlink.
 		old_var_wn = var_wn;
 		var_wn = white_noise_variance(theta);
 		/// 6. Validate white noise variance.
@@ -175,7 +175,7 @@ arma::Moving_average_model<T>::fixed_point_iteration(
 
 template <class T>
 void
-arma::Moving_average_model<T>::newton_raphson(
+arma::generator::MA_model<T>::newton_raphson(
 	int max_iterations,
 	T eps,
 	T min_var_wn
@@ -257,7 +257,7 @@ arma::Moving_average_model<T>::newton_raphson(
 			throw std::runtime_error("bad MA model coefficients");
 		}
 		/// 5. Compute white noise variance by calling
-		/// \link Moving_average_model::white_noise_variance \endlink.
+		/// \link MA_model::white_noise_variance \endlink.
 		old_var_wn = var_wn;
 		var_wn = white_noise_variance(theta);
 		tau(0, 0, 0) = std::sqrt(var_wn);
@@ -281,7 +281,7 @@ arma::Moving_average_model<T>::newton_raphson(
 
 template <class T>
 void
-arma::Moving_average_model<T>::recompute_acf(
+arma::generator::MA_model<T>::recompute_acf(
 	Array3D<T> acf_orig,
 	Array3D<T> phi
 ) {
@@ -325,16 +325,16 @@ arma::Moving_average_model<T>::recompute_acf(
 	}
 }
 
-template class arma::Moving_average_model<ARMA_REAL_TYPE>;
+template class arma::generator::MA_model<ARMA_REAL_TYPE>;
 
 template std::istream&
-arma::operator>>(
+arma::generator::operator>>(
 	std::istream& in,
-	Moving_average_model<ARMA_REAL_TYPE>& rhs
+	MA_model<ARMA_REAL_TYPE>& rhs
 );
 
 template std::ostream&
-arma::operator<<(
+arma::generator::operator<<(
 	std::ostream& out,
-	const Moving_average_model<ARMA_REAL_TYPE>& rhs
+	const MA_model<ARMA_REAL_TYPE>& rhs
 );

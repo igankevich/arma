@@ -14,7 +14,7 @@
 
 template<class T>
 T
-arma::Longuet_Higgins_model<T>::approx_spectrum(T w, T theta, T h) {
+arma::generator::Longuet_Higgins_model<T>::approx_spectrum(T w, T theta, T h) {
 	using std::pow;
 	using std::cos;
 	using std::exp;
@@ -30,7 +30,7 @@ arma::Longuet_Higgins_model<T>::approx_spectrum(T w, T theta, T h) {
 
 template<class T>
 arma::Array2D<T>
-arma::Longuet_Higgins_model<T>::approximate_spectrum(
+arma::generator::Longuet_Higgins_model<T>::approximate_spectrum(
 	const Domain<T,2>& domain,
 	T wave_height
 ) {
@@ -52,7 +52,7 @@ arma::Longuet_Higgins_model<T>::approximate_spectrum(
 
 template<class T>
 arma::Array2D<T>
-arma::Longuet_Higgins_model<T>::determine_coefficients(
+arma::generator::Longuet_Higgins_model<T>::determine_coefficients(
 	const Domain<T,2>& sdom,
 	T wave_height
 ) {
@@ -94,7 +94,7 @@ arma::Longuet_Higgins_model<T>::determine_coefficients(
 
 template <class T>
 void
-arma::Longuet_Higgins_model<T>::generate_surface(
+arma::generator::Longuet_Higgins_model<T>::generate_surface(
 	Discrete_function<T,3>& zeta,
 	const Domain3D& subdomain
 ) {
@@ -147,7 +147,7 @@ arma::Longuet_Higgins_model<T>::generate_surface(
 
 template <class T>
 void
-arma::Longuet_Higgins_model<T>::generate_surface(
+arma::generator::Longuet_Higgins_model<T>::generate_surface(
 	Discrete_function<T,3>& zeta,
 	const Domain3D& subdomain
 ) {
@@ -206,13 +206,13 @@ arma::Longuet_Higgins_model<T>::generate_surface(
 
 template <class T>
 void
-arma::Longuet_Higgins_model<T>::determine_coefficients() {
+arma::generator::Longuet_Higgins_model<T>::determine_coefficients() {
 	_coef.reference(determine_coefficients(_spec_domain, _waveheight));
 }
 
 template <class T>
 void
-arma::Longuet_Higgins_model<T>::generate_white_noise() {
+arma::generator::Longuet_Higgins_model<T>::generate_white_noise() {
 	using constants::_2pi;
 	_eps.resize(_spec_domain.num_points());
 	std::mt19937 generator;
@@ -226,7 +226,7 @@ arma::Longuet_Higgins_model<T>::generate_white_noise() {
 
 template <class T>
 void
-arma::Longuet_Higgins_model<T>::generate(
+arma::generator::Longuet_Higgins_model<T>::generate(
 	Discrete_function<T,3>& zeta,
 	const Domain3D& subdomain
 ) {
@@ -235,7 +235,7 @@ arma::Longuet_Higgins_model<T>::generate(
 
 template <class T>
 std::istream&
-arma::operator>>(std::istream& in, Longuet_Higgins_model<T>& rhs) {
+arma::generator::operator>>(std::istream& in, Longuet_Higgins_model<T>& rhs) {
 	sys::parameter_map params({
 		{"spec_domain", sys::make_param(rhs._spec_domain)},
 		{"spec_subdomain", sys::make_param(rhs._spec_subdomain)},
@@ -250,7 +250,7 @@ arma::operator>>(std::istream& in, Longuet_Higgins_model<T>& rhs) {
 
 template <class T>
 std::ostream&
-arma::operator<<(
+arma::generator::operator<<(
 	std::ostream& out,
 	const Longuet_Higgins_model<T>& rhs
 ) {
@@ -260,16 +260,16 @@ arma::operator<<(
 		<< ",wave_height=" << rhs._waveheight;
 }
 
-template class arma::Longuet_Higgins_model<ARMA_REAL_TYPE>;
+template class arma::generator::Longuet_Higgins_model<ARMA_REAL_TYPE>;
 
 template std::istream&
-arma::operator>>(
+arma::generator::operator>>(
 	std::istream& in,
 	Longuet_Higgins_model<ARMA_REAL_TYPE>& rhs
 );
 
 template std::ostream&
-arma::operator<<(
+arma::generator::operator<<(
 	std::ostream& out,
 	const Longuet_Higgins_model<ARMA_REAL_TYPE>& rhs
 );

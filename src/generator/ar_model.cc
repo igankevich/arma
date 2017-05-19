@@ -13,14 +13,14 @@
 
 template <class T>
 T
-arma::Autoregressive_model<T>::white_noise_variance(Array3D<T> phi) const {
+arma::generator::AR_model<T>::white_noise_variance(Array3D<T> phi) const {
 	blitz::RectDomain<3> subdomain(Shape3D(0, 0, 0), phi.shape() - 1);
 	return _acf(0, 0, 0) - blitz::sum(phi * _acf(subdomain));
 }
 
 template <class T>
 void
-arma::Autoregressive_model<T>::operator()(
+arma::generator::AR_model<T>::operator()(
 	Array3D<T>& zeta,
 	Array3D<T>& eps,
 	const Domain3D& subdomain
@@ -57,7 +57,7 @@ arma::Autoregressive_model<T>::operator()(
 
 template <class T>
 void
-arma::Autoregressive_model<T>::determine_coefficients_old(bool do_least_squares) {
+arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) {
 	using blitz::all;
 	if (!all(order() <= _acf.shape())) {
 		std::cerr << "AR model order is larger than ACF "
@@ -108,7 +108,7 @@ arma::Autoregressive_model<T>::determine_coefficients_old(bool do_least_squares)
 
 template <class T>
 void
-arma::Autoregressive_model<T>::determine_coefficients_iteratively() {
+arma::generator::AR_model<T>::determine_coefficients_iteratively() {
 	using blitz::all;
 	using blitz::isfinite;
 	using blitz::sum;
@@ -177,7 +177,7 @@ arma::Autoregressive_model<T>::determine_coefficients_iteratively() {
 
 template <class T>
 std::istream&
-arma::operator>>(std::istream& in, Autoregressive_model<T>& rhs) {
+arma::generator::operator>>(std::istream& in, AR_model<T>& rhs) {
 	ACF_wrapper<T> acf_wrapper(rhs._acf);
 	Shape3D order(0,0,0);
 	sys::parameter_map params({
@@ -194,13 +194,13 @@ arma::operator>>(std::istream& in, Autoregressive_model<T>& rhs) {
 
 template <class T>
 std::ostream&
-arma::operator<<(std::ostream& out, const Autoregressive_model<T>& rhs) {
+arma::generator::operator<<(std::ostream& out, const AR_model<T>& rhs) {
 	return out << "order=" << rhs.order()
 		<< ",acf.shape=" << rhs._acf.shape();
 }
 
-template class arma::Autoregressive_model<ARMA_REAL_TYPE>;
+template class arma::generator::AR_model<ARMA_REAL_TYPE>;
 template std::ostream&
-arma::operator<<(std::ostream& out, const Autoregressive_model<ARMA_REAL_TYPE>& rhs);
+arma::generator::operator<<(std::ostream& out, const AR_model<ARMA_REAL_TYPE>& rhs);
 template std::istream&
-arma::operator>>(std::istream& in, Autoregressive_model<ARMA_REAL_TYPE>& rhs);
+arma::generator::operator>>(std::istream& in, AR_model<ARMA_REAL_TYPE>& rhs);

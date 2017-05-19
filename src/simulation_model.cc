@@ -17,7 +17,7 @@ arma::operator>>(std::istream& in, Simulation_model& rhs) {
 	} else if (name == "LH") {
 		rhs = Simulation_model::Longuet_Higgins;
 	} else if (name == "plain_wave") {
-		rhs = Simulation_model::Plain_wave;
+		rhs = Simulation_model::Plain_wave_model;
 	} else {
 		in.setstate(std::ios::failbit);
 		std::cerr << "Invalid model: " << name << std::endl;
@@ -33,7 +33,7 @@ arma::to_string(Simulation_model rhs) {
 		case Simulation_model::Moving_average: return "MA";
 		case Simulation_model::ARMA: return "ARMA";
 		case Simulation_model::Longuet_Higgins: return "LH";
-		case Simulation_model::Plain_wave: return "plain_wave";
+		case Simulation_model::Plain_wave_model: return "plain_wave";
 		default: return "UNKNOWN";
 	}
 }

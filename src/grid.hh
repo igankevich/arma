@@ -16,7 +16,7 @@ namespace arma {
 
 	/**
 	\brief
-	Grid is defined by the number of points and the length along each
+	A region defined by the number of points and the length along each
 	dimension.
 
 	\details

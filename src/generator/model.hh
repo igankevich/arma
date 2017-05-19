@@ -5,32 +5,38 @@
 
 namespace arma {
 
-	template<class T>
-	class Basic_ARMA_model {
-	public:
+	/// \brief Wavy surface generators.
+	namespace generator {
 
-		Basic_ARMA_model() = default;
-		Basic_ARMA_model(const Basic_ARMA_model&) = default;
-		Basic_ARMA_model(Basic_ARMA_model&&) = default;
-		virtual ~Basic_ARMA_model() = default;
+		/// \brief A base class for ARMA generators.
+		template<class T>
+		class Basic_ARMA_model {
+		public:
 
-		virtual T white_noise_variance() const = 0;
-		virtual void validate() const = 0;
-		virtual void determine_coefficients() = 0;
+			Basic_ARMA_model() = default;
+			Basic_ARMA_model(const Basic_ARMA_model&) = default;
+			Basic_ARMA_model(Basic_ARMA_model&&) = default;
+			virtual ~Basic_ARMA_model() = default;
 
-		virtual void
-		operator()(
-			Array3D<T>& zeta,
-			Array3D<T>& eps,
-			const Domain3D& subdomain
-		) = 0;
+			virtual T white_noise_variance() const = 0;
+			virtual void validate() const = 0;
+			virtual void determine_coefficients() = 0;
 
-		inline void
-		operator()(Array3D<T>& zeta, Array3D<T>& eps) {
-			operator()(zeta, eps, zeta.domain());
-		}
+			virtual void
+			operator()(
+				Array3D<T>& zeta,
+				Array3D<T>& eps,
+				const Domain3D& subdomain
+			) = 0;
 
-	};
+			inline void
+			operator()(Array3D<T>& zeta, Array3D<T>& eps) {
+				operator()(zeta, eps, zeta.domain());
+			}
+
+		};
+
+	}
 
 }
 

@@ -15,7 +15,7 @@ namespace arma {
 		template <class T>
 		class Plain_wave_solver: public Velocity_potential_solver<T> {
 
-			typedef Plain_wave<T> wave_type;
+			typedef ::arma::generator::Plain_wave_model<T> wave_type;
 			wave_type _waves;
 
 		protected:

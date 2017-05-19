@@ -69,7 +69,7 @@ namespace {
 }
 
 std::istream&
-arma::bits::operator>>(std::istream& in, Function& rhs) {
+arma::generator::bits::operator>>(std::istream& in, Function& rhs) {
 	std::string name;
 	in >> std::ws >> name;
 	if (name == "sin") {
@@ -85,7 +85,7 @@ arma::bits::operator>>(std::istream& in, Function& rhs) {
 }
 
 const char*
-arma::bits::to_string(Function rhs) {
+arma::generator::bits::to_string(Function rhs) {
 	switch (rhs) {
 		case Function::Sine: return "sin";
 		case Function::Cosine: return "cos";
@@ -96,7 +96,7 @@ arma::bits::to_string(Function rhs) {
 
 template <class T>
 void
-arma::Plain_wave<T>::generate(
+arma::generator::Plain_wave_model<T>::generate(
 	Discrete_function<T,3>& zeta,
 	const Domain3D& subdomain
 ) {
@@ -137,7 +137,7 @@ arma::Plain_wave<T>::generate(
 
 template <class T>
 std::istream&
-arma::operator>>(std::istream& in, Plain_wave<T>& rhs) {
+arma::generator::operator>>(std::istream& in, Plain_wave_model<T>& rhs) {
 	std::string func;
 	Array_wrapper<T> wamplitudes(rhs._amplitudes);
 	Array_wrapper<T> wwavenumbers(rhs._wavenumbers);
@@ -160,7 +160,7 @@ arma::operator>>(std::istream& in, Plain_wave<T>& rhs) {
 
 template <class T>
 std::ostream&
-arma::operator<<(std::ostream& out, const Plain_wave<T>& rhs) {
+arma::generator::operator<<(std::ostream& out, const Plain_wave_model<T>& rhs) {
 	return out
 		<< "func=" << rhs._func
 		<< ",amplitudes=" << Array_wrapper<T>(rhs._amplitudes)
@@ -170,8 +170,8 @@ arma::operator<<(std::ostream& out, const Plain_wave<T>& rhs) {
 }
 
 
-template class arma::Plain_wave<ARMA_REAL_TYPE>;
+template class arma::generator::Plain_wave_model<ARMA_REAL_TYPE>;
 template std::ostream&
-arma::operator<<(std::ostream& out, const Plain_wave<ARMA_REAL_TYPE>& rhs);
+arma::generator::operator<<(std::ostream& out, const Plain_wave_model<ARMA_REAL_TYPE>& rhs);
 template std::istream&
-arma::operator>>(std::istream& in, Plain_wave<ARMA_REAL_TYPE>& rhs);
+arma::generator::operator>>(std::istream& in, Plain_wave_model<ARMA_REAL_TYPE>& rhs);

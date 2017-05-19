@@ -11,69 +11,76 @@
 
 namespace arma {
 
-	template <class T>
-	class Longuet_Higgins_model {
-		Domain<T,2> _spec_domain;
-		Vec2D<int> _spec_subdomain;
-		T _waveheight;
-		Grid<T,3> _outgrid;
-		Array2D<T> _coef;
-		Array2D<T> _eps;
+	namespace generator {
 
-	public:
-		inline void
-		operator()(Discrete_function<T,3>& zeta) {
-			operator()(zeta, zeta.domain());
-		}
+		/**
+		\brief Uses Longuet---Higgins model, small-amplitude waves.
+		*/
+		template <class T>
+		class Longuet_Higgins_model {
+			Domain<T,2> _spec_domain;
+			Vec2D<int> _spec_subdomain;
+			T _waveheight;
+			Grid<T,3> _outgrid;
+			Array2D<T> _coef;
+			Array2D<T> _eps;
 
-		inline void
-		operator()(Discrete_function<T,3>& zeta, const Domain3D& subdomain) {
-			generate(zeta, subdomain);
-		}
+		public:
+			inline void
+			operator()(Discrete_function<T,3>& zeta) {
+				operator()(zeta, zeta.domain());
+			}
 
-		void
-		determine_coefficients();
+			inline void
+			operator()(Discrete_function<T,3>& zeta, const Domain3D& subdomain) {
+				generate(zeta, subdomain);
+			}
 
-		void
-		generate_white_noise();
+			void
+			determine_coefficients();
 
-		void
-		setgrid(const Grid<T,3>& rhs) noexcept {
-			_outgrid = rhs;
-		}
+			void
+			generate_white_noise();
 
-		template <class X>
-		friend std::istream&
-		operator>>(std::istream& in, Longuet_Higgins_model<X>& rhs);
+			void
+			setgrid(const Grid<T,3>& rhs) noexcept {
+				_outgrid = rhs;
+			}
 
-		template <class X>
-		friend std::ostream&
-		operator<<(std::ostream& out, const Longuet_Higgins_model<X>& rhs);
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, Longuet_Higgins_model<X>& rhs);
 
-	private:
-		T
-		approx_spectrum(T w, T theta, T h);
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const Longuet_Higgins_model<X>& rhs);
 
-		Array2D<T>
-		approximate_spectrum(const Domain<T,2>& domain, T wave_height);
+		private:
+			T
+			approx_spectrum(T w, T theta, T h);
 
-		Array2D<T>
-		determine_coefficients(const Domain<T,2>& sdom, T wave_height);
+			Array2D<T>
+			approximate_spectrum(const Domain<T,2>& domain, T wave_height);
 
-		void
-		generate_surface(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
+			Array2D<T>
+			determine_coefficients(const Domain<T,2>& sdom, T wave_height);
 
-		void
-		generate(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
-	};
+			void
+			generate_surface(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
 
-	template <class T>
-	std::istream&
-	operator>>(std::istream& in, Longuet_Higgins_model<T>& rhs);
+			void
+			generate(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
+		};
 
-	template <class T>
-	std::ostream&
-	operator<<(std::ostream& out, const Longuet_Higgins_model<T>& rhs);
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, Longuet_Higgins_model<T>& rhs);
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const Longuet_Higgins_model<T>& rhs);
+
+	}
 
 }
 

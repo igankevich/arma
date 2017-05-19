@@ -199,7 +199,7 @@ namespace arma {
 				_zeta.setgrid(_outgrid);
 				_lhmodel.setgrid(_outgrid);
 				_lhmodel(_zeta);
-			} else if (_model == Simulation_model::Plain_wave) {
+			} else if (_model == Simulation_model::Plain_wave_model) {
 				_zeta.resize(_outgrid.size());
 				_zeta.setgrid(_outgrid);
 			   	_plainwavemodel(_zeta);
@@ -247,7 +247,7 @@ namespace arma {
 			std::clog << "WN variance = " << var_wn << std::endl;
 			Array3D<T> zeta = do_generate_wavy_surface(model, var_wn);
 			this->_zeta.reference(zeta);
-			if (std::is_same<Model,Autoregressive_model<T>>::value) {
+			if (std::is_same<Model,generator::AR_model<T>>::value) {
 				/// Estimate mean/variance with ramp-up region removed.
 				blitz::RectDomain<3> subdomain(model.order(), zeta.shape() - 1);
 				Shape3D zeta_size = subdomain.ubound() - subdomain.lbound();
@@ -554,7 +554,7 @@ namespace arma {
 				case Simulation_model::ARMA:
 					write_key_value(std::clog, "ARMA model", "<not implemented>");
 					break;
-				case Simulation_model::Plain_wave:
+				case Simulation_model::Plain_wave_model:
 					write_key_value(std::clog, "Plain wave model", _plainwavemodel);
 					break;
 				case Simulation_model::Longuet_Higgins:
@@ -682,11 +682,11 @@ namespace arma {
 		/// The size of partitions that are computed in parallel.
 		Shape3D _partition;
 
-		Autoregressive_model<T> _armodel;
-		Moving_average_model<T> _mamodel;
-		ARMA_model<T> _armamodel;
-		Plain_wave<T> _plainwavemodel;
-		Longuet_Higgins_model<T> _lhmodel;
+		generator::AR_model<T> _armodel;
+		generator::MA_model<T> _mamodel;
+		generator::ARMA_model<T> _armamodel;
+		generator::Plain_wave_model<T> _plainwavemodel;
+		generator::Longuet_Higgins_model<T> _lhmodel;
 
 		velocity_potential_solver_type* _vpsolver = nullptr;
 
