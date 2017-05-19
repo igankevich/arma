@@ -2,7 +2,7 @@
 
 template<class X>
 std::ostream&
-arma::operator<<(std::ostream& out, const Wave<X>& rhs) {
+arma::bits::operator<<(std::ostream& out, const Wave<X>& rhs) {
 	return out
 		<< rhs.i << ' '
 		<< rhs.j << ' '
@@ -11,6 +11,6 @@ arma::operator<<(std::ostream& out, const Wave<X>& rhs) {
 		<< rhs.period;
 }
 
-template class arma::Wave<ARMA_REAL_TYPE>;
+template class arma::bits::Wave<ARMA_REAL_TYPE>;
 template std::ostream&
-arma::operator<<(std::ostream& out, const Wave<ARMA_REAL_TYPE>& rhs);
+arma::bits::operator<<(std::ostream& out, const Wave<ARMA_REAL_TYPE>& rhs);

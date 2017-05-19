@@ -22,11 +22,11 @@ namespace arma {
 
 	template<class T>
 	Delaunay_triangulation
-	create_triangulation(const std::vector< Wave<T> >& waves);
+	create_triangulation(const std::vector< bits::Wave<T> >& waves);
 
 	template<class T>
 	Function_values
-	create_function_values(const std::vector< Wave<T> >& waves);
+	create_function_values(const std::vector< bits::Wave<T> >& waves);
 
 	template<class T>
 	T interpolate(
@@ -37,7 +37,7 @@ namespace arma {
 
 	template<class T>
 	T
-	interpolate(Point p, const std::vector< Wave<T> >& waves);
+	interpolate(Point p, const std::vector< bits::Wave<T> >& waves);
 
 }
 

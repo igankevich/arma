@@ -2,7 +2,7 @@
 
 template<class T>
 arma::Delaunay_triangulation
-arma::create_triangulation(const std::vector< Wave<T> >& waves) {
+arma::create_triangulation(const std::vector< bits::Wave<T> >& waves) {
 	Delaunay_triangulation triangulation;
 	int n = waves.size();
 	for (int i=0; i<n; ++i) {
@@ -13,7 +13,7 @@ arma::create_triangulation(const std::vector< Wave<T> >& waves) {
 
 template<class T>
 arma::Function_values
-arma::create_function_values(const std::vector< Wave<T> >& waves) {
+arma::create_function_values(const std::vector< bits::Wave<T> >& waves) {
 	Function_values values;
 	int n = waves.size();
 	for (int i=0; i<n; ++i) {
@@ -44,7 +44,7 @@ arma::interpolate(
 
 template<class T>
 T
-arma::interpolate(Point p, const std::vector< Wave<T> >& waves) {
+arma::interpolate(Point p, const std::vector< bits::Wave<T> >& waves) {
 //	Delaunay_triangulation triangulation = create_triangulation(waves);
 //	Function_values function_values = create_function_values(waves);
 	Delaunay_triangulation triangulation;
@@ -71,11 +71,11 @@ arma::interpolate(Point p, const std::vector< Wave<T> >& waves) {
 
 template
 arma::Delaunay_triangulation
-arma::create_triangulation(const std::vector< Wave<ARMA_REAL_TYPE> >& waves);
+arma::create_triangulation(const std::vector< bits::Wave<ARMA_REAL_TYPE> >& waves);
 
 template
 arma::Function_values
-arma::create_function_values(const std::vector< Wave<ARMA_REAL_TYPE> >& waves);
+arma::create_function_values(const std::vector< bits::Wave<ARMA_REAL_TYPE> >& waves);
 
 template
 ARMA_REAL_TYPE
@@ -87,4 +87,4 @@ arma::interpolate(
 
 template
 ARMA_REAL_TYPE
-arma::interpolate(Point p, const std::vector< Wave<ARMA_REAL_TYPE> >& waves);
+arma::interpolate(Point p, const std::vector< bits::Wave<ARMA_REAL_TYPE> >& waves);

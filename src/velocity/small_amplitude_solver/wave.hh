@@ -5,35 +5,39 @@
 
 namespace arma {
 
-	template<class T>
-	class Wave {
-		int i = 0, j = 0;
-		T k = 0;
-		T height = 0;
-		T period = 0;
+	namespace bits {
 
-	public:
-		inline
-		Wave(int i_, int j_, T k_, T h, T p):
-		i(i_), j(j_), k(k_), height(h), period(p)
-		{}
+		template<class T>
+		class Wave {
+			int i = 0, j = 0;
+			T k = 0;
+			T height = 0;
+			T period = 0;
 
-		Wave() = default;
+		public:
+			inline
+			Wave(int i_, int j_, T k_, T h, T p):
+			i(i_), j(j_), k(k_), height(h), period(p)
+			{}
 
-		inline T wave_number() const noexcept { return k; }
-		inline T amplitude_rating() const noexcept { return height / period; }
-		inline int x() const noexcept { return i; }
-		inline int y() const noexcept { return j; }
+			Wave() = default;
 
-		template<class X>
-		friend std::ostream&
-		operator<<(std::ostream& out, const Wave<X>& rhs);
+			inline T wave_number() const noexcept { return k; }
+			inline T amplitude_rating() const noexcept { return height / period; }
+			inline int x() const noexcept { return i; }
+			inline int y() const noexcept { return j; }
 
-	};
+			template<class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const Wave<X>& rhs);
 
-	template<class T>
-	std::ostream&
-	operator<<(std::ostream& out, const Wave<T>& rhs);
+		};
+
+		template<class T>
+		std::ostream&
+		operator<<(std::ostream& out, const Wave<T>& rhs);
+
+	}
 
 }
 

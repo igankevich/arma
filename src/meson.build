@@ -56,7 +56,7 @@ if get_option('with_small_amplitude_solver')
 		'velocity/small_amplitude_solver/linear_interpolation.cc',
 	]
 	arma_cpp_args += '-DWITH_SMALL_AMPLITUDE_SOLVER' 
-	arma_depn += [libCGAL, libgmp]
+	arma_deps += [libCGAL, libgmp]
 endif
 
 if get_option('framework') == 'opencl'
