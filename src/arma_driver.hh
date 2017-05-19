@@ -42,16 +42,19 @@
 #include "discrete_function.hh"
 #include "util.hh"
 
-/// @file
-/// Some abbreviations used throughout the programme.
-/// AR      autoregressive
-/// ACF     auto-covariate function
-/// zeta    ocean wavy surface
-/// phi     AR model coefficients
-/// YW      Yule-Walker
-/// WN      white noise
-/// var     variance
-/// MT      Mersenne Twister (pseudo-random number generator)
+/** \mainpage
+Some abbreviations used throughout the programme.
+| Abbreviation      | Meaning                 |
+|:------------------|:------------------------|
+| AR                | autoregressive          |
+| ACF               | auto-covariate function |
+| zeta              | ocean wavy surface      |
+| phi               | AR model coefficients   |
+| YW                | Yule-Walker             |
+| WN                | white noise             |
+| var               | variance                |
+| MT                | Mersenne Twister        |
+*/
 
 namespace arma {
 
