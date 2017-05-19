@@ -3,5 +3,6 @@
 
 #define MT_CONFIG_FILE "@mt_config_file@"
 #define ARMA_OPENCL_SRC_DIR "@opencl_srcdir@"
+#define ARMA_DCMT_NAME "@arma_dcmt_name@"
 
 #endif // CONFIG_HH

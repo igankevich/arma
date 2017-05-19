@@ -1,3 +1,6 @@
+arma_dcmt_name = executable_prefix + '-dcmt'
+config.set('arma_dcmt_name', arma_dcmt_name)
+
 configure_file(
 	input: 'config.hh.in',
 	output: 'config.hh',
@@ -89,9 +92,8 @@ if get_option('with_high_amplitude_realtime_solver')
 	)
 endif
 
-
 executable(
-	executable_prefix + '-dcmt',
+	arma_dcmt_name,
 	sources: 'dcmt.cc',
 	dependencies: [libdcmt],
 	install: true
