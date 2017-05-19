@@ -281,7 +281,11 @@ namespace arma {
 
 			Partition() = default;
 
-			Partition(Shape3D ijk_, const blitz::RectDomain<3>& r, const mt_config& conf):
+			Partition(
+				Shape3D ijk_,
+				const blitz::RectDomain<3>& r,
+				const prng::mt_config& conf
+			):
 			ijk(ijk_), rect(r), prng(conf)
 			{}
 
@@ -297,7 +301,7 @@ namespace arma {
 
 			Shape3D ijk;
 			blitz::RectDomain<3> rect;
-			parallel_mt prng;
+			prng::parallel_mt prng;
 		};
 
 		template <class Model>
@@ -305,7 +309,7 @@ namespace arma {
 		do_generate_wavy_surface(Model& model, T var_wn) {
 			using blitz::RectDomain;
 			/// 1. Read parallel Mersenne Twister states.
-			std::vector<mt_config> prng_config;
+			std::vector<prng::mt_config> prng_config;
 			read_parallel_mt_config(
 				MT_CONFIG_FILE,
 				std::back_inserter(prng_config)
@@ -389,7 +393,7 @@ namespace arma {
 			Shape3D nparts,
 			Shape3D partshape,
 			Shape3D shape,
-			const std::vector<mt_config>& prng_config
+			const std::vector<prng::mt_config>& prng_config
 		) {
 			std::vector<Partition> parts;
 			const int nt = nparts(0);
@@ -658,8 +662,8 @@ namespace arma {
 				throw std::runtime_error("bad file");
 			}
 			std::copy(
-				std::istream_iterator<arma::mt_config>(in),
-				std::istream_iterator<arma::mt_config>(),
+				std::istream_iterator<arma::prng::mt_config>(in),
+				std::istream_iterator<arma::prng::mt_config>(),
 				result
 			);
 		}

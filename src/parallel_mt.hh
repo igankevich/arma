@@ -15,118 +15,139 @@ extern "C" {
 
 namespace arma {
 
-	struct mt_config : public ::mt_struct {
+	/// \brief Pseudo-random number generators.
+	namespace prng {
 
-		mt_config() { std::memset(this, 0, sizeof(mt_config)); }
-		~mt_config() { std::free(this->state); }
-		mt_config(const mt_config& rhs) {
-			std::memset(this, 0, sizeof(mt_config));
-			this->operator=(rhs);
-		}
+		/// \brief A set of parameters for parallel_mt generator.
+		struct mt_config : public ::mt_struct {
 
-		mt_config& operator=(const mt_config& rhs) {
-			free_state();
-			std::memcpy(this, &rhs, sizeof(mt_config));
-			init_state();
-			std::copy_n(rhs.state, rhs.nn, this->state);
-			return *this;
-		}
+			mt_config() { std::memset(this, 0, sizeof(mt_config)); }
+			~mt_config() { std::free(this->state); }
+			mt_config(const mt_config& rhs) {
+				std::memset(this, 0, sizeof(mt_config));
+				this->operator=(rhs);
+			}
 
-	private:
-		void
-		init_state() {
-			this->state = (uint32_t*)std::malloc(this->nn * sizeof(uint32_t));
-		}
+			mt_config&
+			operator=(const mt_config& rhs) {
+				free_state();
+				std::memcpy(this, &rhs, sizeof(mt_config));
+				init_state();
+				std::copy_n(rhs.state, rhs.nn, this->state);
+				return *this;
+			}
 
-		void
-		free_state() {
-			if (this->state) { std::free(this->state); }
-		}
+		private:
+			void
+			init_state() {
+				this->state = (uint32_t*)std::malloc(this->nn * sizeof(uint32_t));
+			}
 
-		friend std::istream& operator>>(std::istream& in, mt_config& rhs) {
-			rhs.free_state();
-			in.read((char*)&rhs, sizeof(mt_config));
-			rhs.init_state();
-			in.read((char*)rhs.state, rhs.nn * sizeof(uint32_t));
-			return in;
-		}
+			void
+			free_state() {
+				if (this->state) { std::free(this->state); }
+			}
 
-		friend std::ostream& operator<<(std::ostream& out,
-		                                const mt_config& rhs) {
-			out.write((char*)&rhs, sizeof(mt_config));
-			out.write((char*)rhs.state, rhs.nn * sizeof(uint32_t));
-			return out;
-		}
-	};
+			friend std::istream&
+			operator>>(std::istream& in, mt_config& rhs) {
+				rhs.free_state();
+				in.read((char*)&rhs, sizeof(mt_config));
+				rhs.init_state();
+				in.read((char*)rhs.state, rhs.nn * sizeof(uint32_t));
+				return in;
+			}
 
-	template <int p = 521, int w = 32>
-	struct parallel_mt_seq {
+			friend std::ostream&
+			operator<<(std::ostream& out, const mt_config& rhs) {
+				out.write((char*)&rhs, sizeof(mt_config));
+				out.write((char*)rhs.state, rhs.nn * sizeof(uint32_t));
+				return out;
+			}
+		};
 
-		typedef mt_config result_type;
+		/**
+		\brief Generates a sequence of mt_config objects.
 
-		explicit parallel_mt_seq(uint32_t seed) : _seed(seed) {}
+		mt_config objects are used to initialise parallel_mt generators to make
+		them produce uncorrelated sequences of pseudo-random numbers in
+		parallel.
+		*/
+		template <int p = 521, int w = 32>
+		struct parallel_mt_seq {
 
-		result_type operator()() {
-			this->generate_mt_struct();
-			return _result;
-		}
+			typedef mt_config result_type;
 
-		template <class OutputIterator>
-		void
-		param(OutputIterator dest) const {
-			*dest = _seed;
-			++dest;
-		}
+			explicit parallel_mt_seq(uint32_t seed) : _seed(seed) {}
 
-	private:
-		void
-		generate_mt_struct() {
-			mt_config* ptr = static_cast<mt_config*>(
-			    ::get_mt_parameter_id_st(w, p, _id, _seed));
-			if (!ptr) { throw std::runtime_error("bad MT"); }
-			_result = *ptr;
-			::free_mt_struct(ptr);
-			++_id;
-		}
+			result_type operator()() {
+				this->generate_mt_struct();
+				return _result;
+			}
 
-		uint32_t _seed = 0;
-		uint16_t _id = 0;
-		result_type _result;
-	};
+			template <class OutputIterator>
+			void
+			param(OutputIterator dest) const {
+				*dest = _seed;
+				++dest;
+			}
 
-	struct parallel_mt {
+		private:
+			void
+			generate_mt_struct() {
+				mt_config* ptr = static_cast<mt_config*>(
+				    ::get_mt_parameter_id_st(w, p, _id, _seed));
+				if (!ptr) { throw std::runtime_error("bad MT"); }
+				_result = *ptr;
+				::free_mt_struct(ptr);
+				++_id;
+			}
 
-		typedef uint32_t result_type;
+			uint32_t _seed = 0;
+			uint16_t _id = 0;
+			result_type _result;
+		};
 
-		parallel_mt() = default;
-		explicit parallel_mt(mt_config conf) : _config(conf) { init(0); }
-		parallel_mt& operator=(const parallel_mt&) = default;
+		/**
+		\brief A version of Mersenne Twister which is able to produce
+		uncorrelated pseudo-random number sequences using pre-generated
+		mt_config objects.
+		*/
+		struct parallel_mt {
 
-		result_type operator()() noexcept { return ::genrand_mt(&_config); }
+			typedef uint32_t result_type;
 
-		result_type
-		min() const noexcept {
-			return std::numeric_limits<result_type>::min();
-		}
+			parallel_mt() = default;
+			explicit parallel_mt(mt_config conf) : _config(conf) { init(0); }
+			parallel_mt& operator=(const parallel_mt&) = default;
 
-		result_type
-		max() const noexcept {
-			return std::numeric_limits<result_type>::max();
-		}
+			result_type operator()() noexcept { return ::genrand_mt(&_config); }
 
-		void
-		seed(result_type rhs) noexcept {
-			init(rhs);
-		}
+			result_type
+			min() const noexcept {
+				return std::numeric_limits<result_type>::min();
+			}
 
-	private:
-		void
-		init(result_type seed) {
-			::sgenrand_mt(seed, &_config);
-		}
+			result_type
+			max() const noexcept {
+				return std::numeric_limits<result_type>::max();
+			}
 
-		mt_config _config;
-	};
+			void
+			seed(result_type rhs) noexcept {
+				init(rhs);
+			}
+
+		private:
+			void
+			init(result_type seed) {
+				::sgenrand_mt(seed, &_config);
+			}
+
+			mt_config _config;
+		};
+
+	}
+
 }
 
 #endif // PARALLEL_MT_HH

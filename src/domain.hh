@@ -13,7 +13,7 @@ namespace arma {
 
 	/**
 	\brief
-	A region defined by the number of points, the lower and upper bound
+	A region defined by the number of points and the lower and upper bound
 	for each dimension.
 
 	\tparam T length type.
