@@ -294,7 +294,7 @@ main(int argc, char* argv[]) {
 		try {
 			driver.generate_wavy_surface();
 			driver.compute_velocity_potentials();
-		} catch (const prng_error& err) {
+		} catch (const PRNG_error& err) {
 			if (err.ngenerators() == 0) {
 				std::cerr << "No parallel Mersenne Twisters configuration is found. "
 					"Please, generate sufficient number of MTs with dcmt programme."

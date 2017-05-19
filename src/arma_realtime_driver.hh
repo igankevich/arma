@@ -9,6 +9,7 @@
 
 namespace arma {
 
+	/// \brief An ARMA_driver suiltable for real-time visualisation.
 	template <class T>
 	class ARMA_realtime_driver: public ARMA_driver<T> {
 

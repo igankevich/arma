@@ -6,6 +6,7 @@
 
 namespace arma {
 
+	/// \brief Multidimensional array with a grid.
 	template<class T, int N>
 	class Discrete_function: public blitz::Array<T,N> {
 

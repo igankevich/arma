@@ -32,8 +32,10 @@
 #include "acf.hh"
 #include "params.hh"
 #include "grid.hh"
-#include "statistics.hh"
-#include "distribution.hh"
+#include "stats/statistics.hh"
+#include "stats/distribution.hh"
+#include "stats/summary.hh"
+#include "stats/waves.hh"
 #include "errors.hh"
 #include "output_format.hh"
 #include "velocity/basic_solver.hh"
@@ -53,6 +55,7 @@
 
 namespace arma {
 
+	/// Helper class that initialises velocity potential solver by name.
 	template <class Solver>
 	class Solver_wrapper {
 		typedef Solver solver_type;
@@ -88,8 +91,13 @@ namespace arma {
 
 
 
-	/// Class that reads parameters from the input files,
-	/// calls all subroutines, and prints the result.
+	/**
+	\brief Control class that generates wavy surface and computes
+	velocity potential field.
+
+	Class that reads parameters from the input files,
+	calls all subroutines, and prints the result.
+	*/
 	template <class T>
 	struct ARMA_driver {
 
@@ -316,7 +324,7 @@ namespace arma {
 			);
 			const int nprngs = prng_config.size();
 			if (nprngs == 0) {
-				throw prng_error("bad number of MT configs", nprngs, 0);
+				throw PRNG_error("bad number of MT configs", nprngs, 0);
 			}
 			/// 2. Partition the data.
 			const Shape3D shape = _outgrid.size();
@@ -324,7 +332,7 @@ namespace arma {
 			const Shape3D nparts = blitz::div_ceil(shape, partshape);
 			const int ntotal = blitz::product(nparts);
 			if (prng_config.size() < size_t(blitz::product(nparts))) {
-				throw prng_error("bad number of MT configs", nprngs, ntotal);
+				throw PRNG_error("bad number of MT configs", nprngs, ntotal);
 			}
 			write_key_value(std::clog, "Partition size", partshape);
 			std::vector<Partition> parts = partition(
@@ -463,8 +471,10 @@ namespace arma {
 		template<class Model>
 		void
 		show_statistics(Array3D<T> acf, Array3D<T> zeta, Model model) {
+			using stats::Summary;
+			using stats::Wave_field;
 			const T var_wn = model.white_noise_variance();
-			Stats<T>::print_header(std::clog);
+			Summary<T>::print_header(std::clog);
 			std::clog << std::endl;
 			T var_elev = acf(0, 0, 0);
 			Wave_field<T> wave_field(zeta);
@@ -481,36 +491,36 @@ namespace arma {
 			stats::Wave_heights_dist<T> heights_y_dist(stats::mean(heights_y));
 			stats::Wave_lengths_dist<T> lengths_x_dist(stats::mean(lengths_x));
 			stats::Wave_lengths_dist<T> lengths_y_dist(stats::mean(lengths_y));
-			std::vector<Stats<T>> stats = {
-			    make_stats(zeta, T(0), var_elev, elev_dist, "elevation"),
-			    make_stats(heights_x, approx_wave_height(var_elev), T(0),
+			std::vector<Summary<T>> stats = {
+			    make_summary(zeta, T(0), var_elev, elev_dist, "elevation"),
+			    make_summary(heights_x, approx_wave_height(var_elev), T(0),
 			               heights_x_dist, "wave height x"),
-			    make_stats(heights_y, approx_wave_height(var_elev), T(0),
+			    make_summary(heights_y, approx_wave_height(var_elev), T(0),
 			               heights_y_dist, "wave height y"),
-			    make_stats(lengths_x, T(0), T(0), lengths_x_dist,
+			    make_summary(lengths_x, T(0), T(0), lengths_x_dist,
 			               "wave length x"),
-			    make_stats(lengths_y, T(0), T(0), lengths_y_dist,
+			    make_summary(lengths_y, T(0), T(0), lengths_y_dist,
 			               "wave length y"),
-			    make_stats(periods, approx_wave_period(var_elev), T(0),
+			    make_summary(periods, approx_wave_period(var_elev), T(0),
 			               periods_dist, "wave period"),
 			};
 			std::copy(
 				stats.begin(),
 				stats.end(),
-				std::ostream_iterator<Stats<T>>(std::clog, "\n")
+				std::ostream_iterator<Summary<T>>(std::clog, "\n")
 			);
 			if (_vscheme == Verification_scheme::Quantile) {
 				std::for_each(
 					stats.begin(),
 					stats.end(),
-					std::mem_fn(&Stats<T>::write_quantile_graph)
+					std::mem_fn(&Summary<T>::write_quantile_graph)
 				);
 			}
 		}
 
 		void
 		write_everything_to_files(Array3D<T> acf, Array3D<T> zeta) {
-			Wave_field<T> wave_field(zeta);
+			stats::Wave_field<T> wave_field(zeta);
 			write_raw("heights_x", wave_field.heights_x());
 			write_raw("heights_y", wave_field.heights_y());
 			write_raw("periods", wave_field.periods());

@@ -20,6 +20,9 @@ common_src = [
 	'interpolate.cc',
 	'verification_scheme.cc',
 	'simulation_model.cc',
+	'stats/qq_graph.cc',
+	'stats/summary.cc',
+	'stats/waves.cc',
 ]
 
 if get_option('profile')

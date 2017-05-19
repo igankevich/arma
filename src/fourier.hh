@@ -204,6 +204,7 @@ namespace arma {
 
 	}
 
+	/// \brief Multidimensional Fourier transform based on GSL library routines.
 	template <class T, int N>
 	class Fourier_transform {
 

@@ -6,16 +6,17 @@
 
 namespace arma {
 
-	class prng_error: public std::runtime_error {
+	/// \brief An error in the number of MT configurations.
+	class PRNG_error: public std::runtime_error {
 
 		int _nprngs, _nparts;
 
 	public:
-		prng_error() = default;
-		prng_error(const prng_error&) = default;
-		prng_error(prng_error&&) = default;
+		PRNG_error() = default;
+		PRNG_error(const PRNG_error&) = default;
+		PRNG_error(PRNG_error&&) = default;
 
-		prng_error(const char* msg, int nprngs, int nparts):
+		PRNG_error(const char* msg, int nprngs, int nparts):
 		std::runtime_error(msg),
 		_nprngs(nprngs), _nparts(nparts)
 		{}

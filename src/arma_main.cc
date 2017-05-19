@@ -138,7 +138,7 @@ main(int argc, char* argv[]) {
 				driver.write_wavy_surface("zeta.csv", Output_format::CSV);
 				driver.write_velocity_potentials("phi.csv", Output_format::CSV);
 			}
-		} catch (const prng_error& err) {
+		} catch (const PRNG_error& err) {
 			if (err.ngenerators() == 0) {
 				std::cerr << "No parallel Mersenne Twisters configuration is found. "
 					"Please, generate sufficient number of MTs with dcmt programme."
