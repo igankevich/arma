@@ -5,11 +5,11 @@
 #include "params.hh"
 #include "acf.hh"
 
-#include <stdexcept>
-#include <iostream>
-#include <functional>
-#include <cassert>
 #include <algorithm>
+#include <cassert>
+#include <functional>
+#include <iostream>
+#include <stdexcept>
 
 template <class T>
 T
