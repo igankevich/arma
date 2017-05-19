@@ -78,7 +78,7 @@ arma::bits::operator>>(std::istream& in, Function& rhs) {
 		rhs = Function::Cosine;
 	} else {
 		in.setstate(std::ios::failbit);
-		std::clog << "Invalid plain wave function: " << name << std::endl;
+		std::cerr << "Invalid plain wave function: " << name << std::endl;
 		throw std::runtime_error("bad function");
 	}
 	return in;

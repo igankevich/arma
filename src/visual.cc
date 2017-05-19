@@ -112,7 +112,6 @@ onDisplay() {
 	const int tl = std::min(tail, timer);
 	for (int t = timer - tl, i = 1; t <= timer; ++t, ++i) {
 		drawSeries(t, i / (tl + 1.0));
-		// clog << i/(tail+1.0) << endl;
 	}
 
 	std::stringstream str;

@@ -246,7 +246,6 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 				tmp.data() + tmp.numElements()
 			);
 			if (!opencl::supports_gl_sharing(opencl::devices()[0])) {
-			std::clog << "_glphi=" << _glphi << std::endl;
 				glBindBuffer(GL_ARRAY_BUFFER, _glphi);
 				glBufferData(
 					GL_ARRAY_BUFFER,

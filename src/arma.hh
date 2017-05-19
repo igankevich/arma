@@ -224,11 +224,6 @@ namespace arma {
 				T wex = c + tex * (b + a * tex);
 				Tex.push_back(tex);
 				Wex.push_back(wex);
-				if (std::isnan(tex) || std::isnan(wex)) {
-					std::clog << "NaN: " << tex << ", " << wex << ", " << a
-					          << ", " << b << ", " << c << ", " << dw1 << ", "
-					          << dw2 << std::endl;
-				}
 			}
 		}
 		if (!Tex.empty()) {

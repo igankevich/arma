@@ -74,7 +74,7 @@ namespace arma {
 		get_acf_function(std::string func) {
 			auto result = acf_functions.find(func);
 			if (result == acf_functions.end()) {
-				std::clog << "Bad ACF function name: \"" << func << '\"' << std::endl;
+				std::cerr << "Bad ACF function name: \"" << func << '\"' << std::endl;
 				throw std::runtime_error("bad ACF function name");
 			}
 			return result->second;

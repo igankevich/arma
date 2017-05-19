@@ -146,7 +146,7 @@ arma::Moving_average_model<T>::fixed_point_iteration(
 		theta(0, 0, 0) = 0;
 		/// 4. Validate coefficients.
 		if (!blitz::all(blitz::isfinite(theta))) {
-			std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+			std::cerr << __func__
 					  << ": bad coefficients = \n" << theta
 					  << std::endl;
 			throw std::runtime_error("bad MA model coefficients");
@@ -157,7 +157,7 @@ arma::Moving_average_model<T>::fixed_point_iteration(
 		var_wn = white_noise_variance(theta);
 		/// 6. Validate white noise variance.
 		if (var_wn <= min_var_wn || !std::isfinite(var_wn)) {
-			std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+			std::cerr << __func__
 					  << ": bad white noise variance = " << var_wn
 					  << std::endl;
 			throw std::runtime_error("bad white noise variance");
@@ -251,7 +251,7 @@ arma::Moving_average_model<T>::newton_raphson(
 		theta(0, 0, 0) = 0;
 		/// 4. Validate coefficients.
 		if (!all(isfinite(theta))) {
-			std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+			std::cerr << __func__
 					  << ": bad coefficients = \n" << theta
 					  << std::endl;
 			throw std::runtime_error("bad MA model coefficients");
@@ -263,7 +263,7 @@ arma::Moving_average_model<T>::newton_raphson(
 		tau(0, 0, 0) = std::sqrt(var_wn);
 		/// 6. Validate white noise variance.
 		if (var_wn <= min_var_wn || !std::isfinite(var_wn)) {
-			std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
+			std::cerr << __func__
 					  << ": bad white noise variance = " << var_wn
 					  << std::endl;
 			throw std::runtime_error("bad white noise variance");

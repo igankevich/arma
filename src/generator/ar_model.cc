@@ -60,7 +60,7 @@ void
 arma::Autoregressive_model<T>::determine_coefficients_old(bool do_least_squares) {
 	using blitz::all;
 	if (!all(order() <= _acf.shape())) {
-		std::clog << "AR model order is larger than ACF "
+		std::cerr << "AR model order is larger than ACF "
 					 "size:\n\tAR model "
 					 "order = "
 				  << order() << "\n\tACF size = " << _acf.shape()
@@ -151,26 +151,25 @@ arma::Autoregressive_model<T>::determine_coefficients_iteratively() {
 		/// Validate white noise variance.
 		const T var_wn = white_noise_variance(phi1);
 		if (!std::isfinite(var_wn)) {
-			std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
-					  << ": bad white noise variance = " << var_wn
-					  << std::endl;
+			std::cerr << "bad white noise variance = " << var_wn << std::endl;
+			#ifndef NDEBUG
 			std::clog << "Indices: \n";
 			std::copy(indices.begin(), indices.end(),
 					  std::ostream_iterator<Shape3D>(std::clog, "\n"));
 			std::clog << std::endl;
 			RectDomain<3> subdomain(_0, order - 1);
 			std::clog << "phi1 = \n" << phi1(subdomain) << std::endl;
+			#endif
 			throw std::runtime_error("bad white noise variance");
 		}
-#ifndef NDEBUG
+		#ifndef NDEBUG
 		/// Print solver state.
 		std::clog << __func__ << ':' << "Iteration=" << p
 				  << ", var_wn=" << var_wn << std::endl;
-#endif
+		#endif
 
 		if (!all(isfinite(phi1))) {
-			std::clog << __FILE__ << ':' << __LINE__ << ':' << __func__
-					  << ": bad coefficients = \n" << phi1 << std::endl;
+			std::cerr << "bad coefficients = \n" << phi1 << std::endl;
 			throw std::runtime_error("bad AR model coefficients");
 		}
 	}

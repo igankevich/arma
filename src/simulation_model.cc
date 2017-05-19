@@ -20,7 +20,7 @@ arma::operator>>(std::istream& in, Simulation_model& rhs) {
 		rhs = Simulation_model::Plain_wave;
 	} else {
 		in.setstate(std::ios::failbit);
-		std::clog << "Invalid model: " << name << std::endl;
+		std::cerr << "Invalid model: " << name << std::endl;
 		throw std::runtime_error("bad model");
 	}
 	return in;

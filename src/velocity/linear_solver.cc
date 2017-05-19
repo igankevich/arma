@@ -60,7 +60,7 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 	const Domain<T,2> wngrid(this->_wnmax, arr_size);
 	Array2D<T> mult = low_amp_window_function(wngrid, z);
 	if (!all(isfinite(mult))) {
-		std::clog << "Infinite/NaN multiplier. Try to increase minimal z "
+		std::cerr << "Infinite/NaN multiplier. Try to increase minimal z "
 			"coordinate at which velocity potential is calculated, or "
 			"decrease water depth. Here z="
 			<< z << ",depth=" << this->_depth << '.' << std::endl;

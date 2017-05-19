@@ -82,7 +82,7 @@ namespace {
 			rhs = Device_type::All;
 		} else {
 			in.setstate(std::ios::failbit);
-			std::clog << "Invalid device type: " << name << std::endl;
+			std::cerr << "Invalid device type: " << name << std::endl;
 			throw std::runtime_error("bad device type");
 		}
 		return in;
@@ -155,7 +155,7 @@ namespace {
 			std::vector<cl::Platform> platforms;
 			cl::Platform::get(&platforms);
 			if (platforms.empty()) {
-				std::clog
+				std::cerr
 					<< "Unable to find any OpenCL platform. Terminating."
 					<< std::endl;
 				std::exit(1);
@@ -173,10 +173,10 @@ namespace {
 					}
 				);
 				if (result == platforms.end()) {
-					std::clog << "Unable to find requested OpenCL platform. "
+					std::cerr << "Unable to find requested OpenCL platform. "
 						"Platform name = " << platform_name << std::endl;
-					std::clog << "Here is the list of all OpenCL platforms:\n";
-					std::clog << platforms;
+					std::cerr << "Here is the list of all OpenCL platforms:\n";
+					std::cerr << platforms;
 					std::exit(1);
 				}
 			}
@@ -195,7 +195,7 @@ namespace {
 			GLXContext glx_context = ::glXGetCurrentContext();
 			Display* glx_display = ::glXGetCurrentDisplay();
 			if (!glx_context || !glx_display) {
-				std::clog << "Unable to get current GLX display or context. "
+				std::cerr << "Unable to get current GLX display or context. "
 					"Please, initialise OpenGL before OpenCL. "
 					"Terminating." << std::endl;
 				std::exit(1);
@@ -221,7 +221,7 @@ namespace {
 			_devices = _context.getInfo<CL_CONTEXT_DEVICES>();
 			const std::string extensions = _devices[0].getInfo<CL_DEVICE_EXTENSIONS>();
 			if (extensions.find("cl_khr_gl_sharing") == std::string::npos) {
-				std::clog << "WARNING: "
+				std::cerr << "WARNING: "
 					"OpenCL and OpenGL context sharing (cl_khr_gl_sharing) "
 					"is not supported." << std::endl;
 			}
@@ -288,7 +288,7 @@ namespace {
 					}
 				}
 				if (!home) {
-					std::clog
+					std::cerr
 						<< "Can not determine neither XDG_CACHE_HOME nor HOME directory. "
 						"Setting OpenCL cache to /tmp."
 						<< std::endl;

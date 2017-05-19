@@ -41,7 +41,7 @@ namespace {
 std::istream&
 sys::operator>>(std::istream& in, parameter_map& rhs) {
 	if (rhs._parens && !(in >> std::ws >> const_char<'{'>())) {
-		std::clog << "Expecting \"{\"." << std::endl;
+		std::cerr << "Expecting \"{\"." << std::endl;
 	}
 	std::string name;
 	while (in >> comment) {
@@ -57,7 +57,7 @@ sys::operator>>(std::istream& in, parameter_map& rhs) {
 		trim_right(name);
 		auto result = rhs._params.find(name);
 		if (result == rhs._params.end()) {
-			std::clog << "Unknown parameter: \"" << name << "\"." << std::endl;
+			std::cerr << "Unknown parameter: \"" << name << "\"." << std::endl;
 			in.setstate(std::ios::failbit);
 		} else {
 			result->second(in, name.data());

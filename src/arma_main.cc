@@ -120,7 +120,7 @@ main(int argc, char* argv[]) {
 		#endif
 		std::ifstream cfg(input_filename);
 		if (!cfg.is_open()) {
-			std::clog << "Cannot open input file "
+			std::cerr << "Cannot open input file "
 				"\"" << input_filename << "\"."
 				<< std::endl;
 			throw std::runtime_error("bad input file");

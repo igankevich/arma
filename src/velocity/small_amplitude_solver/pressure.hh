@@ -286,7 +286,6 @@ namespace arma {
 				}
 			}
 		}
-		std::clog << "ok" << std::endl;
 		return wavenum;
 	}
 

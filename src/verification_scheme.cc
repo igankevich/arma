@@ -17,7 +17,7 @@ arma::operator>>(std::istream& in, Verification_scheme& rhs) {
 		rhs = Verification_scheme::Manual;
 	} else {
 		in.setstate(std::ios::failbit);
-		std::clog << "Invalid verification scheme: " << name << std::endl;
+		std::cerr << "Invalid verification scheme: " << name << std::endl;
 		throw std::runtime_error("bad varification scheme");
 	}
 	return in;

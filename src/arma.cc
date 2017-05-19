@@ -21,7 +21,7 @@ arma::validate_process(blitz::Array<T, N> _phi) {
 									 (gsl_complex_packed_ptr)result.data());
 	gsl_poly_complex_workspace_free(w);
 	if (ret != GSL_SUCCESS) {
-		std::clog << "GSL error: " << gsl_strerror(ret) << '.' << std::endl;
+		std::cerr << "GSL error: " << gsl_strerror(ret) << '.' << std::endl;
 		throw std::runtime_error(
 			"Can not find roots of the polynomial to "
 			"verify AR/MA model stationarity/invertibility.");
@@ -35,11 +35,11 @@ arma::validate_process(blitz::Array<T, N> _phi) {
 		/// precision. So we filter val=0 as well.
 		if (!(val > 1.0 || val == 0.0)) {
 			++num_bad_roots;
-			std::clog << "Root #" << i << '=' << result(i) << std::endl;
+			std::cerr << "Root #" << i << '=' << result(i) << std::endl;
 		}
 	}
 	if (num_bad_roots > 0) {
-		std::clog << "No. of bad roots = " << num_bad_roots << std::endl;
+		std::cerr << "No. of bad roots = " << num_bad_roots << std::endl;
 		throw std::runtime_error(
 			"AR/MA process is not stationary/invertible: some roots lie "
 			"inside unit circle or on its borderline.");

@@ -76,7 +76,7 @@ namespace arma {
 			auto result = rhs._constructors.find(name);
 			if (result == rhs._constructors.end()) {
 				in.setstate(std::ios::failbit);
-				std::clog << "Invalid solver: " << name << std::endl;
+				std::cerr << "Invalid solver: " << name << std::endl;
 				throw std::runtime_error("bad solver");
 			} else {
 				rhs._solver = result->second();

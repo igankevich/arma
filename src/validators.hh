@@ -10,7 +10,7 @@ namespace arma {
 	void
 	validate_shape(const blitz::TinyVector<T,n>& rhs, const char* name) {
 		if (blitz::any(rhs <= T(0))) {
-			std::clog
+			std::cerr
 				<< "Bad \"" << name << "\": "
 				<< rhs
 				<< std::endl;
@@ -22,7 +22,7 @@ namespace arma {
 	void
 	validate_positive(T rhs, const char* name) {
 		if (!(rhs > T(0))) {
-			std::clog
+			std::cerr
 				<< "Bad \"" << name << "\": "
 				<< rhs
 				<< std::endl;
@@ -36,7 +36,7 @@ namespace arma {
 		using blitz::all;
 		using blitz::isfinite;
 		if (!all(isfinite(rhs))) {
-			std::clog
+			std::cerr
 				<< "Bad \"" << name << "\": "
 				<< rhs
 				<< std::endl;
@@ -47,7 +47,7 @@ namespace arma {
 	void
 	validate_finite(T rhs, const char* name) {
 		if (!std::isfinite(rhs)) {
-			std::clog
+			std::cerr
 				<< "Bad \"" << name << "\": "
 				<< rhs
 				<< std::endl;
