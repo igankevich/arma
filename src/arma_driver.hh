@@ -58,40 +58,43 @@ Some abbreviations used throughout the programme.
 
 namespace arma {
 
-	/// Helper class that initialises velocity potential solver by name.
-	template <class Solver>
-	class Solver_wrapper {
-		typedef Solver solver_type;
-		typedef std::string key_type;
-		typedef std::function<solver_type*()> value_type;
-		typedef std::unordered_map<std::string, value_type> map_type;
-		solver_type*& _solver;
-		const map_type& _constructors;
+	namespace bits {
 
-	public:
-		explicit
-		Solver_wrapper(solver_type*& solver, const map_type& constructors):
-		_solver(solver),
-		_constructors(constructors)
-		{}
+		/// Helper class that initialises velocity potential solver by name.
+		template <class Solver>
+		class Solver_wrapper {
+			typedef Solver solver_type;
+			typedef std::string key_type;
+			typedef std::function<solver_type*()> value_type;
+			typedef std::unordered_map<std::string, value_type> map_type;
+			solver_type*& _solver;
+			const map_type& _constructors;
 
-		friend std::istream&
-		operator>>(std::istream& in, Solver_wrapper& rhs) {
-			std::string name;
-			in >> std::ws >> name;
-			auto result = rhs._constructors.find(name);
-			if (result == rhs._constructors.end()) {
-				in.setstate(std::ios::failbit);
-				std::cerr << "Invalid solver: " << name << std::endl;
-				throw std::runtime_error("bad solver");
-			} else {
-				rhs._solver = result->second();
-				in >> *rhs._solver;
+		public:
+			explicit
+			Solver_wrapper(solver_type*& solver, const map_type& constructors):
+			_solver(solver),
+			_constructors(constructors)
+			{}
+
+			friend std::istream&
+			operator>>(std::istream& in, Solver_wrapper& rhs) {
+				std::string name;
+				in >> std::ws >> name;
+				auto result = rhs._constructors.find(name);
+				if (result == rhs._constructors.end()) {
+					in.setstate(std::ios::failbit);
+					std::cerr << "Invalid solver: " << name << std::endl;
+					throw std::runtime_error("bad solver");
+				} else {
+					rhs._solver = result->second();
+					in >> *rhs._solver;
+				}
+				return in;
 			}
-			return in;
-		}
-	};
+		};
 
+	}
 
 
 	/**
@@ -535,7 +538,7 @@ namespace arma {
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
-			Solver_wrapper<velocity_potential_solver_type> vpsolver_wrapper(
+			bits::Solver_wrapper<velocity_potential_solver_type> vpsolver_wrapper(
 				_vpsolver,
 				_vpsolvers
 			);
