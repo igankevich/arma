@@ -10,8 +10,12 @@
 
 namespace arma {
 
+	/**
+	\brief Velocity potential field solvers.
+	*/
 	namespace velocity {
 
+		/// \brief Base class for all velocity potential field solvers.
 		template<class T>
 		class Velocity_potential_solver {
 

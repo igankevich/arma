@@ -9,7 +9,9 @@ namespace arma {
 
 	namespace velocity {
 
-		/// Linear wave theory formula to compute velocity potential field.
+		/**
+		\brief Uses linear wave theory formula, small-amplitude waves.
+		*/
 		template<class T>
 		class Linear_solver: public Velocity_potential_solver<T> {
 

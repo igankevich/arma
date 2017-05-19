@@ -17,6 +17,19 @@ namespace arma {
 
 	namespace velocity {
 
+		/**
+		\brief A version of \link High_amplitude_solver \endlink
+		with shared OpenCL/OpenGL buffers for real-time rendering.
+
+		- OpenCL/OpenGL sharing is used only when it is supported by the current
+		  OpenCL runtime.
+		- Only the first OpenCL device is used for computations. Multiple
+		  devices are not supported yet. The name of the device can be specified
+		  in `opencl.conf` the configuration file.
+
+		\see \link High_amplitude_solver \endlink
+		\see \link opencl/opencl.hh \endlink
+		*/
 		template <class T>
 		class High_amplitude_realtime_solver:
 		public Velocity_potential_solver<T> {

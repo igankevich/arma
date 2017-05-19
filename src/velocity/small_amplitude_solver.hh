@@ -7,7 +7,11 @@ namespace arma {
 
 	namespace velocity {
 
-		/// \note WIP
+		/**
+		\brief Uses numerical schemes, small-amplitude waves (WIP).
+
+		\note WIP
+		*/
 		template <class T>
 		class Small_amplitude_solver: public Velocity_potential_solver<T> {
 
