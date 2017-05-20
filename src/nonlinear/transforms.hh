@@ -68,6 +68,27 @@ namespace arma {
 			}
 		}
 
+		/**
+		\brief Transform ACF to the distribution function expanded into
+		       Gram--Charlier series.
+		\date 2017-05-20
+		\author Ivan Gankevich
+		*/
+		template <class T, class Solver>
+		void
+		transform_ACF(
+			const T* data,
+			const int n,
+			const blitz::Array<T,1> gram_charlier_coefs,
+			Solver solver
+		) {
+			for (int i=0; i<n; ++i) {
+				data[i] = solver(
+					Equation_ACF<T>(gram_charlier_coefs, data[i])
+				);
+			}
+		}
+
 	}
 
 }
