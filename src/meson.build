@@ -134,7 +134,7 @@ test(
 )
 
 test(
-	'arma::parallel_mt',
+	'arma::prng::parallel_mt',
 	executable(
 		'dcmt-test',
 		sources: 'dcmt-test.cc',

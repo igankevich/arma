@@ -1,6 +1,7 @@
 #include "polynomial.hh"
 #include <iomanip>
 #include <algorithm>
+#include <cmath>
 
 template <class T>
 arma::apmath::Polynomial<T>::Polynomial(std::initializer_list<T> coefs):
@@ -33,17 +34,32 @@ arma::apmath::Polynomial<T>::operator*(const Polynomial<T>& rhs) const {
 }
 
 template <class T>
+arma::apmath::Polynomial<T>&
+arma::apmath::Polynomial<T>::normalise(T eps) {
+	if (size() > 1) {
+		int i = order();
+		while (i>1 && std::abs(a(i)) < eps) {
+			--i;
+		}
+		a.resizeAndPreserve(i);
+	}
+	return *this;
+}
+
+template <class T>
 std::ostream&
 arma::apmath::operator<<(std::ostream& out, const Polynomial<T>& rhs) {
-	for (int i=rhs.order(); i>1; --i) {
-		out << std::setw(16) << std::showpos << std::right
-			<< rhs(i) << "x^" << std::noshowpos << i;
+	if (rhs.size() > 0) {
+		for (int i=rhs.size()-1; i>1; --i) {
+			out << std::setw(16) << std::showpos << std::right
+				<< rhs(i) << "x^" << std::noshowpos << i;
+		}
 	}
-	if (rhs.order() > 0) {
+	if (rhs.size() > 1) {
 		out << std::setw(16) << std::showpos << std::right
 			<< rhs(1) << 'x';
 	}
-	if (rhs.order() >= 0) {
+	if (rhs.size() > 0) {
 		out << std::setw(18) << std::showpos << std::right
 			<< rhs(0);
 	}

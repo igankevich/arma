@@ -44,7 +44,6 @@ arma::apmath::hermite_polynomial(int n) {
 		++h1_size;
 	}
 	std::reverse(&hn[0], &hn[hn.order()]);
-	std::clog << "hn.size()=" << hn.size() << std::endl;
 	return hn;
 }
 

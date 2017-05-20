@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include <algorithm>
 #include <cmath>
+#include "test/polynomial.hh"
 
 typedef ARMA_REAL_TYPE T;
 typedef arma::apmath::Polynomial<ARMA_REAL_TYPE> poly_type;
@@ -33,4 +34,11 @@ TEST(Polynomial, Multiply) {
 		<< "p1=" << p1 << std::endl
 		<< "p2=" << p2 << std::endl
 		<< "p1*p2=" << p1 << std::endl;
+}
+
+TEST(Polynomial, Normalise) {
+	const T eps(1e-3);
+	EXPECT_TRUE(compare(poly_type({0}).normalise(eps), poly_type()));
+	EXPECT_TRUE(compare(poly_type({0, 0}).normalise(eps), poly_type()));
+	EXPECT_TRUE(compare(poly_type({0, 0, 0}).normalise(eps), poly_type()));
 }

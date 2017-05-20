@@ -36,6 +36,9 @@ namespace arma {
 			Polynomial
 			operator*(const Polynomial& rhs) const;
 
+			Polynomial&
+			normalise(T eps);
+
 			inline int
 			order() const noexcept {
 				return a.extent(0)-1;
