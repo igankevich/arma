@@ -1,12 +1,8 @@
 #ifndef DISTRIBUTION_HH
 #define DISTRIBUTION_HH
 
-#include <algorithm>
-
-#include <blitz/array.h>
 #include <gsl/gsl_cdf.h>
-
-#include "statistics.hh"
+#include "physical_constants.hh"
 
 namespace arma {
 
@@ -48,6 +44,38 @@ namespace arma {
 		private:
 			T _a; //< lambda
 			T _b; //< k
+		};
+
+		/**
+		\brief Skew normal distribution.
+		\date 2017-05-20
+		\author Ivan Gankevich
+
+		\details Gram---Charlier series approximation with configurable
+		skewness and kurtosis.
+		*/
+		template<class T>
+		class Skew_normal {
+			T _skewness;
+			T _kurtosis;
+
+		public:
+			inline
+			Skew_normal(T skew, T kurt) noexcept:
+			_skewness(skew),
+			_kurtosis(kurt)
+			{}
+
+			inline T
+			operator()(T x) const noexcept {
+				using constants::_2pi;
+				using constants::sqrt2pi;
+				using constants::sqrt2;
+				return std::exp(T(-0.5)*x*x)*(_kurtosis*(T(3)*x - x*x*x)
+					+ _skewness*(T(4) - T(4)*x*x) + T(3)*x*x*x - T(9)*x)
+					/ (T(24)*sqrt2pi) + T(0.5)*std::erf(x/sqrt2) + T(0.5);
+			}
+
 		};
 
 		enum struct Characteristic {
