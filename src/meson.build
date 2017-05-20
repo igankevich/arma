@@ -23,6 +23,7 @@ common_src = [
 	'stats/qq_graph.cc',
 	'stats/summary.cc',
 	'stats/waves.cc',
+	'apmath/polynomial.cc',
 ]
 
 if get_option('profile')
@@ -163,6 +164,15 @@ test(
 	executable(
 		'factorial-test',
 		sources: 'factorial-test.cc',
+		dependencies: [libblitz, gtest]
+	)
+)
+
+test(
+	'arma::apmath::polynomial',
+	executable(
+		'polynomial-test',
+		sources: ['polynomial-test.cc', 'apmath/polynomial.cc'],
 		dependencies: [libblitz, gtest]
 	)
 )
