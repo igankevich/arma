@@ -148,3 +148,12 @@ test(
 		dependencies: [libblitz, gtest]
 	)
 )
+
+test(
+	'arma::Grid',
+	executable(
+		'grid-test',
+		sources: 'grid-test.cc',
+		dependencies: [libblitz, gtest]
+	)
+)

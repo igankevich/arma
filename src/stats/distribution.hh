@@ -64,31 +64,37 @@ namespace arma {
 		template <Characteristic c, class T>
 		struct Weibull_shape {};
 
+		/// \copydoc Weibull_shape
 		template <class T>
 		struct Weibull_shape<Characteristic::Wave_height, T> {
 			constexpr static const T shape = 2.0;
 		};
 
+		/// \copydoc Weibull_shape
 		template <class T>
 		struct Weibull_shape<Characteristic::Wave_length, T> {
 			constexpr static const T shape = 2.3;
 		};
 
+		/// \copydoc Weibull_shape
 		template <class T>
 		struct Weibull_shape<Characteristic::Crest_length, T> {
 			constexpr static const T shape = 2.3;
 		};
 
+		/// \copydoc Weibull_shape
 		template <class T>
 		struct Weibull_shape<Characteristic::Wave_period, T> {
 			constexpr static const T shape = 3.0;
 		};
 
+		/// \copydoc Weibull_shape
 		template <class T>
 		struct Weibull_shape<Characteristic::Wave_slope, T> {
 			constexpr static const T shape = 2.5;
 		};
 
+		/// \copydoc Weibull_shape
 		template <class T>
 		struct Weibull_shape<Characteristic::Threedimensionality, T> {
 			constexpr static const T shape = 2.5;

@@ -42,73 +42,80 @@ namespace arma {
 
 		Grid() = default;
 		Grid(const Grid&) = default;
-		Grid(const size_type& npts, const length_type& len)
-		    : _npoints(npts), _length(len) {}
-		explicit Grid(const size_type& npts)
-		    : _npoints(npts), _length(npts - 1) {}
+
+		Grid(const size_type& npts, const length_type& len) noexcept:
+		_npoints(npts), _length(len)
+		{}
+
+		explicit
+		Grid(const size_type& npts) noexcept:
+		_npoints(npts),
+		_length(npts - 1)
+		{}
+
 		~Grid() = default;
 
-		int
-		num_points(int i) const {
+		inline int
+		num_points(int i) const noexcept {
 			return _npoints(i);
 		}
 
-		const size_type&
-		num_points() const {
+		inline const size_type&
+		num_points() const noexcept {
 			return _npoints;
 		}
 
-		const size_type&
-		size() const {
+		inline const size_type&
+		size() const noexcept {
 			return _npoints;
 		}
 
-		int
-		num_patches(int i) const {
+		inline int
+		num_patches(int i) const noexcept {
 			return _npoints(i) - 1;
 		}
 
-		size_type
-		num_patches() const {
+		inline size_type
+		num_patches() const noexcept {
 			return _npoints - 1;
 		}
 
-		T
-		patch_size(int i) const {
+		inline T
+		patch_size(int i) const noexcept {
 			return _length(i) / num_patches(i);
 		}
 
-		length_type
-		patch_size() const {
+		inline length_type
+		patch_size() const noexcept {
 			return _length / num_patches();
 		}
 
-		T
-		delta(int i) const {
+		inline T
+		delta(int i) const noexcept {
 			return _length(i) / num_patches(i);
 		}
 
-		length_type
-		delta() const {
+		inline length_type
+		delta() const noexcept {
 			return _length / num_patches();
 		}
 
-		T
-		length(int i) const {
+		inline T
+		length(int i) const noexcept {
 			return _length(i);
 		}
 
-		const length_type&
-		length() const {
+		inline const length_type&
+		length() const noexcept {
 			return _length;
 		}
 
-		length_type
+		inline length_type
 		operator()(const size_type& i) const noexcept {
 			return delta() * i;
 		}
 
-		T
+		inline T
 		operator()(const int idx, const int dim) const noexcept {
 			return delta(dim) * idx;
 		}

@@ -4,7 +4,8 @@
 #include <blitz/array.h>
 
 /**
-@file domain-specific types and templates
+\file
+\brief domain-specific types and templates
 */
 
 namespace arma {
