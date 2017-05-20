@@ -120,6 +120,26 @@ namespace arma {
 			return delta(dim) * idx;
 		}
 
+		inline T
+		min(const int dim) const noexcept {
+			return operator()(0, dim);
+		}
+
+		inline length_type
+		min() const noexcept {
+			return operator()(0);
+		}
+
+		inline T
+		max(const int dim) const noexcept {
+			return operator()(num_patches(), dim);
+		}
+
+		inline length_type
+		max() const noexcept {
+			return operator()(num_patches());
+		}
+
 		friend std::ostream&
 		operator<<(std::ostream& out, const Grid& rhs) {
 			return out << rhs._npoints << ':' << rhs._length;
