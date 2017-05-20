@@ -17,9 +17,14 @@ namespace arma {
 			_sigma(sigma)
 			{}
 
-			T
+			inline T
 			quantile(T f) {
 				return gsl_cdf_gaussian_Pinv(f, _sigma) + _mean;
+			}
+
+			inline T
+			cdf(T f) {
+				return gsl_cdf_gaussian_P(f - _mean, _sigma);
 			}
 
 		private:
@@ -67,7 +72,7 @@ namespace arma {
 			{}
 
 			inline T
-			operator()(T x) const noexcept {
+			cdf(T x) const noexcept {
 				using constants::_2pi;
 				using constants::sqrt2pi;
 				using constants::sqrt2;
