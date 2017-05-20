@@ -157,3 +157,12 @@ test(
 		dependencies: [libblitz, gtest]
 	)
 )
+
+test(
+	'arma::apmath::factorial',
+	executable(
+		'factorial-test',
+		sources: 'factorial-test.cc',
+		dependencies: [libblitz, gtest]
+	)
+)
