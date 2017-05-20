@@ -25,6 +25,7 @@ common_src = [
 	'stats/waves.cc',
 	'apmath/polynomial.cc',
 	'apmath/hermite.cc',
+	'nonlinear/series.cc',
 ]
 
 if get_option('profile')
