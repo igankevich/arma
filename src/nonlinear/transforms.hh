@@ -33,7 +33,7 @@ namespace arma {
 			const Grid<T, 1>& grid,
 			Dist1 old_dist,
 			Dist2 new_dist,
-			Solver solver,
+			Solver solver
 		) {
 			const int n = grid.num_points();
 			blitz::Array<T,1> x(n), y(n);
@@ -46,6 +46,28 @@ namespace arma {
 			}
 			return std::make_pair(x, y);
 		}
+
+		/**
+		\brief Transforms each data point from old to new distribution.
+		\date 2017-05-20
+		\author Ivan Gankevich
+		*/
+		template <class T, class Solver>
+		void
+		transform_data(
+			const T* data,
+			const int n,
+			Dist1 old_dist,
+			Dist2 new_dist,
+			Solver solver
+		) {
+			for (int i=0; i<n; ++i) {
+				data[i] = solver(
+					Equation_CDF<T, Dist2>(new_dist, old_dist.cdf(data[i]))
+				);
+			}
+		}
+
 	}
 
 }
