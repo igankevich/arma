@@ -142,6 +142,33 @@ namespace linalg {
 		} while (i < max_iter && (b - a) > eps && std::abs(fc) > eps);
 		return c;
 	}
+
+	/**
+	\brief Functor for bisection algorithm.
+	\date 2017-05-20
+	\author Ivan Gankevich
+	*/
+	template <class T>
+	class Bisection {
+		T _x0, _x1;
+		T _eps;
+		int _niterations;
+
+	public:
+		inline
+		Bisection(T a, T b, T eps, int niterations) noexcept:
+		_x0(a),
+		_x1(b),
+		_eps(eps),
+		_niterations(niterations)
+		{}
+
+		template <class Func>
+		T
+		operator()(Func func) const noexcept {
+			bisection<T>(_x0, _x1, func, _eps, _niterations);
+		}
+	};
 }
 
 #endif // LINALG_HH
