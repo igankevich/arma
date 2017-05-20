@@ -24,6 +24,7 @@ common_src = [
 	'stats/summary.cc',
 	'stats/waves.cc',
 	'apmath/polynomial.cc',
+	'apmath/hermite.cc',
 ]
 
 if get_option('profile')
@@ -173,6 +174,19 @@ test(
 	executable(
 		'polynomial-test',
 		sources: ['polynomial-test.cc', 'apmath/polynomial.cc'],
+		dependencies: [libblitz, gtest]
+	)
+)
+
+test(
+	'arma::apmath::hermite_polynomial',
+	executable(
+		'hermite-test',
+		sources: [
+			'hermite-test.cc',
+			'apmath/polynomial.cc',
+			'apmath/hermite.cc'
+		],
 		dependencies: [libblitz, gtest]
 	)
 )

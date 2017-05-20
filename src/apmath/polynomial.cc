@@ -18,7 +18,6 @@ arma::apmath::Polynomial<T>::operator=(const Polynomial<T>& rhs) {
 	return *this;
 }
 
-
 template <class T>
 arma::apmath::Polynomial<T>
 arma::apmath::Polynomial<T>::operator*(const Polynomial<T>& rhs) const {
@@ -36,7 +35,7 @@ arma::apmath::Polynomial<T>::operator*(const Polynomial<T>& rhs) const {
 template <class T>
 std::ostream&
 arma::apmath::operator<<(std::ostream& out, const Polynomial<T>& rhs) {
-	for (int i=rhs.order()-1; i>1; --i) {
+	for (int i=rhs.order(); i>1; --i) {
 		out << std::setw(16) << std::showpos << std::right
 			<< rhs(i) << "x^" << std::noshowpos << i;
 	}

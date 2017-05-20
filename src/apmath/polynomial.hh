@@ -25,7 +25,7 @@ namespace arma {
 		public:
 			inline Polynomial(): a(1) {}
 			inline explicit Polynomial(int order): a(order+1) {}
-			inline Polynomial(const array_type& coefs): a(coefs) {}
+			inline explicit Polynomial(const array_type& coefs): a(coefs) {}
 			Polynomial(std::initializer_list<T> coefs);
 			inline Polynomial(const Polynomial& rhs) = default;
 			inline ~Polynomial() = default;
@@ -39,6 +39,16 @@ namespace arma {
 			inline int
 			order() const noexcept {
 				return a.extent(0)-1;
+			}
+
+			inline size_t
+			size() const noexcept {
+				return a.size();
+			}
+
+			inline const T*
+			data() const noexcept {
+				return a.data();
 			}
 
 			inline T&
