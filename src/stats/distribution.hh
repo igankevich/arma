@@ -1,6 +1,8 @@
 #ifndef DISTRIBUTION_HH
 #define DISTRIBUTION_HH
 
+#include <istream>
+#include <ostream>
 #include <gsl/gsl_cdf.h>
 #include "physical_constants.hh"
 
@@ -12,6 +14,11 @@ namespace arma {
 		template <class T>
 		struct Gaussian {
 
+			Gaussian() = default;
+			Gaussian(const Gaussian&) = default;
+			Gaussian(Gaussian&&) = default;
+
+			explicit
 			Gaussian(T m, T sigma):
 			_mean(m),
 			_sigma(sigma)
@@ -27,10 +34,26 @@ namespace arma {
 				return gsl_cdf_gaussian_P(f - _mean, _sigma);
 			}
 
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, Gaussian<X>& rhs);
+
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const Gaussian<X>& rhs);
+
 		private:
 			T _mean;
 			T _sigma;
 		};
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, Gaussian<T>& rhs);
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const Gaussian<T>& rhs);
 
 		/// \brief Weibull distribution.
 		template <class T>
@@ -65,7 +88,11 @@ namespace arma {
 			T _kurtosis;
 
 		public:
-			inline
+			Skew_normal() = default;
+			Skew_normal(const Skew_normal&) = default;
+			Skew_normal(Skew_normal&&) = default;
+
+			inline explicit
 			Skew_normal(T skew, T kurt) noexcept:
 			_skewness(skew),
 			_kurtosis(kurt)
@@ -81,7 +108,23 @@ namespace arma {
 					/ (T(24)*sqrt2pi<T>) + T(0.5)*std::erf(x/sqrt2<T>) + T(0.5);
 			}
 
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, Skew_normal<X>& rhs);
+
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const Skew_normal<X>& rhs);
+
 		};
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, Skew_normal<T>& rhs);
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const Skew_normal<T>& rhs);
 
 		enum struct Characteristic {
 			Wave_height,

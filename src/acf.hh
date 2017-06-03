@@ -8,6 +8,7 @@
 #include "params.hh"
 #include "grid.hh"
 #include "validators.hh"
+#include "discrete_function.hh"
 
 /// @file
 /// Mini-database of ACF approximations.
@@ -68,7 +69,7 @@ namespace arma {
 		typedef std::function<Array3D<T>(const Vec3D<T>&, const Shape3D&)>
 		    ACF_function;
 
-		Array3D<T>& _acf;
+		Discrete_function<T,3>& _acf;
 
 		static ACF_function
 		get_acf_function(std::string func) {
@@ -87,7 +88,7 @@ namespace arma {
 	public:
 
 		explicit
-		ACF_wrapper(Array3D<T>& acf):
+		ACF_wrapper(Discrete_function<T,3>& acf):
 		_acf(acf)
 		{}
 
@@ -102,7 +103,8 @@ namespace arma {
 			in >> params;
 			ACF_function acf_func = get_acf_function(func);
 			rhs._acf.resize(grid.size());
-			rhs._acf = acf_func(grid.delta(), grid.size());
+			rhs._acf.reference(acf_func(grid.delta(), grid.size()));
+			rhs._acf.setgrid(grid);
 			return in;
 		}
 

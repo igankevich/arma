@@ -4,6 +4,7 @@
 #include "types.hh"
 #include "ar_model.hh"
 #include "ma_model.hh"
+#include "discrete_function.hh"
 
 namespace arma {
 
@@ -18,17 +19,18 @@ namespace arma {
 
 			typedef AR_model<T> ar_model;
 			typedef MA_model<T> ma_model;
+			typedef Discrete_function<T,3> acf_type;
 
 			ARMA_model() = default;
 
 			inline explicit
-			ARMA_model(Array3D<T> acf, Shape3D ar_order, Shape3D ma_order):
-			ar_model(slice_front(acf, ar_order).copy(), ar_order),
-			ma_model(slice_back(acf, ma_order).copy(), ma_order),
+			ARMA_model(acf_type acf, Shape3D ar_order, Shape3D ma_order):
+			ar_model(slice_front(acf, ar_order), ar_order),
+			ma_model(slice_back(acf, ma_order), ma_order),
 			_acf_orig(acf)
 			{}
 
-			inline Array3D<T>
+			inline acf_type
 			acf() const {
 				return _acf_orig;
 			}
@@ -68,18 +70,30 @@ namespace arma {
 			white_noise_variance(Array3D<T> phi, Array3D<T> theta) const;
 
 		private:
-			inline static Array3D<T>
-			slice_back(Array3D<T> arr, Shape3D amount) {
+			inline static acf_type
+			slice_back(acf_type arr, Shape3D amount) {
 				const Shape3D last = arr.shape() - 1;
-				return arr(blitz::RectDomain<3>(arr.shape() - amount, last));
+				Array3D<T> res = arr(
+					blitz::RectDomain<3>(arr.shape() - amount, last)
+				);
+				acf_type result;
+				result.reference(res);
+				result.setgrid(arr.grid());
+				return result;
 			}
 
-			inline static Array3D<T>
-			slice_front(Array3D<T> arr, Shape3D amount) {
-				return arr(blitz::RectDomain<3>(Shape3D(0, 0, 0), amount - 1));
+			inline static acf_type
+			slice_front(acf_type arr, Shape3D amount) {
+				Array3D<T> res = arr(
+					blitz::RectDomain<3>(Shape3D(0, 0, 0), amount - 1)
+				);
+				acf_type result;
+				result.reference(res);
+				result.setgrid(arr.grid());
+				return result;
 			}
 
-			Array3D<T> _acf_orig;
+			acf_type _acf_orig;
 		};
 
 		template <class T>

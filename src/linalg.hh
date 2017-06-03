@@ -140,6 +140,7 @@ namespace linalg {
 			if (func(b) * fc < T(0)) a = c;
 			i++;
 		} while (i < max_iter && (b - a) > eps && std::abs(fc) > eps);
+		// TODO eps is used as absolute error and as a minimal interval size
 		return c;
 	}
 
@@ -168,7 +169,21 @@ namespace linalg {
 		operator()(Func func) const noexcept {
 			bisection<T>(_x0, _x1, func, _eps, _niterations);
 		}
+
+		inline void
+		interval(T a, T b) noexcept {
+			_x0 = a;
+			_x1 = b;
+		}
+
+		template <class X>
+		friend std::istream&
+		operator>>(std::istream& in, Bisection<X>& rhs);
 	};
+
+	template <class T>
+	std::istream&
+	operator>>(std::istream& in, Bisection<T>& rhs);
 }
 
 #endif // LINALG_HH

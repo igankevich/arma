@@ -30,7 +30,7 @@ namespace arma {
 		template <class T, class Dist1, class Dist2, class Solver>
 		std::pair<blitz::Array<T,1>,blitz::Array<T,1>>
 		transform_CDF(
-			const Grid<T, 1>& grid,
+			const Domain<T, 1>& grid,
 			Dist1 old_dist,
 			Dist2 new_dist,
 			Solver solver
@@ -52,7 +52,7 @@ namespace arma {
 		\date 2017-05-20
 		\author Ivan Gankevich
 		*/
-		template <class T, class Solver>
+		template <class T, class Dist1, class Dist2, class Solver>
 		void
 		transform_data(
 			const T* data,

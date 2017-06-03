@@ -66,3 +66,16 @@ sys::operator>>(std::istream& in, parameter_map& rhs) {
 	return in;
 }
 
+std::ostream&
+sys::operator<<(std::ostream& out, const parameter_map& rhs) {
+	if (rhs._parens) {
+		out << '{';
+	}
+//	for (const auto& pair : rhs._params) {
+//		out << pair.first << '=' << pair.second << '\n';
+//	}
+	if (rhs._parens) {
+		out << '}';
+	}
+	return out;
+}

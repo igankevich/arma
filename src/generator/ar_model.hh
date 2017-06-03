@@ -4,6 +4,7 @@
 #include "types.hh"
 #include "arma.hh"
 #include "model.hh"
+#include "discrete_function.hh"
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations
@@ -19,20 +20,22 @@ namespace arma {
 		template <class T>
 		struct AR_model: public virtual Basic_ARMA_model<T> {
 
+			typedef Discrete_function<T,3> acf_type;
+
 			AR_model() = default;
 
 			inline explicit
-			AR_model(Array3D<T> acf, Shape3D order):
+			AR_model(acf_type acf, Shape3D order):
 			_acf(acf), _phi(order)
 			{}
 
-			inline Array3D<T>
+			inline acf_type
 			acf() const {
 				return _acf;
 			}
 
 			inline void
-			setacf(Array3D<T> acf) {
+			setacf(acf_type acf) {
 				_acf.resize(acf.shape());
 				_acf = acf;
 			}
@@ -102,7 +105,7 @@ namespace arma {
 			void
 			determine_coefficients_iteratively();
 
-			Array3D<T> _acf;
+			acf_type _acf;
 			Array3D<T> _phi;
 			bool _doleastsquares = false;
 		};

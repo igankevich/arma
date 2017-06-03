@@ -7,10 +7,17 @@ configure_file(
 	configuration: config
 )
 
-linalg_files = files('linalg.cc')
+linalg_files = files([
+	'linalg.cc',
+	'params.cc',
+])
 apmath_files = files([
 	'apmath/polynomial.cc',
 	'apmath/hermite.cc',
+])
+nonlinear_files = files([
+	'nonlinear/series.cc',
+	'nonlinear/nit_transform.cc',
 ])
 
 common_src = [
@@ -28,8 +35,8 @@ common_src = [
 	'stats/qq_graph.cc',
 	'stats/summary.cc',
 	'stats/waves.cc',
-	'nonlinear/series.cc',
-] + linalg_files + apmath_files
+	'stats/distribution.cc',
+] + linalg_files + apmath_files + nonlinear_files
 
 if get_option('profile')
 	common_src += 'profile.cc'

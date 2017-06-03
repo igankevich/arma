@@ -1,4 +1,6 @@
 #include "linalg.hh"
+#include "params.hh"
+#include "validators.hh"
 
 namespace {
 
@@ -164,6 +166,19 @@ linalg::interpolate(const Vector<T>& x, const Vector<T>& y, const int n) {
 }
 
 
+template <class T>
+std::istream&
+linalg::operator>>(std::istream& in, Bisection<T>& rhs) {
+	sys::parameter_map params({
+	    {"absolute_error", sys::make_param(rhs._eps)},
+	    {"max_iterations", sys::make_param(rhs._niterations)},
+	}, true);
+	in >> params;
+	arma::validate_positive(rhs._eps, "bisection.absolute_error");
+	arma::validate_positive(rhs._niterations, "bisection.max_iterations");
+	return in;
+}
+
 template bool linalg::is_symmetric<ARMA_REAL_TYPE>(Matrix<ARMA_REAL_TYPE>& rhs);
 template bool linalg::is_positive_definite<ARMA_REAL_TYPE>(Matrix<ARMA_REAL_TYPE>& rhs);
 template bool linalg::is_toeplitz<ARMA_REAL_TYPE>(Matrix<ARMA_REAL_TYPE>& rhs);
@@ -182,3 +197,6 @@ linalg::least_squares<ARMA_REAL_TYPE>(
 	Matrix<ARMA_REAL_TYPE>& A,
 	Vector<ARMA_REAL_TYPE>& b
 );
+
+template std::istream&
+linalg::operator>>(std::istream& in, Bisection<ARMA_REAL_TYPE>& rhs);

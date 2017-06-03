@@ -85,3 +85,12 @@ velocity_potential_solver = linear {
 	# surface elevation to compute potentials inside waves.
 	domain = from (10,-5) to (10,4) npoints (1,10)
 }
+
+transform = nit {
+	distribution = skew_normal
+	interpolation_order = 12
+	interpolation_nodes = 100
+	gram_charlier_order = 10
+	nsigma = 5
+	acf_interval = 2
+}

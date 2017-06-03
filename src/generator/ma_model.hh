@@ -5,6 +5,7 @@
 #include "ma_algorithm.hh"
 #include "arma.hh"
 #include "model.hh"
+#include "discrete_function.hh"
 
 namespace arma {
 
@@ -16,21 +17,23 @@ namespace arma {
 		template <class T>
 		struct MA_model: public virtual Basic_ARMA_model<T> {
 
+			typedef Discrete_function<T,3> acf_type;
+
 			MA_model() = default;
 
 			inline explicit
-			MA_model(Array3D<T> acf, Shape3D order):
+			MA_model(acf_type acf, Shape3D order):
 			_acf(acf),
 			_theta(order)
 			{}
 
-			inline Array3D<T>
+			inline acf_type
 			acf() const {
 				return _acf;
 			}
 
 			inline void
-			setacf(Array3D<T> acf) {
+			setacf(acf_type acf) {
 				_acf.resize(acf.shape());
 				_acf = acf;
 			}
@@ -127,7 +130,7 @@ namespace arma {
 			recompute_acf(Array3D<T> acf_orig, Array3D<T> phi);
 
 		private:
-			Array3D<T> _acf;
+			acf_type _acf;
 			Array3D<T> _theta;
 			MA_algorithm _algo = MA_algorithm::Fixed_point_iteration;
 			int _maxiter = 1000;

@@ -41,6 +41,7 @@
 #include "velocity/basic_solver.hh"
 #include "discrete_function.hh"
 #include "util.hh"
+#include "nonlinear/nit_transform.hh"
 
 /** \mainpage
 Some abbreviations used throughout the programme.
@@ -94,6 +95,34 @@ namespace arma {
 			}
 		};
 
+		template <class Tr>
+		class Transform_wrapper {
+			Tr& _transform;
+			bool& _linear;
+		public:
+			explicit
+			Transform_wrapper(Tr& tr, bool& linear):
+			_transform(tr),
+			_linear(linear)
+			{}
+			friend std::istream&
+			operator>>(std::istream& in, Transform_wrapper& rhs) {
+				std::string name;
+				in >> std::ws >> name;
+				if (name == "nit") {
+					in >> rhs._transform;
+					rhs._linear = false;
+				} else if (name == "none") {
+					rhs._linear = true;
+				} else {
+					in.setstate(std::ios::failbit);
+					std::cerr << "Invalid transform: " << name << std::endl;
+					throw std::runtime_error("bad transform");
+				}
+				return in;
+			}
+		};
+
 	}
 
 
@@ -109,7 +138,8 @@ namespace arma {
 
 		typedef std::chrono::high_resolution_clock clock_type;
 		typedef velocity::Velocity_potential_solver<T>
-			velocity_potential_solver_type;
+			vpsolver_type;
+		typedef nonlinear::NIT_transform<T> transform_type;
 
 		ARMA_driver():
 		_outgrid{{768, 24, 24}},
@@ -135,12 +165,12 @@ namespace arma {
 			return _vpotentials;
 		}
 
-		const velocity_potential_solver_type*
+		const vpsolver_type*
 		velocity_potential_solver() const noexcept {
 			return _vpsolver;
 		}
 
-		velocity_potential_solver_type*
+		vpsolver_type*
 		velocity_potential_solver() noexcept {
 			return _vpsolver;
 		}
@@ -538,9 +568,13 @@ namespace arma {
 		/// Read AR model parameters from an input stream.
 		void
 		read_parameters(std::istream& in) {
-			bits::Solver_wrapper<velocity_potential_solver_type> vpsolver_wrapper(
+			bits::Solver_wrapper<vpsolver_type> vpsolver_wrapper(
 				_vpsolver,
 				_vpsolvers
+			);
+			bits::Transform_wrapper<transform_type> trans_wrapper(
+				_nittransform,
+				_linear
 			);
 			sys::parameter_map params({
 			    {"out_grid", sys::make_param(_outgrid, validate_grid<T,3>)},
@@ -553,15 +587,23 @@ namespace arma {
 			    {"verification", sys::make_param(_vscheme)},
 			    {"partition", sys::make_param(_partition)},
 			    {"velocity_potential_solver", sys::make_param(vpsolver_wrapper)},
+			    {"transform", sys::make_param(trans_wrapper)},
 			});
 			in >> params;
 		}
 
 		void
 		echo_parameters() {
-			write_key_value(std::clog, "Output grid size", _outgrid.size());
-			write_key_value(std::clog, "Output grid patch size",
-			                _outgrid.patch_size());
+			write_key_value(
+				std::clog,
+				"Output grid size",
+				_outgrid.size()
+			);
+			write_key_value(
+				std::clog,
+				"Output grid patch size",
+				_outgrid.patch_size()
+			);
 			write_key_value(std::clog, "Model", _model);
 			write_key_value(std::clog, "Verification scheme", _vscheme);
 			switch (_model) {
@@ -572,13 +614,25 @@ namespace arma {
 					write_key_value(std::clog, "MA model", _mamodel);
 					break;
 				case Simulation_model::ARMA:
-					write_key_value(std::clog, "ARMA model", "<not implemented>");
+					write_key_value(
+						std::clog,
+						"ARMA model",
+						"<not implemented>"
+					);
 					break;
 				case Simulation_model::Plain_wave_model:
-					write_key_value(std::clog, "Plain wave model", _plainwavemodel);
+					write_key_value(
+						std::clog,
+						"Plain wave model",
+						_plainwavemodel
+					);
 					break;
 				case Simulation_model::Longuet_Higgins:
-					write_key_value(std::clog, "Longuet-Higgins model", _lhmodel);
+					write_key_value(
+						std::clog,
+						"Longuet-Higgins model",
+						_lhmodel
+					);
 					break;
 			}
 			if (_vpsolver) {
@@ -587,7 +641,16 @@ namespace arma {
 					"Velocity potential solver name",
 					typeid(*_vpsolver).name()
 				);
-				write_key_value(std::clog, "Velocity potential solver", *_vpsolver);
+				write_key_value(
+					std::clog,
+					"Velocity potential solver",
+					*_vpsolver
+				);
+			}
+			if (_linear) {
+				write_key_value(std::clog, "NIT transform", "none");
+			} else {
+				write_key_value(std::clog, "NIT transform", _nittransform);
 			}
 		}
 
@@ -708,12 +771,14 @@ namespace arma {
 		generator::Plain_wave_model<T> _plainwavemodel;
 		generator::Longuet_Higgins_model<T> _lhmodel;
 
-		velocity_potential_solver_type* _vpsolver = nullptr;
+		vpsolver_type* _vpsolver = nullptr;
 
 		Discrete_function<T,3> _zeta;
 		Array4D<T> _vpotentials;
+		nonlinear::NIT_transform<T> _nittransform;
+		bool _linear = true;
 
-		typedef std::function<velocity_potential_solver_type*()> vpsolver_ctr;
+		typedef std::function<vpsolver_type*()> vpsolver_ctr;
 		std::unordered_map<std::string, vpsolver_ctr> _vpsolvers;
 	};
 

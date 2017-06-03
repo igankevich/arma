@@ -58,16 +58,30 @@ namespace sys {
 		_parens(parens)
 		{}
 
+		inline explicit
+		parameter_map(map_type&& rhs, std::string name, bool parens=false):
+		_params(rhs),
+		_name(name),
+		_parens(parens)
+		{}
+
 		friend std::istream&
 		operator>>(std::istream& in, parameter_map& rhs);
 
+		friend std::ostream&
+		operator<<(std::ostream& out, const parameter_map& rhs);
+
 	private:
 		map_type _params;
+		std::string _name;
 		bool _parens;
 	};
 
 	std::istream&
 	operator>>(std::istream& in, parameter_map& rhs);
+
+	std::ostream&
+	operator<<(std::ostream& out, const parameter_map& rhs);
 }
 
 #endif // PARAMS_HH
