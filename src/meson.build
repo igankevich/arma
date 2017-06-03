@@ -7,10 +7,15 @@ configure_file(
 	configuration: config
 )
 
+linalg_files = files('linalg.cc')
+apmath_files = files([
+	'apmath/polynomial.cc',
+	'apmath/hermite.cc',
+])
+
 common_src = [
 	'arma.cc',
 	'params.cc',
-	'linalg.cc',
 	'generator/plain_wave.cc',
 	'generator/ar_model.cc',
 	'generator/ma_model.cc',
@@ -23,10 +28,8 @@ common_src = [
 	'stats/qq_graph.cc',
 	'stats/summary.cc',
 	'stats/waves.cc',
-	'apmath/polynomial.cc',
-	'apmath/hermite.cc',
 	'nonlinear/series.cc',
-]
+] + linalg_files + apmath_files
 
 if get_option('profile')
 	common_src += 'profile.cc'
@@ -118,76 +121,4 @@ executable(
 	install: true
 )
 
-test(
-	'linalg::*',
-	executable(
-		'linalg-test',
-		sources: ['linalg.cc', 'linalg-test.cc'],
-		dependencies: [
-			libblitz,
-			libgsl,
-			libblas,
-			liblapack,
-			gtest
-		],
-		link_args: '-llapacke'
-	)
-)
-
-test(
-	'arma::prng::parallel_mt',
-	executable(
-		'dcmt-test',
-		sources: 'dcmt-test.cc',
-		dependencies: [libdcmt, gtest]
-	)
-)
-
-test(
-	'arma::Domain',
-	executable(
-		'domain-test',
-		sources: 'domain-test.cc',
-		dependencies: [libblitz, gtest]
-	)
-)
-
-test(
-	'arma::Grid',
-	executable(
-		'grid-test',
-		sources: 'grid-test.cc',
-		dependencies: [libblitz, gtest]
-	)
-)
-
-test(
-	'arma::apmath::factorial',
-	executable(
-		'factorial-test',
-		sources: 'factorial-test.cc',
-		dependencies: [libblitz, gtest]
-	)
-)
-
-test(
-	'arma::apmath::polynomial',
-	executable(
-		'polynomial-test',
-		sources: ['polynomial-test.cc', 'apmath/polynomial.cc'],
-		dependencies: [libblitz, gtest]
-	)
-)
-
-test(
-	'arma::apmath::hermite_polynomial',
-	executable(
-		'hermite-test',
-		sources: [
-			'hermite-test.cc',
-			'apmath/polynomial.cc',
-			'apmath/hermite.cc'
-		],
-		dependencies: [libblitz, gtest]
-	)
-)
+subdir('test')

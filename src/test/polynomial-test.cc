@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include <algorithm>
 #include <cmath>
-#include "test/polynomial.hh"
+#include "polynomial.hh"
 
 typedef ARMA_REAL_TYPE T;
 typedef arma::apmath::Polynomial<ARMA_REAL_TYPE> poly_type;
