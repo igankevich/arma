@@ -128,4 +128,9 @@ executable(
 	install: true
 )
 
+executable(
+	'layout-run',
+	sources: 'layout-run.cc'
+)
+
 subdir('test')
