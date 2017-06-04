@@ -276,7 +276,11 @@ namespace arma {
 		template <class Model>
 		void
 		generate_wavy_surface(Model& model) {
-			Array3D<T> acf = model.acf();
+			Discrete_function<T,3> acf = model.acf();
+			if (!_linear) {
+				auto copy = acf.copy();
+				_nittransform.transform_ACF(copy);
+			}
 			std::clog << "ACF variance = " << ACF_variance(acf) << std::endl;
 			if (_vscheme == Verification_scheme::Manual) {
 				write_csv("acf.csv", acf);
@@ -291,6 +295,9 @@ namespace arma {
 			std::clog << "WN variance = " << var_wn << std::endl;
 			Array3D<T> zeta = do_generate_wavy_surface(model, var_wn);
 			this->_zeta.reference(zeta);
+			if (!_linear) {
+				_nittransform.transform_realisation(acf, _zeta);
+			}
 			if (std::is_same<Model,generator::AR_model<T>>::value) {
 				/// Estimate mean/variance with ramp-up region removed.
 				blitz::RectDomain<3> subdomain(model.order(), zeta.shape() - 1);
@@ -422,13 +429,13 @@ namespace arma {
 					model(zeta, eps, part.rect);
 					lock.lock();
 					std::clog
-						<< "Finished part ["
-						<< ++nfinished << '/' << ntotal << ']'
-						<< std::endl;
+						<< "\rFinished part ["
+						<< ++nfinished << '/' << ntotal << ']';
 					completed(part.ijk) = true;
 					cv.notify_all();
 				}
 			}
+			std::clog << std::endl;
 			return zeta;
 		}
 

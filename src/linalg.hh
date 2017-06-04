@@ -167,7 +167,7 @@ namespace linalg {
 		template <class Func>
 		T
 		operator()(Func func) const noexcept {
-			bisection<T>(_x0, _x1, func, _eps, _niterations);
+			return bisection<T>(_x0, _x1, func, _eps, _niterations);
 		}
 
 		inline void

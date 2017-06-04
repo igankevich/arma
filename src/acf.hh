@@ -22,7 +22,8 @@ namespace arma {
 		// guessed
 		T alpha = 0.06;
 		T beta = 0.8;
-		T gamm = 5.0;
+		T gamm = 1.0;
+		// TODO gamma=1 is needed for nonlinear transform
 
 		// from mathematica
 //		T alpha = 2.31906, beta = -5.49873, gamm = 0.0680413;

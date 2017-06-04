@@ -15,8 +15,7 @@ namespace arma {
 		namespace bits {
 
 			enum struct Distribution {
-				Normal = 0,
-				Skew_normal = 1
+				Skew_normal = 0
 			};
 
 			std::istream&
@@ -50,8 +49,7 @@ namespace arma {
 			static constexpr const T default_absolute_error = T(1e-6);
 			static const unsigned int default_niterations = 100;
 
-			bits::Distribution _targetdist;
-			normaldist_type _normal;
+			bits::Distribution _targetdist = bits::Distribution::Skew_normal;
 			skewnormaldist_type  _skewnormal;
 			int _intnodes = 100;
 			T _nsigma = T(5);
@@ -102,13 +100,8 @@ namespace arma {
 			void
 			do_transform_ACF(Array3D<T>& acf);
 
-			class Distribution_wrapper {
-				NIT_transform& _obj;
-			public:
-				template <class X>
-				friend std::istream&
-				operator>>(std::istream& in, Distribution_wrapper& rhs);
-			};
+			void
+			read_dist(std::istream& in);
 
 		};
 
@@ -121,12 +114,6 @@ namespace arma {
 		std::istream&
 		operator>>(std::istream& in, NIT_transform<T>& rhs);
 
-		template <class T>
-		std::istream&
-		operator>>(
-			std::istream& in,
-			typename NIT_transform<T>::Distribution_wrapper& rhs
-		);
 	}
 
 }

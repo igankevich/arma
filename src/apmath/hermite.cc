@@ -18,7 +18,8 @@ arma::apmath::hermite_polynomial(int n) {
 	}
 	const int m = n+1;
 	// in an order of decreasing x powers
-	array_type h0(m), h1(m);
+	array_type h0(m);
+	array_type h1(m);
 	h0(0) = T(1);
 	h1(0) = T(1);
 	h1(1) = T(0);

@@ -105,10 +105,15 @@ main(int argc, char* argv[]) {
 				break;
 		}
 	}
+	if (argc - ::optind > 1) {
+		std::cerr << "Only one file argument is allowed." << std::endl;
+		return 1;
+	}
 
-	if (help_requested || input_filename.empty()) {
+	if (help_requested || ::optind == argc) {
 		usage(argv[0]);
 	} else {
+		input_filename = argv[::optind];
 		/// input file with various driver parameters
 		ARMA_driver<Real> driver;
 		using namespace velocity;

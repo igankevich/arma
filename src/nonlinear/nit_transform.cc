@@ -3,6 +3,7 @@
 #include "validators.hh"
 #include "domain.hh"
 #include "transforms.hh"
+#include "series.hh"
 
 #include <string>
 #include <stdexcept>
@@ -12,8 +13,6 @@
 template <class T>
 void
 arma::nonlinear::NIT_transform<T>::transform_CDF(Array3D<T> acf) {
-	// Do nothing, if target distribution matches the current one.
-	if (_targetdist == bits::Distribution::Normal) return;
 	const T stdev = std::sqrt(acf(0,0,0));
 	const T breadth = _nsigma*stdev;
 	_cdfsolver.interval(-breadth, breadth);
@@ -22,7 +21,7 @@ arma::nonlinear::NIT_transform<T>::transform_CDF(Array3D<T> acf) {
 		Vec1D<T>(breadth),
 		Vec1D<int>(_intnodes)
 	);
-	auto nodes = transform_CDF(
+	auto nodes = ::arma::nonlinear::transform_CDF(
 		grid,
 		normaldist_type(T(0), stdev),
 		_skewnormal,
@@ -54,7 +53,7 @@ template <class T>
 void
 arma::nonlinear::NIT_transform<T>::do_transform_ACF(Array3D<T>& acf) {
 	_acfsolver.interval(_acfinterval, _acfinterval);
-	transform_ACF(
+	::arma::nonlinear::transform_ACF(
 		acf.data(),
 		acf.numElements(),
 		_gcscoefs,
@@ -87,13 +86,20 @@ arma::nonlinear::NIT_transform<T>::transform_realisation(
 	);
 }
 
+template <class T>
+void
+arma::nonlinear::NIT_transform<T>::read_dist(std::istream& str) {
+	str >> _targetdist;
+	if (_targetdist == bits::Distribution::Skew_normal) {
+		str >> _skewnormal;
+	}
+}
+
 std::istream&
 arma::nonlinear::bits::operator>>(std::istream& in, Distribution& rhs) {
 	std::string name;
 	in >> std::ws >> name;
-	if (name == "normal") {
-		rhs = Distribution::Normal;
-	} else if (name == "skew_normal") {
+	if (name == "skew_normal") {
 		rhs = Distribution::Skew_normal;
 	} else {
 		in.setstate(std::ios::failbit);
@@ -106,7 +112,6 @@ arma::nonlinear::bits::operator>>(std::istream& in, Distribution& rhs) {
 const char*
 arma::nonlinear::bits::to_string(Distribution rhs) {
 	switch (rhs) {
-		case Distribution::Normal: return "normal";
 		case Distribution::Skew_normal: return "skew_normal";
 		default: return "UNKNOWN";
 	}
@@ -120,19 +125,12 @@ arma::nonlinear::bits::operator<<(std::ostream& out, const Distribution& rhs) {
 template <class T>
 std::ostream&
 arma::nonlinear::operator<<(std::ostream& out, const NIT_transform<T>& rhs) {
-	out << "dist=" << rhs._targetdist << ',';
-	switch (rhs._targetdist) {
-		case bits::Distribution::Normal:
-			out << rhs._normal;
-			break;
-		case bits::Distribution::Skew_normal:
-			out << rhs._skewnormal;
-			break;
-		default:
-			break;
+	out << "dist=" << rhs._targetdist;
+	if (rhs._targetdist == bits::Distribution::Skew_normal) {
+		out << ',' << rhs._skewnormal;
 	}
-	out << ",interpolation_nodes=" << rhs._xnodes.numElements()
-		<< ",interpolation_order=" << rhs._intnodes
+	out << ",interpolation_nodes=" << rhs._intnodes
+		<< ",interpolation_order=" << rhs._intcoefs.numElements()
 		<< ",gram_charlier_order=" << rhs._gcscoefs.numElements()
 		;
 	return out;
@@ -143,8 +141,13 @@ std::istream&
 arma::nonlinear::operator>>(std::istream& in, NIT_transform<T>& rhs) {
 	int intorder = NIT_transform<T>::default_interpolation_order;
 	int gcsorder = NIT_transform<T>::default_gram_charlier_order;
+	sys::parameter_map::read_param
+	read_dist = [&rhs] (std::istream& str, const char*) -> std::istream& {
+		rhs.read_dist(str);
+		return str;
+	};
 	sys::parameter_map params({
-	    {"distribution", sys::make_param(rhs._targetdist)},
+	    {"distribution", read_dist},
 	    {"interpolation_order", sys::make_param(intorder, validate_positive<T>)},
 	    {"interpolation_nodes", sys::make_param(rhs._intnodes, validate_positive<T>)},
 	    {"gram_charlier_order", sys::make_param(gcsorder, validate_positive<T>)},
@@ -159,24 +162,7 @@ arma::nonlinear::operator>>(std::istream& in, NIT_transform<T>& rhs) {
 	return in;
 }
 
-template <class T>
-std::istream&
-arma::nonlinear::operator>>(
-	std::istream& in,
-	typename NIT_transform<T>::Distribution_wrapper& rhs
-) {
-	switch (rhs._obj._targetdist) {
-		case bits::Distribution::Normal:
-			in >> rhs._obj._normal;
-			break;
-		case bits::Distribution::Skew_normal:
-			in >> rhs._obj._skewnormal;
-			break;
-		default:
-			break;
-	}
-	return in;
-}
+template class arma::nonlinear::NIT_transform<ARMA_REAL_TYPE>;
 
 template std::ostream&
 arma::nonlinear::operator<<(

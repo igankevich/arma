@@ -35,10 +35,10 @@ namespace arma {
 			Dist2 new_dist,
 			Solver solver
 		) {
-			const int n = grid.num_points();
+			const int n = grid.num_points(0);
 			blitz::Array<T,1> x(n), y(n);
 			for (int i=0; i<n; ++i) {
-				const int xi = grid(i);
+				const int xi = grid(i, 0);
 				x(i) = xi;
 				y(i) = solver(
 					Equation_CDF<T, Dist2>(new_dist, old_dist.cdf(xi))
@@ -55,7 +55,7 @@ namespace arma {
 		template <class T, class Dist1, class Dist2, class Solver>
 		void
 		transform_data(
-			const T* data,
+			T* data,
 			const int n,
 			Dist1 old_dist,
 			Dist2 new_dist,
@@ -77,7 +77,7 @@ namespace arma {
 		template <class T, class Solver>
 		void
 		transform_ACF(
-			const T* data,
+			T* data,
 			const int n,
 			const blitz::Array<T,1> gram_charlier_coefs,
 			Solver solver

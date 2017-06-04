@@ -45,7 +45,7 @@ namespace arma {
 		template<class T>
 		class Equation_ACF {
 
-			typedef blitz::Array<T,1>& array_type;
+			typedef blitz::Array<T,1> array_type;
 
 			/// Coefficients of the expansion.
 			const array_type& _coef;
@@ -67,7 +67,8 @@ namespace arma {
 				T x2 = 1;
 				const int n = _coef.size();
 				for (int i=0; i<n; ++i) {
-					sum += _coef[i]*_coef[i]*x2/f;
+					const T c_i = _coef(i);
+					sum += c_i*c_i*x2/f;
 					f *= (i+1);
 					x2 *= x;
 				}

@@ -48,7 +48,7 @@ arma::nonlinear::gram_charlier_expand(
 		for (int i=2; i<=yorder; i+=2) {
 			sum2 += y(i)*factorial<T>(i-1, 2);
 		}
-		c[m] = sum2;
+		c(m) = sum2;
 
 		/**
 		2. Calculate error:
@@ -61,7 +61,7 @@ arma::nonlinear::gram_charlier_expand(
 		*/
 		sum_c += c(m)*c(m)/f;
 		f *= (m+1);
-		const T e = abs(acf_variance - sum_c);
+		const T e = abs(T(1) - sum_c);
 		// criteria could be: abs(T(1) - sum_c)
 
 		// determine minimum error
@@ -73,7 +73,9 @@ arma::nonlinear::gram_charlier_expand(
 		std::clog << "err = " << e << std::endl;
 		#endif
 	}
+	#ifndef NDEBUG
 	std::clog << "trim = " << trim << std::endl;
+	#endif
 	c.resizeAndPreserve(trim);
 	return c;
 }
