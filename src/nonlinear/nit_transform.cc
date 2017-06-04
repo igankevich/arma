@@ -90,7 +90,7 @@ template <class T>
 void
 arma::nonlinear::NIT_transform<T>::read_dist(std::istream& str) {
 	str >> _targetdist;
-	if (_targetdist == bits::Distribution::Skew_normal) {
+	if (_targetdist == bits::Distribution::Gram_Charlier) {
 		str >> _skewnormal;
 	}
 }
@@ -99,8 +99,8 @@ std::istream&
 arma::nonlinear::bits::operator>>(std::istream& in, Distribution& rhs) {
 	std::string name;
 	in >> std::ws >> name;
-	if (name == "skew_normal") {
-		rhs = Distribution::Skew_normal;
+	if (name == "gram_charlier") {
+		rhs = Distribution::Gram_Charlier;
 	} else {
 		in.setstate(std::ios::failbit);
 		std::clog << "Invalid distribution: " << name << std::endl;
@@ -112,7 +112,7 @@ arma::nonlinear::bits::operator>>(std::istream& in, Distribution& rhs) {
 const char*
 arma::nonlinear::bits::to_string(Distribution rhs) {
 	switch (rhs) {
-		case Distribution::Skew_normal: return "skew_normal";
+		case Distribution::Gram_Charlier: return "gram_charlier";
 		default: return "UNKNOWN";
 	}
 }
@@ -126,7 +126,7 @@ template <class T>
 std::ostream&
 arma::nonlinear::operator<<(std::ostream& out, const NIT_transform<T>& rhs) {
 	out << "dist=" << rhs._targetdist;
-	if (rhs._targetdist == bits::Distribution::Skew_normal) {
+	if (rhs._targetdist == bits::Distribution::Gram_Charlier) {
 		out << ',' << rhs._skewnormal;
 	}
 	out << ",interpolation_nodes=" << rhs._intnodes

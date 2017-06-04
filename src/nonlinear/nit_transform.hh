@@ -15,7 +15,7 @@ namespace arma {
 		namespace bits {
 
 			enum struct Distribution {
-				Skew_normal = 0
+				Gram_Charlier = 0
 			};
 
 			std::istream&
@@ -41,7 +41,7 @@ namespace arma {
 		class NIT_transform {
 
 			typedef stats::Gaussian<T> normaldist_type;
-			typedef stats::Skew_normal<T> skewnormaldist_type;
+			typedef stats::Gram_Charlier<T> skewnormaldist_type;
 			typedef linalg::Bisection<T> solver_type;
 
 			static const unsigned int default_interpolation_order = 12;
@@ -49,7 +49,7 @@ namespace arma {
 			static constexpr const T default_absolute_error = T(1e-6);
 			static const unsigned int default_niterations = 100;
 
-			bits::Distribution _targetdist = bits::Distribution::Skew_normal;
+			bits::Distribution _targetdist = bits::Distribution::Gram_Charlier;
 			skewnormaldist_type  _skewnormal;
 			int _intnodes = 100;
 			T _nsigma = T(5);

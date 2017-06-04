@@ -83,17 +83,17 @@ namespace arma {
 		skewness and kurtosis.
 		*/
 		template<class T>
-		class Skew_normal {
+		class Gram_Charlier {
 			T _skewness;
 			T _kurtosis;
 
 		public:
-			Skew_normal() = default;
-			Skew_normal(const Skew_normal&) = default;
-			Skew_normal(Skew_normal&&) = default;
+			Gram_Charlier() = default;
+			Gram_Charlier(const Gram_Charlier&) = default;
+			Gram_Charlier(Gram_Charlier&&) = default;
 
 			inline explicit
-			Skew_normal(T skew, T kurt) noexcept:
+			Gram_Charlier(T skew, T kurt) noexcept:
 			_skewness(skew),
 			_kurtosis(kurt)
 			{}
@@ -110,21 +110,21 @@ namespace arma {
 
 			template <class X>
 			friend std::istream&
-			operator>>(std::istream& in, Skew_normal<X>& rhs);
+			operator>>(std::istream& in, Gram_Charlier<X>& rhs);
 
 			template <class X>
 			friend std::ostream&
-			operator<<(std::ostream& out, const Skew_normal<X>& rhs);
+			operator<<(std::ostream& out, const Gram_Charlier<X>& rhs);
 
 		};
 
 		template <class T>
 		std::istream&
-		operator>>(std::istream& in, Skew_normal<T>& rhs);
+		operator>>(std::istream& in, Gram_Charlier<T>& rhs);
 
 		template <class T>
 		std::ostream&
-		operator<<(std::ostream& out, const Skew_normal<T>& rhs);
+		operator<<(std::ostream& out, const Gram_Charlier<T>& rhs);
 
 		enum struct Characteristic {
 			Wave_height,

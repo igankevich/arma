@@ -16,7 +16,7 @@ velocity_potential_solver = high_amplitude {
 	domain = from (10,-12) to (10,3) npoints (1,128)
 }
 transform = nit {
-	distribution = skew_normal {
+	distribution = gram_charlier {
 		skewness=2.25
 		kurtosis=0.4
 	}

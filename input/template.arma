@@ -87,7 +87,7 @@ velocity_potential_solver = linear {
 }
 
 transform = nit {
-	distribution = skew_normal
+	distribution = gram_charlier
 	interpolation_order = 12
 	interpolation_nodes = 100
 	gram_charlier_order = 10
