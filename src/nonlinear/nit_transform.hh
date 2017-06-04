@@ -4,7 +4,9 @@
 #include <istream>
 #include <ostream>
 
-#include "stats/distribution.hh"
+#include "stats/gaussian.hh"
+#include "stats/skew_normal.hh"
+#include "stats/gram_charlier.hh"
 #include "linalg.hh"
 #include "types.hh"
 

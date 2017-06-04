@@ -1,130 +1,14 @@
 #ifndef DISTRIBUTION_HH
 #define DISTRIBUTION_HH
 
-#include <istream>
-#include <ostream>
-#include <gsl/gsl_cdf.h>
-#include "physical_constants.hh"
+#include "gaussian.hh"
+#include "weibull.hh"
+#include "gram_charlier.hh"
+#include "skew_normal.hh"
 
 namespace arma {
 
 	namespace stats {
-
-		/// \brief Normal distribution.
-		template <class T>
-		struct Gaussian {
-
-			Gaussian() = default;
-			Gaussian(const Gaussian&) = default;
-			Gaussian(Gaussian&&) = default;
-
-			explicit
-			Gaussian(T m, T sigma):
-			_mean(m),
-			_sigma(sigma)
-			{}
-
-			inline T
-			quantile(T f) {
-				return gsl_cdf_gaussian_Pinv(f, _sigma) + _mean;
-			}
-
-			inline T
-			cdf(T f) {
-				return gsl_cdf_gaussian_P(f - _mean, _sigma);
-			}
-
-			template <class X>
-			friend std::istream&
-			operator>>(std::istream& in, Gaussian<X>& rhs);
-
-			template <class X>
-			friend std::ostream&
-			operator<<(std::ostream& out, const Gaussian<X>& rhs);
-
-		private:
-			T _mean;
-			T _sigma;
-		};
-
-		template <class T>
-		std::istream&
-		operator>>(std::istream& in, Gaussian<T>& rhs);
-
-		template <class T>
-		std::ostream&
-		operator<<(std::ostream& out, const Gaussian<T>& rhs);
-
-		/// \brief Weibull distribution.
-		template <class T>
-		struct Weibull {
-
-			Weibull(T a, T b):
-			_a(a),
-			_b(b)
-			{}
-
-			T
-			quantile(T f) {
-				return gsl_cdf_weibull_Pinv(f, _a, _b);
-			}
-
-		private:
-			T _a; //< lambda
-			T _b; //< k
-		};
-
-		/**
-		\brief Skew normal distribution.
-		\date 2017-05-20
-		\author Ivan Gankevich
-
-		\details Gram---Charlier series approximation with configurable
-		skewness and kurtosis.
-		*/
-		template<class T>
-		class Gram_Charlier {
-			T _skewness;
-			T _kurtosis;
-
-		public:
-			Gram_Charlier() = default;
-			Gram_Charlier(const Gram_Charlier&) = default;
-			Gram_Charlier(Gram_Charlier&&) = default;
-
-			inline explicit
-			Gram_Charlier(T skew, T kurt) noexcept:
-			_skewness(skew),
-			_kurtosis(kurt)
-			{}
-
-			inline T
-			cdf(T x) const noexcept {
-				using constants::_2pi;
-				using constants::sqrt2pi;
-				using constants::sqrt2;
-				return std::exp(T(-0.5)*x*x)*(_kurtosis*(T(3)*x - x*x*x)
-					+ _skewness*(T(4) - T(4)*x*x) + T(3)*x*x*x - T(9)*x)
-					/ (T(24)*sqrt2pi<T>) + T(0.5)*std::erf(x/sqrt2<T>) + T(0.5);
-			}
-
-			template <class X>
-			friend std::istream&
-			operator>>(std::istream& in, Gram_Charlier<X>& rhs);
-
-			template <class X>
-			friend std::ostream&
-			operator<<(std::ostream& out, const Gram_Charlier<X>& rhs);
-
-		};
-
-		template <class T>
-		std::istream&
-		operator>>(std::istream& in, Gram_Charlier<T>& rhs);
-
-		template <class T>
-		std::ostream&
-		operator<<(std::ostream& out, const Gram_Charlier<T>& rhs);
 
 		enum struct Characteristic {
 			Wave_height,

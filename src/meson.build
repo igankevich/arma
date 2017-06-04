@@ -37,6 +37,9 @@ common_src = [
 	'stats/summary.cc',
 	'stats/waves.cc',
 	'stats/distribution.cc',
+	'stats/gaussian.cc',
+	'stats/gram_charlier.cc',
+	'stats/skew_normal.cc',
 ] + linalg_files + apmath_files + nonlinear_files
 
 if get_option('profile')
