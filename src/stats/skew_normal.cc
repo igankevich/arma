@@ -1,4 +1,5 @@
 #include "skew_normal.hh"
+#include "params.hh"
 
 template <class T>
 std::istream&

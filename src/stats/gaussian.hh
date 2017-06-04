@@ -24,12 +24,12 @@ namespace arma {
 			{}
 
 			inline T
-			quantile(T f) {
+			quantile(T f) const noexcept {
 				return gsl_cdf_gaussian_Pinv(f, _sigma) + _mean;
 			}
 
 			inline T
-			cdf(T f) {
+			cdf(T f) const noexcept {
 				return gsl_cdf_gaussian_P(f - _mean, _sigma);
 			}
 

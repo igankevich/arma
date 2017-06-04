@@ -76,12 +76,30 @@ arma::nonlinear::NIT_transform<T>::transform_realisation(
 	Array3D<T> acf,
 	Array3D<T>& realisation
 ) {
+	switch (_targetdist) {
+		case bits::Distribution::Gram_Charlier:
+			do_transform_realisation(acf, realisation, _gramcharlier);
+			break;
+		case bits::Distribution::Skew_normal:
+			do_transform_realisation(acf, realisation, _skewnormal);
+			break;
+	}
+}
+
+template <class T>
+template <class Dist>
+void
+arma::nonlinear::NIT_transform<T>::do_transform_realisation(
+	Array3D<T> acf,
+	Array3D<T>& realisation,
+	Dist& dist
+) {
 	const T stdev = std::sqrt(acf(0,0,0));
 	transform_data(
 		realisation.data(),
 		realisation.numElements(),
 		normaldist_type(T(0), stdev),
-		_skewnormal,
+		dist,
 		_cdfsolver
 	);
 }
@@ -90,8 +108,15 @@ template <class T>
 void
 arma::nonlinear::NIT_transform<T>::read_dist(std::istream& str) {
 	str >> _targetdist;
-	if (_targetdist == bits::Distribution::Gram_Charlier) {
-		str >> _skewnormal;
+	switch (_targetdist) {
+		case bits::Distribution::Gram_Charlier:
+			str >> _gramcharlier;
+			break;
+		case bits::Distribution::Skew_normal:
+			str >> _skewnormal;
+			break;
+		default:
+			throw std::runtime_error("bad distribution");
 	}
 }
 
@@ -101,6 +126,8 @@ arma::nonlinear::bits::operator>>(std::istream& in, Distribution& rhs) {
 	in >> std::ws >> name;
 	if (name == "gram_charlier") {
 		rhs = Distribution::Gram_Charlier;
+	} else if (name == "skew_normal") {
+		rhs = Distribution::Skew_normal;
 	} else {
 		in.setstate(std::ios::failbit);
 		std::clog << "Invalid distribution: " << name << std::endl;
@@ -113,6 +140,7 @@ const char*
 arma::nonlinear::bits::to_string(Distribution rhs) {
 	switch (rhs) {
 		case Distribution::Gram_Charlier: return "gram_charlier";
+		case Distribution::Skew_normal: return "skew_normal";
 		default: return "UNKNOWN";
 	}
 }
@@ -125,9 +153,14 @@ arma::nonlinear::bits::operator<<(std::ostream& out, const Distribution& rhs) {
 template <class T>
 std::ostream&
 arma::nonlinear::operator<<(std::ostream& out, const NIT_transform<T>& rhs) {
-	out << "dist=" << rhs._targetdist;
-	if (rhs._targetdist == bits::Distribution::Gram_Charlier) {
-		out << ',' << rhs._skewnormal;
+	out << "dist=" << rhs._targetdist << ',';
+	switch (rhs._targetdist) {
+		case bits::Distribution::Gram_Charlier:
+			out << rhs._gramcharlier;
+			break;
+		case bits::Distribution::Skew_normal:
+			out << rhs._skewnormal;
+			break;
 	}
 	out << ",interpolation_nodes=" << rhs._intnodes
 		<< ",interpolation_order=" << rhs._intcoefs.numElements()

@@ -17,7 +17,8 @@ namespace arma {
 		namespace bits {
 
 			enum struct Distribution {
-				Gram_Charlier = 0
+				Gram_Charlier = 0,
+				Skew_normal = 1
 			};
 
 			std::istream&
@@ -43,7 +44,8 @@ namespace arma {
 		class NIT_transform {
 
 			typedef stats::Gaussian<T> normaldist_type;
-			typedef stats::Gram_Charlier<T> skewnormaldist_type;
+			typedef stats::Skew_normal<T> skewnormaldist_type;
+			typedef stats::Gram_Charlier<T> gramcharlierdist_type;
 			typedef linalg::Bisection<T> solver_type;
 
 			static const unsigned int default_interpolation_order = 12;
@@ -53,6 +55,7 @@ namespace arma {
 
 			bits::Distribution _targetdist = bits::Distribution::Gram_Charlier;
 			skewnormaldist_type  _skewnormal;
+			gramcharlierdist_type  _gramcharlier;
 			int _intnodes = 100;
 			T _nsigma = T(5);
 			T _acfinterval = T(2);
@@ -102,11 +105,18 @@ namespace arma {
 			void
 			do_transform_ACF(Array3D<T>& acf);
 
+			template <class Dist>
+			void
+			do_transform_realisation(
+				Array3D<T> acf,
+				Array3D<T>& realisation,
+				Dist& dist
+			);
+
 			void
 			read_dist(std::istream& in);
 
 		};
-
 
 		template <class T>
 		std::ostream&

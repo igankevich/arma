@@ -21,9 +21,13 @@ namespace arma {
 			T _mean;
 			T _sigma;
 			T _alpha;
-			Skew_normal<T> _gaussian;
+			Gaussian<T> _gaussian;
 
 		public:
+			Skew_normal() = default;
+			Skew_normal(const Skew_normal&) = default;
+			Skew_normal(Skew_normal&&) = default;
+
 			explicit
 			Skew_normal(T mean, T sigma, T alpha):
 			_mean(mean),
