@@ -75,3 +75,13 @@ test(
 	)
 )
 
+
+test(
+	'arma::apmath::owen_t',
+	executable(
+		'owen-t-test',
+		sources: ['owen-t-test.cc'] + apmath_files,
+		include_directories: incdirs,
+		dependencies: [libblitz, gtest]
+	)
+)

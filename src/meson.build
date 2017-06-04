@@ -14,6 +14,7 @@ linalg_files = files([
 apmath_files = files([
 	'apmath/polynomial.cc',
 	'apmath/hermite.cc',
+	'apmath/owen_t.cc',
 ])
 nonlinear_files = files([
 	'nonlinear/series.cc',
