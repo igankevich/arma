@@ -29,5 +29,12 @@ rz <- range(z)
 aspect_ratio <- (rx[[2]] - rx[[1]]) / (rz[[2]] - rz[[1]])
 print(aspect_ratio)
 aspect_ratio <- 1
-cairo_pdf(filename="nonlinear.pdf", width=2.5*aspect_ratio, height=5)
-plot(zeta_slice$x, zeta_slice$z, lwd=4, asp=1)
+cairo_pdf(filename="nonlinear.pdf", height=2.5*aspect_ratio, width=5)
+plot(
+	zeta_slice$x,
+	zeta_slice$z,
+	lwd=4,
+	asp=1,
+	xlab="x",
+	ylab="z"
+)
