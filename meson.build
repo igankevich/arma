@@ -88,6 +88,7 @@ run_target('archive', command: [
 	meson.project_name(),
 	meson.project_version()
 ])
+run_target('nonlinear', command: 'scripts/target-nonlinear.R')
 
 datadir = get_option('prefix') + '/' + get_option('datadir')
 opencl_srcdir = get_option('opencl_srcdir')
