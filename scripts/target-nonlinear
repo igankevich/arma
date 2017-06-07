@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cd $MESON_BUILD_ROOT
+set -x
+
+# run linear case
+./src/arma -c $MESON_SOURCE_ROOT/input/test-linear
+ninja plot-nonlinear
+mv zeta.csv zeta-linear.csv
+
+# run nonlinear case
+./src/arma -c $MESON_SOURCE_ROOT/input/test-nonlinear
+mv zeta.csv zeta-nonlinear.csv
+
+# plot two graphs
+ninja plot-nonlinear
