@@ -110,10 +110,13 @@ main(int argc, char* argv[]) {
 		return 1;
 	}
 
-	if (help_requested || ::optind == argc) {
+	if (input_filename.empty() && ::optind < argc) {
+		input_filename = argv[::optind];
+	}
+
+	if (help_requested || input_filename.empty()) {
 		usage(argv[0]);
 	} else {
-		input_filename = argv[::optind];
 		/// input file with various driver parameters
 		ARMA_driver<Real> driver;
 		using namespace velocity;
