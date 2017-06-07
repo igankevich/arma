@@ -75,7 +75,6 @@ test(
 	)
 )
 
-
 test(
 	'arma::apmath::owen_t',
 	executable(
@@ -83,5 +82,15 @@ test(
 		sources: ['owen-t-test.cc'] + apmath_files,
 		include_directories: incdirs,
 		dependencies: [libblitz, gtest]
+	)
+)
+
+test(
+	'arma::apmath::Skew_normal',
+	executable(
+		'skew-normal-test',
+		sources: ['skew-normal-test.cc'] + apmath_files,
+		include_directories: incdirs,
+		dependencies: [libblitz, libgsl, gtest]
 	)
 )
