@@ -37,6 +37,9 @@ namespace arma {
 		) {
 			const int n = grid.num_points(0);
 			blitz::Array<T,1> x(n), y(n);
+			#if ARMA_OPENMP
+			#pragma omp parallel for
+			#endif
 			for (int i=0; i<n; ++i) {
 				const int xi = grid(i, 0);
 				x(i) = xi;
@@ -61,6 +64,9 @@ namespace arma {
 			Dist2 new_dist,
 			Solver solver
 		) {
+			#if ARMA_OPENMP
+			#pragma omp parallel for
+			#endif
 			for (int i=0; i<n; ++i) {
 				data[i] = solver(
 					Equation_CDF<T, Dist2>(new_dist, old_dist.cdf(data[i]))
@@ -82,6 +88,9 @@ namespace arma {
 			const blitz::Array<T,1> gram_charlier_coefs,
 			Solver solver
 		) {
+			#if ARMA_OPENMP
+			#pragma omp parallel for
+			#endif
 			for (int i=0; i<n; ++i) {
 				data[i] = solver(
 					Equation_ACF<T>(gram_charlier_coefs, data[i])
