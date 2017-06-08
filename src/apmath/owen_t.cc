@@ -36,13 +36,20 @@ namespace {
 }
 
 template <class T>
+#if defined(__GNUG__)
+[[gnu::optimize("unroll-loops")]]
+#endif
 T
-arma::apmath::owen_t(T h, T alpha) {
+arma::apmath::owen_t(T h, T alpha)
+{
 	using arma::constants::_2pi;
 	using std::exp;
 	T result = 0;
 	const T a2 = alpha*alpha;
 	const T h2 = -T(0.5)*h*h;
+	#if ARMA_OPENMP
+	#pragma omp simd reduction(+:result)
+	#endif
 	for (int i=0; i<nabscissas; ++i) {
 		const T x = abscissas<T>[i];
 		const T term = (T(1) + a2*x*x);
