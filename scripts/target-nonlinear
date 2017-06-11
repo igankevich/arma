@@ -1,15 +1,21 @@
 #!/bin/sh
 
+linear=$1
+nonlinear=$2
+if test -z "$linear" || test -z "$nonlinear"
+then
+	echo "Please, specify linear and nonlinear test case names from input directory as the first and the second arguments."
+	exit 1
+fi
+
 cd $MESON_BUILD_ROOT
-set -x
 
 # run linear case
-./src/arma -c $MESON_SOURCE_ROOT/input/test-linear
-ninja plot-nonlinear
+./src/arma -c $MESON_SOURCE_ROOT/input/$linear
 mv zeta.csv zeta-linear.csv
 
 # run nonlinear case
-./src/arma -c $MESON_SOURCE_ROOT/input/test-nonlinear
+./src/arma -c $MESON_SOURCE_ROOT/input/$nonlinear
 mv zeta.csv zeta-nonlinear.csv
 
 # plot two graphs

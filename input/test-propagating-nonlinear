@@ -12,9 +12,25 @@ ma_model = {
 	eps = 1e-5
 	min_var_wn = 1e-6
 }
-verification = manual
+verification = quantile
 velocity_potential_solver = high_amplitude {
 	wnmax = from (0,0) to (0,0.25) npoints (2,2)
 	depth = 12
 	domain = from (10,-12) to (10,3) npoints (1,128)
+}
+transform = nit {
+	distribution = gram_charlier {
+		skewness=2.25
+		kurtosis=4.4
+	}
+#	distribution = skew_normal {
+#		mean=0
+#		stdev=1
+#		alpha=1
+#	}
+	interpolation_order = 12
+	interpolation_nodes = 100
+	gram_charlier_order = 20
+	nsigma = 5
+	acf_interval = 10
 }

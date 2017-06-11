@@ -4,7 +4,6 @@ build_root=ARG1
 cd build_root
 
 files='\
-white-noise \
 elevation \
 wave-period \
 wave-height-x \
@@ -13,7 +12,7 @@ wave-height-y \
 wave-length-y \
 '
 
-set terminal x11 size 1920/2, 1080
+#set terminal x11 size 1920/2, 1080
 unset key
 set multiplot layout 3, 3
 do for [f in files] {

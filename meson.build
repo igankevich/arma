@@ -88,7 +88,13 @@ run_target('archive', command: [
 	meson.project_name(),
 	meson.project_version()
 ])
-run_target('nonlinear', command: 'scripts/target-nonlinear')
+foreach testcase : ['standing', 'propagating']
+	run_target('nit-' + testcase, command: [
+		'scripts/target-nonlinear',
+		'test-' + testcase + '-linear',
+		'test-' + testcase + '-nonlinear'
+	])
+endforeach
 run_target('plot-nonlinear', command: 'scripts/target-nonlinear.R')
 
 datadir = get_option('prefix') + '/' + get_option('datadir')
