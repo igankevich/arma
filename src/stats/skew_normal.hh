@@ -32,8 +32,8 @@ namespace arma {
 			Skew_normal(T mean, T sigma, T alpha):
 			_mean(mean),
 			_sigma(sigma),
-			_gaussian(mean, sigma),
-			_alpha(alpha)
+			_alpha(alpha),
+			_gaussian(mean, sigma)
 			{}
 
 			inline T
