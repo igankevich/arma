@@ -19,7 +19,7 @@ velocity_potential_solver = high_amplitude {
 transform = nit {
 	distribution = gram_charlier {
 		skewness=3.25
-		kurtosis=0.4
+		kurtosis=2.4
 	}
 	interpolation_order = 12
 	interpolation_nodes = 100
