@@ -1,0 +1,27 @@
+#!/bin/sh
+
+none=$1
+gcs=$2
+sn=$3
+if test -z "$none" || test -z "$gcs" || test -z "$sn"
+then
+	echo "Please, specify \"none\", \"gramcharlier\", \"skewnormal\" test case names from input directory as the first and the second arguments."
+	exit 1
+fi
+
+cd $MESON_BUILD_ROOT
+
+# run linear case
+./src/arma -c $MESON_SOURCE_ROOT/input/$none
+mv zeta.csv zeta-none.csv
+
+# run Gram---Charlier case
+./src/arma -c $MESON_SOURCE_ROOT/input/$gcs
+mv zeta.csv zeta-gramcharlier.csv
+
+# run skew normal case
+./src/arma -c $MESON_SOURCE_ROOT/input/$sn
+mv zeta.csv zeta-skewnormal.csv
+
+# plot the graphs
+ninja nit-plot

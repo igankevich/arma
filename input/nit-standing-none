@@ -1,3 +1,4 @@
+no_seed = 1
 out_grid = (200,40,40)
 
 model = AR

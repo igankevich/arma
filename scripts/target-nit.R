@@ -22,8 +22,9 @@ read_zeta_slice <- function (filename) {
 	zeta[zeta$t == slice_t & zeta$y == slice_y,]
 }
 
-zeta_linear <- read_zeta_slice('zeta-linear.csv')
-zeta_nonlinear <- read_zeta_slice('zeta-nonlinear.csv')
+zeta_linear <- read_zeta_slice('zeta-none.csv')
+zeta_gcs <- read_zeta_slice('zeta-gramcharlier.csv')
+zeta_sn <- read_zeta_slice('zeta-skewnormal.csv')
 
 x <- unique(zeta_linear$x)
 z <- unique(zeta_linear$z)
@@ -39,7 +40,8 @@ plot.new()
 plot.window(xlim=rx, ylim=rz, asp=1)
 axis(1)
 axis(2)
-lines(zeta_linear$x, zeta_linear$z, lty='dashed')
-lines(zeta_nonlinear$x, zeta_nonlinear$z, lty='solid')
+lines(zeta_linear$x, zeta_linear$z, lty='solid')
+lines(zeta_gcs$x, zeta_gcs$z, lty='dashed')
+lines(zeta_sn$x, zeta_sn$z, lty='dotted')
 title(xlab="x", ylab="z")
 box()

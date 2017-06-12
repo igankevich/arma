@@ -90,12 +90,13 @@ run_target('archive', command: [
 ])
 foreach testcase : ['standing', 'propagating']
 	run_target('nit-' + testcase, command: [
-		'scripts/target-nonlinear',
-		'test-' + testcase + '-linear',
-		'test-' + testcase + '-nonlinear'
+		'scripts/target-nit',
+		'nit-' + testcase + '-none',
+		'nit-' + testcase + '-gramcharlier',
+		'nit-' + testcase + '-skewnormal'
 	])
 endforeach
-run_target('plot-nonlinear', command: 'scripts/target-nonlinear.R')
+run_target('nit-plot', command: 'scripts/target-nit.R')
 
 datadir = get_option('prefix') + '/' + get_option('datadir')
 opencl_srcdir = get_option('opencl_srcdir')
