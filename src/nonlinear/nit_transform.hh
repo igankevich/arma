@@ -9,6 +9,7 @@
 #include "stats/gram_charlier.hh"
 #include "linalg.hh"
 #include "types.hh"
+#include "domain.hh"
 
 namespace arma {
 
@@ -95,6 +96,9 @@ namespace arma {
 		private:
 			void
 			transform_CDF(Array3D<T> acf);
+
+			std::pair<arma::Array1D<T>,arma::Array1D<T>>
+			do_transform_CDF(const T stdev, const Domain<T,1>& grid);
 
 			void
 			interpolate_CDF();

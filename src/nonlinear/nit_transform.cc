@@ -1,7 +1,6 @@
 #include "nit_transform.hh"
 #include "params.hh"
 #include "validators.hh"
-#include "domain.hh"
 #include "transforms.hh"
 #include "series.hh"
 
@@ -21,14 +20,36 @@ arma::nonlinear::NIT_transform<T>::transform_CDF(Array3D<T> acf) {
 		Vec1D<T>(breadth),
 		Vec1D<int>(_intnodes)
 	);
-	auto nodes = ::arma::nonlinear::transform_CDF(
-		grid,
-		normaldist_type(T(0), stdev),
-		_skewnormal,
-		_cdfsolver
-	);
+	auto nodes = do_transform_CDF(stdev, grid);
 	_xnodes.reference(nodes.first);
 	_ynodes.reference(nodes.second);
+}
+
+template <class T>
+std::pair<arma::Array1D<T>,arma::Array1D<T>>
+arma::nonlinear::NIT_transform<T>::do_transform_CDF(
+	const T stdev,
+	const Domain<T,1>& grid
+) {
+	switch (_targetdist) {
+		case bits::Distribution::Gram_Charlier:
+			return
+				::arma::nonlinear::transform_CDF(
+					grid,
+					normaldist_type(T(0), stdev),
+					_gramcharlier,
+					_cdfsolver
+				);
+		case bits::Distribution::Skew_normal:
+			return
+				::arma::nonlinear::transform_CDF(
+					grid,
+					normaldist_type(T(0), stdev),
+					_skewnormal,
+					_cdfsolver
+				);
+	}
+	return std::make_pair(arma::Array1D<T>(),arma::Array1D<T>());
 }
 
 template <class T>

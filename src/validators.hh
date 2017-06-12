@@ -43,6 +43,7 @@ namespace arma {
 			throw std::runtime_error("bad parameter");
 		}
 	}
+
 	template<class T>
 	void
 	validate_finite(T rhs, const char* name) {

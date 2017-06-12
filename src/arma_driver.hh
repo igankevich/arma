@@ -595,8 +595,15 @@ namespace arma {
 			    {"partition", sys::make_param(_partition)},
 			    {"velocity_potential_solver", sys::make_param(vpsolver_wrapper)},
 			    {"transform", sys::make_param(trans_wrapper)},
+			    {"no_seed", sys::make_param(_noseed)},
 			});
 			in >> params;
+			if (!_vpsolver) {
+				std::cerr
+					<< "Bad \"velocity_potential_solver\": null"
+					<< std::endl;
+				throw std::runtime_error("bad solver");
+			}
 		}
 
 		void
@@ -755,12 +762,15 @@ namespace arma {
 		}
 		#endif
 
-		inline static clock_type::rep
+		inline clock_type::rep
 		newseed() noexcept {
 			#if defined(ARMA_NO_PRNG_SEED)
 			return clock_type::rep(0);
 			#else
-			return clock_type::now().time_since_epoch().count();
+			return
+				_noseed
+				? clock_type::rep(0)
+				: clock_type::now().time_since_epoch().count();
 			#endif
 		}
 
@@ -784,6 +794,7 @@ namespace arma {
 		Array4D<T> _vpotentials;
 		nonlinear::NIT_transform<T> _nittransform;
 		bool _linear = true;
+		bool _noseed = false;
 
 		typedef std::function<vpsolver_type*()> vpsolver_ctr;
 		std::unordered_map<std::string, vpsolver_ctr> _vpsolvers;
