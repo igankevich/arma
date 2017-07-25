@@ -31,6 +31,7 @@ common_src = [
 	'generator/ma_model.cc',
 	'generator/arma_model.cc',
 	'generator/lh_model.cc',
+	'generator/basic_arma_model.cc',
 	'ma_algorithm.cc',
 	'interpolate.cc',
 	'verification_scheme.cc',

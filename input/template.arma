@@ -46,6 +46,8 @@ ar_model = {
 	least_squares = 0
 	# AR model order
 	order = (7,7,7)
+	# Whether seed PRNG or not.
+	no_seed = 0
 }
 
 # Moving average model configuration.
@@ -68,6 +70,8 @@ ma_model = {
 	eps = 1e-5
 	# Maximal value of white noise variance considered to be nought.
 	min_var_wn = 1e-6
+	# Whether seed PRNG or not.
+	no_seed = 0
 }
 
 # Velocity potential field formula and configuration.

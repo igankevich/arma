@@ -136,42 +136,36 @@ arma::generator::Plain_wave_model<T>::generate(
 
 
 template <class T>
-std::istream&
-arma::generator::operator>>(std::istream& in, Plain_wave_model<T>& rhs) {
+void
+arma::generator::Plain_wave_model<T>::read(std::istream& in) {
 	std::string func;
-	Array_wrapper<T> wamplitudes(rhs._amplitudes);
-	Array_wrapper<T> wwavenumbers(rhs._wavenumbers);
-	Array_wrapper<T> wphases(rhs._phases);
-	Array_wrapper<T> wvelocitites(rhs._velocities);
+	Array_wrapper<T> wamplitudes(this->_amplitudes);
+	Array_wrapper<T> wwavenumbers(this->_wavenumbers);
+	Array_wrapper<T> wphases(this->_phases);
+	Array_wrapper<T> wvelocitites(this->_velocities);
 	sys::parameter_map params({
-		{"func", sys::make_param(rhs._func)},
+		{"func", sys::make_param(this->_func)},
 		{"amplitudes", sys::make_param(wamplitudes)},
 		{"wavenumbers", sys::make_param(wwavenumbers)},
 		{"phases", sys::make_param(wphases)},
 		{"velocities", sys::make_param(wvelocitites)},
 	}, true);
 	in >> params;
-	validate_shape(rhs._amplitudes.shape(), "plain_wave.amplitudes");
-	validate_shape(rhs._wavenumbers.shape(), "plain_wave.wavenumbers");
-	validate_shape(rhs._phases.shape(), "plain_wave.phases");
-	validate_shape(rhs._velocities.shape(), "plain_wave.velocities");
-	return in;
+	validate_shape(this->_amplitudes.shape(), "plain_wave.amplitudes");
+	validate_shape(this->_wavenumbers.shape(), "plain_wave.wavenumbers");
+	validate_shape(this->_phases.shape(), "plain_wave.phases");
+	validate_shape(this->_velocities.shape(), "plain_wave.velocities");
 }
 
 template <class T>
-std::ostream&
-arma::generator::operator<<(std::ostream& out, const Plain_wave_model<T>& rhs) {
-	return out
-		<< "func=" << rhs._func
-		<< ",amplitudes=" << Array_wrapper<T>(rhs._amplitudes)
-		<< ",wavenumbers=" << Array_wrapper<T>(rhs._wavenumbers)
-		<< ",phases=" << Array_wrapper<T>(rhs._phases)
-		<< ",velocities=" << Array_wrapper<T>(rhs._velocities);
+void
+arma::generator::Plain_wave_model<T>::write(std::ostream& out) const {
+	out << "func=" << this->_func
+		<< ",amplitudes=" << Array_wrapper<T>(this->_amplitudes)
+		<< ",wavenumbers=" << Array_wrapper<T>(this->_wavenumbers)
+		<< ",phases=" << Array_wrapper<T>(this->_phases)
+		<< ",velocities=" << Array_wrapper<T>(this->_velocities);
 }
 
 
 template class arma::generator::Plain_wave_model<ARMA_REAL_TYPE>;
-template std::ostream&
-arma::generator::operator<<(std::ostream& out, const Plain_wave_model<ARMA_REAL_TYPE>& rhs);
-template std::istream&
-arma::generator::operator>>(std::istream& in, Plain_wave_model<ARMA_REAL_TYPE>& rhs);

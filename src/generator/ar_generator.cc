@@ -1,4 +1,4 @@
-#include "ar_model.hh"
+#include "ar_generator.hh"
 
 #include "voodoo.hh"
 #include "linalg.hh"
@@ -13,14 +13,14 @@
 
 template <class T>
 T
-arma::generator::AR_model<T>::white_noise_variance(Array3D<T> phi) const {
+arma::generator::AR_generator<T>::white_noise_variance(Array3D<T> phi) const {
 	blitz::RectDomain<3> subdomain(Shape3D(0, 0, 0), phi.shape() - 1);
 	return _acf(0, 0, 0) - blitz::sum(phi * _acf(subdomain));
 }
 
 template <class T>
 void
-arma::generator::AR_model<T>::operator()(
+arma::generator::AR_generator<T>::operator()(
 	Array3D<T>& zeta,
 	Array3D<T>& eps,
 	const Domain3D& subdomain
@@ -57,7 +57,7 @@ arma::generator::AR_model<T>::operator()(
 
 template <class T>
 void
-arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) {
+arma::generator::AR_generator<T>::determine_coefficients_old(bool do_least_squares) {
 	using blitz::all;
 	if (!all(order() <= _acf.shape())) {
 		std::cerr << "AR model order is larger than ACF "
@@ -108,7 +108,7 @@ arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) 
 
 template <class T>
 void
-arma::generator::AR_model<T>::determine_coefficients_iteratively() {
+arma::generator::AR_generator<T>::determine_coefficients_iteratively() {
 	using blitz::all;
 	using blitz::isfinite;
 	using blitz::sum;
@@ -176,30 +176,31 @@ arma::generator::AR_model<T>::determine_coefficients_iteratively() {
 }
 
 template <class T>
-void
-arma::generator::AR_model<T>::read(std::istream& in) {
-	ACF_wrapper<T> acf_wrapper(this->_acf);
+std::istream&
+arma::generator::operator>>(std::istream& in, AR_generator<T>& rhs) {
+	ACF_wrapper<T> acf_wrapper(rhs._acf);
 	Shape3D order(0,0,0);
 	sys::parameter_map params({
 		{"order", sys::make_param(order)},
-		{"least_squares", sys::make_param(this->_doleastsquares)},
+		{"least_squares", sys::make_param(rhs._doleastsquares)},
 		{"acf", sys::make_param(acf_wrapper)},
-		{"partition", sys::make_param(this->_partition, validate_shape<int,3>)},
-		{"no_seed", sys::make_param(this->_noseed)},
-		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
 	}, true);
 	in >> params;
 	validate_shape(order, "ar_model.order");
-	validate_shape(this->_acf.shape(), "ar_model.acf.shape");
-	this->_phi.resize(order);
+	validate_shape(rhs._acf.shape(), "ar_model.acf.shape");
+	rhs._phi.resize(order);
+	return in;
 }
 
 template <class T>
-void
-arma::generator::AR_model<T>::write(std::ostream& out) const {
-	out << "grid=" << this->grid()
-		<< ",order=" << this->order()
-		<< ",acf.shape=" << this->_acf.shape();
+std::ostream&
+arma::generator::operator<<(std::ostream& out, const AR_generator<T>& rhs) {
+	return out << "order=" << rhs.order()
+		<< ",acf.shape=" << rhs._acf.shape();
 }
 
-template class arma::generator::AR_model<ARMA_REAL_TYPE>;
+template class arma::generator::AR_generator<ARMA_REAL_TYPE>;
+template std::ostream&
+arma::generator::operator<<(std::ostream& out, const AR_generator<ARMA_REAL_TYPE>& rhs);
+template std::istream&
+arma::generator::operator>>(std::istream& in, AR_generator<ARMA_REAL_TYPE>& rhs);

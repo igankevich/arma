@@ -1,22 +1,22 @@
-#ifndef GENERATOR_MODEL_HH
-#define GENERATOR_MODEL_HH
+#ifndef GENERATOR_BASIC_GENERATOR_HH
+#define GENERATOR_BASIC_GENERATOR_HH
 
 #include "types.hh"
 
 namespace arma {
 
-	/// \brief Wavy surface generators.
+	// \brief Wavy surface generators.
 	namespace generator {
 
-		/// \brief A base class for ARMA generators.
+		/// \brief A base class for wavy surface generators.
 		template<class T>
-		class Basic_ARMA_model {
+		class Basic_generator {
 		public:
 
-			Basic_ARMA_model() = default;
-			Basic_ARMA_model(const Basic_ARMA_model&) = default;
-			Basic_ARMA_model(Basic_ARMA_model&&) = default;
-			virtual ~Basic_ARMA_model() = default;
+			Basic_generator() = default;
+			Basic_generator(const Basic_generator&) = default;
+			Basic_generator(Basic_generator&&) = default;
+			virtual ~Basic_generator() = default;
 
 			virtual T white_noise_variance() const = 0;
 			virtual void validate() const = 0;
@@ -40,4 +40,4 @@ namespace arma {
 
 }
 
-#endif // GENERATOR_MODEL_HH
+#endif // GENERATOR_BASIC_GENERATOR_HH

@@ -3,7 +3,7 @@
 
 #include "types.hh"
 #include "arma.hh"
-#include "basic_arma_model.hh"
+#include "basic_generator.hh"
 #include "discrete_function.hh"
 
 /// @file
@@ -18,14 +18,14 @@ namespace arma {
 		\brief Uses autoregressive process, standing waves.
 		*/
 		template <class T>
-		struct AR_model: public virtual Basic_ARMA_model<T> {
+		struct AR_generator: public virtual Basic_generator<T> {
 
 			typedef Discrete_function<T,3> acf_type;
 
-			AR_model() = default;
+			AR_generator() = default;
 
 			inline explicit
-			AR_model(acf_type acf, Shape3D order):
+			AR_generator(acf_type acf, Shape3D order):
 			_acf(acf), _phi(order)
 			{}
 
@@ -50,7 +50,7 @@ namespace arma {
 				return _phi;
 			}
 
-			inline Shape3D
+			inline const Shape3D&
 			order() const {
 				return _phi.shape();
 			}
@@ -81,12 +81,17 @@ namespace arma {
 				determine_coefficients_old(_doleastsquares);
 			}
 
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, AR_generator<X>& rhs);
+
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const AR_generator<X>& rhs);
+
 		protected:
 			T
 			white_noise_variance(Array3D<T> phi) const;
-
-			void write(std::ostream& out) const override;
-			void read(std::istream& in) override;
 
 		private:
 
@@ -104,6 +109,14 @@ namespace arma {
 			Array3D<T> _phi;
 			bool _doleastsquares = false;
 		};
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, AR_generator<T>& rhs);
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const AR_generator<T>& rhs);
 
 	}
 

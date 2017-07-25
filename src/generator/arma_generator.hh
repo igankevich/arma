@@ -2,8 +2,8 @@
 #define ARMA_MODEL_HH
 
 #include "types.hh"
-#include "ar_model.hh"
-#include "ma_model.hh"
+#include "ar_generator.hh"
+#include "ma_generator.hh"
 #include "discrete_function.hh"
 
 namespace arma {
@@ -14,17 +14,17 @@ namespace arma {
 		\brief Uses autoregressive moving average process (WIP).
 		*/
 		template <class T>
-		struct ARMA_model: public AR_model<T>,
-		                   public MA_model<T> {
+		struct ARMA_generator: public AR_generator<T>,
+		                   public MA_generator<T> {
 
-			typedef AR_model<T> ar_model;
-			typedef MA_model<T> ma_model;
+			typedef AR_generator<T> ar_model;
+			typedef MA_generator<T> ma_model;
 			typedef Discrete_function<T,3> acf_type;
 
-			ARMA_model() = default;
+			ARMA_generator() = default;
 
 			inline explicit
-			ARMA_model(acf_type acf, Shape3D ar_order, Shape3D ma_order):
+			ARMA_generator(acf_type acf, Shape3D ar_order, Shape3D ma_order):
 			ar_model(slice_front(acf, ar_order), ar_order),
 			ma_model(slice_back(acf, ma_order), ma_order),
 			_acf_orig(acf)
@@ -58,15 +58,16 @@ namespace arma {
 				const Domain3D& subdomain
 			) override;
 
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, ARMA_generator<X>& rhs);
+
 			void
 			determine_coefficients() override;
 
 		protected:
 			T
 			white_noise_variance(Array3D<T> phi, Array3D<T> theta) const;
-
-			void write(std::ostream& out) const override;
-			void read(std::istream& in) override;
 
 		private:
 			inline static acf_type
@@ -94,6 +95,10 @@ namespace arma {
 
 			acf_type _acf_orig;
 		};
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, ARMA_generator<T>& rhs);
 
 	}
 

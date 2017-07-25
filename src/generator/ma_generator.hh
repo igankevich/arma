@@ -4,7 +4,7 @@
 #include "types.hh"
 #include "ma_algorithm.hh"
 #include "arma.hh"
-#include "basic_arma_model.hh"
+#include "basic_generator.hh"
 #include "discrete_function.hh"
 
 namespace arma {
@@ -15,14 +15,14 @@ namespace arma {
 		\brief Uses moving average process, propagating waves.
 		*/
 		template <class T>
-		struct MA_model: public virtual Basic_ARMA_model<T> {
+		struct MA_generator: public virtual Basic_generator<T> {
 
 			typedef Discrete_function<T,3> acf_type;
 
-			MA_model() = default;
+			MA_generator() = default;
 
 			inline explicit
-			MA_model(acf_type acf, Shape3D order):
+			MA_generator(acf_type acf, Shape3D order):
 			_acf(acf),
 			_theta(order)
 			{}
@@ -48,7 +48,7 @@ namespace arma {
 				return _theta;
 			}
 
-			inline Shape3D
+			inline const Shape3D&
 			order() const {
 				return _theta.shape();
 			}
@@ -88,15 +88,20 @@ namespace arma {
 				const Domain3D& subdomain
 			) override;
 
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, MA_generator<X>& rhs);
+
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const MA_generator<X>& rhs);
+
 			void
 			determine_coefficients() override;
 
 		protected:
 			T
 			white_noise_variance(const Array3D<T>& theta) const;
-
-			void write(std::ostream& out) const override;
-			void read(std::istream& in) override;
 
 		private:
 			/**
@@ -133,6 +138,14 @@ namespace arma {
 			T _minvarwn = T(1e-6);
 		};
 
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, MA_generator<T>& rhs);
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const MA_generator<T>& rhs);
 
 	}
 

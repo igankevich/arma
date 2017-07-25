@@ -8,7 +8,6 @@
 #include "discrete_function.hh"
 #include "domain.hh"
 #include "grid.hh"
-#include "basic_model.hh"
 
 namespace arma {
 
@@ -18,10 +17,11 @@ namespace arma {
 		\brief Uses Longuet---Higgins model, small-amplitude waves.
 		*/
 		template <class T>
-		class Longuet_Higgins_model: public Basic_model<T> {
+		class Longuet_Higgins_model {
 			Domain<T,2> _spec_domain;
 			Vec2D<int> _spec_subdomain;
 			T _waveheight;
+			Grid<T,3> _outgrid;
 			Array2D<T> _coef;
 			Array2D<T> _eps;
 
@@ -42,35 +42,18 @@ namespace arma {
 			void
 			generate_white_noise();
 
-			inline Array3D<T>
-			generate() override {
-				this->determine_coefficients();
-				this->generate_white_noise();
-				Discrete_function<T,3> zeta;
-				zeta.resize(this->grid().num_points());
-				zeta.setgrid(this->grid());
-				operator()(zeta, zeta.domain());
-				return zeta;
+			void
+			setgrid(const Grid<T,3>& rhs) noexcept {
+				_outgrid = rhs;
 			}
 
-			T white_noise_variance() const override {
-				return T(0);
-			}
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, Longuet_Higgins_model<X>& rhs);
 
-			void validate() const override {}
-
-			virtual void
-			operator()(
-				Array3D<T>& zeta,
-				Array3D<T>& eps,
-				const Domain3D& subdomain
-			) override {
-				throw std::runtime_error("not implemented");
-			}
-
-		protected:
-			void write(std::ostream& out) const override;
-			void read(std::istream& in) override;
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const Longuet_Higgins_model<X>& rhs);
 
 		private:
 			T
@@ -88,6 +71,14 @@ namespace arma {
 			void
 			generate(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
 		};
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, Longuet_Higgins_model<T>& rhs);
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const Longuet_Higgins_model<T>& rhs);
 
 	}
 

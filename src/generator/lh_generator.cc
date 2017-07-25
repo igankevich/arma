@@ -1,4 +1,4 @@
-#include "lh_model.hh"
+#include "lh_generator.hh"
 #include "physical_constants.hh"
 #include "params.hh"
 #if ARMA_OPENCL
@@ -174,9 +174,9 @@ arma::generator::Longuet_Higgins_model<T>::generate_surface(
 	for (int i=i0; i<=i1; ++i) {
 		for (int j=j0; j<=j1; ++j) {
 			for (int k=k0; k<=k1; ++k) {
-				const T t = this->_outgrid(i, 0);
-				const T x = this->_outgrid(j, 1);
-				const T y = this->_outgrid(k, 2);
+				const T t = _outgrid(i, 0);
+				const T x = _outgrid(j, 1);
+				const T y = _outgrid(k, 2);
 				T sum = 0;
 				for (int l=0; l<nomega; ++l) {
 					for (int m=0; m<ntheta; ++m) {
@@ -234,27 +234,42 @@ arma::generator::Longuet_Higgins_model<T>::generate(
 }
 
 template <class T>
-void
-arma::generator::Longuet_Higgins_model<T>::read(std::istream& in) {
+std::istream&
+arma::generator::operator>>(std::istream& in, Longuet_Higgins_model<T>& rhs) {
 	sys::parameter_map params({
-		{"spec_domain", sys::make_param(this->_spec_domain)},
-		{"spec_subdomain", sys::make_param(this->_spec_subdomain)},
-		{"wave_height", sys::make_param(this->_waveheight)},
-		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
+		{"spec_domain", sys::make_param(rhs._spec_domain)},
+		{"spec_subdomain", sys::make_param(rhs._spec_subdomain)},
+		{"wave_height", sys::make_param(rhs._waveheight)},
 	}, true);
 	in >> params;
-	validate_domain<T,2>(this->_spec_domain, "lh_model.spec_domain");
-	validate_shape(this->_spec_subdomain, "lh_model.spec_subdomain");
-	validate_positive(this->_waveheight, "lh_model.wave_height");
+	validate_domain<T,2>(rhs._spec_domain, "lh_model.spec_domain");
+	validate_shape(rhs._spec_subdomain, "lh_model.spec_subdomain");
+	validate_positive(rhs._waveheight, "lh_model.wave_height");
+	return in;
 }
 
 template <class T>
-void
-arma::generator::Longuet_Higgins_model<T>::write(std::ostream& out) const {
-	out << "grid=" << this->grid()
-		<< ",spec_domain=" << this->_spec_domain
-		<< ",spec_subdomain=" << this->_spec_subdomain
-		<< ",wave_height=" << this->_waveheight;
+std::ostream&
+arma::generator::operator<<(
+	std::ostream& out,
+	const Longuet_Higgins_model<T>& rhs
+) {
+	return out
+		<< "spec_domain=" << rhs._spec_domain
+		<< ",spec_subdomain=" << rhs._spec_subdomain
+		<< ",wave_height=" << rhs._waveheight;
 }
 
 template class arma::generator::Longuet_Higgins_model<ARMA_REAL_TYPE>;
+
+template std::istream&
+arma::generator::operator>>(
+	std::istream& in,
+	Longuet_Higgins_model<ARMA_REAL_TYPE>& rhs
+);
+
+template std::ostream&
+arma::generator::operator<<(
+	std::ostream& out,
+	const Longuet_Higgins_model<ARMA_REAL_TYPE>& rhs
+);

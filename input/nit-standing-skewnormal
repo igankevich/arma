@@ -1,4 +1,3 @@
-no_seed = 1
 out_grid = (200,40,40)
 
 model = AR
@@ -9,6 +8,7 @@ ar_model = {
 	}
 	least_squares = 0
 	order = (7,7,7)
+	no_seed = 1
 }
 verification = manual
 velocity_potential_solver = high_amplitude {

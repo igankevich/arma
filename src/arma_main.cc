@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #include "arma_driver.hh"
+#include "errors.hh"
 #include "velocity/high_amplitude_solver.hh"
 #include "velocity/linear_solver.hh"
 #include "velocity/plain_wave_solver.hh"

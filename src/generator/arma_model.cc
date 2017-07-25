@@ -50,28 +50,36 @@ arma::generator::ARMA_model<T>::operator()(
 }
 
 template <class T>
-std::istream&
-arma::generator::operator>>(std::istream& in, ARMA_model<T>& rhs) {
-	ACF_wrapper<T> acf_wrapper(rhs._acf_orig);
+void
+arma::generator::ARMA_model<T>::read(std::istream& in) {
+	ACF_wrapper<T> acf_wrapper(this->_acf_orig);
 	sys::parameter_map params({
 		{"acf", sys::make_param(acf_wrapper)},
-		{"ar_model", sys::make_param(static_cast<AR_model<T>&>(rhs))},
-		{"ma_model", sys::make_param(static_cast<MA_model<T>&>(rhs))},
+		{"ar_model", sys::make_param(static_cast<AR_model<T>&>(*this))},
+		{"ma_model", sys::make_param(static_cast<MA_model<T>&>(*this))},
+		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
 	}, true);
 	in >> params;
-	validate_shape(rhs._acf_orig.shape(), "ma_model.acf.shape");
-	rhs.AR_model<T>::setacf(ARMA_model<T>::slice_front(
-		rhs._acf_orig,
-		rhs.AR_model<T>::order()
+	validate_shape(this->_acf_orig.shape(), "ma_model.acf.shape");
+	this->AR_model<T>::setacf(ARMA_model<T>::slice_front(
+		this->_acf_orig,
+		this->AR_model<T>::order()
 	));
-	rhs.MA_model<T>::setacf(ARMA_model<T>::slice_back(
-		rhs._acf_orig,
-		rhs.MA_model<T>::order()
+	this->AR_model<T>::setgrid(this->ARMA_model<T>::grid());
+	this->MA_model<T>::setacf(ARMA_model<T>::slice_back(
+		this->_acf_orig,
+		this->MA_model<T>::order()
 	));
-	return in;
+	this->MA_model<T>::setgrid(this->ARMA_model<T>::grid());
+}
+
+template <class T>
+void
+arma::generator::ARMA_model<T>::write(std::ostream& out) const {
+	out << "ar_model=";
+	this->AR_model<T>::write(out);
+	out << ",ma_model=";
+	this->MA_model<T>::write(out);
 }
 
 template class arma::generator::ARMA_model<ARMA_REAL_TYPE>;
-
-template std::istream&
-arma::generator::operator>>(std::istream& in, ARMA_model<ARMA_REAL_TYPE>& rhs);

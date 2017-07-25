@@ -1,4 +1,4 @@
-#include "ma_model.hh"
+#include "ma_generator.hh"
 
 #include "linalg.hh"
 #include "voodoo.hh"
@@ -11,7 +11,7 @@
 
 template <class T>
 T
-arma::generator::MA_model<T>::white_noise_variance(
+arma::generator::MA_generator<T>::white_noise_variance(
 	const Array3D<T>& theta
 ) const {
 	using blitz::sum;
@@ -21,7 +21,7 @@ arma::generator::MA_model<T>::white_noise_variance(
 
 template <class T>
 void
-arma::generator::MA_model<T>::operator()(
+arma::generator::MA_generator<T>::operator()(
 	Array3D<T>& zeta,
 	Array3D<T>& eps,
 	const Domain3D& subdomain
@@ -54,42 +54,39 @@ arma::generator::MA_model<T>::operator()(
 }
 
 template <class T>
-void
-arma::generator::MA_model<T>::read(std::istream& in) {
-	ACF_wrapper<T> acf_wrapper(this->_acf);
+std::istream&
+arma::generator::operator>>(std::istream& in, MA_generator<T>& rhs) {
+	ACF_wrapper<T> acf_wrapper(rhs._acf);
 	Shape3D order(0,0,0);
 	sys::parameter_map params({
 		{"order", sys::make_param(order)},
 		{"acf", sys::make_param(acf_wrapper)},
-		{"algorithm", sys::make_param(this->_algo)},
-		{"max_iterations", sys::make_param(this->_maxiter)},
-		{"eps", sys::make_param(this->_eps)},
-		{"min_var_wn", sys::make_param(this->_minvarwn)},
-		{"partition", sys::make_param(this->_partition, validate_shape<int,3>)},
-		{"no_seed", sys::make_param(this->_noseed)},
-		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
+		{"algorithm", sys::make_param(rhs._algo)},
+		{"max_iterations", sys::make_param(rhs._maxiter)},
+		{"eps", sys::make_param(rhs._eps)},
+		{"min_var_wn", sys::make_param(rhs._minvarwn)},
 	}, true);
 	in >> params;
 	validate_shape(order, "ma_model.order");
-	validate_shape(this->_acf.shape(), "ma_model.acf.shape");
-	validate_positive(this->_maxiter, "ma_model.algo.max_iterations");
-	validate_positive(this->_eps, "ma_model.algo.eps");
-	validate_positive(this->_minvarwn, "ma_model.algo.min_var_wn");
-	this->_theta.resize(order);
+	validate_shape(rhs._acf.shape(), "ma_model.acf.shape");
+	validate_positive(rhs._maxiter, "ma_model.algo.max_iterations");
+	validate_positive(rhs._eps, "ma_model.algo.eps");
+	validate_positive(rhs._minvarwn, "ma_model.algo.min_var_wn");
+	rhs._theta.resize(order);
+	return in;
+}
+
+template <class T>
+std::ostream&
+arma::generator::operator<<(std::ostream& out, const MA_generator<T>& rhs) {
+	return out << "order=" << rhs.order()
+		<< ",acf.shape=" << rhs._acf.shape()
+		<< ",algorithm=" << rhs._algo;
 }
 
 template <class T>
 void
-arma::generator::MA_model<T>::write(std::ostream& out) const {
-	out << "grid=" << this->grid()
-		<< ",order=" << this->order()
-		<< ",acf.shape=" << this->_acf.shape()
-		<< ",algorithm=" << this->_algo;
-}
-
-template <class T>
-void
-arma::generator::MA_model<T>::determine_coefficients() {
+arma::generator::MA_generator<T>::determine_coefficients() {
 	switch (_algo) {
 		case MA_algorithm::Fixed_point_iteration:
 			fixed_point_iteration(_maxiter, _eps, _minvarwn);
@@ -102,7 +99,7 @@ arma::generator::MA_model<T>::determine_coefficients() {
 
 template <class T>
 void
-arma::generator::MA_model<T>::fixed_point_iteration(
+arma::generator::MA_generator<T>::fixed_point_iteration(
 	int max_iterations,
 	T eps,
 	T min_var_wn
@@ -155,7 +152,7 @@ arma::generator::MA_model<T>::fixed_point_iteration(
 			throw std::runtime_error("bad MA model coefficients");
 		}
 		/// 5. Compute white noise variance by calling
-		/// \link MA_model::white_noise_variance \endlink.
+		/// \link MA_generator::white_noise_variance \endlink.
 		old_var_wn = var_wn;
 		var_wn = white_noise_variance(theta);
 		/// 6. Validate white noise variance.
@@ -178,7 +175,7 @@ arma::generator::MA_model<T>::fixed_point_iteration(
 
 template <class T>
 void
-arma::generator::MA_model<T>::newton_raphson(
+arma::generator::MA_generator<T>::newton_raphson(
 	int max_iterations,
 	T eps,
 	T min_var_wn
@@ -260,7 +257,7 @@ arma::generator::MA_model<T>::newton_raphson(
 			throw std::runtime_error("bad MA model coefficients");
 		}
 		/// 5. Compute white noise variance by calling
-		/// \link MA_model::white_noise_variance \endlink.
+		/// \link MA_generator::white_noise_variance \endlink.
 		old_var_wn = var_wn;
 		var_wn = white_noise_variance(theta);
 		tau(0, 0, 0) = std::sqrt(var_wn);
@@ -284,7 +281,7 @@ arma::generator::MA_model<T>::newton_raphson(
 
 template <class T>
 void
-arma::generator::MA_model<T>::recompute_acf(
+arma::generator::MA_generator<T>::recompute_acf(
 	Array3D<T> acf_orig,
 	Array3D<T> phi
 ) {
@@ -328,4 +325,16 @@ arma::generator::MA_model<T>::recompute_acf(
 	}
 }
 
-template class arma::generator::MA_model<ARMA_REAL_TYPE>;
+template class arma::generator::MA_generator<ARMA_REAL_TYPE>;
+
+template std::istream&
+arma::generator::operator>>(
+	std::istream& in,
+	MA_generator<ARMA_REAL_TYPE>& rhs
+);
+
+template std::ostream&
+arma::generator::operator<<(
+	std::ostream& out,
+	const MA_generator<ARMA_REAL_TYPE>& rhs
+);

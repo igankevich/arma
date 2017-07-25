@@ -5,6 +5,7 @@
 #include <ostream>
 #include "types.hh"
 #include "discrete_function.hh"
+#include "basic_model.hh"
 
 namespace arma {
 
@@ -37,7 +38,7 @@ namespace arma {
 		configuration file.
 		*/
 		template<class T>
-		class Plain_wave_model {
+		class Plain_wave_model: public Basic_model<T> {
 
 		public:
 			typedef Array1D<T> array_type;
@@ -100,27 +101,41 @@ namespace arma {
 				return _amplitudes.size();
 			}
 
-			template <class X>
-			friend std::istream&
-			operator>>(std::istream& in, Plain_wave_model<X>& rhs);
+			inline Array3D<T>
+			generate() override {
+				Discrete_function<T,3> zeta;
+				zeta.resize(this->grid().num_points());
+				zeta.setgrid(this->grid());
+				operator()(zeta, zeta.domain());
+				return zeta;
+			}
 
-			template <class X>
-			friend std::ostream&
-			operator<<(std::ostream& out, const Plain_wave_model<X>& rhs);
+			void determine_coefficients() override {}
+
+			T white_noise_variance() const override {
+				return T(0);
+			}
+
+			void validate() const override {}
+
+			virtual void
+			operator()(
+				Array3D<T>& zeta,
+				Array3D<T>& eps,
+				const Domain3D& subdomain
+			) override {
+				throw std::runtime_error("not implemented");
+			}
+
+		protected:
+			void write(std::ostream& out) const override;
+			void read(std::istream& in) override;
 
 		private:
 			void
 			generate(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
 
 		};
-
-		template <class T>
-		std::istream&
-		operator>>(std::istream& in, Plain_wave_model<T>& rhs);
-
-		template <class T>
-		std::ostream&
-		operator<<(std::ostream& out, const Plain_wave_model<T>& rhs);
 
 	}
 
