@@ -86,11 +86,30 @@ velocity_potential_solver = linear {
 	domain = from (10,-5) to (10,4) npoints (1,10)
 }
 
+# Non-linear inertialess transform.
 transform = nit {
-	distribution = gram_charlier
+	# Target distribution of wavy surface elevation. Possible values:
+	# - gram_charlier
+	# - skew_normal (WIP)
+	distribution = gram_charlier {
+		skewness=3.25
+		kurtosis=2.4
+	}
+#	distribution = skew_normal {
+#		mean=0
+#		stdev=1
+#		alpha=1
+#	}
+	# The no. of coefficients for CDF interpolation.
 	interpolation_order = 12
+	# The no. of nodes for CDF interpolation.
 	interpolation_nodes = 100
-	gram_charlier_order = 10
+	# The no. of coefficients for Gram---Charlier series expansion.
+	gram_charlier_order = 20
+	# The size of the interval in distribution's sigma
+	# on which CDF solver is run.
 	nsigma = 5
-	acf_interval = 2
+	# The size of the interval on which ACF solver is run.
+	acf_interval = 10
 }
+
