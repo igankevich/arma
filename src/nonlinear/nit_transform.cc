@@ -73,7 +73,7 @@ arma::nonlinear::NIT_transform<T>::expand_into_gram_charlier_series(
 template <class T>
 void
 arma::nonlinear::NIT_transform<T>::do_transform_ACF(Array3D<T>& acf) {
-	_acfsolver.interval(_acfinterval, _acfinterval);
+	_acfsolver.interval(-_acfinterval, _acfinterval);
 	::arma::nonlinear::transform_ACF(
 		acf.data(),
 		acf.numElements(),
