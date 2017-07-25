@@ -10,6 +10,7 @@ configure_file(
 linalg_files = files([
 	'linalg.cc',
 	'params.cc',
+	'apmath/closed_interval.cc',
 ])
 apmath_files = files([
 	'apmath/polynomial.cc',

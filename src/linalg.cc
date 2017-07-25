@@ -170,13 +170,27 @@ template <class T>
 std::istream&
 linalg::operator>>(std::istream& in, Bisection<T>& rhs) {
 	sys::parameter_map params({
+	    {"interval", sys::make_param(rhs._interval)},
 	    {"absolute_error", sys::make_param(rhs._eps)},
 	    {"max_iterations", sys::make_param(rhs._niterations)},
 	}, true);
 	in >> params;
+	if (!rhs._interval.valid()) {
+		std::cerr
+			<< "Bad \"bisection.interval\": "
+			<< rhs._interval
+			<< std::endl;
+		throw std::runtime_error("bad parameter");
+	}
 	arma::validate_positive(rhs._eps, "bisection.absolute_error");
 	arma::validate_positive(rhs._niterations, "bisection.max_iterations");
 	return in;
+}
+
+template <class T>
+std::ostream&
+linalg::operator<<(std::ostream& out, const Bisection<T>& rhs) {
+	return out << "interval=" << rhs._interval;
 }
 
 template bool linalg::is_symmetric<ARMA_REAL_TYPE>(Matrix<ARMA_REAL_TYPE>& rhs);
@@ -200,3 +214,6 @@ linalg::least_squares<ARMA_REAL_TYPE>(
 
 template std::istream&
 linalg::operator>>(std::istream& in, Bisection<ARMA_REAL_TYPE>& rhs);
+
+template std::ostream&
+linalg::operator<<(std::ostream& out, const Bisection<ARMA_REAL_TYPE>& rhs);

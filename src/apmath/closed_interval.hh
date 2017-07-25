@@ -23,6 +23,9 @@ namespace arma {
 			closed_interval(closed_interval&&) = default;
 			~closed_interval() = default;
 
+			closed_interval&
+			operator=(const closed_interval&) = default;
+
 			inline T
 			first() const noexcept {
 				return this->_a;
@@ -31,6 +34,11 @@ namespace arma {
 			inline T
 			last() const noexcept {
 				return this->_b;
+			}
+
+			inline T
+			length() const noexcept {
+				return this->_b - this->_a;
 			}
 
 			inline bool

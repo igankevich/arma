@@ -5,6 +5,7 @@
 #include <blitz/array.h>
 #include <lapacke/lapacke.h>
 #include <openblas/cblas.h>
+#include "apmath/closed_interval.hh"
 
 /**
 \file
@@ -15,6 +16,8 @@
 
 /// Various linear algebra subroutines.
 namespace linalg {
+
+	using ::arma::apmath::closed_interval;
 
 	template <class T>
 	using Matrix = blitz::Array<T, 2>;
@@ -151,15 +154,14 @@ namespace linalg {
 	*/
 	template <class T>
 	class Bisection {
-		T _x0, _x1;
+		closed_interval<T> _interval;
 		T _eps;
 		int _niterations;
 
 	public:
 		inline
 		Bisection(T a, T b, T eps, int niterations) noexcept:
-		_x0(a),
-		_x1(b),
+		_interval(a, b),
 		_eps(eps),
 		_niterations(niterations)
 		{}
@@ -167,23 +169,42 @@ namespace linalg {
 		template <class Func>
 		T
 		operator()(Func func) const noexcept {
-			return bisection<T>(_x0, _x1, func, _eps, _niterations);
+			return bisection<T>(
+				this->_interval.first(),
+				this->_interval.last(),
+				func,
+				this->_eps,
+				this->_niterations
+			);
 		}
 
 		inline void
 		interval(T a, T b) noexcept {
-			_x0 = a;
-			_x1 = b;
+			this->_interval = closed_interval<T>(a, b);
+		}
+
+		inline const closed_interval<T>&
+		interval() const noexcept {
+			return this->_interval;
 		}
 
 		template <class X>
 		friend std::istream&
 		operator>>(std::istream& in, Bisection<X>& rhs);
+
+		template <class X>
+		friend std::ostream&
+		operator<<(std::ostream& out, const Bisection<X>& rhs);
 	};
 
 	template <class T>
 	std::istream&
 	operator>>(std::istream& in, Bisection<T>& rhs);
+
+	template <class T>
+	std::ostream&
+	operator<<(std::ostream& out, const Bisection<T>& rhs);
+
 }
 
 #endif // LINALG_HH
