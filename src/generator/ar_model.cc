@@ -3,7 +3,6 @@
 #include "voodoo.hh"
 #include "linalg.hh"
 #include "params.hh"
-#include "acf.hh"
 
 #include <algorithm>
 #include <cassert>
@@ -178,19 +177,13 @@ arma::generator::AR_model<T>::determine_coefficients_iteratively() {
 template <class T>
 void
 arma::generator::AR_model<T>::read(std::istream& in) {
-	ACF_wrapper<T> acf_wrapper(this->_acf);
 	Shape3D order(0,0,0);
 	sys::parameter_map params({
-		{"order", sys::make_param(order)},
+		{"order", sys::make_param(order, validate_shape<int,3>)},
 		{"least_squares", sys::make_param(this->_doleastsquares)},
-		{"acf", sys::make_param(acf_wrapper)},
-		{"partition", sys::make_param(this->_partition, validate_shape<int,3>)},
-		{"no_seed", sys::make_param(this->_noseed)},
-		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
 	}, true);
+	params.insert(this->parameters());
 	in >> params;
-	validate_shape(order, "ar_model.order");
-	validate_shape(this->_acf.shape(), "ar_model.acf.shape");
 	this->_phi.resize(order);
 }
 

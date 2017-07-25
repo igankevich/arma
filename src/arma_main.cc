@@ -6,6 +6,11 @@
 
 #include "arma_driver.hh"
 #include "errors.hh"
+#include "generator/ar_model.hh"
+#include "generator/ma_model.hh"
+#include "generator/arma_model.hh"
+#include "generator/plain_wave.hh"
+#include "generator/lh_model.hh"
 #include "velocity/high_amplitude_solver.hh"
 #include "velocity/linear_solver.hh"
 #include "velocity/plain_wave_solver.hh"
@@ -64,6 +69,17 @@ register_vpsolver(Driver& drv, std::string key) {
 	drv.template register_velocity_potential_solver<Solver>(key);
 }
 
+template <class T>
+void
+register_all_models(arma::ARMA_driver<T>& drv) {
+	using namespace ::arma::generator;
+	drv.template register_model<AR_model<T>>("AR");
+	drv.template register_model<MA_model<T>>("MA");
+	drv.template register_model<ARMA_model<T>>("ARMA");
+	drv.template register_model<Plain_wave_model<T>>("plain_wave");
+	drv.template register_model<Longuet_Higgins_model<T>>("LH");
+}
+
 #if ARMA_OPENCL
 void
 init_opencl() {
@@ -120,6 +136,7 @@ main(int argc, char* argv[]) {
 	} else {
 		/// input file with various driver parameters
 		ARMA_driver<Real> driver;
+		register_all_models<Real>(driver);
 		using namespace velocity;
 		register_vpsolver<Linear_solver<Real>>(driver, "linear");
 		register_vpsolver<Plain_wave_solver<Real>>(driver, "plain");

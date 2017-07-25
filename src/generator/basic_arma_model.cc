@@ -1,9 +1,34 @@
-#include "basic_arma_model.hh"
 #include "arma.hh"
+#include "basic_arma_model.hh"
+#include "bits/acf_wrapper.hh"
+#include "bits/transform_wrapper.hh"
+#include "bits/write_csv.hh"
+#include "nonlinear/nit_transform.hh"
+#include "validators.hh"
+#include "util.hh"
+
 #include <random>
 #if ARMA_OPENMP
 #include <omp.h>
 #endif
+
+template <class T>
+sys::parameter_map::map_type
+arma::generator::Basic_ARMA_model<T>::parameters() {
+	typedef bits::Transform_wrapper<transform_type> nit_wrapper;
+	typedef bits::ACF_wrapper<T> acf_wrapper;
+	return {
+		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
+		{"no_seed", sys::make_param(this->_noseed)},
+		{"partition", sys::make_param(this->_partition, validate_shape<int,3>)},
+		{"transform", sys::wrap_param(nit_wrapper(
+			this->_nittransform,
+			this->_linear
+		))},
+		{"acf", sys::wrap_param(acf_wrapper(this->_acf))},
+		{"verification", sys::make_param(this->_vscheme)},
+	};
+}
 
 template <class T>
 arma::Shape3D
@@ -35,19 +60,27 @@ arma::generator::Basic_ARMA_model<T>::get_partition_shape(
 	return ret;
 }
 
+#include "basic_arma_model_verify.cc"
+
 template <class T>
 arma::Array3D<T>
 arma::generator::Basic_ARMA_model<T>::generate() {
-	Discrete_function<T,3> acf = this->acf();
 	if (!this->_linear) {
-		auto copy = acf.copy();
-		this->_nittransform.transform_ACF(copy);
+		this->_nittransform.transform_ACF(this->_acf);
+	}
+	arma::write_key_value(std::clog, "ACF variance", ACF_variance(this->_acf));
+	if (this->_vscheme == Verification_scheme::Manual) {
+		bits::write_csv("acf.csv", this->_acf, this->_acf.grid());
+	}
+	{
+		std::ofstream out("acf");
+		out << this->_acf;
 	}
 	this->determine_coefficients();
 	this->validate();
 	Array3D<T> zeta = this->do_generate();
 	if (!this->_linear) {
-		this->_nittransform.transform_realisation(acf, zeta);
+		this->_nittransform.transform_realisation(this->_acf, zeta);
 	}
 	return zeta;
 }

@@ -26,6 +26,7 @@ nonlinear_files = files([
 common_src = [
 	'arma.cc',
 	'params.cc',
+	'bits/acf_wrapper.cc',
 	'generator/plain_wave.cc',
 	'generator/ar_model.cc',
 	'generator/ma_model.cc',
@@ -35,7 +36,6 @@ common_src = [
 	'ma_algorithm.cc',
 	'interpolate.cc',
 	'verification_scheme.cc',
-	'simulation_model.cc',
 	'stats/qq_graph.cc',
 	'stats/summary.cc',
 	'stats/waves.cc',

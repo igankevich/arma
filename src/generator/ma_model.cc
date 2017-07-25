@@ -4,7 +4,6 @@
 #include "voodoo.hh"
 #include "validators.hh"
 #include "params.hh"
-#include "acf.hh"
 
 #include <cassert>
 #include <algorithm>
@@ -56,25 +55,16 @@ arma::generator::MA_model<T>::operator()(
 template <class T>
 void
 arma::generator::MA_model<T>::read(std::istream& in) {
-	ACF_wrapper<T> acf_wrapper(this->_acf);
 	Shape3D order(0,0,0);
 	sys::parameter_map params({
-		{"order", sys::make_param(order)},
-		{"acf", sys::make_param(acf_wrapper)},
+		{"order", sys::make_param(order, validate_shape<int,3>)},
 		{"algorithm", sys::make_param(this->_algo)},
-		{"max_iterations", sys::make_param(this->_maxiter)},
-		{"eps", sys::make_param(this->_eps)},
-		{"min_var_wn", sys::make_param(this->_minvarwn)},
-		{"partition", sys::make_param(this->_partition, validate_shape<int,3>)},
-		{"no_seed", sys::make_param(this->_noseed)},
-		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
+		{"max_iterations", sys::make_param(this->_maxiter, validate_positive<int>)},
+		{"eps", sys::make_param(this->_eps, validate_positive<T>)},
+		{"min_var_wn", sys::make_param(this->_minvarwn, validate_positive<T>)},
 	}, true);
+	params.insert(this->parameters());
 	in >> params;
-	validate_shape(order, "ma_model.order");
-	validate_shape(this->_acf.shape(), "ma_model.acf.shape");
-	validate_positive(this->_maxiter, "ma_model.algo.max_iterations");
-	validate_positive(this->_eps, "ma_model.algo.eps");
-	validate_positive(this->_minvarwn, "ma_model.algo.min_var_wn");
 	this->_theta.resize(order);
 }
 

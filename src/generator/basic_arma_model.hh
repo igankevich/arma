@@ -2,9 +2,10 @@
 #define GENERATOR_BASIC_ARMA_MODEL_HH
 
 #include "basic_model.hh"
-#include <chrono>
 #include "discrete_function.hh"
 #include "nonlinear/nit_transform.hh"
+#include "params.hh"
+#include <chrono>
 
 namespace arma {
 
@@ -16,13 +17,15 @@ namespace arma {
 		protected:
 			typedef std::chrono::high_resolution_clock clock_type;
 			typedef Discrete_function<T,3> acf_type;
+			typedef nonlinear::NIT_transform<T> transform_type;
+
 			acf_type _acf;
 			/// The size of partitions that are computed in parallel.
 			Shape3D _partition;
 			/// Whether seed PRNG or not. This flag is needed for
 			/// reproducible tests.
 			bool _noseed = false;
-			nonlinear::NIT_transform<T> _nittransform;
+			transform_type _nittransform;
 			bool _linear = true;
 
 			Shape3D
@@ -46,6 +49,11 @@ namespace arma {
 			acf() const noexcept{
 				return this->_acf;
 			}
+
+			void verify(Array3D<T> zeta) const override;
+
+			virtual sys::parameter_map::map_type
+			parameters();
 
 		public:
 			Array3D<T> generate() override;

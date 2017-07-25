@@ -63,60 +63,6 @@ namespace arma {
 		return acf;
 	}
 
-	/// Helper class to init ACF by name.
-	template<class T>
-	class ACF_wrapper {
-
-		typedef std::function<Array3D<T>(const Vec3D<T>&, const Shape3D&)>
-		    ACF_function;
-
-		Discrete_function<T,3>& _acf;
-
-		static ACF_function
-		get_acf_function(std::string func) {
-			auto result = acf_functions.find(func);
-			if (result == acf_functions.end()) {
-				std::cerr << "Bad ACF function name: \"" << func << '\"' << std::endl;
-				throw std::runtime_error("bad ACF function name");
-			}
-			return result->second;
-		}
-
-		/// Map of names to ACF functions.
-		static const std::unordered_map<std::string, ACF_function>
-		    acf_functions;
-
-	public:
-
-		explicit
-		ACF_wrapper(Discrete_function<T,3>& acf):
-		_acf(acf)
-		{}
-
-		friend std::istream&
-		operator>>(std::istream& in, ACF_wrapper& rhs) {
-			std::string func;
-			Grid<T,3> grid;
-			sys::parameter_map params({
-			    {"grid", sys::make_param(grid, validate_grid<T,3>)},
-			    {"func", sys::make_param(func)},
-			}, true);
-			in >> params;
-			ACF_function acf_func = get_acf_function(func);
-			rhs._acf.resize(grid.size());
-			rhs._acf.reference(acf_func(grid.delta(), grid.size()));
-			rhs._acf.setgrid(grid);
-			return in;
-		}
-
-	};
-
-	template <class T>
-	const std::unordered_map<
-	    std::string, std::function<Array3D<T>(const Vec3D<T>&, const Shape3D&)>>
-	    ACF_wrapper<T>::acf_functions = {
-	        {"standing_wave", standing_wave_ACF<T>},
-	        {"propagating_wave", propagating_wave_ACF<T>}};
 }
 
 #endif // ACF_HH

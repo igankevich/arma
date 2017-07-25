@@ -2,7 +2,7 @@
 
 #include "validators.hh"
 #include "params.hh"
-#include "acf.hh"
+#include "bits/acf_wrapper.hh"
 
 template <class T>
 T
@@ -52,15 +52,17 @@ arma::generator::ARMA_model<T>::operator()(
 template <class T>
 void
 arma::generator::ARMA_model<T>::read(std::istream& in) {
-	ACF_wrapper<T> acf_wrapper(this->_acf_orig);
+	bits::ACF_wrapper<T> acf_wrapper(this->_acf_orig);
 	sys::parameter_map params({
-		{"acf", sys::make_param(acf_wrapper)},
 		{"ar_model", sys::make_param(static_cast<AR_model<T>&>(*this))},
 		{"ma_model", sys::make_param(static_cast<MA_model<T>&>(*this))},
-		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
 	}, true);
+	params.insert(this->parameters());
+	params.insert({
+		{"acf", sys::make_param(acf_wrapper)},
+	});
 	in >> params;
-	validate_shape(this->_acf_orig.shape(), "ma_model.acf.shape");
+	validate_shape(this->_acf_orig.shape(), "arma_model.acf_orig.shape");
 	this->AR_model<T>::setacf(ARMA_model<T>::slice_front(
 		this->_acf_orig,
 		this->AR_model<T>::order()

@@ -12,12 +12,12 @@ namespace sys {
 	struct parameter {
 
 		inline
-		parameter(T& val):
-		parameter(val, [](const T&,const char*){})
+		parameter(T val):
+		parameter(val, [](const T,const char*){})
 		{}
 
 		template<class Validate>
-		parameter(T& val, Validate validate):
+		parameter(T val, Validate validate):
 		_value(val), _validate(validate)
 		{}
 
@@ -30,20 +30,26 @@ namespace sys {
 		}
 
 	private:
-		T& _value;
-		std::function<void(const T&, const char*)> _validate;
+		T _value;
+		std::function<void(const T, const char*)> _validate;
 	};
 
 	template <class T>
-	parameter<T>
+	parameter<T&>
 	make_param(T& val) {
-		return parameter<T>(val);
+		return parameter<T&>(val);
 	}
 
 	template <class T, class Validate>
-	parameter<T>
+	parameter<T&>
 	make_param(T& val, Validate validate) {
-		return parameter<T>(val, validate);
+		return parameter<T&>(val, validate);
+	}
+
+	template <class T>
+	parameter<T>
+	wrap_param(T wrapper) {
+		return parameter<T>(wrapper);
 	}
 
 	struct parameter_map {
@@ -64,6 +70,11 @@ namespace sys {
 		_name(name),
 		_parens(parens)
 		{}
+
+		inline void
+		insert(const map_type& rhs) {
+			this->_params.insert(rhs.begin(), rhs.end());
+		}
 
 		friend std::istream&
 		operator>>(std::istream& in, parameter_map& rhs);
