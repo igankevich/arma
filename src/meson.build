@@ -15,6 +15,7 @@ apmath_files = files([
 	'apmath/polynomial.cc',
 	'apmath/hermite.cc',
 	'apmath/owen_t.cc',
+	'apmath/closed_interval.cc',
 ])
 nonlinear_files = files([
 	'nonlinear/series.cc',

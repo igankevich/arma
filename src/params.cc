@@ -4,6 +4,8 @@
 #include <iostream>
 #include <iomanip>
 
+#include "utility/const_char.hh"
+
 namespace {
 
 	/// ignore lines starting with "#"
@@ -18,19 +20,6 @@ namespace {
 		return in;
 	}
 
-	template<char CH>
-	struct const_char {
-		friend std::istream&
-		operator>>(std::istream& in, const const_char& rhs) {
-			char ch;
-			if ((ch = in.get()) != CH) {
-				in.putback(ch);
-				in.setstate(std::ios::failbit);
-			}
-			return in;
-		}
-	};
-
 	void
 	trim_right(std::string& rhs) {
 		while (!rhs.empty() && rhs.back() <= ' ') { rhs.pop_back(); }
@@ -40,6 +29,7 @@ namespace {
 
 std::istream&
 sys::operator>>(std::istream& in, parameter_map& rhs) {
+	using arma::util::const_char;
 	if (rhs._parens && !(in >> std::ws >> const_char<'{'>())) {
 		std::cerr << "Expecting \"{\"." << std::endl;
 	}

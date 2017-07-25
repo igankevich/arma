@@ -94,3 +94,13 @@ test(
 		dependencies: [libblitz, libgsl, gtest]
 	)
 )
+
+test(
+	'arma::apmath::closed_interval',
+	executable(
+		'closed-interval-test',
+		sources: ['closed-interval-test.cc'] + apmath_files,
+		include_directories: incdirs,
+		dependencies: [libblitz, libgsl, gtest]
+	)
+)
