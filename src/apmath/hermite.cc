@@ -1,5 +1,6 @@
 #include "hermite.hh"
 #include <algorithm>
+#include <blitz/array.h>
 
 template <class T>
 arma::apmath::Polynomial<T>

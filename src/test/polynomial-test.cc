@@ -13,6 +13,18 @@ TEST(Polynomial, Constructor) {
 	EXPECT_EQ(poly_type(2).order(), 2);
 }
 
+TEST(Polynomial, ConstructorCopy) {
+	poly_type p1{{1, 2, 3, 4}};
+	poly_type p2(p1);
+	EXPECT_TRUE(std::equal(&p1[0], &p1[p1.order()], &p2[0]));
+}
+
+TEST(Polynomial, ConstructorCopy2) {
+	poly_type p1{{1, 2, 3, 4}};
+	poly_type p2 = p1;
+	EXPECT_TRUE(std::equal(&p1[0], &p1[p1.order()], &p2[0]));
+}
+
 TEST(Polynomial, Assign) {
 	poly_type p1{{1, 2, 3, 4}};
 	poly_type p2;
@@ -24,6 +36,7 @@ TEST(Polynomial, Multiply) {
 	poly_type p1{{1, 2}};
 	poly_type p2{{3, 4}};
 	poly_type p3{{3, 10, 8}};
+	std::clog << "p1*p2=" << poly_type(p1*p2) << std::endl;
 	p1 = p1*p2;
 	EXPECT_TRUE(std::equal(
 		&p1[0],
