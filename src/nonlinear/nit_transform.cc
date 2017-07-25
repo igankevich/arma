@@ -3,6 +3,7 @@
 #include "validators.hh"
 #include "transforms.hh"
 #include "series.hh"
+#include "util.hh"
 
 #include <string>
 #include <stdexcept>
@@ -13,16 +14,15 @@ template <class T>
 void
 arma::nonlinear::NIT_transform<T>::transform_CDF(Array3D<T> acf) {
 	const T stdev = std::sqrt(acf(0,0,0));
-	const T breadth = _nsigma*stdev;
-	_cdfsolver.interval(-breadth, breadth);
+	const auto& iv = this->_cdfsolver.interval();
 	const Domain<T,1> grid(
-		Vec1D<T>(-breadth),
-		Vec1D<T>(breadth),
-		Vec1D<int>(_intnodes)
+		Vec1D<T>(iv.first()),
+		Vec1D<T>(iv.last()),
+		Vec1D<int>(this->_intnodes)
 	);
 	auto nodes = do_transform_CDF(stdev, grid);
-	_xnodes.reference(nodes.first);
-	_ynodes.reference(nodes.second);
+	this->_xnodes.reference(nodes.first);
+	this->_ynodes.reference(nodes.second);
 }
 
 template <class T>
@@ -54,41 +54,44 @@ arma::nonlinear::NIT_transform<T>::do_transform_CDF(
 
 template <class T>
 void
-arma::nonlinear::NIT_transform<T>::interpolate_CDF() {
-	_intcoefs = linalg::interpolate(_xnodes, _ynodes, _intcoefs.size());
-}
-
-template <class T>
-void
-arma::nonlinear::NIT_transform<T>::expand_into_gram_charlier_series(
-	Array3D<T> acf
-) {
-	gram_charlier_expand(
-		_intcoefs,
-		_gcscoefs.numElements(),
-		acf(0,0,0)
-	);
-}
-
-template <class T>
-void
-arma::nonlinear::NIT_transform<T>::do_transform_ACF(Array3D<T>& acf) {
-	_acfsolver.interval(-_acfinterval, _acfinterval);
+arma::nonlinear::NIT_transform<T>::transform_ACF(Array3D<T>& acf) {
+	transform_CDF(acf);
+	T err = std::numeric_limits<T>::max();
+	Array1D<T> intcoefs;
+	Array1D<T> gcscoefs;
+	// find the optimal interpolation order
+	for (unsigned int i=1; i<this->_maxintorder; ++i) {
+		Array1D<T> new_intcoefs = linalg::interpolate(
+			this->_xnodes,
+			this->_ynodes,
+			i
+		);
+		T new_err = std::numeric_limits<T>::max();
+		Array1D<T> new_gcscoefs =
+			gram_charlier_expand(
+				new_intcoefs,
+				this->_maxexpansionorder,
+				acf(0,0,0),
+				new_err
+			);
+		if (new_err < err) {
+			intcoefs.resize(new_intcoefs.size());
+			intcoefs = new_intcoefs;
+			gcscoefs.resize(new_gcscoefs.size());
+			gcscoefs = new_gcscoefs;
+			err = new_err;
+		}
+	}
+	#ifndef NDEBUG
+	write_key_value(std::clog, "Optimal interpolation order", intcoefs.size());
+	write_key_value(std::clog, "GCS approximation error", err);
+	#endif
 	::arma::nonlinear::transform_ACF(
 		acf.data(),
 		acf.numElements(),
-		_gcscoefs,
-		_acfsolver
+		gcscoefs,
+		this->_acfsolver
 	);
-}
-
-template <class T>
-void
-arma::nonlinear::NIT_transform<T>::transform_ACF(Array3D<T>& acf) {
-	transform_CDF(acf);
-	interpolate_CDF();
-	expand_into_gram_charlier_series(acf);
-	do_transform_ACF(acf);
 }
 
 template <class T>
@@ -99,10 +102,10 @@ arma::nonlinear::NIT_transform<T>::transform_realisation(
 ) {
 	switch (_targetdist) {
 		case bits::Distribution::Gram_Charlier:
-			do_transform_realisation(acf, realisation, _gramcharlier);
+			do_transform_realisation(acf, realisation, this->_gramcharlier);
 			break;
 		case bits::Distribution::Skew_normal:
-			do_transform_realisation(acf, realisation, _skewnormal);
+			do_transform_realisation(acf, realisation, this->_skewnormal);
 			break;
 	}
 }
@@ -121,7 +124,7 @@ arma::nonlinear::NIT_transform<T>::do_transform_realisation(
 		realisation.numElements(),
 		normaldist_type(T(0), stdev),
 		dist,
-		_cdfsolver
+		this->_cdfsolver
 	);
 }
 
@@ -151,7 +154,7 @@ arma::nonlinear::bits::operator>>(std::istream& in, Distribution& rhs) {
 		rhs = Distribution::Skew_normal;
 	} else {
 		in.setstate(std::ios::failbit);
-		std::clog << "Invalid distribution: " << name << std::endl;
+		std::cerr << "Invalid distribution: " << name << std::endl;
 		throw std::runtime_error("bad distribution");
 	}
 	return in;
@@ -183,9 +186,11 @@ arma::nonlinear::operator<<(std::ostream& out, const NIT_transform<T>& rhs) {
 			out << rhs._skewnormal;
 			break;
 	}
-	out << ",interpolation_nodes=" << rhs._intnodes
-		<< ",interpolation_order=" << rhs._intcoefs.numElements()
-		<< ",gram_charlier_order=" << rhs._gcscoefs.numElements()
+	out << ",cdf_solver=" << rhs._cdfsolver
+		<< ",acf_solver=" << rhs._acfsolver
+		<< ",interpolation_nodes=" << rhs._intnodes
+		<< ",max_interpolation_order=" << rhs._maxintorder
+		<< ",max_expansion_order=" << rhs._maxexpansionorder
 		;
 	return out;
 }
@@ -193,8 +198,6 @@ arma::nonlinear::operator<<(std::ostream& out, const NIT_transform<T>& rhs) {
 template <class T>
 std::istream&
 arma::nonlinear::operator>>(std::istream& in, NIT_transform<T>& rhs) {
-	int intorder = NIT_transform<T>::default_interpolation_order;
-	int gcsorder = NIT_transform<T>::default_gram_charlier_order;
 	sys::parameter_map::read_param
 	read_dist = [&rhs] (std::istream& str, const char*) -> std::istream& {
 		rhs.read_dist(str);
@@ -202,17 +205,22 @@ arma::nonlinear::operator>>(std::istream& in, NIT_transform<T>& rhs) {
 	};
 	sys::parameter_map params({
 	    {"distribution", read_dist},
-	    {"interpolation_order", sys::make_param(intorder, validate_positive<T>)},
-	    {"interpolation_nodes", sys::make_param(rhs._intnodes, validate_positive<T>)},
-	    {"gram_charlier_order", sys::make_param(gcsorder, validate_positive<T>)},
-	    {"nsigma", sys::make_param(rhs._nsigma, validate_positive<T>)},
-	    {"acf_interval", sys::make_param(rhs._acfinterval, validate_positive<T>)},
+	    {
+			"max_interpolation_order",
+			sys::make_param(rhs._maxintorder, validate_positive<T>)
+	    },
+	    {
+			"interpolation_nodes",
+			sys::make_param(rhs._intnodes, validate_positive<T>)
+	    },
+	    {
+			"max_expansion_order",
+			sys::make_param(rhs._maxexpansionorder, validate_positive<T>)
+	    },
 	    {"cdf_solver", sys::make_param(rhs._cdfsolver)},
 	    {"acf_solver", sys::make_param(rhs._acfsolver)},
 	}, "nit_transform", true);
 	in >> params;
-	rhs._intcoefs.resize(intorder);
-	rhs._gcscoefs.resize(gcsorder);
 	return in;
 }
 

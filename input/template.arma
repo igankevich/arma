@@ -100,16 +100,20 @@ transform = nit {
 #		stdev=1
 #		alpha=1
 #	}
-	# The no. of coefficients for CDF interpolation.
-	interpolation_order = 12
 	# The no. of nodes for CDF interpolation.
 	interpolation_nodes = 100
-	# The no. of coefficients for Gram---Charlier series expansion.
-	gram_charlier_order = 20
-	# The size of the interval in distribution's sigma
-	# on which CDF solver is run.
-	nsigma = 5
-	# The size of the interval on which ACF solver is run.
-	acf_interval = 10
+	# Max no. of coefficients for CDF interpolation.
+	max_interpolation_order = 10
+	# Max no. of coefficients for Gram---Charlier series expansion.
+	max_expansion_order = 20
+	cdf_solver = {
+		# The size of the interval in distribution's sigma
+		# on which CDF solver is run.
+		interval = [-10,10]
+	}
+	acf_solver = {
+		# The size of the interval on which ACF solver is run.
+		interval = [-10,10]
+	}
 }
 

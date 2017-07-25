@@ -13,16 +13,18 @@ namespace arma {
 		\author Ivan Gankevich
 		\param[in] a polynomial coefficients of a transformed cumulative
 		             distribution function
-		\param[in] order expansion order
+		\param[in] max_order maximal expansion order
 		\param[in] acf_variance ACF variance \f$\gamma_{\vec{0}}\f$
+		\param[out] err error of the resulting approximation
 		\see transform_CDF
 		*/
 		template <class T>
 		blitz::Array<T, 1>
 		gram_charlier_expand(
 			blitz::Array<T, 1> a,
-			const int order,
-			const T acf_variance
+			const int max_order,
+			const T acf_variance,
+			T& err
 		);
 
 	}

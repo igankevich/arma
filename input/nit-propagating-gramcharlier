@@ -24,9 +24,13 @@ transform = nit {
 		skewness=2.25
 		kurtosis=0.4
 	}
-	interpolation_order = 12
 	interpolation_nodes = 100
-	gram_charlier_order = 20
-	nsigma = 5
-	acf_interval = 10
+	max_interpolation_order = 10
+	max_expansion_order = 20
+	cdf_solver = {
+		interval = [-10,10]
+	}
+	acf_solver = {
+		interval = [-10,10]
+	}
 }

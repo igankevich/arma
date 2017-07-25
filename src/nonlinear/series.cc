@@ -14,20 +14,25 @@ template <class T>
 blitz::Array<T, 1>
 arma::nonlinear::gram_charlier_expand(
 	blitz::Array<T, 1> a,
-	const int order,
-	const T acf_variance
+	const int max_order,
+	const T acf_variance,
+	T& out_err
 ) {
 	typedef ::arma::apmath::Polynomial<T> poly_type;
 	using ::arma::apmath::hermite_polynomial;
 	using ::arma::apmath::factorial;
 	using std::abs;
+	using std::isfinite;
+	using blitz::Range;
 
-	blitz::Array<T,1> c(order);
+	blitz::Array<T,1> c(max_order);
+	T err;
 	T sum_c = 0;
 	T f = 1;
-	T err = std::numeric_limits<T>::max();
-	int trim = 0;
-	for (int m=0; m<order; ++m) {
+	T e = std::numeric_limits<T>::max();
+	int m = 0;
+	do {
+		err = e;
 		/**
 		1. Calculate series coefficients \f$C\f$:
 		\f[
@@ -61,28 +66,22 @@ arma::nonlinear::gram_charlier_expand(
 		*/
 		sum_c += c(m)*c(m)/f;
 		f *= (m+1);
-		const T e = abs(T(1) - sum_c);
+		e = abs(acf_variance - sum_c);
 		// criteria could be: abs(T(1) - sum_c)
 
-		// determine minimum error
-		if (e < err) {
-			err = e;
-			trim = m+1;
-		}
-		#ifndef NDEBUG
-		std::clog << "err = " << e << std::endl;
-		#endif
-	}
-	#ifndef NDEBUG
-	std::clog << "trim = " << trim << std::endl;
-	#endif
-	c.resizeAndPreserve(trim);
+		//#ifndef NDEBUG
+		//std::clog << "m=" << m << ",e=" << e << std::endl;
+		//#endif
+	} while (e < err && ++m < max_order);
+	c.resizeAndPreserve(m);
+	out_err = err;
 	return c;
 }
 
 template blitz::Array<ARMA_REAL_TYPE, 1>
 arma::nonlinear::gram_charlier_expand(
 	blitz::Array<ARMA_REAL_TYPE, 1> a,
-	const int order,
-	const ARMA_REAL_TYPE acf_variance
+	const int max_order,
+	const ARMA_REAL_TYPE acf_variance,
+	ARMA_REAL_TYPE& err
 );

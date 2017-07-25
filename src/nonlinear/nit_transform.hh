@@ -57,26 +57,16 @@ namespace arma {
 			bits::Distribution _targetdist = bits::Distribution::Gram_Charlier;
 			skewnormaldist_type  _skewnormal;
 			gramcharlierdist_type  _gramcharlier;
-			int _intnodes = 100;
-			T _nsigma = T(5);
-			T _acfinterval = T(2);
+			unsigned int _intnodes = 100;
+			unsigned int _maxintorder = default_interpolation_order;
+			unsigned int _maxexpansionorder = default_gram_charlier_order;
 			solver_type _cdfsolver, _acfsolver;
-			Array1D<T> _xnodes, _ynodes, _intcoefs, _gcscoefs;
+			Array1D<T> _xnodes, _ynodes;
 
 		public:
 			NIT_transform():
-			_cdfsolver(
-				T(0),
-				T(1),
-				default_absolute_error,
-				default_niterations
-			),
-			_acfsolver(
-				T(0),
-				T(1),
-				default_absolute_error,
-				default_niterations
-			)
+			_cdfsolver(T(0), T(1), default_absolute_error, default_niterations),
+			_acfsolver(T(0), T(1), default_absolute_error, default_niterations)
 			{}
 
 			void
@@ -99,15 +89,6 @@ namespace arma {
 
 			std::pair<arma::Array1D<T>,arma::Array1D<T>>
 			do_transform_CDF(const T stdev, const Domain<T,1>& grid);
-
-			void
-			interpolate_CDF();
-
-			void
-			expand_into_gram_charlier_series(Array3D<T> acf);
-
-			void
-			do_transform_ACF(Array3D<T>& acf);
 
 			template <class Dist>
 			void
