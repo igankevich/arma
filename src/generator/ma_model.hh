@@ -15,7 +15,7 @@ namespace arma {
 		\brief Uses moving average process, propagating waves.
 		*/
 		template <class T>
-		struct MA_model: public virtual Basic_ARMA_model<T> {
+		struct MA_model: public Basic_ARMA_model<T> {
 
 			typedef Discrete_function<T,3> acf_type;
 

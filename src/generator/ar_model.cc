@@ -14,7 +14,7 @@ template <class T>
 T
 arma::generator::AR_model<T>::white_noise_variance(Array3D<T> phi) const {
 	blitz::RectDomain<3> subdomain(Shape3D(0, 0, 0), phi.shape() - 1);
-	return _acf(0, 0, 0) - blitz::sum(phi * _acf(subdomain));
+	return this->_acf(0, 0, 0) - blitz::sum(phi * this->_acf(subdomain));
 }
 
 template <class T>
@@ -58,11 +58,11 @@ template <class T>
 void
 arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) {
 	using blitz::all;
-	if (!all(order() <= _acf.shape())) {
+	if (!all(this->order() <= this->_acf.shape())) {
 		std::cerr << "AR model order is larger than ACF "
 					 "size:\n\tAR model "
 					 "order = "
-				  << order() << "\n\tACF size = " << _acf.shape()
+				  << this->order() << "\n\tACF size = " << this->_acf.shape()
 				  << std::endl;
 		throw std::runtime_error("bad AR model order");
 	}
@@ -73,9 +73,9 @@ arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) 
 	// matrices
 	std::function<Array2D<T>()> generator;
 	if (do_least_squares) {
-		generator = AC_matrix_generator_LS<T>(_acf, order());
+		generator = AC_matrix_generator_LS<T>(this->_acf, this->order());
 	} else {
-		generator = AC_matrix_generator<T>(_acf, order());
+		generator = AC_matrix_generator<T>(this->_acf, this->order());
 	}
 	Array2D<T> acm = generator();
 	const int m = acm.rows() - 1;
@@ -113,7 +113,7 @@ arma::generator::AR_model<T>::determine_coefficients_iteratively() {
 	using blitz::sum;
 	using blitz::RectDomain;
 	const Shape3D _0(0, 0, 0);
-	Array3D<T> r(_acf / _acf(0, 0, 0));
+	Array3D<T> r(this->_acf / this->_acf(0, 0, 0));
 	const Shape3D order = this->order();
 	Array3D<T> phi0(order), phi1(order);
 	phi0 = 0;
@@ -177,14 +177,12 @@ arma::generator::AR_model<T>::determine_coefficients_iteratively() {
 template <class T>
 void
 arma::generator::AR_model<T>::read(std::istream& in) {
-	Shape3D order(0,0,0);
 	sys::parameter_map params({
-		{"order", sys::make_param(order, validate_shape<int,3>)},
 		{"least_squares", sys::make_param(this->_doleastsquares)},
 	}, true);
 	params.insert(this->parameters());
 	in >> params;
-	this->_phi.resize(order);
+	this->_phi.resize(this->order());
 }
 
 template <class T>

@@ -18,7 +18,7 @@ namespace arma {
 		\brief Uses autoregressive process, standing waves.
 		*/
 		template <class T>
-		struct AR_model: public virtual Basic_ARMA_model<T> {
+		struct AR_model: public Basic_ARMA_model<T> {
 
 			typedef Discrete_function<T,3> acf_type;
 
@@ -26,33 +26,13 @@ namespace arma {
 
 			inline explicit
 			AR_model(acf_type acf, Shape3D order):
-			_acf(acf), _phi(order)
+			Basic_ARMA_model<T>(acf, order),
+			_phi(order)
 			{}
-
-			inline acf_type
-			acf() const {
-				return _acf;
-			}
-
-			inline void
-			setacf(acf_type acf) {
-				_acf.resize(acf.shape());
-				_acf = acf;
-			}
-
-			inline T
-			acf_variance() const {
-				return _acf(0, 0, 0);
-			}
 
 			inline Array3D<T>
 			coefficients() const {
 				return _phi;
-			}
-
-			inline Shape3D
-			order() const {
-				return _phi.shape();
 			}
 
 			inline T
@@ -100,7 +80,6 @@ namespace arma {
 			void
 			determine_coefficients_iteratively();
 
-			acf_type _acf;
 			Array3D<T> _phi;
 			bool _doleastsquares = false;
 		};

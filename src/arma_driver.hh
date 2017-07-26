@@ -226,7 +226,7 @@ namespace arma {
 					"Output grid patch size",
 					this->_generator->grid().patch_size()
 				);
-				write_key_value(std::clog, "Model", this->_generator);
+				write_key_value(std::clog, "Model", *this->_generator);
 			}
 			if (_vpsolver) {
 				write_key_value(

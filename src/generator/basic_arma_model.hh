@@ -14,14 +14,16 @@ namespace arma {
 		template <class T>
 		class Basic_ARMA_model: public virtual Basic_model<T> {
 
-		protected:
+		public:
 			typedef std::chrono::high_resolution_clock clock_type;
 			typedef Discrete_function<T,3> acf_type;
 			typedef nonlinear::NIT_transform<T> transform_type;
 
+		protected:
 			acf_type _acf;
+			Shape3D _order = Shape3D(0,0,0);
 			/// The size of partitions that are computed in parallel.
-			Shape3D _partition;
+			Shape3D _partition = Shape3D(0,0,0);
 			/// Whether seed PRNG or not. This flag is needed for
 			/// reproducible tests.
 			bool _noseed = false;
@@ -43,11 +45,33 @@ namespace arma {
 				#endif
 			}
 
-			virtual Shape3D order() const = 0;
+		public:
+			inline
+			Basic_ARMA_model() = default;
 
-			inline acf_type
+			inline explicit
+			Basic_ARMA_model(acf_type acf, Shape3D order):
+			_acf(acf), _order(order)
+			{}
+
+			const Shape3D&
+			order() const noexcept {
+				return this->_order;
+			}
+
+			inline const acf_type&
 			acf() const noexcept{
 				return this->_acf;
+			}
+
+			inline T
+			acf_variance() const noexcept {
+				return this->_acf(0,0,0);
+			}
+
+			inline void
+			setacf(const acf_type& rhs) {
+				this->_acf.reference(rhs);
 			}
 
 			void verify(Array3D<T> zeta) const override;

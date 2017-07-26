@@ -57,7 +57,7 @@ arma::generator::ARMA_model<T>::read(std::istream& in) {
 		{"ar_model", sys::make_param(static_cast<AR_model<T>&>(*this))},
 		{"ma_model", sys::make_param(static_cast<MA_model<T>&>(*this))},
 	}, true);
-	params.insert(this->parameters());
+	params.insert(this->AR_model<T>::parameters());
 	params.insert({
 		{"acf", sys::make_param(acf_wrapper)},
 	});

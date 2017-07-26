@@ -27,6 +27,7 @@ arma::generator::Basic_ARMA_model<T>::parameters() {
 		))},
 		{"acf", sys::wrap_param(acf_wrapper(this->_acf))},
 		{"verification", sys::make_param(this->_vscheme)},
+		{"order", sys::make_param(this->_order, validate_shape<int,3>)},
 	};
 }
 
@@ -37,8 +38,9 @@ arma::generator::Basic_ARMA_model<T>::get_partition_shape(
 	int nprngs
 ) {
 	Shape3D ret;
+	std::clog << "this->_partition=" << this->_partition << std::endl;
 	if (blitz::product(this->_partition) > 0) {
-		ret = _partition;
+		ret = this->_partition;
 	} else {
 		const Shape3D shape = this->_outgrid.size();
 		const Shape3D guess1 = blitz::max(
@@ -66,7 +68,8 @@ template <class T>
 arma::Array3D<T>
 arma::generator::Basic_ARMA_model<T>::generate() {
 	if (!this->_linear) {
-		this->_nittransform.transform_ACF(this->_acf);
+		auto copy = this->_acf.copy();
+		this->_nittransform.transform_ACF(copy);
 	}
 	arma::write_key_value(std::clog, "ACF variance", ACF_variance(this->_acf));
 	if (this->_vscheme == Verification_scheme::Manual) {

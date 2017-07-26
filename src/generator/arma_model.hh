@@ -61,6 +61,16 @@ namespace arma {
 			void
 			determine_coefficients() override;
 
+			Array3D<T> generate() override {
+				// any will do
+				return AR_model<T>::generate();
+			}
+
+			void verify(Array3D<T> zeta) const override {
+				// any will do
+				AR_model<T>::verify(zeta);
+			}
+
 		protected:
 			T
 			white_noise_variance(Array3D<T> phi, Array3D<T> theta) const;
