@@ -58,7 +58,7 @@ usage(char* argv0) {
 template<class Solver, class Driver>
 void
 register_vpsolver(Driver& drv, std::string key) {
-	drv.template register_velocity_potential_solver<Solver>(key);
+	drv.template register_solver<Solver>(key);
 }
 
 void

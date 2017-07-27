@@ -58,15 +58,21 @@ print_error_and_continue(
 void
 usage(char* argv0) {
 	std::cout
-		<< "USAGE: "
+		<< "usage: "
 		<< (argv0 == nullptr ? "arma" : argv0)
-		<< " -c CONFIGFILE\n";
+		<< " [-h] configfile\n";
 }
 
-template<class Solver, class Driver>
+template <class T>
 void
-register_vpsolver(Driver& drv, std::string key) {
-	drv.template register_velocity_potential_solver<Solver>(key);
+register_all_solvers(arma::ARMA_driver<T>& drv) {
+	using namespace ::arma::velocity;
+	drv.template register_solver<Linear_solver<T>>("linear");
+	drv.template register_solver<Plain_wave_solver<T>>("plain");
+	drv.template register_solver<High_amplitude_solver<T>>("high_amplitude");
+	#if defined(WITH_SMALL_AMPLITUDE_SOLVER)
+	drv.template register_solver<Small_amplitude_solver<T>>("small_amplitude");
+	#endif
 }
 
 template <class T>
@@ -87,6 +93,32 @@ init_opencl() {
 }
 #endif
 
+template <class T>
+void
+run_arma(const std::string& input_filename) {
+	using namespace arma;
+	/// input file with various driver parameters
+	ARMA_driver<T> driver;
+	register_all_models<T>(driver);
+	register_all_solvers<T>(driver);
+	driver.open(input_filename);
+	try {
+		driver.generate_wavy_surface();
+		driver.compute_velocity_potentials();
+		driver.write_all();
+	} catch (const PRNG_error& err) {
+		if (err.ngenerators() == 0) {
+			std::cerr << "No parallel Mersenne Twisters configuration is found. "
+				"Please, generate sufficient number of MTs with dcmt programme."
+				<< std::endl;
+		} else {
+			std::cerr << "Insufficient number of parallel Mersenne Twisters found. "
+				"Please, generate at least " << err.nparts() << " MTs for this run."
+				<< std::endl;
+		}
+	}
+}
+
 int
 main(int argc, char* argv[]) {
 
@@ -103,20 +135,11 @@ main(int argc, char* argv[]) {
 	init_opencl();
 	#endif
 
-	using namespace arma;
-
-	/// floating point type (float, double, long double or multiprecision number
-	/// C++ class)
-	typedef ARMA_REAL_TYPE Real;
-
 	std::string input_filename;
 	bool help_requested = false;
 	int opt = 0;
-	while ((opt = ::getopt(argc, argv, "c:h")) != -1) {
+	while ((opt = ::getopt(argc, argv, "h")) != -1) {
 		switch (opt) {
-			case 'c':
-				input_filename = ::optarg;
-				break;
 			case 'h':
 				help_requested = true;
 				break;
@@ -134,49 +157,10 @@ main(int argc, char* argv[]) {
 	if (help_requested || input_filename.empty()) {
 		usage(argv[0]);
 	} else {
-		/// input file with various driver parameters
-		ARMA_driver<Real> driver;
-		register_all_models<Real>(driver);
-		using namespace velocity;
-		register_vpsolver<Linear_solver<Real>>(driver, "linear");
-		register_vpsolver<Plain_wave_solver<Real>>(driver, "plain");
-		register_vpsolver<High_amplitude_solver<Real>>(driver, "high_amplitude");
-		#if defined(WITH_SMALL_AMPLITUDE_SOLVER)
-		register_vpsolver<Small_amplitude_solver<Real>>(driver, "small_amplitude");
-		#endif
-		std::ifstream cfg(input_filename);
-		if (!cfg.is_open()) {
-			std::cerr << "Cannot open input file "
-				"\"" << input_filename << "\"."
-				<< std::endl;
-			throw std::runtime_error("bad input file");
-		}
-		write_key_value(std::clog, "Input file", input_filename);
-		cfg >> driver;
-		try {
-			driver.generate_wavy_surface();
-			driver.compute_velocity_potentials();
-			if (driver.vscheme().isset(Output_flags::Surface)) {
-				if (driver.vscheme().isset(Output_flags::Blitz)) {
-					driver.write_wavy_surface("zeta");
-					driver.write_velocity_potentials("phi");
-				}
-				if (driver.vscheme().isset(Output_flags::CSV)) {
-					driver.write_wavy_surface("zeta.csv");
-					driver.write_velocity_potentials("phi.csv");
-				}
-			}
-		} catch (const PRNG_error& err) {
-			if (err.ngenerators() == 0) {
-				std::cerr << "No parallel Mersenne Twisters configuration is found. "
-					"Please, generate sufficient number of MTs with dcmt programme."
-					<< std::endl;
-			} else {
-				std::cerr << "Insufficient number of parallel Mersenne Twisters found. "
-					"Please, generate at least " << err.nparts() << " MTs for this run."
-					<< std::endl;
-			}
-		}
+		/// floating point type (float, double, long double or multiprecision number
+		/// C++ class)
+		typedef ARMA_REAL_TYPE T;
+		run_arma<T>(input_filename);
 	}
 	#if ARMA_PROFILE
 	arma::print_counters(std::clog);
