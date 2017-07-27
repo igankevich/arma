@@ -14,7 +14,17 @@ template <class T>
 T
 arma::generator::AR_model<T>::white_noise_variance(Array3D<T> phi) const {
 	blitz::RectDomain<3> subdomain(Shape3D(0, 0, 0), phi.shape() - 1);
-	return this->_acf(0, 0, 0) - blitz::sum(phi * this->_acf(subdomain));
+	return this->_acf(0,0,0) - blitz::sum(phi * this->_acf(subdomain));
+}
+
+template <class T>
+void
+arma::generator::AR_model<T>::validate() const {
+	using blitz::all;
+	if (!all(this->_phi.shape() == this->order())) {
+		throw std::runtime_error("bad shape");
+	}
+	validate_process(this->_phi);
 }
 
 template <class T>

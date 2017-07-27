@@ -32,11 +32,6 @@ namespace arma {
 				return this->_theta;
 			}
 
-			inline Shape3D
-			order() const {
-				return this->_theta.shape();
-			}
-
 			/**
 			Compute white noise variance via the following formula.
 			\f[
@@ -55,10 +50,7 @@ namespace arma {
 				return white_noise_variance(_theta);
 			}
 
-			inline void
-			validate() const override {
-				validate_process(_theta);
-			}
+			void validate() const override;
 
 			inline void
 			operator()(Array3D<T>& zeta, Array3D<T>& eps) {

@@ -40,10 +40,7 @@ namespace arma {
 				return white_noise_variance(_phi);
 			}
 
-			inline void
-			validate() const override {
-				validate_process(_phi);
-			}
+			void validate() const override;
 
 			/**
 			Generate wavy surface realisation.
