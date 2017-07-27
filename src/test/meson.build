@@ -104,3 +104,13 @@ test(
 		dependencies: [libblitz, libgsl, gtest]
 	)
 )
+
+test(
+	'arma::Output_flags',
+	executable(
+		'output-flags-test',
+		sources: ['output-flags-test.cc'] + output_flags_files,
+		include_directories: incdirs,
+		dependencies: [gtest]
+	)
+)

@@ -23,7 +23,11 @@ nonlinear_files = files([
 	'nonlinear/nit_transform.cc',
 ])
 
-common_src = [
+output_flags_files = files([
+	'output_flags.cc'
+])
+
+common_src = files([
 	'arma.cc',
 	'params.cc',
 	'bits/acf_wrapper.cc',
@@ -35,7 +39,6 @@ common_src = [
 	'generator/basic_arma_model.cc',
 	'ma_algorithm.cc',
 	'interpolate.cc',
-	'verification_scheme.cc',
 	'stats/qq_graph.cc',
 	'stats/summary.cc',
 	'stats/waves.cc',
@@ -43,7 +46,7 @@ common_src = [
 	'stats/gaussian.cc',
 	'stats/gram_charlier.cc',
 	'stats/skew_normal.cc',
-] + linalg_files + apmath_files + nonlinear_files
+]) + linalg_files + apmath_files + nonlinear_files + output_flags_files
 
 if get_option('profile')
 	common_src += 'profile.cc'

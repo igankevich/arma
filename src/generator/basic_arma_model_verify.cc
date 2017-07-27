@@ -16,7 +16,7 @@ namespace {
 		arma::Array3D<T> acf,
 		arma::Array3D<T> zeta,
 		const arma::generator::Basic_ARMA_model<T>& model,
-		arma::Verification_scheme vscheme
+		arma::Output_flags vscheme
 	) {
 		using namespace arma;
 		using stats::Summary;
@@ -52,12 +52,14 @@ namespace {
 			make_summary(periods, approx_wave_period(var_elev), T(0),
 					   periods_dist, "wave period"),
 		};
-		std::copy(
-			stats.begin(),
-			stats.end(),
-			std::ostream_iterator<Summary<T>>(std::clog, "\n")
-		);
-		if (vscheme == Verification_scheme::Quantile) {
+		if (vscheme.isset(Output_flags::Summary)) {
+			std::copy(
+				stats.begin(),
+				stats.end(),
+				std::ostream_iterator<Summary<T>>(std::clog, "\n")
+			);
+		}
+		if (vscheme.isset(Output_flags::Quantile)) {
 			std::for_each(
 				stats.begin(),
 				stats.end(),
@@ -94,15 +96,12 @@ namespace {
 template <class T>
 void
 arma::generator::Basic_ARMA_model<T>::verify(Array3D<T> zeta) const {
-	switch (this->_vscheme) {
-		case Verification_scheme::No_verification:
-			break;
-		case Verification_scheme::Summary:
-		case Verification_scheme::Quantile:
-			show_statistics(this->_acf, zeta, *this, this->_vscheme);
-			break;
-		case Verification_scheme::Manual:
-			write_everything_to_files(this->_acf, zeta);
-			break;
+	if (this->_oflags.isset(Output_flags::Summary) ||
+		this->_oflags.isset(Output_flags::Quantile))
+	{
+		show_statistics(this->_acf, zeta, *this, this->_oflags);
+	}
+	if (this->_oflags.isset(Output_flags::Waves)) {
+		write_everything_to_files(this->_acf, zeta);
 	}
 }

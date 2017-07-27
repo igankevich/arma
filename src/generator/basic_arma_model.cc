@@ -26,7 +26,7 @@ arma::generator::Basic_ARMA_model<T>::parameters() {
 			this->_linear
 		))},
 		{"acf", sys::wrap_param(acf_wrapper(this->_acf))},
-		{"verification", sys::make_param(this->_vscheme)},
+		{"output", sys::make_param(this->_oflags)},
 		{"order", sys::make_param(this->_order, validate_shape<int,3>)},
 	};
 }
@@ -71,12 +71,14 @@ arma::generator::Basic_ARMA_model<T>::generate() {
 		this->_nittransform.transform_ACF(copy);
 	}
 	arma::write_key_value(std::clog, "ACF variance", ACF_variance(this->_acf));
-	if (this->_vscheme == Verification_scheme::Manual) {
-		bits::write_csv("acf.csv", this->_acf, this->_acf.grid());
-	}
-	{
-		std::ofstream out("acf");
-		out << this->_acf;
+	if (this->_oflags.isset(Output_flags::ACF)) {
+		if (this->_oflags.isset(Output_flags::CSV)) {
+			bits::write_csv("acf.csv", this->_acf, this->_acf.grid());
+		}
+		if (this->_oflags.isset(Output_flags::Blitz)) {
+			std::ofstream out("acf");
+			out << this->_acf;
+		}
 	}
 	this->determine_coefficients();
 	this->validate();

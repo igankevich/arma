@@ -3,7 +3,7 @@
 
 #include "types.hh"
 #include "grid.hh"
-#include "verification_scheme.hh"
+#include "output_flags.hh"
 #include <istream>
 #include <ostream>
 
@@ -22,7 +22,7 @@ namespace arma {
 		protected:
 			/// Wavy surface grid.
 			grid_type _outgrid;
-			Verification_scheme _vscheme = Verification_scheme::Summary;
+			Output_flags _oflags = Output_flags(Output_flags::Flag::Surface);
 
 			virtual void write(std::ostream& out) const {}
 			virtual void read(std::istream& in) {}
@@ -44,9 +44,9 @@ namespace arma {
 				return this->_outgrid;
 			}
 
-			Verification_scheme
+			Output_flags
 			vscheme() const noexcept {
-				return this->_vscheme;
+				return this->_oflags;
 			}
 
 			virtual void validate() const {}

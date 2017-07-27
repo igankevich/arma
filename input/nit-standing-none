@@ -1,6 +1,6 @@
 model = AR {
 	out_grid = (200,40,40)
-	verification = manual
+	output = waves,acf,surface
 	transform = none
 	acf = {
 		func = standing_wave

@@ -156,13 +156,15 @@ main(int argc, char* argv[]) {
 		try {
 			driver.generate_wavy_surface();
 			driver.compute_velocity_potentials();
-			if (driver.vscheme() != Verification_scheme::No_verification) {
-				driver.write_wavy_surface("zeta", Output_format::Blitz);
-				driver.write_velocity_potentials("phi", Output_format::Blitz);
-			}
-			if (driver.vscheme() == Verification_scheme::Manual) {
-				driver.write_wavy_surface("zeta.csv", Output_format::CSV);
-				driver.write_velocity_potentials("phi.csv", Output_format::CSV);
+			if (driver.vscheme().isset(Output_flags::Surface)) {
+				if (driver.vscheme().isset(Output_flags::Blitz)) {
+					driver.write_wavy_surface("zeta");
+					driver.write_velocity_potentials("phi");
+				}
+				if (driver.vscheme().isset(Output_flags::CSV)) {
+					driver.write_wavy_surface("zeta.csv");
+					driver.write_velocity_potentials("phi.csv");
+				}
 			}
 		} catch (const PRNG_error& err) {
 			if (err.ngenerators() == 0) {

@@ -17,11 +17,11 @@ model = AR {
 	out_grid = (200,40,40)
 
 	# Verification scheme. Possible values:
-	# - none (perform no verification of the resulting wavy surface)
+	# - none (perform no output of the resulting wavy surface)
 	# - summary (validate mean, variance and distributions of wave characteristics, default value)
 	# - quantile (do everything from summary and write quantile plots to files)
 	# - manual (write raw data to files)
-	verification = manual
+	output = waves,acf,surface
 
 	# The size of wavy surface partition. Each partition is computed
 	# in parallel, given that all dependent partitions has been computed as well.
@@ -83,7 +83,7 @@ model = AR {
 # Moving average model configuration.
 model = MA {
 	out_grid = (200,40,40)
-	verification = manual
+	output = waves,acf,surface
 	acf = {
 		func = propagating_wave
 		grid = (20,10,10) : (10,5,5)

@@ -15,14 +15,13 @@
 #include "types.hh"
 #include "arma.hh"
 #include "generator/basic_model.hh"
-#include "verification_scheme.hh"
+#include "output_flags.hh"
 #include "params.hh"
 #include "grid.hh"
 #include "stats/statistics.hh"
 #include "stats/distribution.hh"
 #include "stats/summary.hh"
 #include "stats/waves.hh"
-#include "output_format.hh"
 #include "velocity/basic_solver.hh"
 #include "discrete_function.hh"
 #include "util.hh"
@@ -93,7 +92,7 @@ namespace arma {
 			return _vpsolver;
 		}
 
-		Verification_scheme
+		Output_flags
 		vscheme() const noexcept {
 			return this->_generator->vscheme();
 		}
@@ -115,34 +114,26 @@ namespace arma {
 		}
 
 		void
-		write_wavy_surface(std::string filename, Output_format fmt) {
-			switch (fmt) {
-				case Output_format::Blitz:
-					std::ofstream(filename) << _zeta;
-					break;
-				case Output_format::CSV:
-					bits::write_csv(filename, _zeta, _zeta.grid());
-					break;
-				default:
-					throw std::runtime_error("bad format");
+		write_wavy_surface(std::string filename) {
+			if (this->vscheme().isset(Output_flags::Blitz)) {
+				std::ofstream(filename) << _zeta;
+			}
+			if (this->vscheme().isset(Output_flags::CSV)) {
+				bits::write_csv(filename, _zeta, _zeta.grid());
 			}
 		}
 
 		void
-		write_velocity_potentials(std::string filename, Output_format fmt) {
-			switch (fmt) {
-				case Output_format::Blitz:
-					std::ofstream(filename) << _vpotentials;
-					break;
-				case Output_format::CSV:
-					write_4d_csv(
-						filename,
-						_vpotentials,
-						_vpsolver->domain()
-					);
-					break;
-				default:
-					throw std::runtime_error("bad format");
+		write_velocity_potentials(std::string filename) {
+			if (this->vscheme().isset(Output_flags::Blitz)) {
+				std::ofstream(filename) << _vpotentials;
+			}
+			if (this->vscheme().isset(Output_flags::CSV)) {
+				write_4d_csv(
+					filename,
+					_vpotentials,
+					_vpsolver->domain()
+				);
 			}
 		}
 
