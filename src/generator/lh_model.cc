@@ -205,9 +205,15 @@ arma::generator::Longuet_Higgins_model<T>::generate_surface(
 #endif
 
 template <class T>
-void
-arma::generator::Longuet_Higgins_model<T>::determine_coefficients() {
-	_coef.reference(determine_coefficients(_spec_domain, _waveheight));
+arma::Array3D<T>
+arma::generator::Longuet_Higgins_model<T>::generate() {
+	this->_coef.reference(determine_coefficients(_spec_domain, _waveheight));
+	this->generate_white_noise();
+	Discrete_function<T,3> zeta;
+	zeta.resize(this->grid().num_points());
+	zeta.setgrid(this->grid());
+	generate_surface(zeta, zeta.domain());
+	return zeta;
 }
 
 template <class T>
@@ -222,15 +228,6 @@ arma::generator::Longuet_Higgins_model<T>::generate_white_noise() {
 		std::end(_eps),
 		std::bind(dist, generator)
 	);
-}
-
-template <class T>
-void
-arma::generator::Longuet_Higgins_model<T>::generate(
-	Discrete_function<T,3>& zeta,
-	const Domain3D& subdomain
-) {
-	generate_surface(zeta, subdomain);
 }
 
 template <class T>

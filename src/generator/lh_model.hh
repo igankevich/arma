@@ -19,29 +19,21 @@ namespace arma {
 		*/
 		template <class T>
 		class Longuet_Higgins_model: public Basic_model<T> {
+			/// Frequency-directional spectrum domain.
 			Domain<T,2> _spec_domain;
+			/// Frequency-directional spectrum no. of discrete points
+			/// along each dimension.
 			Vec2D<int> _spec_subdomain;
+			/// Wave height used in spectrum approximation.
 			T _waveheight;
+			/// LH model coefficients (wave amplitudes). Calculated from
+			/// the spectrum.
 			Array2D<T> _coef;
+			/// White noise uniformly distributed on \f$[0, 2\pi]\f$.
 			Array2D<T> _eps;
 
 		public:
-			void
-			determine_coefficients();
-
-			void
-			generate_white_noise();
-
-			inline Array3D<T>
-			generate() override {
-				this->determine_coefficients();
-				this->generate_white_noise();
-				Discrete_function<T,3> zeta;
-				zeta.resize(this->grid().num_points());
-				zeta.setgrid(this->grid());
-				generate(zeta, zeta.domain());
-				return zeta;
-			}
+			Array3D<T> generate() override;
 
 		protected:
 			void write(std::ostream& out) const override;
@@ -58,10 +50,10 @@ namespace arma {
 			determine_coefficients(const Domain<T,2>& sdom, T wave_height);
 
 			void
-			generate_surface(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
+			generate_white_noise();
 
 			void
-			generate(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
+			generate_surface(Discrete_function<T,3>& zeta, const Domain3D& subdomain);
 		};
 
 	}
