@@ -15,7 +15,7 @@ arma::generator::MA_model<T>::white_noise_variance(
 ) const {
 	using blitz::sum;
 	using blitz::pow2;
-	return _acf(0, 0, 0) / (T(1) + sum(pow2(theta)));
+	return this->_acf(0,0,0) / (T(1) + sum(pow2(theta)));
 }
 
 template <class T>
@@ -105,7 +105,7 @@ arma::generator::MA_model<T>::fixed_point_iteration(
 	const int order_x = order(1);
 	const int order_y = order(2);
 	/// 1. Precompute white noise variance for the first iteration.
-	T var_wn = _acf(0, 0, 0);
+	T var_wn = this->_acf(0, 0, 0);
 	T old_var_wn = 0;
 	int it = 0;
 	do {
@@ -130,7 +130,7 @@ arma::generator::MA_model<T>::fixed_point_iteration(
 					RectDomain<3> sub2(Shape3D(0, 0, 0),
 									   order - Shape3D(i, j, k) - 1);
 					theta(i, j, k) =
-						-_acf(i, j, k) / var_wn +
+						-this->_acf(i, j, k) / var_wn +
 						blitz::sum(theta(sub1) * theta(sub2));
 				}
 			}
@@ -188,7 +188,7 @@ arma::generator::MA_model<T>::newton_raphson(
 	const int order_x = order(1);
 	const int order_y = order(2);
 	/// 1. Precompute white noise variance for the first iteration.
-	T var_wn = _acf(0, 0, 0);
+	T var_wn = this->_acf(0, 0, 0);
 	tau(0, 0, 0) = std::sqrt(var_wn);
 	T old_var_wn = 0;
 	int it = 0;
@@ -214,7 +214,7 @@ arma::generator::MA_model<T>::newton_raphson(
 									   order - Shape3D(i, j, k) - 1);
 					RectDomain<3> sub2(Shape3D(i, j, k), order - 1);
 					f(i, j, k) =
-						sum(tau(sub1) * tau(sub2)) - _acf(i, j, k);
+						sum(tau(sub1) * tau(sub2)) - this->_acf(i, j, k);
 				}
 			}
 		}
@@ -311,7 +311,7 @@ arma::generator::MA_model<T>::recompute_acf(
 						}
 					}
 				}
-				_acf(i, j, k) =
+				this->_acf(i, j, k) =
 					sum_phi_1 * acf_orig(i, j, k) + sum_phi_2;
 			}
 		}

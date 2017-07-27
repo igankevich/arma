@@ -38,7 +38,6 @@ arma::generator::Basic_ARMA_model<T>::get_partition_shape(
 	int nprngs
 ) {
 	Shape3D ret;
-	std::clog << "this->_partition=" << this->_partition << std::endl;
 	if (blitz::product(this->_partition) > 0) {
 		ret = this->_partition;
 	} else {

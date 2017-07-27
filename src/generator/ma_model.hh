@@ -23,34 +23,18 @@ namespace arma {
 
 			inline explicit
 			MA_model(acf_type acf, Shape3D order):
-			_acf(acf),
+			Basic_ARMA_model<T>(acf, order),
 			_theta(order)
 			{}
 
-			inline acf_type
-			acf() const {
-				return _acf;
-			}
-
-			inline void
-			setacf(acf_type acf) {
-				_acf.resize(acf.shape());
-				_acf = acf;
-			}
-
-			inline T
-			acf_variance() const {
-				return _acf(0, 0, 0);
-			}
-
 			inline Array3D<T>
 			coefficients() const {
-				return _theta;
+				return this->_theta;
 			}
 
 			inline Shape3D
 			order() const {
-				return _theta.shape();
+				return this->_theta.shape();
 			}
 
 			/**
@@ -125,7 +109,6 @@ namespace arma {
 			recompute_acf(Array3D<T> acf_orig, Array3D<T> phi);
 
 		private:
-			acf_type _acf;
 			Array3D<T> _theta;
 			MA_algorithm _algo = MA_algorithm::Fixed_point_iteration;
 			int _maxiter = 1000;
