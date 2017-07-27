@@ -40,13 +40,13 @@ arma::generator::ARMA_model<T>::white_noise_variance(Array3D<T> phi, Array3D<T> 
 
 template <class T>
 void
-arma::generator::ARMA_model<T>::operator()(
+arma::generator::ARMA_model<T>::generate_surface(
 	Array3D<T>& zeta,
 	Array3D<T>& eps,
 	const Domain3D& subdomain
 ) {
-	MA_model<T>::operator()(zeta, eps, subdomain);
-	AR_model<T>::operator()(zeta, zeta, subdomain);
+	MA_model<T>::generate_surface(zeta, eps, subdomain);
+	AR_model<T>::generate_surface(zeta, zeta, subdomain);
 }
 
 template <class T>

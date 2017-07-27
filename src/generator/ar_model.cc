@@ -29,7 +29,7 @@ arma::generator::AR_model<T>::validate() const {
 
 template <class T>
 void
-arma::generator::AR_model<T>::operator()(
+arma::generator::AR_model<T>::generate_surface(
 	Array3D<T>& zeta,
 	Array3D<T>& eps,
 	const Domain3D& subdomain

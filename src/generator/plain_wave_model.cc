@@ -99,7 +99,7 @@ arma::generator::Plain_wave_model<T>::validate() const {
 		validate_positive(w(0), "amplitudes");
 		validate_positive(w(1), "wavenumbers_x");
 		validate_positive(w(2), "wavenumbers_y");
-		for (int i=0; i<5; ++i) {
+		for (int i=0; i<w.length(); ++i) {
 			validate_finite(w(i), "waves");
 		}
 	}

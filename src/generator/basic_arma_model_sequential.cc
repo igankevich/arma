@@ -14,7 +14,7 @@ arma::generator::Basic_ARMA_model<T>::do_generate() {
 		std::ref(prng)
 	);
 	Array3D<T> zeta(eps.shape());
-	this->operator()(zeta, eps, zeta.domain());
+	this->generate_surface(zeta, eps, zeta.domain());
 	return zeta;
 }
 

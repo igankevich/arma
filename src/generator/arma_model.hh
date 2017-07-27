@@ -46,13 +46,8 @@ namespace arma {
 			void
 			validate() const override;
 
-			inline void
-			operator()(Array3D<T>& zeta, Array3D<T>& eps) {
-				operator()(zeta, eps, zeta.domain());
-			}
-
 			void
-			operator()(
+			generate_surface(
 				Array3D<T>& zeta,
 				Array3D<T>& eps,
 				const Domain3D& subdomain

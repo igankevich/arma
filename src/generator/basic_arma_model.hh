@@ -84,7 +84,7 @@ namespace arma {
 			parameters();
 
 			virtual void
-			operator()(
+			generate_surface(
 				Array3D<T>& zeta,
 				Array3D<T>& eps,
 				const Domain3D& subdomain

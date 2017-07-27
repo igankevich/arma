@@ -166,7 +166,7 @@ arma::generator::Basic_ARMA_model<T>::do_generate() {
 				var_wn,
 				std::ref(part.prng)
 			);
-			this->operator()(zeta, eps, part.rect);
+			this->generate_surface(zeta, eps, part.rect);
 			lock.lock();
 			std::clog
 				<< "\rFinished part ["

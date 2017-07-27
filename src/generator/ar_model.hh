@@ -32,7 +32,7 @@ namespace arma {
 
 			inline Array3D<T>
 			coefficients() const {
-				return _phi;
+				return this->_phi;
 			}
 
 			inline T
@@ -46,11 +46,11 @@ namespace arma {
 			Generate wavy surface realisation.
 			*/
 			void
-			operator()(
+			generate_surface(
 				Array3D<T>& zeta,
 				Array3D<T>& eps,
 				const Domain3D& subdomain
-			);
+			) override;
 
 			inline void
 			determine_coefficients() override {
