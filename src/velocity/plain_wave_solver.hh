@@ -2,7 +2,7 @@
 #define VELOCITY_PLAIN_WAVE_SOLVER_HH
 
 #include "basic_solver.hh"
-#include "generator/plain_wave.hh"
+#include "generator/plain_wave_model.hh"
 #include "types.hh"
 
 namespace arma {

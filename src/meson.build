@@ -27,7 +27,7 @@ common_src = [
 	'arma.cc',
 	'params.cc',
 	'bits/acf_wrapper.cc',
-	'generator/plain_wave.cc',
+	'generator/plain_wave_model.cc',
 	'generator/ar_model.cc',
 	'generator/ma_model.cc',
 	'generator/arma_model.cc',

@@ -16,6 +16,7 @@ namespace arma {
 		template<class T>
 		class Basic_model {
 
+		public:
 			typedef Grid<T,3> grid_type;
 
 		protected:
@@ -48,23 +49,9 @@ namespace arma {
 				return this->_vscheme;
 			}
 
-			virtual T white_noise_variance() const = 0;
-			virtual void validate() const = 0;
-			virtual void determine_coefficients() = 0;
+			virtual void validate() const {}
 			virtual Array3D<T> generate() = 0;
 			virtual void verify(Array3D<T> zeta) const {}
-
-			virtual void
-			operator()(
-				Array3D<T>& zeta,
-				Array3D<T>& eps,
-				const Domain3D& subdomain
-			) = 0;
-
-			inline void
-			operator()(Array3D<T>& zeta, Array3D<T>& eps) {
-				operator()(zeta, eps, zeta.domain());
-			}
 
 			inline friend std::ostream&
 			operator<<(std::ostream& out, const Basic_model& rhs) {

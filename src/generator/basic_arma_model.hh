@@ -76,10 +76,19 @@ namespace arma {
 				this->_acf.reference(rhs);
 			}
 
+			virtual T white_noise_variance() const = 0;
+			virtual void determine_coefficients() = 0;
 			void verify(Array3D<T> zeta) const override;
 
 			virtual sys::parameter_map::map_type
 			parameters();
+
+			virtual void
+			operator()(
+				Array3D<T>& zeta,
+				Array3D<T>& eps,
+				const Domain3D& subdomain
+			) = 0;
 
 		public:
 			Array3D<T> generate() override;

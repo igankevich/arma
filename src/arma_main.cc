@@ -9,7 +9,7 @@
 #include "generator/ar_model.hh"
 #include "generator/ma_model.hh"
 #include "generator/arma_model.hh"
-#include "generator/plain_wave.hh"
+#include "generator/plain_wave_model.hh"
 #include "generator/lh_model.hh"
 #include "velocity/high_amplitude_solver.hh"
 #include "velocity/linear_solver.hh"

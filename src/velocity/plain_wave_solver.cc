@@ -12,12 +12,10 @@ arma::velocity::Plain_wave_solver<T>::compute_velocity_field_2d(
 	const int idx_t
 ) {
 	using constants::_2pi;
-	typedef typename wave_type::array_type array_type;
-	const array_type& A = _waves.amplitudes();
-	const array_type& omega = _waves.velocities();
-	const array_type& k = _waves.wavenumbers();
-	const array_type& phases = _waves.phases();
-	const T shift = _waves.get_shift();
+	using std::cos;
+	using std::sinh;
+	using std::sqrt;
+	const T shift = this->_waves.get_shift();
 	Array2D<T> phi(arr_size);
 	const int nx = arr_size(0);
 	const int ny = arr_size(1);
@@ -26,17 +24,27 @@ arma::velocity::Plain_wave_solver<T>::compute_velocity_field_2d(
 		zeta.grid().length(),
 		zeta.shape()
 	);
+	const int nwaves = this->_waves.num_waves();
 	for (int i=0; i<nx; ++i) {
 		for (int j=0; j<ny; ++j) {
 			const T x = dom(i, 1);
 			const T y = dom(j, 2);
-			phi(i,j) = blitz::sum(
-				T(2)*A*omega
-				*blitz::cos(_2pi<T>*k*x - omega*idx_t + shift + phases)
-				*blitz::sinh(_2pi<T>*k*(z + h))
-				/k
-				/blitz::sinh(_2pi<T>*k*h)
-			);
+			T sum = 0;
+			for (int k=0; k<nwaves; ++k) {
+				const T a = this->_waves.amplitude(k);
+				const T kx = this->_waves.wavenum_x(k);
+				const T ky = this->_waves.wavenum_y(k);
+				const T klen = sqrt(kx*kx + ky*ky);
+				const T klen2pi = _2pi<T>*klen;
+				const T w = this->_waves.velocity(k);
+				const T p = this->_waves.phase(k);
+				sum += T(2)*a*w
+					* cos(_2pi<T>*(kx*x + ky*y) - w*idx_t + shift + p)
+					* sinh(klen2pi*(z + h))
+					/ klen
+					/ sinh(klen2pi*h);
+			}
+			phi(i,j) = sum;
 		}
 	}
 	return phi;

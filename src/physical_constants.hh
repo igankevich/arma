@@ -14,7 +14,10 @@ namespace arma {
 		constexpr const T _2pi = T(2)*pi<T>;
 
 		template <class T>
-		constexpr const T sqrt2pi = std::sqrt(T(2)*pi<T>);
+		constexpr const T pi_div_2 = T(0.5)*pi<T>;
+
+		template <class T>
+		constexpr const T sqrt2pi = std::sqrt(_2pi<T>);
 
 		template <class T>
 		constexpr const T sqrt2 = std::sqrt(T(2));

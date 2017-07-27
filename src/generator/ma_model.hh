@@ -62,7 +62,7 @@ namespace arma {
 				Array3D<T>& zeta,
 				Array3D<T>& eps,
 				const Domain3D& subdomain
-			) override;
+			);
 
 			void
 			determine_coefficients() override;

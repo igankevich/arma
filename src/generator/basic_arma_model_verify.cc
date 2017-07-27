@@ -15,7 +15,7 @@ namespace {
 	show_statistics(
 		arma::Array3D<T> acf,
 		arma::Array3D<T> zeta,
-		const arma::generator::Basic_model<T>& model,
+		const arma::generator::Basic_ARMA_model<T>& model,
 		arma::Verification_scheme vscheme
 	) {
 		using namespace arma;

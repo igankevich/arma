@@ -26,16 +26,6 @@ namespace arma {
 			Array2D<T> _eps;
 
 		public:
-			inline void
-			operator()(Discrete_function<T,3>& zeta) {
-				operator()(zeta, zeta.domain());
-			}
-
-			inline void
-			operator()(Discrete_function<T,3>& zeta, const Domain3D& subdomain) {
-				generate(zeta, subdomain);
-			}
-
 			void
 			determine_coefficients();
 
@@ -49,23 +39,8 @@ namespace arma {
 				Discrete_function<T,3> zeta;
 				zeta.resize(this->grid().num_points());
 				zeta.setgrid(this->grid());
-				operator()(zeta, zeta.domain());
+				generate(zeta, zeta.domain());
 				return zeta;
-			}
-
-			T white_noise_variance() const override {
-				return T(0);
-			}
-
-			void validate() const override {}
-
-			virtual void
-			operator()(
-				Array3D<T>& zeta,
-				Array3D<T>& eps,
-				const Domain3D& subdomain
-			) override {
-				throw std::runtime_error("not implemented");
 			}
 
 		protected:

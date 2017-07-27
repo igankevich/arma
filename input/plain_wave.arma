@@ -1,29 +1,20 @@
-out_grid = (200,128,40) : (199,8,8)
-
-model = plain_wave
-plain_wave = {
+model = plain_wave {
+	out_grid = (200,128,40) : (199,8,8)
 	func = cos
-	amplitudes = [4]
-	wavenumbers = [0.125]
-	phases = [0]
-	velocities = [0.5]
-}
-verification = none
-
-velocity_potential_solver = high_amplitude_realtime {
-	wnmax = from (0,0) to (0,0.25) npoints (2,2)
-	depth = 12
-	domain = from (10,-12) to (10,4) npoints (1,128)
+	waves = [(4,0.125,0,0.5,0)]
 }
 
-#velocity_potential_solver = plain {
-#	waves = {
-#		func = cos
-#		amplitudes = [4]
-#		wavenumbers = [0.125]
-#		phases = [0]
-#		velocities = [0.5]
-#	}
+#velocity_potential_solver = high_amplitude_realtime {
+#	wnmax = from (0,0) to (0,0.25) npoints (2,2)
 #	depth = 12
 #	domain = from (10,-12) to (10,4) npoints (1,128)
 #}
+
+velocity_potential_solver = plain {
+	waves = {
+		func = cos
+		waves = [(4,0.125,0,0.5,0)]
+	}
+	depth = 12
+	domain = from (10,-12) to (10,4) npoints (1,128)
+}

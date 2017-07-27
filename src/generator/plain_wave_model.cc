@@ -1,5 +1,4 @@
-#include "plain_wave.hh"
-#include "physical_constants.hh"
+#include "plain_wave_model.hh"
 #include "validators.hh"
 #include "params.hh"
 #include "domain.hh"
@@ -93,78 +92,72 @@ arma::generator::bits::to_string(Function rhs) {
 	}
 }
 
-
 template <class T>
 void
-arma::generator::Plain_wave_model<T>::generate(
-	Discrete_function<T,3>& zeta,
-	const Domain3D& subdomain
-) {
+arma::generator::Plain_wave_model<T>::validate() const {
+	for (const wave_type& w : this->_waves) {
+		validate_positive(w(0), "amplitudes");
+		validate_positive(w(1), "wavenumbers_x");
+		validate_positive(w(2), "wavenumbers_y");
+		for (int i=0; i<5; ++i) {
+			validate_finite(w(i), "waves");
+		}
+	}
+}
+
+template <class T>
+arma::Array3D<T>
+arma::generator::Plain_wave_model<T>::generate() {
+	Array3D<T> zeta(this->grid().num_points());
 	using constants::_2pi;
+	using std::sin;
 	const T shift = get_shift();
-	const Shape3D& lbound = subdomain.lbound();
-	const Shape3D& ubound = subdomain.ubound();
-	const int t0 = lbound(0);
-	const int j0 = lbound(1);
-	const int k0 = lbound(2);
-	const int t1 = ubound(0);
-	const int j1 = ubound(1);
-	const int k1 = ubound(2);
-	const Domain<T,3> dom(
-		zeta.grid().length() * (ubound-lbound) / zeta.grid().num_points(),
-		ubound-lbound+1
-	);
+	const int t1 = zeta.extent(0);
+	const int j1 = zeta.extent(1);
+	const int k1 = zeta.extent(2);
+	const grid_type& grid = this->grid();
+	const int nwaves = this->num_waves();
 	#if ARMA_OPENMP
 	#pragma omp parallel for collapse(3)
 	#endif
-	for (int t = t0; t <= t1; t++) {
-		for (int j = j0; j <= j1; j++) {
-			for (int k = k0; k <= k1; k++) {
-				const T x = dom(j, 1);
-				const T y = dom(k, 2);
-				zeta(t, j, k) = blitz::sum(
-					_amplitudes *
-					blitz::sin(
-						_2pi<T>*_wavenumbers*x - _velocities*t
-						+ _phases + shift
-					)
-				);
+	for (int t = 0; t < t1; t++) {
+		for (int j = 0; j < j1; j++) {
+			for (int k = 0; k < k1; k++) {
+				const T x = grid(j, 1);
+				const T y = grid(k, 2);
+				T sum  = 0;
+				for (int i=0; i<nwaves; ++i) {
+					sum += amplitude(i) * sin(
+						_2pi<T>*wavenum_x(i)*x + _2pi<T>*wavenum_y(i)*y
+						- velocity(i)*t + phase(i) + shift
+					);
+				}
+				zeta(t, j, k) = sum;
 			}
 		}
 	}
+	return zeta;
 }
 
 
 template <class T>
 void
 arma::generator::Plain_wave_model<T>::read(std::istream& in) {
-	std::string func;
-	Array_wrapper<T> wamplitudes(this->_amplitudes);
-	Array_wrapper<T> wwavenumbers(this->_wavenumbers);
-	Array_wrapper<T> wphases(this->_phases);
-	Array_wrapper<T> wvelocitites(this->_velocities);
+	Array_wrapper<wave_type> waves_wrappper(this->_waves);
 	sys::parameter_map params({
 		{"func", sys::make_param(this->_func)},
-		{"amplitudes", sys::make_param(wamplitudes)},
-		{"wavenumbers", sys::make_param(wwavenumbers)},
-		{"phases", sys::make_param(wphases)},
-		{"velocities", sys::make_param(wvelocitites)},
+		{"waves", sys::make_param(waves_wrappper)},
+		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
 	}, true);
 	in >> params;
-	validate_shape(this->_amplitudes.shape(), "plain_wave.amplitudes");
-	validate_shape(this->_wavenumbers.shape(), "plain_wave.wavenumbers");
-	validate_shape(this->_phases.shape(), "plain_wave.phases");
-	validate_shape(this->_velocities.shape(), "plain_wave.velocities");
+	validate_shape(this->_waves.shape(), "plain_wave.waves");
 }
 
 template <class T>
 void
 arma::generator::Plain_wave_model<T>::write(std::ostream& out) const {
 	out << "func=" << this->_func
-		<< ",amplitudes=" << Array_wrapper<T>(this->_amplitudes)
-		<< ",wavenumbers=" << Array_wrapper<T>(this->_wavenumbers)
-		<< ",phases=" << Array_wrapper<T>(this->_phases)
-		<< ",velocities=" << Array_wrapper<T>(this->_velocities);
+		<< ",waves=" << Array_wrapper<wave_type>(this->_waves);
 }
 
 
