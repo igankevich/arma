@@ -20,7 +20,9 @@ namespace arma {
 			typedef nonlinear::NIT_transform<T> transform_type;
 
 		protected:
+			/// Autocovariate function (ACF) of the process.
 			acf_type _acf;
+			/// Process order.
 			Shape3D _order = Shape3D(0,0,0);
 			/// The size of partitions that are computed in parallel.
 			Shape3D _partition = Shape3D(0,0,0);
