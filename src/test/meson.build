@@ -124,3 +124,13 @@ test(
 		dependencies: [gtest,libblitz,libgsl]
 	)
 )
+
+test(
+	'arma::apmath::Convolution',
+	executable(
+		'convolution-test',
+		sources: ['convolution-test.cc'],
+		include_directories: incdirs,
+		dependencies: [gtest,libblitz,libgsl]
+	)
+)
