@@ -24,16 +24,11 @@ namespace arma {
 			acf_type _acf;
 			/// Process order.
 			Shape3D _order = Shape3D(0,0,0);
-			/// The size of partitions that are computed in parallel.
-			Shape3D _partition = Shape3D(0,0,0);
 			/// Whether seed PRNG or not. This flag is needed for
 			/// reproducible tests.
 			bool _noseed = false;
 			transform_type _nittransform;
 			bool _linear = true;
-
-			Shape3D
-			get_partition_shape(Shape3D order, int nprngs);
 
 			inline clock_type::rep
 			newseed() noexcept {
@@ -46,6 +41,8 @@ namespace arma {
 					: clock_type::now().time_since_epoch().count();
 				#endif
 			}
+
+			virtual Array3D<T> do_generate() = 0;
 
 		public:
 			inline
@@ -92,9 +89,6 @@ namespace arma {
 
 		public:
 			Array3D<T> generate() override;
-
-		private:
-			Array3D<T> do_generate();
 
 		};
 

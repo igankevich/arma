@@ -89,14 +89,48 @@ namespace {
 		return parts;
 	}
 
+	arma::Shape3D
+	get_partition_shape(
+		Shape3D partition_shape,
+		Shape3D grid_shape,
+		Shape3D order,
+		int nprngs
+	) {
+		using blitz::product;
+		using std::min;
+		using std::cbrt;
+		Shape3D ret;
+		if (product(partition_shape) > 0) {
+			ret = partition_shape;
+		} else {
+			const Shape3D guess1 = blitz::max(
+				order * 2,
+				Shape3D(10, 10, 10)
+			);
+			#if ARMA_OPENMP
+			const int parallelism = min(omp_get_max_threads(), nprngs);
+			#else
+			const int parallelism = nprngs;
+			#endif
+			const int npar = std::max(1, 7*int(cbrt(parallelism)));
+			const Shape3D guess2 = blitz::div_ceil(
+				grid_shape,
+				Shape3D(npar, npar, npar)
+			);
+			ret = blitz::min(guess1, guess2) + blitz::abs(guess1 - guess2) / 2;
+		}
+		return ret;
+	}
+
 }
 
 template <class T>
 arma::Array3D<T>
-arma::generator::Basic_ARMA_model<T>::do_generate() {
+arma::generator::AR_model<T>::do_generate() {
 	const T var_wn = this->white_noise_variance();
 	write_key_value(std::clog, "White noise variance", var_wn);
 	using blitz::RectDomain;
+	using blitz::product;
 	/// 1. Read parallel Mersenne Twister states.
 	std::vector<prng::mt_config> prng_config;
 	read_parallel_mt_config(
@@ -109,20 +143,24 @@ arma::generator::Basic_ARMA_model<T>::do_generate() {
 	}
 	/// 2. Partition the data.
 	const Shape3D shape = this->_outgrid.size();
-	const Shape3D partshape = get_partition_shape(this->order(), nprngs);
+	const Shape3D partshape = get_partition_shape(
+		this->_partition,
+		this->grid().num_points(),
+		this->order(),
+		nprngs
+	);
 	const Shape3D nparts = blitz::div_ceil(shape, partshape);
-	const int ntotal = blitz::product(nparts);
-	if (prng_config.size() < size_t(blitz::product(nparts))) {
+	const int ntotal = product(nparts);
+	if (prng_config.size() < size_t(product(nparts))) {
 		throw PRNG_error("bad number of MT configs", nprngs, ntotal);
 	}
-	const clock_type::rep seed = this->newseed();
 	write_key_value(std::clog, "Partition size", partshape);
 	std::vector<Partition> parts = partition(
 		nparts,
 		partshape,
 		shape,
 		prng_config,
-		seed
+		this->newseed()
 	);
 	Array3D<bool> completed(nparts);
 	Array3D<T> zeta(shape), eps(shape);

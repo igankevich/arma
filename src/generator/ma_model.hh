@@ -53,18 +53,20 @@ namespace arma {
 			void validate() const override;
 
 			void
+			determine_coefficients() override;
+
+			void
 			generate_surface(
 				Array3D<T>& zeta,
 				Array3D<T>& eps,
 				const Domain3D& subdomain
 			) override;
 
-			void
-			determine_coefficients() override;
-
 		protected:
 			T
 			white_noise_variance(const Array3D<T>& theta) const;
+
+			Array3D<T> do_generate() override;
 
 			void write(std::ostream& out) const override;
 			void read(std::istream& in) override;

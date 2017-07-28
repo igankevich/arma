@@ -7,6 +7,7 @@
 
 #include <cassert>
 #include <algorithm>
+#include <random>
 
 template <class T>
 T
@@ -29,6 +30,20 @@ arma::generator::MA_model<T>::validate() const {
 }
 
 template <class T>
+arma::Array3D<T>
+arma::generator::MA_model<T>::do_generate() {
+	std::mt19937 prng(this->newseed());
+	Array3D<T> eps = generate_white_noise(
+		this->grid().num_points(),
+		this->white_noise_variance(),
+		std::ref(prng)
+	);
+	Array3D<T> zeta(this->grid().num_points());
+	generate_surface(zeta, eps, zeta.domain());
+	return zeta;
+}
+
+template <class T>
 void
 arma::generator::MA_model<T>::generate_surface(
 	Array3D<T>& zeta,
@@ -44,6 +59,9 @@ arma::generator::MA_model<T>::generate_surface(
 	const int t1 = ubound(0);
 	const int x1 = ubound(1);
 	const int y1 = ubound(2);
+	#if ARMA_OPENMP
+	#pragma omp parallel for collapse(3)
+	#endif
 	for (int t = t0; t <= t1; t++) {
 		for (int x = x0; x <= x1; x++) {
 			for (int y = y0; y <= y1; y++) {
@@ -65,9 +83,7 @@ arma::generator::MA_model<T>::generate_surface(
 template <class T>
 void
 arma::generator::MA_model<T>::read(std::istream& in) {
-	Shape3D order(0,0,0);
 	sys::parameter_map params({
-		{"order", sys::make_param(order, validate_shape<int,3>)},
 		{"algorithm", sys::make_param(this->_algo)},
 		{"max_iterations", sys::make_param(this->_maxiter, validate_positive<int>)},
 		{"eps", sys::make_param(this->_eps, validate_positive<T>)},
@@ -75,7 +91,7 @@ arma::generator::MA_model<T>::read(std::istream& in) {
 	}, true);
 	params.insert(this->parameters());
 	in >> params;
-	this->_theta.resize(order);
+	this->_theta.resize(this->order());
 }
 
 template <class T>
@@ -83,6 +99,7 @@ void
 arma::generator::MA_model<T>::write(std::ostream& out) const {
 	out << "grid=" << this->grid()
 		<< ",order=" << this->order()
+		<< ",output=" << this->_oflags
 		<< ",acf.shape=" << this->_acf.shape()
 		<< ",algorithm=" << this->_algo;
 }

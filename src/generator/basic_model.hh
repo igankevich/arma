@@ -22,7 +22,7 @@ namespace arma {
 		protected:
 			/// Wavy surface grid.
 			grid_type _outgrid;
-			Output_flags _oflags = Output_flags(Output_flags::Flag::Surface);
+			Output_flags _oflags;
 
 			virtual void write(std::ostream& out) const {}
 			virtual void read(std::istream& in) {}

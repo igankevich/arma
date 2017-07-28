@@ -3,12 +3,14 @@
 #include "voodoo.hh"
 #include "linalg.hh"
 #include "params.hh"
+#include "util.hh"
 
 #include <algorithm>
 #include <cassert>
 #include <functional>
 #include <iostream>
 #include <stdexcept>
+#include <random>
 
 template <class T>
 T
@@ -189,6 +191,7 @@ void
 arma::generator::AR_model<T>::read(std::istream& in) {
 	sys::parameter_map params({
 		{"least_squares", sys::make_param(this->_doleastsquares)},
+		{"partition", sys::make_param(this->_partition, validate_shape<int,3>)},
 	}, true);
 	params.insert(this->parameters());
 	in >> params;
@@ -200,7 +203,14 @@ void
 arma::generator::AR_model<T>::write(std::ostream& out) const {
 	out << "grid=" << this->grid()
 		<< ",order=" << this->order()
+		<< ",output=" << this->_oflags
 		<< ",acf.shape=" << this->_acf.shape();
 }
+
+#if ARMA_NONE || ARMA_OPENCL
+#include "ar_model_sequential.cc"
+#elif ARMA_OPENMP
+#include "ar_model_parallel.cc"
+#endif
 
 template class arma::generator::AR_model<ARMA_REAL_TYPE>;

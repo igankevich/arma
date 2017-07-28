@@ -20,7 +20,6 @@ arma::generator::Basic_ARMA_model<T>::parameters() {
 	return {
 		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
 		{"no_seed", sys::make_param(this->_noseed)},
-		{"partition", sys::make_param(this->_partition, validate_shape<int,3>)},
 		{"transform", sys::wrap_param(nit_wrapper(
 			this->_nittransform,
 			this->_linear
@@ -29,36 +28,6 @@ arma::generator::Basic_ARMA_model<T>::parameters() {
 		{"output", sys::make_param(this->_oflags)},
 		{"order", sys::make_param(this->_order, validate_shape<int,3>)},
 	};
-}
-
-template <class T>
-arma::Shape3D
-arma::generator::Basic_ARMA_model<T>::get_partition_shape(
-	Shape3D order,
-	int nprngs
-) {
-	Shape3D ret;
-	if (blitz::product(this->_partition) > 0) {
-		ret = this->_partition;
-	} else {
-		const Shape3D shape = this->_outgrid.size();
-		const Shape3D guess1 = blitz::max(
-			order * 2,
-			Shape3D(10, 10, 10)
-		);
-		#if ARMA_OPENMP
-		const int parallelism = std::min(omp_get_max_threads(), nprngs);
-		#else
-		const int parallelism = nprngs;
-		#endif
-		const int npar = std::max(1, 7*int(std::cbrt(parallelism)));
-		const Shape3D guess2 = blitz::div_ceil(
-			shape,
-			Shape3D(npar, npar, npar)
-		);
-		ret = blitz::min(guess1, guess2) + blitz::abs(guess1 - guess2) / 2;
-	}
-	return ret;
 }
 
 #include "basic_arma_model_verify.cc"
@@ -88,11 +57,5 @@ arma::generator::Basic_ARMA_model<T>::generate() {
 	}
 	return zeta;
 }
-
-#if ARMA_NONE || ARMA_OPENCL
-#include "basic_arma_model_sequential.cc"
-#elif ARMA_OPENMP
-#include "basic_arma_model_parallel.cc"
-#endif
 
 template class arma::generator::Basic_ARMA_model<ARMA_REAL_TYPE>;

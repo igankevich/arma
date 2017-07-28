@@ -23,6 +23,18 @@ namespace {
 
 }
 
+void
+arma::Output_flags::prune() {
+	// do nothing if all flags are disabled
+	if (isset(Flag::None)) {
+		return;
+	}
+	// set default output format if none is specified
+	if (isset(Flag::Surface) && !isset(Flag::Blitz) && !isset(Flag::CSV)) {
+		setf(Flag::Blitz);
+	}
+}
+
 std::istream&
 arma::operator>>(std::istream& in, Output_flags& rhs) {
 	std::string name;
@@ -55,6 +67,7 @@ arma::operator>>(std::istream& in, Output_flags& rhs) {
 			name.push_back(ch);
 		}
 	}
+	rhs.prune();
 	return in;
 }
 

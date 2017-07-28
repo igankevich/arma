@@ -42,6 +42,8 @@ namespace arma {
 
 			void validate() const override;
 
+			Array3D<T> do_generate() override;
+
 			/**
 			Generate wavy surface realisation.
 			*/
@@ -66,7 +68,6 @@ namespace arma {
 			void read(std::istream& in) override;
 
 		private:
-
 			void
 			determine_coefficients_old(bool do_least_squares);
 
@@ -77,6 +78,9 @@ namespace arma {
 			void
 			determine_coefficients_iteratively();
 
+			/// The size of partitions that are computed in parallel.
+			Shape3D _partition = Shape3D(0,0,0);
+			/// AR coefficients.
 			Array3D<T> _phi;
 			bool _doleastsquares = false;
 		};

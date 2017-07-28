@@ -4,6 +4,7 @@
 #include <istream>
 #include <ostream>
 #include <bitset>
+#include <type_traits>
 
 namespace arma {
 
@@ -26,12 +27,6 @@ namespace arma {
 		bitset_type _flags;
 
 	public:
-		Output_flags() = default;
-
-		inline explicit
-		Output_flags(Flag f):
-		_flags(static_cast<unsigned long>(f)) {}
-
 		inline void
 		setf(Flag f) {
 			this->_flags.set(size_t(f));
@@ -57,6 +52,11 @@ namespace arma {
 
 		friend std::ostream&
 		operator<<(std::ostream& out, const Output_flags& rhs);
+
+	private:
+		/// Infer default values when no output format is specified.
+		void
+		prune();
 
 	};
 
