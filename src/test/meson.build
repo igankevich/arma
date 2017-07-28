@@ -114,3 +114,13 @@ test(
 		dependencies: [gtest]
 	)
 )
+
+test(
+	'arma::Fourier_transform',
+	executable(
+		'fourier-test',
+		sources: ['fourier-test.cc'],
+		include_directories: incdirs,
+		dependencies: [gtest,libblitz,libgsl]
+	)
+)

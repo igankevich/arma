@@ -208,10 +208,12 @@ namespace arma {
 	template <class T, int N>
 	class Fourier_transform {
 
+	public:
 		typedef typename bits::Fourier_config<T>::transform_type transform_type;
 		typedef blitz::TinyVector<int,N> shape_type;
 		typedef blitz::Array<T,N> array_type;
 
+	private:
 		std::vector<transform_type> _transforms;
 
 	public:
@@ -225,12 +227,12 @@ namespace arma {
 		Fourier_transform&
 		operator=(const Fourier_transform&) = delete;
 
-		explicit
+		inline explicit
 		Fourier_transform(const shape_type& shape) {
 			init(shape);
 		}
 
-		void
+		inline void
 		init(const shape_type& shp) {
 			if (blitz::any(shp != shape())) {
 				_transforms.clear();
@@ -240,7 +242,7 @@ namespace arma {
 			}
 		}
 
-		shape_type
+		inline shape_type
 		shape() const noexcept {
 			shape_type result;
 			const int n = _transforms.size();
@@ -250,30 +252,30 @@ namespace arma {
 			return result;
 		}
 
-		static int
+		inline static int
 		dimensions() noexcept {
 			return N;
 		}
 
-		array_type
+		inline array_type
 		forward(array_type rhs) {
-			const int n = _transforms.size();
+			const int n = this->_transforms.size();
 			for (int i = 0; i < n; ++i) {
-				_transforms[i].forward(rhs.data(), rhs.stride(i));
+				this->_transforms[i].forward(rhs.data(), rhs.stride(i));
 			}
 			return rhs;
 		}
 
-		array_type
+		inline array_type
 		backward(array_type rhs) {
-			const int n = _transforms.size();
+			const int n = this->_transforms.size();
 			for (int i = 0; i < n; ++i) {
-				_transforms[i].backward(rhs.data(), rhs.stride(i));
+				this->_transforms[i].backward(rhs.data(), rhs.stride(i));
 			}
 			return rhs;
 		}
 
-		friend std::ostream&
+		inline friend std::ostream&
 		operator<<(std::ostream& out, const Fourier_transform& rhs) {
 			return out << "shape=" << rhs.shape();
 		}

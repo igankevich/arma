@@ -8,6 +8,7 @@ TEST(OutputFlags, SimpleIO) {
 	Output_flags f;
 	f.setf(Output_flags::ACF);
 	f.setf(Output_flags::Surface);
+	f.setf(Output_flags::Blitz);
 	std::stringstream tmp;
 	tmp << f;
 	std::string orig = tmp.str();
@@ -26,6 +27,7 @@ TEST_P(OutputFlagsInputTest, ReadWhiteSpace) {
 	Output_flags orig;
 	orig.setf(Output_flags::ACF);
 	orig.setf(Output_flags::Surface);
+	orig.setf(Output_flags::Blitz);
 	Output_flags f;
 	std::stringstream(GetParam()) >> f;
 	EXPECT_EQ(orig, f);
@@ -35,9 +37,9 @@ INSTANTIATE_TEST_CASE_P(
 	ReadWhiteSpace,
 	OutputFlagsInputTest,
 	::testing::Values(
-		"acf,surface",
-		"acf , surface",
-		" acf , surface ",
-		"acf,surface\ntrash"
+		"acf,surface,blitz",
+		"acf , surface , blitz",
+		" acf , surface , blitz ",
+		"acf,surface,blitz\ntrash"
 	)
 );
