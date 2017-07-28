@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <functional>
 #include <fstream>
+#include <ctime>
 
 using namespace arma;
 
@@ -92,13 +93,10 @@ reference_convolve(
 
 typedef double T;
 typedef std::complex<T> C;
-typedef arma::apmath::Convolution<C,3> convolution_type;
-typedef typename convolution_type::shape_type shape_type;
-typedef typename convolution_type::array_type array_type;
 
 template <class X>
 void
-write_to_files(const X& output, const X& actual) {
+write_to_files(const X& output, X& actual) {
 	using blitz::max;
 	using blitz::mean;
 	using blitz::abs;
@@ -135,15 +133,22 @@ write_to_files(const X& output, const X& actual) {
 
 
 TEST(ConvolutionTest, Exceptions) {
-	shape_type shp(10,100,10);
-	EXPECT_NO_THROW(convolution_type(shp, 1, 20, 10));
-	EXPECT_THROW(convolution_type(shp, 999, 20, 10), std::out_of_range);
-	EXPECT_THROW(convolution_type(shp, 1, 0, 10), std::length_error);
+	typedef arma::apmath::Convolution<C,1> convolution_type;
+	EXPECT_NO_THROW(convolution_type(20, 10));
+	EXPECT_THROW(convolution_type(0, 10), std::length_error);
+	EXPECT_THROW(convolution_type(-1, 10), std::length_error);
+	EXPECT_NO_THROW(convolution_type(20, 0));
+	EXPECT_THROW(convolution_type(20, -1), std::length_error);
+	EXPECT_THROW(convolution_type(20, 21), std::length_error);
 }
 
 /*
 TEST(ConvolutionTest, ThreeDim) {
+	typedef arma::apmath::Convolution<C,3> convolution_type;
+	typedef typename convolution_type::shape_type shape_type;
+	typedef typename convolution_type::array_type array_type;
 	using blitz::all;
+	using blitz::abs;
 	shape_type orig(16, 10, 10);
 	array_type kernel(orig);
 	std::mt19937 prng;
@@ -155,7 +160,7 @@ TEST(ConvolutionTest, ThreeDim) {
 	reference_convolve(output, signal, kernel);
 	convolution_type conv(orig, 0, 100, 15);
 	array_type actual(conv.convolve(signal, kernel));
-	EXPECT_NEAR(max(real(actual - output)), 0, 1e-4);
+	EXPECT_NEAR(max(abs(actual - output)), 0, 1e-4);
 	write_to_files(output, actual);
 }
 */
@@ -165,42 +170,62 @@ TEST(ConvolutionTest, TwoDim) {
 	typedef typename convolution_type::shape_type shape_type;
 	typedef typename convolution_type::array_type array_type;
 	using blitz::all;
+	using blitz::shape;
+	using blitz::Range;
+	using blitz::abs;
 	shape_type orig(16, 16);
 	array_type kernel(orig);
 	std::mt19937 prng;
-	std::normal_distribution<T> normal(T(0), std::sqrt(T(2)));
+	std::normal_distribution<T> normal(T(0), std::sqrt(T(0.1)));
 	std::generate(kernel.begin(), kernel.end(), std::bind(normal, prng));
-	array_type signal(shape_type(200, orig(1)));
+	array_type signal(shape_type(orig(0), orig(1)));
 	std::generate(signal.begin(), signal.end(), std::bind(normal, prng));
 	array_type output(signal.shape());
 	reference_convolve(output, signal, kernel);
-	convolution_type conv(orig, 0, 100, 15);
+	convolution_type conv(shape(orig(0), orig(1)), shape(16,16));
 	array_type actual(conv.convolve(signal, kernel));
 	write_to_files(output, actual);
-	EXPECT_NEAR(max(real(actual - output)), 0, 1e-4);
+	EXPECT_NEAR(max(abs(actual - output)), 0, 1e-4);
 }
 
 /*
-TEST(ConvolutionTest, OneDim) {
+class Convolution1DTest:
+public ::testing::TestWithParam<blitz::TinyVector<int,4>>
+{};
+
+TEST_P(Convolution1DTest, OneDim) {
 	typedef arma::apmath::Convolution<C,1> convolution_type;
 	typedef typename convolution_type::shape_type shape_type;
 	typedef typename convolution_type::array_type array_type;
 	using blitz::all;
 	using blitz::max;
-	using blitz::real;
-	shape_type orig(16);
+	using blitz::abs;
+	auto params = GetParam();
+	const int kernel_size = params(0);
+	const int signal_size = params(1);
+	const int block_size = params(2);
+	const int padding_size = params(3);
+	shape_type orig(kernel_size);
 	array_type kernel(orig);
 	std::mt19937 prng;
 	std::normal_distribution<T> normal(T(0), std::sqrt(T(2)));
 	std::generate(kernel.begin(), kernel.end(), std::bind(normal, prng));
-	array_type signal(shape_type(1000));
+	array_type signal(blitz::shape(signal_size));
 	std::generate(signal.begin(), signal.end(), std::bind(normal, prng));
 	array_type output(signal.shape());
 	reference_convolve(output, signal, kernel);
-	convolution_type conv(orig, 0, 100, 15);
+	convolution_type conv(block_size, padding_size);
 	array_type actual(conv.convolve(signal, kernel));
-	EXPECT_NEAR(max(real(actual - output)), 0, 1e-4);
+	EXPECT_NEAR(max(abs(actual - output)), 0, 1e-4);
 	write_to_files(output, actual);
 }
-*/
 
+INSTANTIATE_TEST_CASE_P(
+	Instance,
+	Convolution1DTest,
+	::testing::Values(
+		blitz::shape(16, 16, 16, 15), // single block
+		blitz::shape(16, 1000, 100, 15) // multiple blocks
+	)
+);
+*/

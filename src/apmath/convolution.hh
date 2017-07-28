@@ -4,12 +4,49 @@
 #include "fourier.hh"
 #include "blitz.hh"
 #include <stdexcept>
-#include <vector>
 #include <mutex>
 #include <iostream>
-#include "physical_constants.hh"
 
 namespace arma {
+
+	namespace bits {
+
+		template <class T, int N>
+		class Index {
+
+		public:
+			typedef blitz::TinyVector<T,N> shape_type;
+
+		private:
+			shape_type _shape;
+
+		public:
+			inline explicit
+			Index(const shape_type& shape):
+			_shape(shape)
+			{}
+
+			inline shape_type
+			operator()(int linear_index) const noexcept {
+				shape_type idx;
+				for (int i=0; i<N; ++i) {
+					int res = linear_index;
+					for (int j=N-1; j>i; --j) {
+						res /= this->_shape(j);
+					}
+					idx(i) = res % this->_shape(i);
+				}
+				return idx;
+			}
+
+			const int
+			num_elements() const noexcept {
+				return blitz::product(this->_shape);
+			}
+
+		};
+
+	}
 
 	namespace apmath {
 
@@ -28,35 +65,32 @@ namespace arma {
 			typedef blitz::RectDomain<N> domain_type;
 
 		private:
+			shape_type _blocksize;
+			shape_type _padding;
 			transform_type _fft;
-			int _dimension;
-			int _blocksize;
-			int _padding;
 
 		public:
 			inline explicit
 			Convolution(
-				const shape_type& kernel_shape,
-				int dimension,
-				int blocksize,
-				int padding
+				const shape_type& blocksize,
+				const shape_type& padding
 			):
-			_fft(zero_pad_shape(kernel_shape, blocksize, dimension, padding)),
-			_dimension(dimension),
 			_blocksize(blocksize),
-			_padding(padding)
+			_padding(padding),
+			_fft(blocksize + padding)
 			{ check(); }
 
 			inline array_type
 			convolve(array_type signal, array_type kernel) {
 				using blitz::all;
-				using std::min;
-				using constants::_2pi;
-				/// Zero-pad kernel to be of length `block_size + padding`.
-				const shape_type padded_block = zero_pad_shape(kernel.shape());
-				if (!all(padded_block == this->_fft.shape())) {
-					throw std::length_error("bad kernel size");
+				using blitz::product;
+				using blitz::div_ceil;
+				using blitz::min;
+				if (!all(kernel.shape() <= this->_blocksize)) {
+					throw std::length_error("bad kernel shape");
 				}
+				/// Zero-pad kernel to be of length `block_size + padding`.
+				const shape_type padded_block = this->_blocksize + this->_padding;
 				domain_type orig_domain(shape_type(0), kernel.shape()-1);
 				array_type padded_kernel(padded_block);
 				padded_kernel(orig_domain) = kernel;
@@ -64,31 +98,29 @@ namespace arma {
 				/// Take forward FFT of padded kernel.
 				padded_kernel = this->_fft.forward(padded_kernel);
 				/// Decompose input signal into blocks of length `block_size`.
-				const int bs = this->_blocksize;
-				const int pad = this->_padding;
-				const int dim = this->_dimension;
-				const int limit = signal.extent(dim);
-				const int nparts = limit / bs + ((limit%bs == 0) ? 0 : 1);
-				if (bs+pad > limit) {
-					throw std::length_error("too large block+padding size");
+				const shape_type bs = this->_blocksize;
+				const shape_type pad = this->_padding;
+				const shape_type limit = signal.shape();
+				const shape_type nparts = div_ceil(limit, bs);
+				const bits::Index<int,N> part_index(nparts);
+				const int all_parts = part_index.num_elements();
+				if (!all(bs <= limit)) {
+					throw std::length_error("bad block size");
 				}
-				array_type out_signal(signal.shape());
-				std::vector<std::mutex> mutexes(nparts);
+				array_type out_signal(limit);
+				blitz::Array<std::mutex,N> mutexes(nparts);
 				//#if ARMA_OPENMP
-				//#pragma omp parallel for schedule(static,1)
+				//#pragma omp parallel for collapse(2) schedule(static,1) ordered
 				//#endif
-				for (int i=0; i<nparts; ++i) {
+				for (int i=0; i<all_parts; ++i) {
 					/// Zero-pad each part to be of length
 					/// `block_size + padding`.
-					const int offset = i*bs;
-					shape_type from(0);
-					from(dim) = offset;
-					shape_type to(signal.shape()-1);
-					to(dim) = min(limit, offset+bs) - 1;
+					const shape_type idx = part_index(i);
+					const shape_type offset = idx*bs;
+					shape_type from = offset;
+					shape_type to = min(limit, offset+bs) - 1;
 					domain_type part_domain(from, to);
-					domain_type dom_to(from, to);
-					dom_to.lbound()(dim) -= offset;
-					dom_to.ubound()(dim) -= offset;
+					domain_type dom_to(from-offset, to-offset);
 					#ifndef NDEBUG
 					std::clog << "copy from signal "
 						<< part_domain
@@ -105,14 +137,9 @@ namespace arma {
 					/// Take backward FFT of the result.
 					padded_part = this->_fft.backward(padded_part);
 					padded_part /= nelements;
-					//padded_part.transposeSelf(blitz::secondDim, blitz::firstDim);
-					domain_type padded_from(from, to);
 					/// Copy padded part back overlapping it with adjacent parts.
-					const int tmp = padded_from.ubound()(dim);
-					padded_from.ubound()(dim) = min(tmp+pad, limit-1);
-					domain_type padded_to(padded_from);
-					padded_to.lbound()(dim) -= offset;
-					padded_to.ubound()(dim) -= offset;
+					domain_type padded_from(from, min(to+pad, limit-1));
+					domain_type padded_to(from-offset, padded_from.ubound()-offset);
 					#ifndef NDEBUG
 					std::clog << "copy from part "
 						<< padded_to
@@ -120,9 +147,10 @@ namespace arma {
 						<< padded_from
 						<< std::endl;
 					#endif
+					//#if ARMA_OPENMP
+					//#pragma omp ordered
+					//#endif
 					{
-						const int m = (i%2==0) ? i : (i-1);
-						std::unique_lock<std::mutex> lock(mutexes[m]);
 						out_signal(padded_from) += padded_part(padded_to);
 					}
 				}
@@ -131,33 +159,17 @@ namespace arma {
 
 		private:
 
-			static inline shape_type
-			zero_pad_shape(const shape_type& rhs, int bs, int dim, int padding) {
-				shape_type shp(rhs);
-				shp(dim) = bs + padding;
-				return shp;
-			}
-
-			inline shape_type
-			zero_pad_shape(const shape_type& rhs) {
-				return zero_pad_shape(
-					rhs,
-					this->_blocksize,
-					this->_dimension,
-					this->_padding
-				);
-			}
-
 			inline void
 			check() {
-				if (this->_dimension < 0 || this->_dimension >= N) {
-					throw std::out_of_range("dimension out of range");
-				}
-				if (this->_padding < 0) {
+				using blitz::all;
+				if (!all(this->_padding >= 0)) {
 					throw std::length_error("bad padding");
 				}
-				if (this->_blocksize <= 0) {
+				if (!all(this->_blocksize > 0)) {
 					throw std::length_error("bad block size");
+				}
+				if (!all(this->_blocksize >= this->_padding)) {
+					throw std::length_error("bad block size/padding ratio");
 				}
 			}
 

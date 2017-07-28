@@ -41,6 +41,9 @@ libclFFT = dependency(
 
 if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')
+else
+	# debug Blitz++
+	add_global_arguments('-DBZ_DEBUG', language: 'cpp')
 endif
 
 parallel_deps = []
