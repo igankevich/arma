@@ -13,6 +13,44 @@ using blitz::shape;
 
 template <class T>
 void
+generate_surface(
+	Array3D<T>& zeta,
+	Array3D<T>& eps,
+	Array3D<T>& kernel
+) {
+	const Domain3D subdomain = zeta.domain();
+	const Shape3D fsize = kernel.shape();
+	const Shape3D& lbound = subdomain.lbound();
+	const Shape3D& ubound = subdomain.ubound();
+	const int t0 = lbound(0);
+	const int x0 = lbound(1);
+	const int y0 = lbound(2);
+	const int t1 = ubound(0);
+	const int x1 = ubound(1);
+	const int y1 = ubound(2);
+	#if ARMA_OPENMP
+	#pragma omp parallel for collapse(3)
+	#endif
+	for (int t = t0; t <= t1; t++) {
+		for (int x = x0; x <= x1; x++) {
+			for (int y = y0; y <= y1; y++) {
+				const int m1 = std::min(t + 1, fsize[0]);
+				const int m2 = std::min(x + 1, fsize[1]);
+				const int m3 = std::min(y + 1, fsize[2]);
+				T sum = 0;
+				for (int k = 0; k < m1; k++)
+					for (int i = 0; i < m2; i++)
+						for (int j = 0; j < m3; j++)
+							sum += kernel(k, i, j) *
+								   eps(t - k, x - i, y - j);
+				zeta(t, x, y) = eps(t, x, y) - sum;
+			}
+		}
+	}
+}
+
+template <class T>
+void
 reference_convolve(
 	Array3D<T>& zeta,
 	Array3D<T>& eps,
@@ -156,6 +194,47 @@ operator<<(std::ostream& out, const ConvolutionParams<N>& rhs) {
 		<< ",block_shape=" << rhs.block_size
 		<< ",padding=" << rhs.padding_size;
 }
+
+class GenerateSurfaceTest:
+public ::testing::TestWithParam<ConvolutionParams<3>>
+{};
+
+TEST_P(GenerateSurfaceTest, ThreeDim) {
+	typedef arma::apmath::Convolution<C,3> convolution_type;
+	typedef typename convolution_type::array_type array_type;
+	using blitz::max;
+	using blitz::abs;
+	const auto& p = GetParam();
+	array_type kernel(p.kernel_size);
+	std::mt19937 prng;
+	std::normal_distribution<T> normal(T(0), std::sqrt(T(2)));
+	std::generate(kernel.begin(), kernel.end(), std::bind(normal, prng));
+	array_type signal(p.signal_size);
+	std::generate(signal.begin(), signal.end(), std::bind(normal, prng));
+	array_type output(signal.shape());
+	kernel(0,0,0) = 0;
+	generate_surface(output, signal, kernel);
+	convolution_type conv(signal, kernel);
+	kernel(0,0,0) = -1;
+	kernel = -kernel;
+	array_type actual(conv.convolve(signal, kernel));
+	EXPECT_NEAR(max(abs(actual - output)), 0, 1e-4);
+	write_to_files(output, actual);
+}
+
+INSTANTIATE_TEST_CASE_P(
+	Instance,
+	GenerateSurfaceTest,
+	::testing::Values(
+		ConvolutionParams<3>{
+			shape(8,8,8),
+			shape(400,8,8),
+			shape(100,8,8),
+			shape(8,8,8)
+		}
+	)
+);
+
 
 class Convolution3DTest:
 public ::testing::TestWithParam<ConvolutionParams<3>>

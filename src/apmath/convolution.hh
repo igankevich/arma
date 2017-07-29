@@ -5,6 +5,9 @@
 #include "blitz.hh"
 #include <stdexcept>
 #include <iostream>
+#if ARMA_OPENMP
+#include <omp.h>
+#endif
 
 namespace arma {
 
@@ -78,6 +81,16 @@ namespace arma {
 			_blocksize(blocksize),
 			_padding(padding),
 			_fft(blocksize + padding)
+			{ check(); }
+
+			inline explicit
+			Convolution(
+				const array_type& signal,
+				const array_type& kernel
+			):
+			_blocksize(get_block_shape(signal.shape(), kernel.shape())),
+			_padding(kernel.shape()),
+			_fft(_blocksize + _padding)
 			{ check(); }
 
 			inline array_type
@@ -168,6 +181,8 @@ namespace arma {
 
 			inline void
 			check() {
+				std::clog << "this->_blocksize=" << this->_blocksize << std::endl;
+				std::clog << "this->_padding=" << this->_padding << std::endl;
 				using blitz::all;
 				if (!all(this->_padding >= 0)) {
 					throw std::length_error("bad padding");
@@ -178,6 +193,23 @@ namespace arma {
 				if (!all(this->_blocksize >= this->_padding)) {
 					throw std::length_error("bad block size/padding ratio");
 				}
+			}
+
+			inline shape_type
+			get_block_shape(
+				const shape_type& signal_shape,
+				const shape_type& kernel_shape
+			) {
+				using blitz::min;
+				using blitz::abs;
+				#if ARMA_OPENMP
+				const int parallelism = omp_get_max_threads();
+				#else
+				const int parallelism = 2;
+				#endif
+				shape_type guess1 = min(signal_shape, 4*kernel_shape);
+				shape_type guess2 = max(kernel_shape, signal_shape / parallelism);
+				return min(guess1, guess2) + abs(guess1 - guess2) / 2;
 			}
 
 		};

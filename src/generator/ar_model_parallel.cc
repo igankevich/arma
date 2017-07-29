@@ -5,7 +5,9 @@
 #include <fstream>
 #include <iterator>
 #include <mutex>
+#if ARMA_OPENMP
 #include <omp.h>
+#endif
 #include <stdexcept>
 #include <vector>
 #include "parallel_mt.hh"
