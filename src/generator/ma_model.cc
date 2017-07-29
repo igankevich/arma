@@ -4,10 +4,12 @@
 #include "voodoo.hh"
 #include "validators.hh"
 #include "params.hh"
+#include "apmath/convolution.hh"
 
 #include <cassert>
 #include <algorithm>
 #include <random>
+#include <complex>
 
 template <class T>
 T
@@ -50,34 +52,17 @@ arma::generator::MA_model<T>::generate_surface(
 	Array3D<T>& eps,
 	const Domain3D& subdomain
 ) {
-	const Shape3D fsize = _theta.shape();
-	const Shape3D& lbound = subdomain.lbound();
-	const Shape3D& ubound = subdomain.ubound();
-	const int t0 = lbound(0);
-	const int x0 = lbound(1);
-	const int y0 = lbound(2);
-	const int t1 = ubound(0);
-	const int x1 = ubound(1);
-	const int y1 = ubound(2);
-	#if ARMA_OPENMP
-	#pragma omp parallel for collapse(3)
-	#endif
-	for (int t = t0; t <= t1; t++) {
-		for (int x = x0; x <= x1; x++) {
-			for (int y = y0; y <= y1; y++) {
-				const int m1 = std::min(t + 1, fsize[0]);
-				const int m2 = std::min(x + 1, fsize[1]);
-				const int m3 = std::min(y + 1, fsize[2]);
-				T sum = 0;
-				for (int k = 0; k < m1; k++)
-					for (int i = 0; i < m2; i++)
-						for (int j = 0; j < m3; j++)
-							sum += _theta(k, i, j) *
-								   eps(t - k, x - i, y - j);
-				zeta(t, x, y) = eps(t, x, y) - sum;
-			}
-		}
-	}
+	using blitz::real;
+	typedef std::complex<T> C;
+	typedef apmath::Convolution<C,3> convolution_type;
+	Array3D<C> signal(eps.shape());
+	signal = eps;
+	Array3D<C> kernel(this->_theta.shape());
+	kernel = this->_theta;
+	kernel(0,0,0) = -1;
+	kernel = -kernel;
+	convolution_type conv(signal, kernel);
+	zeta = real(conv.convolve(signal, kernel));
 }
 
 template <class T>
