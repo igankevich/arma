@@ -52,7 +52,7 @@ struct MT_generator {
 };
 
 TEST(DCMT, IO) {
-	MT_generator gen("mts.tmp", 7);
+	MT_generator gen("mts.tmp", 3);
 	gen.generate_and_write_to_file();
 	gen.read_from_file_and_test();
 }

@@ -49,6 +49,7 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 	using blitz::all;
 	using blitz::isfinite;
 	using blitz::Range;
+	workspace_type workspace(this->_fft.shape());
 	/**
 	1. Compute window function.
 	\f[
@@ -90,7 +91,7 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 			\right\}
 		\f]
 		*/
-		phi = _fft.forward(phi);
+		phi = _fft.forward(phi, workspace);
 		#if ARMA_DEBUG_FFT
 		_fft_1(_idxz, Range::all(), Range::all()) = phi;
 		if (_idxz+1 == this->_domain.num_points(1)) {
@@ -98,7 +99,7 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 		}
 		#endif
 		phi *= mult;
-		ret = blitz::real(_fft.backward(phi)).copy();
+		ret = blitz::real(_fft.backward(phi, workspace)).copy();
 	);
 	#if ARMA_DEBUG_FFT
 	++_idxz;
