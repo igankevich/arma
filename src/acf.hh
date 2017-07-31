@@ -19,24 +19,29 @@ namespace arma {
 	Array3D<T>
 	standing_wave_ACF(const Vec3D<T>& delta, const Shape3D& acf_size) {
 
+		using blitz::exp;
+		using blitz::cos;
+
+		blitz::firstIndex t;
+		blitz::secondIndex x;
+		blitz::thirdIndex y;
+
 		// guessed
 		T alpha = 0.06;
 		T beta = 0.8;
 		T gamm = 1.0;
+		T velocity = 2*beta;
 		// TODO gamma=1 is needed for nonlinear transform
 
 		// from mathematica
 //		T alpha = 2.31906, beta = -5.49873, gamm = 0.0680413;
 
 		Array3D<T> acf(acf_size);
-		blitz::firstIndex t;
-		blitz::secondIndex x;
-		blitz::thirdIndex y;
-		acf = gamm * blitz::exp(-alpha * (2 * t * delta[0] + x * delta[1] +
-		                                  y * delta[2])) *
-		      blitz::cos(2 * beta * t * delta[0]) *
-		      blitz::cos(beta * x * delta[1]) *
-		      blitz::cos(0 * beta * y * delta[2]);
+		acf = gamm *
+			exp(-alpha*(2*t*delta[0] + x*delta[1] + y*delta[2])) *
+			cos(velocity*t*delta[0]) *
+			cos(beta*x*delta[1]) *
+			cos(0*beta*y*delta[2]);
 		return acf;
 	}
 
@@ -44,22 +49,21 @@ namespace arma {
 	Array3D<T>
 	propagating_wave_ACF(const Vec3D<T>& delta, const Shape3D& acf_size) {
 
-		// guessed
-//		T alpha = 1.5;
-//		T gamm = 1.0;
+		using blitz::exp;
+		using blitz::cos;
 
-		// from mathematica
-		T alpha = 0.42, beta = -1.8, gamm = 1.0;
-
-		Array3D<T> acf(acf_size);
 		blitz::firstIndex i;
 		blitz::secondIndex j;
 		blitz::thirdIndex k;
 
-		acf = gamm * blitz::exp(-alpha *
-		                        (i * delta[0] + j * delta[1] + k * delta[2])) *
-		      blitz::cos(-beta * i * delta[0] + beta * j * delta[1] +
-		                 0*beta * k * delta[2]);
+		// from mathematica
+		T alpha = 0.42, beta = -1.8, gamm = 1.0;
+		T velocity = 0.9;
+
+		Array3D<T> acf(acf_size);
+		acf = gamm*exp(-alpha*(i*delta[0] + j*delta[1] + k*delta[2])) *
+			cos(velocity*i*delta[0] + beta*j*delta[1] + 0*beta*k*delta[2]);
+
 		return acf;
 	}
 
