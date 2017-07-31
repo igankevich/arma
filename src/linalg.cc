@@ -99,11 +99,11 @@ linalg::is_positive_definite(Matrix<T>& rhs) {
 	L = 0;
 	const int n = rhs.rows();
 	for (int i = 0; i < n; ++i) {
-		T s = sum(pow2(L(i, Range(0, i - 1))));
+		T s = sum(pow2(L(i, Range(0, i))));
 		if (rhs(i, i) < s) { return false; }
 		L(i, i) = sqrt(rhs(i, i) - s);
 		for (int j = 0; j < i; ++j) {
-			s = sum(L(i, Range(0, j - 1)) * L(j, Range(0, j - 1)));
+			s = sum(L(i, Range(0, j)) * L(j, Range(0, j)));
 			L(i, j) = (rhs(i, j) - s) / L(j, j);
 		}
 	}
