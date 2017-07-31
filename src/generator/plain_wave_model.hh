@@ -109,6 +109,10 @@ namespace arma {
 			void write(std::ostream& out) const override;
 			void read(std::istream& in) override;
 
+		private:
+			Array3D<T>
+			do_generate();
+
 		};
 
 	}

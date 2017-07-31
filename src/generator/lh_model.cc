@@ -5,6 +5,7 @@
 #include "opencl/opencl.hh"
 #include "opencl/vec.hh"
 #endif
+#include "profile_counters.hh"
 
 #include <cmath>
 #include <random>
@@ -207,12 +208,16 @@ arma::generator::Longuet_Higgins_model<T>::generate_surface(
 template <class T>
 arma::Array3D<T>
 arma::generator::Longuet_Higgins_model<T>::generate() {
-	this->_coef.reference(determine_coefficients(_spec_domain, _waveheight));
-	this->generate_white_noise();
+	ARMA_PROFILE_BLOCK("deteremine_coefficients",
+		this->_coef.reference(determine_coefficients(_spec_domain, _waveheight));
+	);
 	Discrete_function<T,3> zeta;
-	zeta.resize(this->grid().num_points());
-	zeta.setgrid(this->grid());
-	generate_surface(zeta, zeta.domain());
+	ARMA_PROFILE_BLOCK("generate_surface",
+		zeta.resize(this->grid().num_points());
+		zeta.setgrid(this->grid());
+		this->generate_white_noise();
+		generate_surface(zeta, zeta.domain());
+	);
 	return zeta;
 }
 

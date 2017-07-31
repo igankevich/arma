@@ -76,7 +76,7 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 	}
 	#endif
 	Array2D<T> ret(arr_size);
-	ARMA_PROFILE_BLOCK_CNT(CNT_FFT, "fft",
+	ARMA_PROFILE_CNT(CNT_FFT,
 		/// 2. Compute \f$\zeta_t\f$.
 		Array2D<Cmplx> phi(arr_size);
 		phi = _zeta_t(idx_t, Range::all(), Range::all());
@@ -121,7 +121,7 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 	Array2D<T> result(wngrid.num_points());
 	const int nx = wngrid.num_points(0);
 	const int ny = wngrid.num_points(1);
-	ARMA_PROFILE_BLOCK_CNT(CNT_WINDOWFUNC, "window_function::compute",
+	ARMA_PROFILE_CNT(CNT_WINDOWFUNC,
 		for (int i=0; i<nx; ++i) {
 			for (int j=0; j<ny; ++j) {
 				const T l = _2pi<T> * length(wngrid({i,j}));
@@ -131,7 +131,7 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 			}
 		}
 	);
-	ARMA_PROFILE_BLOCK_CNT(CNT_WINDOWFUNC, "window_function::interpolate",
+	ARMA_PROFILE_CNT(CNT_WINDOWFUNC,
 		// replace infinite value with values from neighbouring points
 		result(0,0) = T(0);
 		int n = 0;

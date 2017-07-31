@@ -2,6 +2,7 @@
 #include "validators.hh"
 #include "params.hh"
 #include "domain.hh"
+#include "profile.hh"
 
 #include <algorithm>
 #include <stdexcept>
@@ -108,6 +109,16 @@ arma::generator::Plain_wave_model<T>::validate() const {
 template <class T>
 arma::Array3D<T>
 arma::generator::Plain_wave_model<T>::generate() {
+	Array3D<T> zeta;
+	ARMA_PROFILE_BLOCK("generate_surface",
+		zeta.reference(this->do_generate());
+	);
+	return zeta;
+}
+
+template <class T>
+arma::Array3D<T>
+arma::generator::Plain_wave_model<T>::do_generate() {
 	Array3D<T> zeta(this->grid().num_points());
 	using constants::_2pi;
 	using std::sin;

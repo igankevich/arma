@@ -24,10 +24,6 @@ arma::generator::MA_model<T>::white_noise_variance(
 template <class T>
 void
 arma::generator::MA_model<T>::validate() const {
-	using blitz::all;
-	if (!all(this->_theta.shape() == this->order())) {
-		throw std::runtime_error("bad shape");
-	}
 	validate_process(this->_theta);
 }
 

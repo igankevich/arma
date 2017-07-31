@@ -186,14 +186,14 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 	);
 	for (int i=0; i<nt; ++i) {
 		const T idx_t = this->_domain(i, 0);
-		ARMA_PROFILE_BLOCK_CNT(CNT_SECONDFUNC, "second_function",
+		ARMA_PROFILE_CNT(CNT_SECONDFUNC,
 			compute_second_function(zeta, idx_t);
 		);
-		ARMA_PROFILE_BLOCK_CNT(CNT_WINDOWFUNC, "window_function::compute",
+		ARMA_PROFILE_CNT(CNT_WINDOWFUNC,
 			compute_window_function(wngrid);
 		);
 		opencl::command_queue().finish();
-		ARMA_PROFILE_BLOCK_CNT(CNT_WINDOWFUNC, "window_function::interpolate",
+		ARMA_PROFILE_CNT(CNT_WINDOWFUNC,
 			interpolate_window_function(wngrid);
 		);
 		#if ARMA_DEBUG_FFT
@@ -208,7 +208,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 			std::ofstream("wn_func_opencl") << tmp;
 		}
 		#endif
-		ARMA_PROFILE_BLOCK_CNT(CNT_FFT, "fft_1",
+		ARMA_PROFILE_CNT(CNT_FFT, "fft_1",
 			fft(grid, CLFFT_FORWARD);
 		);
 		#if ARMA_DEBUG_FFT
@@ -223,10 +223,10 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 			std::ofstream("fft_1_opencl") << tmp;
 		}
 		#endif
-		ARMA_PROFILE_BLOCK_CNT(CNT_FFT, "multiply_functions",
+		ARMA_PROFILE_CNT(CNT_FFT, "multiply_functions",
 			multiply_functions(grid);
 		);
-		ARMA_PROFILE_BLOCK_CNT(CNT_FFT, "fft_2",
+		ARMA_PROFILE_CNT(CNT_FFT, "fft_2",
 			fft(grid, CLFFT_BACKWARD);
 		);
 		cl::copy(
@@ -239,7 +239,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::operator()(
 		ARMA_PROFILE_BLOCK("create_vector_field",
 			create_vector_field(grid);
 		);
-		ARMA_PROFILE_BLOCK_CNT(CNT_DEVTOHOST_COPY, "copy_device_to_host",
+		ARMA_PROFILE_CNT(CNT_DEVTOHOST_COPY, "copy_device_to_host",
 			Array1D<T> tmp(3*nz*nx*ny);
 			cl::copy(
 				opencl::command_queue(),

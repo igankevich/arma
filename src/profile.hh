@@ -28,7 +28,7 @@ namespace arma {
 
 	template <class Func>
 	inline void
-	__profile(counter_type cnt_name, const char* name, Func func) {
+	__profile_cnt(counter_type cnt_name, Func func) {
 		using namespace std::chrono;
 		auto t0 = high_resolution_clock::now();
 		func();
@@ -49,16 +49,13 @@ namespace arma {
 	::arma::__profile(#func, [&](){ func; })
 #define ARMA_PROFILE_BLOCK(name, block) \
 	::arma::__profile(name, [&](){ block; })
-#define ARMA_PROFILE_FUNC_CNT(cnt, func) \
-	::arma::__profile(cnt, #func, [&](){ func; })
-#define ARMA_PROFILE_BLOCK_CNT(cnt, name, block) \
-	::arma::__profile(cnt, name, [&](){ block; })
+#define ARMA_PROFILE_CNT(cnt, block) \
+	::arma::__profile_cnt(cnt, [&](){ block; })
 
 #else
 #define ARMA_PROFILE_FUNC(func) func;
 #define ARMA_PROFILE_BLOCK(name, block) block
-#define ARMA_PROFILE_FUNC_CNT(cnt, func) func;
-#define ARMA_PROFILE_BLOCK_CNT(cnt, name, block) block
+#define ARMA_PROFILE_CNT(cnt, block) block
 #endif
 
 #endif // PROFILE_HH

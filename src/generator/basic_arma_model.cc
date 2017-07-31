@@ -6,6 +6,7 @@
 #include "nonlinear/nit_transform.hh"
 #include "validators.hh"
 #include "util.hh"
+#include "profile_counters.hh"
 
 #include <random>
 #if ARMA_OPENMP
@@ -35,10 +36,12 @@ arma::generator::Basic_ARMA_model<T>::parameters() {
 template <class T>
 arma::Array3D<T>
 arma::generator::Basic_ARMA_model<T>::generate() {
-	if (!this->_linear) {
-		auto copy = this->_acf.copy();
-		this->_nittransform.transform_ACF(copy);
-	}
+	ARMA_PROFILE_CNT(CNT_NIT,
+		if (!this->_linear) {
+			auto copy = this->_acf.copy();
+			this->_nittransform.transform_ACF(copy);
+		}
+	);
 	arma::write_key_value(std::clog, "ACF variance", ACF_variance(this->_acf));
 	if (this->_oflags.isset(Output_flags::ACF)) {
 		if (this->_oflags.isset(Output_flags::CSV)) {
@@ -49,12 +52,21 @@ arma::generator::Basic_ARMA_model<T>::generate() {
 			out << this->_acf;
 		}
 	}
-	this->determine_coefficients();
-	this->validate();
-	Array3D<T> zeta = this->do_generate();
-	if (!this->_linear) {
-		this->_nittransform.transform_realisation(this->_acf, zeta);
-	}
+	ARMA_PROFILE_BLOCK("deteremine_coefficients",
+		this->determine_coefficients();
+	);
+	ARMA_PROFILE_BLOCK("validate",
+		this->validate();
+	);
+	Array3D<T> zeta;
+	ARMA_PROFILE_BLOCK("generate_surface",
+		zeta.reference(this->do_generate());
+	);
+	ARMA_PROFILE_CNT(CNT_NIT,
+		if (!this->_linear) {
+			this->_nittransform.transform_realisation(this->_acf, zeta);
+		}
+	);
 	return zeta;
 }
 
