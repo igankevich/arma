@@ -167,6 +167,9 @@ write_to_files(const X& output, X& actual) {
 }
 
 TEST(ConvolutionTest, Exceptions) {
+	#if ARMA_OPENCL
+	::arma::opencl::init();
+	#endif
 	typedef arma::apmath::Convolution<C,1> convolution_type;
 	EXPECT_NO_THROW(convolution_type(20, 10));
 	EXPECT_THROW(convolution_type(0, 10), std::length_error);
@@ -199,7 +202,14 @@ class GenerateSurfaceTest:
 public ::testing::TestWithParam<ConvolutionParams<3>>
 {};
 
+#if ARMA_OPENCL
+TEST_P(GenerateSurfaceTest, DISABLED_ThreeDim) {
+#else
 TEST_P(GenerateSurfaceTest, ThreeDim) {
+#endif
+	#if ARMA_OPENCL
+	::arma::opencl::init();
+	#endif
 	typedef arma::apmath::Convolution<C,3> convolution_type;
 	typedef typename convolution_type::array_type array_type;
 	using blitz::max;
@@ -240,7 +250,14 @@ class Convolution3DTest:
 public ::testing::TestWithParam<ConvolutionParams<3>>
 {};
 
+#if ARMA_OPENCL
+TEST_P(Convolution3DTest, DISABLED_ThreeDim) {
+#else
 TEST_P(Convolution3DTest, ThreeDim) {
+#endif
+	#if ARMA_OPENCL
+	::arma::opencl::init();
+	#endif
 	typedef arma::apmath::Convolution<C,3> convolution_type;
 	typedef typename convolution_type::array_type array_type;
 	using blitz::max;
@@ -292,6 +309,9 @@ public ::testing::TestWithParam<ConvolutionParams<2>>
 {};
 
 TEST_P(Convolution2DTest, TwoDim) {
+	#if ARMA_OPENCL
+	::arma::opencl::init();
+	#endif
 	typedef arma::apmath::Convolution<C,2> convolution_type;
 	typedef typename convolution_type::array_type array_type;
 	using blitz::abs;
@@ -329,6 +349,9 @@ public ::testing::TestWithParam<blitz::TinyVector<int,4>>
 {};
 
 TEST_P(Convolution1DTest, OneDim) {
+	#if ARMA_OPENCL
+	::arma::opencl::init();
+	#endif
 	typedef arma::apmath::Convolution<C,1> convolution_type;
 	typedef typename convolution_type::shape_type shape_type;
 	typedef typename convolution_type::array_type array_type;

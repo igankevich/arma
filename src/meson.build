@@ -53,12 +53,15 @@ if get_option('profile')
 	common_src += 'profile.cc'
 endif
 
+opencl_src = []
 if get_option('framework') == 'opencl'
-	common_src += [
+	opencl_src = files([
 		'opencl/opencl.cc',
 		'opencl/gl_object_guard.cc',
 		'opencl/device_type.cc',
-	]
+		'params.cc'
+	])
+	common_src += opencl_src
 endif
 
 arma_src = common_src + [
@@ -86,8 +89,13 @@ if get_option('with_small_amplitude_solver')
 	arma_deps += [libCGAL, libgmp]
 endif
 
+fourier_src = []
+fourier_deps = []
 if get_option('framework') == 'opencl'
-	arma_deps += [libOpenCL, libpthread]
+	fourier_src = files(['apmath/fourier_opencl.cc'])
+	fourier_deps = [libOpenCL, libpthread, libclFFT]
+	arma_deps += fourier_deps
+	arma_src += fourier_src
 endif
 
 executable(

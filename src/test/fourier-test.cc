@@ -3,8 +3,11 @@
 #include <gtest/gtest.h>
 
 TEST(FourierTest, Shape) {
+	#if ARMA_OPENCL
+	::arma::opencl::init();
+	#endif
 	typedef std::complex<double> T;
-	typedef arma::Fourier_transform<T,3> fft_type;
+	typedef arma::apmath::Fourier_transform<T,3> fft_type;
 	typedef typename fft_type::shape_type shape_type;
 	using blitz::all;
 	shape_type orig(16, 32, 64);

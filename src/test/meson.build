@@ -56,7 +56,7 @@ test(
 )
 
 test(
-	'arma::apmath::polynomial',
+	'arma::apmath::Polynomial',
 	executable(
 		'polynomial-test',
 		sources: ['polynomial-test.cc'] + apmath_files,
@@ -116,12 +116,12 @@ test(
 )
 
 test(
-	'arma::Fourier_transform',
+	'arma::apmath::Fourier_transform',
 	executable(
 		'fourier-test',
-		sources: ['fourier-test.cc'],
+		sources: ['fourier-test.cc'] + fourier_src + opencl_src,
 		include_directories: incdirs,
-		dependencies: [gtest,libblitz,libgsl]
+		dependencies: [gtest,libblitz,libgsl] + fourier_deps
 	)
 )
 
@@ -129,8 +129,8 @@ test(
 	'arma::apmath::Convolution',
 	executable(
 		'convolution-test',
-		sources: ['convolution-test.cc'],
+		sources: ['convolution-test.cc'] + fourier_src + opencl_src,
 		include_directories: incdirs,
-		dependencies: [gtest,libblitz,libgsl]
+		dependencies: [gtest,libblitz,libgsl] + fourier_deps
 	)
 )

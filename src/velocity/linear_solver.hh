@@ -17,8 +17,8 @@ namespace arma {
 
 		protected:
 			typedef std::complex<T> Cmplx;
-			typedef Fourier_transform<Cmplx,2> transform_type;
-			typedef Fourier_workspace<Cmplx,2> workspace_type;
+			typedef apmath::Fourier_transform<Cmplx,2> transform_type;
+			typedef apmath::Fourier_workspace<Cmplx,2> workspace_type;
 			transform_type _fft;
 			Array3D<Cmplx> _zeta_t;
 			#if ARMA_DEBUG_FFT
