@@ -12,6 +12,41 @@
 #include <stdexcept>
 #include <random>
 
+#if ARMA_OPENMP || ARMA_OPENCL
+namespace {
+
+	arma::Shape3D
+	get_partition_shape(
+		arma::Shape3D partition_shape,
+		arma::Shape3D grid_shape,
+		arma::Shape3D order,
+		int parallelism
+	) {
+		using blitz::product;
+		using std::min;
+		using std::cbrt;
+		using arma::Shape3D;
+		Shape3D ret;
+		if (product(partition_shape) > 0) {
+			ret = partition_shape;
+		} else {
+			const Shape3D guess1 = blitz::max(
+				order * 2,
+				Shape3D(10, 10, 10)
+			);
+			const int npar = std::max(1, 7*int(cbrt(parallelism)));
+			const Shape3D guess2 = blitz::div_ceil(
+				grid_shape,
+				Shape3D(npar, npar, npar)
+			);
+			ret = blitz::min(guess1, guess2) + blitz::abs(guess1 - guess2) / 2;
+		}
+		return ret;
+	}
+
+}
+#endif
+
 template <class T>
 T
 arma::generator::AR_model<T>::white_noise_variance(Array3D<T> phi) const {
@@ -29,12 +64,8 @@ template <class T>
 void
 arma::generator::AR_model<T>::generate_surface(
 	Array3D<T>& zeta,
-	Array3D<T>& eps,
 	const Domain3D& subdomain
 ) {
-	if (std::addressof(zeta) != std::addressof(eps)) {
-		zeta(subdomain) = eps(subdomain);
-	}
 	const Shape3D fsize = _phi.shape();
 	const Shape3D& lbound = subdomain.lbound();
 	const Shape3D& ubound = subdomain.ubound();
@@ -54,7 +85,7 @@ arma::generator::AR_model<T>::generate_surface(
 				for (int k = 0; k < m1; k++)
 					for (int i = 0; i < m2; i++)
 						for (int j = 0; j < m3; j++)
-							sum += _phi(k, i, j) *
+							sum += this->_phi(k, i, j) *
 								   zeta(t - k, x - i, y - j);
 				zeta(t, x, y) += sum;
 			}
@@ -203,10 +234,12 @@ arma::generator::AR_model<T>::write(std::ostream& out) const {
 		<< ",acf.shape=" << this->_acf.shape();
 }
 
-#if ARMA_NONE || ARMA_OPENCL
+#if ARMA_NONE
 #include "ar_model_sequential.cc"
 #elif ARMA_OPENMP
 #include "ar_model_parallel.cc"
+#elif ARMA_OPENCL
+#include "ar_model_opencl.cc"
 #endif
 
 template class arma::generator::AR_model<ARMA_REAL_TYPE>;

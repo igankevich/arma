@@ -91,39 +91,6 @@ namespace {
 		return parts;
 	}
 
-	arma::Shape3D
-	get_partition_shape(
-		Shape3D partition_shape,
-		Shape3D grid_shape,
-		Shape3D order,
-		int nprngs
-	) {
-		using blitz::product;
-		using std::min;
-		using std::cbrt;
-		Shape3D ret;
-		if (product(partition_shape) > 0) {
-			ret = partition_shape;
-		} else {
-			const Shape3D guess1 = blitz::max(
-				order * 2,
-				Shape3D(10, 10, 10)
-			);
-			#if ARMA_OPENMP
-			const int parallelism = min(omp_get_max_threads(), nprngs);
-			#else
-			const int parallelism = nprngs;
-			#endif
-			const int npar = std::max(1, 7*int(cbrt(parallelism)));
-			const Shape3D guess2 = blitz::div_ceil(
-				grid_shape,
-				Shape3D(npar, npar, npar)
-			);
-			ret = blitz::min(guess1, guess2) + blitz::abs(guess1 - guess2) / 2;
-		}
-		return ret;
-	}
-
 }
 
 template <class T>
@@ -133,6 +100,7 @@ arma::generator::AR_model<T>::do_generate() {
 	write_key_value(std::clog, "White noise variance", var_wn);
 	using blitz::RectDomain;
 	using blitz::product;
+	using std::min;
 	/// 1. Read parallel Mersenne Twister states.
 	std::vector<prng::mt_config> prng_config;
 	read_parallel_mt_config(
@@ -149,7 +117,7 @@ arma::generator::AR_model<T>::do_generate() {
 		this->_partition,
 		this->grid().num_points(),
 		this->order(),
-		nprngs
+		min(omp_get_max_threads(), nprngs);
 	);
 	const Shape3D nparts = blitz::div_ceil(shape, partshape);
 	const int ntotal = product(nparts);
@@ -165,7 +133,7 @@ arma::generator::AR_model<T>::do_generate() {
 		this->newseed()
 	);
 	Array3D<bool> completed(nparts);
-	Array3D<T> zeta(shape), eps(shape);
+	Array3D<T> zeta(shape);
 	std::condition_variable cv;
 	std::mutex mtx;
 	std::atomic<int> nfinished(0);
@@ -201,12 +169,12 @@ arma::generator::AR_model<T>::do_generate() {
 			Partition part = *result;
 			parts.erase(result);
 			lock.unlock();
-			eps(part.rect) = generate_white_noise(
+			zeta(part.rect) = generate_white_noise(
 				part.shape(),
 				var_wn,
 				std::ref(part.prng)
 			);
-			this->generate_surface(zeta, eps, part.rect);
+			this->generate_surface(zeta, part.rect);
 			lock.lock();
 			std::clog
 				<< "\rFinished part ["

@@ -217,13 +217,13 @@ namespace {
 			createKernels(prg);
 		}
 
-		cl_kernel
+		cl::Kernel
 		get_kernel(const std::string& name) const {
 		    auto it = _kernels.find(name);
 		    if (it == _kernels.end()) {
-				return nullptr;
+				return cl::Kernel();
 		    }
-		    return it->second();
+		    return it->second;
 		}
 
 	private:
@@ -395,16 +395,16 @@ arma::opencl::compile(const char* src) {
 
 cl::Kernel
 arma::opencl::get_kernel(const char* name, const char* src) {
-	cl_kernel kernel = __opencl_instance.get_kernel(name);
-	if (!kernel) {
+	cl::Kernel kernel = __opencl_instance.get_kernel(name);
+	if (!kernel()) {
 		compile(src);
 	}
 	kernel = __opencl_instance.get_kernel(name);
-	if (!kernel) {
+	if (!kernel()) {
 		std::cerr << "OpenCL kernel not found: " << name << std::endl;
 		throw std::runtime_error("bad kernel");
 	}
-	return cl::Kernel(kernel);
+	return kernel;
 }
 
 cl::Kernel

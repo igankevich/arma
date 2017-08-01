@@ -44,16 +44,6 @@ namespace arma {
 
 			Array3D<T> do_generate() override;
 
-			/**
-			Generate wavy surface realisation.
-			*/
-			void
-			generate_surface(
-				Array3D<T>& zeta,
-				Array3D<T>& eps,
-				const Domain3D& subdomain
-			) override;
-
 			inline void
 			determine_coefficients() override {
 				// determine_coefficients_iteratively();
@@ -61,6 +51,9 @@ namespace arma {
 			}
 
 		protected:
+			void
+			generate_surface(Array3D<T>& zeta, const Domain3D& subdomain);
+
 			T
 			white_noise_variance(Array3D<T> phi) const;
 

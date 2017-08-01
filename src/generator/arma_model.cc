@@ -46,7 +46,7 @@ arma::generator::ARMA_model<T>::generate_surface(
 	const Domain3D& subdomain
 ) {
 	MA_model<T>::generate_surface(zeta, eps, subdomain);
-	AR_model<T>::generate_surface(zeta, zeta, subdomain);
+	AR_model<T>::generate_surface(zeta, subdomain);
 }
 
 template <class T>

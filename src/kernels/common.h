@@ -11,6 +11,8 @@ typedef NEW_VEC(ARMA_REAL_TYPE,4) T3; // use cl_double4 instead of cl_double3
 typedef NEW_VEC(ARMA_REAL_TYPE,3) RealT3;
 typedef NEW_VEC(ARMA_REAL_TYPE,4) T4;
 
+typedef int4 Shape3D; // use int3 instead of int4 due to aligning issues
+
 typedef union {
 	T3 vec;
 	T elem[sizeof(T3)];

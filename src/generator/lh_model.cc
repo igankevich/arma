@@ -127,10 +127,10 @@ arma::generator::Longuet_Higgins_model<T>::generate_surface(
 	kernel.setArg(0, bcoef);
 	kernel.setArg(1, beps);
 	kernel.setArg(2, bzeta);
-	kernel.setArg(3, Vec2(_spec_domain.lbound()));
-	kernel.setArg(4, Vec2(_spec_domain.ubound()));
-	kernel.setArg(5, Int2(_spec_domain.num_patches()));
-	kernel.setArg(6, Vec3(_outgrid.length()));
+	kernel.setArg(3, Vec2(this->_spec_domain.lbound()));
+	kernel.setArg(4, Vec2(this->_spec_domain.ubound()));
+	kernel.setArg(5, Int2(this->_spec_domain.num_patches()));
+	kernel.setArg(6, Vec3(this->_outgrid.length()));
 	command_queue().enqueueNDRangeKernel(
 		kernel,
 		cl::NullRange,

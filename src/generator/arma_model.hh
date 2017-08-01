@@ -47,13 +47,6 @@ namespace arma {
 			validate() const override;
 
 			void
-			generate_surface(
-				Array3D<T>& zeta,
-				Array3D<T>& eps,
-				const Domain3D& subdomain
-			) override;
-
-			void
 			determine_coefficients() override;
 
 			Array3D<T> generate() override {
@@ -96,6 +89,13 @@ namespace arma {
 				result.setgrid(arr.grid());
 				return result;
 			}
+
+			void
+			generate_surface(
+				Array3D<T>& zeta,
+				Array3D<T>& eps,
+				const Domain3D& subdomain
+			);
 
 			acf_type _acf_orig;
 		};

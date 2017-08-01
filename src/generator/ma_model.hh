@@ -55,14 +55,14 @@ namespace arma {
 			void
 			determine_coefficients() override;
 
+		protected:
 			void
 			generate_surface(
 				Array3D<T>& zeta,
 				Array3D<T>& eps,
 				const Domain3D& subdomain
-			) override;
+			);
 
-		protected:
 			T
 			white_noise_variance(const Array3D<T>& theta) const;
 

@@ -80,13 +80,6 @@ namespace arma {
 			virtual sys::parameter_map::map_type
 			parameters();
 
-			virtual void
-			generate_surface(
-				Array3D<T>& zeta,
-				Array3D<T>& eps,
-				const Domain3D& subdomain
-			) = 0;
-
 		public:
 			Array3D<T> generate() override;
 
