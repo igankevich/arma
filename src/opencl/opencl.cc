@@ -55,6 +55,12 @@ namespace {
 		while (!rhs.empty() && rhs.back() <= ' ') { rhs.pop_back(); }
 	}
 
+	std::string
+	trim(std::string rhs) {
+		trim_right(rhs);
+		return rhs;
+	}
+
 	[[noreturn]] void
 	print_error_and_exit(cl::Error err) {
 		std::cerr << err << std::endl;
@@ -139,12 +145,12 @@ namespace {
 			arma::write_key_value(
 				std::clog,
 				"OpenCL platform",
-				result->getInfo<CL_PLATFORM_NAME>()
+				trim(result->getInfo<CL_PLATFORM_NAME>())
 			);
 			arma::write_key_value(
 				std::clog,
 				"OpenCL platform vendor",
-				result->getInfo<CL_PLATFORM_VENDOR>()
+				trim(result->getInfo<CL_PLATFORM_VENDOR>())
 			);
 			#if ARMA_OPENGL
 			GLXContext glx_context = ::glXGetCurrentContext();
