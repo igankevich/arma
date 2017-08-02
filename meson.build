@@ -30,8 +30,8 @@ libOpenCL = dependency(
 	'OpenCL',
 	required: get_option('framework') == 'opencl'
 )
-libpthread = cpp.find_library(
-	'pthread',
+libpthread = dependency(
+	'threads',
 	required: get_option('framework') == 'opencl'
 )
 libclFFT = dependency(

@@ -27,6 +27,12 @@ namespace arma {
 			int _idxz = 0;
 			#endif
 
+		public:
+			inline
+			Linear_solver():
+			_fft()
+			{}
+
 		protected:
 			void
 			precompute(const Discrete_function<T,3>& zeta) override;

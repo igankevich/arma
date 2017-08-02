@@ -243,6 +243,7 @@ arma::generator::Longuet_Higgins_model<T>::read(std::istream& in) {
 		{"spec_subdomain", sys::make_param(this->_spec_subdomain)},
 		{"wave_height", sys::make_param(this->_waveheight)},
 		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
+		{"output", sys::make_param(this->_oflags)},
 	}, true);
 	in >> params;
 	validate_domain<T,2>(this->_spec_domain, "lh_model.spec_domain");
