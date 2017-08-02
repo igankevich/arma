@@ -117,7 +117,7 @@ arma::generator::AR_model<T>::do_generate() {
 		this->_partition,
 		this->grid().num_points(),
 		this->order(),
-		min(omp_get_max_threads(), nprngs);
+		min(omp_get_max_threads(), nprngs)
 	);
 	const Shape3D nparts = blitz::div_ceil(shape, partshape);
 	const int ntotal = product(nparts);
