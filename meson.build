@@ -55,13 +55,14 @@ if framework == 'openmp'
 	add_global_link_arguments('-fopenmp', language: 'cpp')
 elif framework == 'opencl'
 	add_global_arguments('-DARMA_OPENCL=1', language: 'cpp')
-	add_global_arguments('-fopenmp', language: 'cpp')
-	add_global_arguments('-DBZ_THREADSAFE', language: 'cpp')
-	add_global_link_arguments('-fopenmp', language: 'cpp')
 elif framework == 'mpi'
 	add_global_arguments('-DARMA_MPI=1', language: 'cpp')
 else
 	add_global_arguments('-DARMA_NONE=1', language: 'cpp')
+endif
+
+if get_option('noseed')
+	add_global_arguments('-DARMA_NO_PRNG_SEED', language: 'cpp')
 endif
 
 add_global_arguments(

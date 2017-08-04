@@ -6,6 +6,12 @@ option(
 )
 
 option(
+	'noseed',
+	type: 'boolean',
+	value: false
+)
+
+option(
 	'with_small_amplitude_solver',
 	type: 'boolean',
 	value: false

@@ -2,7 +2,7 @@
 #define WHITE_NOISE_HH
 
 #include <cmath>
-#if ARMA_OPENMP || ARMA_OPENCL
+#if ARMA_OPENMP
 #include <omp.h>
 #endif
 
@@ -28,7 +28,7 @@ namespace arma {
 			Dist dist
 		) {
 			/// 1. Read parallel Mersenne Twister states.
-			#if ARMA_OPENMP || ARMA_OPENCL
+			#if ARMA_OPENMP
 			const size_t nthreads = std::max(1, omp_get_max_threads());
 			#else
 			const size_t nthreads = 1;
@@ -38,16 +38,16 @@ namespace arma {
 			/// 2. Generate white noise in parallel.
 			blitz::Array<T,N> eps(shape);
 			const int n = eps.numElements();
-			#if ARMA_OPENMP || ARMA_OPENCL
+			#if ARMA_OPENMP
 			#pragma omp parallel
 			#endif
 			{
-				#if ARMA_OPENMP || ARMA_OPENCL
+				#if ARMA_OPENMP
 				prng::parallel_mt& mt = mts[omp_get_thread_num()];
 				#else
 				prng::parallel_mt& mt = mts[0];
 				#endif
-				#if ARMA_OPENMP || ARMA_OPENCL
+				#if ARMA_OPENMP
 				#pragma omp for
 				#endif
 				for (int i=0; i<n; ++i) {
