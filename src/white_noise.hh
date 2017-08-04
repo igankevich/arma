@@ -42,7 +42,11 @@ namespace arma {
 			#pragma omp parallel
 			#endif
 			{
+				#if ARMA_OPENMP
 				prng::parallel_mt& mt = mts[omp_get_thread_num()];
+				#else
+				prng::parallel_mt& mt = mts[0];
+				#endif
 				#if ARMA_OPENMP
 				#pragma omp for
 				#endif

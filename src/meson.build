@@ -77,7 +77,8 @@ arma_deps = [
 	libblitz,
 	libgsl,
 	libblas,
-	liblapack
+	liblapack,
+	libdcmt
 ]
 
 if get_option('with_small_amplitude_solver')
@@ -103,7 +104,7 @@ executable(
 	executable_prefix,
 	sources: arma_src + ['arma_main.cc'],
 	include_directories: incdirs,
-	dependencies: arma_deps + parallel_deps,
+	dependencies: arma_deps,
 	cpp_args: arma_cpp_args,
 	link_args: '-llapacke',
 	install: true
@@ -115,7 +116,7 @@ if get_option('with_high_amplitude_realtime_solver')
 		'velocity/high_amplitude_realtime_solver.cc',
 	]
 	arma_realtime_cpp_args = arma_cpp_args + ['-DARMA_OPENGL=1']
-	arma_realtime_deps = arma_deps + [libglut, libGLU, libGL, libclFFT] + parallel_deps
+	arma_realtime_deps = arma_deps + [libglut, libGLU, libGL, libclFFT]
 	executable(
 		executable_prefix + '-realtime',
 		sources: arma_realtime_src + [
