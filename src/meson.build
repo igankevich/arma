@@ -30,6 +30,7 @@ output_flags_files = files([
 common_src = files([
 	'arma.cc',
 	'params.cc',
+	'parallel_mt.cc',
 	'bits/acf_wrapper.cc',
 	'generator/plain_wave_model.cc',
 	'generator/ar_model.cc',

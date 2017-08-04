@@ -5,7 +5,11 @@
 #include "opencl/opencl.hh"
 #include "opencl/vec.hh"
 #endif
+#if ARMA_OPENMP
+#include <omp.h>
+#endif
 #include "profile_counters.hh"
+#include "white_noise.hh"
 
 #include <cmath>
 #include <random>
@@ -170,34 +174,39 @@ arma::generator::Longuet_Higgins_model<T>::generate_surface(
 	const int total_count = product(ubound - lbound + 1);
 	const int time_slice_count = total_count / (i1-i0+1);
 	#if ARMA_OPENMP
-	#pragma omp parallel for collapse(3)
+	#pragma omp parallel
 	#endif
-	for (int i=i0; i<=i1; ++i) {
-		for (int j=j0; j<=j1; ++j) {
-			for (int k=k0; k<=k1; ++k) {
-				const T t = this->_outgrid(i, 0);
-				const T x = this->_outgrid(j, 1);
-				const T y = this->_outgrid(k, 2);
-				T sum = 0;
-				for (int l=0; l<nomega; ++l) {
-					for (int m=0; m<ntheta; ++m) {
-						const T omega = _spec_domain(l, 0);
-						const T theta = _spec_domain(m, 1);
-						const T omega_squared = omega*omega;
-						const T k_x = omega_squared*cos(theta)/g<T>;
-						const T k_y = omega_squared*sin(theta)/g<T>;
-						sum += _coef(l,m)*cos(
-							k_x*x + k_y*y - omega*t + _eps(l,m)
-						);
+	{
+		#if ARMA_OPENMP
+		#pragma omp for collapse(3)
+		#endif
+		for (int i=i0; i<=i1; ++i) {
+			for (int j=j0; j<=j1; ++j) {
+				for (int k=k0; k<=k1; ++k) {
+					const T t = this->_outgrid(i, 0);
+					const T x = this->_outgrid(j, 1);
+					const T y = this->_outgrid(k, 2);
+					T sum = 0;
+					for (int l=0; l<nomega; ++l) {
+						for (int m=0; m<ntheta; ++m) {
+							const T omega = _spec_domain(l, 0);
+							const T theta = _spec_domain(m, 1);
+							const T omega_squared = omega*omega;
+							const T k_x = omega_squared*cos(theta)/g<T>;
+							const T k_y = omega_squared*sin(theta)/g<T>;
+							sum += _coef(l,m)*cos(
+								k_x*x + k_y*y - omega*t + _eps(l,m)
+							);
+						}
 					}
-				}
-				zeta(i,j,k) = sum;
-				const int nfinished = ++counter;
-				if ((nfinished % time_slice_count) == 0) {
-					const int t0 = nfinished / time_slice_count;
-					const int t1 = total_count / time_slice_count;
-					std::clog << "Finished "
-						<< '[' << t0 << '/' << t1 << ']' << std::endl;
+					zeta(i,j,k) = sum;
+					const int nfinished = ++counter;
+					if ((nfinished % time_slice_count) == 0) {
+						const int t0 = nfinished / time_slice_count;
+						const int t1 = total_count / time_slice_count;
+						std::clog << "Finished "
+							<< '[' << t0 << '/' << t1 << ']' << std::endl;
+					}
 				}
 			}
 		}
@@ -208,14 +217,16 @@ arma::generator::Longuet_Higgins_model<T>::generate_surface(
 template <class T>
 arma::Array3D<T>
 arma::generator::Longuet_Higgins_model<T>::generate() {
-	ARMA_PROFILE_BLOCK("deteremine_coefficients",
+	ARMA_PROFILE_BLOCK("determine_coefficients",
 		this->_coef.reference(determine_coefficients(_spec_domain, _waveheight));
 	);
 	Discrete_function<T,3> zeta;
-	ARMA_PROFILE_BLOCK("generate_surface",
-		zeta.resize(this->grid().num_points());
-		zeta.setgrid(this->grid());
+	zeta.resize(this->grid().num_points());
+	zeta.setgrid(this->grid());
+	ARMA_PROFILE_BLOCK("generate_white_noise",
 		this->generate_white_noise();
+	);
+	ARMA_PROFILE_BLOCK("generate_surface",
 		generate_surface(zeta, zeta.domain());
 	);
 	return zeta;
@@ -225,14 +236,11 @@ template <class T>
 void
 arma::generator::Longuet_Higgins_model<T>::generate_white_noise() {
 	using constants::_2pi;
-	_eps.resize(_spec_domain.num_points());
-	std::mt19937 generator;
-	std::uniform_real_distribution<T> dist(T(0), _2pi<T>);
-	std::generate(
-		std::begin(_eps),
-		std::end(_eps),
-		std::bind(dist, generator)
-	);
+	this->_eps.reference(prng::generate_white_noise<T,2>(
+		this->_spec_domain.num_points(),
+		this->_noseed,
+		std::uniform_real_distribution<T>(T(0), _2pi<T>)
+	));
 }
 
 template <class T>

@@ -41,33 +41,6 @@ namespace arma {
 		return acf(0, 0, 0);
 	}
 
-	/**
-	Generate white noise via Mersenne Twister algorithm. Convert to normal
-	distribution via Box---Muller transform.
-	*/
-	template <class T, class Generator>
-	Array3D<T>
-	generate_white_noise(const Shape3D& size, T variance, Generator generator) {
-		if (variance < T(0)) {
-			throw std::runtime_error("variance is less than zero");
-		}
-
-		std::normal_distribution<T> normal(T(0), std::sqrt(variance));
-
-		// generate and check
-		Array3D<T> eps(size);
-		std::generate(
-			std::begin(eps),
-			std::end(eps),
-			std::bind(normal, generator)
-		);
-		if (!blitz::all(blitz::isfinite(eps))) {
-			throw std::runtime_error(
-			    "white noise generator produced some NaN/Inf");
-		}
-		return eps;
-	}
-
 	template <class T>
 	T
 	approx_wave_height(T variance) {

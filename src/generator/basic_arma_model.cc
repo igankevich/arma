@@ -7,11 +7,9 @@
 #include "validators.hh"
 #include "util.hh"
 #include "profile_counters.hh"
+#include "white_noise.hh"
 
 #include <random>
-#if ARMA_OPENMP
-#include <omp.h>
-#endif
 
 template <class T>
 sys::parameter_map::map_type
@@ -35,6 +33,21 @@ arma::generator::Basic_ARMA_model<T>::parameters() {
 
 template <class T>
 arma::Array3D<T>
+arma::generator::Basic_ARMA_model<T>::generate_white_noise() {
+	const T var_wn = this->white_noise_variance();
+	write_key_value(std::clog, "White noise variance", var_wn);
+	if (var_wn < T(0)) {
+		throw std::invalid_argument("variance is less than zero");
+	}
+	return prng::generate_white_noise<T,3>(
+		this->grid().num_points(),
+		this->_noseed,
+		std::normal_distribution<T>(T(0), std::sqrt(var_wn))
+	);
+}
+
+template <class T>
+arma::Array3D<T>
 arma::generator::Basic_ARMA_model<T>::generate() {
 	ARMA_PROFILE_CNT(CNT_NIT,
 		if (!this->_linear) {
@@ -52,7 +65,7 @@ arma::generator::Basic_ARMA_model<T>::generate() {
 			out << this->_acf;
 		}
 	}
-	ARMA_PROFILE_BLOCK("deteremine_coefficients",
+	ARMA_PROFILE_BLOCK("determine_coefficients",
 		this->determine_coefficients();
 	);
 	ARMA_PROFILE_BLOCK("validate",

@@ -5,6 +5,7 @@
 #include "validators.hh"
 #include "params.hh"
 #include "apmath/convolution.hh"
+#include "profile.hh"
 
 #include <cassert>
 #include <algorithm>
@@ -30,12 +31,9 @@ arma::generator::MA_model<T>::validate() const {
 template <class T>
 arma::Array3D<T>
 arma::generator::MA_model<T>::do_generate() {
-	std::mt19937 prng(this->newseed());
-	Array3D<T> eps = generate_white_noise(
-		this->grid().num_points(),
-		this->white_noise_variance(),
-		std::ref(prng)
-	);
+	ARMA_PROFILE_START(generate_white_noise);
+	Array3D<T> eps = this->generate_white_noise();
+	ARMA_PROFILE_END(generate_white_noise);
 	Array3D<T> zeta(this->grid().num_points());
 	generate_surface(zeta, eps, zeta.domain());
 	return zeta;

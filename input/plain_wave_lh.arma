@@ -3,7 +3,7 @@ model = LH {
 	spec_domain = from (0.3,-1.5708) to (1.5708,1.5708) npoints (40,40)
 	spec_subdomain = (50,50)
 	wave_height = 4
-	output = none
+	output = surface
 }
 
 velocity_potential_solver = high_amplitude {

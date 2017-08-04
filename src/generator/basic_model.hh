@@ -4,6 +4,7 @@
 #include "types.hh"
 #include "grid.hh"
 #include "output_flags.hh"
+#include "parallel_mt.hh"
 #include <istream>
 #include <ostream>
 
@@ -23,9 +24,19 @@ namespace arma {
 			/// Wavy surface grid.
 			grid_type _outgrid;
 			Output_flags _oflags;
+			/// Whether seed PRNG or not. This flag is needed for
+			/// reproducible tests.
+			bool _noseed = false;
 
 			virtual void write(std::ostream& out) const {}
 			virtual void read(std::istream& in) {}
+
+			inline prng::clock_type::rep
+			newseed() noexcept {
+				return this->_noseed
+					? prng::clock_type::rep(0)
+					: prng::clock_seed();
+			}
 
 		public:
 

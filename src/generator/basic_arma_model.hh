@@ -5,7 +5,6 @@
 #include "discrete_function.hh"
 #include "nonlinear/nit_transform.hh"
 #include "params.hh"
-#include <chrono>
 
 namespace arma {
 
@@ -15,7 +14,6 @@ namespace arma {
 		class Basic_ARMA_model: public virtual Basic_model<T> {
 
 		public:
-			typedef std::chrono::high_resolution_clock clock_type;
 			typedef Discrete_function<T,3> acf_type;
 			typedef nonlinear::NIT_transform<T> transform_type;
 
@@ -24,25 +22,13 @@ namespace arma {
 			acf_type _acf;
 			/// Process order.
 			Shape3D _order = Shape3D(0,0,0);
-			/// Whether seed PRNG or not. This flag is needed for
-			/// reproducible tests.
-			bool _noseed = false;
 			transform_type _nittransform;
 			bool _linear = true;
 
-			inline clock_type::rep
-			newseed() noexcept {
-				#if defined(ARMA_NO_PRNG_SEED)
-				return clock_type::rep(0);
-				#else
-				return
-					this->_noseed
-					? clock_type::rep(0)
-					: clock_type::now().time_since_epoch().count();
-				#endif
-			}
-
 			virtual Array3D<T> do_generate() = 0;
+
+			Array3D<T>
+			generate_white_noise();
 
 		public:
 			inline

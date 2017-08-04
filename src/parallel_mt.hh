@@ -8,6 +8,10 @@
 #include <istream>   // for istream, ostream, basic_istream::read, basic_os...
 #include <limits>    // for numeric_limits
 #include <stdexcept> // for runtime_error
+#include <vector>
+#include <fstream>
+#include <iterator>
+#include <chrono>
 
 extern "C" {
 #include <dc.h> // for free_mt_struct, genrand_mt, get_mt_parameter_id_st
@@ -117,10 +121,21 @@ namespace arma {
 			typedef uint32_t result_type;
 
 			parallel_mt() = default;
-			explicit parallel_mt(mt_config conf) : _config(conf) { init(0); }
-			parallel_mt& operator=(const parallel_mt&) = default;
 
-			result_type operator()() noexcept { return ::genrand_mt(&_config); }
+			explicit
+			parallel_mt(mt_config conf):
+			parallel_mt(conf, 0)
+			{}
+
+			parallel_mt(mt_config conf, result_type seed):
+			_config(conf)
+			{ init(seed); }
+
+			parallel_mt&
+			operator=(const parallel_mt&) = default;
+
+			result_type
+			operator()() noexcept { return ::genrand_mt(&_config); }
 
 			result_type
 			min() const noexcept {
@@ -145,6 +160,30 @@ namespace arma {
 
 			mt_config _config;
 		};
+
+		template<class Result>
+		void
+		read_parallel_mt_config(const char* filename, Result result) {
+			std::ifstream in(filename);
+			if (!in.is_open()) {
+				throw std::runtime_error("bad file");
+			}
+			std::copy(
+				std::istream_iterator<mt_config>(in),
+				std::istream_iterator<mt_config>(),
+				result
+			);
+		}
+
+		typedef std::chrono::high_resolution_clock clock_type;
+
+		inline clock_type::rep
+		clock_seed() noexcept {
+			return clock_type::now().time_since_epoch().count();
+		}
+
+		std::vector<parallel_mt>
+		read_parallel_mts(const char* filename, size_t n, bool noseed);
 
 	}
 

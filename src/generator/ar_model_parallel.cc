@@ -23,14 +23,9 @@ namespace {
 
 		Partition() = default;
 
-		Partition(
-			Shape3D ijk_,
-			const blitz::RectDomain<3>& r,
-			const prng::mt_config& conf,
-			uint32_t seed
-		):
-		ijk(ijk_), rect(r), prng(conf)
-		{ prng.seed(seed); }
+		Partition(Shape3D ijk_, const blitz::RectDomain<3>& r, uint32_t seed):
+		ijk(ijk_), rect(r)
+		{}
 
 		friend std::ostream&
 		operator<<(std::ostream& out, const Partition& rhs) {
@@ -44,29 +39,13 @@ namespace {
 
 		Shape3D ijk;
 		blitz::RectDomain<3> rect;
-		prng::parallel_mt prng;
 	};
-
-	template<class Result>
-	void
-	read_parallel_mt_config(const char* filename, Result result) {
-		std::ifstream in(filename);
-		if (!in.is_open()) {
-			throw std::runtime_error("bad file");
-		}
-		std::copy(
-			std::istream_iterator<prng::mt_config>(in),
-			std::istream_iterator<prng::mt_config>(),
-			result
-		);
-	}
 
 	std::vector<Partition>
 	partition(
 		Shape3D nparts,
 		Shape3D partshape,
 		Shape3D shape,
-		const std::vector<prng::mt_config>& prng_config,
 		const uint32_t seed
 	) {
 		std::vector<Partition> parts;
@@ -82,13 +61,25 @@ namespace {
 					parts.emplace_back(
 						ijk,
 						blitz::RectDomain<3>(lower, upper),
-						prng_config[parts.size()],
 						seed
 					);
 				}
 			}
 		}
 		return parts;
+	}
+
+	template <class T, class Generator>
+	Array3D<T>
+	generate_white_noise(const Shape3D& size, T variance, Generator generator) {
+		std::normal_distribution<T> normal(T(0), std::sqrt(variance));
+		Array3D<T> eps(size);
+		std::generate_n(
+			eps.data(),
+			eps.numElements(),
+			std::bind(normal, generator)
+		);
+		return eps;
 	}
 
 }
@@ -98,38 +89,31 @@ arma::Array3D<T>
 arma::generator::AR_model<T>::do_generate() {
 	const T var_wn = this->white_noise_variance();
 	write_key_value(std::clog, "White noise variance", var_wn);
+	if (var_wn < T(0)) {
+		throw std::invalid_argument("variance is less than zero");
+	}
 	using blitz::RectDomain;
 	using blitz::product;
 	using std::min;
 	/// 1. Read parallel Mersenne Twister states.
-	std::vector<prng::mt_config> prng_config;
-	read_parallel_mt_config(
-		MT_CONFIG_FILE,
-		std::back_inserter(prng_config)
-	);
-	const int nprngs = prng_config.size();
-	if (nprngs == 0) {
-		throw PRNG_error("bad number of MT configs", nprngs, 0);
-	}
+	const size_t nthreads = std::max(1, omp_get_max_threads());
+	std::vector<prng::parallel_mt> mts =
+		prng::read_parallel_mts(MT_CONFIG_FILE, nthreads, this->_noseed);
 	/// 2. Partition the data.
 	const Shape3D shape = this->_outgrid.size();
 	const Shape3D partshape = get_partition_shape(
 		this->_partition,
 		this->grid().num_points(),
 		this->order(),
-		min(omp_get_max_threads(), nprngs)
+		nthreads
 	);
 	const Shape3D nparts = blitz::div_ceil(shape, partshape);
 	const int ntotal = product(nparts);
-	if (prng_config.size() < size_t(product(nparts))) {
-		throw PRNG_error("bad number of MT configs", nprngs, ntotal);
-	}
 	write_key_value(std::clog, "Partition size", partshape);
 	std::vector<Partition> parts = partition(
 		nparts,
 		partshape,
 		shape,
-		prng_config,
 		this->newseed()
 	);
 	Array3D<bool> completed(nparts);
@@ -144,6 +128,7 @@ arma::generator::AR_model<T>::do_generate() {
 	/// updated in a separate map.
 	#pragma omp parallel
 	{
+		prng::parallel_mt& mt = mts[omp_get_thread_num()];
 		std::unique_lock<std::mutex> lock(mtx);
 		while (!parts.empty()) {
 			typename std::vector<Partition>::iterator result;
@@ -172,7 +157,7 @@ arma::generator::AR_model<T>::do_generate() {
 			zeta(part.rect) = generate_white_noise(
 				part.shape(),
 				var_wn,
-				std::ref(part.prng)
+				std::ref(mt)
 			);
 			this->generate_surface(zeta, part.rect);
 			lock.lock();

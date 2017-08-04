@@ -51,11 +51,25 @@ namespace arma {
 	::arma::__profile(name, [&](){ block; })
 #define ARMA_PROFILE_CNT(cnt, block) \
 	::arma::__profile_cnt(cnt, [&](){ block; })
+#define ARMA_PROFILE_START(name) \
+	const auto name##_t0 = ::std::chrono::high_resolution_clock::now()
+#define ARMA_PROFILE_END(name) \
+	{ \
+		auto name##_t1 = ::std::chrono::high_resolution_clock::now(); \
+		auto us = ::std::chrono::duration_cast<::std::chrono::microseconds> \
+			(name##_t1 - name##_t0); \
+		::std::stringstream msg; \
+		msg << "prfl" << ' ' << #name << ' ' << us.count() << "us\n"; \
+		::std::clog << msg.rdbuf(); \
+	}
+
 
 #else
 #define ARMA_PROFILE_FUNC(func) func;
 #define ARMA_PROFILE_BLOCK(name, block) block
 #define ARMA_PROFILE_CNT(cnt, block) block
+#define ARMA_PROFILE_START(name)
+#define ARMA_PROFILE_END(name)
 #endif
 
 #endif // PROFILE_HH
