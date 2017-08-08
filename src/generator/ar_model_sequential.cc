@@ -1,3 +1,5 @@
+#include "profile.hh"
+
 template <class T>
 arma::Array3D<T>
 arma::generator::AR_model<T>::do_generate() {
