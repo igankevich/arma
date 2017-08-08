@@ -2,6 +2,7 @@
 #include "bits/object_wrapper.hh"
 #include "bits/write_csv.hh"
 #include "params.hh"
+#include "profile.hh"
 #include <stdexcept>
 #include <fstream>
 #include <iomanip>
@@ -132,6 +133,7 @@ arma::ARMA_driver<T>::echo_parameters() {
 template <class T>
 void
 arma::ARMA_driver<T>::write_all() {
+	ARMA_PROFILE_START(write_all);
 	if (this->vscheme().isset(Output_flags::Surface)) {
 		if (this->vscheme().isset(Output_flags::Blitz)) {
 			this->write_wavy_surface("zeta");
@@ -142,6 +144,7 @@ arma::ARMA_driver<T>::write_all() {
 			this->write_velocity_potentials("phi.csv");
 		}
 	}
+	ARMA_PROFILE_END(write_all);
 }
 
 
