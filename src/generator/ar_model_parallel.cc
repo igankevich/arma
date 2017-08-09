@@ -23,8 +23,9 @@ namespace {
 
 		Partition() = default;
 
-		Partition(Shape3D ijk_, const blitz::RectDomain<3>& r, uint32_t seed):
-		ijk(ijk_), rect(r)
+		Partition(Shape3D ijk_, const blitz::RectDomain<3>& r):
+		ijk(ijk_),
+		rect(r)
 		{}
 
 		friend std::ostream&
@@ -45,8 +46,7 @@ namespace {
 	partition(
 		Shape3D nparts,
 		Shape3D partshape,
-		Shape3D shape,
-		const uint32_t seed
+		Shape3D shape
 	) {
 		std::vector<Partition> parts;
 		const int nt = nparts(0);
@@ -58,11 +58,7 @@ namespace {
 					const Shape3D ijk(i, j, k);
 					const Shape3D lower = blitz::min(ijk * partshape, shape);
 					const Shape3D upper = blitz::min((ijk+1) * partshape, shape) - 1;
-					parts.emplace_back(
-						ijk,
-						blitz::RectDomain<3>(lower, upper),
-						seed
-					);
+					parts.emplace_back(ijk, blitz::RectDomain<3>(lower, upper));
 				}
 			}
 		}
@@ -110,12 +106,7 @@ arma::generator::AR_model<T>::do_generate() {
 	const Shape3D nparts = blitz::div_ceil(shape, partshape);
 	const int ntotal = product(nparts);
 	write_key_value(std::clog, "Partition size", partshape);
-	std::vector<Partition> parts = partition(
-		nparts,
-		partshape,
-		shape,
-		this->newseed()
-	);
+	std::vector<Partition> parts = partition(nparts, partshape, shape);
 	Array3D<bool> completed(nparts);
 	Array3D<T> zeta(shape);
 	std::condition_variable cv;
@@ -162,12 +153,11 @@ arma::generator::AR_model<T>::do_generate() {
 			this->generate_surface(zeta, part.rect);
 			lock.lock();
 			std::clog
-				<< "\rFinished part ["
-				<< ++nfinished << '/' << ntotal << ']';
+				<< "Finished part ["
+				<< ++nfinished << '/' << ntotal << "]\n";
 			completed(part.ijk) = true;
 			cv.notify_all();
 		}
 	}
-	std::clog << std::endl;
 	return zeta;
 }

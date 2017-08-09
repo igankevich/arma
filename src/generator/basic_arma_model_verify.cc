@@ -16,7 +16,7 @@ namespace {
 		arma::Array3D<T> acf,
 		arma::Array3D<T> zeta,
 		const arma::generator::Basic_ARMA_model<T>& model,
-		arma::Output_flags vscheme
+		arma::Output_flags oflags
 	) {
 		using namespace arma;
 		using stats::Summary;
@@ -52,14 +52,14 @@ namespace {
 			make_summary(periods, approx_wave_period(var_elev), T(0),
 					   periods_dist, "wave period"),
 		};
-		if (vscheme.isset(Output_flags::Summary)) {
+		if (oflags.isset(Output_flags::Summary)) {
 			std::copy(
 				stats.begin(),
 				stats.end(),
 				std::ostream_iterator<Summary<T>>(std::clog, "\n")
 			);
 		}
-		if (vscheme.isset(Output_flags::Quantile)) {
+		if (oflags.isset(Output_flags::Quantile)) {
 			std::for_each(
 				stats.begin(),
 				stats.end(),

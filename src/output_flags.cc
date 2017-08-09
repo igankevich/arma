@@ -10,7 +10,7 @@ namespace {
 
 	typedef std::pair<arma::Output_flags::Flag,std::string> flag_pair;
 
-	std::array<std::string,8> all_flags{{
+	std::array<std::string,9> all_flags{{
 		"none",
 		"summary",
 		"qq",
@@ -18,9 +18,22 @@ namespace {
 		"acf",
 		"csv",
 		"blitz",
+		"binary",
 		"surface",
 	}};
 
+}
+
+std::string
+arma::get_filename(const std::string& prefix, Output_flags::Flag flag) {
+	std::string f;
+	f.append(prefix);
+	if (flag == Output_flags::Flag::CSV) {
+		f.append(".csv");
+	} else if (flag == Output_flags::Flag::Binary) {
+		f.append(".bin");
+	}
+	return f;
 }
 
 void
@@ -30,7 +43,9 @@ arma::Output_flags::prune() {
 		return;
 	}
 	// set default output format if none is specified
-	if (isset(Flag::Surface) && !isset(Flag::Blitz) && !isset(Flag::CSV)) {
+	if (isset(Flag::Surface) && !isset(Flag::Blitz) &&
+		!isset(Flag::CSV) && !isset(Flag::Binary))
+	{
 		setf(Flag::Blitz);
 	}
 }

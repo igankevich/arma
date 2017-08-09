@@ -3,6 +3,7 @@
 #include "bits/write_csv.hh"
 #include "params.hh"
 #include "profile.hh"
+#include "io/binary_stream.hh"
 #include <stdexcept>
 #include <fstream>
 #include <iomanip>
@@ -27,28 +28,36 @@ arma::ARMA_driver<T>::velocity_potential_grid() const {
 
 template <class T>
 void
-arma::ARMA_driver<T>::write_wavy_surface(std::string filename) {
-	if (this->vscheme().isset(Output_flags::Blitz)) {
+arma::ARMA_driver<T>::write_wavy_surface() {
+	if (this->oflags().isset(Output_flags::Blitz)) {
+		std::string filename = get_surface_filename(Output_flags::Blitz);
 		std::ofstream(filename) << _zeta;
-	}
-	if (this->vscheme().isset(Output_flags::CSV)) {
+	} else if (this->oflags().isset(Output_flags::CSV)) {
+		std::string filename = get_surface_filename(Output_flags::CSV);
 		bits::write_csv(filename, _zeta, _zeta.grid());
+	} else if (this->oflags().isset(Output_flags::Binary)) {
+		std::string filename = get_surface_filename(Output_flags::Binary);
+		io::Binary_stream out(filename);
+		out.write(this->_zeta);
 	}
 }
 
 template <class T>
 void
-arma::ARMA_driver<T>::write_velocity_potentials(std::string filename) {
-	if (this->vscheme().isset(Output_flags::Blitz)) {
+arma::ARMA_driver<T>::write_velocity_potentials() {
+	if (this->oflags().isset(Output_flags::Blitz)) {
+		std::string filename = get_velocity_filename(Output_flags::Blitz);
 		std::ofstream(filename) << this->_vpotentials;
-	}
-	if (this->vscheme().isset(Output_flags::CSV)) {
+	} else if (this->oflags().isset(Output_flags::CSV)) {
+		std::string filename = get_velocity_filename(Output_flags::CSV);
 		bits::write_4d_csv(
 			filename,
 			this->_vpotentials,
 			this->_solver->domain(),
 			this->_model->grid()
 		);
+	} else if (this->oflags().isset(Output_flags::Binary)) {
+		// TODO
 	}
 }
 
@@ -134,15 +143,9 @@ template <class T>
 void
 arma::ARMA_driver<T>::write_all() {
 	ARMA_PROFILE_START(write_all);
-	if (this->vscheme().isset(Output_flags::Surface)) {
-		if (this->vscheme().isset(Output_flags::Blitz)) {
-			this->write_wavy_surface("zeta");
-			this->write_velocity_potentials("phi");
-		}
-		if (this->vscheme().isset(Output_flags::CSV)) {
-			this->write_wavy_surface("zeta.csv");
-			this->write_velocity_potentials("phi.csv");
-		}
+	if (this->oflags().isset(Output_flags::Surface)) {
+		this->write_wavy_surface();
+		this->write_velocity_potentials();
 	}
 	ARMA_PROFILE_END(write_all);
 }

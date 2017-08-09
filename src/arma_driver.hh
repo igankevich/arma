@@ -95,18 +95,18 @@ namespace arma {
 		}
 
 		inline Output_flags
-		vscheme() const noexcept {
-			return this->_model->vscheme();
+		oflags() const noexcept {
+			return this->_model->oflags();
 		}
 
 		Grid<T,3>
 		velocity_potential_grid() const;
 
 		void
-		write_wavy_surface(std::string filename);
+		write_wavy_surface();
 
 		void
-		write_velocity_potentials(std::string filename);
+		write_velocity_potentials();
 
 		void
 		write_all();

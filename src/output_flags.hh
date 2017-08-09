@@ -5,6 +5,7 @@
 #include <ostream>
 #include <bitset>
 #include <type_traits>
+#include <string>
 
 namespace arma {
 
@@ -20,7 +21,8 @@ namespace arma {
 			ACF = 4,
 			CSV = 5,
 			Blitz = 6,
-			Surface = 7
+			Binary = 7,
+			Surface = 8
 		};
 
 	private:
@@ -65,6 +67,19 @@ namespace arma {
 
 	std::ostream&
 	operator<<(std::ostream& out, const Output_flags& rhs);
+
+	std::string
+	get_filename(const std::string& prefix, Output_flags::Flag flag);
+
+	inline std::string
+	get_surface_filename(Output_flags::Flag flag) {
+		return get_filename("zeta", flag);
+	}
+
+	inline std::string
+	get_velocity_filename(Output_flags::Flag flag) {
+		return get_filename("phi", flag);
+	}
 
 }
 

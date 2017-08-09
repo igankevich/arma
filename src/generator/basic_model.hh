@@ -50,13 +50,13 @@ namespace arma {
 				this->_outgrid = rhs;
 			}
 
-			const grid_type&
+			inline const grid_type&
 			grid() const noexcept {
 				return this->_outgrid;
 			}
 
-			Output_flags
-			vscheme() const noexcept {
+			inline Output_flags
+			oflags() const noexcept {
 				return this->_oflags;
 			}
 
