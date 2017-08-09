@@ -110,6 +110,7 @@ namespace {
 					in >> params;
 				}
 				_options += " -DARMA_REAL_TYPE=" ARMA_STRINGIFY(ARMA_REAL_TYPE);
+				_options += " -Darma_" ARMA_STRINGIFY(ARMA_REAL_TYPE) "=1";
 				_options += " -I";
 				_options += ARMA_OPENCL_SRC_DIR;
 			}

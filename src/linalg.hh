@@ -188,6 +188,11 @@ namespace linalg {
 			return this->_interval;
 		}
 
+		inline int
+		num_iterations() const noexcept {
+			return this->_niterations;
+		}
+
 		template <class X>
 		friend std::istream&
 		operator>>(std::istream& in, Bisection<X>& rhs);

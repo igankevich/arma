@@ -49,7 +49,7 @@ arma::generator::Basic_ARMA_model<T>::generate_white_noise() {
 template <class T>
 arma::Array3D<T>
 arma::generator::Basic_ARMA_model<T>::generate() {
-	ARMA_PROFILE_CNT(CNT_NIT,
+	ARMA_PROFILE_BLOCK("nit_acf",
 		if (!this->_linear) {
 			auto copy = this->_acf.copy();
 			this->_nittransform.transform_ACF(copy);
@@ -75,7 +75,7 @@ arma::generator::Basic_ARMA_model<T>::generate() {
 	ARMA_PROFILE_BLOCK("generate_surface",
 		zeta.reference(this->do_generate());
 	);
-	ARMA_PROFILE_CNT(CNT_NIT,
+	ARMA_PROFILE_BLOCK("nit_realisation",
 		if (!this->_linear) {
 			this->_nittransform.transform_realisation(this->_acf, zeta);
 		}

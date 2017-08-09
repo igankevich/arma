@@ -190,7 +190,9 @@ linalg::operator>>(std::istream& in, Bisection<T>& rhs) {
 template <class T>
 std::ostream&
 linalg::operator<<(std::ostream& out, const Bisection<T>& rhs) {
-	return out << "interval=" << rhs._interval;
+	return out
+		<< "interval=" << rhs._interval
+		<< ",niterations=" << rhs._niterations;
 }
 
 template bool linalg::is_symmetric<ARMA_REAL_TYPE>(Matrix<ARMA_REAL_TYPE>& rhs);

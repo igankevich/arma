@@ -44,6 +44,16 @@ namespace arma {
 					/ (T(24)*sqrt2pi<T>) + T(0.5)*std::erf(x/sqrt2<T>) + T(0.5);
 			}
 
+			inline T
+			skewness() const noexcept {
+				return this->_skewness;
+			}
+
+			inline T
+			kurtosis() const noexcept {
+				return this->_kurtosis;
+			}
+
 			template <class X>
 			friend std::istream&
 			operator>>(std::istream& in, Gram_Charlier<X>& rhs);

@@ -4,11 +4,62 @@
 #include "transforms.hh"
 #include "series.hh"
 #include "util.hh"
+#if ARMA_OPENCL
+#include "opencl/opencl.hh"
+#include "opencl/vec.hh"
+#endif
 
 #include <string>
 #include <stdexcept>
 #include <iostream>
 #include <cmath>
+
+namespace {
+
+	#if ARMA_OPENCL
+	template <class T, class Solver, class Distribution>
+	void
+	do_transform_realisation_opencl(
+		arma::Array3D<T> acf,
+		arma::Array3D<T>& realisation,
+		const Solver& solver,
+		const Distribution& dist
+	) {
+		using namespace arma;
+		using opencl::context;
+		using opencl::command_queue;
+		using opencl::get_kernel;
+		Vec3D<size_t> shp = realisation.shape();
+		const T stdev = std::sqrt(acf(0,0,0));
+		cl::Buffer bdata(
+			context(),
+			realisation.data(),
+			realisation.data() + realisation.numElements(),
+			false
+		);
+		cl::Kernel kernel = get_kernel("transform_data_gram_charlier");
+		kernel.setArg(0, bdata);
+		kernel.setArg(1, solver.interval().first());
+		kernel.setArg(2, solver.interval().last());
+		kernel.setArg(3, solver.num_iterations());
+		kernel.setArg(4, stdev);
+		kernel.setArg(5, dist.skewness());
+		kernel.setArg(6, dist.kurtosis());
+		command_queue().enqueueNDRangeKernel(
+			kernel,
+			cl::NullRange,
+			cl::NDRange(shp(0), shp(1), shp(2))
+		);
+		cl::copy(
+			command_queue(),
+			bdata,
+			realisation.data(),
+			realisation.data() + realisation.numElements()
+		);
+	}
+	#endif
+
+}
 
 template <class T>
 void
@@ -102,7 +153,16 @@ arma::nonlinear::NIT_transform<T>::transform_realisation(
 ) {
 	switch (_targetdist) {
 		case bits::Distribution::Gram_Charlier:
+			#if ARMA_OPENCL
+			do_transform_realisation_opencl(
+				acf,
+				realisation,
+				this->_cdfsolver,
+				this->_gramcharlier
+			);
+			#else
 			do_transform_realisation(acf, realisation, this->_gramcharlier);
+			#endif
 			break;
 		case bits::Distribution::Skew_normal:
 			do_transform_realisation(acf, realisation, this->_skewnormal);

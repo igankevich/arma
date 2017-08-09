@@ -231,7 +231,8 @@ arma::generator::AR_model<T>::write(std::ostream& out) const {
 	out << "grid=" << this->grid()
 		<< ",order=" << this->order()
 		<< ",output=" << this->_oflags
-		<< ",acf.shape=" << this->_acf.shape();
+		<< ",acf.shape=" << this->_acf.shape()
+		<< ",transform=" << this->_nittransform;
 }
 
 #if ARMA_NONE
