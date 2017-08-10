@@ -145,7 +145,7 @@ executable(
 		libblitz,
 		libglut,
 		libGL
-	],
+	] + fourier_deps,
 	install: true
 )
 

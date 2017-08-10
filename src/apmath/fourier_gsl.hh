@@ -1,12 +1,12 @@
 #ifndef APMATH_FOURIER_GSL_HH
 #define APMATH_FOURIER_GSL_HH
 
-#include <blitz/array.h>
 #include <complex>
 #include <vector>
 
 #include "apmath/fourier_direction.hh"
 #include "bits/fourier_gsl.hh"
+#include "types.hh"
 
 namespace arma {
 
@@ -68,7 +68,7 @@ namespace arma {
 			typedef typename bits::Fourier_config<T>::transform_type transform_type;
 			typedef Fourier_workspace<T,N> workspace_type;
 			typedef blitz::TinyVector<int,N> shape_type;
-			typedef blitz::Array<T,N> array_type;
+			typedef ::arma::Array<T,N> array_type;
 
 		private:
 			std::vector<transform_type> _transforms;

@@ -103,49 +103,21 @@ arma::generator::Longuet_Higgins_model<T>::generate_surface(
 	Discrete_function<T,3>& zeta,
 	const Domain3D& subdomain
 ) {
-	using opencl::context;
-	using opencl::command_queue;
-	using opencl::get_kernel;
 	typedef opencl::Vec<Vec2D<T>,T,2> Vec2;
 	typedef opencl::Vec<Vec2D<int>,int,2> Int2;
 	typedef opencl::Vec<Vec3D<T>,T,3> Vec3;
-	Vec3D<size_t> shp = zeta.shape();
-	cl::Buffer bcoef(
-		context(),
-		_coef.data(),
-		_coef.data() + _coef.numElements(),
-		true
-	);
-	cl::Buffer beps(
-		context(),
-		_eps.data(),
-		_eps.data() + _eps.numElements(),
-		true
-	);
-	cl::Buffer bzeta(
-		context(),
-		CL_MEM_WRITE_ONLY,
-		zeta.numElements()*sizeof(T)
-	);
-	cl::Kernel kernel = get_kernel("lh_generate_surface");
-	kernel.setArg(0, bcoef);
-	kernel.setArg(1, beps);
-	kernel.setArg(2, bzeta);
+	this->_coef.copy_to_device(CL_MEM_READ_ONLY);
+	this->_eps.copy_to_device(CL_MEM_READ_ONLY);
+	zeta.init_on_device(CL_MEM_WRITE_ONLY);
+	cl::Kernel kernel = opencl::get_kernel("lh_generate_surface");
+	kernel.setArg(0, this->_coef.buffer());
+	kernel.setArg(1, this->_eps.buffer());
+	kernel.setArg(2, zeta.buffer());
 	kernel.setArg(3, Vec2(this->_spec_domain.lbound()));
 	kernel.setArg(4, Vec2(this->_spec_domain.ubound()));
 	kernel.setArg(5, Int2(this->_spec_domain.num_patches()));
 	kernel.setArg(6, Vec3(this->_outgrid.length()));
-	command_queue().enqueueNDRangeKernel(
-		kernel,
-		cl::NullRange,
-		cl::NDRange(shp(0), shp(1), shp(2))
-	);
-	cl::copy(
-		command_queue(),
-		bzeta,
-		zeta.data(),
-		zeta.data() + zeta.numElements()
-	);
+	zeta.compute(kernel);
 }
 
 #else

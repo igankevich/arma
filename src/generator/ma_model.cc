@@ -184,10 +184,11 @@ arma::generator::MA_model<T>::newton_raphson(
 	using blitz::sum;
 	using blitz::all;
 	using blitz::isfinite;
+	using blitz::shape;
 	const Shape3D& order = this->order();
 	const int n = blitz::product(order);
 	Array3D<T> theta(order), tau(order), f(order);
-	Array2D<T> tau_matrix(n, n);
+	Array2D<T> tau_matrix(shape(n, n));
 	theta = 0;
 	tau = 0;
 	const int order_t = order(0);

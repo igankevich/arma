@@ -26,36 +26,15 @@ namespace {
 		const Distribution& dist
 	) {
 		using namespace arma;
-		using opencl::context;
-		using opencl::command_queue;
-		using opencl::get_kernel;
-		Vec3D<size_t> shp = realisation.shape();
-		const T stdev = std::sqrt(acf(0,0,0));
-		cl::Buffer bdata(
-			context(),
-			realisation.data(),
-			realisation.data() + realisation.numElements(),
-			false
-		);
-		cl::Kernel kernel = get_kernel("transform_data_gram_charlier");
-		kernel.setArg(0, bdata);
+		cl::Kernel kernel = opencl::get_kernel("transform_data_gram_charlier");
+		kernel.setArg(0, realisation.buffer());
 		kernel.setArg(1, solver.interval().first());
 		kernel.setArg(2, solver.interval().last());
 		kernel.setArg(3, solver.num_iterations());
-		kernel.setArg(4, stdev);
+		kernel.setArg(4, std::sqrt(acf(0,0,0)));
 		kernel.setArg(5, dist.skewness());
 		kernel.setArg(6, dist.kurtosis());
-		command_queue().enqueueNDRangeKernel(
-			kernel,
-			cl::NullRange,
-			cl::NDRange(shp(0), shp(1), shp(2))
-		);
-		cl::copy(
-			command_queue(),
-			bdata,
-			realisation.data(),
-			realisation.data() + realisation.numElements()
-		);
+		realisation.compute(kernel);
 	}
 	#endif
 

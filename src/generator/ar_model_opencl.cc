@@ -4,6 +4,7 @@
 #include "util.hh"
 #include "opencl/opencl.hh"
 #include "opencl/vec.hh"
+#include "opencl/array.hh"
 #include "blitz.hh"
 #include "profile.hh"
 
@@ -58,18 +59,8 @@ arma::generator::AR_model<T>::do_generate() {
 	write_key_value(std::clog, "Partition size", partshape);
 	/// 3. Launch parallel kernels with dependencies
 	/// controlled by OpenCL events.
-	cl::Buffer bcoef(
-		context(),
-		this->_phi.data(),
-		this->_phi.data() + this->_phi.numElements(),
-		true
-	);
-	cl::Buffer bzeta(
-		context(),
-		zeta.data(),
-		zeta.data() + zeta.numElements(),
-		false
-	);
+	this->_phi.copy_to_device();
+	zeta.copy_to_device();
 	const int nt = nparts(0);
 	const int nx = nparts(1);
 	const int ny = nparts(2);
@@ -81,9 +72,9 @@ arma::generator::AR_model<T>::do_generate() {
 				const Shape3D ijk(i, j, k);
 				const Shape3D lower = blitz::min(ijk * partshape, shape);
 				const Shape3D upper = blitz::min((ijk+1) * partshape, shape) - 1;
-				kernel.setArg(0, bcoef);
+				kernel.setArg(0, this->_phi.buffer());
 				kernel.setArg(1, Int3(this->_phi.shape()));
-				kernel.setArg(2, bzeta);
+				kernel.setArg(2, zeta.buffer());
 				kernel.setArg(3, Int3(zeta.shape()));
 				kernel.setArg(4, Int3(lower));
 				kernel.setArg(5, Int3(upper));
@@ -117,12 +108,6 @@ arma::generator::AR_model<T>::do_generate() {
 	}
 	std::vector<cl::Event> all_events(part_events.begin(), part_events.end());
 	cl::Event::waitForEvents(all_events);
-	cl::copy(
-		command_queue(),
-		bzeta,
-		zeta.data(),
-		zeta.data() + zeta.numElements()
-	);
 	return zeta;
 }
 

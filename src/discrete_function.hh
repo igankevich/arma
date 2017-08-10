@@ -1,16 +1,16 @@
 #ifndef DISCRETE_FUNCTION_HH
 #define DISCRETE_FUNCTION_HH
 
-#include <blitz/array.h>
+#include "types.hh"
 #include "grid.hh"
 
 namespace arma {
 
 	/// \brief Multidimensional array with a grid.
 	template<class T, int N>
-	class Discrete_function: public blitz::Array<T,N> {
+	class Discrete_function: public ::arma::Array<T,N> {
 
-		typedef blitz::Array<T,N> base_type;
+		typedef ::arma::Array<T,N> base_type;
 		typedef Grid<T,N> grid_type;
 		grid_type _grid;
 

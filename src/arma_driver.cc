@@ -66,6 +66,9 @@ void
 arma::ARMA_driver<T>::generate_wavy_surface() {
 	echo_parameters();
 	this->_zeta.reference(this->_model->generate());
+	#if ARMA_OPENCL
+	this->_zeta.copy_to_host_if_exists();
+	#endif
 	this->_model->verify(this->_zeta);
 }
 
