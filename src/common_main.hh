@@ -34,7 +34,6 @@ register_all_counters() {
 	arma::register_counter(CNT_SECONDFUNC, "second_function");
 	arma::register_counter(CNT_FFT, "fft");
 	arma::register_counter(CNT_DEVTOHOST_COPY, "dev_to_host_copy");
-	arma::register_counter(CNT_NIT, "nit");
 	#endif
 }
 

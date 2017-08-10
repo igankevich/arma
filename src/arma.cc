@@ -7,7 +7,6 @@ template <class T, int N>
 void
 arma::validate_process(blitz::Array<T, N> _phi) {
 	typedef blitz::Array<std::complex<double>, 1> result_type;
-	typedef blitz::Array<double, 1> result_real_type;
 	if (blitz::product(_phi.shape()) <= 1) { return; }
 	/// 1. Find roots of the polynomial
 	/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
@@ -37,6 +36,7 @@ arma::validate_process(blitz::Array<T, N> _phi) {
 		}
 	}
 	#ifndef NDEBUG
+	typedef blitz::Array<double, 1> result_real_type;
 	{ std::ofstream("poly") << phi; }
 	{ std::ofstream("poly_roots") << result; }
 	{ std::ofstream("poly_roots_abs") << result_real_type(blitz::abs(result)); }
