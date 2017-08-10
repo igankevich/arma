@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <blitz/array.h>
 #include "opencl.hh"
+#include "profile_counters.hh"
 
 namespace arma {
 
@@ -155,11 +156,13 @@ namespace arma {
 				if (!this->_buffer()) {
 					throw std::runtime_error("uninitialised buffer");
 				}
-				cl::copy(
-					command_queue(),
-					this->_buffer,
-					this->data_begin(),
-					this->data_end()
+				ARMA_PROFILE_CNT(CNT_COPY_TO_HOST,
+					cl::copy(
+						command_queue(),
+						this->_buffer,
+						this->data_begin(),
+						this->data_end()
+					);
 				);
 			}
 

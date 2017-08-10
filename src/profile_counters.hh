@@ -7,5 +7,6 @@
 #define CNT_SECONDFUNC 1
 #define CNT_FFT 2
 #define CNT_DEVTOHOST_COPY 3
+#define CNT_COPY_TO_HOST 4
 
 #endif // PROFILE_COUNTERS_HH
