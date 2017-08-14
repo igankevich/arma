@@ -60,6 +60,11 @@ namespace arma {
 				return this->_oflags;
 			}
 
+			virtual bool
+			writes_in_parallel() const noexcept {
+				return false;
+			}
+
 			virtual void validate() const {}
 			virtual Array3D<T> generate() = 0;
 			virtual void verify(Array3D<T> zeta) const {}

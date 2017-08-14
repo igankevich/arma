@@ -40,6 +40,11 @@ namespace arma {
 				return white_noise_variance(_phi);
 			}
 
+			inline bool
+			writes_in_parallel() const noexcept override {
+				return this->oflags().isset(Output_flags::Binary);
+			}
+
 			void validate() const override;
 
 			Array3D<T> do_generate() override;

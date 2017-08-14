@@ -8,12 +8,16 @@
 #if ARMA_OPENMP
 #include <omp.h>
 #endif
+#include <thread>
+#include <string>
 #include <stdexcept>
 #include <vector>
 #include "parallel_mt.hh"
 #include "config.hh"
 #include "errors.hh"
 #include "util.hh"
+#include "io/binary_stream.hh"
+#include "profile_counters.hh"
 
 using namespace arma;
 
@@ -112,6 +116,41 @@ arma::generator::AR_model<T>::do_generate() {
 	std::condition_variable cv;
 	std::mutex mtx;
 	std::atomic<int> nfinished(0);
+	const bool writing_in_parallel = this->writes_in_parallel();
+	// how many parts are computed along t dimension
+	Array1D<int> parts_per_slice_completed(nparts(0));
+	parts_per_slice_completed = 0;
+	std::thread writer;
+	if (writing_in_parallel) {
+		writer = std::thread([&] () {
+			using blitz::Range;
+			std::string filename = get_surface_filename(Output_flags::Binary);
+			io::Binary_stream out(filename);
+			int part_t = 0;
+			const int nparts_t = nparts(0);
+			const int nparts_per_slice = nparts(1)*nparts(2);
+			std::unique_lock<std::mutex> lock(mtx);
+			while (part_t < nparts_t) {
+				cv.wait(lock, [&] () {
+					return parts_per_slice_completed(part_t) == nparts_per_slice;
+				});
+				lock.unlock();
+				const int t0 = part_t*partshape(0);
+				const int t1 = std::min(t0 + partshape(0), shape(0)) - 1;
+				std::clog << "writing slices " << t0 << ':' << t1 << std::endl;
+				ARMA_PROFILE_CNT(CNT_WRITE_SURFACE,
+					out.write(Array3D<T>(
+						zeta,
+						Range(t0,t1),
+						Range::all(),
+						Range::all()
+					));
+				);
+				++part_t;
+				lock.lock();
+			}
+		});
+	}
 	/// 3. Put all partitions in a queue and process them in parallel.
 	/// Each thread traverses the queue looking for partitions depedent
 	/// partitions of which has been computed. When eligible partition is
@@ -156,8 +195,14 @@ arma::generator::AR_model<T>::do_generate() {
 				<< "Finished part ["
 				<< ++nfinished << '/' << ntotal << "]\n";
 			completed(part.ijk) = true;
+			if (writing_in_parallel) {
+				++parts_per_slice_completed(part.ijk(0));
+			}
 			cv.notify_all();
 		}
+	}
+	if (writer.joinable()) {
+		writer.join();
 	}
 	return zeta;
 }

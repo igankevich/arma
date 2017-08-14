@@ -29,6 +29,9 @@ arma::ARMA_driver<T>::velocity_potential_grid() const {
 template <class T>
 void
 arma::ARMA_driver<T>::write_wavy_surface() {
+	if (this->_model->writes_in_parallel()) {
+		return;
+	}
 	if (this->oflags().isset(Output_flags::Blitz)) {
 		std::string filename = get_surface_filename(Output_flags::Blitz);
 		std::ofstream(filename) << _zeta;

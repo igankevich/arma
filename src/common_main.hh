@@ -35,6 +35,7 @@ register_all_counters() {
 	arma::register_counter(CNT_FFT, "fft");
 	arma::register_counter(CNT_DEVTOHOST_COPY, "dev_to_host_copy");
 	arma::register_counter(CNT_COPY_TO_HOST, "copy_to_host");
+	arma::register_counter(CNT_WRITE_SURFACE, "write_surface");
 	#endif
 }
 

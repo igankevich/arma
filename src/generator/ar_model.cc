@@ -232,7 +232,8 @@ arma::generator::AR_model<T>::write(std::ostream& out) const {
 		<< ",order=" << this->order()
 		<< ",output=" << this->_oflags
 		<< ",acf.shape=" << this->_acf.shape()
-		<< ",transform=" << this->_nittransform;
+		<< ",transform=" << this->_nittransform
+		<< ",noseed=" << this->_noseed;
 }
 
 #if ARMA_NONE
