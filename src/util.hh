@@ -4,6 +4,7 @@
 #include <ostream>
 #include <ios>
 #include <iomanip>
+#include <mutex>
 
 namespace arma {
 
@@ -18,6 +19,8 @@ namespace arma {
 
 	void
 	print_progress(const char* msg, int nfinished, int ntotal);
+
+	extern std::mutex __write_mutex;
 
 
 }

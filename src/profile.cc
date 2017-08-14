@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <string>
+#include "util.hh"
 
 arma::counter_type arma::__counters[4096 / sizeof(counter_type)];
 std::unordered_map<size_t,std::string> __names;
@@ -37,14 +38,13 @@ arma::profile::thread_event(
 	const int thread_no
 ) {
 	using namespace std::chrono;
+	std::unique_lock<std::mutex> lock(__write_mutex);
 	const auto tp = high_resolution_clock::now();
 	const auto us = duration_cast<microseconds>(tp - programme_start);
-	std::stringstream msg;
-	msg << "evnt "
+	std::clog << "evnt "
 		<< thread_name << ' '
 		<< thread_no << ' '
 		<< state << ' '
 		<< name << ' '
 		<< us.count() << "us\n";
-	std::clog << msg.rdbuf();
 }
