@@ -137,7 +137,7 @@ arma::generator::AR_model<T>::do_generate() {
 				lock.unlock();
 				const int t0 = part_t*partshape(0);
 				const int t1 = std::min(t0 + partshape(0), shape(0)) - 1;
-				std::clog << "writing slices " << t0 << ':' << t1 << std::endl;
+				print_progress("wrote slice", t1+1, shape(0));
 				ARMA_EVENT_START("write_surface", "io", 0);
 				out.write(Array3D<T>(
 					zeta,
@@ -194,9 +194,7 @@ arma::generator::AR_model<T>::do_generate() {
 			this->generate_surface(zeta, part.rect);
 			ARMA_EVENT_END("generate_surface", "omp", thread_no);
 			lock.lock();
-			std::clog
-				<< "Finished part ["
-				<< ++nfinished << '/' << ntotal << "]\n";
+			print_progress("generated part", ++nfinished, ntotal);
 			completed(part.ijk) = true;
 			if (writing_in_parallel) {
 				++parts_per_slice_completed(part.ijk(0));

@@ -16,6 +16,9 @@ namespace arma {
 		out.setf(oldf);
 	}
 
+	void
+	print_progress(const char* msg, int nfinished, int ntotal);
+
 
 }
 

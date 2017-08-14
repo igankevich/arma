@@ -47,7 +47,8 @@ common_src = files([
 	'stats/gaussian.cc',
 	'stats/gram_charlier.cc',
 	'stats/skew_normal.cc',
-	'arma_driver.cc'
+	'arma_driver.cc',
+	'util.cc'
 ]) + linalg_files + apmath_files + nonlinear_files + output_flags_files
 
 if get_option('profile')
