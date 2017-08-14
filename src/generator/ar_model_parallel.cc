@@ -149,6 +149,9 @@ arma::generator::AR_model<T>::do_generate() {
 				++part_t;
 				lock.lock();
 			}
+			ARMA_EVENT_START("write_surface", "io", 0);
+			out.close();
+			ARMA_EVENT_END("write_surface", "io", 0);
 		});
 	}
 	/// 3. Put all partitions in a queue and process them in parallel.
