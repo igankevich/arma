@@ -41,6 +41,7 @@ run_arma(const std::string& input_filename) {
 
 int
 main(int argc, char* argv[]) {
+	ARMA_EVENT_START("programme", "main", 0);
 	arma_init();
 	std::string input_filename;
 	bool help_requested = false;
@@ -72,5 +73,6 @@ main(int argc, char* argv[]) {
 	#if ARMA_PROFILE
 	arma::print_counters(std::clog);
 	#endif
+	ARMA_EVENT_END("programme", "main", 0);
 	return 0;
 }

@@ -25,3 +25,26 @@ void
 arma::register_counter(size_t idx, std::string name) {
 	__names.emplace(idx, name);
 }
+
+const std::chrono::high_resolution_clock::time_point arma::profile::programme_start =
+	std::chrono::high_resolution_clock::now();
+
+void
+arma::profile::thread_event(
+	const char* name,
+	const char* state,
+	const char* thread_name,
+	const int thread_no
+) {
+	using namespace std::chrono;
+	const auto tp = high_resolution_clock::now();
+	const auto us = duration_cast<microseconds>(tp - programme_start);
+	std::stringstream msg;
+	msg << "evnt "
+		<< thread_name << ' '
+		<< thread_no << ' '
+		<< state << ' '
+		<< name << ' '
+		<< us.count() << "us\n";
+	std::clog << msg.rdbuf();
+}

@@ -43,6 +43,20 @@ namespace arma {
 	void
 	register_counter(size_t idx, std::string name);
 
+	namespace profile {
+
+		extern const std::chrono::high_resolution_clock::time_point programme_start;
+
+		void
+		thread_event(
+			const char* name,
+			const char* state,
+			const char* thread_name,
+			const int thread_no
+		);
+
+	}
+
 }
 
 #define ARMA_PROFILE_FUNC(func) \
@@ -62,7 +76,10 @@ namespace arma {
 		msg << "prfl" << ' ' << #name << ' ' << us.count() << "us\n"; \
 		::std::clog << msg.rdbuf(); \
 	}
-
+#define ARMA_EVENT_START(name, thread_name, thread_no) \
+	::arma::profile::thread_event(name, "strt", thread_name, thread_no)
+#define ARMA_EVENT_END(name, thread_name, thread_no) \
+	::arma::profile::thread_event(name, "end", thread_name, thread_no)
 
 #else
 #define ARMA_PROFILE_FUNC(func) func;
@@ -70,6 +87,8 @@ namespace arma {
 #define ARMA_PROFILE_CNT(cnt, block) block
 #define ARMA_PROFILE_START(name)
 #define ARMA_PROFILE_END(name)
+#define ARMA_EVENT_START(name)
+#define ARMA_EVENT_END(name)
 #endif
 
 #endif // PROFILE_HH

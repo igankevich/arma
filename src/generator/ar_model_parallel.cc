@@ -138,14 +138,14 @@ arma::generator::AR_model<T>::do_generate() {
 				const int t0 = part_t*partshape(0);
 				const int t1 = std::min(t0 + partshape(0), shape(0)) - 1;
 				std::clog << "writing slices " << t0 << ':' << t1 << std::endl;
-				ARMA_PROFILE_CNT(CNT_WRITE_SURFACE,
-					out.write(Array3D<T>(
-						zeta,
-						Range(t0,t1),
-						Range::all(),
-						Range::all()
-					));
-				);
+				ARMA_EVENT_START("write_surface", "io", 0);
+				out.write(Array3D<T>(
+					zeta,
+					Range(t0,t1),
+					Range::all(),
+					Range::all()
+				));
+				ARMA_EVENT_END("write_surface", "io", 0);
 				++part_t;
 				lock.lock();
 			}
@@ -158,7 +158,8 @@ arma::generator::AR_model<T>::do_generate() {
 	/// updated in a separate map.
 	#pragma omp parallel
 	{
-		prng::parallel_mt& mt = mts[omp_get_thread_num()];
+		const int thread_no = omp_get_thread_num();
+		prng::parallel_mt& mt = mts[thread_no];
 		std::unique_lock<std::mutex> lock(mtx);
 		while (!parts.empty()) {
 			typename std::vector<Partition>::iterator result;
@@ -184,12 +185,14 @@ arma::generator::AR_model<T>::do_generate() {
 			Partition part = *result;
 			parts.erase(result);
 			lock.unlock();
+			ARMA_EVENT_START("generate_surface", "omp", thread_no);
 			zeta(part.rect) = generate_white_noise(
 				part.shape(),
 				var_wn,
 				std::ref(mt)
 			);
 			this->generate_surface(zeta, part.rect);
+			ARMA_EVENT_END("generate_surface", "omp", thread_no);
 			lock.lock();
 			std::clog
 				<< "Finished part ["
