@@ -87,8 +87,8 @@ namespace arma {
 #define ARMA_PROFILE_CNT(cnt, block) block
 #define ARMA_PROFILE_START(name)
 #define ARMA_PROFILE_END(name)
-#define ARMA_EVENT_START(name)
-#define ARMA_EVENT_END(name)
+#define ARMA_EVENT_START(name, thread_name, thread_no)
+#define ARMA_EVENT_END(name, thread_name, thread_no)
 #endif
 
 #endif // PROFILE_HH
