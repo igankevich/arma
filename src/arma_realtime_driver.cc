@@ -12,36 +12,36 @@ ARMA_driver<T>()
 
 template <class T>
 arma::ARMA_realtime_driver<T>::~ARMA_realtime_driver() {
-	delete_buffers();
+	this->delete_buffers();
 }
 
 template <class T>
 void
 arma::ARMA_realtime_driver<T>::on_display() {
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo_phi);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo_phi);
+	glBindBuffer(GL_ARRAY_BUFFER, this->_vbo_phi);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo_phi);
 	glColor3f(0.8f, 0, 0);
-	glDrawElements(GL_LINE_STRIP, _indices.size(), GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_LINE_STRIP, this->_indices.size(), GL_UNSIGNED_INT, nullptr);
 }
 
 template <class T>
 void
 arma::ARMA_realtime_driver<T>::init_buffers() {
-	glGenVertexArrays(1, &_vao_phi);
-	glBindVertexArray(_vao_phi);
+	glGenVertexArrays(1, &this->_vao_phi);
+	glBindVertexArray(this->_vao_phi);
 	using blitz::product;
 	const GLsizei num_dimensions = 3;
 	GLsizei phi_size = product(this->velocity_potential_grid().num_points())
 		* sizeof(T) * num_dimensions;
-	glGenBuffers(1, &_vbo_phi);
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo_phi);
+	glGenBuffers(1, &this->_vbo_phi);
+	glBindBuffer(GL_ARRAY_BUFFER, this->_vbo_phi);
 	glBufferData(GL_ARRAY_BUFFER, phi_size, nullptr, GL_DYNAMIC_DRAW);
 	glEnableVertexAttribArray(0);
 	using opengl::GL_type;
 	glVertexAttribPointer(0, 3, GL_type<T>::value, GL_FALSE, 0, 0);
 	typedef velocity::High_amplitude_realtime_solver<T> solver_type;
 	solver_type* solver = dynamic_cast<solver_type*>(this->velocity_potential_solver());
-	solver->set_gl_buffer_name(_vbo_phi);
+	solver->set_gl_buffer_name(this->_vbo_phi);
 }
 
 template <class T>
@@ -53,41 +53,41 @@ arma::ARMA_realtime_driver<T>::init_indices() {
 	bool dir = true;
 	// for explanation see
 	// http://andmonahov.blogspot.ru/2012/12/opengl-es-20-4.html
-	_indices.clear();
+	this->_indices.clear();
 	for (int i=0; i<nx; ++i) {
 		if (dir) {
 			// left-to-right
 			for (int j=0; j<ny; ++j) {
-				_indices.emplace_back(i*ny + j);
-				_indices.emplace_back((i+1)*ny + j);
+				this->_indices.emplace_back(i*ny + j);
+				this->_indices.emplace_back((i+1)*ny + j);
 			}
 			// repeat last index to join the stripes
-			_indices.emplace_back((i+1)*ny + (ny-1));
+			this->_indices.emplace_back((i+1)*ny + (ny-1));
 		} else {
 			// right-to-left
 			for (int j=ny-1; j>=0; --j) {
-				_indices.emplace_back(i*ny + j);
-				_indices.emplace_back((i+1)*ny + j);
+				this->_indices.emplace_back(i*ny + j);
+				this->_indices.emplace_back((i+1)*ny + j);
 			}
 			// repeat last index to join the stripes
-			_indices.emplace_back((i+1)*ny);
+			this->_indices.emplace_back((i+1)*ny);
 		}
 		dir = !dir;
 	}
-	glGenBuffers(1, &_ibo_phi);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo_phi);
+	glGenBuffers(1, &this->_ibo_phi);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->_ibo_phi);
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER,
-		_indices.size()*sizeof(index_type),
-		_indices.data(),
+		this->_indices.size()*sizeof(index_type),
+		this->_indices.data(),
 		GL_STATIC_DRAW
 	);
 	#if ARMA_DEBUG_OPENGL
 	{
 		std::ofstream out("indices");
 		std::copy(
-			_indices.begin(),
-			_indices.end(),
+			this->_indices.begin(),
+			this->_indices.end(),
 			std::ostream_iterator<index_type>(out, "\n")
 		);
 	}
@@ -97,18 +97,15 @@ arma::ARMA_realtime_driver<T>::init_indices() {
 template <class T>
 void
 arma::ARMA_realtime_driver<T>::delete_buffers() {
-	glDeleteBuffers(1, &_vbo_phi);
+	glDeleteBuffers(1, &this->_vbo_phi);
 }
 
 template <class T>
-std::istream&
-arma::operator>>(std::istream& in, ARMA_realtime_driver<T>& rhs) {
-	in >> static_cast<ARMA_driver<T>&>(rhs);
-	rhs.init_buffers();
-	rhs.init_indices();
-	return in;
+void
+arma::ARMA_realtime_driver<T>::read(std::istream& in) {
+	ARMA_driver<T>::read(in);
+	this->init_buffers();
+	this->init_indices();
 }
 
 template class arma::ARMA_realtime_driver<ARMA_REAL_TYPE>;
-template std::istream&
-arma::operator>>(std::istream& in, ARMA_realtime_driver<ARMA_REAL_TYPE>& rhs);

@@ -29,6 +29,9 @@ namespace arma {
 		void
 		on_display();
 
+		void
+		read(std::istream& in) override;
+
 	private:
 		void
 		init_buffers();
@@ -39,15 +42,7 @@ namespace arma {
 		void
 		init_indices();
 
-		template<class X>
-		friend std::istream&
-		operator>>(std::istream& in, ARMA_realtime_driver<X>& rhs);
-
 	};
-
-	template <class T>
-	std::istream&
-	operator>>(std::istream& in, ARMA_realtime_driver<T>& rhs);
 
 }
 

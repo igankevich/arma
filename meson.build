@@ -36,7 +36,7 @@ libpthread = dependency(
 )
 libclFFT = dependency(
 	'clFFT',
-	required: get_option('with_high_amplitude_realtime_solver')
+	required: get_option('framework') == 'opencl'
 )
 
 if get_option('buildtype') == 'release'
@@ -104,6 +104,8 @@ config = configuration_data()
 config.set('mt_config_file', 'mt.dat')
 config.set('datadir', datadir)
 config.set('opencl_srcdir', opencl_srcdir)
+config.set('ARMA_CLFFT', get_option('framework') == 'opencl')
+config.set('ARMA_HART_SOLVER', get_option('with_high_amplitude_realtime_solver'))
 
 incdirs = include_directories('src')
 subdir('src')

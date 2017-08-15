@@ -3,8 +3,15 @@
 
 #include <exception>
 #include <iostream>
+#include <string>
 
 #include <gsl/gsl_errno.h>
+
+#if defined(ARMA_CLFFT)
+#include <clFFT.h>
+#endif
+
+#include "config.hh"
 
 #include "generator/ar_model.hh"
 #include "generator/ma_model.hh"
@@ -30,10 +37,10 @@
 void
 register_all_counters() {
 	#if ARMA_PROFILE
-	arma::register_counter(CNT_WINDOWFUNC, "window_function");
-	arma::register_counter(CNT_SECONDFUNC, "second_function");
-	arma::register_counter(CNT_FFT, "fft");
-	arma::register_counter(CNT_DEVTOHOST_COPY, "dev_to_host_copy");
+	arma::register_counter(CNT_HARTS_G1, "harts_g1");
+	arma::register_counter(CNT_HARTS_G2, "harts_g2");
+	arma::register_counter(CNT_HARTS_FFT, "harts_fft");
+	arma::register_counter(CNT_HARTS_COPY_TO_HOST, "harts_copy_to_host");
 	arma::register_counter(CNT_COPY_TO_HOST, "copy_to_host");
 	arma::register_counter(CNT_WRITE_SURFACE, "write_surface");
 	#endif
@@ -92,20 +99,84 @@ register_all_models(arma::ARMA_driver<T>& drv) {
 	drv.template register_model<Longuet_Higgins_model<T>>("LH");
 }
 
+#if ARMA_OPENGL
 void
-arma_init() {
+init_opengl(int argc, char* argv[]);
+#endif
+
+void
+arma_init(int argc, char* argv[]) {
 	#if ARMA_PROFILE
 	register_all_counters();
 	#endif
-
 	/// Print GSL errors and proceed execution.
 	/// Throw domain-specific exception later.
 	gsl_set_error_handler(print_error_and_continue);
 	std::set_terminate(print_exception_and_terminate);
-
+	#if ARMA_OPENGL
+	init_opengl(argc, argv);
+	#endif
 	#if ARMA_OPENCL
 	::arma::opencl::init();
 	#endif
+}
+
+void
+arma_finalise() {
+	#if ARMA_PROFILE
+	arma::print_counters(std::clog);
+	#endif
+	#if defined(ARMA_CLFFT)
+	#define CHECK(x) ::cl::detail::errHandler((x), #x);
+	CHECK(clfftTeardown());
+	#undef CHECK
+	#endif
+}
+
+void
+usage(char* argv0) {
+	std::cout
+		<< "usage: "
+		<< (argv0 == nullptr ? "arma" : argv0)
+		<< " [-h] INPUTFILE\n";
+}
+
+template <class T>
+void
+run_arma(const std::string& input_filename);
+
+int
+main(int argc, char* argv[]) {
+	ARMA_EVENT_START("programme", "main", 0);
+	arma_init(argc, argv);
+	std::string input_filename;
+	bool help_requested = false;
+	int opt = 0;
+	while ((opt = ::getopt(argc, argv, "h")) != -1) {
+		switch (opt) {
+			case 'h':
+				help_requested = true;
+				break;
+		}
+	}
+	if (argc - ::optind > 1) {
+		std::cerr << "Only one file argument is allowed." << std::endl;
+		return 1;
+	}
+	if (input_filename.empty() && ::optind < argc) {
+		input_filename = argv[::optind];
+	}
+	if (help_requested || input_filename.empty()) {
+		usage(argv[0]);
+	} else {
+		/// floating point type (float, double, long double or multiprecision number
+		/// C++ class)
+		typedef ARMA_REAL_TYPE T;
+		run_arma<T>(input_filename);
+	}
+	arma_finalise();
+	ARMA_EVENT_END("programme", "main", 0);
+	return 0;
 }
 
 #endif // COMMON_MAIN_HH

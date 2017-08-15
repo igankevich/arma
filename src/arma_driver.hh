@@ -129,6 +129,9 @@ namespace arma {
 			this->_models.emplace(key, [] () { return new Type; });
 		}
 
+		virtual void
+		read(std::istream& in);
+
 		/**
 		Read and validate driver parameters from an input stream.
 		*/

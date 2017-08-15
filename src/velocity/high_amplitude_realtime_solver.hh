@@ -56,7 +56,7 @@ namespace arma {
 			#if ARMA_OPENGL
 			inline void
 			set_gl_buffer_name(GLuint name) noexcept {
-				_glphi = name;
+				this->_glphi = name;
 			}
 			#endif
 

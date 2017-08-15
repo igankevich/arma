@@ -5,4 +5,7 @@
 #define ARMA_OPENCL_SRC_DIR "@opencl_srcdir@"
 #define ARMA_DCMT_NAME "@arma_dcmt_name@"
 
+#mesondefine ARMA_CLFFT
+#mesondefine ARMA_HART_SOLVER
+
 #endif // CONFIG_HH

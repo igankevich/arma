@@ -91,7 +91,6 @@ arma::apmath::Fourier_transform<T,N>::Fourier_transform() {
 template <class T, int N>
 arma::apmath::Fourier_transform<T,N>::~Fourier_transform() {
 	CHECK(clfftDestroyPlan(&this->_fftplan));
-	CHECK(clfftTeardown());
 }
 
 template <class T, int N>

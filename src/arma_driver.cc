@@ -85,33 +85,7 @@ arma::ARMA_driver<T>::compute_velocity_potentials() {
 template <class T>
 std::istream&
 arma::operator>>(std::istream& in, ARMA_driver<T>& rhs) {
-	typedef typename ARMA_driver<T>::model_type model_type;
-	typedef typename ARMA_driver<T>::vpsolver_type vpsolver_type;
-	bits::Object_wrapper<model_type> model_wrapper(
-		rhs._model,
-		rhs._models
-	);
-	bits::Object_wrapper<vpsolver_type> vpsolver_wrapper(
-		rhs._solver,
-		rhs._solvers
-	);
-	sys::parameter_map params({
-		{"model", sys::make_param(model_wrapper)},
-		{"velocity_potential_solver", sys::make_param(vpsolver_wrapper)},
-	});
-	in >> params;
-	if (!rhs._solver) {
-		std::cerr
-			<< "Bad \"velocity_potential_solver\": null"
-			<< std::endl;
-		throw std::runtime_error("bad solver");
-	}
-	if (!rhs._model) {
-		std::cerr
-			<< "Bad \"generator\": null"
-			<< std::endl;
-		throw std::runtime_error("bad generator");
-	}
+	rhs.read(in);
 	return in;
 }
 
@@ -168,7 +142,39 @@ arma::ARMA_driver<T>::open(const std::string& filename) {
 		throw std::runtime_error("bad input file");
 	}
 	write_key_value(std::clog, "Input file", filename);
-	cfg >> *this;
+	this->read(cfg);
+}
+
+template <class T>
+void
+arma::ARMA_driver<T>::read(std::istream& in) {
+	typedef typename ARMA_driver<T>::model_type model_type;
+	typedef typename ARMA_driver<T>::vpsolver_type vpsolver_type;
+	bits::Object_wrapper<model_type> model_wrapper(
+		this->_model,
+		this->_models
+	);
+	bits::Object_wrapper<vpsolver_type> vpsolver_wrapper(
+		this->_solver,
+		this->_solvers
+	);
+	sys::parameter_map params({
+		{"model", sys::make_param(model_wrapper)},
+		{"velocity_potential_solver", sys::make_param(vpsolver_wrapper)},
+	});
+	in >> params;
+	if (!this->_solver) {
+		std::cerr
+			<< "Bad \"velocity_potential_solver\": null"
+			<< std::endl;
+		throw std::runtime_error("bad solver");
+	}
+	if (!this->_model) {
+		std::cerr
+			<< "Bad \"generator\": null"
+			<< std::endl;
+		throw std::runtime_error("bad generator");
+	}
 }
 
 template class arma::ARMA_driver<ARMA_REAL_TYPE>;
