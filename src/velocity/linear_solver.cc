@@ -3,6 +3,7 @@
 #include "derivative.hh"
 #include "interpolate.hh"
 #include "profile.hh"
+#include "blitz.hh"
 
 #include <stdexcept>
 #include <cmath>
@@ -99,7 +100,7 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 		}
 		#endif
 		phi *= mult;
-		ret = blitz::real(_fft.backward(phi, workspace)).copy();
+		ret = blitz::real(_fft.backward(phi, workspace)).copy() / phi.numElements();
 	);
 	#if ARMA_DEBUG_FFT
 	++_idxz;
@@ -151,6 +152,7 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 			}
 		}
 	);
+	blitz::rotate(result, result.shape()/2);
 	return result;
 }
 
