@@ -159,6 +159,7 @@ arma::generator::Plain_wave_model<T>::read(std::istream& in) {
 		{"func", sys::make_param(this->_func)},
 		{"waves", sys::make_param(waves_wrappper)},
 		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
+		{"output", sys::make_param(this->_oflags)},
 	}, true);
 	in >> params;
 	validate_shape(this->_waves.shape(), "plain_wave.waves");
