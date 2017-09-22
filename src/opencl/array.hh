@@ -1,10 +1,10 @@
 #ifndef OPENCL_ARRAY_HH
 #define OPENCL_ARRAY_HH
 
-#include <stdexcept>
-#include <blitz/array.h>
 #include "opencl.hh"
 #include "profile_counters.hh"
+#include <blitz/array.h>
+#include <stdexcept>
 
 namespace arma {
 
@@ -34,6 +34,16 @@ namespace arma {
 
 	namespace opencl {
 
+		/**
+		   \brief A wrapper for \c blitz::Array class for OpenCL kernels.
+
+		   Array optimises data transfer between host and device by explicitly
+		   copying data to accelerator, or allocating memory directly on the
+		   device. These operations are tied to the object rather than OpenCL
+		   kernel, so there is no need to copy data before/after each kernel
+		   execution. In all other cases this class acts as \c blitz::Array.
+
+		 */
 		template <class T, int N>
 		class Array: public blitz::Array<T,N> {
 
@@ -52,7 +62,9 @@ namespace arma {
 		public:
 
 			Array() = default;
+
 			Array(const Array&) = default;
+
 			~Array() = default;
 
 			Array(Array&& rhs):
@@ -83,7 +95,9 @@ namespace arma {
 			inline Array&
 			operator=(const Array& rhs) {
 				this->_buffer = rhs._buffer;
-				this->base_type::operator=(static_cast<const base_type&>(rhs));
+				this->
+				base_type::operator=(static_cast<const base_type&>(rhs));
+
 				return *this;
 			}
 
@@ -135,7 +149,7 @@ namespace arma {
 						this->data_end(),
 						flags & CL_MEM_READ_ONLY,
 						flags & CL_MEM_USE_HOST_PTR
-					);
+					                );
 				}
 			}
 
@@ -148,7 +162,7 @@ namespace arma {
 					context(),
 					flags,
 					this->numElements()*sizeof(T)
-				);
+				                );
 			}
 
 			inline void
@@ -156,7 +170,8 @@ namespace arma {
 				if (!this->_buffer()) {
 					throw std::runtime_error("uninitialised buffer");
 				}
-				ARMA_PROFILE_CNT(CNT_COPY_TO_HOST,
+				ARMA_PROFILE_CNT(
+					CNT_COPY_TO_HOST,
 					cl::copy(
 						command_queue(),
 						this->_buffer,

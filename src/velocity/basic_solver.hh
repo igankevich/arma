@@ -15,7 +15,15 @@ namespace arma {
 	*/
 	namespace velocity {
 
-		/// \brief Base class for all velocity potential field solvers.
+		/**
+		\defgroup solvers Velocity potential solvers
+		\brief Solvers which determine velocity potential field under wavy surface.
+		*/
+
+		/**
+		\brief Base class for all velocity potential field solvers.
+		\ingroup solvers
+		*/
 		template<class T>
 		class Velocity_potential_solver {
 

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <blitz/array.h>
 
+/// Additional routines for Blitz++ arrays.
 namespace blitz {
 
 	inline bool

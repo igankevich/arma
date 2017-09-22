@@ -16,6 +16,7 @@ namespace arma {
 
 		/**
 		\brief Uses autoregressive process, standing waves.
+		\ingroup generators
 		*/
 		template <class T>
 		struct AR_model: public Basic_ARMA_model<T> {

@@ -8,13 +8,10 @@
 #include "apmath/closed_interval.hh"
 
 /**
-\file
+\brief Linear algebra subroutines.
 \author Ivan Gankevich
 \date 2016-07-26
-\brief Various linear algebra subroutines.
 */
-
-/// Various linear algebra subroutines.
 namespace linalg {
 
 	using ::arma::apmath::closed_interval;
@@ -24,6 +21,7 @@ namespace linalg {
 	template <class T>
 	using Vector = blitz::Array<T, 1>;
 
+	/// BLAS C++ templates.
 	namespace bits {
 		template<
 			class T,

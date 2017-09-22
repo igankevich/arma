@@ -1,19 +1,20 @@
 #ifndef PARAMS_HH
 #define PARAMS_HH
 
-#include <unordered_map>
 #include <functional>
 #include <string>
+#include <unordered_map>
 
-/// Various system utilities.
+/// System utilities.
 namespace sys {
 
+	/// Configuration file parameter.
 	template <class T>
 	struct parameter {
 
 		inline
 		parameter(T val):
-		parameter(val, [](const T,const char*){})
+		parameter(val, [](const T,const char*) {})
 		{}
 
 		template<class Validate>
@@ -52,9 +53,10 @@ namespace sys {
 		return parameter<T>(wrapper);
 	}
 
+	/// Configuration file parameters.
 	struct parameter_map {
 
-		typedef std::function<std::istream&(std::istream&, const char*)>
+		typedef std::function<std::istream& (std::istream&, const char*)>
 		    read_param;
 		typedef std::unordered_map<std::string, read_param> map_type;
 
@@ -93,6 +95,7 @@ namespace sys {
 
 	std::ostream&
 	operator<<(std::ostream& out, const parameter_map& rhs);
+
 }
 
 #endif // PARAMS_HH

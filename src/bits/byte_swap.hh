@@ -16,9 +16,6 @@ namespace arma {
 
 	namespace bits {
 
-		/// @addtogroup byteswap Byte swap
-		/// @brief Compile-time byte swapping functions.
-		/// @{
 		template<class T>
 		inline T
 		byte_swap (T n) noexcept {
@@ -79,23 +76,6 @@ namespace arma {
 			#endif
 		}
 
-		// compile-time unit tests for byte swapping
-		static_assert(
-			byte_swap<uint16_t>(UINT16_C(0xABCD)) == UINT16_C(0xCDAB),
-			"byte swap failed for u16"
-		);
-
-		static_assert(
-			byte_swap<uint32_t>(UINT32_C(0xABCDDCBA)) == UINT32_C(0xBADCCDAB),
-			"byte swap failed for u32"
-		);
-
-		static_assert(
-			byte_swap<uint64_t>(UINT64_C(0xABCDDCBA12344321)) == UINT64_C(0x21433412BADCCDAB),
-			"byte swap failed for u64"
-		);
-		/// @}
-
 		constexpr bool
 		is_network_byte_order() noexcept {
 			#if defined(WORDS_BIGENDIAN) \
@@ -105,6 +85,7 @@ namespace arma {
 			return false;
 			#endif
 		}
+
 		template<class Int, bool integral>
 		struct byte_swap_chooser {};
 
@@ -163,159 +144,144 @@ namespace arma {
 		template<> struct Integral<4>: public byte_swap_chooser<uint32_t,true> {};
 		template<> struct Integral<8>: public byte_swap_chooser<uint64_t,true> {};
 
-	}
+		template<class T, class Ch=char>
+		union Bytes {
 
-	template<class T, class Ch=char>
-	union Bytes {
+			typedef Ch value_type;
+			typedef bits::Integral<sizeof(T)> integral_type;
+			typedef value_type* iterator;
+			typedef const value_type* const_iterator;
+			typedef std::size_t size_type;
 
-		typedef Ch value_type;
-		typedef bits::Integral<sizeof(T)> integral_type;
-		typedef value_type* iterator;
-		typedef const value_type* const_iterator;
-		typedef std::size_t size_type;
+			constexpr
+			Bytes() noexcept:
+				_val{} {}
 
-		constexpr
-		Bytes() noexcept:
-			_val{} {}
+			constexpr
+			Bytes(const Bytes& rhs) noexcept:
+				_val(rhs._val) {}
 
-		constexpr
-		Bytes(const Bytes& rhs) noexcept:
-			_val(rhs._val) {}
+			constexpr
+			Bytes(T rhs) noexcept:
+				_val(rhs) {}
 
-		constexpr
-		Bytes(T rhs) noexcept:
-			_val(rhs) {}
-
-		template<class It>
-		Bytes(It first, It last) noexcept {
-			std::copy(first, last, _bytes);
-		}
-
-		inline void
-		to_network_format() noexcept {
-			_intval.to_network_format();
-		}
-
-		inline void
-		to_host_format() noexcept {
-			_intval.to_host_format();
-		}
-
-		inline
-		operator T&() noexcept {
-			return _val;
-		}
-
-		constexpr
-		operator const T&() const noexcept {
-			return _val;
-		}
-
-		constexpr value_type
-		operator[](size_type idx) const noexcept {
-			return _bytes[idx];
-		}
-
-		constexpr bool
-		operator==(const Bytes& rhs) const noexcept {
-			return _intval == rhs._intval;
-		}
-
-		constexpr bool
-		operator!=(const Bytes& rhs) const noexcept {
-			return !operator==(rhs);
-		}
-
-		inline iterator
-		begin() noexcept {
-			return _bytes;
-		}
-
-		inline iterator
-		end() noexcept {
-			return _bytes + sizeof(T);
-		}
-
-		constexpr const_iterator
-		begin() const noexcept {
-			return _bytes;
-		}
-
-		constexpr const_iterator
-		end() const noexcept {
-			return _bytes + sizeof(T);
-		}
-
-		constexpr const T&
-		value() const noexcept {
-			return _val;
-		}
-
-		inline T&
-		value() noexcept {
-			return _val;
-		}
-
-		static constexpr size_type
-		size() noexcept {
-			return sizeof(T);
-		}
-
-	private:
-		T _val;
-		integral_type _intval;
-		value_type _bytes[sizeof(T)];
-
-		static_assert(
-			sizeof(decltype(_val)) == sizeof(decltype(_intval)),
-			"bad integral type"
-		);
-	};
-
-	template<class T>
-	constexpr Bytes<T>
-	make_bytes(T rhs) noexcept {
-		return Bytes<T>(rhs);
-	}
-
-	template<class T>
-	T to_network_format(Bytes<T> n) noexcept {
-		n.to_network_format();
-		return n.value();
-	}
-
-	template<class T>
-	T to_host_format(Bytes<T> n) noexcept {
-		n.to_host_format();
-		return n.value();
-	}
-
-	template<class T>
-	constexpr T
-	to_network_format(T n) noexcept {
-		return bits::is_network_byte_order() ? n : bits::byte_swap<T>(n);
-	}
-
-	template<class T>
-	constexpr T
-	to_host_format(T n) noexcept {
-		return bits::is_network_byte_order() ? n : bits::byte_swap<T>(n);
-	}
-
-	struct endiannes_guard {
-		endiannes_guard() {
-			union Endian {
-				constexpr Endian() {}
-				uint32_t i = UINT32_C(1);
-				uint8_t b[4];
-			} endian;
-			if ((bits::is_network_byte_order() && endian.b[0] != 0)
-				|| (!bits::is_network_byte_order() && endian.b[0] != 1))
-			{
-				throw std::runtime_error("endiannes was not correctly determined at compile time");
+			template<class It>
+			Bytes(It first, It last) noexcept {
+				std::copy(first, last, _bytes);
 			}
+
+			inline void
+			to_network_format() noexcept {
+				_intval.to_network_format();
+			}
+
+			inline void
+			to_host_format() noexcept {
+				_intval.to_host_format();
+			}
+
+			inline
+			operator T&() noexcept {
+				return _val;
+			}
+
+			constexpr
+			operator const T&() const noexcept {
+				return _val;
+			}
+
+			constexpr value_type
+			operator[](size_type idx) const noexcept {
+				return _bytes[idx];
+			}
+
+			constexpr bool
+			operator==(const Bytes& rhs) const noexcept {
+				return _intval == rhs._intval;
+			}
+
+			constexpr bool
+			operator!=(const Bytes& rhs) const noexcept {
+				return !operator==(rhs);
+			}
+
+			inline iterator
+			begin() noexcept {
+				return _bytes;
+			}
+
+			inline iterator
+			end() noexcept {
+				return _bytes + sizeof(T);
+			}
+
+			constexpr const_iterator
+			begin() const noexcept {
+				return _bytes;
+			}
+
+			constexpr const_iterator
+			end() const noexcept {
+				return _bytes + sizeof(T);
+			}
+
+			constexpr const T&
+			value() const noexcept {
+				return _val;
+			}
+
+			inline T&
+			value() noexcept {
+				return _val;
+			}
+
+			static constexpr size_type
+			size() noexcept {
+				return sizeof(T);
+			}
+
+		private:
+			T _val;
+			integral_type _intval;
+			value_type _bytes[sizeof(T)];
+
+			static_assert(
+				sizeof(decltype(_val)) == sizeof(decltype(_intval)),
+				"bad integral type"
+			);
+		};
+
+		template<class T>
+		constexpr Bytes<T>
+		make_bytes(T rhs) noexcept {
+			return Bytes<T>(rhs);
 		}
-	};
+
+		template<class T>
+		T to_network_format(Bytes<T> n) noexcept {
+			n.to_network_format();
+			return n.value();
+		}
+
+		template<class T>
+		T to_host_format(Bytes<T> n) noexcept {
+			n.to_host_format();
+			return n.value();
+		}
+
+		template<class T>
+		constexpr T
+		to_network_format(T n) noexcept {
+			return bits::is_network_byte_order() ? n : bits::byte_swap<T>(n);
+		}
+
+		template<class T>
+		constexpr T
+		to_host_format(T n) noexcept {
+			return bits::is_network_byte_order() ? n : bits::byte_swap<T>(n);
+		}
+
+	}
 
 }
 

@@ -9,6 +9,7 @@ namespace arma {
 
 	namespace opencl {
 
+		/// A wrapper for \c cl_device_type.
 		enum struct Device_type: cl_device_type {
 			Default = CL_DEVICE_TYPE_DEFAULT,
 			CPU = CL_DEVICE_TYPE_CPU,

@@ -13,6 +13,7 @@ namespace arma {
 
 		/**
 		\brief Uses moving average process, propagating waves.
+		\ingroup generators
 		*/
 		template <class T>
 		struct MA_model: public Basic_ARMA_model<T> {

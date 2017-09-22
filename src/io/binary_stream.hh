@@ -9,8 +9,13 @@
 
 namespace arma {
 
+	/// binary input/output streams
 	namespace io {
 
+		/**
+		\brief Output stream that writes data in binary format using
+		network byte order.
+		*/
 		class Binary_stream {
 
 		private:
@@ -41,7 +46,7 @@ namespace arma {
 				const T* first = &rhs(t0,0,0);
 				const T* last = first + n*rhs.extent(1)*rhs.extent(2);
 				while (first != last) {
-					Bytes<T> bytes(*first);
+					bits::Bytes<T> bytes(*first);
 					bytes.to_network_format();
 					this->_buffer->sputn(bytes.begin(), bytes.size());
 					++first;

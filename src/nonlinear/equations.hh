@@ -5,6 +5,7 @@
 
 namespace arma {
 
+	/// Non-linear inertialess transformation of wavy surface.
 	namespace nonlinear {
 
 		/**

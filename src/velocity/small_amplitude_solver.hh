@@ -9,6 +9,7 @@ namespace arma {
 
 		/**
 		\brief Uses analytic formulae for small-amplitude waves (WIP).
+		\ingroup solvers
 		*/
 		template <class T>
 		class Small_amplitude_solver: public Velocity_potential_solver<T> {

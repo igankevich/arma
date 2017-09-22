@@ -7,10 +7,14 @@
 
 namespace arma {
 
+	/// Basic mathematical tools.
 	namespace apmath {
 
+		/// An interval which includes both of its end points.
 		template <class T>
 		class closed_interval {
+
+		private:
 			T _a, _b;
 
 		public:

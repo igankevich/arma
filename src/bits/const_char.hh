@@ -5,7 +5,7 @@
 
 namespace arma {
 
-	namespace util {
+	namespace bits {
 
 		template<char CH>
 		struct const_char {

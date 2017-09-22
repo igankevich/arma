@@ -14,7 +14,7 @@ namespace arma {
 
 	namespace apmath {
 
-		/*
+		/**
 		\brief Multidimensional convolution based on Fourier transform.
 
 		Slicing is done in specified dimension with specified padding.

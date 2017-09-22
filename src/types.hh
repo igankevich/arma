@@ -6,11 +6,6 @@
 #include "opencl/array.hh"
 #endif
 
-/**
-\file
-\brief domain-specific types and templates
-*/
-
 namespace arma {
 
 	template <class T, size_t N>

@@ -1,5 +1,5 @@
 #include "closed_interval.hh"
-#include "utility/const_char.hh"
+#include "bits/const_char.hh"
 
 #include <iostream>
 
@@ -12,7 +12,7 @@ arma::apmath::operator<<(std::ostream& out, const closed_interval<T>& rhs) {
 template <class T>
 std::istream&
 arma::apmath::operator>>(std::istream& in, closed_interval<T>& rhs) {
-	using arma::util::const_char;
+	using bits::const_char;
 	if (!(in >> std::ws >> const_char<'['>())) {
 		std::cerr << "Expecting \"[\"." << std::endl;
 	}

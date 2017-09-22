@@ -10,7 +10,9 @@ namespace arma {
 	namespace velocity {
 
 		/**
-		\brief Uses analytic formulae from linear wave theory, sine and cosine waves.
+		\brief Uses analytic formulae from linear wave theory, sine and
+		cosine waves.
+		\ingroup solvers
 		*/
 		template <class T>
 		class Plain_wave_solver: public Velocity_potential_solver<T> {

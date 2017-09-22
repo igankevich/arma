@@ -38,6 +38,7 @@ common_src = files([
 	'generator/arma_model.cc',
 	'generator/lh_model.cc',
 	'generator/basic_arma_model.cc',
+	'generator/voodoo.cc',
 	'ma_algorithm.cc',
 	'interpolate.cc',
 	'stats/qq_graph.cc',
@@ -148,11 +149,6 @@ executable(
 		libGL
 	] + fourier_deps,
 	install: true
-)
-
-executable(
-	'layout-run',
-	sources: 'layout-run.cc'
 )
 
 subdir('test')

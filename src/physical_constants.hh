@@ -5,6 +5,7 @@
 
 namespace arma {
 
+	/// Physical and mathematical constants.
 	namespace constants {
 
 		template <class T>

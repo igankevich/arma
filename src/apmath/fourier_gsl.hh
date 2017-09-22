@@ -12,6 +12,10 @@ namespace arma {
 
 	namespace apmath {
 
+		/**
+		\brief An opaque object which holds per-thread state of
+		\link Fourier_transform Fourier transform\endlink.
+		*/
 		template <class T, int N>
 		class Fourier_workspace {
 

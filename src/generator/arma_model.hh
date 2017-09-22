@@ -12,6 +12,7 @@ namespace arma {
 
 		/**
 		\brief Uses autoregressive moving average process (WIP).
+		\ingroup generators
 		*/
 		template <class T>
 		struct ARMA_model: public AR_model<T>,

@@ -9,7 +9,10 @@ namespace arma {
 
 	namespace stats {
 
-		/// \brief Weibull distribution.
+		/**
+		\brief Weibull distribution.
+		\ingroup distributions
+		*/
 		template <class T>
 		struct Weibull {
 

@@ -16,6 +16,7 @@ namespace arma {
 
 		/**
 		\brief Uses Longuet---Higgins model, small-amplitude waves.
+		\ingroup generators
 		*/
 		template <class T>
 		class Longuet_Higgins_model: public Basic_model<T> {

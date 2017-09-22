@@ -11,6 +11,7 @@ namespace arma {
 
 		/**
 		\brief Uses linear wave theory formula, small-amplitude waves.
+		\ingroup solvers
 		*/
 		template<class T>
 		class Linear_solver: public Velocity_potential_solver<T> {

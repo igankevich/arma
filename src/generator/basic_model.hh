@@ -13,7 +13,15 @@ namespace arma {
 	/// \brief Wavy surface generators.
 	namespace generator {
 
-		/// \brief A base class for ARMA generators.
+		/**
+		\defgroup generators Wavy surface generation
+		\brief Generators based on ocean wavy surface simulation models.
+		*/
+
+		/**
+		\brief A base class for all generators.
+		\ingroup generators
+		*/
 		template<class T>
 		class Basic_model {
 

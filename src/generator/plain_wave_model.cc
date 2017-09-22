@@ -69,7 +69,7 @@ namespace {
 }
 
 std::istream&
-arma::generator::bits::operator>>(std::istream& in, Function& rhs) {
+arma::generator::operator>>(std::istream& in, Function& rhs) {
 	std::string name;
 	in >> std::ws >> name;
 	if (name == "sin") {
@@ -85,7 +85,7 @@ arma::generator::bits::operator>>(std::istream& in, Function& rhs) {
 }
 
 const char*
-arma::generator::bits::to_string(Function rhs) {
+arma::generator::to_string(Function rhs) {
 	switch (rhs) {
 		case Function::Sine: return "sin";
 		case Function::Cosine: return "cos";

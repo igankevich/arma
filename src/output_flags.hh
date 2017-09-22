@@ -9,7 +9,9 @@
 
 namespace arma {
 
+	/// Flags that determine what and how is written to disk.
 	class Output_flags {
+
 	public:
 		typedef std::bitset<32> bitset_type;
 

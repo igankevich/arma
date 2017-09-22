@@ -10,6 +10,7 @@ namespace arma {
 
 	namespace generator {
 
+		/// Base class for AR, MA and ARMA models.
 		template <class T>
 		class Basic_ARMA_model: public virtual Basic_model<T> {
 

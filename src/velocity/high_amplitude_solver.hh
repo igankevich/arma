@@ -9,7 +9,9 @@ namespace arma {
 	namespace velocity {
 
 		/**
-		\brief Uses analytic formula based on Fourier transforms, arbitrary amplitude waves.
+		\brief Uses analytic formula based on Fourier transforms,
+		arbitrary amplitude waves.
+		\ingroup solvers
 		*/
 		template <class T>
 		class High_amplitude_solver: public Linear_solver<T> {

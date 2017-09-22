@@ -15,6 +15,7 @@ namespace arma {
 		controlled by single parameter.
 		\date 2017-06-04
 		\author Ivan Gankevich
+		\ingroup distributions
 		*/
 		template<class T>
 		class Skew_normal {

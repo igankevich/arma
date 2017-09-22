@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
-#include "utility/const_char.hh"
+#include "bits/const_char.hh"
 
 namespace {
 
@@ -29,7 +29,7 @@ namespace {
 
 std::istream&
 sys::operator>>(std::istream& in, parameter_map& rhs) {
-	using arma::util::const_char;
+	using arma::bits::const_char;
 	if (rhs._parens && !(in >> std::ws >> const_char<'{'>())) {
 		std::cerr << "Expecting \"{\"." << std::endl;
 	}

@@ -12,28 +12,26 @@ namespace arma {
 
 	namespace generator {
 
-		namespace bits {
+		enum struct Function {
+			Sine,
+			Cosine
+		};
 
-			enum struct Function {
-				Sine,
-				Cosine
-			};
+		std::istream&
+		operator>>(std::istream& in, Function& rhs);
 
-			std::istream&
-			operator>>(std::istream& in, Function& rhs);
+		const char*
+		to_string(Function rhs);
 
-			const char*
-			to_string(Function rhs);
-
-			inline std::ostream&
-			operator<<(std::ostream& out, const Function& rhs) {
-				return out << to_string(rhs);
-			}
-
+		inline std::ostream&
+		operator<<(std::ostream& out, const Function& rhs) {
+			return out << to_string(rhs);
 		}
+
 
 		/**
 		\brief Uses a simple sum of sines and cosines, small-amplitude waves.
+		\ingroup generators
 
 		Individual amplitudes, wave numbers, phases and velocities are set via
 		configuration file.
@@ -44,7 +42,7 @@ namespace arma {
 		public:
 			typedef blitz::TinyVector<T,5> wave_type;
 			typedef Array1D<wave_type> array_type;
-			typedef bits::Function function_type;
+			typedef Function function_type;
 			using typename Basic_model<T>::grid_type;
 
 		private:

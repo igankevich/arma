@@ -12,18 +12,19 @@ namespace arma {
 	namespace opengl {
 
 		/**
-		\brief Maps `GL*` types to the corresponding `GLenum` constants
+		\brief Maps \c GL* types to the corresponding \c GLenum constants
 		*/
 		template<class T>
 		struct GL_type;
 
 		#define MAKE_GL_TYPE(x, y) \
+			/** \copydoc GL_type */ \
 			template<> \
 			struct GL_type<x>: public std::integral_constant<GLenum, y> {};
 
+		MAKE_GL_TYPE(GLbyte, GL_BYTE);
 		MAKE_GL_TYPE(GLfloat, GL_FLOAT);
 		MAKE_GL_TYPE(GLdouble, GL_DOUBLE);
-		MAKE_GL_TYPE(GLbyte, GL_BYTE);
 		MAKE_GL_TYPE(GLubyte, GL_UNSIGNED_BYTE);
 		MAKE_GL_TYPE(GLshort, GL_SHORT);
 		MAKE_GL_TYPE(GLushort, GL_UNSIGNED_SHORT);

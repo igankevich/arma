@@ -30,6 +30,7 @@
 #include "opencl/opencl.hh"
 #endif
 
+#include "profile.hh"
 #if ARMA_PROFILE
 #include "profile_counters.hh"
 #endif

@@ -62,7 +62,7 @@ arma::nonlinear::NIT_transform<T>::do_transform_CDF(
 	const Domain<T,1>& grid
 ) {
 	switch (_targetdist) {
-		case bits::Distribution::Gram_Charlier:
+		case Distribution::Gram_Charlier:
 			return
 				::arma::nonlinear::transform_CDF(
 					grid,
@@ -70,7 +70,7 @@ arma::nonlinear::NIT_transform<T>::do_transform_CDF(
 					_gramcharlier,
 					_cdfsolver
 				);
-		case bits::Distribution::Skew_normal:
+		case Distribution::Skew_normal:
 			return
 				::arma::nonlinear::transform_CDF(
 					grid,
@@ -131,7 +131,7 @@ arma::nonlinear::NIT_transform<T>::transform_realisation(
 	Array3D<T>& realisation
 ) {
 	switch (_targetdist) {
-		case bits::Distribution::Gram_Charlier:
+		case Distribution::Gram_Charlier:
 			#if ARMA_OPENCL
 			do_transform_realisation_opencl(
 				acf,
@@ -143,7 +143,7 @@ arma::nonlinear::NIT_transform<T>::transform_realisation(
 			do_transform_realisation(acf, realisation, this->_gramcharlier);
 			#endif
 			break;
-		case bits::Distribution::Skew_normal:
+		case Distribution::Skew_normal:
 			do_transform_realisation(acf, realisation, this->_skewnormal);
 			break;
 	}
@@ -172,10 +172,10 @@ void
 arma::nonlinear::NIT_transform<T>::read_dist(std::istream& str) {
 	str >> _targetdist;
 	switch (_targetdist) {
-		case bits::Distribution::Gram_Charlier:
+		case Distribution::Gram_Charlier:
 			str >> _gramcharlier;
 			break;
-		case bits::Distribution::Skew_normal:
+		case Distribution::Skew_normal:
 			str >> _skewnormal;
 			break;
 		default:
@@ -184,7 +184,7 @@ arma::nonlinear::NIT_transform<T>::read_dist(std::istream& str) {
 }
 
 std::istream&
-arma::nonlinear::bits::operator>>(std::istream& in, Distribution& rhs) {
+arma::nonlinear::operator>>(std::istream& in, Distribution& rhs) {
 	std::string name;
 	in >> std::ws >> name;
 	if (name == "gram_charlier") {
@@ -200,7 +200,7 @@ arma::nonlinear::bits::operator>>(std::istream& in, Distribution& rhs) {
 }
 
 const char*
-arma::nonlinear::bits::to_string(Distribution rhs) {
+arma::nonlinear::to_string(Distribution rhs) {
 	switch (rhs) {
 		case Distribution::Gram_Charlier: return "gram_charlier";
 		case Distribution::Skew_normal: return "skew_normal";
@@ -209,7 +209,7 @@ arma::nonlinear::bits::to_string(Distribution rhs) {
 }
 
 std::ostream&
-arma::nonlinear::bits::operator<<(std::ostream& out, const Distribution& rhs) {
+arma::nonlinear::operator<<(std::ostream& out, const Distribution& rhs) {
 	return out << to_string(rhs);
 }
 
@@ -218,10 +218,10 @@ std::ostream&
 arma::nonlinear::operator<<(std::ostream& out, const NIT_transform<T>& rhs) {
 	out << "dist=" << rhs._targetdist << ',';
 	switch (rhs._targetdist) {
-		case bits::Distribution::Gram_Charlier:
+		case Distribution::Gram_Charlier:
 			out << rhs._gramcharlier;
 			break;
-		case bits::Distribution::Skew_normal:
+		case Distribution::Skew_normal:
 			out << rhs._skewnormal;
 			break;
 	}

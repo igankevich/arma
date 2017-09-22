@@ -9,7 +9,16 @@ namespace arma {
 
 	namespace stats {
 
-		/// \brief Normal distribution.
+		/**
+		\defgroup distributions Probability distributions
+		\brief Classes that encapsulate PDF, CDF and quantile functions.
+		*/
+
+
+		/**
+		\brief Normal distribution.
+		\ingroup distributions
+		*/
 		template <class T>
 		struct Gaussian {
 

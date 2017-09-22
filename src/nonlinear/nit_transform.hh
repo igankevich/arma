@@ -15,23 +15,19 @@ namespace arma {
 
 	namespace nonlinear {
 
-		namespace bits {
+		enum struct Distribution {
+			Gram_Charlier = 0,
+			Skew_normal = 1
+		};
 
-			enum struct Distribution {
-				Gram_Charlier = 0,
-				Skew_normal = 1
-			};
+		std::istream&
+		operator>>(std::istream& in, Distribution& rhs);
 
-			std::istream&
-			operator>>(std::istream& in, Distribution& rhs);
+		std::ostream&
+		operator<<(std::ostream& out, const Distribution& rhs);
 
-			std::ostream&
-			operator<<(std::ostream& out, const Distribution& rhs);
-
-			const char*
-			to_string(Distribution rhs);
-
-		}
+		const char*
+		to_string(Distribution rhs);
 
 		/**
 		\brief Non-linear inertialess tranformation (NIT).
@@ -54,7 +50,7 @@ namespace arma {
 			static constexpr const T default_absolute_error = T(1e-6);
 			static const unsigned int default_niterations = 100;
 
-			bits::Distribution _targetdist = bits::Distribution::Gram_Charlier;
+			Distribution _targetdist = Distribution::Gram_Charlier;
 			skewnormaldist_type  _skewnormal;
 			gramcharlierdist_type  _gramcharlier;
 			unsigned int _intnodes = 100;

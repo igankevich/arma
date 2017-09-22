@@ -29,6 +29,7 @@ namespace arma {
 
 		\see \link High_amplitude_solver \endlink
 		\see \link opencl/opencl.hh \endlink
+		\ingroup solvers
 		*/
 		template <class T>
 		class High_amplitude_realtime_solver:

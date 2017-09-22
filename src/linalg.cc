@@ -4,50 +4,47 @@
 
 namespace {
 
-	namespace bits {
-
-		template<
-			class T,
-			lapack_int (*sysv)(int matrix_layout, char uplo, lapack_int n,
-                               lapack_int nrhs, T* a, lapack_int lda,
-                               lapack_int* ipiv, T* b, lapack_int ldb)
-		>
-		void
-		cholesky(linalg::Matrix<T>& A, linalg::Vector<T>& b) {
-			assert(A.extent(0) == A.extent(1));
-			assert(A.extent(0) == b.extent(0));
-			linalg::Vector<lapack_int> ipiv(A.rows());
-			sysv(LAPACK_ROW_MAJOR, 'U', A.rows(), 1, A.data(), A.cols(),
-			     ipiv.data(), b.data(), 1);
-		}
-
-		template <
-			class T,
-			lapack_int (*getrf)(
-				int matrix_layout,
-				lapack_int m,
-				lapack_int n,
-				T* a,
-				lapack_int lda,
-				lapack_int* ipiv
-			),
-			lapack_int (*getri)(
-				int matrix_layout,
-				lapack_int n,
-				T* a,
-				lapack_int lda,
-				const lapack_int* ipiv
-			)
-		>
-		void
-		inverse(linalg::Matrix<T>& A) {
-			const int m = A.rows(), n = A.cols();
-			linalg::Vector<lapack_int> ipiv(std::min(m, n));
-			getrf(LAPACK_ROW_MAJOR, m, n, A.data(), m, ipiv.data());
-			getri(LAPACK_ROW_MAJOR, m, A.data(), m, ipiv.data());
-		}
-
+	template<
+		class T,
+		lapack_int (*sysv)(int matrix_layout, char uplo, lapack_int n,
+						   lapack_int nrhs, T* a, lapack_int lda,
+						   lapack_int* ipiv, T* b, lapack_int ldb)
+	>
+	void
+	do_cholesky(linalg::Matrix<T>& A, linalg::Vector<T>& b) {
+		assert(A.extent(0) == A.extent(1));
+		assert(A.extent(0) == b.extent(0));
+		linalg::Vector<lapack_int> ipiv(A.rows());
+		sysv(LAPACK_ROW_MAJOR, 'U', A.rows(), 1, A.data(), A.cols(),
+			 ipiv.data(), b.data(), 1);
 	}
+
+	template <
+		class T,
+		lapack_int (*getrf)(
+			int matrix_layout,
+			lapack_int m,
+			lapack_int n,
+			T* a,
+			lapack_int lda,
+			lapack_int* ipiv
+		),
+		lapack_int (*getri)(
+			int matrix_layout,
+			lapack_int n,
+			T* a,
+			lapack_int lda,
+			const lapack_int* ipiv
+		)
+	>
+	void
+	do_inverse(linalg::Matrix<T>& A) {
+		const int m = A.rows(), n = A.cols();
+		linalg::Vector<lapack_int> ipiv(std::min(m, n));
+		getrf(LAPACK_ROW_MAJOR, m, n, A.data(), m, ipiv.data());
+		getri(LAPACK_ROW_MAJOR, m, A.data(), m, ipiv.data());
+	}
+
 }
 
 namespace linalg {
@@ -55,25 +52,25 @@ namespace linalg {
 	template <>
 	void
 	cholesky<float>(Matrix<float>& A, Vector<float>& b) {
-		::bits::cholesky<float,LAPACKE_ssysv>(A, b);
+		do_cholesky<float,LAPACKE_ssysv>(A, b);
 	}
 
 	template <>
 	void
 	cholesky<double>(Matrix<double>& A, Vector<double>& b) {
-		::bits::cholesky<double,LAPACKE_dsysv>(A, b);
+		do_cholesky<double,LAPACKE_dsysv>(A, b);
 	}
 
 	template <>
 	void
 	inverse(Matrix<float>& A) {
-		::bits::inverse<float,LAPACKE_sgetrf,LAPACKE_sgetri>(A);
+		do_inverse<float,LAPACKE_sgetrf,LAPACKE_sgetri>(A);
 	}
 
 	template <>
 	void
 	inverse(Matrix<double>& A) {
-		::bits::inverse<double,LAPACKE_dgetrf,LAPACKE_dgetri>(A);
+		do_inverse<double,LAPACKE_dgetrf,LAPACKE_dgetri>(A);
 	}
 
 }

@@ -14,8 +14,9 @@ namespace arma {
 		\brief Skewed normal distribution.
 		\date 2017-05-20
 		\author Ivan Gankevich
+		\ingroup distributions
 
-		\details Gram---Charlier series approximation with configurable
+		Gram---Charlier series approximation with configurable
 		skewness and kurtosis.
 		*/
 		template<class T>
