@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 # decrypt and add key to ssh-agent
 eval $(ssh-agent -s)
 keyfile=build/arma-id-rsa
