@@ -8,7 +8,7 @@ keyfile=build/arma-id-rsa
 openssl aes-256-cbc \
 	-K $encrypted_3ea07b9ba991_key \
 	-iv $encrypted_3ea07b9ba991_iv \
-	-in arma-id-rsa.enc \
+	-in deploy/arma-id-rsa.enc \
 	-out $keyfile \
 	-d
 chmod 600 $keyfile
