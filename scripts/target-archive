@@ -1,8 +1,0 @@
-#!/bin/sh
-
-name=$1
-version=$2
-prefix=${name}-${version}
-outfile=$MESON_BUILD_ROOT/${prefix}.tar.gz
-git archive --format=tar.gz --output=$outfile --prefix=$prefix/ HEAD
-echo "Output file: $outfile"

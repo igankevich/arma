@@ -1,0 +1,17 @@
+<map id="/home/travis/build/igankevich/arma/src/arma.hh" name="/home/travis/build/igankevich/arma/src/arma.hh">
+<area shape="rect" id="node15" href="$types_8hh.html" title="types.hh" alt="" coords="680,267,752,293"/>
+<area shape="rect" id="node17" href="$statistics_8hh.html" title="stats/statistics.hh" alt="" coords="1115,184,1241,211"/>
+<area shape="rect" id="node20" href="$distribution_8hh.html" title="stats/distribution.hh" alt="" coords="1388,109,1523,136"/>
+<area shape="rect" id="node29" href="$qq__graph_8hh.html" title="stats/qq_graph.hh" alt="" coords="1047,109,1173,136"/>
+<area shape="rect" id="node30" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="483,109,559,136"/>
+<area shape="rect" id="node38" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="900,109,964,136"/>
+<area shape="rect" id="node21" href="$gaussian_8hh.html" title="gaussian.hh" alt="" coords="1851,267,1943,293"/>
+<area shape="rect" id="node24" href="$weibull_8hh.html" title="weibull.hh" alt="" coords="1696,267,1775,293"/>
+<area shape="rect" id="node25" href="$gram__charlier_8hh.html" title="gram_charlier.hh" alt="" coords="1447,184,1565,211"/>
+<area shape="rect" id="node27" href="$skew__normal_8hh.html" title="skew_normal.hh" alt="" coords="1839,184,1955,211"/>
+<area shape="rect" id="node26" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1317,267,1469,293"/>
+<area shape="rect" id="node28" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="2019,267,2148,293"/>
+<area shape="rect" id="node31" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="403,184,549,211"/>
+<area shape="rect" id="node34" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="331,267,509,293"/>
+<area shape="rect" id="node35" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="99,267,224,293"/>
+</map>

@@ -1,0 +1,31 @@
+<map id="/home/travis/build/igankevich/arma/src/arma_realtime.cc" name="/home/travis/build/igankevich/arma/src/arma_realtime.cc">
+<area shape="rect" id="node7" href="$arma__realtime__driver_8hh.html" title="arma_realtime_driver.hh" alt="" coords="261,192,421,219"/>
+<area shape="rect" id="node35" href="$high__amplitude__realtime__solver_8hh.html" title="velocity/high_amplitude\l_realtime_solver.hh" alt="" coords="809,275,967,317"/>
+<area shape="rect" id="node36" href="$errors_8hh.html" title="errors.hh" alt="" coords="129,531,201,557"/>
+<area shape="rect" id="node37" href="$common__main_8hh.html" title="common_main.hh" alt="" coords="1336,109,1461,136"/>
+<area shape="rect" id="node10" href="$arma__driver_8hh.html" title="arma_driver.hh" alt="" coords="677,283,784,309"/>
+<area shape="rect" id="node32" href="$opengl_8hh.html" title="opengl.hh" alt="" coords="137,283,215,309"/>
+<area shape="rect" id="node15" href="$types_8hh.html" title="types.hh" alt="" coords="1887,531,1959,557"/>
+<area shape="rect" id="node17" href="$arma_8hh.html" title="arma.hh" alt="" coords="2139,373,2208,400"/>
+<area shape="rect" id="node23" href="$basic__model_8hh.html" title="generator/basic_model.hh" alt="" coords="999,456,1169,483"/>
+<area shape="rect" id="node24" href="$grid_8hh.html" title="grid.hh" alt="" coords="829,531,891,557"/>
+<area shape="rect" id="node27" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="509,531,619,557"/>
+<area shape="rect" id="node28" href="$basic__solver_8hh.html" title="velocity/basic_solver.hh" alt="" coords="1296,373,1459,400"/>
+<area shape="rect" id="node30" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="1447,456,1585,483"/>
+<area shape="rect" id="node31" href="$util_8hh.html" title="util.hh" alt="" coords="1123,531,1180,557"/>
+<area shape="rect" id="node22" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="2583,456,2659,483"/>
+<area shape="rect" id="node26" href="$validators_8hh.html" title="validators.hh" alt="" coords="919,605,1015,632"/>
+<area shape="rect" id="node29" href="$domain_8hh.html" title="domain.hh" alt="" coords="965,531,1047,557"/>
+<area shape="rect" id="node38" href="$ar__model_8hh.html" title="generator/ar_model.hh" alt="" coords="1531,283,1681,309"/>
+<area shape="rect" id="node40" href="$ma__model_8hh.html" title="generator/ma_model.hh" alt="" coords="1758,283,1916,309"/>
+<area shape="rect" id="node42" href="$arma__model_8hh.html" title="generator/arma_model.hh" alt="" coords="1437,192,1605,219"/>
+<area shape="rect" id="node43" href="$plain__wave__model_8hh.html" title="generator/plain_wave\l_model.hh" alt="" coords="1809,366,1953,407"/>
+<area shape="rect" id="node45" href="$lh__model_8hh.html" title="generator/lh_model.hh" alt="" coords="921,373,1071,400"/>
+<area shape="rect" id="node46" href="$high__amplitude__solver_8hh.html" title="velocity/high_amplitude\l_solver.hh" alt="" coords="2475,185,2633,226"/>
+<area shape="rect" id="node47" href="$linear__solver_8hh.html" title="linear_solver.hh" alt="" coords="2498,283,2611,309"/>
+<area shape="rect" id="node49" href="$plain__wave__solver_8hh.html" title="velocity/plain_wave\l_solver.hh" alt="" coords="1371,275,1505,317"/>
+<area shape="rect" id="node50" href="$profile_8hh.html" title="profile.hh" alt="" coords="1631,192,1704,219"/>
+<area shape="rect" id="node39" href="$basic__arma__model_8hh.html" title="basic_arma_model.hh" alt="" coords="1483,373,1631,400"/>
+<area shape="rect" id="node41" href="$ma__algorithm_8hh.html" title="ma_algorithm.hh" alt="" coords="2338,531,2456,557"/>
+<area shape="rect" id="node44" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1660,456,1812,483"/>
+</map>

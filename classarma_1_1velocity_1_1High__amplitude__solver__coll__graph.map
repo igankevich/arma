@@ -1,0 +1,6 @@
+<map id="arma::velocity::High_amplitude_solver&lt; T &gt;" name="arma::velocity::High_amplitude_solver&lt; T &gt;">
+<area shape="rect" id="node2" href="$classarma_1_1velocity_1_1Linear__solver.html" title="Uses linear wave theory formula, small&#45;amplitude waves. " alt="" coords="157,713,352,863"/>
+<area shape="rect" id="node3" href="$classarma_1_1velocity_1_1Velocity__potential__solver.html" title="Base class for all velocity potential field solvers. " alt="" coords="5,343,200,641"/>
+<area shape="rect" id="node4" href="$structarma_1_1Domain.html" title="{arma::Domain\&lt; T \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ num_points()\l+ num_points()\land 15 more...\l}" alt="" coords="35,5,169,259"/>
+<area shape="rect" id="node5" href="$classarma_1_1apmath_1_1Fourier__transform.html" title="{arma::apmath::Fourier\l_transform\&lt; Cmplx, 2 \&gt;\n|&#45; _transforms\l&#45; _shape\l&#45; _fft\l&#45; _fftplan\l|+ Fourier_transform()\l+ Fourier_transform()\l+ Fourier_transform()\l+ Fourier_transform()\l+ Fourier_transform()\l+ Fourier_transform()\l+ Fourier_transform()\l+ Fourier_transform()\l+ operator=()\l+ operator=()\land 22 more...\l+ dimensions()\l+ dimensions()\l}" alt="" coords="225,336,385,648"/>
+</map>
