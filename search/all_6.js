@@ -22,6 +22,5 @@ var searchData=
   ['free_5fstate',['free_state',['../structarma_1_1prng_1_1mt__config.html#a28a91ec30053e1b5f6d10d943c397c47',1,'arma::prng::mt_config']]],
   ['func',['func',['../visual_8cc.html#a918ea2cf64a816663d6daa227e7c7101',1,'visual.cc']]],
   ['function',['Function',['../namespacearma_1_1generator.html#aaccb22c6cd1221c82b10444d5839fda9',1,'arma::generator']]],
-  ['function_5ftype',['function_type',['../classarma_1_1generator_1_1Plain__wave__model.html#a1b028c05957302c79a15e8fcb6f63d83',1,'arma::generator::Plain_wave_model']]],
-  ['function_5fvalues',['Function_values',['../namespacearma.html#a4a114c4a826ce2082c2f006e6c89d4ed',1,'arma']]]
+  ['function_5ftype',['function_type',['../classarma_1_1generator_1_1Plain__wave__model.html#a1b028c05957302c79a15e8fcb6f63d83',1,'arma::generator::Plain_wave_model']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['delaunay_5ftriangulation',['Delaunay_triangulation',['../namespacearma.html#ae9fd8468654d6b666c9d8acc78d11716',1,'arma']]],
   ['domain1d',['Domain1D',['../namespacearma.html#ab80bc467596a92040edcceb6a0805dfb',1,'arma']]],
   ['domain2',['Domain2',['../namespacearma.html#acf5f066eba5f7fbf0d99e2dfe755dfc9',1,'arma']]],
   ['domain2d',['Domain2D',['../namespacearma.html#af4138eacadfeb83100a7334baecf8a74',1,'arma']]],

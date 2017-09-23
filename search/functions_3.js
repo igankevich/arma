@@ -24,7 +24,5 @@ var searchData=
   ['copy_5fto_5fdevice',['copy_to_device',['../classarma_1_1opencl_1_1Array.html#aaf21acf720f35763d1d906c60e4314bd',1,'arma::opencl::Array']]],
   ['copy_5fto_5fhost',['copy_to_host',['../classarma_1_1opencl_1_1Array.html#aa4c8a03022b6ba91db831ac0a691138d',1,'arma::opencl::Array']]],
   ['copy_5fto_5fhost_5fif_5fexists',['copy_to_host_if_exists',['../classarma_1_1opencl_1_1Array.html#ab3cc4d8dde5be9a6868fda59df38f1a8',1,'arma::opencl::Array']]],
-  ['create_5ffunction_5fvalues',['create_function_values',['../namespacearma.html#a96b918ab03f35839f9c109a75a9a85a0',1,'arma']]],
-  ['create_5ftriangulation',['create_triangulation',['../namespacearma.html#a46bc6ce2098ee9fcde4bda4ea5d24075',1,'arma']]],
   ['create_5fvector_5ffield',['create_vector_field',['../classarma_1_1velocity_1_1High__amplitude__realtime__solver.html#a58b4fdd17a76b6298562fbc62d275738',1,'arma::velocity::High_amplitude_realtime_solver']]]
 ];

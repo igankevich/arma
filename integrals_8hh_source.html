@@ -373,115 +373,108 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            std::copy(waves_y.begin(), waves_y.end(), std::back_inserter(waves));</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            out &lt;&lt; waves;</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            <span class="keywordflow">if</span> (waves.size() &gt; 2) {</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                <a class="code" href="namespacearma.html#ae9fd8468654d6b666c9d8acc78d11716">Delaunay_triangulation</a> triangulation = <a class="code" href="namespacearma.html#a46bc6ce2098ee9fcde4bda4ea5d24075">create_triangulation</a>(waves);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                <a class="code" href="namespacearma.html#a4a114c4a826ce2082c2f006e6c89d4ed">Function_values</a> values = <a class="code" href="namespacearma.html#a96b918ab03f35839f9c109a75a9a85a0">create_function_values</a>(waves);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;nx; ++j) {</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k=0; k&lt;ny; ++k) {</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                        wavenum(j,k) = interpolate&lt;T&gt;(</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                            <a class="code" href="namespacearma.html#a731efcbeeea9a086c380b9fe692d3a1c">Point</a>(j, k),</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                            triangulation,</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                            values</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                        );</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                    }</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                }</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;            }</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;            <span class="keywordflow">return</span> wavenum;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        }</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;        Array2D&lt;T&gt;</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;        velocity_field(</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            <span class="keyword">const</span> Discrete_function&lt;T,3&gt;&amp; surface,</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;            <span class="keywordtype">int</span> idx_t,</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="keywordtype">int</span> idx_y</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        ) {</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;            <span class="keyword">using</span> <a class="code" href="namespacearma_1_1constants.html#ab2bbcc62e8925a2093503f7eb18d4aa6">constants::_2pi</a>;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;            <span class="keyword">const</span> Vec3D&lt;T&gt;&amp; delta = surface.grid().delta();</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;            <span class="keyword">const</span> <a class="code" href="common_8h.html#a71023f03a34460781c8bf07dcbddebb8">Shape3D</a>&amp; size = surface.shape();</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> k_count = 40;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            <span class="keyword">const</span> Domain&lt;T,1&gt; krange(</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                Vec1D&lt;T&gt;(_2pi&lt;T&gt;/<a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(20)),</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                Vec1D&lt;T&gt;(_2pi&lt;T&gt;/<a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(2)),</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                k_count</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            );</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;            <a class="code" href="common_8h.html#a71023f03a34460781c8bf07dcbddebb8">Shape3D</a> ksize = size;</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;            Array2D&lt;T&gt; wavenum = wave_number(</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                surface,</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                krange.lbound(),</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                krange.ubound()</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            );</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            Array2D&lt;T&gt; wavenum_t = derivative&lt;0&gt;(wavenum, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            Array2D&lt;T&gt; wavenum_x = derivative&lt;1&gt;(wavenum, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            Array2D&lt;T&gt; zeta_t = derivative&lt;0&gt;(surface, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            Array2D&lt;T&gt; alpha = derivative&lt;1&gt;(surface, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            Array2D&lt;T&gt; alpha_t = derivative&lt;0&gt;(alpha, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            Array2D&lt;T&gt; alpha_x = derivative&lt;1&gt;(alpha, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            std::clog &lt;&lt; <span class="stringliteral">&quot;lambda count = &quot;</span> &lt;&lt; k_count &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;alpha&quot;</span>); out &lt;&lt; alpha; }</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;alpha_x&quot;</span>); out &lt;&lt; alpha_x; }</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;alpha_t&quot;</span>); out &lt;&lt; alpha_t; }</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            <span class="comment">// compute reference velocity field using assumptions</span></div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            <span class="comment">// from small amplitude wave theory</span></div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;            Integral_1&lt;T&gt; integral_1(</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                wavenum_x,</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                wavenum,</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                surface,</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;                alpha,</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;                idx_t,</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;                idx_y</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;            );</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;            Integral_2&lt;T&gt; integral_2(</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                wavenum_t,</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;                wavenum,</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;                surface,</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;                zeta_t,</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                alpha,</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;                alpha_t,</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;                idx_t,</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;                idx_y,</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;                integral_1</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;            );</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> nx = size(1);</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> ny = size(2);</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;            Array2D&lt;T&gt; u(blitz::shape(nx, ny));</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;nx; ++i) {</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;ny; ++j) {</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;                    <span class="keyword">using</span> std::sqrt;</div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                    <span class="keyword">using</span> std::exp;</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;                    u(i,j) = - (<a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1)/sqrt(<a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1) + alpha(i, j)*alpha(i, j)))</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;                            * exp(-integral_1(i))</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;                            * integral_2(i);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;                }</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;            }</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                Delaunay_interpolation&lt;T&gt; interpolation;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">const</span> Wave&lt;T&gt;&amp; w : waves) {</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                    interpolation.insert(w.x(), w.y(), w.wave_number());</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                }</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;nx; ++j) {</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k=0; k&lt;ny; ++k) {</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                        wavenum(j,k) = interpolation(j, k);</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                    }</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;            }</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;            <span class="keywordflow">return</span> wavenum;</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        }</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        Array2D&lt;T&gt;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;        velocity_field(</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;            <span class="keyword">const</span> Discrete_function&lt;T,3&gt;&amp; surface,</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;            <span class="keywordtype">int</span> idx_t,</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;            <span class="keywordtype">int</span> idx_y</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        ) {</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            <span class="keyword">using</span> <a class="code" href="namespacearma_1_1constants.html#ab2bbcc62e8925a2093503f7eb18d4aa6">constants::_2pi</a>;</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;            <span class="keyword">const</span> Vec3D&lt;T&gt;&amp; delta = surface.grid().delta();</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;            <span class="keyword">const</span> <a class="code" href="common_8h.html#a71023f03a34460781c8bf07dcbddebb8">Shape3D</a>&amp; size = surface.shape();</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> k_count = 40;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;            <span class="keyword">const</span> Domain&lt;T,1&gt; krange(</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                Vec1D&lt;T&gt;(_2pi&lt;T&gt;/<a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(20)),</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                Vec1D&lt;T&gt;(_2pi&lt;T&gt;/<a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(2)),</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                k_count</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            );</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;            <a class="code" href="common_8h.html#a71023f03a34460781c8bf07dcbddebb8">Shape3D</a> ksize = size;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            Array2D&lt;T&gt; wavenum = wave_number(</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                surface,</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                krange.lbound(),</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                krange.ubound()</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;            );</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;            Array2D&lt;T&gt; wavenum_t = derivative&lt;0&gt;(wavenum, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            Array2D&lt;T&gt; wavenum_x = derivative&lt;1&gt;(wavenum, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            Array2D&lt;T&gt; zeta_t = derivative&lt;0&gt;(surface, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            Array2D&lt;T&gt; alpha = derivative&lt;1&gt;(surface, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            Array2D&lt;T&gt; alpha_t = derivative&lt;0&gt;(alpha, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            Array2D&lt;T&gt; alpha_x = derivative&lt;1&gt;(alpha, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            std::clog &lt;&lt; <span class="stringliteral">&quot;lambda count = &quot;</span> &lt;&lt; k_count &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;alpha&quot;</span>); out &lt;&lt; alpha; }</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;alpha_x&quot;</span>); out &lt;&lt; alpha_x; }</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;alpha_t&quot;</span>); out &lt;&lt; alpha_t; }</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;            <span class="comment">// compute reference velocity field using assumptions</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;            <span class="comment">// from small amplitude wave theory</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            Integral_1&lt;T&gt; integral_1(</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                wavenum_x,</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;                wavenum,</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                surface,</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;                alpha,</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                idx_t,</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;                idx_y</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;            );</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;            Integral_2&lt;T&gt; integral_2(</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;                wavenum_t,</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;                wavenum,</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;                surface,</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;                zeta_t,</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;                alpha,</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;                alpha_t,</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;                idx_t,</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;                idx_y,</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;                integral_1</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;            );</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> nx = size(1);</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> ny = size(2);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;            Array2D&lt;T&gt; u(blitz::shape(nx, ny));</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;nx; ++i) {</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j&lt;ny; ++j) {</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;                    <span class="keyword">using</span> std::sqrt;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;                    <span class="keyword">using</span> std::exp;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;                    u(i,j) = - (<a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1)/sqrt(<a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1) + alpha(i, j)*alpha(i, j)))</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;                            * exp(-integral_1(i))</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;                            * integral_2(i);</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;                }</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;            }</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;u0&quot;</span>); out &lt;&lt; u; }</div>
 <div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;u0&quot;</span>); out &lt;&lt; u; }</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;            <span class="keywordflow">return</span> u;</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        }</div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;</div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;    }</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;}</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor">#endif // PRESSURE_HH</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;            <span class="keywordflow">return</span> u;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        }</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    }</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;}</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;<span class="preprocessor">#endif // PRESSURE_HH</span></div>
 <div class="ttc" id="namespaceblitz_html_a943f9dbc7edf668a374e4387c1b2ee2a"><div class="ttname"><a href="namespaceblitz.html#a943f9dbc7edf668a374e4387c1b2ee2a">blitz::length</a></div><div class="ttdeci">T length(const TinyVector&lt; T, 2 &gt; &amp;rhs) noexcept</div><div class="ttdef"><b>Definition:</b> blitz.hh:38</div></div>
 <div class="ttc" id="namespacearma_1_1constants_html_ab2bbcc62e8925a2093503f7eb18d4aa6"><div class="ttname"><a href="namespacearma_1_1constants.html#ab2bbcc62e8925a2093503f7eb18d4aa6">arma::constants::_2pi</a></div><div class="ttdeci">constexpr const T _2pi</div><div class="ttdef"><b>Definition:</b> physical_constants.hh:15</div></div>
-<div class="ttc" id="namespacearma_html_a731efcbeeea9a086c380b9fe692d3a1c"><div class="ttname"><a href="namespacearma.html#a731efcbeeea9a086c380b9fe692d3a1c">arma::Point</a></div><div class="ttdeci">K::Point_2 Point</div><div class="ttdef"><b>Definition:</b> linear_interpolation.hh:19</div></div>
 <div class="ttc" id="namespacearma_html_af7d4db4b1cfb7a98584f1799b785f95c"><div class="ttname"><a href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a></div><div class="ttdeci">Array&lt; T, 3 &gt; Array3D</div><div class="ttdef"><b>Definition:</b> types.hh:36</div></div>
 <div class="ttc" id="namespacearma_html_a0c9a855cdcc7177fd794f05952eb94b3"><div class="ttname"><a href="namespacearma.html#a0c9a855cdcc7177fd794f05952eb94b3">arma::Shape2D</a></div><div class="ttdeci">Vector&lt; int, 2 &gt; Shape2D</div><div class="ttdef"><b>Definition:</b> types.hh:15</div></div>
 <div class="ttc" id="namespacearma_1_1constants_html_a5a25bb7cab9941f0546f6442a1db3778"><div class="ttname"><a href="namespacearma_1_1constants.html#a5a25bb7cab9941f0546f6442a1db3778">arma::constants::g</a></div><div class="ttdeci">constexpr const T g</div><div class="ttdef"><b>Definition:</b> physical_constants.hh:27</div></div>
-<div class="ttc" id="namespacearma_html_a4a114c4a826ce2082c2f006e6c89d4ed"><div class="ttname"><a href="namespacearma.html#a4a114c4a826ce2082c2f006e6c89d4ed">arma::Function_values</a></div><div class="ttdeci">std::map&lt; Point, Coord_type, K::Less_xy_2 &gt; Function_values</div><div class="ttdef"><b>Definition:</b> linear_interpolation.hh:20</div></div>
-<div class="ttc" id="namespacearma_html_a96b918ab03f35839f9c109a75a9a85a0"><div class="ttname"><a href="namespacearma.html#a96b918ab03f35839f9c109a75a9a85a0">arma::create_function_values</a></div><div class="ttdeci">Function_values create_function_values(const std::vector&lt; bits::Wave&lt; T &gt; &gt; &amp;waves)</div></div>
 <div class="ttc" id="physical__constants_8hh_html"><div class="ttname"><a href="physical__constants_8hh.html">physical_constants.hh</a></div></div>
 <div class="ttc" id="common_8h_html_a71023f03a34460781c8bf07dcbddebb8"><div class="ttname"><a href="common_8h.html#a71023f03a34460781c8bf07dcbddebb8">Shape3D</a></div><div class="ttdeci">int4 Shape3D</div><div class="ttdef"><b>Definition:</b> common.h:14</div></div>
 <div class="ttc" id="visual_8cc_html_a81af9475d8398d8a4b635c5f906be7d6"><div class="ttname"><a href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a></div><div class="ttdeci">Vector&lt; Real, 3 &gt; delta(0.1, 1.0, 1.0)</div></div>
 <div class="ttc" id="types_8hh_html"><div class="ttname"><a href="types_8hh.html">types.hh</a></div></div>
 <div class="ttc" id="common_8h_html_a25af1c42bcec3ac9b8d7d2846b1f2198"><div class="ttname"><a href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div><div class="ttdeci">ARMA_REAL_TYPE T</div><div class="ttdef"><b>Definition:</b> common.h:8</div></div>
-<div class="ttc" id="namespacearma_html_a46bc6ce2098ee9fcde4bda4ea5d24075"><div class="ttname"><a href="namespacearma.html#a46bc6ce2098ee9fcde4bda4ea5d24075">arma::create_triangulation</a></div><div class="ttdeci">Delaunay_triangulation create_triangulation(const std::vector&lt; bits::Wave&lt; T &gt; &gt; &amp;waves)</div></div>
-<div class="ttc" id="namespacearma_html_ae9fd8468654d6b666c9d8acc78d11716"><div class="ttname"><a href="namespacearma.html#ae9fd8468654d6b666c9d8acc78d11716">arma::Delaunay_triangulation</a></div><div class="ttdeci">CGAL::Delaunay_triangulation_2&lt; K &gt; Delaunay_triangulation</div><div class="ttdef"><b>Definition:</b> linear_interpolation.hh:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

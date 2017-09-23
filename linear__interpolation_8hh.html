@@ -92,25 +92,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">linear_interpolation.hh File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;CGAL/Exact_predicates_inexact_constructions_kernel.h&gt;</code><br/>
+<div class="textblock"><code>#include &lt;map&gt;</code><br/>
+<code>#include &lt;CGAL/number_utils.h&gt;</code><br/>
 <code>#include &lt;CGAL/Delaunay_triangulation_2.h&gt;</code><br/>
+<code>#include &lt;CGAL/Exact_predicates_inexact_constructions_kernel.h&gt;</code><br/>
 <code>#include &lt;CGAL/Interpolation_traits_2.h&gt;</code><br/>
-<code>#include &lt;CGAL/natural_neighbor_coordinates_2.h&gt;</code><br/>
 <code>#include &lt;CGAL/interpolation_functions.h&gt;</code><br/>
-<code>#include &lt;vector&gt;</code><br/>
-<code>#include &lt;map&gt;</code><br/>
+<code>#include &lt;CGAL/natural_neighbor_coordinates_2.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="wave_8hh_source.html">wave.hh</a>&quot;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for linear_interpolation.hh:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="linear__interpolation_8hh__incl.svg" width="1160" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="linear__interpolation_8hh__incl.svg" width="1248" height="262"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -122,46 +121,17 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="linear__interpolation_8hh_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Delaunay__interpolation.html">arma::Delaunay_interpolation&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolates function values on irregular grid.  <a href="classarma_1_1Delaunay__interpolation.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacearma"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma.html">arma</a></td></tr>
 <tr class="memdesc:namespacearma"><td class="mdescLeft">&#160;</td><td class="mdescRight">Domain-specific classes and functions. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ae794b680d39b50937689d0632e90b54a"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
-CGAL::Exact_predicates_inexact_constructions_kernel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma.html#ae794b680d39b50937689d0632e90b54a">arma::K</a></td></tr>
-<tr class="separator:ae794b680d39b50937689d0632e90b54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9fd8468654d6b666c9d8acc78d11716"><td class="memItemLeft" align="right" valign="top">typedef <br class="typebreak"/>
-CGAL::Delaunay_triangulation_2<br class="typebreak"/>
-&lt; K &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma.html#ae9fd8468654d6b666c9d8acc78d11716">arma::Delaunay_triangulation</a></td></tr>
-<tr class="separator:ae9fd8468654d6b666c9d8acc78d11716"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cecd9940594c277da84259c06cb4c67"><td class="memItemLeft" align="right" valign="top">typedef K::FT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma.html#a6cecd9940594c277da84259c06cb4c67">arma::Coord_type</a></td></tr>
-<tr class="separator:a6cecd9940594c277da84259c06cb4c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a731efcbeeea9a086c380b9fe692d3a1c"><td class="memItemLeft" align="right" valign="top">typedef K::Point_2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma.html#a731efcbeeea9a086c380b9fe692d3a1c">arma::Point</a></td></tr>
-<tr class="separator:a731efcbeeea9a086c380b9fe692d3a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a114c4a826ce2082c2f006e6c89d4ed"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; Point, <br class="typebreak"/>
-Coord_type, K::Less_xy_2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma.html#a4a114c4a826ce2082c2f006e6c89d4ed">arma::Function_values</a></td></tr>
-<tr class="separator:a4a114c4a826ce2082c2f006e6c89d4ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dd684ba3fbe7ac5e7779589d3c8d6eb"><td class="memItemLeft" align="right" valign="top">typedef CGAL::Data_access<br class="typebreak"/>
-&lt; Function_values &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma.html#a6dd684ba3fbe7ac5e7779589d3c8d6eb">arma::Value_access</a></td></tr>
-<tr class="separator:a6dd684ba3fbe7ac5e7779589d3c8d6eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a46bc6ce2098ee9fcde4bda4ea5d24075"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a46bc6ce2098ee9fcde4bda4ea5d24075"><td class="memTemplItemLeft" align="right" valign="top">Delaunay_triangulation&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#a46bc6ce2098ee9fcde4bda4ea5d24075">arma::create_triangulation</a> (const std::vector&lt; bits::Wave&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &gt; &amp;waves)</td></tr>
-<tr class="separator:a46bc6ce2098ee9fcde4bda4ea5d24075"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96b918ab03f35839f9c109a75a9a85a0"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a96b918ab03f35839f9c109a75a9a85a0"><td class="memTemplItemLeft" align="right" valign="top">Function_values&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#a96b918ab03f35839f9c109a75a9a85a0">arma::create_function_values</a> (const std::vector&lt; bits::Wave&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &gt; &amp;waves)</td></tr>
-<tr class="separator:a96b918ab03f35839f9c109a75a9a85a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bf611fc022dd1089da259613435285f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a1bf611fc022dd1089da259613435285f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#a1bf611fc022dd1089da259613435285f">arma::interpolate</a> (Point p, const Delaunay_triangulation &amp;triangulation, const Function_values &amp;function_values)</td></tr>
-<tr class="separator:a1bf611fc022dd1089da259613435285f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bfb76915d334c0ac19b7d4cb340cf89"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a1bfb76915d334c0ac19b7d4cb340cf89"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#a1bfb76915d334c0ac19b7d4cb340cf89">arma::interpolate</a> (Point p, const std::vector&lt; bits::Wave&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &gt; &amp;waves)</td></tr>
-<tr class="separator:a1bfb76915d334c0ac19b7d4cb340cf89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
