@@ -276,15 +276,13 @@ namespace arma {
 			std::copy(waves_y.begin(), waves_y.end(), std::back_inserter(waves));
 			out << waves;
 			if (waves.size() > 2) {
-				Delaunay_triangulation triangulation = create_triangulation(waves);
-				Function_values values = create_function_values(waves);
+				Delaunay_interpolation<T> interpolation;
+				for (const Wave<T>& w : waves) {
+					interpolation.insert(w.x(), w.y(), w.wave_number());
+				}
 				for (int j=0; j<nx; ++j) {
 					for (int k=0; k<ny; ++k) {
-						wavenum(j,k) = interpolate<T>(
-							Point(j, k),
-							triangulation,
-							values
-						);
+						wavenum(j,k) = interpolation(j, k);
 					}
 				}
 			}
