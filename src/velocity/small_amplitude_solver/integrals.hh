@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 
-#include "apmath/delaunay_interpolation.hh"
+#include "delaunay_interpolation.hh"
 #include "physical_constants.hh"
 #include "types.hh"
 #include "wave.hh"

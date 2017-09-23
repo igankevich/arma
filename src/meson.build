@@ -14,7 +14,6 @@ linalg_files = files([
 ])
 apmath_files = files([
 	'apmath/closed_interval.cc',
-	'apmath/delaunay_interpolation.cc',
 	'apmath/hermite.cc',
 	'apmath/owen_t.cc',
 	'apmath/polynomial.cc',
@@ -84,15 +83,15 @@ arma_deps = [
 	libblas,
 	liblapack,
 	libdcmt,
-	libCGAL,
-	libgmp,
 ]
 
 if get_option('with_small_amplitude_solver')
 	arma_src += [
 		'velocity/small_amplitude_solver.cc',
+		'velocity/delaunay_interpolation.cc',
 	]
 	arma_cpp_args += '-DWITH_SMALL_AMPLITUDE_SOLVER' 
+	arma_deps += [libCGAL, libgmp]
 endif
 
 fourier_src = []
