@@ -9,7 +9,7 @@ model = plain_wave {
 }
 
 velocity_potential_solver = high_amplitude {
-	wnmax = (0.0,0.25)
+#	wnmax = (0.0,0.25)
 	depth = 12
 	domain = from (10,-12) to (10,1) npoints (1,128)
 }

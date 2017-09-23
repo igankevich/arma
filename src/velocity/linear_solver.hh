@@ -34,6 +34,7 @@ namespace arma {
 		public:
 			inline
 			Linear_solver():
+			Velocity_potential_solver<T>(),
 			_fft()
 			{}
 
@@ -63,9 +64,6 @@ namespace arma {
 		private:
 			Array2D<T>
 			low_amp_window_function(const Domain<T,2>& wngrid, const T z);
-
-			domain2_type
-			wave_number_range(const Discrete_function<T,3>& zeta) const;
 
 		};
 

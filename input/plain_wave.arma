@@ -1,12 +1,12 @@
 model = plain_wave {
-	out_grid = (200,128,40) : (199,8,8)
+	out_grid = (200,256,40) : (199,8,8)
 	func = cos
 	waves = [(4,0.125,0,0.5,0)]
 	output = surface,csv
 }
 
-velocity_potential_solver = high_amplitude {
-	wnmax = from (0,0) to (0,0.25) npoints (2,2)
+velocity_potential_solver = linear {
+#	wnmax = from (0,0) to (0,0.25) npoints (2,2)
 	depth = 12
 	domain = from (10,-12) to (10,4) npoints (1,128)
 }

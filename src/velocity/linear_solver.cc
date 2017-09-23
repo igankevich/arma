@@ -4,6 +4,7 @@
 #include "interpolate.hh"
 #include "profile.hh"
 #include "blitz.hh"
+#include "factor_waves.hh"
 
 #include <stdexcept>
 #include <cmath>
@@ -13,15 +14,26 @@
 #if ARMA_PROFILE
 #include "profile_counters.hh"
 #endif
+#ifndef NDEBUG
+#include <iostream>
+#endif
 
 template <class T>
 void
 arma::velocity::Linear_solver<T>::precompute(const Discrete_function<T,3>& zeta) {
-	_fft.init(Shape2D(zeta.extent(1), zeta.extent(2)));
-	_zeta_t.resize(zeta.shape());
+	this->_fft.init(Shape2D(zeta.extent(1), zeta.extent(2)));
+	this->_zeta_t.resize(zeta.shape());
 	#if ARMA_DEBUG_FFT
-	_wnfunc.resize(this->_domain.num_points(1), zeta.extent(1), zeta.extent(2));
-	_fft_1.resize(this->_domain.num_points(1), zeta.extent(1), zeta.extent(2));
+	this->_wnfunc.resize(
+		this->_domain.num_points(1),
+		zeta.extent(1),
+		zeta.extent(2)
+	);
+	this->_fft_1.resize(
+		this->_domain.num_points(1),
+		zeta.extent(1),
+		zeta.extent(2)
+	);
 	#endif
 }
 
@@ -32,11 +44,23 @@ arma::velocity::Linear_solver<T>::precompute(
 	const int idx_t
 ) {
 	using blitz::Range;
-	_zeta_t(idx_t, Range::all(), Range::all()) = -derivative<0,T>(
+	this->_zeta_t(idx_t, Range::all(), Range::all()) = -derivative<0,T>(
 		zeta,
 		zeta.grid().delta(),
 		idx_t
 	);
+	const T t = zeta.grid()(idx_t, 0);
+	const T dt = zeta.grid().delta(0);
+	domain2_type tmp = factor_waves<T>(
+		zeta(idx_t, Range::all(), Range::all()),
+		t,
+		dt
+	);
+	this->_wnmax = domain2_type{{0,0}, T(1) / tmp.lbound(), {2,2}};
+	#ifndef NDEBUG
+	std::clog << "this->_wnmax=" << this->_wnmax << std::endl;
+	#endif
+	validate_domain<T,2>(this->_wnmax, "wnmax");
 }
 
 template <class T>
@@ -61,6 +85,14 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 	*/
 	const Domain<T,2> wngrid(this->_wnmax, arr_size);
 	Array2D<T> mult = low_amp_window_function(wngrid, z);
+	#if ARMA_DEBUG_FFT
+	_wnfunc(_idxz, Range::all(), Range::all()) = mult;
+	//if (_idxz+1 == this->_domain.num_points(1)) {
+		std::ofstream("wn_func_openmp") << _wnfunc;
+		std::ofstream("zeta_t_openmp")
+			<< blitz::real(_zeta_t(idx_t, Range::all(), Range::all()));
+	//}
+	#endif
 	if (!all(isfinite(mult))) {
 		std::cerr << "Infinite/NaN multiplier. Try to increase minimal z "
 			"coordinate at which velocity potential is calculated, or "
@@ -68,14 +100,6 @@ arma::velocity::Linear_solver<T>::compute_velocity_field_2d(
 			<< z << ",depth=" << this->_depth << '.' << std::endl;
 		throw std::runtime_error("bad multiplier");
 	}
-	#if ARMA_DEBUG_FFT
-	_wnfunc(_idxz, Range::all(), Range::all()) = mult;
-	if (_idxz+1 == this->_domain.num_points(1)) {
-		std::ofstream("wn_func_openmp") << _wnfunc;
-		std::ofstream("zeta_t_openmp")
-			<< blitz::real(_zeta_t(idx_t, Range::all(), Range::all()));
-	}
-	#endif
 	Array2D<T> ret(arr_size);
 	ARMA_PROFILE_CNT(CNT_HARTS_FFT,
 		/// 2. Compute \f$\zeta_t\f$.
@@ -115,6 +139,7 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 	const T z
 ) {
 	using std::cosh;
+	using std::exp;
 	using std::isfinite;
 	using blitz::length;
 	using constants::_2pi;
@@ -126,8 +151,12 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 		for (int i=0; i<nx; ++i) {
 			for (int j=0; j<ny; ++j) {
 				const T l = _2pi<T> * length(wngrid({i,j}));
-				const T numerator = cosh(l*(z + h));
-				const T denominator = l*cosh(l*h);
+//				const T numerator = cosh(l*(z + h));
+//				const T denominator = l*cosh(l*h);
+				const T explz = exp(-l*z);
+				const T exp2lh = exp(-T(2)*l*h);
+				const T numerator = T(1) + explz*explz*exp2lh;
+				const T denominator = explz*(T(1) + exp2lh);
 				result(i, j) = _2pi<T> * T(2) * numerator / denominator;
 			}
 		}
@@ -152,16 +181,9 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 			}
 		}
 	);
+	result = blitz::where(blitz::isfinite(result), result, 0);
 	blitz::rotate(result, result.shape()/2);
 	return result;
-}
-
-template <class T>
-typename arma::velocity::Linear_solver<T>::domain2_type
-arma::velocity::Linear_solver<T>::wave_number_range(
-	const Discrete_function<T, 3>& zeta
-) const {
-	return domain2_type();
 }
 
 template class arma::velocity::Linear_solver<ARMA_REAL_TYPE>;

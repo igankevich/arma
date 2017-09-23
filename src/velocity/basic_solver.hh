@@ -34,7 +34,7 @@ namespace arma {
 			/// Wave number range in \f$X\f$ and \f$Y\f$ dimensions.
 			domain2_type _wnmax;
 			/// Water depth.
-			T _depth;
+			T _depth = 0;
 			domain2_type _domain;
 
 			virtual void
@@ -58,7 +58,12 @@ namespace arma {
 			read(std::istream& in);
 
 		public:
-			Velocity_potential_solver() = default;
+
+			Velocity_potential_solver():
+			_wnmax(),
+			_domain()
+			{}
+
 			Velocity_potential_solver(const Velocity_potential_solver&) = default;
 			Velocity_potential_solver(Velocity_potential_solver&&) = default;
 			virtual ~Velocity_potential_solver() = default;

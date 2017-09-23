@@ -50,7 +50,9 @@ common_src = files([
 	'stats/gram_charlier.cc',
 	'stats/skew_normal.cc',
 	'arma_driver.cc',
-	'util.cc'
+	'util.cc',
+	'wave.cc',
+	'factor_waves.cc',
 ]) + linalg_files + apmath_files + nonlinear_files + output_flags_files
 
 if get_option('profile')
@@ -89,7 +91,6 @@ arma_deps = [
 if get_option('with_small_amplitude_solver')
 	arma_src += [
 		'velocity/small_amplitude_solver.cc',
-		'velocity/small_amplitude_solver/wave.cc',
 	]
 	arma_cpp_args += '-DWITH_SMALL_AMPLITUDE_SOLVER' 
 endif

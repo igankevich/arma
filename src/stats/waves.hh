@@ -3,11 +3,11 @@
 
 #include "types.hh"
 
+#include <algorithm>
 #include <cmath>
+#include <iterator>
 #include <tuple>
 #include <vector>
-#include <iterator>
-#include <algorithm>
 
 namespace arma {
 

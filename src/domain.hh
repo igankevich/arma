@@ -56,6 +56,9 @@ namespace arma {
 
 		~Domain() = default;
 
+		Domain&
+		operator=(const Domain&) = default;
+
 		int
 		num_points(int i) const {
 			return _npoints(i);

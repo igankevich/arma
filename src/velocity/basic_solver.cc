@@ -26,6 +26,10 @@ arma::velocity::Velocity_potential_solver<T>::read(std::istream& in) {
 		{"domain", sys::make_param(_domain, validate_domain<T,2>)},
 	}, true);
 	in >> params;
+	const T min_z = this->_domain.lbound(1);
+	if (min_z < -this->_depth) {
+		throw std::invalid_argument("min(z) is less than -h");
+	}
 }
 
 template <class T>

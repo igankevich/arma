@@ -110,9 +110,9 @@ model = MA {
 # Velocity potential field formula and configuration.
 velocity_potential_solver = linear {
 	# Maximal wave number for each spatial dimension.
-	# Defines a range from (0,0) to wnmax over which 
+#	# Defines a range from (0,0) to wnmax over which 
 	# integration is done.
-	wnmax = from (0,0) to (0,0.25) npoints (2,2)
+#	wnmax = from (0,0) to (0,0.25) npoints (2,2)
 	# Water depth.
 	depth = 10
 	# A compound range of t and z coordinates over which to compute
