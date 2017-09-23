@@ -3,6 +3,7 @@ var searchData=
   ['wave',['Wave',['../structarma_1_1stats_1_1Wave.html#a6e7947df1e10d9e32509e1fec8f919e8',1,'arma::stats::Wave::Wave()=default'],['../structarma_1_1stats_1_1Wave.html#a8d94c14aadbbdabb3e6efe6b231c0a9d',1,'arma::stats::Wave::Wave(T height, T period)']]],
   ['wave_5fcharacteristic_5fdistribution',['Wave_characteristic_distribution',['../structarma_1_1stats_1_1Wave__characteristic__distribution.html#a085af615c55b6c8635a184efa61d1eac',1,'arma::stats::Wave_characteristic_distribution']]],
   ['wave_5ffield',['Wave_field',['../structarma_1_1stats_1_1Wave__field.html#a50d1133cf1f24515a1b9c8dc736101eb',1,'arma::stats::Wave_field']]],
+  ['wave_5fnumber_5frange',['wave_number_range',['../classarma_1_1velocity_1_1Linear__solver.html#af98714802dbc24bb0100c74f7f4563e0',1,'arma::velocity::Linear_solver']]],
   ['wavenum_5fx',['wavenum_x',['../classarma_1_1generator_1_1Plain__wave__model.html#ac7292262363569c18715aebde8f60125',1,'arma::generator::Plain_wave_model']]],
   ['wavenum_5fy',['wavenum_y',['../classarma_1_1generator_1_1Plain__wave__model.html#a46dc16df98f515bfb6876049c9433740',1,'arma::generator::Plain_wave_model']]],
   ['waves',['waves',['../classarma_1_1generator_1_1Plain__wave__model.html#a20341474dbdfa9c6439d2ffe559e67c7',1,'arma::generator::Plain_wave_model']]],

@@ -20,7 +20,7 @@ var searchData=
   ['approx_5fwave_5fheight',['approx_wave_height',['../namespacearma.html#a191379ad041815726556d493bbbc69fb',1,'arma']]],
   ['approx_5fwave_5fperiod',['approx_wave_period',['../namespacearma.html#a9e0adb4276e8261293b12a669227d1dd',1,'arma']]],
   ['approximate_5fspectrum',['approximate_spectrum',['../classarma_1_1generator_1_1Longuet__Higgins__model.html#af2ed8fc6bf22caa228392b1f78f32ade',1,'arma::generator::Longuet_Higgins_model']]],
-  ['ar_5fmodel',['AR_model',['../structarma_1_1generator_1_1AR__model.html#a5920edb7826c545b2884b7dae9540c7c',1,'arma::generator::AR_model::AR_model()=default'],['../structarma_1_1generator_1_1AR__model.html#aaec0d7441a8bbbeceb1e0e295c0a310f',1,'arma::generator::AR_model::AR_model(acf_type acf, Shape3D order)'],['../structarma_1_1generator_1_1ARMA__model.html#a130ca60d9a933518ce587d25efcbc007',1,'arma::generator::ARMA_model::ar_model()']]],
+  ['ar_5fmodel',['ar_model',['../structarma_1_1generator_1_1ARMA__model.html#a130ca60d9a933518ce587d25efcbc007',1,'arma::generator::ARMA_model::ar_model()'],['../structarma_1_1generator_1_1AR__model.html#a5920edb7826c545b2884b7dae9540c7c',1,'arma::generator::AR_model::AR_model()=default'],['../structarma_1_1generator_1_1AR__model.html#aaec0d7441a8bbbeceb1e0e295c0a310f',1,'arma::generator::AR_model::AR_model(acf_type acf, Shape3D order)']]],
   ['ar_5fmodel',['AR_model',['../structarma_1_1generator_1_1AR__model.html',1,'arma::generator']]],
   ['ar_5fmodel_2ecc',['ar_model.cc',['../ar__model_8cc.html',1,'']]],
   ['ar_5fmodel_2ehh',['ar_model.hh',['../ar__model_8hh.html',1,'']]],

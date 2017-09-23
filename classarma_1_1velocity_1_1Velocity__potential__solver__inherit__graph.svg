@@ -72,24 +72,25 @@
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
 <g id="a_node3"><a xlink:href="classarma_1_1velocity_1_1Linear__solver.html" target="_top" xlink:title="Uses linear wave theory formula, small&#45;amplitude waves. ">
-<polygon fill="none" stroke="black" points="177,-172.5 177,-295.5 323,-295.5 323,-172.5 177,-172.5"/>
-<text text-anchor="start" x="185" y="-283.5" font-family="Helvetica,sans-Serif" font-size="10.00">arma::velocity::Linear</text>
-<text text-anchor="middle" x="250" y="-272.5" font-family="Helvetica,sans-Serif" font-size="10.00">_solver&lt; T &gt;</text>
-<polyline fill="none" stroke="black" points="177,-265.5 323,-265.5 "/>
-<text text-anchor="start" x="185" y="-253.5" font-family="Helvetica,sans-Serif" font-size="10.00"># _fft</text>
-<text text-anchor="start" x="185" y="-242.5" font-family="Helvetica,sans-Serif" font-size="10.00"># _zeta_t</text>
-<polyline fill="none" stroke="black" points="177,-235.5 323,-235.5 "/>
-<text text-anchor="start" x="185" y="-223.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ Linear_solver()</text>
-<text text-anchor="start" x="185" y="-212.5" font-family="Helvetica,sans-Serif" font-size="10.00"># precompute()</text>
-<text text-anchor="start" x="185" y="-201.5" font-family="Helvetica,sans-Serif" font-size="10.00"># precompute()</text>
-<text text-anchor="start" x="185" y="-190.5" font-family="Helvetica,sans-Serif" font-size="10.00"># compute_velocity_field_2d()</text>
-<text text-anchor="start" x="185" y="-179.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; low_amp_window_function()</text>
+<polygon fill="none" stroke="black" points="177,-167 177,-301 323,-301 323,-167 177,-167"/>
+<text text-anchor="start" x="185" y="-289" font-family="Helvetica,sans-Serif" font-size="10.00">arma::velocity::Linear</text>
+<text text-anchor="middle" x="250" y="-278" font-family="Helvetica,sans-Serif" font-size="10.00">_solver&lt; T &gt;</text>
+<polyline fill="none" stroke="black" points="177,-271 323,-271 "/>
+<text text-anchor="start" x="185" y="-259" font-family="Helvetica,sans-Serif" font-size="10.00"># _fft</text>
+<text text-anchor="start" x="185" y="-248" font-family="Helvetica,sans-Serif" font-size="10.00"># _zeta_t</text>
+<polyline fill="none" stroke="black" points="177,-241 323,-241 "/>
+<text text-anchor="start" x="185" y="-229" font-family="Helvetica,sans-Serif" font-size="10.00">+ Linear_solver()</text>
+<text text-anchor="start" x="185" y="-218" font-family="Helvetica,sans-Serif" font-size="10.00"># precompute()</text>
+<text text-anchor="start" x="185" y="-207" font-family="Helvetica,sans-Serif" font-size="10.00"># precompute()</text>
+<text text-anchor="start" x="185" y="-196" font-family="Helvetica,sans-Serif" font-size="10.00"># compute_velocity_field_2d()</text>
+<text text-anchor="start" x="185" y="-185" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; low_amp_window_function()</text>
+<text text-anchor="start" x="185" y="-174" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; wave_number_range()</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node3 -->
 <g id="edge2" class="edge"><title>Node1&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M294.334,-389.088C284.945,-356.455 275.321,-323.006 267.449,-295.648"/>
+<path fill="none" stroke="midnightblue" d="M294.272,-388.873C285.517,-358.444 276.562,-327.32 269.017,-301.096"/>
 <polygon fill="none" stroke="midnightblue" points="290.977,-390.079 297.106,-398.721 297.704,-388.143 290.977,-390.079"/>
 </g>
 <!-- Node5 -->
@@ -147,8 +148,8 @@
 </g>
 <!-- Node3&#45;&gt;Node4 -->
 <g id="edge3" class="edge"><title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M250,-162.132C250,-130.35 250,-94.3907 250,-69.0228"/>
-<polygon fill="none" stroke="midnightblue" points="246.5,-162.286 250,-172.286 253.5,-162.286 246.5,-162.286"/>
+<path fill="none" stroke="midnightblue" d="M250,-156.692C250,-126.338 250,-93.0184 250,-69.0931"/>
+<polygon fill="none" stroke="midnightblue" points="246.5,-156.854 250,-166.854 253.5,-156.854 246.5,-156.854"/>
 </g>
 </g>
 </svg>
