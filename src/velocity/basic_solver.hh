@@ -28,9 +28,14 @@ namespace arma {
 		class Velocity_potential_solver {
 
 		protected:
-			Domain2<T> _wnmax;
+			typedef Domain2<T> domain2_type;
+
+		protected:
+			/// Wave number range in \f$X\f$ and \f$Y\f$ dimensions.
+			domain2_type _wnmax;
+			/// Water depth.
 			T _depth;
-			Domain2<T> _domain;
+			domain2_type _domain;
 
 			virtual void
 			precompute(const Discrete_function<T,3>& zeta) {}
@@ -59,19 +64,15 @@ namespace arma {
 			virtual ~Velocity_potential_solver() = default;
 
 			/**
-			\param[in] zeta      ocean wavy surface
-			\param[in] subdomain region of zeta
-			\param[in] z         a coordinate \f$z\f$ in which to compute velocity
-								 potential
-			\param[in] idx_t     a time point in which to compute velocity potential,
-								 specified as index of zeta
+			\param[in] zeta ocean wavy surface
+			\return velocity potential field with \f$(t,z,x,y)\f$ dimensions
 			*/
 			virtual Array4D<T>
 			operator()(const Discrete_function<T,3>& zeta);
 
 			inline const Domain2<T>
 			domain() const noexcept {
-				return _domain;
+				return this->_domain;
 			}
 
 			inline friend std::ostream&

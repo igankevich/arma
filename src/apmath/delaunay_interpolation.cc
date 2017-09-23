@@ -1,4 +1,4 @@
-#include "linear_interpolation.hh"
+#include "delaunay_interpolation.hh"
 
 #include <iterator>
 #include <vector>

@@ -6,8 +6,10 @@
 #include <iostream>
 #include <cmath>
 
-#include "types.hh"
+#include "apmath/delaunay_interpolation.hh"
 #include "physical_constants.hh"
+#include "types.hh"
+#include "wave.hh"
 
 namespace arma {
 

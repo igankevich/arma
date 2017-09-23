@@ -1,5 +1,5 @@
-#ifndef LINEAR_INTERPOLATON_HH
-#define LINEAR_INTERPOLATON_HH
+#ifndef APMATH_DELAUNAY_INTERPOLATION_HH
+#define APMATH_DELAUNAY_INTERPOLATION_HH
 
 #include <map>
 
@@ -10,8 +10,6 @@
 #include <CGAL/Interpolation_traits_2.h>
 #include <CGAL/interpolation_functions.h>
 #include <CGAL/natural_neighbor_coordinates_2.h>
-
-#include "wave.hh"
 
 namespace arma {
 
@@ -46,4 +44,4 @@ namespace arma {
 
 }
 
-#endif // LINEAR_INTERPOLATON_HH
+#endif // vim:filetype=cpp

@@ -61,7 +61,12 @@ test(
 		'polynomial-test',
 		sources: ['polynomial-test.cc'] + apmath_files,
 		include_directories: incdirs,
-		dependencies: [libblitz, gtest]
+		dependencies: [
+			libblitz,
+			gtest,
+			libCGAL,
+			libgmp,
+		]
 	)
 )
 
@@ -71,7 +76,12 @@ test(
 		'hermite-test',
 		sources: ['hermite-test.cc'] + apmath_files,
 		include_directories: incdirs,
-		dependencies: [libblitz, gtest]
+		dependencies: [
+			libblitz,
+			gtest,
+			libCGAL,
+			libgmp,
+		]
 	)
 )
 
@@ -81,7 +91,12 @@ test(
 		'owen-t-test',
 		sources: ['owen-t-test.cc'] + apmath_files,
 		include_directories: incdirs,
-		dependencies: [libblitz, gtest]
+		dependencies: [
+			libblitz,
+			gtest,
+			libCGAL,
+			libgmp,
+		]
 	)
 )
 
@@ -91,7 +106,13 @@ test(
 		'skew-normal-test',
 		sources: ['skew-normal-test.cc'] + apmath_files,
 		include_directories: incdirs,
-		dependencies: [libblitz, libgsl, gtest]
+		dependencies: [
+			libblitz,
+			libgsl,
+			gtest,
+			libCGAL,
+			libgmp,
+		]
 	)
 )
 
@@ -101,7 +122,13 @@ test(
 		'closed-interval-test',
 		sources: ['closed-interval-test.cc'] + apmath_files,
 		include_directories: incdirs,
-		dependencies: [libblitz, libgsl, gtest]
+		dependencies: [
+			libblitz,
+			libgsl,
+			gtest,
+			libCGAL,
+			libgmp,
+		]
 	)
 )
 

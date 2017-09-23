@@ -1,7 +1,6 @@
 #include "small_amplitude_solver.hh"
 #include "derivative.hh"
 #include "physical_constants.hh"
-#include "small_amplitude_solver/linear_interpolation.hh"
 #include "small_amplitude_solver/integrals.hh"
 
 template <class T>

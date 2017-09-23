@@ -156,4 +156,12 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 	return result;
 }
 
+template <class T>
+typename arma::velocity::Linear_solver<T>::domain2_type
+arma::velocity::Linear_solver<T>::wave_number_range(
+	const Discrete_function<T, 3>& zeta
+) const {
+	return domain2_type();
+}
+
 template class arma::velocity::Linear_solver<ARMA_REAL_TYPE>;
