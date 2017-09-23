@@ -9,7 +9,7 @@ var searchData=
   ['init_5fopengl',['init_opengl',['../arma__realtime_8cc.html#a1137af47adfa1f40d871304a42f34b35',1,'arma_realtime.cc']]],
   ['init_5fstate',['init_state',['../structarma_1_1prng_1_1mt__config.html#ab7d1aaece2a7442e1d4b8a48e9396e49',1,'arma::prng::mt_config']]],
   ['initopengl',['initOpenGL',['../visual_8cc.html#a4bbc4d876e33ad2580da08278533e83d',1,'visual.cc']]],
-  ['insert',['insert',['../classarma_1_1Delaunay__interpolation.html#ad6586918e084d8642ddee26f5e2b1e8b',1,'arma::Delaunay_interpolation::insert()'],['../structsys_1_1parameter__map.html#aea092fbbd9159ef17e37b3fd036538e5',1,'sys::parameter_map::insert()']]],
+  ['insert',['insert',['../structsys_1_1parameter__map.html#aea092fbbd9159ef17e37b3fd036538e5',1,'sys::parameter_map::insert()'],['../classarma_1_1Delaunay__interpolation.html#ad6586918e084d8642ddee26f5e2b1e8b',1,'arma::Delaunay_interpolation::insert()']]],
   ['integrals_2ehh',['integrals.hh',['../integrals_8hh.html',1,'']]],
   ['interpolate',['interpolate',['../namespacearma.html#add74f7e1462dabe6f3614accbc9808ad',1,'arma::interpolate(const Vec3D&lt; T &gt; &amp;coef, const Vec2D&lt; int &gt; &amp;x)'],['../namespacearma.html#a0f188955850072b2963c859dbb1d2484',1,'arma::interpolate(const Vec2D&lt; int &gt; &amp;x1, const Vec2D&lt; int &gt; &amp;x2, const Vec2D&lt; int &gt; &amp;x3, const Array2D&lt; T &gt; &amp;f, const Vec2D&lt; int &gt; &amp;x)'],['../namespacelinalg.html#a77bf31315e0ae8079ab8ff59727ff774',1,'linalg::interpolate()']]],
   ['interpolate_2ecc',['interpolate.cc',['../interpolate_8cc.html',1,'']]],

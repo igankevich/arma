@@ -4,7 +4,7 @@ var searchData=
   ['ma_5falgorithm_2ecc',['ma_algorithm.cc',['../ma__algorithm_8cc.html',1,'']]],
   ['ma_5falgorithm_2ehh',['ma_algorithm.hh',['../ma__algorithm_8hh.html',1,'']]],
   ['ma_5fmodel',['MA_model',['../structarma_1_1generator_1_1MA__model.html',1,'arma::generator']]],
-  ['ma_5fmodel',['ma_model',['../structarma_1_1generator_1_1ARMA__model.html#a431ce075f22367a8e779ca17d830d4c1',1,'arma::generator::ARMA_model::ma_model()'],['../structarma_1_1generator_1_1MA__model.html#aa598f8fab2d688f1d8b3d184f4da28db',1,'arma::generator::MA_model::MA_model()=default'],['../structarma_1_1generator_1_1MA__model.html#ae19875a2793b07e2aa1bb7a3a1d59be7',1,'arma::generator::MA_model::MA_model(acf_type acf, Shape3D order)']]],
+  ['ma_5fmodel',['MA_model',['../structarma_1_1generator_1_1MA__model.html#aa598f8fab2d688f1d8b3d184f4da28db',1,'arma::generator::MA_model::MA_model()=default'],['../structarma_1_1generator_1_1MA__model.html#ae19875a2793b07e2aa1bb7a3a1d59be7',1,'arma::generator::MA_model::MA_model(acf_type acf, Shape3D order)'],['../structarma_1_1generator_1_1ARMA__model.html#a431ce075f22367a8e779ca17d830d4c1',1,'arma::generator::ARMA_model::ma_model()']]],
   ['ma_5fmodel_2ecc',['ma_model.cc',['../ma__model_8cc.html',1,'']]],
   ['ma_5fmodel_2ehh',['ma_model.hh',['../ma__model_8hh.html',1,'']]],
   ['main',['main',['../common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;common_main.hh'],['../dcmt_8cc.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;dcmt.cc'],['../visual_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;visual.cc']]],
