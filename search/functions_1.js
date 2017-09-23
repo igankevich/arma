@@ -6,6 +6,7 @@ var searchData=
   ['acf',['acf',['../structarma_1_1generator_1_1ARMA__model.html#a51a93815d6b63323249ef6fb6340331b',1,'arma::generator::ARMA_model::acf()'],['../classarma_1_1generator_1_1Basic__ARMA__model.html#abc9ff159adf802358c5029ac9a80c4e5',1,'arma::generator::Basic_ARMA_model::acf()']]],
   ['acf_5fvariance',['acf_variance',['../classarma_1_1generator_1_1Basic__ARMA__model.html#a5226e042dddd36300ee73a92402a02c6',1,'arma::generator::Basic_ARMA_model::acf_variance()'],['../namespacearma.html#a5d82797b5a67439600753e62b9207dc3',1,'arma::ACF_variance()']]],
   ['amplitude',['amplitude',['../classarma_1_1generator_1_1Plain__wave__model.html#a68deeb2890753fac889366c43568b6a9',1,'arma::generator::Plain_wave_model']]],
+  ['amplitude_5frating',['amplitude_rating',['../classarma_1_1Wave.html#a6c782642f323aa6af62772838fe1d942',1,'arma::Wave']]],
   ['approx_5fspectrum',['approx_spectrum',['../classarma_1_1generator_1_1Longuet__Higgins__model.html#ab3ccfb8c385a48f9b73f5089b853e53b',1,'arma::generator::Longuet_Higgins_model']]],
   ['approx_5fwave_5fheight',['approx_wave_height',['../namespacearma.html#a191379ad041815726556d493bbbc69fb',1,'arma']]],
   ['approx_5fwave_5fperiod',['approx_wave_period',['../namespacearma.html#a9e0adb4276e8261293b12a669227d1dd',1,'arma']]],

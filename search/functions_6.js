@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['factor_5fwaves',['factor_waves',['../namespacearma.html#a1d426dc026f21d64927288b65f9143a5',1,'arma']]],
   ['factorial',['factorial',['../namespacearma_1_1apmath.html#a1a20fb50a167a73652c2a3bd3a7654cd',1,'arma::apmath']]],
   ['fft',['fft',['../classarma_1_1velocity_1_1High__amplitude__realtime__solver.html#ad5317e1a6eebc7517df291113316ea68',1,'arma::velocity::High_amplitude_realtime_solver']]],
   ['first',['first',['../classarma_1_1apmath_1_1closed__interval.html#ad52e5eb1f89913fb1343180e747a278e',1,'arma::apmath::closed_interval']]],

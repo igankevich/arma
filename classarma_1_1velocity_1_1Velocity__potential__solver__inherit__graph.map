@@ -1,6 +1,6 @@
 <map id="arma::velocity::Velocity_potential_solver&lt; T &gt;" name="arma::velocity::Velocity_potential_solver&lt; T &gt;">
 <area shape="rect" id="node2" href="$classarma_1_1velocity_1_1High__amplitude__realtime__solver.html" title="A version of High_amplitude_solver with shared OpenCL/OpenGL buffers for real&#45;time rendering..." alt="" coords="5,381,216,723"/>
-<area shape="rect" id="node3" href="$classarma_1_1velocity_1_1Linear__solver.html" title="Uses linear wave theory formula, small&#45;amplitude waves. " alt="" coords="241,462,436,642"/>
+<area shape="rect" id="node3" href="$classarma_1_1velocity_1_1Linear__solver.html" title="Uses linear wave theory formula, small&#45;amplitude waves. " alt="" coords="241,469,436,635"/>
 <area shape="rect" id="node5" href="$classarma_1_1velocity_1_1Plain__wave__solver.html" title="Uses analytic formulae from linear wave theory, sine and cosine waves. " alt="" coords="460,491,655,613"/>
 <area shape="rect" id="node6" href="$classarma_1_1velocity_1_1Small__amplitude__solver.html" title="Uses analytic formulae for small&#45;amplitude waves (WIP). " alt="" coords="679,491,873,613"/>
 <area shape="rect" id="node4" href="$classarma_1_1velocity_1_1High__amplitude__solver.html" title="Uses analytic formula based on Fourier transforms, arbitrary amplitude waves. " alt="" coords="259,771,417,863"/>

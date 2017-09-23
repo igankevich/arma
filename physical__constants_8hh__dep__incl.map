@@ -3,11 +3,12 @@
 <area shape="rect" id="node3" href="$gram__charlier_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/stats/gram_charlier.hh" alt="" coords="696,117,849,173"/>
 <area shape="rect" id="node27" href="$plain__wave__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/plain_wave\l_model.hh" alt="" coords="1040,110,1188,181"/>
 <area shape="rect" id="node29" href="$plain__wave__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/plain_wave\l_solver.cc" alt="" coords="1194,350,1336,421"/>
-<area shape="rect" id="node31" href="$lh__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/lh_model.cc" alt="" coords="1317,117,1471,173"/>
-<area shape="rect" id="node32" href="$high__amplitude__realtime__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_realtime_solver.cc" alt="" coords="1496,110,1659,181"/>
-<area shape="rect" id="node33" href="$linear__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/linear_solver.cc" alt="" coords="1683,117,1849,173"/>
-<area shape="rect" id="node34" href="$integrals_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/small_amplitude\l_solver/integrals.hh" alt="" coords="1926,110,2095,181"/>
-<area shape="rect" id="node35" href="$small__amplitude__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/small_amplitude\l_solver.cc" alt="" coords="1865,230,2033,301"/>
+<area shape="rect" id="node31" href="$factor__waves_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/factor_waves.cc" alt="" coords="1318,117,1460,173"/>
+<area shape="rect" id="node32" href="$lh__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/lh_model.cc" alt="" coords="1485,117,1639,173"/>
+<area shape="rect" id="node33" href="$high__amplitude__realtime__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_realtime_solver.cc" alt="" coords="1664,110,1827,181"/>
+<area shape="rect" id="node34" href="$linear__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/linear_solver.cc" alt="" coords="1851,117,2017,173"/>
+<area shape="rect" id="node35" href="$integrals_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/small_amplitude\l_solver/integrals.hh" alt="" coords="2042,110,2211,181"/>
+<area shape="rect" id="node36" href="$small__amplitude__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/small_amplitude\l_solver.cc" alt="" coords="2103,230,2272,301"/>
 <area shape="rect" id="node4" href="$distribution_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/stats/distribution.hh" alt="" coords="305,237,447,293"/>
 <area shape="rect" id="node23" href="$nit__transform_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/nonlinear/nit_transform.hh" alt="" coords="496,237,672,293"/>
 <area shape="rect" id="node26" href="$gram__charlier_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/stats/gram_charlier.cc" alt="" coords="696,237,849,293"/>

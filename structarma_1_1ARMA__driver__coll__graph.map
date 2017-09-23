@@ -1,6 +1,6 @@
 <map id="arma::ARMA_driver&lt; T &gt;" name="arma::ARMA_driver&lt; T &gt;">
 <area shape="rect" id="node2" href="$classarma_1_1velocity_1_1Velocity__potential__solver.html" title="Base class for all velocity potential field solvers. " alt="" coords="5,337,200,634"/>
-<area shape="rect" id="node3" href="$structarma_1_1Domain.html" title="{arma::Domain\&lt; T \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ num_points()\l+ num_points()\land 15 more...\l}" alt="" coords="23,5,157,259"/>
+<area shape="rect" id="node3" href="$structarma_1_1Domain.html" title="{arma::Domain\&lt; T \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ operator=()\l+ num_points()\land 16 more...\l}" alt="" coords="23,5,157,259"/>
 <area shape="rect" id="node4" href="$classarma_1_1generator_1_1Basic__model.html" title="A base class for all generators. " alt="" coords="271,344,424,627"/>
 <area shape="rect" id="node5" href="$structarma_1_1Grid.html" title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ num_patches()\l+ num_patches()\land 12 more...\l}" alt="" coords="183,13,312,251"/>
 <area shape="rect" id="node6" href="$classarma_1_1Output__flags.html" title="Flags that determine what and how is written to disk. " alt="" coords="337,64,471,200"/>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>ARMA ocean wave simulation programme: /home/travis/build/igankevich/arma/src/velocity/small_amplitude_solver/wave.hh Source File</title>
+<title>ARMA ocean wave simulation programme: /home/travis/build/igankevich/arma/src/wave.hh Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,7 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c48fbb18bd75afff4be030191c91476e.html">velocity</a></li><li class="navelem"><a class="el" href="dir_6ba7ed895c3e5d73e68273f00301f5eb.html">small_amplitude_solver</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -102,43 +102,69 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>arma {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">namespace </span>bits {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">class </span>Wave {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;            <span class="keywordtype">int</span> i = 0, j = 0;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> k = 0;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> height = 0;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> period = 0;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="keyword">inline</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            Wave(<span class="keywordtype">int</span> i_, <span class="keywordtype">int</span> j_, <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> k_, <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> h, <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> p):</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            i(i_), j(j_), k(k_), height(h), period(p)</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            {}</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html">   13</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classarma_1_1Wave.html">Wave</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#a58f7514c2fe06af3c0bf0063d430864d">   16</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="classarma_1_1Wave.html#aed088019318d5a99bcf5c549554493ee">_i</a> = 0, <a class="code" href="classarma_1_1Wave.html#a58f7514c2fe06af3c0bf0063d430864d">_j</a> = 0;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#affd2351370e3358ca6376db3bbec8044">   17</a></span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> <a class="code" href="classarma_1_1Wave.html#affd2351370e3358ca6376db3bbec8044">_wavenum</a> = 0;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#a0931e2a4b90cdc1e22a11d6046a6febc">   18</a></span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> <a class="code" href="classarma_1_1Wave.html#a0931e2a4b90cdc1e22a11d6046a6febc">_height</a> = 0;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#a1c5e74d103dd3ee92af5921128591f9f">   19</a></span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> <a class="code" href="classarma_1_1Wave.html#a1c5e74d103dd3ee92af5921128591f9f">_period</a> = 0;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            Wave() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classarma_1_1Wave.html#aab15ec2608659aa6fa38e55be949b179">Wave</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keyword">inline</span> <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> wave_number() const noexcept { <span class="keywordflow">return</span> k; }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keyword">inline</span> <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> amplitude_rating() const noexcept { <span class="keywordflow">return</span> height / period; }</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">int</span> x() const noexcept { <span class="keywordflow">return</span> i; }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keyword">inline</span> <span class="keywordtype">int</span> y() const noexcept { <span class="keywordflow">return</span> j; }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">inline</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#a05d7bb6a25f154a0e5bc0d6849b6ba76">   26</a></span>&#160;        <a class="code" href="classarma_1_1Wave.html#a05d7bb6a25f154a0e5bc0d6849b6ba76">Wave</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> k, <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> h, <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> p) noexcept:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="classarma_1_1Wave.html#aed088019318d5a99bcf5c549554493ee">_i</a>(i), <a class="code" href="classarma_1_1Wave.html#a58f7514c2fe06af3c0bf0063d430864d">_j</a>(j), <a class="code" href="classarma_1_1Wave.html#affd2351370e3358ca6376db3bbec8044">_wavenum</a>(k), <a class="code" href="classarma_1_1Wave.html#a0931e2a4b90cdc1e22a11d6046a6febc">_height</a>(h), <a class="code" href="classarma_1_1Wave.html#a1c5e74d103dd3ee92af5921128591f9f">_period</a>(p)</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        {}</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keyword">template</span>&lt;<span class="keyword">class</span> X&gt;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keyword">friend</span> std::ostream&amp;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            operator&lt;&lt;(std::ostream&amp; out, const Wave&lt;X&gt;&amp; rhs);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        };</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        std::ostream&amp;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        operator&lt;&lt;(std::ostream&amp; out, const Wave&lt;T&gt;&amp; rhs);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">inline</span> <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#a0727480250ababcffcb5195215b4aadb">   31</a></span>&#160;        <a class="code" href="classarma_1_1Wave.html#a0727480250ababcffcb5195215b4aadb">wave_number</a>() const noexcept {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordflow">return</span> this-&gt;<a class="code" href="classarma_1_1Wave.html#affd2351370e3358ca6376db3bbec8044">_wavenum</a>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">inline</span> <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#a6c782642f323aa6af62772838fe1d942">   36</a></span>&#160;        <a class="code" href="classarma_1_1Wave.html#a6c782642f323aa6af62772838fe1d942">amplitude_rating</a>() const noexcept {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">return</span> this-&gt;<a class="code" href="classarma_1_1Wave.html#a0931e2a4b90cdc1e22a11d6046a6febc">_height</a> / this-&gt;<a class="code" href="classarma_1_1Wave.html#a1c5e74d103dd3ee92af5921128591f9f">_period</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        }</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif // WAVE_HH</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">inline</span> <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#a81feaee4dc239165e25dd3a254a19a25">   41</a></span>&#160;        <a class="code" href="classarma_1_1Wave.html#a81feaee4dc239165e25dd3a254a19a25">x</a>() const noexcept {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordflow">return</span> this-&gt;<a class="code" href="classarma_1_1Wave.html#aed088019318d5a99bcf5c549554493ee">_i</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">inline</span> <span class="keywordtype">int</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classarma_1_1Wave.html#a7124c1272afe4183e0451a313d11065f">   46</a></span>&#160;        <a class="code" href="classarma_1_1Wave.html#a7124c1272afe4183e0451a313d11065f">y</a>() const noexcept {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordflow">return</span> this-&gt;<a class="code" href="classarma_1_1Wave.html#a58f7514c2fe06af3c0bf0063d430864d">_j</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        }</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> X&gt;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">friend</span> std::ostream&amp;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        operator&lt;&lt;(std::ostream&amp; out, const Wave&lt;X&gt;&amp; rhs);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    };</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    std::ostream&amp;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    operator&lt;&lt;(std::ostream&amp; out, const Wave&lt;T&gt;&amp; rhs);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif // WAVE_HH</span></div>
+<div class="ttc" id="classarma_1_1Wave_html_aed088019318d5a99bcf5c549554493ee"><div class="ttname"><a href="classarma_1_1Wave.html#aed088019318d5a99bcf5c549554493ee">arma::Wave::_i</a></div><div class="ttdeci">int _i</div><div class="ttdef"><b>Definition:</b> wave.hh:16</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_a0931e2a4b90cdc1e22a11d6046a6febc"><div class="ttname"><a href="classarma_1_1Wave.html#a0931e2a4b90cdc1e22a11d6046a6febc">arma::Wave::_height</a></div><div class="ttdeci">T _height</div><div class="ttdef"><b>Definition:</b> wave.hh:18</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_a6c782642f323aa6af62772838fe1d942"><div class="ttname"><a href="classarma_1_1Wave.html#a6c782642f323aa6af62772838fe1d942">arma::Wave::amplitude_rating</a></div><div class="ttdeci">T amplitude_rating() const noexcept</div><div class="ttdef"><b>Definition:</b> wave.hh:36</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_aab15ec2608659aa6fa38e55be949b179"><div class="ttname"><a href="classarma_1_1Wave.html#aab15ec2608659aa6fa38e55be949b179">arma::Wave::Wave</a></div><div class="ttdeci">Wave()=default</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_a05d7bb6a25f154a0e5bc0d6849b6ba76"><div class="ttname"><a href="classarma_1_1Wave.html#a05d7bb6a25f154a0e5bc0d6849b6ba76">arma::Wave::Wave</a></div><div class="ttdeci">Wave(int i, int j, T k, T h, T p) noexcept</div><div class="ttdef"><b>Definition:</b> wave.hh:26</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_a58f7514c2fe06af3c0bf0063d430864d"><div class="ttname"><a href="classarma_1_1Wave.html#a58f7514c2fe06af3c0bf0063d430864d">arma::Wave::_j</a></div><div class="ttdeci">int _j</div><div class="ttdef"><b>Definition:</b> wave.hh:16</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_affd2351370e3358ca6376db3bbec8044"><div class="ttname"><a href="classarma_1_1Wave.html#affd2351370e3358ca6376db3bbec8044">arma::Wave::_wavenum</a></div><div class="ttdeci">T _wavenum</div><div class="ttdef"><b>Definition:</b> wave.hh:17</div></div>
+<div class="ttc" id="classarma_1_1Wave_html"><div class="ttname"><a href="classarma_1_1Wave.html">arma::Wave</a></div><div class="ttdoc">A wave with height, period, wave number,  and  coordinate. </div><div class="ttdef"><b>Definition:</b> wave.hh:13</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_a81feaee4dc239165e25dd3a254a19a25"><div class="ttname"><a href="classarma_1_1Wave.html#a81feaee4dc239165e25dd3a254a19a25">arma::Wave::x</a></div><div class="ttdeci">int x() const noexcept</div><div class="ttdef"><b>Definition:</b> wave.hh:41</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_a7124c1272afe4183e0451a313d11065f"><div class="ttname"><a href="classarma_1_1Wave.html#a7124c1272afe4183e0451a313d11065f">arma::Wave::y</a></div><div class="ttdeci">int y() const noexcept</div><div class="ttdef"><b>Definition:</b> wave.hh:46</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_a0727480250ababcffcb5195215b4aadb"><div class="ttname"><a href="classarma_1_1Wave.html#a0727480250ababcffcb5195215b4aadb">arma::Wave::wave_number</a></div><div class="ttdeci">T wave_number() const noexcept</div><div class="ttdef"><b>Definition:</b> wave.hh:31</div></div>
+<div class="ttc" id="classarma_1_1Wave_html_a1c5e74d103dd3ee92af5921128591f9f"><div class="ttname"><a href="classarma_1_1Wave.html#a1c5e74d103dd3ee92af5921128591f9f">arma::Wave::_period</a></div><div class="ttdeci">T _period</div><div class="ttdef"><b>Definition:</b> wave.hh:19</div></div>
 <div class="ttc" id="common_8h_html_a25af1c42bcec3ac9b8d7d2846b1f2198"><div class="ttname"><a href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div><div class="ttdeci">ARMA_REAL_TYPE T</div><div class="ttdef"><b>Definition:</b> common.h:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

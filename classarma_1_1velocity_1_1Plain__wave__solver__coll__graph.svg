@@ -54,7 +54,7 @@
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
-<g id="a_node3"><a xlink:href="structarma_1_1Domain.html" target="_top" xlink:title="{arma::Domain\&lt; T \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ num_points()\l+ num_points()\land 15 more...\l}">
+<g id="a_node3"><a xlink:href="structarma_1_1Domain.html" target="_top" xlink:title="{arma::Domain\&lt; T \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ operator=()\l+ num_points()\land 16 more...\l}">
 <polygon fill="none" stroke="black" points="22,-412.5 22,-601.5 124,-601.5 124,-412.5 22,-412.5"/>
 <text text-anchor="middle" x="73" y="-589.5" font-family="Helvetica,sans-Serif" font-size="10.00">arma::Domain&lt; T &gt;</text>
 <polyline fill="none" stroke="black" points="22,-582.5 124,-582.5 "/>
@@ -70,9 +70,9 @@
 <text text-anchor="start" x="30" y="-474.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ Domain()</text>
 <text text-anchor="start" x="30" y="-463.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ Domain()</text>
 <text text-anchor="start" x="30" y="-452.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ ~Domain()</text>
-<text text-anchor="start" x="30" y="-441.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ num_points()</text>
+<text text-anchor="start" x="30" y="-441.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ operator=()</text>
 <text text-anchor="start" x="30" y="-430.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ num_points()</text>
-<text text-anchor="start" x="30" y="-419.5" font-family="Helvetica,sans-Serif" font-size="10.00">and 15 more...</text>
+<text text-anchor="start" x="30" y="-419.5" font-family="Helvetica,sans-Serif" font-size="10.00">and 16 more...</text>
 </a>
 </g>
 </g>

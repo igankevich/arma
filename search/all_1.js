@@ -15,6 +15,7 @@ var searchData=
   ['acf_5fwrapper_2ehh',['acf_wrapper.hh',['../acf__wrapper_8hh.html',1,'']]],
   ['all',['All',['../namespacearma_1_1opencl.html#a6666938b2329f3872cff42763f7a7506ab1c94ca2fbc3e78fc30069c8d0f01680',1,'arma::opencl']]],
   ['amplitude',['amplitude',['../classarma_1_1generator_1_1Plain__wave__model.html#a68deeb2890753fac889366c43568b6a9',1,'arma::generator::Plain_wave_model']]],
+  ['amplitude_5frating',['amplitude_rating',['../classarma_1_1Wave.html#a6c782642f323aa6af62772838fe1d942',1,'arma::Wave']]],
   ['apmath',['apmath',['../namespacearma_1_1apmath.html',1,'arma']]],
   ['approx_5fspectrum',['approx_spectrum',['../classarma_1_1generator_1_1Longuet__Higgins__model.html#ab3ccfb8c385a48f9b73f5089b853e53b',1,'arma::generator::Longuet_Higgins_model']]],
   ['approx_5fwave_5fheight',['approx_wave_height',['../namespacearma.html#a191379ad041815726556d493bbbc69fb',1,'arma']]],
