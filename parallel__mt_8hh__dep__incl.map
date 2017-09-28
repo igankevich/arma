@@ -1,9 +1,10 @@
 <map id="/home/travis/build/igankevich/arma/src/parallel_mt.hh" name="/home/travis/build/igankevich/arma/src/parallel_mt.hh">
 <area shape="rect" id="node2" href="$basic__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_model.hh" alt="" coords="706,109,880,165"/>
 <area shape="rect" id="node24" href="$dcmt_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/dcmt.cc" alt="" coords="905,109,1047,165"/>
-<area shape="rect" id="node25" href="$ar__model__parallel_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_parallel.cc" alt="" coords="1072,109,1275,165"/>
-<area shape="rect" id="node26" href="$parallel__mt_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/parallel_mt.cc" alt="" coords="1299,109,1441,165"/>
-<area shape="rect" id="node27" href="$white__noise_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/white_noise.hh" alt="" coords="549,221,691,277"/>
+<area shape="rect" id="node25" href="$ar__model__bscheduler_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_bscheduler.cc" alt="" coords="1071,109,1296,165"/>
+<area shape="rect" id="node26" href="$ar__model__parallel_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_parallel.cc" alt="" coords="1321,109,1524,165"/>
+<area shape="rect" id="node27" href="$parallel__mt_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/parallel_mt.cc" alt="" coords="1549,109,1691,165"/>
+<area shape="rect" id="node28" href="$white__noise_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/white_noise.hh" alt="" coords="549,221,691,277"/>
 <area shape="rect" id="node3" href="$arma__driver_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_driver.hh" alt="" coords="1175,461,1317,517"/>
 <area shape="rect" id="node9" href="$basic__arma__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_arma\l_model.hh" alt="" coords="311,214,461,285"/>
 <area shape="rect" id="node18" href="$plain__wave__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/plain_wave\l_model.hh" alt="" coords="833,334,981,405"/>

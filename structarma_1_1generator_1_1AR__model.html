@@ -465,9 +465,8 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 <ol type="1">
-<li>Generate white noise on host.</li>
 <li>Partition the data.</li>
-<li>Launch parallel kernels with dependencies controlled by OpenCL events. </li>
+<li>Read parallel Mersenne Twister state for each kernel. </li>
 </ol>
 
 <p>Implements <a class="el" href="classarma_1_1generator_1_1Basic__ARMA__model.html#a880903c2601070cef3d5d9618c88ee7f">arma::generator::Basic_ARMA_model&lt; T &gt;</a>.</p>
@@ -755,6 +754,7 @@ template&lt;class T &gt; </div>
 <hr/>The documentation for this struct was generated from the following files:<ul>
 <li>/home/travis/build/igankevich/arma/src/generator/<a class="el" href="ar__model_8hh_source.html">ar_model.hh</a></li>
 <li>/home/travis/build/igankevich/arma/src/generator/<a class="el" href="ar__model_8cc.html">ar_model.cc</a></li>
+<li>/home/travis/build/igankevich/arma/src/generator/<a class="el" href="ar__model__bscheduler_8cc.html">ar_model_bscheduler.cc</a></li>
 <li>/home/travis/build/igankevich/arma/src/generator/<a class="el" href="ar__model__opencl_8cc.html">ar_model_opencl.cc</a></li>
 <li>/home/travis/build/igankevich/arma/src/generator/<a class="el" href="ar__model__parallel_8cc.html">ar_model_parallel.cc</a></li>
 <li>/home/travis/build/igankevich/arma/src/generator/<a class="el" href="ar__model__sequential_8cc.html">ar_model_sequential.cc</a></li>

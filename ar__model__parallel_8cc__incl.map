@@ -1,9 +1,10 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ar_model_parallel.cc" name="/home/travis/build/igankevich/arma/src/generator/ar_model_parallel.cc">
 <area shape="rect" id="node13" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="917,109,1019,136"/>
 <area shape="rect" id="node22" href="$errors_8hh.html" title="errors.hh" alt="" coords="531,109,604,136"/>
-<area shape="rect" id="node23" href="$util_8hh.html" title="util.hh" alt="" coords="1493,109,1549,136"/>
+<area shape="rect" id="node23" href="$util_8hh.html" title="util.hh" alt="" coords="1502,109,1559,136"/>
 <area shape="rect" id="node27" href="$binary__stream_8hh.html" title="io/binary_stream.hh" alt="" coords="207,109,341,136"/>
-<area shape="rect" id="node32" href="$profile__counters_8hh.html" title="profile_counters.hh" alt="" coords="1775,109,1907,136"/>
+<area shape="rect" id="node32" href="$profile__counters_8hh.html" title="profile_counters.hh" alt="" coords="1766,109,1897,136"/>
+<area shape="rect" id="node34" href="$ar__model__wn_8cc.html" title="ar_model_wn.cc" alt="" coords="1923,109,2039,136"/>
 <area shape="rect" id="node29" href="$types_8hh.html" title="types.hh" alt="" coords="109,184,181,211"/>
 <area shape="rect" id="node31" href="$byte__swap_8hh.html" title="bits/byte_swap.hh" alt="" coords="205,184,333,211"/>
 <area shape="rect" id="node33" href="$profile_8hh.html" title="profile.hh" alt="" coords="1813,184,1887,211"/>
