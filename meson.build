@@ -38,6 +38,10 @@ libclFFT = dependency(
 	'clFFT',
 	required: get_option('framework') == 'opencl'
 )
+libbscheduler_app = dependency(
+	'bscheduler-app',
+	required: get_option('framework') == 'bscheduler'
+)
 
 if get_option('buildtype') == 'release'
 	add_global_arguments('-DNDEBUG', language: 'cpp')
@@ -57,6 +61,8 @@ elif framework == 'opencl'
 	add_global_arguments('-DARMA_OPENCL=1', language: 'cpp')
 elif framework == 'mpi'
 	add_global_arguments('-DARMA_MPI=1', language: 'cpp')
+elif framework == 'bscheduler'
+	add_global_arguments('-DARMA_BSCHEDULER=1', language: 'cpp')
 else
 	add_global_arguments('-DARMA_NONE=1', language: 'cpp')
 endif

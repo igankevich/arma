@@ -1,9 +1,39 @@
 #include <cstdlib>
 #include <unistd.h>
 
+#if ARMA_BSCHEDULER
+#include <bscheduler/api.hh>
+#endif
+
 #include "arma_driver.hh"
 #include "errors.hh"
 #include "common_main.hh"
+
+#if ARMA_BSCHEDULER
+template <class T>
+class ARMA_driver_kernel: public bsc::kernel, public arma::ARMA_driver<T> {
+
+private:
+	std::string _filename;
+
+public:
+
+	ARMA_driver_kernel(const std::string& filename):
+	_filename(filename) {
+		register_all_models<T>(*this);
+		register_all_solvers<T>(*this);
+		this->open(this->_filename);
+	}
+
+	void
+	act() override {
+		this->generate_wavy_surface();
+		this->compute_velocity_potentials();
+		this->write_all();
+	}
+
+};
+#endif
 
 template <class T>
 void

@@ -21,6 +21,8 @@
 
 using namespace arma;
 
+#include "ar_model_wn.cc"
+
 namespace {
 
 	struct Partition {
@@ -69,19 +71,6 @@ namespace {
 		return parts;
 	}
 
-	template <class T, class Generator>
-	Array3D<T>
-	generate_white_noise(const Shape3D& size, T variance, Generator generator) {
-		std::normal_distribution<T> normal(T(0), std::sqrt(variance));
-		Array3D<T> eps(size);
-		std::generate_n(
-			eps.data(),
-			eps.numElements(),
-			std::bind(normal, generator)
-		);
-		return eps;
-	}
-
 }
 
 template <class T>
@@ -95,7 +84,7 @@ arma::generator::AR_model<T>::do_generate() {
 	using blitz::RectDomain;
 	using blitz::product;
 	using std::min;
-	/// 1. Read parallel Mersenne Twister states.
+	/// 1. Read parallel Mersenne Twister state for each thread.
 	const size_t nthreads = std::max(1, omp_get_max_threads());
 	std::vector<prng::parallel_mt> mts =
 		prng::read_parallel_mts(MT_CONFIG_FILE, nthreads, this->_noseed);

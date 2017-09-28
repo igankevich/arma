@@ -12,7 +12,7 @@
 #include <stdexcept>
 #include <random>
 
-#if ARMA_OPENMP || ARMA_OPENCL
+#if ARMA_OPENMP || ARMA_OPENCL || ARMA_BSCHEDULER
 namespace {
 
 	arma::Shape3D
@@ -242,6 +242,8 @@ arma::generator::AR_model<T>::write(std::ostream& out) const {
 #include "ar_model_parallel.cc"
 #elif ARMA_OPENCL
 #include "ar_model_opencl.cc"
+#elif ARMA_BSCHEDULER
+#include "ar_model_bscheduler.cc"
 #endif
 
 template class arma::generator::AR_model<ARMA_REAL_TYPE>;

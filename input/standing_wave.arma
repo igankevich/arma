@@ -1,5 +1,5 @@
 model = AR {
-	out_grid = (100,256,20)
+	out_grid = (100,20,20)
 	acf = {
 		func = standing_wave
 		grid = (10,10,10) : (2.5,5,5)
