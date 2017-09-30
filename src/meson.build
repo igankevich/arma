@@ -77,7 +77,7 @@ arma_src = common_src + [
 ]
 
 arma_cpp_args = []
-arma_deps = [
+arma_deps += [
 	libblitz,
 	libgsl,
 	libblas,

@@ -50,6 +50,7 @@ else
 	add_global_arguments('-DBZ_DEBUG', language: 'cpp')
 endif
 
+arma_deps = []
 framework = get_option('framework')
 if framework == 'openmp'
 	add_global_arguments('-DARMA_OPENMP=1', language: 'cpp')
@@ -63,6 +64,8 @@ elif framework == 'mpi'
 	add_global_arguments('-DARMA_MPI=1', language: 'cpp')
 elif framework == 'bscheduler'
 	add_global_arguments('-DARMA_BSCHEDULER=1', language: 'cpp')
+	arma_deps += libbscheduler_app
+	arma_deps += libpthread
 else
 	add_global_arguments('-DARMA_NONE=1', language: 'cpp')
 endif
