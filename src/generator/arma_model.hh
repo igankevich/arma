@@ -60,6 +60,14 @@ namespace arma {
 				AR_model<T>::verify(zeta);
 			}
 
+			#if ARMA_BSCHEDULER
+			void
+			act() override {}
+
+			void
+			react(bsc::kernel* ) override {}
+			#endif
+
 		protected:
 			T
 			white_noise_variance(Array3D<T> phi, Array3D<T> theta) const;

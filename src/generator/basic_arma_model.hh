@@ -1,6 +1,8 @@
 #ifndef GENERATOR_BASIC_ARMA_MODEL_HH
 #define GENERATOR_BASIC_ARMA_MODEL_HH
 
+#include <vector>
+
 #include "basic_model.hh"
 #include "discrete_function.hh"
 #include "nonlinear/nit_transform.hh"
@@ -12,7 +14,9 @@ namespace arma {
 
 		/// Base class for AR, MA and ARMA models.
 		template <class T>
-		class Basic_ARMA_model: public virtual Basic_model<T> {
+		class Basic_ARMA_model:
+			public virtual Basic_model<T>
+	   	{
 
 		public:
 			typedef Discrete_function<T,3> acf_type;
@@ -59,6 +63,14 @@ namespace arma {
 			setacf(const acf_type& rhs) {
 				this->_acf.reference(rhs);
 			}
+
+			#if ARMA_BSCHEDULER
+			void
+			act() override;
+
+			void
+			react(bsc::kernel* child) override;
+			#endif
 
 			virtual T white_noise_variance() const = 0;
 			virtual void determine_coefficients() = 0;

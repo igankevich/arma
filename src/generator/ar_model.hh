@@ -10,6 +10,14 @@
 /// File with subroutines for AR model, Yule-Walker equations
 /// and some others.
 
+
+#if ARMA_BSCHEDULER
+namespace {
+	template <class T>
+	class ar_partition_kernel;
+}
+#endif
+
 namespace arma {
 
 	namespace generator {
@@ -19,8 +27,16 @@ namespace arma {
 		\ingroup generators
 		*/
 		template <class T>
-		struct AR_model: public Basic_ARMA_model<T> {
+		class AR_model: public Basic_ARMA_model<T> {
 
+		private:
+			/// The size of partitions that are computed in parallel.
+			Shape3D _partition = Shape3D(0,0,0);
+			/// AR coefficients.
+			Array3D<T> _phi;
+			bool _doleastsquares = false;
+
+		public:
 			typedef Discrete_function<T,3> acf_type;
 
 			AR_model() = default;
@@ -56,6 +72,15 @@ namespace arma {
 				determine_coefficients_old(_doleastsquares);
 			}
 
+			#if ARMA_BSCHEDULER
+			void
+			act() override;
+
+			template <class X>
+			friend
+			class ::ar_partition_kernel;
+			#endif
+
 		protected:
 			void
 			generate_surface(Array3D<T>& zeta, const Domain3D& subdomain);
@@ -77,11 +102,6 @@ namespace arma {
 			void
 			determine_coefficients_iteratively();
 
-			/// The size of partitions that are computed in parallel.
-			Shape3D _partition = Shape3D(0,0,0);
-			/// AR coefficients.
-			Array3D<T> _phi;
-			bool _doleastsquares = false;
 		};
 
 	}

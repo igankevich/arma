@@ -18,6 +18,7 @@ private:
 
 public:
 
+	explicit
 	ARMA_driver_kernel(const std::string& filename):
 	_filename(filename) {
 		register_all_models<T>(*this);
@@ -27,7 +28,17 @@ public:
 
 	void
 	act() override {
-		this->generate_wavy_surface();
+		this->echo_parameters();
+		this->_model->act();
+	}
+
+	void
+	react(bsc::kernel* child) {
+		this->_zeta.reference(this->_model->zeta());
+		#if ARMA_OPENCL
+		this->_zeta.copy_to_host_if_exists();
+		#endif
+		this->_model->verify(this->_zeta);
 		this->compute_velocity_potentials();
 		this->write_all();
 	}
@@ -39,7 +50,11 @@ template <class T>
 void
 run_arma(const std::string& input_filename) {
 	using namespace arma;
-	/// input file with various driver parameters
+	#if ARMA_BSCHEDULER
+	bsc::factory_guard g;
+	bsc::send(new ARMA_driver_kernel<T>(input_filename));
+	bsc::wait_and_return();
+	#else
 	ARMA_driver<T> driver;
 	register_all_models<T>(driver);
 	register_all_solvers<T>(driver);
@@ -59,4 +74,5 @@ run_arma(const std::string& input_filename) {
 				<< std::endl;
 		}
 	}
+	#endif
 }

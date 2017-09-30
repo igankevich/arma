@@ -7,6 +7,8 @@
 #include "parallel_mt.hh"
 #include "profile.hh"
 
+#include "ar_model_wn.cc"
+
 namespace {
 
 template <class T>
@@ -18,6 +20,7 @@ private:
 	typedef blitz::RectDomain<3> rect_type;
 	typedef arma::prng::parallel_mt generator_type;
 	typedef std::vector<generator_type> mts_type;
+	typedef arma::generator::AR_model<T> model_type;
 
 private:
 	/// Partition start.
@@ -26,6 +29,8 @@ private:
 	shape_type _upper;
 	/// Shape of the wavy surface.
 	shape_type _shape;
+	/// AR mode reference.
+	model_type& _model;
 	/// Wavy surface.
 	array_type& _zeta;
 	/// Parallel Mersenne Twisters.
@@ -49,11 +54,13 @@ public:
 		T varwn,
 		int index,
 		array_type& zeta,
-		mts_type& mts
+		mts_type& mts,
+		model_type& model
 	):
 	_lower(blitz::min(lower, shape)),
 	_upper(blitz::min(upper, shape)),
 	_shape(shape),
+	_model(model),
 	_zeta(zeta),
 	_mts(mts),
 	_index(index),
@@ -63,6 +70,7 @@ public:
 	void
 	act() override {
 		using blitz::shape;
+		sys::log_message("ar", "_\t_", this->_lower, this->_upper);
 		rect_type rect(this->_lower, this->_upper);
 		shape_type partshape = this->get_part_shape();
 		this->_zeta(rect) = generate_white_noise(
@@ -70,7 +78,7 @@ public:
 			this->_varwn,
 			std::ref(this->mersenne_twister())
 		);
-		generate_surface(this->_zeta, rect);
+		this->_model.generate_surface(this->_zeta, rect);
 		/// Launch all dependent kernels.
 		int idx = this->_index;
 		std::vector<ar_partition_kernel*> kernels;
@@ -102,8 +110,8 @@ private:
 		using blitz::min;
 		using blitz::product;
 		shape_type partshape = this->get_part_shape();
-		shape_type new_lower = min(this->_lower + shift, this->_shape);
-		shape_type new_upper = min(this->_upper + shift, this->_shape);
+		shape_type new_lower = min(this->_lower + shift, this->_shape-1);
+		shape_type new_upper = min(this->_upper + shift, this->_shape-1);
 		if (product(new_upper - new_lower) == 0) {
 			// empty part
 			return;
@@ -115,7 +123,8 @@ private:
 			this->_varwn,
 			++index,
 			this->_zeta,
-			this->_mts
+			this->_mts,
+			this->_model
 		));
 	}
 
@@ -135,8 +144,9 @@ private:
 
 
 template <class T>
-arma::Array3D<T>
-arma::generator::AR_model<T>::do_generate() {
+void
+arma::generator::AR_model<T>::act() {
+	Basic_ARMA_model<T>::act();
 	const T var_wn = this->white_noise_variance();
 	write_key_value(std::clog, "White noise variance", var_wn);
 	if (var_wn < T(0)) {
@@ -158,10 +168,23 @@ arma::generator::AR_model<T>::do_generate() {
 	const int ntotal = product(nparts);
 	write_key_value(std::clog, "Partition size", partshape);
 	/// 2. Read parallel Mersenne Twister state for each kernel.
-	std::vector<prng::parallel_mt> mts =
-		prng::read_parallel_mts(MT_CONFIG_FILE, ntotal, this->_noseed);
-	Array3D<T> zeta(shape);
-	return zeta;
+	this->_mts = prng::read_parallel_mts(MT_CONFIG_FILE, ntotal, this->_noseed);
+	this->_zeta.resize(shape);
+	ar_partition_kernel<T>* kernel = new ar_partition_kernel<T>(
+		Shape3D(0,0,0),
+		partshape-1,
+		this->_zeta.shape(),
+		var_wn,
+		0,
+		this->_zeta,
+		this->_mts,
+		*this
+	);
+	bsc::upstream(this, kernel);
 }
 
-
+template <class T>
+arma::Array3D<T>
+arma::generator::AR_model<T>::do_generate() {
+	throw std::runtime_error("bad method");
+}

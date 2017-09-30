@@ -1,12 +1,17 @@
 #ifndef GENERATOR_MODEL_HH
 #define GENERATOR_MODEL_HH
 
-#include "types.hh"
+#include <istream>
+#include <ostream>
+
+#if ARMA_BSCHEDULER
+#include <bscheduler/api.hh>
+#endif
+
 #include "grid.hh"
 #include "output_flags.hh"
 #include "parallel_mt.hh"
-#include <istream>
-#include <ostream>
+#include "types.hh"
 
 namespace arma {
 
@@ -23,7 +28,11 @@ namespace arma {
 		\ingroup generators
 		*/
 		template<class T>
-		class Basic_model {
+		class Basic_model
+			#if ARMA_BSCHEDULER
+			: public virtual bsc::kernel
+			#endif
+		{
 
 		public:
 			typedef Grid<T,3> grid_type;
@@ -35,6 +44,10 @@ namespace arma {
 			/// Whether seed PRNG or not. This flag is needed for
 			/// reproducible tests.
 			bool _noseed = false;
+			#if ARMA_BSCHEDULER
+			Array3D<T> _zeta;
+			std::vector<prng::parallel_mt> _mts;
+			#endif
 
 			virtual void write(std::ostream& out) const {}
 			virtual void read(std::istream& in) {}
@@ -88,6 +101,18 @@ namespace arma {
 				rhs.read(in);
 				return in;
 			}
+
+			#if ARMA_BSCHEDULER
+			inline Array3D<T>&
+			zeta() noexcept {
+				return this->_zeta;
+			}
+
+			inline const Array3D<T>&
+			zeta() const noexcept {
+				return this->_zeta;
+			}
+			#endif
 
 		};
 

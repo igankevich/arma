@@ -49,7 +49,7 @@ namespace arma {
 		typedef generator::Basic_model<T> model_type;
 		typedef std::function<model_type*()> model_ctr;
 
-	private:
+	protected:
 		model_type* _model = nullptr;
 		vpsolver_type* _solver = nullptr;
 		Discrete_function<T,3> _zeta;
@@ -139,7 +139,7 @@ namespace arma {
 		friend std::istream&
 		operator>>(std::istream& in, ARMA_driver<X>& m);
 
-	private:
+	protected:
 		void
 		echo_parameters();
 

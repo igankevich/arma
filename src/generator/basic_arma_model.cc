@@ -83,4 +83,49 @@ arma::generator::Basic_ARMA_model<T>::generate() {
 	return zeta;
 }
 
+#if ARMA_BSCHEDULER
+template <class T>
+void
+arma::generator::Basic_ARMA_model<T>::act() {
+	ARMA_PROFILE_BLOCK("nit_acf",
+		if (!this->_linear) {
+			auto copy = this->_acf.copy();
+			this->_nittransform.transform_ACF(copy);
+		}
+	);
+	arma::write_key_value(std::clog, "ACF variance", ACF_variance(this->_acf));
+	if (this->_oflags.isset(Output_flags::ACF)) {
+		if (this->_oflags.isset(Output_flags::CSV)) {
+			bits::write_csv("acf.csv", this->_acf, this->_acf.grid());
+		}
+		if (this->_oflags.isset(Output_flags::Blitz)) {
+			std::ofstream out("acf");
+			out << this->_acf;
+		}
+	}
+	ARMA_PROFILE_BLOCK("determine_coefficients",
+		this->determine_coefficients();
+	);
+	ARMA_PROFILE_BLOCK("validate",
+		this->validate();
+	);
+}
+
+template <class T>
+void
+arma::generator::Basic_ARMA_model<T>::react(bsc::kernel*) {
+	ARMA_PROFILE_BLOCK("nit_realisation",
+		if (!this->_linear) {
+			this->_nittransform.transform_realisation(this->_acf, this->_zeta);
+		}
+	);
+}
+
+template <class T>
+arma::Array3D<T>
+arma::generator::Basic_ARMA_model<T>::do_generate() {
+	throw std::runtime_error("bad method");
+}
+#endif
+
 template class arma::generator::Basic_ARMA_model<ARMA_REAL_TYPE>;
