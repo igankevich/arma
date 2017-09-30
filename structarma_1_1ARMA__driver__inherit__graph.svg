@@ -13,12 +13,12 @@
 <polygon fill="#bfbfbf" stroke="black" points="4,-204.5 4,-459.5 132,-459.5 132,-204.5 4,-204.5"/>
 <text text-anchor="middle" x="68" y="-447.5" font-family="Helvetica,sans-Serif" font-size="10.00">arma::ARMA_driver&lt; T &gt;</text>
 <polyline fill="none" stroke="black" points="4,-440.5 132,-440.5 "/>
-<text text-anchor="start" x="12" y="-428.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _model</text>
-<text text-anchor="start" x="12" y="-417.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _solver</text>
-<text text-anchor="start" x="12" y="-406.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _zeta</text>
-<text text-anchor="start" x="12" y="-395.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _vpotentials</text>
-<text text-anchor="start" x="12" y="-384.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _solvers</text>
-<text text-anchor="start" x="12" y="-373.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _models</text>
+<text text-anchor="start" x="12" y="-428.5" font-family="Helvetica,sans-Serif" font-size="10.00"># _model</text>
+<text text-anchor="start" x="12" y="-417.5" font-family="Helvetica,sans-Serif" font-size="10.00"># _solver</text>
+<text text-anchor="start" x="12" y="-406.5" font-family="Helvetica,sans-Serif" font-size="10.00"># _zeta</text>
+<text text-anchor="start" x="12" y="-395.5" font-family="Helvetica,sans-Serif" font-size="10.00"># _vpotentials</text>
+<text text-anchor="start" x="12" y="-384.5" font-family="Helvetica,sans-Serif" font-size="10.00"># _solvers</text>
+<text text-anchor="start" x="12" y="-373.5" font-family="Helvetica,sans-Serif" font-size="10.00"># _models</text>
 <polyline fill="none" stroke="black" points="4,-366.5 132,-366.5 "/>
 <text text-anchor="start" x="12" y="-354.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ ARMA_driver()</text>
 <text text-anchor="start" x="12" y="-343.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ ~ARMA_driver()</text>
@@ -33,7 +33,7 @@
 <text text-anchor="start" x="12" y="-244.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ oflags()</text>
 <text text-anchor="start" x="12" y="-233.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ velocity_potential_grid()</text>
 <text text-anchor="start" x="12" y="-222.5" font-family="Helvetica,sans-Serif" font-size="10.00">and 8 more...</text>
-<text text-anchor="start" x="12" y="-211.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; echo_parameters()</text>
+<text text-anchor="start" x="12" y="-211.5" font-family="Helvetica,sans-Serif" font-size="10.00"># echo_parameters()</text>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>

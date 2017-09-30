@@ -13,9 +13,9 @@
 <polygon fill="#bfbfbf" stroke="black" points="193,-1 193,-223 321,-223 321,-1 193,-1"/>
 <text text-anchor="middle" x="257" y="-211" font-family="Helvetica,sans-Serif" font-size="10.00">arma::ARMA_driver&lt; T &gt;</text>
 <polyline fill="none" stroke="black" points="193,-204 321,-204 "/>
-<text text-anchor="start" x="201" y="-192" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _vpotentials</text>
-<text text-anchor="start" x="201" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _solvers</text>
-<text text-anchor="start" x="201" y="-170" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _models</text>
+<text text-anchor="start" x="201" y="-192" font-family="Helvetica,sans-Serif" font-size="10.00"># _vpotentials</text>
+<text text-anchor="start" x="201" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00"># _solvers</text>
+<text text-anchor="start" x="201" y="-170" font-family="Helvetica,sans-Serif" font-size="10.00"># _models</text>
 <polyline fill="none" stroke="black" points="193,-163 321,-163 "/>
 <text text-anchor="start" x="201" y="-151" font-family="Helvetica,sans-Serif" font-size="10.00">+ ARMA_driver()</text>
 <text text-anchor="start" x="201" y="-140" font-family="Helvetica,sans-Serif" font-size="10.00">+ ~ARMA_driver()</text>
@@ -30,7 +30,7 @@
 <text text-anchor="start" x="201" y="-41" font-family="Helvetica,sans-Serif" font-size="10.00">+ oflags()</text>
 <text text-anchor="start" x="201" y="-30" font-family="Helvetica,sans-Serif" font-size="10.00">+ velocity_potential_grid()</text>
 <text text-anchor="start" x="201" y="-19" font-family="Helvetica,sans-Serif" font-size="10.00">and 8 more...</text>
-<text text-anchor="start" x="201" y="-8" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; echo_parameters()</text>
+<text text-anchor="start" x="201" y="-8" font-family="Helvetica,sans-Serif" font-size="10.00"># echo_parameters()</text>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
@@ -63,7 +63,7 @@
 <g id="edge1" class="edge"><title>Node2&#45;&gt;Node1</title>
 <path fill="none" stroke="#404040" d="M146.25,-275.513C159.393,-256.228 173.069,-236.16 186.142,-216.976"/>
 <polygon fill="none" stroke="#404040" points="186.16,-216.949 186.234,-209.739 192.918,-207.033 192.845,-214.244 186.16,-216.949"/>
-<text text-anchor="middle" x="184" y="-245.5" font-family="Helvetica,sans-Serif" font-size="10.00"> &#45;_solver</text>
+<text text-anchor="middle" x="185" y="-245.5" font-family="Helvetica,sans-Serif" font-size="10.00"> #_solver</text>
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
@@ -126,7 +126,7 @@
 <g id="edge3" class="edge"><title>Node4&#45;&gt;Node1</title>
 <path fill="none" stroke="#404040" d="M257,-278.225C257,-264.096 257,-249.502 257,-235.106"/>
 <polygon fill="none" stroke="#404040" points="257,-235.073 253,-229.073 257,-223.073 261,-229.073 257,-235.073"/>
-<text text-anchor="middle" x="276" y="-245.5" font-family="Helvetica,sans-Serif" font-size="10.00"> &#45;_model</text>
+<text text-anchor="middle" x="277" y="-245.5" font-family="Helvetica,sans-Serif" font-size="10.00"> #_model</text>
 </g>
 <!-- Node5 -->
 <g id="node5" class="node"><title>Node5</title>
@@ -198,7 +198,7 @@
 <g id="edge6" class="edge"><title>Node7&#45;&gt;Node1</title>
 <path fill="none" stroke="#404040" d="M385.742,-338.717C369.363,-310 347.17,-271.089 325.824,-233.665"/>
 <polygon fill="none" stroke="#404040" points="325.777,-233.582 319.329,-230.352 319.831,-223.159 326.278,-226.389 325.777,-233.582"/>
-<text text-anchor="middle" x="349.5" y="-245.5" font-family="Helvetica,sans-Serif" font-size="10.00"> &#45;_zeta</text>
+<text text-anchor="middle" x="350.5" y="-245.5" font-family="Helvetica,sans-Serif" font-size="10.00"> #_zeta</text>
 </g>
 <!-- Node8 -->
 <g id="node8" class="node"><title>Node8</title>

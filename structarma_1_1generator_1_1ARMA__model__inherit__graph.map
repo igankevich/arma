@@ -1,5 +1,5 @@
 <map id="arma::generator::ARMA_model&lt; T &gt;" name="arma::generator::ARMA_model&lt; T &gt;">
-<area shape="rect" id="node2" href="$structarma_1_1generator_1_1AR__model.html" title="Uses autoregressive process, standing waves. " alt="" coords="5,733,197,1059"/>
+<area shape="rect" id="node2" href="$classarma_1_1generator_1_1AR__model.html" title="Uses autoregressive process, standing waves. " alt="" coords="5,733,197,1059"/>
 <area shape="rect" id="node3" href="$classarma_1_1generator_1_1Basic__ARMA__model.html" title="Base class for AR, MA and ARMA models. " alt="" coords="119,365,292,677"/>
 <area shape="rect" id="node5" href="$structarma_1_1generator_1_1MA__model.html" title="Uses moving average process, propagating waves. " alt="" coords="223,725,396,1067"/>
 <area shape="rect" id="node4" href="$classarma_1_1generator_1_1Basic__model.html" title="A base class for all generators. " alt="" coords="128,5,281,317"/>

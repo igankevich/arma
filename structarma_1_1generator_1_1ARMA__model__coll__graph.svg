@@ -34,7 +34,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="structarma_1_1generator_1_1AR__model.html" target="_top" xlink:title="Uses autoregressive process, standing waves. ">
+<g id="a_node2"><a xlink:href="classarma_1_1generator_1_1AR__model.html" target="_top" xlink:title="Uses autoregressive process, standing waves. ">
 <polygon fill="none" stroke="black" points="-0.5,-268 -0.5,-512 144.5,-512 144.5,-268 -0.5,-268"/>
 <text text-anchor="start" x="7.5" y="-500" font-family="Helvetica,sans-Serif" font-size="10.00">arma::generator::AR</text>
 <text text-anchor="middle" x="72" y="-489" font-family="Helvetica,sans-Serif" font-size="10.00">_model&lt; T &gt;</text>

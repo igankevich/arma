@@ -22,7 +22,7 @@ var searchData=
   ['cnt_5fharts_5fg1',['CNT_HARTS_G1',['../profile__counters_8hh.html#a3da68b62045b65f29edfa0ec5371466e',1,'profile_counters.hh']]],
   ['cnt_5fharts_5fg2',['CNT_HARTS_G2',['../profile__counters_8hh.html#ae89119bc9297110f629c22f66e8732ec',1,'profile_counters.hh']]],
   ['cnt_5fwrite_5fsurface',['CNT_WRITE_SURFACE',['../profile__counters_8hh.html#ac2537a08655c970f9546d8fdab990bdb',1,'profile_counters.hh']]],
-  ['coefficients',['coefficients',['../structarma_1_1generator_1_1AR__model.html#a8bb984bcccbf0c659383d3525beaa874',1,'arma::generator::AR_model::coefficients()'],['../structarma_1_1generator_1_1MA__model.html#aa31b28c4009324b680434c67806a0011',1,'arma::generator::MA_model::coefficients()']]],
+  ['coefficients',['coefficients',['../classarma_1_1generator_1_1AR__model.html#a8bb984bcccbf0c659383d3525beaa874',1,'arma::generator::AR_model::coefficients()'],['../structarma_1_1generator_1_1MA__model.html#aa31b28c4009324b680434c67806a0011',1,'arma::generator::MA_model::coefficients()']]],
   ['command_5fqueue',['command_queue',['../namespacearma_1_1opencl.html#a9ef0252c8a62d98ffae32a3c14c917af',1,'arma::opencl']]],
   ['common_2eh',['common.h',['../common_8h.html',1,'']]],
   ['common_5fmain_2ehh',['common_main.hh',['../common__main_8hh.html',1,'']]],

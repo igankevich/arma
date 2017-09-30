@@ -11,7 +11,7 @@ var searchData=
   ['approx_5fwave_5fheight',['approx_wave_height',['../namespacearma.html#a191379ad041815726556d493bbbc69fb',1,'arma']]],
   ['approx_5fwave_5fperiod',['approx_wave_period',['../namespacearma.html#a9e0adb4276e8261293b12a669227d1dd',1,'arma']]],
   ['approximate_5fspectrum',['approximate_spectrum',['../classarma_1_1generator_1_1Longuet__Higgins__model.html#af2ed8fc6bf22caa228392b1f78f32ade',1,'arma::generator::Longuet_Higgins_model']]],
-  ['ar_5fmodel',['AR_model',['../structarma_1_1generator_1_1AR__model.html#a5920edb7826c545b2884b7dae9540c7c',1,'arma::generator::AR_model::AR_model()=default'],['../structarma_1_1generator_1_1AR__model.html#aaec0d7441a8bbbeceb1e0e295c0a310f',1,'arma::generator::AR_model::AR_model(acf_type acf, Shape3D order)']]],
+  ['ar_5fmodel',['AR_model',['../classarma_1_1generator_1_1AR__model.html#a5920edb7826c545b2884b7dae9540c7c',1,'arma::generator::AR_model::AR_model()=default'],['../classarma_1_1generator_1_1AR__model.html#aaec0d7441a8bbbeceb1e0e295c0a310f',1,'arma::generator::AR_model::AR_model(acf_type acf, Shape3D order)']]],
   ['arma_5fdriver',['ARMA_driver',['../structarma_1_1ARMA__driver.html#a9ad2783f5bf6e35fb8bc941abc3c8046',1,'arma::ARMA_driver']]],
   ['arma_5ffinalise',['arma_finalise',['../common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e',1,'common_main.hh']]],
   ['arma_5finit',['arma_init',['../common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7',1,'common_main.hh']]],
