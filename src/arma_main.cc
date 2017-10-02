@@ -29,7 +29,7 @@ public:
 	void
 	act() override {
 		this->echo_parameters();
-		this->_model->act();
+		bsc::upstream(this, this->_model);
 	}
 
 	void
@@ -41,6 +41,7 @@ public:
 		this->_model->verify(this->_zeta);
 		this->compute_velocity_potentials();
 		this->write_all();
+		bsc::commit(this);
 	}
 
 };

@@ -1,10 +1,10 @@
 #ifndef AR_MODEL_HH
 #define AR_MODEL_HH
 
-#include "types.hh"
 #include "arma.hh"
 #include "basic_arma_model.hh"
 #include "discrete_function.hh"
+#include "types.hh"
 
 /// @file
 /// File with subroutines for AR model, Yule-Walker equations
@@ -15,6 +15,8 @@
 namespace {
 	template <class T>
 	class ar_partition_kernel;
+	template <class T>
+	class ar_master_kernel;
 }
 #endif
 
@@ -23,9 +25,9 @@ namespace arma {
 	namespace generator {
 
 		/**
-		\brief Uses autoregressive process, standing waves.
-		\ingroup generators
-		*/
+		   \brief Uses autoregressive process, standing waves.
+		   \ingroup generators
+		 */
 		template <class T>
 		class AR_model: public Basic_ARMA_model<T> {
 
@@ -62,9 +64,11 @@ namespace arma {
 				return this->oflags().isset(Output_flags::Binary);
 			}
 
-			void validate() const override;
+			void
+			validate() const override;
 
-			Array3D<T> do_generate() override;
+			Array3D<T>
+			do_generate() override;
 
 			inline void
 			determine_coefficients() override {
@@ -76,9 +80,14 @@ namespace arma {
 			void
 			act() override;
 
+			void
+			react(bsc::kernel* child) override;
+
 			template <class X>
-			friend
-			class ::ar_partition_kernel;
+			friend class ::ar_partition_kernel;
+
+			template <class X>
+			friend class ::ar_master_kernel;
 			#endif
 
 		protected:
@@ -88,17 +97,21 @@ namespace arma {
 			T
 			white_noise_variance(Array3D<T> phi) const;
 
-			void write(std::ostream& out) const override;
-			void read(std::istream& in) override;
+			void
+			write(std::ostream& out) const override;
+
+			void
+			read(std::istream& in) override;
 
 		private:
 			void
 			determine_coefficients_old(bool do_least_squares);
 
 			/**
-			Darbin algorithm. Partial autocovariation function \f$\phi_{k,j}\f$,
-			where k --- AR process order, j --- coefficient index.
-			*/
+			   Darbin algorithm. Partial autocovariation function
+			      \f$\phi_{k,j}\f$,
+			   where k --- AR process order, j --- coefficient index.
+			 */
 			void
 			determine_coefficients_iteratively();
 

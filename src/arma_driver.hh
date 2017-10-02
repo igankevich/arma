@@ -62,7 +62,9 @@ namespace arma {
 
 		inline virtual
 		~ARMA_driver() {
+			#if !ARMA_BSCHEDULER
 			delete _model;
+			#endif
 			delete _solver;
 		}
 
