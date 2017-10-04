@@ -9,6 +9,7 @@ var searchData=
   ['ar_5fmodel_5fopencl_2ecc',['ar_model_opencl.cc',['../ar__model__opencl_8cc.html',1,'']]],
   ['ar_5fmodel_5fparallel_2ecc',['ar_model_parallel.cc',['../ar__model__parallel_8cc.html',1,'']]],
   ['ar_5fmodel_5fsequential_2ecc',['ar_model_sequential.cc',['../ar__model__sequential_8cc.html',1,'']]],
+  ['ar_5fmodel_5fsurf_2ecc',['ar_model_surf.cc',['../ar__model__surf_8cc.html',1,'']]],
   ['ar_5fmodel_5fwn_2ecc',['ar_model_wn.cc',['../ar__model__wn_8cc.html',1,'']]],
   ['arma_2ecc',['arma.cc',['../arma_8cc.html',1,'']]],
   ['arma_2ehh',['arma.hh',['../arma_8hh.html',1,'']]],
