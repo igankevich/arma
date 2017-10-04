@@ -17,6 +17,10 @@ extern "C" {
 #include <dc.h> // for free_mt_struct, genrand_mt, get_mt_parameter_id_st
 }
 
+#if ARMA_BSCHEDULER
+#include <bscheduler/api.hh>
+#endif
+
 namespace arma {
 
 	/// \brief Pseudo-random number generators.
@@ -67,6 +71,57 @@ namespace arma {
 				out.write((char*)rhs.state, rhs.nn * sizeof(uint32_t));
 				return out;
 			}
+
+			#if ARMA_BSCHEDULER
+			friend sys::pstream&
+			operator<<(sys::pstream& out, const mt_config& rhs) {
+				out << rhs.aaa
+					<< int32_t(rhs.mm)
+					<< int32_t(rhs.nn)
+					<< int32_t(rhs.rr)
+					<< int32_t(rhs.ww)
+					<< rhs.wmask
+					<< rhs.umask
+					<< rhs.lmask
+					<< int32_t(rhs.shift0)
+					<< int32_t(rhs.shift1)
+					<< int32_t(rhs.shiftB)
+					<< int32_t(rhs.shiftC)
+					<< rhs.maskB
+					<< rhs.maskC
+					<< int32_t(rhs.i);
+				for (int j=0; j<rhs.nn; ++j) {
+					out << rhs.state[j];
+				}
+				return out;
+			}
+
+			friend sys::pstream&
+			operator>>(sys::pstream& in, mt_config& rhs) {
+				rhs.free_state();
+				in >> rhs.aaa
+					>> static_cast<int32_t&>(rhs.mm)
+					>> static_cast<int32_t&>(rhs.nn)
+					>> static_cast<int32_t&>(rhs.rr)
+					>> static_cast<int32_t&>(rhs.ww)
+					>> rhs.wmask
+					>> rhs.umask
+					>> rhs.lmask
+					>> static_cast<int32_t&>(rhs.shift0)
+					>> static_cast<int32_t&>(rhs.shift1)
+					>> static_cast<int32_t&>(rhs.shiftB)
+					>> static_cast<int32_t&>(rhs.shiftC)
+					>> rhs.maskB
+					>> rhs.maskC
+					>> static_cast<int32_t&>(rhs.i);
+				rhs.init_state();
+				for (int j=0; j<rhs.nn; ++j) {
+					in >> rhs.state[j];
+				}
+				return in;
+			}
+			#endif
+
 		};
 
 		/**
@@ -159,6 +214,18 @@ namespace arma {
 			}
 
 			mt_config _config;
+
+			#if ARMA_BSCHEDULER
+			friend sys::pstream&
+			operator<<(sys::pstream& out, const parallel_mt& rhs) {
+				return out << rhs._config;
+			}
+
+			friend sys::pstream&
+			operator>>(sys::pstream& in, parallel_mt& rhs) {
+				return in >> rhs._config;
+			}
+			#endif
 		};
 
 		template<class Result>

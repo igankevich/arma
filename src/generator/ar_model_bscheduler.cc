@@ -12,6 +12,45 @@
 
 namespace {
 
+	sys::pstream&
+	operator<<(sys::pstream& out, const arma::Shape3D& rhs) {
+		return out << int32_t(rhs(0)) << int32_t(rhs(1)) << int32_t(rhs(2));
+	}
+
+	sys::pstream&
+	operator>>(sys::pstream& in, arma::Shape3D& rhs) {
+		return in
+		       >> static_cast<int32_t&>(rhs(0))
+		       >> static_cast<int32_t&>(rhs(1))
+		       >> static_cast<int32_t&>(rhs(2));
+	}
+
+	template <class T>
+	sys::pstream&
+	operator<<(sys::pstream& out, const arma::Array3D<T>& rhs) {
+		out << rhs.shape();
+		const int n = rhs.numElements();
+		const T* data = rhs.data();
+		for (int i=0; i<n; ++i) {
+			out << data[i];
+		}
+		return out;
+	}
+
+	template <class T>
+	sys::pstream&
+	operator>>(sys::pstream& in, arma::Array3D<T>& rhs) {
+		arma::Shape3D shape;
+		in >> shape;
+		rhs.resize(shape);
+		const int n = rhs.numElements();
+		T* data = rhs.data();
+		for (int i=0; i<n; ++i) {
+			in >> data[i];
+		}
+		return in;
+	}
+
 	template <class T>
 	class ar_partition_kernel: public bsc::kernel {
 
@@ -20,7 +59,6 @@ namespace {
 		typedef arma::Array3D<T> array_type;
 		typedef blitz::RectDomain<3> rect_type;
 		typedef arma::prng::parallel_mt generator_type;
-		typedef arma::generator::AR_model<T> model_type;
 
 	private:
 		/// Partition start.
@@ -31,12 +69,12 @@ namespace {
 		shape_type _part;
 		/// White noise variance.
 		T _varwn = 0;
-		/// AR mode reference.
-		model_type& _model;
-		/// Wavy surface.
-		array_type& _zeta;
+		/// Wavy surface part including all dependent points.
+		array_type _zeta;
+		/// AR coefficients.
+		array_type _phi;
 		/// Parallel Mersenne Twister.
-		generator_type& _generator;
+		generator_type _generator;
 
 	public:
 
@@ -48,36 +86,78 @@ namespace {
 			shape_type upper,
 			shape_type part,
 			T varwn,
-			array_type& zeta,
-			generator_type& generator,
-			model_type& model
+			array_type zeta,
+			array_type phi,
+			const generator_type& generator
 		):
 		_lower(lower),
 		_upper(upper),
 		_part(part),
 		_varwn(varwn),
-		_model(model),
 		_zeta(zeta),
+		_phi(phi),
 		_generator(generator)
 		{}
 
 		void
 		act() override {
-			using blitz::shape;
-			rect_type rect(this->_lower, this->_upper);
-			shape_type partshape = this->get_part_shape();
-			this->_zeta(rect) = generate_white_noise(
-				partshape,
-				this->_varwn,
-				std::ref(this->_generator)
-			                    );
-			this->_model.generate_surface(this->_zeta, rect);
-			bsc::commit(this);
+			rect_type subpart = this->part_bounds();
+			this->_zeta(subpart) =
+				generate_white_noise(
+					this->get_part_shape(),
+					this->_varwn,
+					std::ref(this->_generator)
+				);
+			ar_generate_surface(this->_zeta, this->_phi, subpart);
+			bsc::commit<bsc::Remote>(this);
 		}
 
 		inline const shape_type&
 		get_part_index() const noexcept {
 			return this->_part;
+		}
+
+		inline const array_type&
+		zeta() const noexcept {
+			return this->_zeta;
+		}
+
+		/// Bounds of the partition in big zeta array.
+		inline rect_type
+		bounds() const noexcept {
+			return rect_type(this->_lower, this->_upper);
+		}
+
+		/// Bounds of the partition inside small zeta array.
+		inline rect_type
+		part_bounds() const noexcept {
+			shape_type size = this->_zeta.shape();
+			shape_type offset = size - this->get_part_shape();
+			return rect_type(offset, size-1);
+		}
+
+		void
+		write(sys::pstream& out) override {
+			bsc::kernel::write(out);
+			out << this->_lower
+			    << this->_upper
+			    << this->_part
+			    << this->_varwn
+			    << this->_zeta
+			    << this->_phi
+			    << this->_generator;
+		}
+
+		void
+		read(sys::pstream& in) override {
+			bsc::kernel::read(in);
+			in >> this->_lower
+			>> this->_upper
+			>> this->_part
+			>> this->_varwn
+			>> this->_zeta
+			>> this->_phi
+			>> this->_generator;
 		}
 
 	private:
@@ -131,7 +211,11 @@ namespace {
 		_ntotal(blitz::product(nparts)) {
 			this->init_counters();
 			this->_varwn = this->_model.white_noise_variance();
-			arma::write_key_value(std::clog, "White noise variance", this->_varwn);
+			arma::write_key_value(
+				std::clog,
+				"White noise variance",
+				this->_varwn
+			);
 			if (this->_varwn < T(0)) {
 				throw std::invalid_argument("variance is less than zero");
 			}
@@ -148,6 +232,8 @@ namespace {
 			using blitz::all;
 			slave_kernel* slave = dynamic_cast<slave_kernel*>(child);
 			const shape_type& lower = slave->get_part_index();
+			this->_model._zeta(slave->bounds()) =
+				slave->zeta()(slave->part_bounds());
 			arma::print_progress(
 				"generated part",
 				++this->_nfinished,
@@ -163,19 +249,26 @@ namespace {
 				send_subordinate(shape_type(lower(0)+1, lower(1)+1, lower(2)));
 				send_subordinate(shape_type(lower(0), lower(1)+1, lower(2)+1));
 				send_subordinate(shape_type(lower(0)+1, lower(1), lower(2)+1));
-				send_subordinate(shape_type(lower(0)+1, lower(1)+1, lower(2)+1));
-			}
-			/*
-			const int nt = this->_counter.extent(0);
-			for (int i=0; i<nt; ++i) {
-				using blitz::Range;
-				sys::log_message(
-					"ar",
-					"counter=_",
-					this->_counter(i, Range::all(), Range::all())
+				send_subordinate(
+					shape_type(
+						lower(0)+1,
+						lower(1)+1,
+						lower(2)+
+						1
+					)
 				);
 			}
-			*/
+			/*
+			   const int nt = this->_counter.extent(0);
+			   for (int i=0; i<nt; ++i) {
+			    using blitz::Range;
+			    sys::log_message(
+			        "ar",
+			        "counter=_",
+			        this->_counter(i, Range::all(), Range::all())
+			    );
+			   }
+			 */
 		}
 
 	private:
@@ -183,24 +276,34 @@ namespace {
 		inline void
 		send_subordinate(const shape_type& part_index) {
 			using blitz::any;
+			using blitz::min;
+			using blitz::max;
+			using blitz::shape;
 			if (any(part_index == this->_nparts)) {
 				return;
 			}
 			if (++this->_counter(part_index) == 7) {
-				//sys::log_message("ar", "part=_", part_index);
+				// sys::log_message("ar", "part=_", part_index);
 				// increment counter to prevent calculation
 				// of the part multiple times
 				++this->_counter(part_index);
-				bsc::upstream(
+				shape_type lower = this->_partshape*part_index;
+				shape_type upper =
+					min(lower + this->_partshape, this->zeta_shape()) - 1;
+				// include all dependent points
+				shape_type big_lower =
+					max(lower - this->_model._phi.shape(), shape(0,0,0));
+				rect_type big_rect(big_lower, upper);
+				bsc::upstream<bsc::Remote>(
 					this,
 					new slave_kernel(
-						shape_type(0,0,0),
-						this->partition_shape()-1,
+						lower,
+						upper,
 						part_index,
 						this->_varwn,
-						this->_model._zeta,
-						this->mersenne_twister(),
-						this->_model
+						this->_model._zeta(big_rect),
+						this->_model._phi,
+						this->mersenne_twister()
 					)
 				);
 				++this->_index;
@@ -241,6 +344,13 @@ namespace {
 		}
 
 	};
+
+	struct auto_register_types {
+		auto_register_types() {
+			bsc::register_type<ar_partition_kernel<ARMA_REAL_TYPE> >();
+		}
+
+	} __autoregister;
 
 }
 

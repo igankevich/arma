@@ -53,7 +53,9 @@ run_arma(const std::string& input_filename) {
 	using namespace arma;
 	#if ARMA_BSCHEDULER
 	bsc::factory_guard g;
-	bsc::send(new ARMA_driver_kernel<T>(input_filename));
+	if (bsc::this_application::is_master()) {
+		bsc::send(new ARMA_driver_kernel<T>(input_filename));
+	}
 	bsc::wait_and_return();
 	#else
 	ARMA_driver<T> driver;
