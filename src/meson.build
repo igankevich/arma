@@ -148,7 +148,7 @@ executable(
 		libblitz,
 		libglut,
 		libGL
-	] + fourier_deps,
+	] + fourier_deps + bscheduler_deps,
 	install: true
 )
 
