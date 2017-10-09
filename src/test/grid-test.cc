@@ -30,3 +30,13 @@ TEST(GridTest, ZeroPatchSize) {
 	EXPECT_GE(grid.patch_size(1), 0.0f);
 }
 
+
+TEST(Array, ViewAssign) {
+	using namespace blitz;
+	Array<double,2> x(shape(4, 4));
+	x = 0;
+	Array<double,2> sub(x(Range(2, 3), Range(2, 3)));
+	sub = 33;
+	std::clog << "x=" << x << std::endl;
+	std::clog << "sub=" << sub << std::endl;
+}

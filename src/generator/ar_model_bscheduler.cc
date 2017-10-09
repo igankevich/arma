@@ -148,10 +148,33 @@ namespace {
 			out << this->_lower;
 			out << this->_upper;
 			out << this->_part;
-			out << this->_varwn;
-			out << this->_zeta;
-			out << this->_phi;
-			out << this->_generator;
+			rect_type subpart = this->part_bounds();
+			if (this->moves_upstream()) {
+				out << this->_varwn;
+				out << this->_zeta.shape();
+				const shape_type& offset = subpart.lbound();
+				using blitz::Range;
+				using blitz::toEnd;
+				out << array_type(this->_zeta(
+					Range::all(),
+					Range(0, offset(1)-1),
+					Range(0, offset(2)-1)
+				));
+				out << array_type(this->_zeta(
+					Range(0, offset(0)-1),
+					Range(offset(1), toEnd),
+					Range(0, offset(2)-1)
+				));
+				out << array_type(this->_zeta(
+					Range(0, offset(0)-1),
+					Range(0, offset(1)-1),
+					Range(offset(1), toEnd)
+				));
+				out << this->_phi;
+				out << this->_generator;
+			} else {
+				out << array_type(this->_zeta(subpart));
+			}
 			ARMA_PROFILE_CNT_END(CNT_BSC_MARSHALLING);
 		}
 
@@ -162,10 +185,39 @@ namespace {
 			in >> this->_lower;
 			in >> this->_upper;
 			in >> this->_part;
-			in >> this->_varwn;
-			in >> this->_zeta;
-			in >> this->_phi;
-			in >> this->_generator;
+			rect_type subpart = this->part_bounds();
+			if (this->moves_upstream()) {
+				in >> this->_varwn;
+				shape_type zeta_shape;
+				in >> zeta_shape;
+				this->_zeta.resize(zeta_shape);
+				const shape_type& offset = subpart.lbound();
+				using blitz::Range;
+				using blitz::toEnd;
+				array_type tmp1(this->_zeta(
+					Range::all(),
+					Range(0, offset(1)-1),
+					Range(0, offset(2)-1)
+				));
+				array_type tmp2(this->_zeta(
+					Range(0, offset(0)-1),
+					Range(offset(1), toEnd),
+					Range(0, offset(2)-1)
+				));
+				array_type tmp3(this->_zeta(
+					Range(0, offset(0)-1),
+					Range(0, offset(1)-1),
+					Range(offset(1), toEnd)
+				));
+				in >> tmp1;
+				in >> tmp2;
+				in >> tmp3;
+				in >> this->_phi;
+				in >> this->_generator;
+			} else {
+				array_type tmp(this->_zeta(subpart));
+				in >> tmp;
+			}
 			ARMA_PROFILE_CNT_END(CNT_BSC_MARSHALLING);
 		}
 
