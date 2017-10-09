@@ -43,7 +43,7 @@ libbscheduler_app = dependency(
 	required: get_option('framework') == 'bscheduler'
 )
 
-if get_option('buildtype') == 'release'
+if not get_option('buildtype').contains('debug')
 	add_global_arguments('-DNDEBUG', language: 'cpp')
 else
 	# debug Blitz++

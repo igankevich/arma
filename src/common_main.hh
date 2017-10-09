@@ -38,12 +38,15 @@
 void
 register_all_counters() {
 	#if ARMA_PROFILE
-	arma::register_counter(CNT_HARTS_G1, "harts_g1");
-	arma::register_counter(CNT_HARTS_G2, "harts_g2");
-	arma::register_counter(CNT_HARTS_FFT, "harts_fft");
-	arma::register_counter(CNT_HARTS_COPY_TO_HOST, "harts_copy_to_host");
-	arma::register_counter(CNT_COPY_TO_HOST, "copy_to_host");
-	arma::register_counter(CNT_WRITE_SURFACE, "write_surface");
+	using namespace arma;
+	register_counter(CNT_HARTS_G1, "harts_g1");
+	register_counter(CNT_HARTS_G2, "harts_g2");
+	register_counter(CNT_HARTS_FFT, "harts_fft");
+	register_counter(CNT_HARTS_COPY_TO_HOST, "harts_copy_to_host");
+	register_counter(CNT_COPY_TO_HOST, "copy_to_host");
+	register_counter(CNT_WRITE_SURFACE, "write_surface");
+	register_counter(CNT_BSC_COPY, "bsc_copy");
+	register_counter(CNT_BSC_MARSHALLING, "bsc_marshalling");
 	#endif
 }
 

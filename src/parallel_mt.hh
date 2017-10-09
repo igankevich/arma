@@ -26,6 +26,37 @@ namespace arma {
 	/// \brief Pseudo-random number generators.
 	namespace prng {
 
+		#if ARMA_BSCHEDULER
+		namespace bits {
+
+			template <class X, class Y=int32_t>
+			struct wrap {
+
+				X& _orig;
+
+				inline explicit
+				wrap(X& orig):
+				_orig(orig)
+				{}
+
+				friend sys::pstream&
+				operator<<(sys::pstream& out, const wrap& rhs) {
+					return out << Y(rhs._orig);
+				}
+
+				friend sys::pstream&
+				operator>>(sys::pstream& in, wrap& rhs) {
+					Y y;
+					in >> y;
+					rhs._orig = static_cast<X>(y);
+					return in;
+				}
+
+			};
+
+		}
+		#endif
+
 		/// \brief A set of parameters for parallel_mt generator.
 		struct mt_config : public ::mt_struct {
 
@@ -99,21 +130,33 @@ namespace arma {
 			friend sys::pstream&
 			operator>>(sys::pstream& in, mt_config& rhs) {
 				rhs.free_state();
+				int32_t mm, nn, rr, ww;
+				int32_t shift0, shift1, shiftB, shiftC;
+				int32_t i;
 				in >> rhs.aaa
-					>> static_cast<int32_t&>(rhs.mm)
-					>> static_cast<int32_t&>(rhs.nn)
-					>> static_cast<int32_t&>(rhs.rr)
-					>> static_cast<int32_t&>(rhs.ww)
+					>> mm
+					>> nn
+					>> rr
+					>> ww
 					>> rhs.wmask
 					>> rhs.umask
 					>> rhs.lmask
-					>> static_cast<int32_t&>(rhs.shift0)
-					>> static_cast<int32_t&>(rhs.shift1)
-					>> static_cast<int32_t&>(rhs.shiftB)
-					>> static_cast<int32_t&>(rhs.shiftC)
+					>> shift0
+					>> shift1
+					>> shiftB
+					>> shiftC
 					>> rhs.maskB
 					>> rhs.maskC
-					>> static_cast<int32_t&>(rhs.i);
+					>> i;
+				rhs.mm = mm;
+				rhs.nn = nn;
+				rhs.rr = rr;
+				rhs.ww = ww;
+				rhs.shift0 = shift0;
+				rhs.shift1 = shift1;
+				rhs.shiftB = shiftB;
+				rhs.shiftC = shiftC;
+				rhs.i = i;
 				rhs.init_state();
 				for (int j=0; j<rhs.nn; ++j) {
 					in >> rhs.state[j];
@@ -207,6 +250,9 @@ namespace arma {
 				init(rhs);
 			}
 
+			friend std::ostream&
+			operator<<(std::ostream& out, const parallel_mt& rhs);
+
 		private:
 			void
 			init(result_type seed) {
@@ -227,6 +273,9 @@ namespace arma {
 			}
 			#endif
 		};
+
+		std::ostream&
+		operator<<(std::ostream& out, const parallel_mt& rhs);
 
 		template<class Result>
 		void

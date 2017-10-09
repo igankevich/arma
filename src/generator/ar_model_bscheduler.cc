@@ -6,6 +6,7 @@
 #include "config.hh"
 #include "parallel_mt.hh"
 #include "profile.hh"
+#include "profile_counters.hh"
 #include "util.hh"
 
 #include "ar_model_wn.cc"
@@ -19,10 +20,12 @@ namespace {
 
 	sys::pstream&
 	operator>>(sys::pstream& in, arma::Shape3D& rhs) {
-		return in
-		       >> static_cast<int32_t&>(rhs(0))
-		       >> static_cast<int32_t&>(rhs(1))
-		       >> static_cast<int32_t&>(rhs(2));
+		int32_t x, y, z;
+		in >> x >> y >> z;
+		rhs(0) = x;
+		rhs(1) = y;
+		rhs(2) = z;
+		return in;
 	}
 
 	template <class T>
@@ -101,6 +104,7 @@ namespace {
 
 		void
 		act() override {
+			ARMA_EVENT_START("generate_surface", "bsc", 0);
 			rect_type subpart = this->part_bounds();
 			this->_zeta(subpart) =
 				generate_white_noise(
@@ -109,6 +113,7 @@ namespace {
 					std::ref(this->_generator)
 				);
 			ar_generate_surface(this->_zeta, this->_phi, subpart);
+			ARMA_EVENT_END("generate_surface", "bsc", 0);
 			bsc::commit<bsc::Remote>(this);
 		}
 
@@ -138,26 +143,52 @@ namespace {
 
 		void
 		write(sys::pstream& out) override {
+			sys::log_message(
+				"arma",
+				"write lo=_,hi=_,part=_,varwn=_,zeta.shape=_,phi.shape=_,gen=_",
+				this->_lower,
+				this->_upper,
+				this->_part,
+				this->_varwn,
+				this->_zeta.shape(),
+				this->_phi.shape(),
+				this->_generator
+			);
+			ARMA_PROFILE_CNT_START(CNT_BSC_MARSHALLING);
 			bsc::kernel::write(out);
-			out << this->_lower
-			    << this->_upper
-			    << this->_part
-			    << this->_varwn
-			    << this->_zeta
-			    << this->_phi
-			    << this->_generator;
+			out << this->_lower;
+			out << this->_upper;
+			out << this->_part;
+			out << this->_varwn;
+			out << this->_zeta;
+			out << this->_phi;
+			out << this->_generator;
+			ARMA_PROFILE_CNT_END(CNT_BSC_MARSHALLING);
 		}
 
 		void
 		read(sys::pstream& in) override {
+			ARMA_PROFILE_CNT_START(CNT_BSC_MARSHALLING);
 			bsc::kernel::read(in);
-			in >> this->_lower
-			>> this->_upper
-			>> this->_part
-			>> this->_varwn
-			>> this->_zeta
-			>> this->_phi
-			>> this->_generator;
+			in >> this->_lower;
+			in >> this->_upper;
+			in >> this->_part;
+			in >> this->_varwn;
+			in >> this->_zeta;
+			in >> this->_phi;
+			in >> this->_generator;
+			ARMA_PROFILE_CNT_END(CNT_BSC_MARSHALLING);
+			sys::log_message(
+				"arma",
+				"read lo=_,hi=_,part=_,varwn=_,zeta.shape=_,phi.shape=_,gen=_",
+				this->_lower,
+				this->_upper,
+				this->_part,
+				this->_varwn,
+				this->_zeta.shape(),
+				this->_phi.shape(),
+				this->_generator
+			);
 		}
 
 	private:
@@ -229,16 +260,13 @@ namespace {
 
 		void
 		react(bsc::kernel* child) override {
+			ARMA_PROFILE_CNT_START(CNT_BSC_COPY);
 			using blitz::all;
 			slave_kernel* slave = dynamic_cast<slave_kernel*>(child);
 			const shape_type& lower = slave->get_part_index();
 			this->_model._zeta(slave->bounds()) =
 				slave->zeta()(slave->part_bounds());
-			arma::print_progress(
-				"generated part",
-				++this->_nfinished,
-				this->_ntotal
-			);
+			arma::print_progress("generated part", ++this->_nfinished, this->_ntotal);
 			if (all(lower+1 == this->_nparts)) {
 				bsc::commit(this);
 			} else {
@@ -258,17 +286,7 @@ namespace {
 					)
 				);
 			}
-			/*
-			   const int nt = this->_counter.extent(0);
-			   for (int i=0; i<nt; ++i) {
-			    using blitz::Range;
-			    sys::log_message(
-			        "ar",
-			        "counter=_",
-			        this->_counter(i, Range::all(), Range::all())
-			    );
-			   }
-			 */
+			ARMA_PROFILE_CNT_END(CNT_BSC_COPY);
 		}
 
 	private:

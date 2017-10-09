@@ -80,6 +80,15 @@ namespace arma {
 	::arma::profile::thread_event(name, "strt", thread_name, thread_no)
 #define ARMA_EVENT_END(name, thread_name, thread_no) \
 	::arma::profile::thread_event(name, "end", thread_name, thread_no)
+#define ARMA_PROFILE_CNT_START(name) \
+	const auto name##_t0 = ::std::chrono::high_resolution_clock::now()
+#define ARMA_PROFILE_CNT_END(name) \
+	{ \
+		auto name##_t1 = ::std::chrono::high_resolution_clock::now(); \
+		auto us = ::std::chrono::duration_cast<::std::chrono::microseconds> \
+			(name##_t1 - name##_t0); \
+		::arma::__counters[name] += us.count(); \
+	}
 
 #else
 #define ARMA_PROFILE_FUNC(func) func;
