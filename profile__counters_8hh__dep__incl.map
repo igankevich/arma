@@ -1,7 +1,8 @@
 <map id="/home/travis/build/igankevich/arma/src/profile_counters.hh" name="/home/travis/build/igankevich/arma/src/profile_counters.hh">
-<area shape="rect" id="node2" href="$ar__model__parallel_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_parallel.cc" alt="" coords="5,117,208,173"/>
-<area shape="rect" id="node3" href="$basic__arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_arma\l_model.cc" alt="" coords="233,110,383,181"/>
-<area shape="rect" id="node4" href="$lh__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/lh_model.cc" alt="" coords="408,117,561,173"/>
-<area shape="rect" id="node5" href="$array_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/array.hh" alt="" coords="587,117,729,173"/>
-<area shape="rect" id="node6" href="$ar__model__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_opencl.cc" alt="" coords="559,229,757,285"/>
+<area shape="rect" id="node2" href="$ar__model__bscheduler_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_bscheduler.cc" alt="" coords="5,117,229,173"/>
+<area shape="rect" id="node3" href="$ar__model__parallel_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_parallel.cc" alt="" coords="255,117,457,173"/>
+<area shape="rect" id="node4" href="$basic__arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_arma\l_model.cc" alt="" coords="482,110,632,181"/>
+<area shape="rect" id="node5" href="$lh__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/lh_model.cc" alt="" coords="657,117,811,173"/>
+<area shape="rect" id="node6" href="$array_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/array.hh" alt="" coords="837,117,979,173"/>
+<area shape="rect" id="node7" href="$ar__model__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_opencl.cc" alt="" coords="808,229,1007,285"/>
 </map>

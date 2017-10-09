@@ -1,6 +1,7 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ar_model_bscheduler.cc" name="/home/travis/build/igankevich/arma/src/generator/ar_model_bscheduler.cc">
-<area shape="rect" id="node6" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="509,109,611,136"/>
-<area shape="rect" id="node18" href="$profile_8hh.html" title="profile.hh" alt="" coords="636,109,709,136"/>
-<area shape="rect" id="node19" href="$util_8hh.html" title="util.hh" alt="" coords="1095,109,1152,136"/>
-<area shape="rect" id="node24" href="$ar__model__wn_8cc.html" title="ar_model_wn.cc" alt="" coords="1177,109,1293,136"/>
+<area shape="rect" id="node6" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="599,109,701,136"/>
+<area shape="rect" id="node18" href="$profile_8hh.html" title="profile.hh" alt="" coords="1051,184,1124,211"/>
+<area shape="rect" id="node19" href="$profile__counters_8hh.html" title="profile_counters.hh" alt="" coords="943,109,1075,136"/>
+<area shape="rect" id="node20" href="$util_8hh.html" title="util.hh" alt="" coords="1194,109,1251,136"/>
+<area shape="rect" id="node25" href="$ar__model__wn_8cc.html" title="ar_model_wn.cc" alt="" coords="1276,109,1392,136"/>
 </map>
