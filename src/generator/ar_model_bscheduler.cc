@@ -173,6 +173,7 @@ namespace {
 				out << this->_phi;
 				out << this->_generator;
 			} else {
+				out << this->_zeta.shape();
 				out << array_type(this->_zeta(subpart));
 			}
 			ARMA_PROFILE_CNT_END(CNT_BSC_MARSHALLING);
@@ -215,6 +216,9 @@ namespace {
 				in >> this->_phi;
 				in >> this->_generator;
 			} else {
+				shape_type zeta_shape;
+				in >> zeta_shape;
+				this->_zeta.resize(zeta_shape);
 				array_type tmp(this->_zeta(subpart));
 				in >> tmp;
 			}
