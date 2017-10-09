@@ -143,17 +143,6 @@ namespace {
 
 		void
 		write(sys::pstream& out) override {
-			sys::log_message(
-				"arma",
-				"write lo=_,hi=_,part=_,varwn=_,zeta.shape=_,phi.shape=_,gen=_",
-				this->_lower,
-				this->_upper,
-				this->_part,
-				this->_varwn,
-				this->_zeta.shape(),
-				this->_phi.shape(),
-				this->_generator
-			);
 			ARMA_PROFILE_CNT_START(CNT_BSC_MARSHALLING);
 			bsc::kernel::write(out);
 			out << this->_lower;
@@ -178,17 +167,6 @@ namespace {
 			in >> this->_phi;
 			in >> this->_generator;
 			ARMA_PROFILE_CNT_END(CNT_BSC_MARSHALLING);
-			sys::log_message(
-				"arma",
-				"read lo=_,hi=_,part=_,varwn=_,zeta.shape=_,phi.shape=_,gen=_",
-				this->_lower,
-				this->_upper,
-				this->_part,
-				this->_varwn,
-				this->_zeta.shape(),
-				this->_phi.shape(),
-				this->_generator
-			);
 		}
 
 	private:
