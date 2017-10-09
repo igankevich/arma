@@ -186,12 +186,12 @@ namespace {
 			in >> this->_lower;
 			in >> this->_upper;
 			in >> this->_part;
-			rect_type subpart = this->part_bounds();
 			if (this->moves_upstream()) {
 				in >> this->_varwn;
 				shape_type zeta_shape;
 				in >> zeta_shape;
 				this->_zeta.resize(zeta_shape);
+				rect_type subpart = this->part_bounds();
 				const shape_type& offset = subpart.lbound();
 				using blitz::Range;
 				using blitz::toEnd;
@@ -219,6 +219,7 @@ namespace {
 				shape_type zeta_shape;
 				in >> zeta_shape;
 				this->_zeta.resize(zeta_shape);
+				rect_type subpart = this->part_bounds();
 				array_type tmp(this->_zeta(subpart));
 				in >> tmp;
 			}
