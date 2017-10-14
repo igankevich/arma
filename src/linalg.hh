@@ -21,38 +21,6 @@ namespace linalg {
 	template <class T>
 	using Vector = blitz::Array<T, 1>;
 
-	/// BLAS C++ templates.
-	namespace bits {
-		template<
-			class T,
-			class Vec,
-			void (*gemv_ptr)(
-				OPENBLAS_CONST enum CBLAS_ORDER order,
-				OPENBLAS_CONST enum CBLAS_TRANSPOSE trans,
-				OPENBLAS_CONST blasint m,
-				OPENBLAS_CONST blasint n,
-				OPENBLAS_CONST T alpha,
-				OPENBLAS_CONST T *a,
-				OPENBLAS_CONST blasint lda,
-				OPENBLAS_CONST T *x,
-				OPENBLAS_CONST blasint incx,
-				OPENBLAS_CONST T beta,
-				T *y,
-				OPENBLAS_CONST blasint incy
-			)
-		>
-		Vec
-		gemv(linalg::Matrix<T> lhs, Vec rhs) {
-			const int m = lhs.rows(), n = lhs.cols();
-			Vec result(rhs.shape());
-			result = 0;
-			gemv_ptr(CblasRowMajor, CblasNoTrans, m, n, T(1), lhs.data(), m,
-			     rhs.data(), 1, T(0), result.data(), 1);
-			return result;
-		}
-
-	}
-
 	/**
 	\brief Solve linear system \f$A x=b\f$ via Cholesky decomposition.
 	\param[in]    A input matrix (lhs).
@@ -69,13 +37,23 @@ namespace linalg {
 	template <int N>
 	blitz::Array<float,N>
 	operator*(Matrix<float> lhs, blitz::Array<float,N> rhs) {
-		return bits::gemv<float,blitz::Array<float,N>,cblas_sgemv>(lhs, rhs);
+		const int m = lhs.rows(), n = lhs.cols();
+		blitz::Array<float,N> result(rhs.shape());
+		result = 0;
+		cblas_sgemv(CblasRowMajor, CblasNoTrans, m, n, 1.f, lhs.data(), m,
+		     rhs.data(), 1, 0.f, result.data(), 1);
+		return result;
 	}
 
 	template <int N>
 	blitz::Array<double,N>
 	operator*(Matrix<double> lhs, blitz::Array<double,N> rhs) {
-		return bits::gemv<double,blitz::Array<double,N>,cblas_dgemv>(lhs, rhs);
+		const int m = lhs.rows(), n = lhs.cols();
+		blitz::Array<double,N> result(rhs.shape());
+		result = 0;
+		cblas_dgemv(CblasRowMajor, CblasNoTrans, m, n, 1.0, lhs.data(), m,
+		     rhs.data(), 1, 0.0, result.data(), 1);
+		return result;
 	}
 
 	template <class T>
