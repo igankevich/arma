@@ -181,7 +181,16 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 			}
 		}
 	);
-	result = blitz::where(blitz::isfinite(result), result, 0);
+//	result = blitz::where(blitz::isfinite(result), result, 0);
+	{
+		T* data = result.data();
+		const int nelems = result.numElements();
+		for (int i=0; i<nelems; ++i) {
+			if (!std::isfinite(data[i])) {
+				data[i] = 0;
+			}
+		}
+	}
 	blitz::rotate(result, result.shape()/2);
 	return result;
 }
