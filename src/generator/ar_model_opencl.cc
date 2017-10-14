@@ -10,7 +10,16 @@
 
 namespace {
 
-	typedef std::pair<std::atomic<int>,const int> progress_type;
+	struct progress_type {
+
+		explicit
+		progress_type(int n):
+		second(n)
+		{}
+
+		std::atomic<int> first;
+		int second;
+	};
 
 	void kernel_callback(cl_event ev, cl_int ret, void* user_data) {
 		#if ARMA_PROFILE
@@ -55,7 +64,7 @@ arma::generator::AR_model<T>::do_generate() {
 		devices()[0].getInfo<CL_DEVICE_MAX_COMPUTE_UNITS>()
 	);
 	const Shape3D nparts = blitz::div_ceil(shape, partshape);
-	progress_type progress(0, product(nparts));
+	progress_type progress(product(nparts));
 	write_key_value(std::clog, "Partition size", partshape);
 	/// 3. Launch parallel kernels with dependencies
 	/// controlled by OpenCL events.
