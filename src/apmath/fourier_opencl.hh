@@ -49,7 +49,8 @@ namespace arma {
 			static_assert(N <= 3, "bad no. of dimensions");
 			static_assert(
 				std::is_same<T,std::complex<float>>::value ||
-				std::is_same<T,std::complex<double>>::value
+				std::is_same<T,std::complex<double>>::value,
+				"bad types"
 			);
 
 		public:

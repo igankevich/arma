@@ -112,7 +112,8 @@ namespace arma {
 						and alignof(T) == alignof(value_type)
 					)
 					or
-					!std::is_same<std::complex<elem_type>, T>::value
+					!std::is_same<std::complex<elem_type>, T>::value,
+					"bad types"
 				);
 				Transform(
 					reinterpret_cast<array_type>(rhs),
