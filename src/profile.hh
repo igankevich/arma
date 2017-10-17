@@ -55,6 +55,14 @@ namespace arma {
 			const int thread_no
 		);
 
+		inline uint64_t
+		now() {
+			using namespace std::chrono;
+			return duration_cast<nanoseconds>(
+				high_resolution_clock::now().time_since_epoch()
+			).count();
+		}
+
 	}
 
 }
@@ -89,6 +97,8 @@ namespace arma {
 			(name##_t1 - name##_t0); \
 		::arma::__counters[name] += us.count(); \
 	}
+#define ARMA_PROFILE_CNT_ADD(name, value) \
+	::arma::__counters[name] += value
 
 #else
 #define ARMA_PROFILE_FUNC(func) func;
