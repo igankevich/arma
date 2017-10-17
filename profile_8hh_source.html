@@ -152,52 +152,62 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> thread_no</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        );</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#define ARMA_PROFILE_FUNC(func) \</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">    ::arma::__profile(#func, [&amp;](){ func; })</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_BLOCK(name, block) \</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">    ::arma::__profile(name, [&amp;](){ block; })</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT(cnt, block) \</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">    ::arma::__profile_cnt(cnt, [&amp;](){ block; })</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_START(name) \</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">    const auto name##_t0 = ::std::chrono::high_resolution_clock::now()</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_END(name) \</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">    { \</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">        auto name##_t1 = ::std::chrono::high_resolution_clock::now(); \</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">        auto us = ::std::chrono::duration_cast&lt;::std::chrono::microseconds&gt; \</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">            (name##_t1 - name##_t0); \</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">        ::std::stringstream msg; \</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">        msg &lt;&lt; &quot;prfl&quot; &lt;&lt; &#39; &#39; &lt;&lt; #name &lt;&lt; &#39; &#39; &lt;&lt; us.count() &lt;&lt; &quot;us\n&quot;; \</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">        ::std::clog &lt;&lt; msg.rdbuf(); \</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">    }</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_EVENT_START(name, thread_name, thread_no) \</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">    ::arma::profile::thread_event(name, &quot;strt&quot;, thread_name, thread_no)</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_EVENT_END(name, thread_name, thread_no) \</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">    ::arma::profile::thread_event(name, &quot;end&quot;, thread_name, thread_no)</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT_START(name) \</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">    const auto name##_t0 = ::std::chrono::high_resolution_clock::now()</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT_END(name) \</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">    { \</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">        auto name##_t1 = ::std::chrono::high_resolution_clock::now(); \</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">        auto us = ::std::chrono::duration_cast&lt;::std::chrono::microseconds&gt; \</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">            (name##_t1 - name##_t0); \</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">        ::arma::__counters[name] += us.count(); \</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">    }</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="profile_8hh.html#a4f90c2447ec1fd52a793d4ea7c59efa5">   94</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_FUNC(func) func;</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="profile_8hh.html#a799d506fefd91b4c6f7946ea141bd562">   95</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_BLOCK(name, block) block</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="profile_8hh.html#a427f06291c828af3795e9b2357ffc3eb">   96</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT(cnt, block) block</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="profile_8hh.html#a45d63499c8f1399d279bbf95576e27ac">   97</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_START(name)</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="profile_8hh.html#a81db13fc30c6d7aa744ca6affbb69888">   98</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_END(name)</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="profile_8hh.html#a66f23c66d05007904d4db05cf178a066">   99</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_EVENT_START(name, thread_name, thread_no)</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="profile_8hh.html#a35f8010242a51b9c902b96a37287a186">  100</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_EVENT_END(name, thread_name, thread_no)</span></div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keyword">inline</span> uint64_t</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        now() {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keyword">using namespace </span>std::chrono;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> duration_cast&lt;nanoseconds&gt;(</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                high_resolution_clock::now().time_since_epoch()</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            ).count();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#define ARMA_PROFILE_FUNC(func) \</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">    ::arma::__profile(#func, [&amp;](){ func; })</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_BLOCK(name, block) \</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">    ::arma::__profile(name, [&amp;](){ block; })</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT(cnt, block) \</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">    ::arma::__profile_cnt(cnt, [&amp;](){ block; })</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_START(name) \</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">    const auto name##_t0 = ::std::chrono::high_resolution_clock::now()</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_END(name) \</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">    { \</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">        auto name##_t1 = ::std::chrono::high_resolution_clock::now(); \</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">        auto us = ::std::chrono::duration_cast&lt;::std::chrono::microseconds&gt; \</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">            (name##_t1 - name##_t0); \</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">        ::std::stringstream msg; \</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">        msg &lt;&lt; &quot;prfl&quot; &lt;&lt; &#39; &#39; &lt;&lt; #name &lt;&lt; &#39; &#39; &lt;&lt; us.count() &lt;&lt; &quot;us\n&quot;; \</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">        ::std::clog &lt;&lt; msg.rdbuf(); \</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">    }</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_EVENT_START(name, thread_name, thread_no) \</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">    ::arma::profile::thread_event(name, &quot;strt&quot;, thread_name, thread_no)</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_EVENT_END(name, thread_name, thread_no) \</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">    ::arma::profile::thread_event(name, &quot;end&quot;, thread_name, thread_no)</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT_START(name) \</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">    const auto name##_t0 = ::std::chrono::high_resolution_clock::now()</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT_END(name) \</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">    { \</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">        auto name##_t1 = ::std::chrono::high_resolution_clock::now(); \</span></div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">        auto us = ::std::chrono::duration_cast&lt;::std::chrono::microseconds&gt; \</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">            (name##_t1 - name##_t0); \</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">        ::arma::__counters[name] += us.count(); \</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">    }</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT_ADD(name, value) \</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">    ::arma::__counters[name] += value</span></div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif // PROFILE_HH</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="profile_8hh.html#a4f90c2447ec1fd52a793d4ea7c59efa5">  104</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_FUNC(func) func;</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="profile_8hh.html#a799d506fefd91b4c6f7946ea141bd562">  105</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_BLOCK(name, block) block</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="profile_8hh.html#a427f06291c828af3795e9b2357ffc3eb">  106</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_CNT(cnt, block) block</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="profile_8hh.html#a45d63499c8f1399d279bbf95576e27ac">  107</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_START(name)</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="profile_8hh.html#a81db13fc30c6d7aa744ca6affbb69888">  108</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_PROFILE_END(name)</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="profile_8hh.html#a66f23c66d05007904d4db05cf178a066">  109</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_EVENT_START(name, thread_name, thread_no)</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="profile_8hh.html#a35f8010242a51b9c902b96a37287a186">  110</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define ARMA_EVENT_END(name, thread_name, thread_no)</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif // PROFILE_HH</span></div>
 <div class="ttc" id="visual_8cc_html_a918ea2cf64a816663d6daa227e7c7101"><div class="ttname"><a href="visual_8cc.html#a918ea2cf64a816663d6daa227e7c7101">func</a></div><div class="ttdeci">Array3D&lt; Real &gt; func</div><div class="ttdef"><b>Definition:</b> visual.cc:24</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
