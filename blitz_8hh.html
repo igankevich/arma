@@ -98,9 +98,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">blitz.hh File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;cmath&gt;</code><br/>
-<code>#include &lt;algorithm&gt;</code><br/>
+<div class="textblock"><code>#include &lt;algorithm&gt;</code><br/>
 <code>#include &lt;blitz/array.h&gt;</code><br/>
+<code>#include &lt;cmath&gt;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for blitz.hh:</div>
 <div class="dyncontent">
@@ -110,7 +110,7 @@ Include dependency graph for blitz.hh:</div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="blitz_8hh__dep__incl.svg" width="3018" height="963"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="blitz_8hh__dep__incl.svg" width="3307" height="963"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div>
@@ -146,6 +146,24 @@ Functions</h2></td></tr>
 <tr class="memitem:aed98c85008af2c20e4d1c69564dfbe6e"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:aed98c85008af2c20e4d1c69564dfbe6e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceblitz.html#aed98c85008af2c20e4d1c69564dfbe6e">blitz::rotate</a> (Array&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, 2 &gt; &amp;rhs, TinyVector&lt; int, 2 &gt; point)</td></tr>
 <tr class="separator:aed98c85008af2c20e4d1c69564dfbe6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ed5d8fb6fc34a620dc77e2eebdb72b3"><td class="memTemplParams" colspan="2">template&lt;class T , int N&gt; </td></tr>
+<tr class="memitem:a6ed5d8fb6fc34a620dc77e2eebdb72b3"><td class="memTemplItemLeft" align="right" valign="top">sys::pstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceblitz.html#a6ed5d8fb6fc34a620dc77e2eebdb72b3">blitz::operator&lt;&lt;</a> (sys::pstream &amp;out, const blitz::Array&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt; &amp;rhs)</td></tr>
+<tr class="separator:a6ed5d8fb6fc34a620dc77e2eebdb72b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a011450db9bf3728016887e00e9164d4f"><td class="memTemplParams" colspan="2">template&lt;class T , int N&gt; </td></tr>
+<tr class="memitem:a011450db9bf3728016887e00e9164d4f"><td class="memTemplItemLeft" align="right" valign="top">sys::pstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceblitz.html#a011450db9bf3728016887e00e9164d4f">blitz::operator&gt;&gt;</a> (sys::pstream &amp;in, blitz::Array&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt; &amp;rhs)</td></tr>
+<tr class="separator:a011450db9bf3728016887e00e9164d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a035b6d94c44673834d08e46fc2821282"><td class="memTemplParams" colspan="2">template&lt;int N&gt; </td></tr>
+<tr class="memitem:a035b6d94c44673834d08e46fc2821282"><td class="memTemplItemLeft" align="right" valign="top">sys::pstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceblitz.html#a035b6d94c44673834d08e46fc2821282">blitz::operator&lt;&lt;</a> (sys::pstream &amp;out, const blitz::TinyVector&lt; int, N &gt; &amp;rhs)</td></tr>
+<tr class="separator:a035b6d94c44673834d08e46fc2821282"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07cee4c65386986d7d60872df89486e7"><td class="memTemplParams" colspan="2">template&lt;int N&gt; </td></tr>
+<tr class="memitem:a07cee4c65386986d7d60872df89486e7"><td class="memTemplItemLeft" align="right" valign="top">sys::pstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceblitz.html#a07cee4c65386986d7d60872df89486e7">blitz::operator&gt;&gt;</a> (sys::pstream &amp;in, blitz::TinyVector&lt; int, N &gt; &amp;rhs)</td></tr>
+<tr class="separator:a07cee4c65386986d7d60872df89486e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fc4ffd019fed36d98608e7c406ebd2c"><td class="memTemplParams" colspan="2">template&lt;class T , int N&gt; </td></tr>
+<tr class="memitem:a8fc4ffd019fed36d98608e7c406ebd2c"><td class="memTemplItemLeft" align="right" valign="top">sys::pstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceblitz.html#a8fc4ffd019fed36d98608e7c406ebd2c">blitz::operator&lt;&lt;</a> (sys::pstream &amp;out, const blitz::TinyVector&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt; &amp;rhs)</td></tr>
+<tr class="separator:a8fc4ffd019fed36d98608e7c406ebd2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00cbf8423bc48e4893018f0d77e1c338"><td class="memTemplParams" colspan="2">template&lt;class T , int N&gt; </td></tr>
+<tr class="memitem:a00cbf8423bc48e4893018f0d77e1c338"><td class="memTemplItemLeft" align="right" valign="top">sys::pstream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceblitz.html#a00cbf8423bc48e4893018f0d77e1c338">blitz::operator&gt;&gt;</a> (sys::pstream &amp;in, blitz::TinyVector&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt; &amp;rhs)</td></tr>
+<tr class="separator:a00cbf8423bc48e4893018f0d77e1c338"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

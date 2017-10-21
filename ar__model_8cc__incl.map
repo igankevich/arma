@@ -1,23 +1,23 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ar_model.cc" name="/home/travis/build/igankevich/arma/src/generator/ar_model.cc">
-<area shape="rect" id="node2" href="$ar__model_8hh.html" title="ar_model.hh" alt="" coords="1554,109,1648,136"/>
-<area shape="rect" id="node35" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="2072,333,2142,360"/>
-<area shape="rect" id="node39" href="$params_8hh.html" title="params.hh" alt="" coords="2528,259,2609,285"/>
-<area shape="rect" id="node42" href="$voodoo_8hh.html" title="Non&#45;optimised parts of the implementation. " alt="" coords="2269,259,2350,285"/>
-<area shape="rect" id="node45" href="$util_8hh.html" title="util.hh" alt="" coords="2630,109,2686,136"/>
-<area shape="rect" id="node50" href="$ar__model__surf_8cc.html" title="ar_model_surf.cc" alt="" coords="2808,109,2930,136"/>
-<area shape="rect" id="node3" href="$arma_8hh.html" title="arma.hh" alt="" coords="881,184,950,211"/>
-<area shape="rect" id="node17" href="$types_8hh.html" title="types.hh" alt="" coords="1312,333,1384,360"/>
-<area shape="rect" id="node29" href="$basic__arma__model_8hh.html" title="basic_arma_model.hh" alt="" coords="1810,184,1958,211"/>
-<area shape="rect" id="node33" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="1638,259,1777,285"/>
-<area shape="rect" id="node19" href="$statistics_8hh.html" title="stats/statistics.hh" alt="" coords="219,333,345,360"/>
-<area shape="rect" id="node22" href="$distribution_8hh.html" title="stats/distribution.hh" alt="" coords="1681,333,1816,360"/>
-<area shape="rect" id="node26" href="$qq__graph_8hh.html" title="stats/qq_graph.hh" alt="" coords="344,259,470,285"/>
-<area shape="rect" id="node27" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="107,259,182,285"/>
-<area shape="rect" id="node28" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="496,259,560,285"/>
-<area shape="rect" id="node23" href="$gaussian_8hh.html" title="gaussian.hh" alt="" coords="1814,416,1905,443"/>
-<area shape="rect" id="node25" href="$weibull_8hh.html" title="weibull.hh" alt="" coords="1709,416,1788,443"/>
-<area shape="rect" id="node31" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="1884,259,1997,285"/>
+<area shape="rect" id="node2" href="$ar__model_8hh.html" title="ar_model.hh" alt="" coords="1420,109,1513,136"/>
+<area shape="rect" id="node35" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="2131,333,2201,360"/>
+<area shape="rect" id="node39" href="$params_8hh.html" title="params.hh" alt="" coords="2427,259,2508,285"/>
+<area shape="rect" id="node42" href="$voodoo_8hh.html" title="Non&#45;optimised parts of the implementation. " alt="" coords="2219,259,2300,285"/>
+<area shape="rect" id="node45" href="$util_8hh.html" title="util.hh" alt="" coords="2773,109,2829,136"/>
+<area shape="rect" id="node50" href="$ar__model__surf_8cc.html" title="ar_model_surf.cc" alt="" coords="2951,109,3073,136"/>
+<area shape="rect" id="node3" href="$arma_8hh.html" title="arma.hh" alt="" coords="1016,259,1085,285"/>
+<area shape="rect" id="node17" href="$types_8hh.html" title="types.hh" alt="" coords="1731,333,1803,360"/>
+<area shape="rect" id="node29" href="$basic__arma__model_8hh.html" title="basic_arma_model.hh" alt="" coords="1811,184,1959,211"/>
+<area shape="rect" id="node33" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="1639,259,1777,285"/>
+<area shape="rect" id="node19" href="$statistics_8hh.html" title="stats/statistics.hh" alt="" coords="599,408,725,435"/>
+<area shape="rect" id="node22" href="$distribution_8hh.html" title="stats/distribution.hh" alt="" coords="1276,333,1411,360"/>
+<area shape="rect" id="node26" href="$qq__graph_8hh.html" title="stats/qq_graph.hh" alt="" coords="701,333,827,360"/>
+<area shape="rect" id="node27" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="903,333,979,360"/>
+<area shape="rect" id="node28" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="1001,408,1065,435"/>
+<area shape="rect" id="node23" href="$gaussian_8hh.html" title="gaussian.hh" alt="" coords="1409,408,1500,435"/>
+<area shape="rect" id="node25" href="$weibull_8hh.html" title="weibull.hh" alt="" coords="1304,408,1383,435"/>
+<area shape="rect" id="node31" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="1885,259,1997,285"/>
 <area shape="rect" id="node34" href="$nit__transform_8hh.html" title="nonlinear/nit_transform.hh" alt="" coords="2022,259,2193,285"/>
-<area shape="rect" id="node32" href="$grid_8hh.html" title="grid.hh" alt="" coords="1862,333,1924,360"/>
-<area shape="rect" id="node38" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="1510,416,1684,443"/>
+<area shape="rect" id="node32" href="$grid_8hh.html" title="grid.hh" alt="" coords="1191,333,1252,360"/>
+<area shape="rect" id="node38" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="1729,408,1903,435"/>
 </map>

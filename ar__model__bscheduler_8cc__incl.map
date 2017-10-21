@@ -1,7 +1,13 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ar_model_bscheduler.cc" name="/home/travis/build/igankevich/arma/src/generator/ar_model_bscheduler.cc">
-<area shape="rect" id="node6" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="599,109,701,136"/>
-<area shape="rect" id="node18" href="$profile_8hh.html" title="profile.hh" alt="" coords="1051,184,1124,211"/>
-<area shape="rect" id="node19" href="$profile__counters_8hh.html" title="profile_counters.hh" alt="" coords="943,109,1075,136"/>
-<area shape="rect" id="node20" href="$util_8hh.html" title="util.hh" alt="" coords="1194,109,1251,136"/>
-<area shape="rect" id="node25" href="$ar__model__wn_8cc.html" title="ar_model_wn.cc" alt="" coords="1276,109,1392,136"/>
+<area shape="rect" id="node6" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="750,109,852,136"/>
+<area shape="rect" id="node18" href="$profile_8hh.html" title="profile.hh" alt="" coords="1360,184,1433,211"/>
+<area shape="rect" id="node19" href="$profile__counters_8hh.html" title="profile_counters.hh" alt="" coords="1226,109,1357,136"/>
+<area shape="rect" id="node20" href="$util_8hh.html" title="util.hh" alt="" coords="1278,184,1335,211"/>
+<area shape="rect" id="node25" href="$ar__model__wn_8cc.html" title="ar_model_wn.cc" alt="" coords="1383,109,1499,136"/>
+<area shape="rect" id="node26" href="$bscheduler__io_8hh.html" title="bits/bscheduler_io.hh" alt="" coords="285,109,429,136"/>
+<area shape="rect" id="node27" href="$domain_8hh.html" title="domain.hh" alt="" coords="268,184,349,211"/>
+<area shape="rect" id="node32" href="$grid_8hh.html" title="grid.hh" alt="" coords="183,184,244,211"/>
+<area shape="rect" id="node33" href="$types_8hh.html" title="types.hh" alt="" coords="5,333,77,360"/>
+<area shape="rect" id="node29" href="$validators_8hh.html" title="validators.hh" alt="" coords="165,259,261,285"/>
+<area shape="rect" id="node30" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="181,333,245,360"/>
 </map>

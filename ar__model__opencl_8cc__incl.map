@@ -1,10 +1,10 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ar_model_opencl.cc" name="/home/travis/build/igankevich/arma/src/generator/ar_model_opencl.cc">
 <area shape="rect" id="node5" href="$util_8hh.html" title="util.hh" alt="" coords="278,109,335,136"/>
 <area shape="rect" id="node10" href="$opencl_8hh.html" title="opencl/opencl.hh" alt="" coords="336,184,456,211"/>
-<area shape="rect" id="node13" href="$vec_8hh.html" title="opencl/vec.hh" alt="" coords="1005,109,1107,136"/>
+<area shape="rect" id="node13" href="$vec_8hh.html" title="opencl/vec.hh" alt="" coords="1006,109,1108,136"/>
 <area shape="rect" id="node15" href="$array_8hh.html" title="opencl/array.hh" alt="" coords="542,109,652,136"/>
 <area shape="rect" id="node17" href="$profile_8hh.html" title="profile.hh" alt="" coords="508,259,581,285"/>
-<area shape="rect" id="node20" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="853,109,917,136"/>
+<area shape="rect" id="node20" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="857,109,921,136"/>
 <area shape="rect" id="node11" href="$cl_8hh_source.html" title="cl.hh" alt="" coords="371,259,421,285"/>
 <area shape="rect" id="node16" href="$profile__counters_8hh.html" title="profile_counters.hh" alt="" coords="531,184,663,211"/>
 </map>

@@ -1,19 +1,19 @@
 <map id="/home/travis/build/igankevich/arma/src/nonlinear/nit_transform.cc" name="/home/travis/build/igankevich/arma/src/nonlinear/nit_transform.cc">
-<area shape="rect" id="node2" href="$nit__transform_8hh.html" title="nit_transform.hh" alt="" coords="642,109,757,136"/>
-<area shape="rect" id="node22" href="$validators_8hh.html" title="validators.hh" alt="" coords="1180,259,1276,285"/>
-<area shape="rect" id="node26" href="$params_8hh.html" title="params.hh" alt="" coords="2169,109,2251,136"/>
-<area shape="rect" id="node30" href="$transforms_8hh.html" title="transforms.hh" alt="" coords="1865,109,1967,136"/>
-<area shape="rect" id="node33" href="$series_8hh.html" title="series.hh" alt="" coords="1764,109,1837,136"/>
-<area shape="rect" id="node34" href="$util_8hh.html" title="util.hh" alt="" coords="1981,184,2037,211"/>
-<area shape="rect" id="node5" href="$gaussian_8hh.html" title="stats/gaussian.hh" alt="" coords="231,259,356,285"/>
-<area shape="rect" id="node7" href="$skew__normal_8hh.html" title="stats/skew_normal.hh" alt="" coords="421,184,571,211"/>
-<area shape="rect" id="node9" href="$gram__charlier_8hh.html" title="stats/gram_charlier.hh" alt="" coords="5,259,155,285"/>
-<area shape="rect" id="node12" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="1527,184,1597,211"/>
-<area shape="rect" id="node18" href="$types_8hh.html" title="types.hh" alt="" coords="1343,333,1415,360"/>
-<area shape="rect" id="node19" href="$domain_8hh.html" title="domain.hh" alt="" coords="800,184,881,211"/>
-<area shape="rect" id="node8" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="431,259,560,285"/>
-<area shape="rect" id="node11" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="7,333,159,360"/>
-<area shape="rect" id="node17" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="879,259,1053,285"/>
-<area shape="rect" id="node24" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="1129,333,1193,360"/>
-<area shape="rect" id="node32" href="$equations_8hh.html" title="equations.hh" alt="" coords="1867,333,1963,360"/>
+<area shape="rect" id="node2" href="$nit__transform_8hh.html" title="nit_transform.hh" alt="" coords="881,109,997,136"/>
+<area shape="rect" id="node21" href="$validators_8hh.html" title="validators.hh" alt="" coords="1078,259,1174,285"/>
+<area shape="rect" id="node25" href="$params_8hh.html" title="params.hh" alt="" coords="2071,109,2153,136"/>
+<area shape="rect" id="node29" href="$transforms_8hh.html" title="transforms.hh" alt="" coords="1909,109,2011,136"/>
+<area shape="rect" id="node32" href="$series_8hh.html" title="series.hh" alt="" coords="2229,109,2302,136"/>
+<area shape="rect" id="node33" href="$util_8hh.html" title="util.hh" alt="" coords="1812,184,1869,211"/>
+<area shape="rect" id="node5" href="$gaussian_8hh.html" title="stats/gaussian.hh" alt="" coords="270,259,395,285"/>
+<area shape="rect" id="node7" href="$skew__normal_8hh.html" title="stats/skew_normal.hh" alt="" coords="460,184,610,211"/>
+<area shape="rect" id="node9" href="$gram__charlier_8hh.html" title="stats/gram_charlier.hh" alt="" coords="44,259,194,285"/>
+<area shape="rect" id="node12" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="1457,184,1527,211"/>
+<area shape="rect" id="node18" href="$types_8hh.html" title="types.hh" alt="" coords="1833,333,1905,360"/>
+<area shape="rect" id="node19" href="$domain_8hh.html" title="domain.hh" alt="" coords="989,184,1070,211"/>
+<area shape="rect" id="node8" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="471,259,599,285"/>
+<area shape="rect" id="node11" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="43,333,195,360"/>
+<area shape="rect" id="node17" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="676,259,850,285"/>
+<area shape="rect" id="node23" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="939,333,1003,360"/>
+<area shape="rect" id="node31" href="$equations_8hh.html" title="equations.hh" alt="" coords="1958,333,2054,360"/>
 </map>

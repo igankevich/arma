@@ -1,11 +1,11 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/plain_wave_model.hh" name="/home/travis/build/igankevich/arma/src/generator/plain_wave_model.hh">
-<area shape="rect" id="node4" href="$types_8hh.html" title="types.hh" alt="" coords="83,200,155,227"/>
-<area shape="rect" id="node6" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="151,125,289,152"/>
-<area shape="rect" id="node14" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="365,125,477,152"/>
-<area shape="rect" id="node29" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1216,349,1368,376"/>
-<area shape="rect" id="node7" href="$grid_8hh.html" title="grid.hh" alt="" coords="185,200,247,227"/>
-<area shape="rect" id="node9" href="$validators_8hh.html" title="validators.hh" alt="" coords="165,275,261,301"/>
-<area shape="rect" id="node11" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="251,349,315,376"/>
-<area shape="rect" id="node15" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="439,200,549,227"/>
-<area shape="rect" id="node19" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="973,200,1075,227"/>
+<area shape="rect" id="node4" href="$types_8hh.html" title="types.hh" alt="" coords="43,200,115,227"/>
+<area shape="rect" id="node6" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="108,125,247,152"/>
+<area shape="rect" id="node13" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="322,125,435,152"/>
+<area shape="rect" id="node28" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1112,349,1264,376"/>
+<area shape="rect" id="node7" href="$grid_8hh.html" title="grid.hh" alt="" coords="147,200,208,227"/>
+<area shape="rect" id="node8" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="113,349,177,376"/>
+<area shape="rect" id="node11" href="$validators_8hh.html" title="validators.hh" alt="" coords="97,275,193,301"/>
+<area shape="rect" id="node14" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="373,200,483,227"/>
+<area shape="rect" id="node18" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="910,200,1012,227"/>
 </map>
