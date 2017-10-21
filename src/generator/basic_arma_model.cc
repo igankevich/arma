@@ -126,6 +126,27 @@ arma::Array3D<T>
 arma::generator::Basic_ARMA_model<T>::do_generate() {
 	throw std::runtime_error("bad method");
 }
+
+template <class T>
+void
+arma::generator::Basic_ARMA_model<T>
+::write(sys::pstream& out) const {
+	Basic_model<T>::write(out);
+	out << this->_acf;
+	out << this->_order;
+	out << this->_linear;
+}
+
+template <class T>
+void
+arma::generator::Basic_ARMA_model<T>
+::read(sys::pstream& in) {
+	Basic_model<T>::read(in);
+	in >> this->_acf;
+	in >> this->_order;
+	in >> this->_linear;
+}
+
 #endif
 
 template class arma::generator::Basic_ARMA_model<ARMA_REAL_TYPE>;

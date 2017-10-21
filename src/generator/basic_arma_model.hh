@@ -15,8 +15,7 @@ namespace arma {
 		/// Base class for AR, MA and ARMA models.
 		template <class T>
 		class Basic_ARMA_model:
-			public virtual Basic_model<T>
-	   	{
+			public virtual Basic_model<T>{
 
 		public:
 			typedef Discrete_function<T,3> acf_type;
@@ -30,7 +29,8 @@ namespace arma {
 			transform_type _nittransform;
 			bool _linear = true;
 
-			virtual Array3D<T> do_generate() = 0;
+			virtual Array3D<T>
+			do_generate() = 0;
 
 			Array3D<T>
 			generate_white_noise();
@@ -50,7 +50,7 @@ namespace arma {
 			}
 
 			inline const acf_type&
-			acf() const noexcept{
+			acf() const noexcept {
 				return this->_acf;
 			}
 
@@ -70,17 +70,30 @@ namespace arma {
 
 			void
 			react(bsc::kernel* child) override;
+
+			void
+			write(sys::pstream& out) const override;
+
+			void
+			read(sys::pstream& in) override;
+
 			#endif
 
-			virtual T white_noise_variance() const = 0;
-			virtual void determine_coefficients() = 0;
-			void verify(Array3D<T> zeta) const override;
+			virtual T
+			white_noise_variance() const = 0;
+
+			virtual void
+			determine_coefficients() = 0;
+
+			void
+			verify(Array3D<T> zeta) const override;
 
 			virtual sys::parameter_map::map_type
 			parameters();
 
 		public:
-			Array3D<T> generate() override;
+			Array3D<T>
+			generate() override;
 
 		};
 

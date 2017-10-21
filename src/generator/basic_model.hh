@@ -52,6 +52,11 @@ namespace arma {
 			virtual void write(std::ostream& out) const {}
 			virtual void read(std::istream& in) {}
 
+			#if ARMA_BSCHEDULER
+			void write(sys::pstream& out) const override;
+			void read(sys::pstream& in) override;
+			#endif
+
 			inline prng::clock_type::rep
 			newseed() noexcept {
 				return this->_noseed

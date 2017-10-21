@@ -1,10 +1,14 @@
 #ifndef GRID_HH
 #define GRID_HH
 
-#include <stddef.h>      // for size_t
-#include <istream>       // for istream, ostream, basic_istream::putback
-#include <blitz/array.h> // for TinyVector
+#include <istream>
+
+#include "blitz.hh"
 #include "validators.hh"
+
+#if ARMA_BSCHEDULER
+#include <unistdx/net/pstream>
+#endif
 
 /**
 \file
@@ -34,7 +38,7 @@ namespace arma {
 	\tparam T length type.
 	\tparam N no. of dimensions.
 	*/
-	template <class T, size_t N>
+	template <class T, int N>
 	struct Grid {
 
 		typedef blitz::TinyVector<T, N> length_type;
@@ -158,6 +162,18 @@ namespace arma {
 			}
 			return in;
 		}
+
+		#if ARMA_BSCHEDULER
+		friend sys::pstream&
+		operator<<(sys::pstream& out, const Grid& rhs) {
+			return out << rhs._npoints << rhs._length;
+		}
+
+		friend sys::pstream&
+		operator>>(sys::pstream& in, Grid& rhs) {
+			return in >> rhs._npoints >> rhs._length;
+		}
+		#endif
 
 	private:
 		size_type _npoints;

@@ -7,5 +7,6 @@
 
 #mesondefine ARMA_CLFFT
 #mesondefine ARMA_HART_SOLVER
+#mesondefine ARMA_SIMULATE_FAILURES
 
 #endif // CONFIG_HH

@@ -8,7 +8,7 @@
 
 namespace arma {
 
-	template <class T, size_t N>
+	template <class T, int N>
 	using Vector = blitz::TinyVector<T, N>;
 
 	typedef Vector<int, 3> Shape3D;

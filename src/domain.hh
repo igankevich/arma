@@ -1,11 +1,14 @@
 #ifndef DOMAIN_HH
 #define DOMAIN_HH
 
-#include <cstddef>
 #include <istream>
 #include <ostream>
 #include <iomanip>
 #include <blitz/array.h>
+
+#if ARMA_BSCHEDULER
+#include <unistdx/net/pstream>
+#endif
 
 #include "validators.hh"
 
@@ -19,7 +22,7 @@ namespace arma {
 	\tparam T length type.
 	\tparam N no. of dimensions.
 	*/
-	template <class T, size_t N=1>
+	template <class T, int N=1>
 	struct Domain {
 
 		typedef blitz::TinyVector<T, N> length_type;
@@ -176,6 +179,16 @@ namespace arma {
 			}
 			return in;
 		}
+
+		#if ARMA_BSCHEDULER
+		template <class T1, int N1>
+		friend sys::pstream&
+		operator<<(sys::pstream& out, const Domain<T1,N1>& rhs);
+
+		template <class T1, int N1>
+		friend sys::pstream&
+		operator>>(sys::pstream& in, Domain<T1,N1>& rhs);
+		#endif
 
 	private:
 		length_type _lbound;

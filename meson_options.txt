@@ -31,6 +31,12 @@ option(
 )
 
 option(
+	'simulate_failures',
+	type: 'boolean',
+	value: false
+)
+
+option(
 	'opencl_srcdir',
 	type: 'string',
 	value: '',

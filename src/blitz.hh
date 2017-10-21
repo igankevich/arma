@@ -1,9 +1,13 @@
 #ifndef BLITZ_HH
 #define BLITZ_HH
 
-#include <cmath>
 #include <algorithm>
 #include <blitz/array.h>
+#include <cmath>
+
+#if ARMA_BSCHEDULER
+#include <unistdx/net/pstream>
+#endif
 
 /// Additional routines for Blitz++ arrays.
 namespace blitz {
@@ -65,6 +69,71 @@ namespace blitz {
 			}
 		}
 	}
+
+	template <class T, int N>
+	sys::pstream&
+	operator<<(sys::pstream& out, const blitz::Array<T,N>& rhs) {
+		out << rhs.shape();
+		const int n = rhs.numElements();
+		const T* data = rhs.data();
+		for (int i=0; i<n; ++i) {
+			out << data[i];
+		}
+		return out;
+	}
+
+	template <class T, int N>
+	sys::pstream&
+	operator>>(sys::pstream& in, blitz::Array<T,N>& rhs) {
+		blitz::TinyVector<int,N> shape;
+		in >> shape;
+		rhs.resize(shape);
+		const int n = rhs.numElements();
+		T* data = rhs.data();
+		for (int i=0; i<n; ++i) {
+			in >> data[i];
+		}
+		return in;
+	}
+
+	template <int N>
+	sys::pstream&
+	operator<<(sys::pstream& out, const blitz::TinyVector<int,N>& rhs) {
+		for (int i=0; i<N; ++i) {
+			out << int32_t(rhs(i));
+		}
+		return out;
+	}
+
+	template <int N>
+	sys::pstream&
+	operator>>(sys::pstream& in, blitz::TinyVector<int,N>& rhs) {
+		for (int i=0; i<N; ++i) {
+			int32_t tmp = 0;
+			in >> tmp;
+			rhs(i) = tmp;
+		}
+		return in;
+	}
+
+	template <class T, int N>
+	sys::pstream&
+	operator<<(sys::pstream& out, const blitz::TinyVector<T,N>& rhs) {
+		for (int i=0; i<N; ++i) {
+			out << rhs(i);
+		}
+		return out;
+	}
+
+	template <class T, int N>
+	sys::pstream&
+	operator>>(sys::pstream& in, blitz::TinyVector<T,N>& rhs) {
+		for (int i=0; i<N; ++i) {
+			in >> rhs(i);
+		}
+		return in;
+	}
+
 }
 
 #endif // BLITZ_HH

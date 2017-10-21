@@ -1,6 +1,10 @@
 #include <thread>
 #include <vector>
 
+#if defined(ARMA_SIMULATE_FAILURES)
+#include <ctsdlib>
+#endif
+
 #include <bscheduler/api.hh>
 
 #include "config.hh"
@@ -11,48 +15,9 @@
 
 #include "ar_model_wn.cc"
 
+#include "bits/bscheduler_io.hh"
+
 namespace {
-
-	sys::pstream&
-	operator<<(sys::pstream& out, const arma::Shape3D& rhs) {
-		return out << int32_t(rhs(0)) << int32_t(rhs(1)) << int32_t(rhs(2));
-	}
-
-	sys::pstream&
-	operator>>(sys::pstream& in, arma::Shape3D& rhs) {
-		int32_t x, y, z;
-		in >> x >> y >> z;
-		rhs(0) = x;
-		rhs(1) = y;
-		rhs(2) = z;
-		return in;
-	}
-
-	template <class T>
-	sys::pstream&
-	operator<<(sys::pstream& out, const arma::Array3D<T>& rhs) {
-		out << rhs.shape();
-		const int n = rhs.numElements();
-		const T* data = rhs.data();
-		for (int i=0; i<n; ++i) {
-			out << data[i];
-		}
-		return out;
-	}
-
-	template <class T>
-	sys::pstream&
-	operator>>(sys::pstream& in, arma::Array3D<T>& rhs) {
-		arma::Shape3D shape;
-		in >> shape;
-		rhs.resize(shape);
-		const int n = rhs.numElements();
-		T* data = rhs.data();
-		for (int i=0; i<n; ++i) {
-			in >> data[i];
-		}
-		return in;
-	}
 
 	template <class T>
 	class ar_partition_kernel: public bsc::kernel {
@@ -104,6 +69,18 @@ namespace {
 
 		void
 		act() override {
+			#if defined(ARMA_SIMULATE_FAILURES)
+			if (const char* envvar = std::getenv("_FAILURE")) {
+				using namespace bsc::this_application;
+				std::string failure = envvar;
+				if ((failure == "master" && is_master()) ||
+					(failure == "slave" && is_slave())) {
+					using namespace sys;
+					send(signal::kill, this_process::parent_id());
+					std::exit(this_process::execute_command("false"));
+				}
+			}
+			#endif
 			ARMA_EVENT_START("generate_surface", "bsc", 0);
 			rect_type subpart = this->part_bounds();
 			this->_zeta(subpart) =
@@ -142,7 +119,7 @@ namespace {
 		}
 
 		void
-		write(sys::pstream& out) override {
+		write(sys::pstream& out) const override {
 			ARMA_PROFILE_CNT_START(CNT_BSC_MARSHALLING);
 			bsc::kernel::write(out);
 			out << this->_lower;
@@ -210,6 +187,7 @@ namespace {
 					Range(0, offset(1)-1),
 					Range(offset(1), toEnd)
 				));
+				using blitz::operator>>;
 				in >> tmp1;
 				in >> tmp2;
 				in >> tmp3;
