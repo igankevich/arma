@@ -82,6 +82,7 @@ var searchData=
   ['_5fskewness',['_skewness',['../classarma_1_1stats_1_1Gram__Charlier.html#ae6eb3190b9b8ba6f1c61099c4b1d126c',1,'arma::stats::Gram_Charlier']]],
   ['_5fskewnormal',['_skewnormal',['../classarma_1_1nonlinear_1_1NIT__transform.html#a12e643e362913b883678840dd0cd40d6',1,'arma::nonlinear::NIT_transform']]],
   ['_5fsolver',['_solver',['../structarma_1_1ARMA__driver.html#aa8e325bf1e92ccd08479cae719c2331a',1,'arma::ARMA_driver']]],
+  ['_5fsolvername',['_solvername',['../structarma_1_1ARMA__driver.html#aa624861bed555c16ac15ddfcba0f4058',1,'arma::ARMA_driver']]],
   ['_5fsolvers',['_solvers',['../structarma_1_1ARMA__driver.html#a2146b7ade78a097520214ac4247870ba',1,'arma::ARMA_driver']]],
   ['_5fspec_5fdomain',['_spec_domain',['../classarma_1_1generator_1_1Longuet__Higgins__model.html#a2c75a85a0dda163df9a6548e1b381bfe',1,'arma::generator::Longuet_Higgins_model']]],
   ['_5fspec_5fsubdomain',['_spec_subdomain',['../classarma_1_1generator_1_1Longuet__Higgins__model.html#af493a65d860f54696def010517015d93',1,'arma::generator::Longuet_Higgins_model']]],

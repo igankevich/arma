@@ -104,55 +104,38 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="grid_8hh.html">grid.hh</a>&quot;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="types_8hh.html">types.hh</a>&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;sys::pstream&amp;</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="bscheduler__io_8hh.html#aa8685d6780cebbd090621a1c1137799c">   12</a></span>&#160;operator&lt;&lt;(sys::pstream&amp; out, const arma::Domain&lt;T,N&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keywordflow">return</span> out &lt;&lt; rhs._lbound &lt;&lt; rhs._ubound &lt;&lt; rhs._npoints;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;sys::pstream&amp;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="bscheduler__io_8hh.html#ab24ada27540f6ab4733089aa45eae1a5">   18</a></span>&#160;<a class="code" href="bscheduler__io_8hh.html#ab24ada27540f6ab4733089aa45eae1a5">operator&gt;&gt;</a>(sys::pstream&amp; in, <a class="code" href="structarma_1_1Domain.html">arma::Domain&lt;T,N&gt;</a>&amp; rhs) {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordflow">return</span> in &gt;&gt; rhs.<a class="code" href="structarma_1_1Domain.html#a2ce8134e33bdac46a1b190ef2876d090">_lbound</a> &gt;&gt; rhs.<a class="code" href="structarma_1_1Domain.html#a61e094067ccd9a71bbc13074840c8304">_ubound</a> &gt;&gt; rhs.<a class="code" href="structarma_1_1Domain.html#a8a96e2c96d93da61c78815911e513ba8">_npoints</a>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="namespacestd.html">   22</a></span>&#160;<span class="keyword">namespace </span>std {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    sys::pstream&amp;</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="namespacestd.html#a8c1ab442c84dbf3071ef805da0dec155">   26</a></span>&#160;    operator&lt;&lt;(sys::pstream&amp; out, const std::vector&lt;T&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        uint32_t n = rhs.size();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        out &lt;&lt; n;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="namespacestd.html">   10</a></span>&#160;<span class="keyword">namespace </span>std {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    sys::pstream&amp;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="namespacestd.html#a8c1ab442c84dbf3071ef805da0dec155">   14</a></span>&#160;    operator&lt;&lt;(sys::pstream&amp; out, const std::vector&lt;T&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        uint32_t n = rhs.size();</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        out &lt;&lt; n;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keywordflow">for</span> (uint32_t i=0; i&lt;n; ++i) {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            out &lt;&lt; rhs[i];</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        }</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    }</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    sys::pstream&amp;</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="namespacestd.html#a206256308c93390ce939183e93105603">   25</a></span>&#160;    <a class="code" href="namespacestd.html#a206256308c93390ce939183e93105603">operator&gt;&gt;</a>(sys::pstream&amp; in, std::vector&lt;T&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        uint32_t n = 0;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        in &gt;&gt; n;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        rhs.resize(n);</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">for</span> (uint32_t i=0; i&lt;n; ++i) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            out &lt;&lt; rhs[i];</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            in &gt;&gt; rhs[i];</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">return</span> in;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    sys::pstream&amp;</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="namespacestd.html#a206256308c93390ce939183e93105603">   37</a></span>&#160;    <a class="code" href="namespacestd.html#a206256308c93390ce939183e93105603">operator&gt;&gt;</a>(sys::pstream&amp; in, std::vector&lt;T&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        uint32_t n = 0;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        in &gt;&gt; n;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        rhs.resize(n);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">for</span> (uint32_t i=0; i&lt;n; ++i) {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            in &gt;&gt; rhs[i];</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">return</span> in;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">#endif // vim:filetype=cpp</span></div>
-<div class="ttc" id="structarma_1_1Domain_html_a61e094067ccd9a71bbc13074840c8304"><div class="ttname"><a href="structarma_1_1Domain.html#a61e094067ccd9a71bbc13074840c8304">arma::Domain::_ubound</a></div><div class="ttdeci">length_type _ubound</div><div class="ttdef"><b>Definition:</b> domain.hh:195</div></div>
-<div class="ttc" id="structarma_1_1Domain_html_a8a96e2c96d93da61c78815911e513ba8"><div class="ttname"><a href="structarma_1_1Domain.html#a8a96e2c96d93da61c78815911e513ba8">arma::Domain::_npoints</a></div><div class="ttdeci">size_type _npoints</div><div class="ttdef"><b>Definition:</b> domain.hh:196</div></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif // vim:filetype=cpp</span></div>
 <div class="ttc" id="domain_8hh_html"><div class="ttname"><a href="domain_8hh.html">domain.hh</a></div></div>
 <div class="ttc" id="grid_8hh_html"><div class="ttname"><a href="grid_8hh.html">grid.hh</a></div></div>
-<div class="ttc" id="structarma_1_1Domain_html"><div class="ttname"><a href="structarma_1_1Domain.html">arma::Domain</a></div><div class="ttdoc">A region defined by the number of points and the lower and upper bound for each dimension. </div><div class="ttdef"><b>Definition:</b> domain.hh:26</div></div>
-<div class="ttc" id="bscheduler__io_8hh_html_ab24ada27540f6ab4733089aa45eae1a5"><div class="ttname"><a href="bscheduler__io_8hh.html#ab24ada27540f6ab4733089aa45eae1a5">operator&gt;&gt;</a></div><div class="ttdeci">sys::pstream &amp; operator&gt;&gt;(sys::pstream &amp;in, arma::Domain&lt; T, N &gt; &amp;rhs)</div><div class="ttdef"><b>Definition:</b> bscheduler_io.hh:18</div></div>
 <div class="ttc" id="types_8hh_html"><div class="ttname"><a href="types_8hh.html">types.hh</a></div></div>
-<div class="ttc" id="namespacestd_html_a206256308c93390ce939183e93105603"><div class="ttname"><a href="namespacestd.html#a206256308c93390ce939183e93105603">std::operator&gt;&gt;</a></div><div class="ttdeci">sys::pstream &amp; operator&gt;&gt;(sys::pstream &amp;in, std::vector&lt; T &gt; &amp;rhs)</div><div class="ttdef"><b>Definition:</b> bscheduler_io.hh:37</div></div>
-<div class="ttc" id="structarma_1_1Domain_html_a2ce8134e33bdac46a1b190ef2876d090"><div class="ttname"><a href="structarma_1_1Domain.html#a2ce8134e33bdac46a1b190ef2876d090">arma::Domain::_lbound</a></div><div class="ttdeci">length_type _lbound</div><div class="ttdef"><b>Definition:</b> domain.hh:194</div></div>
+<div class="ttc" id="namespacestd_html_a206256308c93390ce939183e93105603"><div class="ttname"><a href="namespacestd.html#a206256308c93390ce939183e93105603">std::operator&gt;&gt;</a></div><div class="ttdeci">sys::pstream &amp; operator&gt;&gt;(sys::pstream &amp;in, std::vector&lt; T &gt; &amp;rhs)</div><div class="ttdef"><b>Definition:</b> bscheduler_io.hh:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
