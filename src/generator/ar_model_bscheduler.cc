@@ -132,21 +132,27 @@ namespace {
 				const shape_type& offset = subpart.lbound();
 				using blitz::Range;
 				using blitz::toEnd;
-				out << array_type(this->_zeta(
-					Range::all(),
-					Range(0, offset(1)-1),
-					Range(0, offset(2)-1)
-				));
-				out << array_type(this->_zeta(
-					Range(0, offset(0)-1),
-					Range(offset(1), toEnd),
-					Range(0, offset(2)-1)
-				));
-				out << array_type(this->_zeta(
-					Range(0, offset(0)-1),
-					Range(0, offset(1)-1),
-					Range(offset(1), toEnd)
-				));
+				if (offset(1) > 0 && offset(2) > 0) {
+					out << array_type(this->_zeta(
+						Range::all(),
+						Range(0, offset(1)-1),
+						Range(0, offset(2)-1)
+					));
+				}
+				if (offset(0) > 0 && offset(2) > 0) {
+					out << array_type(this->_zeta(
+						Range(0, offset(0)-1),
+						Range(offset(1), toEnd),
+						Range(0, offset(2)-1)
+					));
+				}
+				if (offset(0) > 0 && offset(1) > 0) {
+					out << array_type(this->_zeta(
+						Range(0, offset(0)-1),
+						Range(0, offset(1)-1),
+						Range(offset(1), toEnd)
+					));
+				}
 				out << this->_phi;
 				out << this->_generator;
 			} else {
@@ -172,25 +178,30 @@ namespace {
 				const shape_type& offset = subpart.lbound();
 				using blitz::Range;
 				using blitz::toEnd;
-				array_type tmp1(this->_zeta(
-					Range::all(),
-					Range(0, offset(1)-1),
-					Range(0, offset(2)-1)
-				));
-				array_type tmp2(this->_zeta(
-					Range(0, offset(0)-1),
-					Range(offset(1), toEnd),
-					Range(0, offset(2)-1)
-				));
-				array_type tmp3(this->_zeta(
-					Range(0, offset(0)-1),
-					Range(0, offset(1)-1),
-					Range(offset(1), toEnd)
-				));
-				using blitz::operator>>;
-				in >> tmp1;
-				in >> tmp2;
-				in >> tmp3;
+				if (offset(1) > 0 && offset(2) > 0) {
+					array_type tmp1(this->_zeta(
+						Range::all(),
+						Range(0, offset(1)-1),
+						Range(0, offset(2)-1)
+					));
+					in >> tmp1;
+				}
+				if (offset(0) > 0 && offset(2) > 0) {
+					array_type tmp2(this->_zeta(
+						Range(0, offset(0)-1),
+						Range(offset(1), toEnd),
+						Range(0, offset(2)-1)
+					));
+					in >> tmp2;
+				}
+				if (offset(0) > 0 && offset(1) > 0) {
+					array_type tmp3(this->_zeta(
+						Range(0, offset(0)-1),
+						Range(0, offset(1)-1),
+						Range(offset(1), toEnd)
+					));
+					in >> tmp3;
+				}
 				in >> this->_phi;
 				in >> this->_generator;
 			} else {
