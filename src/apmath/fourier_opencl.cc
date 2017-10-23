@@ -106,8 +106,6 @@ arma::apmath::Fourier_transform<T,N>::init(const shape_type& shape) {
 	}
 	this->_shape = shape;
 	clfft_shape tmp(this->_shape);
-	std::clog << "tmp=" << tmp << std::endl;
-	std::clog << "context()()=" << context()() << std::endl;
 	CHECK(clfftCreateDefaultPlan(
 		&this->_fftplan,
 		context()(),

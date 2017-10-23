@@ -14,6 +14,9 @@
 template <class T>
 class ARMA_driver_kernel: public bsc::kernel, public arma::ARMA_driver<T> {
 
+public:
+	using typename arma::ARMA_driver<T>::model_type;
+
 private:
 	std::string _filename;
 
@@ -41,6 +44,9 @@ public:
 
 	void
 	react(bsc::kernel* child) override {
+		if (child != this->_model) {
+			this->_model = dynamic_cast<model_type*>(child);
+		}
 		this->_zeta.reference(this->_model->zeta());
 		#if ARMA_OPENCL
 		this->_zeta.copy_to_host_if_exists();
