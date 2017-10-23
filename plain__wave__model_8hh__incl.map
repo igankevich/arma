@@ -1,11 +1,11 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/plain_wave_model.hh" name="/home/travis/build/igankevich/arma/src/generator/plain_wave_model.hh">
-<area shape="rect" id="node4" href="$types_8hh.html" title="types.hh" alt="" coords="43,200,115,227"/>
-<area shape="rect" id="node6" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="108,125,247,152"/>
-<area shape="rect" id="node13" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="322,125,435,152"/>
-<area shape="rect" id="node28" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1112,349,1264,376"/>
-<area shape="rect" id="node7" href="$grid_8hh.html" title="grid.hh" alt="" coords="147,200,208,227"/>
+<area shape="rect" id="node4" href="$types_8hh.html" title="types.hh" alt="" coords="28,200,100,227"/>
+<area shape="rect" id="node6" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="93,125,232,152"/>
+<area shape="rect" id="node13" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="307,125,420,152"/>
+<area shape="rect" id="node28" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1111,349,1263,376"/>
+<area shape="rect" id="node7" href="$grid_8hh.html" title="grid.hh" alt="" coords="132,200,193,227"/>
 <area shape="rect" id="node8" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="113,349,177,376"/>
 <area shape="rect" id="node11" href="$validators_8hh.html" title="validators.hh" alt="" coords="97,275,193,301"/>
-<area shape="rect" id="node14" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="373,200,483,227"/>
-<area shape="rect" id="node18" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="910,200,1012,227"/>
+<area shape="rect" id="node14" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="358,200,468,227"/>
+<area shape="rect" id="node18" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="909,200,1011,227"/>
 </map>

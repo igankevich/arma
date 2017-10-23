@@ -1,14 +1,14 @@
 <map id="/home/travis/build/igankevich/arma/src/velocity/plain_wave_solver.hh" name="/home/travis/build/igankevich/arma/src/velocity/plain_wave_solver.hh">
-<area shape="rect" id="node2" href="$basic__solver_8hh.html" title="basic_solver.hh" alt="" coords="82,133,195,160"/>
-<area shape="rect" id="node3" href="$types_8hh.html" title="types.hh" alt="" coords="161,291,233,317"/>
-<area shape="rect" id="node16" href="$plain__wave__model_8hh.html" title="generator/plain_wave\l_model.hh" alt="" coords="330,126,475,167"/>
-<area shape="rect" id="node5" href="$domain_8hh.html" title="domain.hh" alt="" coords="55,291,136,317"/>
-<area shape="rect" id="node14" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="227,216,365,243"/>
+<area shape="rect" id="node2" href="$basic__solver_8hh.html" title="basic_solver.hh" alt="" coords="78,133,191,160"/>
+<area shape="rect" id="node3" href="$types_8hh.html" title="types.hh" alt="" coords="159,291,231,317"/>
+<area shape="rect" id="node16" href="$plain__wave__model_8hh.html" title="generator/plain_wave\l_model.hh" alt="" coords="326,126,471,167"/>
+<area shape="rect" id="node5" href="$domain_8hh.html" title="domain.hh" alt="" coords="52,291,133,317"/>
+<area shape="rect" id="node14" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="223,216,361,243"/>
 <area shape="rect" id="node9" href="$validators_8hh.html" title="validators.hh" alt="" coords="248,365,344,392"/>
 <area shape="rect" id="node11" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="264,440,328,467"/>
 <area shape="rect" id="node15" href="$grid_8hh.html" title="grid.hh" alt="" coords="265,291,327,317"/>
-<area shape="rect" id="node17" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="441,216,553,243"/>
+<area shape="rect" id="node17" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="437,216,549,243"/>
 <area shape="rect" id="node32" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1297,440,1449,467"/>
-<area shape="rect" id="node18" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="630,291,740,317"/>
+<area shape="rect" id="node18" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="617,291,727,317"/>
 <area shape="rect" id="node22" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="1054,291,1156,317"/>
 </map>
