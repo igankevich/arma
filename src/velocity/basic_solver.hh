@@ -4,6 +4,11 @@
 #if ARMA_OPENMP
 #include <omp.h>
 #endif
+
+#if ARMA_BSCHEDULER
+#include <unistdx/net/pstream>
+#endif
+
 #include "types.hh"
 #include "domain.hh"
 #include "discrete_function.hh"
@@ -57,6 +62,15 @@ namespace arma {
 			virtual void
 			read(std::istream& in);
 
+			#if ARMA_BSCHEDULER
+			virtual void
+			write(sys::pstream& out) const;
+
+			virtual void
+			read(sys::pstream& in);
+
+			#endif
+
 		public:
 
 			Velocity_potential_solver():
@@ -91,6 +105,20 @@ namespace arma {
 				rhs.read(in);
 				return in;
 			}
+
+			#if ARMA_BSCHEDULER
+			friend sys::pstream&
+			operator<<(sys::pstream& out, const Velocity_potential_solver& rhs) {
+				rhs.write(out);
+				return out;
+			}
+
+			friend sys::pstream&
+			operator>>(sys::pstream& in, Velocity_potential_solver& rhs) {
+				rhs.read(in);
+				return in;
+			}
+			#endif
 
 		};
 

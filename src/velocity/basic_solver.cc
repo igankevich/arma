@@ -73,4 +73,18 @@ arma::velocity::Velocity_potential_solver<T>::operator()(
 	return result;
 }
 
+template <class T>
+void
+arma::velocity::Velocity_potential_solver<T>
+::write(sys::pstream& out) const {
+	out << this->_wnmax << this->_depth << this->_domain;
+}
+
+template <class T>
+void
+arma::velocity::Velocity_potential_solver<T>
+::read(sys::pstream& in) {
+	in >> this->_wnmax >> this->_depth >> this->_domain;
+}
+
 template class arma::velocity::Velocity_potential_solver<ARMA_REAL_TYPE>;

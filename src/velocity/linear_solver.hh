@@ -2,6 +2,7 @@
 #define VELOCITY_LINEAR_SOLVER_HH
 
 #include <complex>
+
 #include "basic_solver.hh"
 #include "fourier.hh"
 
@@ -18,11 +19,11 @@ namespace arma {
 
 		protected:
 			using typename Velocity_potential_solver<T>::domain2_type;
-
-		protected:
 			typedef std::complex<T> Cmplx;
 			typedef apmath::Fourier_transform<Cmplx,2> transform_type;
 			typedef apmath::Fourier_workspace<Cmplx,2> workspace_type;
+
+		protected:
 			transform_type _fft;
 			Array3D<Cmplx> _zeta_t;
 			#if ARMA_DEBUG_FFT

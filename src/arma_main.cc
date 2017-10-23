@@ -63,6 +63,8 @@ public:
 		out << this->_zeta;
 		out << this->_vpotentials;
 		out << this->_filename;
+		out << this->_solvername;
+		out << *this->_solver;
 	}
 
 	void
@@ -71,6 +73,15 @@ public:
 		in >> this->_zeta;
 		in >> this->_vpotentials;
 		in >> this->_filename;
+		in >> this->_solvername;
+		if (!this->_solvername.empty()) {
+			auto result = this->_solvers.find(this->_solvername);
+			if (result == this->_solvers.end()) {
+				throw std::invalid_argument("bad solver name");
+			}
+			this->_solver = result->second();
+			in >> *this->_solver;
+		}
 	}
 
 };

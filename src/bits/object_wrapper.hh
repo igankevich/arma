@@ -19,6 +19,7 @@ namespace arma {
 			typedef std::unordered_map<std::string, value_type> map_type;
 			solver_type*& _solver;
 			const map_type& _constructors;
+			key_type _name;
 
 		public:
 			explicit
@@ -37,10 +38,16 @@ namespace arma {
 					std::cerr << "Invalid object: " << name << std::endl;
 					throw std::runtime_error("bad object");
 				} else {
+					rhs._name = result->first;
 					rhs._solver = result->second();
 					in >> *rhs._solver;
 				}
 				return in;
+			}
+
+			const key_type&
+			name() const noexcept {
+				return this->_name;
 			}
 
 		};

@@ -56,6 +56,7 @@ namespace arma {
 		Array4D<T> _vpotentials;
 		std::unordered_map<std::string, vpsolver_ctr> _solvers;
 		std::unordered_map<std::string, model_ctr> _models;
+		std::string _solvername;
 
 	public:
 		ARMA_driver() = default;

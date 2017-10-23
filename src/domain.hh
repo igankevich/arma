@@ -181,13 +181,15 @@ namespace arma {
 		}
 
 		#if ARMA_BSCHEDULER
-		template <class T1, int N1>
 		friend sys::pstream&
-		operator<<(sys::pstream& out, const Domain<T1,N1>& rhs);
+		operator<<(sys::pstream& out, const Domain& rhs) {
+			return out << rhs._lbound << rhs._ubound << rhs._npoints;
+		}
 
-		template <class T1, int N1>
 		friend sys::pstream&
-		operator>>(sys::pstream& in, Domain<T1,N1>& rhs);
+		operator>>(sys::pstream& in, Domain& rhs) {
+			return in >> rhs._lbound >> rhs._ubound >> rhs._npoints;
+		}
 		#endif
 
 	private:

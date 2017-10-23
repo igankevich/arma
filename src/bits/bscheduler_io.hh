@@ -7,18 +7,6 @@
 #include "grid.hh"
 #include "types.hh"
 
-template <class T, int N>
-sys::pstream&
-operator<<(sys::pstream& out, const arma::Domain<T,N>& rhs) {
-	return out << rhs._lbound << rhs._ubound << rhs._npoints;
-}
-
-template <class T, int N>
-sys::pstream&
-operator>>(sys::pstream& in, arma::Domain<T,N>& rhs) {
-	return in >> rhs._lbound >> rhs._ubound >> rhs._npoints;
-}
-
 namespace std {
 
 	template <class T>

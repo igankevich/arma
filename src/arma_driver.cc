@@ -175,6 +175,7 @@ arma::ARMA_driver<T>::read(std::istream& in) {
 			<< std::endl;
 		throw std::runtime_error("bad generator");
 	}
+	this->_solvername = vpsolver_wrapper.name();
 }
 
 template class arma::ARMA_driver<ARMA_REAL_TYPE>;
