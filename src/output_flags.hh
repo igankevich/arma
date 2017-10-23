@@ -1,11 +1,15 @@
 #ifndef OUTPUT_FLAGS_HH
 #define OUTPUT_FLAGS_HH
 
+#include <bitset>
 #include <istream>
 #include <ostream>
-#include <bitset>
-#include <type_traits>
 #include <string>
+#include <type_traits>
+
+#if ARMA_BSCHEDULER
+#include <bscheduler/api.hh>
+#endif
 
 namespace arma {
 
@@ -15,7 +19,7 @@ namespace arma {
 	public:
 		typedef std::bitset<32> bitset_type;
 
-		enum Flag: unsigned long {
+		enum Flag : unsigned long {
 			None = 0,
 			Summary = 1,
 			Quantile = 2,
@@ -57,6 +61,15 @@ namespace arma {
 		friend std::ostream&
 		operator<<(std::ostream& out, const Output_flags& rhs);
 
+		#if ARMA_BSCHEDULER
+		void
+		write(sys::pstream& out) const;
+
+		void
+		read(sys::pstream& in);
+
+		#endif
+
 	private:
 		/// Infer default values when no output format is specified.
 		void
@@ -83,7 +96,18 @@ namespace arma {
 		return get_filename("phi", flag);
 	}
 
+	inline sys::pstream&
+	operator<<(sys::pstream& out, const Output_flags& rhs) {
+		rhs.write(out);
+		return out;
+	}
+
+	inline sys::pstream&
+	operator>>(sys::pstream& in, Output_flags& rhs) {
+		rhs.read(in);
+		return in;
+	}
+
 }
 
 #endif // OUTPUT_FLAGS_HH
-

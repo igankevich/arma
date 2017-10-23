@@ -3,6 +3,7 @@
 
 #if ARMA_BSCHEDULER
 #include <bscheduler/api.hh>
+#include <bscheduler/base/error_handler.hh>
 #endif
 
 #include "arma_driver.hh"
@@ -18,6 +19,11 @@ private:
 
 public:
 
+	ARMA_driver_kernel() {
+		register_all_models<T>(*this);
+		register_all_solvers<T>(*this);
+	}
+
 	explicit
 	ARMA_driver_kernel(const std::string& filename):
 	_filename(filename) {
@@ -29,11 +35,12 @@ public:
 	void
 	act() override {
 		this->echo_parameters();
-		bsc::upstream(this, this->_model);
+		this->_model->setf(bsc::kernel_flag::carries_parent);
+		bsc::upstream<bsc::Remote>(this, this->_model);
 	}
 
 	void
-	react(bsc::kernel* child) {
+	react(bsc::kernel* child) override {
 		this->_zeta.reference(this->_model->zeta());
 		#if ARMA_OPENCL
 		this->_zeta.copy_to_host_if_exists();
@@ -44,6 +51,22 @@ public:
 		bsc::commit(this);
 	}
 
+	void
+	write(sys::pstream& out) const override {
+		bsc::kernel::write(out);
+		out << this->_zeta;
+		out << this->_vpotentials;
+		out << this->_filename;
+	}
+
+	void
+	read(sys::pstream& in) override {
+		bsc::kernel::read(in);
+		in >> this->_zeta;
+		in >> this->_vpotentials;
+		in >> this->_filename;
+	}
+
 };
 #endif
 
@@ -52,6 +75,9 @@ void
 run_arma(const std::string& input_filename) {
 	using namespace arma;
 	#if ARMA_BSCHEDULER
+	bsc::install_error_handler();
+	bsc::register_type<generator::AR_model<ARMA_REAL_TYPE> >();
+	bsc::register_type<ARMA_driver_kernel<ARMA_REAL_TYPE> >();
 	bsc::factory_guard g;
 	if (bsc::this_application::is_master()) {
 		bsc::send(new ARMA_driver_kernel<T>(input_filename));

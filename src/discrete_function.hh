@@ -1,8 +1,12 @@
 #ifndef DISCRETE_FUNCTION_HH
 #define DISCRETE_FUNCTION_HH
 
-#include "types.hh"
+#if ARMA_BSCHEDULER
+#include <unistdx/net/pstream>
+#endif
+
 #include "grid.hh"
+#include "types.hh"
 
 namespace arma {
 
@@ -31,6 +35,24 @@ namespace arma {
 			this->_grid = rhs._grid;
 			return *this;
 		}
+
+		#if ARMA_BSCHEDULER
+		inline friend sys::pstream&
+		operator<<(sys::pstream& out, const Discrete_function& rhs) {
+			out << static_cast<const base_type&>(rhs);
+			out << rhs._grid;
+			return out;
+		}
+
+		inline friend sys::pstream&
+		operator>>(sys::pstream& in, Discrete_function& rhs) {
+			in >> static_cast<base_type&>(rhs);
+			in >> rhs._grid;
+			return in;
+		}
+
+		#endif
+
 	};
 
 }

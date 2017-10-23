@@ -19,14 +19,14 @@ namespace arma {
 	namespace generator {
 
 		/**
-		\defgroup generators Wavy surface generation
-		\brief Generators based on ocean wavy surface simulation models.
-		*/
+		   \defgroup generators Wavy surface generation
+		   \brief Generators based on ocean wavy surface simulation models.
+		 */
 
 		/**
-		\brief A base class for all generators.
-		\ingroup generators
-		*/
+		   \brief A base class for all generators.
+		   \ingroup generators
+		 */
 		template<class T>
 		class Basic_model
 			#if ARMA_BSCHEDULER
@@ -49,27 +49,38 @@ namespace arma {
 			std::vector<prng::parallel_mt> _mts;
 			#endif
 
-			virtual void write(std::ostream& out) const {}
-			virtual void read(std::istream& in) {}
+			virtual void
+			write(std::ostream& out) const {}
+
+			virtual void
+			read(std::istream& in) {}
 
 			#if ARMA_BSCHEDULER
-			void write(sys::pstream& out) const override;
-			void read(sys::pstream& in) override;
+			void
+			write(sys::pstream& out) const override;
+
+			void
+			read(sys::pstream& in) override;
+
 			#endif
 
 			inline prng::clock_type::rep
 			newseed() noexcept {
 				return this->_noseed
-					? prng::clock_type::rep(0)
-					: prng::clock_seed();
+				       ? prng::clock_type::rep(0)
+					   : prng::clock_seed();
 			}
 
 		public:
 
 			Basic_model() = default;
+
 			Basic_model(const Basic_model&) = default;
+
 			Basic_model(Basic_model&&) = default;
-			virtual ~Basic_model() = default;
+
+			virtual
+			~Basic_model() = default;
 
 			inline void
 			setgrid(const grid_type& rhs) noexcept {
@@ -91,9 +102,13 @@ namespace arma {
 				return false;
 			}
 
-			virtual void validate() const {}
-			virtual Array3D<T> generate() = 0;
-			virtual void verify(Array3D<T> zeta) const {}
+			virtual void
+			validate() const {}
+			virtual Array3D<T>
+			generate() = 0;
+
+			virtual void
+			verify(Array3D<T> zeta) const {}
 
 			inline friend std::ostream&
 			operator<<(std::ostream& out, const Basic_model& rhs) {
@@ -117,6 +132,7 @@ namespace arma {
 			zeta() const noexcept {
 				return this->_zeta;
 			}
+
 			#endif
 
 		};

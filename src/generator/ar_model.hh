@@ -83,6 +83,12 @@ namespace arma {
 			void
 			react(bsc::kernel* child) override;
 
+			void
+			write(sys::pstream& out) const override;
+
+			void
+			read(sys::pstream& in) override;
+
 			template <class X>
 			friend class ::ar_partition_kernel;
 

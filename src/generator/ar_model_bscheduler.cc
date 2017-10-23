@@ -435,11 +435,31 @@ template <class T>
 void
 arma::generator::AR_model<T>::react(bsc::kernel* child) {
 //	ar_master_kernel<T>* master = dynamic_cast<ar_master_kernel<T>*>(child);
-	bsc::commit(this);
+	bsc::commit<bsc::Remote>(this);
 }
 
 template <class T>
 arma::Array3D<T>
 arma::generator::AR_model<T>::do_generate() {
 	throw std::runtime_error("bad method");
+}
+
+template <class T>
+void
+arma::generator::AR_model<T>
+::write(sys::pstream& out) const {
+	Basic_ARMA_model<T>::write(out);
+	out << this->_partition;
+	out << this->_phi;
+	out << this->_doleastsquares;
+}
+
+template <class T>
+void
+arma::generator::AR_model<T>
+::read(sys::pstream& in) {
+	Basic_ARMA_model<T>::read(in);
+	in >> this->_partition;
+	in >> this->_phi;
+	in >> this->_doleastsquares;
 }

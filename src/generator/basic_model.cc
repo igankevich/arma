@@ -12,6 +12,7 @@ arma::generator::Basic_model<T>
 ::write(sys::pstream& out) const {
 	bsc::kernel::write(out);
 	out << this->_outgrid;
+	out << this->_oflags;
 	out << this->_noseed;
 	out << this->_zeta;
 	out << this->_mts;
@@ -23,6 +24,7 @@ arma::generator::Basic_model<T>
 ::read(sys::pstream& in) {
 	bsc::kernel::read(in);
 	in >> this->_outgrid;
+	in >> this->_oflags;
 	in >> this->_noseed;
 	in >> this->_zeta;
 	in >> this->_mts;

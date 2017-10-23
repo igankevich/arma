@@ -107,4 +107,20 @@ arma::operator<<(std::ostream& out, const Output_flags& rhs) {
 	return out;
 }
 
+#if ARMA_BSCHEDULER
 
+void
+arma::Output_flags
+::write(sys::pstream& out) const {
+	out << uint64_t(this->_flags.to_ulong());
+}
+
+void
+arma::Output_flags
+::read(sys::pstream& in) {
+	uint64_t n = 0;
+	in >> n;
+	this->_flags = bitset_type(n);
+}
+
+#endif
