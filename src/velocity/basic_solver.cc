@@ -73,6 +73,7 @@ arma::velocity::Velocity_potential_solver<T>::operator()(
 	return result;
 }
 
+#if ARMA_BSCHEDULER
 template <class T>
 void
 arma::velocity::Velocity_potential_solver<T>
@@ -86,5 +87,6 @@ arma::velocity::Velocity_potential_solver<T>
 ::read(sys::pstream& in) {
 	in >> this->_wnmax >> this->_depth >> this->_domain;
 }
+#endif
 
 template class arma::velocity::Velocity_potential_solver<ARMA_REAL_TYPE>;

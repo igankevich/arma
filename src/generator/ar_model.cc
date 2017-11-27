@@ -74,7 +74,6 @@ arma::generator::AR_model<T>::generate_surface(
 template <class T>
 void
 arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) {
-	std::clog << "id = " << this->id() << std::endl;
 	using blitz::all;
 	if (!all(this->order() <= this->_acf.shape())) {
 		std::cerr << "AR model order is larger than ACF "

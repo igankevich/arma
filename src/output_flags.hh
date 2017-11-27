@@ -96,6 +96,7 @@ namespace arma {
 		return get_filename("phi", flag);
 	}
 
+	#if ARMA_BSCHEDULER
 	inline sys::pstream&
 	operator<<(sys::pstream& out, const Output_flags& rhs) {
 		rhs.write(out);
@@ -107,6 +108,7 @@ namespace arma {
 		rhs.read(in);
 		return in;
 	}
+	#endif
 
 }
 

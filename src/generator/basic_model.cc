@@ -2,7 +2,9 @@
 
 #include "config.hh"
 
+#if ARMA_BSCHEDULER
 #include "bits/bscheduler_io.hh"
+#endif
 
 #if ARMA_BSCHEDULER
 

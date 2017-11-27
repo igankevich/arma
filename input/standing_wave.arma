@@ -1,5 +1,5 @@
 model = AR {
-	out_grid = (100,20,20)
+	out_grid = (10000,40,40)
 	acf = {
 		func = standing_wave
 		grid = (10,10,10) : (2.5,5,5)
@@ -22,7 +22,8 @@ model = AR {
 #	}
 	least_squares = 0
 	order = (7,7,7)
-	output = waves,acf,surface,csv
+#	output = waves,acf,surface,csv
+	output = none
 }
 velocity_potential_solver = linear {
 #	wnmax = from (0,0) to (0,0.25) npoints (2,2)

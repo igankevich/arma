@@ -70,6 +70,7 @@ namespace blitz {
 		}
 	}
 
+	#if ARMA_BSCHEDULER
 	template <class T, int N>
 	sys::pstream&
 	operator<<(sys::pstream& out, const blitz::Array<T,N>& rhs) {
@@ -133,6 +134,7 @@ namespace blitz {
 		}
 		return in;
 	}
+	#endif
 
 }
 
