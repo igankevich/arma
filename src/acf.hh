@@ -58,7 +58,7 @@ namespace arma {
 
 		// from mathematica
 		T alpha = 0.42, beta = -1.8, gamm = 1.0;
-		T velocity = 0.9;
+		T velocity = 1.0;
 
 		Array3D<T> acf(acf_size);
 		acf = gamm*exp(-alpha*(i*delta[0] + j*delta[1] + k*delta[2])) *

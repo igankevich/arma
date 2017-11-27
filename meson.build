@@ -107,6 +107,7 @@ foreach testcase : ['standing', 'propagating']
 	])
 endforeach
 run_target('nit-plot', command: 'scripts/target-nit.R')
+run_target('propagating-wave-slice', command: 'scripts/target-propagating-wave-slice.R')
 
 datadir = get_option('prefix') + '/' + get_option('datadir')
 opencl_srcdir = get_option('opencl_srcdir')
