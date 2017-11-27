@@ -1,7 +1,7 @@
 <map id="/home/travis/build/igankevich/arma/src/generator" name="/home/travis/build/igankevich/arma/src/generator">
 <area shape="rect" id="node1" href="dir_0cecdb4f206ce84e50dfb37a6ecc3667.html" title="generator" alt="" coords="165,52,240,100"/>
 <area shape="rect" id="node2" href="dir_ffbd8fa4f0d2c39e05d0b979611bf178.html" title="bits" alt="" coords="79,436,151,484"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000004_000002.html" title="6" alt="" coords="121,411,129,426"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000004_000002.html" title="5" alt="" coords="121,411,129,426"/>
 <area shape="rect" id="node3" href="dir_0f3b9fbb4618702e0c3f1f6fecbfd9bc.html" title="opencl" alt="" coords="277,436,349,484"/>
 <area shape="rect" id="edge2-headlabel" href="dir_000004_000008.html" title="3" alt="" coords="329,413,337,428"/>
 <area shape="rect" id="node4" href="dir_c184e51c84f2c3f0345bbc8a0d75d3e1.html" title="io" alt="" coords="5,148,77,196"/>

@@ -191,21 +191,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespacearma.html#a83121b2b1665bf63687c0cd8a6d1b08f">get_filename</a>(<span class="stringliteral">&quot;phi&quot;</span>, flag);</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">inline</span> sys::pstream&amp;</div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="namespacearma.html#a844f377ca44a926b30a2192766580d78">  100</a></span>&#160;    <a class="code" href="namespacearma.html#ae1553777ccf91c5bb717c8bc08e85bc1">operator&lt;&lt;</a>(sys::pstream&amp; out, <span class="keyword">const</span> <a class="code" href="classarma_1_1Output__flags.html">Output_flags</a>&amp; rhs) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        rhs.write(out);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">return</span> out;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">inline</span> sys::pstream&amp;</div>
-<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="namespacearma.html#ae66886df14ea9784fba23bd01c038656">  106</a></span>&#160;    <a class="code" href="namespacearma.html#aa76afb9615d176164bbd1555a8daf180">operator&gt;&gt;</a>(sys::pstream&amp; in, <a class="code" href="classarma_1_1Output__flags.html">Output_flags</a>&amp; rhs) {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        rhs.read(in);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">return</span> in;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif // OUTPUT_FLAGS_HH</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">    #if ARMA_BSCHEDULER</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor"></span>    <span class="keyword">inline</span> sys::pstream&amp;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <a class="code" href="namespacearma.html#ae1553777ccf91c5bb717c8bc08e85bc1">operator&lt;&lt;</a>(sys::pstream&amp; out, <span class="keyword">const</span> Output_flags&amp; rhs) {</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        rhs.write(out);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    }</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">inline</span> sys::pstream&amp;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="namespacearma.html#aa76afb9615d176164bbd1555a8daf180">operator&gt;&gt;</a>(sys::pstream&amp; in, Output_flags&amp; rhs) {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        rhs.read(in);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordflow">return</span> in;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif // OUTPUT_FLAGS_HH</span></div>
 <div class="ttc" id="namespacearma_html_a67d26f61b4fc8b0cc88c83bdbc253120"><div class="ttname"><a href="namespacearma.html#a67d26f61b4fc8b0cc88c83bdbc253120">arma::get_surface_filename</a></div><div class="ttdeci">std::string get_surface_filename(Output_flags::Flag flag)</div><div class="ttdef"><b>Definition:</b> output_flags.hh:90</div></div>
 <div class="ttc" id="classarma_1_1Output__flags_html_a5d89f49e6838d6a3b98fa1d2561cbf1d"><div class="ttname"><a href="classarma_1_1Output__flags.html#a5d89f49e6838d6a3b98fa1d2561cbf1d">arma::Output_flags::bitset_type</a></div><div class="ttdeci">std::bitset&lt; 32 &gt; bitset_type</div><div class="ttdef"><b>Definition:</b> output_flags.hh:20</div></div>
 <div class="ttc" id="namespacearma_html_ae1553777ccf91c5bb717c8bc08e85bc1"><div class="ttname"><a href="namespacearma.html#ae1553777ccf91c5bb717c8bc08e85bc1">arma::operator&lt;&lt;</a></div><div class="ttdeci">std::ostream &amp; operator&lt;&lt;(std::ostream &amp;out, const MA_algorithm &amp;rhs)</div><div class="ttdef"><b>Definition:</b> ma_algorithm.cc:33</div></div>

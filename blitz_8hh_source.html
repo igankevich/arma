@@ -166,74 +166,75 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        }</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    sys::pstream&amp;</div>
-<div class="line"><a name="l00075"></a><span class="lineno"><a class="line" href="namespaceblitz.html#a6ed5d8fb6fc34a620dc77e2eebdb72b3">   75</a></span>&#160;    operator&lt;&lt;(sys::pstream&amp; out, const blitz::Array&lt;T,N&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        out &lt;&lt; rhs.shape();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> n = rhs.numElements();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">const</span> <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>* data = rhs.data();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;n; ++i) {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            out &lt;&lt; data[i];</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordflow">return</span> out;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    sys::pstream&amp;</div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="namespaceblitz.html#a011450db9bf3728016887e00e9164d4f">   87</a></span>&#160;    <a class="code" href="namespaceblitz.html#a011450db9bf3728016887e00e9164d4f">operator&gt;&gt;</a>(sys::pstream&amp; in, blitz::Array&lt;T,N&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        blitz::TinyVector&lt;int,N&gt; shape;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        in &gt;&gt; shape;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        rhs.resize(shape);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> n = rhs.numElements();</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>* data = rhs.data();</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;n; ++i) {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            in &gt;&gt; data[i];</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">return</span> in;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    }</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    sys::pstream&amp;</div>
-<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="namespaceblitz.html#a035b6d94c44673834d08e46fc2821282">  101</a></span>&#160;    operator&lt;&lt;(sys::pstream&amp; out, const blitz::TinyVector&lt;int,N&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;N; ++i) {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            out &lt;&lt; int32_t(rhs(i));</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        }</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">return</span> out;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    sys::pstream&amp;</div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="namespaceblitz.html#a07cee4c65386986d7d60872df89486e7">  110</a></span>&#160;    <a class="code" href="namespaceblitz.html#a011450db9bf3728016887e00e9164d4f">operator&gt;&gt;</a>(sys::pstream&amp; in, blitz::TinyVector&lt;int,N&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;N; ++i) {</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            int32_t tmp = 0;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            in &gt;&gt; tmp;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            rhs(i) = tmp;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        }</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">return</span> in;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    sys::pstream&amp;</div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="namespaceblitz.html#a8fc4ffd019fed36d98608e7c406ebd2c">  121</a></span>&#160;    operator&lt;&lt;(sys::pstream&amp; out, const blitz::TinyVector&lt;T,N&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;N; ++i) {</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            out &lt;&lt; rhs(i);</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        }</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keywordflow">return</span> out;</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    sys::pstream&amp;</div>
-<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="namespaceblitz.html#a00cbf8423bc48e4893018f0d77e1c338">  130</a></span>&#160;    <a class="code" href="namespaceblitz.html#a011450db9bf3728016887e00e9164d4f">operator&gt;&gt;</a>(sys::pstream&amp; in, blitz::TinyVector&lt;T,N&gt;&amp; rhs) {</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;N; ++i) {</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            in &gt;&gt; rhs(i);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        }</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">return</span> in;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    }</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="preprocessor">#endif // BLITZ_HH</span></div>
-<div class="ttc" id="namespaceblitz_html_a011450db9bf3728016887e00e9164d4f"><div class="ttname"><a href="namespaceblitz.html#a011450db9bf3728016887e00e9164d4f">blitz::operator&gt;&gt;</a></div><div class="ttdeci">sys::pstream &amp; operator&gt;&gt;(sys::pstream &amp;in, blitz::Array&lt; T, N &gt; &amp;rhs)</div><div class="ttdef"><b>Definition:</b> blitz.hh:87</div></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">    #if ARMA_BSCHEDULER</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor"></span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    sys::pstream&amp;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    operator&lt;&lt;(sys::pstream&amp; out, const blitz::Array&lt;T,N&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        out &lt;&lt; rhs.shape();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> n = rhs.numElements();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keyword">const</span> <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>* data = rhs.data();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;n; ++i) {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            out &lt;&lt; data[i];</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    sys::pstream&amp;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <a class="code" href="namespacearma_1_1apmath.html#aab9b91aaae156ffd2989cdc6ea7d6a45">operator&gt;&gt;</a>(sys::pstream&amp; in, blitz::Array&lt;T,N&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        blitz::TinyVector&lt;int,N&gt; shape;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        in &gt;&gt; shape;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        rhs.resize(shape);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">int</span> n = rhs.numElements();</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>* data = rhs.data();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;n; ++i) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            in &gt;&gt; data[i];</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">return</span> in;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    sys::pstream&amp;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    operator&lt;&lt;(sys::pstream&amp; out, const blitz::TinyVector&lt;int,N&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;N; ++i) {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            out &lt;&lt; int32_t(rhs(i));</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    sys::pstream&amp;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <a class="code" href="namespacearma_1_1apmath.html#aab9b91aaae156ffd2989cdc6ea7d6a45">operator&gt;&gt;</a>(sys::pstream&amp; in, blitz::TinyVector&lt;int,N&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;N; ++i) {</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            int32_t tmp = 0;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            in &gt;&gt; tmp;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            rhs(i) = tmp;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">return</span> in;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    sys::pstream&amp;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    operator&lt;&lt;(sys::pstream&amp; out, const blitz::TinyVector&lt;T,N&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;N; ++i) {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            out &lt;&lt; rhs(i);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    }</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keywordtype">int</span> N&gt;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    sys::pstream&amp;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <a class="code" href="namespacearma_1_1apmath.html#aab9b91aaae156ffd2989cdc6ea7d6a45">operator&gt;&gt;</a>(sys::pstream&amp; in, blitz::TinyVector&lt;T,N&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;N; ++i) {</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            in &gt;&gt; rhs(i);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        }</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">return</span> in;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="preprocessor">#endif // BLITZ_HH</span></div>
 <div class="ttc" id="namespaceblitz_html_a1e4dd6ca971bf31edb1b1a69b7ba219a"><div class="ttname"><a href="namespaceblitz.html#a1e4dd6ca971bf31edb1b1a69b7ba219a">blitz::isfinite</a></div><div class="ttdeci">bool isfinite(double rhs) noexcept</div><div class="ttdef"><b>Definition:</b> blitz.hh:21</div></div>
 <div class="ttc" id="namespaceblitz_html_a943f9dbc7edf668a374e4387c1b2ee2a"><div class="ttname"><a href="namespaceblitz.html#a943f9dbc7edf668a374e4387c1b2ee2a">blitz::length</a></div><div class="ttdeci">T length(const TinyVector&lt; T, 2 &gt; &amp;rhs) noexcept</div><div class="ttdef"><b>Definition:</b> blitz.hh:42</div></div>
 <div class="ttc" id="namespaceblitz_html_ab20ab27bfb64cd964b1d66eb61e409d5"><div class="ttname"><a href="namespaceblitz.html#ab20ab27bfb64cd964b1d66eb61e409d5">blitz::isfinite</a></div><div class="ttdeci">bool isfinite(float rhs) noexcept</div><div class="ttdef"><b>Definition:</b> blitz.hh:16</div></div>
@@ -242,6 +243,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="namespaceblitz_html_a7fb9e50fb9dd08773226eef386c33f3f"><div class="ttname"><a href="namespaceblitz.html#a7fb9e50fb9dd08773226eef386c33f3f">blitz::BZ_DECLARE_FUNCTION2</a></div><div class="ttdeci">BZ_DECLARE_FUNCTION2(div_ceil)</div></div>
 <div class="ttc" id="namespaceblitz_html_a196e6e1926a4621157892d96bf8b7ca3"><div class="ttname"><a href="namespaceblitz.html#a196e6e1926a4621157892d96bf8b7ca3">blitz::BZ_DECLARE_FUNCTION</a></div><div class="ttdeci">BZ_DECLARE_FUNCTION(isfinite)</div></div>
 <div class="ttc" id="namespaceblitz_html_aed98c85008af2c20e4d1c69564dfbe6e"><div class="ttname"><a href="namespaceblitz.html#aed98c85008af2c20e4d1c69564dfbe6e">blitz::rotate</a></div><div class="ttdeci">void rotate(Array&lt; T, 2 &gt; &amp;rhs, TinyVector&lt; int, 2 &gt; point)</div><div class="ttdef"><b>Definition:</b> blitz.hh:56</div></div>
+<div class="ttc" id="namespacearma_1_1apmath_html_aab9b91aaae156ffd2989cdc6ea7d6a45"><div class="ttname"><a href="namespacearma_1_1apmath.html#aab9b91aaae156ffd2989cdc6ea7d6a45">arma::apmath::operator&gt;&gt;</a></div><div class="ttdeci">std::istream &amp; operator&gt;&gt;(std::istream &amp;in, closed_interval&lt; T &gt; &amp;rhs)</div><div class="ttdef"><b>Definition:</b> closed_interval.cc:14</div></div>
 <div class="ttc" id="common_8h_html_a25af1c42bcec3ac9b8d7d2846b1f2198"><div class="ttname"><a href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div><div class="ttdeci">ARMA_REAL_TYPE T</div><div class="ttdef"><b>Definition:</b> common.h:8</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
