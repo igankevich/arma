@@ -1,8 +1,8 @@
 <map id="arma::generator::Basic_model&lt; T &gt;" name="arma::generator::Basic_model&lt; T &gt;">
-<area shape="rect" id="node2" href="$classarma_1_1generator_1_1Basic__ARMA__model.html" title="Base class for AR, MA and ARMA models. " alt="" coords="119,365,292,677"/>
-<area shape="rect" id="node6" href="$classarma_1_1generator_1_1Longuet__Higgins__model.html" title="Uses Longuet—Higgins model, small&#45;amplitude waves. " alt="" coords="316,395,487,648"/>
-<area shape="rect" id="node7" href="$classarma_1_1generator_1_1Plain__wave__model.html" title="Uses a simple sum of sines and cosines, small&#45;amplitude waves.Individual amplitudes, wave numbers, phases and velocities are set via configuration file. " alt="" coords="511,373,661,670"/>
-<area shape="rect" id="node3" href="$classarma_1_1generator_1_1AR__model.html" title="Uses autoregressive process, standing waves. " alt="" coords="5,733,197,1059"/>
-<area shape="rect" id="node5" href="$structarma_1_1generator_1_1MA__model.html" title="Uses moving average process, propagating waves. " alt="" coords="223,725,396,1067"/>
-<area shape="rect" id="node4" href="$structarma_1_1generator_1_1ARMA__model.html" title="Uses autoregressive moving average process (WIP). " alt="" coords="119,1115,292,1413"/>
+<area shape="rect" id="node2" href="$classarma_1_1generator_1_1Basic__ARMA__model.html" title="Base class for AR, MA and ARMA models. " alt="" coords="119,366,292,693"/>
+<area shape="rect" id="node6" href="$classarma_1_1generator_1_1Longuet__Higgins__model.html" title="Uses Longuet—Higgins model, small&#45;amplitude waves. " alt="" coords="316,403,487,656"/>
+<area shape="rect" id="node7" href="$classarma_1_1generator_1_1Plain__wave__model.html" title="Uses a simple sum of sines and cosines, small&#45;amplitude waves.Individual amplitudes, wave numbers, phases and velocities are set via configuration file. " alt="" coords="511,381,661,678"/>
+<area shape="rect" id="node3" href="$classarma_1_1generator_1_1AR__model.html" title="Uses autoregressive process, standing waves. " alt="" coords="5,749,197,1075"/>
+<area shape="rect" id="node5" href="$structarma_1_1generator_1_1MA__model.html" title="Uses moving average process, propagating waves. " alt="" coords="223,741,396,1083"/>
+<area shape="rect" id="node4" href="$structarma_1_1generator_1_1ARMA__model.html" title="Uses autoregressive moving average process (WIP). " alt="" coords="119,1131,292,1429"/>
 </map>

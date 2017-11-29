@@ -90,7 +90,7 @@ var searchData=
   ['_5ftheta',['_theta',['../structarma_1_1generator_1_1MA__model.html#ab9a8a487e96af602f6c521f1159567d3',1,'arma::generator::MA_model']]],
   ['_5ftransforms',['_transforms',['../classarma_1_1apmath_1_1Fourier__transform.html#a73950fc748478ad59a68c5c1ed217fb4',1,'arma::apmath::Fourier_transform']]],
   ['_5fubound',['_ubound',['../structarma_1_1Domain.html#a61e094067ccd9a71bbc13074840c8304',1,'arma::Domain']]],
-  ['_5fvalidate',['_validate',['../structsys_1_1parameter.html#a756f207d2ec6cdc4c86397bf7546d161',1,'sys::parameter']]],
+  ['_5fvalidate',['_validate',['../classarma_1_1generator_1_1Basic__ARMA__model.html#ac25fbb3f1b9099284410b313bba63320',1,'arma::generator::Basic_ARMA_model::_validate()'],['../structsys_1_1parameter.html#a756f207d2ec6cdc4c86397bf7546d161',1,'sys::parameter::_validate()']]],
   ['_5fvalue',['_value',['../structsys_1_1parameter.html#abab10042d260a420603544d99a36b559',1,'sys::parameter']]],
   ['_5fvalues',['_values',['../classarma_1_1Delaunay__interpolation.html#aae21755992830f73923d2184c0c9ef3a',1,'arma::Delaunay_interpolation']]],
   ['_5fvao_5fphi',['_vao_phi',['../classarma_1_1ARMA__realtime__driver.html#affc5ec01cfeb483592df4afeb4333fd5',1,'arma::ARMA_realtime_driver']]],
