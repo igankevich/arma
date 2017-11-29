@@ -26,6 +26,7 @@ arma::generator::Basic_ARMA_model<T>::parameters() {
 		{"acf", sys::wrap_param(acf_wrapper(this->_acf))},
 		{"output", sys::make_param(this->_oflags)},
 		{"order", sys::make_param(this->_order, validate_shape<int,3>)},
+		{"validate", sys::make_param(this->_validate)},
 	};
 }
 
@@ -69,7 +70,9 @@ arma::generator::Basic_ARMA_model<T>::generate() {
 		this->determine_coefficients();
 	);
 	ARMA_PROFILE_BLOCK("validate",
-		this->validate();
+		if (this->_validate) {
+			this->validate();
+		}
 	);
 	Array3D<T> zeta;
 	ARMA_PROFILE_BLOCK("generate_surface",

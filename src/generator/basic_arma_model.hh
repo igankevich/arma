@@ -28,6 +28,8 @@ namespace arma {
 			Shape3D _order = Shape3D(0,0,0);
 			transform_type _nittransform;
 			bool _linear = true;
+			/// Perform AR/MA process validation or not.
+			bool _validate = true;
 
 			virtual Array3D<T>
 			do_generate() = 0;

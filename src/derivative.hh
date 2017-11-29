@@ -10,13 +10,15 @@ namespace arma {
 	derivative(const Array3D<T>& rhs, const Vec3D<T>& delta, const int idx_t) {
 		assert(dimension >= 0);
 		assert(dimension < 3);
+		using blitz::Range;
 		const int min_d = 0;
 		const int max_d = rhs.extent(dimension)-1;
 		const int nx = rhs.extent(1);
 		const int ny = rhs.extent(2);
 		Array2D<O> result(Shape2D(nx, ny));
 		if (max_d - min_d < 2) {
-			throw std::length_error("bad shape");
+			result = rhs(idx_t, Range::all(), Range::all());
+			return result;
 		}
 		for (int i=0; i<nx; ++i) {
 			for (int j=0; j<ny; ++j) {
