@@ -99,33 +99,34 @@
 <!-- Node7 -->
 <g id="node7" class="node"><title>Node7</title>
 <g id="a_node7"><a xlink:href="classarma_1_1generator_1_1Plain__wave__model.html" target="_top" xlink:title="Uses a simple sum of sines and cosines, small&#45;amplitude waves.Individual amplitudes, wave numbers, phases and velocities are set via configuration file. ">
-<polygon fill="none" stroke="black" points="379.5,-564 379.5,-786 492.5,-786 492.5,-564 379.5,-564"/>
-<text text-anchor="start" x="387.5" y="-774" font-family="Helvetica,sans-Serif" font-size="10.00">arma::generator::Plain</text>
-<text text-anchor="middle" x="436" y="-763" font-family="Helvetica,sans-Serif" font-size="10.00">_wave_model&lt; T &gt;</text>
-<polyline fill="none" stroke="black" points="379.5,-756 492.5,-756 "/>
-<text text-anchor="start" x="387.5" y="-744" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _func</text>
-<text text-anchor="start" x="387.5" y="-733" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _waves</text>
-<polyline fill="none" stroke="black" points="379.5,-726 492.5,-726 "/>
-<text text-anchor="start" x="387.5" y="-714" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_function()</text>
-<text text-anchor="start" x="387.5" y="-703" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_shift()</text>
-<text text-anchor="start" x="387.5" y="-692" font-family="Helvetica,sans-Serif" font-size="10.00">+ waves()</text>
-<text text-anchor="start" x="387.5" y="-681" font-family="Helvetica,sans-Serif" font-size="10.00">+ num_waves()</text>
-<text text-anchor="start" x="387.5" y="-670" font-family="Helvetica,sans-Serif" font-size="10.00">+ validate()</text>
-<text text-anchor="start" x="387.5" y="-659" font-family="Helvetica,sans-Serif" font-size="10.00">+ generate()</text>
-<text text-anchor="start" x="387.5" y="-648" font-family="Helvetica,sans-Serif" font-size="10.00">+ amplitude()</text>
-<text text-anchor="start" x="387.5" y="-637" font-family="Helvetica,sans-Serif" font-size="10.00">+ wavenum_x()</text>
-<text text-anchor="start" x="387.5" y="-626" font-family="Helvetica,sans-Serif" font-size="10.00">+ wavenum_y()</text>
-<text text-anchor="start" x="387.5" y="-615" font-family="Helvetica,sans-Serif" font-size="10.00">+ velocity()</text>
-<text text-anchor="start" x="387.5" y="-604" font-family="Helvetica,sans-Serif" font-size="10.00">+ phase()</text>
-<text text-anchor="start" x="387.5" y="-593" font-family="Helvetica,sans-Serif" font-size="10.00"># write()</text>
-<text text-anchor="start" x="387.5" y="-582" font-family="Helvetica,sans-Serif" font-size="10.00"># read()</text>
-<text text-anchor="start" x="387.5" y="-571" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; do_generate()</text>
+<polygon fill="none" stroke="black" points="379.5,-558.5 379.5,-791.5 492.5,-791.5 492.5,-558.5 379.5,-558.5"/>
+<text text-anchor="start" x="387.5" y="-779.5" font-family="Helvetica,sans-Serif" font-size="10.00">arma::generator::Plain</text>
+<text text-anchor="middle" x="436" y="-768.5" font-family="Helvetica,sans-Serif" font-size="10.00">_wave_model&lt; T &gt;</text>
+<polyline fill="none" stroke="black" points="379.5,-761.5 492.5,-761.5 "/>
+<text text-anchor="start" x="387.5" y="-749.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _func</text>
+<text text-anchor="start" x="387.5" y="-738.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _waves</text>
+<polyline fill="none" stroke="black" points="379.5,-731.5 492.5,-731.5 "/>
+<text text-anchor="start" x="387.5" y="-719.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_function()</text>
+<text text-anchor="start" x="387.5" y="-708.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ get_shift()</text>
+<text text-anchor="start" x="387.5" y="-697.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ waves()</text>
+<text text-anchor="start" x="387.5" y="-686.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ num_waves()</text>
+<text text-anchor="start" x="387.5" y="-675.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ validate()</text>
+<text text-anchor="start" x="387.5" y="-664.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ generate()</text>
+<text text-anchor="start" x="387.5" y="-653.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ amplitude()</text>
+<text text-anchor="start" x="387.5" y="-642.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ wavenum_x()</text>
+<text text-anchor="start" x="387.5" y="-631.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ wavenum_y()</text>
+<text text-anchor="start" x="387.5" y="-620.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ velocity()</text>
+<text text-anchor="start" x="387.5" y="-609.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ phase()</text>
+<text text-anchor="start" x="387.5" y="-598.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ do_generate()</text>
+<text text-anchor="start" x="387.5" y="-587.5" font-family="Helvetica,sans-Serif" font-size="10.00"># write()</text>
+<text text-anchor="start" x="387.5" y="-576.5" font-family="Helvetica,sans-Serif" font-size="10.00"># read()</text>
+<text text-anchor="start" x="387.5" y="-565.5" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; do_generate()</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node7 -->
 <g id="edge7" class="edge"><title>Node1&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M359.808,-826.191C366.571,-812.861 373.419,-799.362 380.092,-786.206"/>
+<path fill="none" stroke="midnightblue" d="M359.682,-826.441C366.26,-813.472 372.921,-800.342 379.426,-787.52"/>
 <polygon fill="none" stroke="midnightblue" points="356.546,-824.885 355.143,-835.387 362.789,-828.052 356.546,-824.885"/>
 </g>
 <!-- Node3 -->
