@@ -1,7 +1,10 @@
 #include "basic_solver.hh"
+
+#include "factor_waves.hh"
+#include "interpolate.hh"
 #include "params.hh"
 #include "validators.hh"
-#include "interpolate.hh"
+
 #include "profile.hh"
 #if ARMA_PROFILE
 #include "profile_counters.hh"
@@ -88,5 +91,30 @@ arma::velocity::Velocity_potential_solver<T>
 	in >> this->_wnmax >> this->_depth >> this->_domain;
 }
 #endif
+
+template <class T>
+void
+arma::velocity::Velocity_potential_solver<T>
+::compute_wave_number_range_from_surface(
+	const Discrete_function<T, 3>& zeta,
+	const int idx_t
+) {
+	/*
+	using blitz::Range;
+	const T t = zeta.grid()(idx_t, 0);
+	const T dt = zeta.grid().delta(0);
+	domain2_type tmp = factor_waves<T>(
+		zeta(idx_t, Range::all(), Range::all()),
+		t,
+		dt
+	);
+	this->_wnmax = domain2_type{{0,0}, T(1) / tmp.lbound(), {2,2}};
+	*/
+	#ifndef NDEBUG
+	std::clog << "this->_wnmax=" << this->_wnmax << std::endl;
+	#endif
+	validate_domain<T,2>(this->_wnmax, "wnmax");
+
+}
 
 template class arma::velocity::Velocity_potential_solver<ARMA_REAL_TYPE>;

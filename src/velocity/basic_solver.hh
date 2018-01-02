@@ -71,6 +71,12 @@ namespace arma {
 
 			#endif
 
+			void
+			compute_wave_number_range_from_surface(
+				const Discrete_function<T, 3>& zeta,
+				const int idx_t
+			);
+
 		public:
 
 			Velocity_potential_solver():

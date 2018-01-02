@@ -4,7 +4,6 @@
 #include "interpolate.hh"
 #include "profile.hh"
 #include "blitz.hh"
-#include "factor_waves.hh"
 
 #include <stdexcept>
 #include <cmath>
@@ -49,18 +48,7 @@ arma::velocity::Linear_solver<T>::precompute(
 		zeta.grid().delta(),
 		idx_t
 	);
-	const T t = zeta.grid()(idx_t, 0);
-	const T dt = zeta.grid().delta(0);
-	domain2_type tmp = factor_waves<T>(
-		zeta(idx_t, Range::all(), Range::all()),
-		t,
-		dt
-	);
-	this->_wnmax = domain2_type{{0,0}, T(1) / tmp.lbound(), {2,2}};
-	#ifndef NDEBUG
-	std::clog << "this->_wnmax=" << this->_wnmax << std::endl;
-	#endif
-	validate_domain<T,2>(this->_wnmax, "wnmax");
+	this->compute_wave_number_range_from_surface(zeta, idx_t);
 }
 
 template <class T>

@@ -53,7 +53,7 @@ aspect_ratio <- (rx[[2]] - rx[[1]]) / (rz[[2]] - rz[[1]])
 print(aspect_ratio)
 aspect_ratio <- 1
 # plot the image
-cairo_pdf(filename="u.pdf", width=2.5*aspect_ratio, height=5)
+cairo_pdf(filename="u.pdf", width=10, height=5)
 #par(pty="s")
 contour(
 	x, z, u,
