@@ -10,10 +10,10 @@
 <title>/home/travis/build/igankevich/arma/src/validators.hh</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<polygon fill="#bfbfbf" stroke="black" points="1467.5,-606.5 1467.5,-647.5 1574.5,-647.5 1574.5,-606.5 1467.5,-606.5"/>
-<text text-anchor="start" x="1475.5" y="-635.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1475.5" y="-624.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1521" y="-613.5" font-family="Helvetica,sans-Serif" font-size="10.00">/validators.hh</text>
+<polygon fill="#bfbfbf" stroke="black" points="1517.5,-606.5 1517.5,-647.5 1624.5,-647.5 1624.5,-606.5 1517.5,-606.5"/>
+<text text-anchor="start" x="1525.5" y="-635.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1525.5" y="-624.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1571" y="-613.5" font-family="Helvetica,sans-Serif" font-size="10.00">/validators.hh</text>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
@@ -27,8 +27,8 @@
 </g>
 <!-- Node1&#45;&gt;Node2 -->
 <g id="edge1" class="edge"><title>Node1&#45;&gt;Node2</title>
-<path fill="none" stroke="midnightblue" d="M1457.28,-619.311C1316.61,-604.545 981.665,-569.385 850.748,-555.642"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1457.16,-622.817 1467.47,-620.381 1457.89,-615.856 1457.16,-622.817"/>
+<path fill="none" stroke="midnightblue" d="M1507.14,-619.73C1357.98,-605.083 988.867,-568.84 850.514,-555.255"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1507.2,-623.252 1517.49,-620.746 1507.88,-616.286 1507.2,-623.252"/>
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
@@ -42,69 +42,69 @@
 </g>
 <!-- Node1&#45;&gt;Node3 -->
 <g id="edge74" class="edge"><title>Node1&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M1457.05,-623.64C1217.58,-614.181 383.399,-575.434 302,-492 277.094,-466.472 277.828,-421.639 280.786,-395.823"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1457.2,-627.148 1467.33,-624.042 1457.48,-620.154 1457.2,-627.148"/>
+<path fill="none" stroke="midnightblue" d="M1507.29,-623.951C1261.86,-615.439 387.027,-579.152 302,-492 277.094,-466.472 277.828,-421.639 280.786,-395.823"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1507.36,-627.456 1517.48,-624.301 1507.6,-620.46 1507.36,-627.456"/>
 </g>
 <!-- Node19 -->
 <g id="node19" class="node"><title>Node19</title>
 <g id="a_node19"><a xlink:href="plain__wave__solver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/plain_wave\l_solver.cc">
-<polygon fill="none" stroke="black" points="1183.5,-169 1183.5,-221 1290.5,-221 1290.5,-169 1183.5,-169"/>
-<text text-anchor="start" x="1191.5" y="-209" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1191.5" y="-198" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1191.5" y="-187" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/plain_wave</text>
-<text text-anchor="middle" x="1237" y="-176" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.cc</text>
+<polygon fill="none" stroke="black" points="1189.5,-169 1189.5,-221 1296.5,-221 1296.5,-169 1189.5,-169"/>
+<text text-anchor="start" x="1197.5" y="-209" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1197.5" y="-198" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="1197.5" y="-187" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/plain_wave</text>
+<text text-anchor="middle" x="1243" y="-176" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.cc</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node19 -->
 <g id="edge94" class="edge"><title>Node1&#45;&gt;Node19</title>
-<path fill="none" stroke="midnightblue" d="M1466.49,-601.909C1423.23,-579.791 1365.02,-542.742 1334,-492 1279.15,-402.283 1346.34,-351.9 1299,-258 1292.01,-244.135 1280.75,-231.476 1269.73,-221.263"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1464.97,-605.063 1475.48,-606.402 1468.1,-598.801 1464.97,-605.063"/>
+<path fill="none" stroke="midnightblue" d="M1507.33,-610.537C1448.48,-592.611 1364.01,-556.85 1322,-492 1265.31,-404.483 1348.37,-352.827 1305,-258 1298.61,-244.018 1287.61,-231.418 1276.63,-221.286"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1506.69,-613.998 1517.27,-613.472 1508.67,-607.284 1506.69,-613.998"/>
 </g>
 <!-- Node22 -->
 <g id="node22" class="node"><title>Node22</title>
 <g id="a_node22"><a xlink:href="basic__solver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/basic_solver.cc">
-<polygon fill="none" stroke="black" points="1907.5,-264.5 1907.5,-305.5 2032.5,-305.5 2032.5,-264.5 1907.5,-264.5"/>
-<text text-anchor="start" x="1915.5" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1915.5" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1970" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/basic_solver.cc</text>
+<polygon fill="none" stroke="black" points="1855.5,-264.5 1855.5,-305.5 1980.5,-305.5 1980.5,-264.5 1855.5,-264.5"/>
+<text text-anchor="start" x="1863.5" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1863.5" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1918" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/basic_solver.cc</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node22 -->
 <g id="edge93" class="edge"><title>Node1&#45;&gt;Node22</title>
-<path fill="none" stroke="midnightblue" d="M1584.76,-626.075C1669.69,-624.295 1823.48,-614.457 1946,-570 2006.85,-547.92 2037.81,-548.72 2069,-492 2099.84,-435.922 2100,-403.991 2069,-348 2058.59,-329.193 2039.82,-315.331 2021.41,-305.543"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1584.68,-622.576 1574.75,-626.254 1584.81,-629.575 1584.68,-622.576"/>
+<path fill="none" stroke="midnightblue" d="M1634.64,-614.213C1715.27,-597.093 1856.11,-559.736 1959,-492 2020.52,-451.503 2079.62,-410.712 2041,-348 2032.6,-334.357 1999.29,-318.009 1969.45,-305.527"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1633.7,-610.832 1624.63,-616.299 1635.13,-617.684 1633.7,-610.832"/>
 </g>
 <!-- Node28 -->
 <g id="node28" class="node"><title>Node28</title>
 <g id="a_node28"><a xlink:href="arma__model_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.cc">
-<polygon fill="none" stroke="black" points="243,-84.5 243,-125.5 373,-125.5 373,-84.5 243,-84.5"/>
-<text text-anchor="start" x="251" y="-113.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="251" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="308" y="-91.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/arma_model.cc</text>
+<polygon fill="none" stroke="black" points="249,-84.5 249,-125.5 379,-125.5 379,-84.5 249,-84.5"/>
+<text text-anchor="start" x="257" y="-113.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="257" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="314" y="-91.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/arma_model.cc</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node28 -->
 <g id="edge87" class="edge"><title>Node1&#45;&gt;Node28</title>
-<path fill="none" stroke="midnightblue" d="M1457.19,-624.827C1211.08,-620.092 331.275,-601.129 210,-570 109.119,-544.105 0,-570.152 0,-466 0,-466 0,-466 0,-284 0,-172.833 152.271,-129.994 242.681,-114.356"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1457.33,-628.33 1467.39,-625.022 1457.46,-621.332 1457.33,-628.33"/>
+<path fill="none" stroke="midnightblue" d="M1507.36,-624.92C1255.78,-620.441 338.207,-602.042 212,-570 110.278,-544.175 0,-570.949 0,-466 0,-466 0,-466 0,-284 0,-170.579 156.966,-128.561 248.939,-113.677"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1507.37,-628.421 1517.43,-625.098 1507.5,-621.422 1507.37,-628.421"/>
 </g>
 <!-- Node31 -->
 <g id="node31" class="node"><title>Node31</title>
 <g id="a_node31"><a xlink:href="ma__model_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/generator/ma_model.cc">
-<polygon fill="none" stroke="black" points="967,-174.5 967,-215.5 1089,-215.5 1089,-174.5 967,-174.5"/>
-<text text-anchor="start" x="975" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="975" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1028" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/ma_model.cc</text>
+<polygon fill="none" stroke="black" points="973,-174.5 973,-215.5 1095,-215.5 1095,-174.5 973,-174.5"/>
+<text text-anchor="start" x="981" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="981" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1034" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/ma_model.cc</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node31 -->
 <g id="edge89" class="edge"><title>Node1&#45;&gt;Node31</title>
-<path fill="none" stroke="midnightblue" d="M1524.25,-595.987C1530.53,-531.558 1540.95,-383.007 1508,-348 1456.84,-293.637 1243.06,-340.339 1174,-312 1146.45,-300.694 1083.08,-245.714 1049.61,-215.683"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1520.74,-595.985 1523.22,-606.286 1527.7,-596.687 1520.74,-595.985"/>
+<path fill="none" stroke="midnightblue" d="M1609.11,-599.688C1618.46,-591.31 1627.38,-581.255 1633,-570 1659.23,-517.432 1668.15,-489.565 1640,-438 1625.82,-412.03 1605.84,-421.963 1584,-402 1561.56,-381.486 1568.62,-362.695 1542,-348 1400.46,-269.856 1329.83,-372.76 1180,-312 1152.4,-300.807 1089.05,-245.778 1055.6,-215.71"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1606.62,-597.206 1601.22,-606.32 1611.13,-602.564 1606.62,-597.206"/>
 </g>
 <!-- Node32 -->
 <g id="node32" class="node"><title>Node32</title>
@@ -119,54 +119,54 @@
 </g>
 <!-- Node1&#45;&gt;Node32 -->
 <g id="edge88" class="edge"><title>Node1&#45;&gt;Node32</title>
-<path fill="none" stroke="midnightblue" d="M1457.19,-626.233C1250.15,-626.454 598.725,-622.828 396,-570 233.281,-527.597 145.657,-544.883 57,-402 44.3463,-381.607 43.8562,-368.081 57,-348 75.8571,-319.19 111.357,-303.69 142.143,-295.393"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1457.3,-629.732 1467.29,-626.218 1457.29,-622.732 1457.3,-629.732"/>
+<path fill="none" stroke="midnightblue" d="M1507.12,-626.342C1294.48,-626.95 612.007,-624.5 400,-570 235.597,-527.738 146.833,-546.029 57,-402 44.2989,-381.636 43.8562,-368.081 57,-348 75.8571,-319.19 111.357,-303.69 142.143,-295.393"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1507.2,-629.842 1517.19,-626.31 1507.18,-622.842 1507.2,-629.842"/>
 </g>
 <!-- Node34 -->
 <g id="node34" class="node"><title>Node34</title>
 <g id="a_node34"><a xlink:href="plain__wave__model_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/generator/plain_wave\l_model.cc">
-<polygon fill="none" stroke="black" points="1777,-259 1777,-311 1889,-311 1889,-259 1777,-259"/>
-<text text-anchor="start" x="1785" y="-299" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1785" y="-288" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1785" y="-277" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/plain_wave</text>
-<text text-anchor="middle" x="1833" y="-266" font-family="Helvetica,sans-Serif" font-size="10.00">_model.cc</text>
+<polygon fill="none" stroke="black" points="2005,-259 2005,-311 2117,-311 2117,-259 2005,-259"/>
+<text text-anchor="start" x="2013" y="-299" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="2013" y="-288" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="2013" y="-277" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/plain_wave</text>
+<text text-anchor="middle" x="2061" y="-266" font-family="Helvetica,sans-Serif" font-size="10.00">_model.cc</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node34 -->
 <g id="edge90" class="edge"><title>Node1&#45;&gt;Node34</title>
-<path fill="none" stroke="midnightblue" d="M1585.04,-619.155C1711.34,-604.196 1985.18,-564.032 2041,-492 2080.2,-441.413 2080.34,-398.478 2041,-348 2000.71,-296.309 1960.34,-332.215 1898,-312 1895.11,-311.063 1892.16,-310.061 1889.2,-309.015"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1584.27,-615.721 1574.75,-620.357 1585.08,-622.674 1584.27,-615.721"/>
+<path fill="none" stroke="midnightblue" d="M1634.84,-623.759C1728.72,-617.066 1904.09,-591.121 2008,-492 2041.59,-459.959 2048.79,-446.787 2061,-402 2069.26,-371.689 2067.45,-335.244 2064.78,-311.397"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1634.38,-620.282 1624.63,-624.433 1634.84,-627.266 1634.38,-620.282"/>
 </g>
 <!-- Node44 -->
 <g id="node44" class="node"><title>Node44</title>
 <g id="a_node44"><a xlink:href="domain_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/domain.hh">
-<polygon fill="none" stroke="black" points="1561.5,-528.5 1561.5,-569.5 1668.5,-569.5 1668.5,-528.5 1561.5,-528.5"/>
-<text text-anchor="start" x="1569.5" y="-557.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1569.5" y="-546.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1615" y="-535.5" font-family="Helvetica,sans-Serif" font-size="10.00">/domain.hh</text>
+<polygon fill="none" stroke="black" points="1517.5,-528.5 1517.5,-569.5 1624.5,-569.5 1624.5,-528.5 1517.5,-528.5"/>
+<text text-anchor="start" x="1525.5" y="-557.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1525.5" y="-546.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1571" y="-535.5" font-family="Helvetica,sans-Serif" font-size="10.00">/domain.hh</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node44 -->
 <g id="edge75" class="edge"><title>Node1&#45;&gt;Node44</title>
-<path fill="none" stroke="midnightblue" d="M1553.08,-600.065C1565.46,-590.057 1579.37,-578.804 1590.87,-569.506"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1550.78,-597.419 1545.21,-606.428 1555.18,-602.863 1550.78,-597.419"/>
+<path fill="none" stroke="midnightblue" d="M1571,-596.297C1571,-587.301 1571,-577.653 1571,-569.506"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1567.5,-596.428 1571,-606.428 1574.5,-596.428 1567.5,-596.428"/>
 </g>
 <!-- Node48 -->
 <g id="node48" class="node"><title>Node48</title>
 <g id="a_node48"><a xlink:href="nit__transform_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/nonlinear/nit_transform.cc">
-<polygon fill="none" stroke="black" points="1775,-354.5 1775,-395.5 1907,-395.5 1907,-354.5 1775,-354.5"/>
-<text text-anchor="start" x="1783" y="-383.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1783" y="-372.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1841" y="-361.5" font-family="Helvetica,sans-Serif" font-size="10.00">/nonlinear/nit_transform.cc</text>
+<polygon fill="none" stroke="black" points="1737,-354.5 1737,-395.5 1869,-395.5 1869,-354.5 1737,-354.5"/>
+<text text-anchor="start" x="1745" y="-383.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1745" y="-372.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1803" y="-361.5" font-family="Helvetica,sans-Serif" font-size="10.00">/nonlinear/nit_transform.cc</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node48 -->
 <g id="edge92" class="edge"><title>Node1&#45;&gt;Node48</title>
-<path fill="none" stroke="midnightblue" d="M1584.72,-611.334C1614.5,-602.5 1649.39,-589.166 1677,-570 1747.46,-521.083 1805.52,-434.512 1829.35,-395.74"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1583.49,-608.046 1574.84,-614.159 1585.42,-614.776 1583.49,-608.046"/>
+<path fill="none" stroke="midnightblue" d="M1626.76,-601.582C1642.74,-593.006 1659.48,-582.372 1673,-570 1730.87,-517.029 1775.53,-433.298 1793.89,-395.572"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1624.74,-598.687 1617.46,-606.391 1627.95,-604.904 1624.74,-598.687"/>
 </g>
 <!-- Node49 -->
 <g id="node49" class="node"><title>Node49</title>
@@ -180,8 +180,8 @@
 </g>
 <!-- Node1&#45;&gt;Node49 -->
 <g id="edge91" class="edge"><title>Node1&#45;&gt;Node49</title>
-<path fill="none" stroke="midnightblue" d="M1584.91,-624.477C1699.37,-620.831 1946.47,-608.774 2151,-570 2155.72,-569.106 2160.57,-568.02 2165.42,-566.822"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1584.48,-620.989 1574.59,-624.795 1584.69,-627.986 1584.48,-620.989"/>
+<path fill="none" stroke="midnightblue" d="M1634.69,-623.801C1742.06,-619.216 1965.54,-605.889 2151,-570 2155.71,-569.088 2160.57,-567.99 2165.41,-566.783"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1634.51,-620.306 1624.66,-624.218 1634.8,-627.3 1634.51,-620.306"/>
 </g>
 <!-- Node2&#45;&gt;Node3 -->
 <g id="edge2" class="edge"><title>Node2&#45;&gt;Node3</title>
@@ -221,18 +221,18 @@
 <!-- Node20 -->
 <g id="node20" class="node"><title>Node20</title>
 <g id="a_node20"><a xlink:href="high__amplitude__realtime__solver_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_realtime_solver.hh">
-<polygon fill="none" stroke="black" points="1347,-259 1347,-311 1469,-311 1469,-259 1347,-259"/>
-<text text-anchor="start" x="1355" y="-299" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1355" y="-288" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1355" y="-277" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/high_amplitude</text>
-<text text-anchor="middle" x="1408" y="-266" font-family="Helvetica,sans-Serif" font-size="10.00">_realtime_solver.hh</text>
+<polygon fill="none" stroke="black" points="1353,-259 1353,-311 1475,-311 1475,-259 1353,-259"/>
+<text text-anchor="start" x="1361" y="-299" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1361" y="-288" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="1361" y="-277" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/high_amplitude</text>
+<text text-anchor="middle" x="1414" y="-266" font-family="Helvetica,sans-Serif" font-size="10.00">_realtime_solver.hh</text>
 </a>
 </g>
 </g>
 <!-- Node2&#45;&gt;Node20 -->
 <g id="edge69" class="edge"><title>Node2&#45;&gt;Node20</title>
-<path fill="none" stroke="midnightblue" d="M860.654,-535.123C950.333,-515.273 1117.19,-471.997 1245,-402 1245.85,-401.533 1325.2,-345.006 1372.86,-311.044"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="859.657,-531.758 850.636,-537.313 861.153,-538.596 859.657,-531.758"/>
+<path fill="none" stroke="midnightblue" d="M860.647,-535.109C950.317,-515.243 1117.16,-471.949 1245,-402 1281.35,-382.11 1286.87,-371.495 1321,-348 1338.9,-335.677 1358.94,-322.269 1375.82,-311.085"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="859.65,-531.744 850.629,-537.302 861.147,-538.583 859.65,-531.744"/>
 </g>
 <!-- Node35 -->
 <g id="node35" class="node"><title>Node35</title>
@@ -282,17 +282,17 @@
 <!-- Node41 -->
 <g id="node41" class="node"><title>Node41</title>
 <g id="a_node41"><a xlink:href="bscheduler__io_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/bits/bscheduler_io.hh">
-<polygon fill="none" stroke="black" points="1343,-444.5 1343,-485.5 1455,-485.5 1455,-444.5 1343,-444.5"/>
-<text text-anchor="start" x="1351" y="-473.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1351" y="-462.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1399" y="-451.5" font-family="Helvetica,sans-Serif" font-size="10.00">/bits/bscheduler_io.hh</text>
+<polygon fill="none" stroke="black" points="1331,-444.5 1331,-485.5 1443,-485.5 1443,-444.5 1331,-444.5"/>
+<text text-anchor="start" x="1339" y="-473.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1339" y="-462.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1387" y="-451.5" font-family="Helvetica,sans-Serif" font-size="10.00">/bits/bscheduler_io.hh</text>
 </a>
 </g>
 </g>
 <!-- Node2&#45;&gt;Node41 -->
 <g id="edge70" class="edge"><title>Node2&#45;&gt;Node41</title>
-<path fill="none" stroke="midnightblue" d="M860.812,-545.234C959.525,-540.038 1154.8,-526.091 1317,-492 1325.48,-490.218 1334.32,-487.909 1342.93,-485.404"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="860.508,-541.745 850.7,-545.754 860.867,-548.736 860.508,-541.745"/>
+<path fill="none" stroke="midnightblue" d="M860.636,-546.221C959.51,-542.326 1155.46,-530.072 1317,-492 1324.32,-490.275 1331.91,-487.997 1339.29,-485.505"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="860.37,-542.728 850.509,-546.604 860.635,-549.723 860.37,-542.728"/>
 </g>
 <!-- Node43 -->
 <g id="node43" class="node"><title>Node43</title>
@@ -369,47 +369,47 @@
 <!-- Node26 -->
 <g id="node26" class="node"><title>Node26</title>
 <g id="a_node26"><a xlink:href="ar__model_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.hh">
-<polygon fill="none" stroke="black" points="636,-264.5 636,-305.5 752,-305.5 752,-264.5 636,-264.5"/>
-<text text-anchor="start" x="644" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="644" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="694" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/ar_model.hh</text>
+<polygon fill="none" stroke="black" points="643,-264.5 643,-305.5 759,-305.5 759,-264.5 643,-264.5"/>
+<text text-anchor="start" x="651" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="651" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="701" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/ar_model.hh</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node26 -->
 <g id="edge44" class="edge"><title>Node5&#45;&gt;Node26</title>
-<path fill="none" stroke="midnightblue" d="M690.145,-438.06C678.927,-428.208 668.036,-415.951 662,-402 647.981,-369.597 666.417,-329.422 680.567,-305.859"/>
+<path fill="none" stroke="midnightblue" d="M690.145,-438.06C678.927,-428.208 668.036,-415.951 662,-402 652.47,-379.973 655.35,-371.06 662,-348 666.475,-332.483 676.108,-317.103 684.68,-305.543"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="687.973,-440.806 697.908,-444.488 692.438,-435.414 687.973,-440.806"/>
 </g>
 <!-- Node27 -->
 <g id="node27" class="node"><title>Node27</title>
 <g id="a_node27"><a xlink:href="arma__model_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.hh">
-<polygon fill="none" stroke="black" points="571,-174.5 571,-215.5 701,-215.5 701,-174.5 571,-174.5"/>
-<text text-anchor="start" x="579" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="579" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="636" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/arma_model.hh</text>
+<polygon fill="none" stroke="black" points="577,-174.5 577,-215.5 707,-215.5 707,-174.5 577,-174.5"/>
+<text text-anchor="start" x="585" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="585" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="642" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/arma_model.hh</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node27 -->
 <g id="edge46" class="edge"><title>Node5&#45;&gt;Node27</title>
-<path fill="none" stroke="midnightblue" d="M688.723,-438.11C676.112,-428.128 663.075,-415.778 654,-402 615.493,-343.537 625.205,-254.614 632.02,-215.556"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="686.821,-441.06 696.903,-444.319 691.054,-435.485 686.821,-441.06"/>
+<path fill="none" stroke="midnightblue" d="M686.244,-438.272C673.44,-428.427 660.502,-416.121 652,-402 616.078,-342.337 628.968,-254.421 637.235,-215.624"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="684.454,-441.3 694.591,-444.381 688.588,-435.651 684.454,-441.3"/>
 </g>
 <!-- Node30 -->
 <g id="node30" class="node"><title>Node30</title>
 <g id="a_node30"><a xlink:href="ma__model_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/generator/ma_model.hh">
-<polygon fill="none" stroke="black" points="770,-264.5 770,-305.5 892,-305.5 892,-264.5 770,-264.5"/>
-<text text-anchor="start" x="778" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="778" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="831" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/ma_model.hh</text>
+<polygon fill="none" stroke="black" points="777,-264.5 777,-305.5 899,-305.5 899,-264.5 777,-264.5"/>
+<text text-anchor="start" x="785" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="785" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="838" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/ma_model.hh</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node30 -->
 <g id="edge45" class="edge"><title>Node5&#45;&gt;Node30</title>
-<path fill="none" stroke="midnightblue" d="M761.746,-437.665C772.956,-427.52 784.684,-415.182 793,-402 812.335,-371.351 822.795,-329.89 827.609,-305.736"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="759.35,-435.11 754.116,-444.321 763.952,-440.385 759.35,-435.11"/>
+<path fill="none" stroke="midnightblue" d="M761.083,-437.659C772.337,-427.443 784.264,-415.06 793,-402 813.537,-371.297 826.716,-329.854 833.204,-305.718"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="758.65,-435.138 753.448,-444.368 763.27,-440.397 758.65,-435.138"/>
 </g>
 <!-- Node33 -->
 <g id="node33" class="node"><title>Node33</title>
@@ -449,279 +449,279 @@
 </g>
 <!-- Node6&#45;&gt;Node7 -->
 <g id="edge7" class="edge"><title>Node6&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M1595.11,-351.671C1589.71,-350.231 1584.29,-348.972 1579,-348 1162.56,-271.48 1047.7,-359.89 627,-312 599.652,-308.887 569.562,-303.357 544.652,-298.196"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1594.19,-355.047 1604.77,-354.433 1596.12,-348.317 1594.19,-355.047"/>
+<path fill="none" stroke="midnightblue" d="M1583.36,-355.47C1569.38,-352.505 1554.8,-349.818 1541,-348 1141.03,-295.298 1035,-356.192 634,-312 604.278,-308.725 571.432,-302.91 544.722,-297.61"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1582.89,-358.951 1593.41,-357.67 1584.39,-352.113 1582.89,-358.951"/>
 </g>
 <!-- Node13 -->
 <g id="node13" class="node"><title>Node13</title>
 <g id="a_node13"><a xlink:href="linear__solver_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/linear_solver.hh">
-<polygon fill="none" stroke="black" points="1633.5,-264.5 1633.5,-305.5 1758.5,-305.5 1758.5,-264.5 1633.5,-264.5"/>
-<text text-anchor="start" x="1641.5" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1641.5" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1696" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/linear_solver.hh</text>
+<polygon fill="none" stroke="black" points="1567.5,-264.5 1567.5,-305.5 1692.5,-305.5 1692.5,-264.5 1567.5,-264.5"/>
+<text text-anchor="start" x="1575.5" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1575.5" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1630" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/linear_solver.hh</text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node13 -->
 <g id="edge13" class="edge"><title>Node6&#45;&gt;Node13</title>
-<path fill="none" stroke="midnightblue" d="M1669.14,-345.09C1675,-332.21 1681.74,-317.367 1687.01,-305.78"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1665.83,-343.918 1664.88,-354.47 1672.2,-346.815 1665.83,-343.918"/>
+<path fill="none" stroke="midnightblue" d="M1647.35,-344.71C1643.57,-331.919 1639.23,-317.253 1635.84,-305.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1644.04,-345.872 1650.23,-354.47 1650.75,-343.888 1644.04,-345.872"/>
 </g>
 <!-- Node18 -->
 <g id="node18" class="node"><title>Node18</title>
 <g id="a_node18"><a xlink:href="plain__wave__solver_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/plain_wave\l_solver.hh">
-<polygon fill="none" stroke="black" points="1183.5,-259 1183.5,-311 1290.5,-311 1290.5,-259 1183.5,-259"/>
-<text text-anchor="start" x="1191.5" y="-299" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1191.5" y="-288" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1191.5" y="-277" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/plain_wave</text>
-<text text-anchor="middle" x="1237" y="-266" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.hh</text>
+<polygon fill="none" stroke="black" points="1189.5,-259 1189.5,-311 1296.5,-311 1296.5,-259 1189.5,-259"/>
+<text text-anchor="start" x="1197.5" y="-299" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1197.5" y="-288" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="1197.5" y="-277" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/plain_wave</text>
+<text text-anchor="middle" x="1243" y="-266" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.hh</text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node18 -->
 <g id="edge21" class="edge"><title>Node6&#45;&gt;Node18</title>
-<path fill="none" stroke="midnightblue" d="M1592.3,-351.527C1587.83,-350.246 1583.36,-349.053 1579,-348 1473.73,-322.577 1444.14,-333.528 1338,-312 1322.56,-308.869 1305.95,-304.863 1290.75,-300.938"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1591.5,-354.941 1602.09,-354.454 1593.51,-348.234 1591.5,-354.941"/>
+<path fill="none" stroke="midnightblue" d="M1592.3,-351.546C1587.82,-350.26 1583.36,-349.061 1579,-348 1476.34,-323.004 1447.51,-333.197 1344,-312 1328.57,-308.84 1311.96,-304.825 1296.76,-300.901"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1591.5,-354.959 1602.08,-354.48 1593.51,-348.254 1591.5,-354.959"/>
 </g>
 <!-- Node6&#45;&gt;Node20 -->
 <g id="edge24" class="edge"><title>Node6&#45;&gt;Node20</title>
-<path fill="none" stroke="midnightblue" d="M1589.71,-351.03C1556.45,-339.438 1515.55,-325.092 1479,-312 1475.79,-310.849 1472.49,-309.664 1469.17,-308.463"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1588.74,-354.395 1599.33,-354.378 1591.04,-347.785 1588.74,-354.395"/>
+<path fill="none" stroke="midnightblue" d="M1592.8,-351.017C1556.52,-337.824 1511.18,-321.337 1475.23,-308.267"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1591.7,-354.342 1602.29,-354.47 1594.09,-347.763 1591.7,-354.342"/>
 </g>
 <!-- Node6&#45;&gt;Node22 -->
 <g id="edge28" class="edge"><title>Node6&#45;&gt;Node22</title>
-<path fill="none" stroke="midnightblue" d="M1728.6,-357.135C1776.69,-345.522 1840.98,-329.144 1897,-312 1903.43,-310.032 1910.14,-307.84 1916.76,-305.588"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1727.5,-353.799 1718.6,-359.539 1729.14,-360.606 1727.5,-353.799"/>
+<path fill="none" stroke="midnightblue" d="M1719.06,-351.024C1722.08,-349.989 1725.07,-348.976 1728,-348 1780.02,-330.683 1793.98,-329.317 1846,-312 1852.05,-309.985 1858.37,-307.812 1864.63,-305.61"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1717.67,-347.802 1709.37,-354.39 1719.96,-354.414 1717.67,-347.802"/>
 </g>
 <!-- Node23 -->
 <g id="node23" class="node"><title>Node23</title>
 <g id="a_node23"><a xlink:href="small__amplitude__solver_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/small_amplitude\l_solver.hh">
-<polygon fill="none" stroke="black" points="1488.5,-259 1488.5,-311 1615.5,-311 1615.5,-259 1488.5,-259"/>
-<text text-anchor="start" x="1496.5" y="-299" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1496.5" y="-288" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1496.5" y="-277" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/small_amplitude</text>
-<text text-anchor="middle" x="1552" y="-266" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.hh</text>
+<polygon fill="none" stroke="black" points="1710.5,-259 1710.5,-311 1837.5,-311 1837.5,-259 1710.5,-259"/>
+<text text-anchor="start" x="1718.5" y="-299" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1718.5" y="-288" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="1718.5" y="-277" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/small_amplitude</text>
+<text text-anchor="middle" x="1774" y="-266" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.hh</text>
 </a>
 </g>
 </g>
 <!-- Node6&#45;&gt;Node23 -->
 <g id="edge29" class="edge"><title>Node6&#45;&gt;Node23</title>
-<path fill="none" stroke="midnightblue" d="M1625.15,-347.896C1611.43,-336.283 1595.33,-322.666 1581.74,-311.166"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1623.02,-350.682 1632.92,-354.47 1627.55,-345.339 1623.02,-350.682"/>
+<path fill="none" stroke="midnightblue" d="M1690.57,-348.221C1706.23,-336.538 1724.69,-322.774 1740.26,-311.166"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1688.11,-345.686 1682.19,-354.47 1692.3,-351.297 1688.11,-345.686"/>
 </g>
 <!-- Node8 -->
 <g id="node8" class="node"><title>Node8</title>
 <g id="a_node8"><a xlink:href="arma__driver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/arma_driver.cc">
-<polygon fill="none" stroke="black" points="144.5,-174.5 144.5,-215.5 251.5,-215.5 251.5,-174.5 144.5,-174.5"/>
-<text text-anchor="start" x="152.5" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="152.5" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="198" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_driver.cc</text>
+<polygon fill="none" stroke="black" points="150.5,-174.5 150.5,-215.5 257.5,-215.5 257.5,-174.5 150.5,-174.5"/>
+<text text-anchor="start" x="158.5" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="158.5" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="204" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_driver.cc</text>
 </a>
 </g>
 </g>
 <!-- Node7&#45;&gt;Node8 -->
 <g id="edge8" class="edge"><title>Node7&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M427.399,-264.898C374.981,-249.155 301.456,-227.072 251.895,-212.187"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="426.675,-268.335 437.259,-267.859 428.689,-261.631 426.675,-268.335"/>
+<path fill="none" stroke="midnightblue" d="M427.771,-264.613C376.87,-249.006 306.104,-227.307 257.869,-212.517"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="426.767,-267.966 437.354,-267.551 428.82,-261.273 426.767,-267.966"/>
 </g>
 <!-- Node9 -->
 <g id="node9" class="node"><title>Node9</title>
 <g id="a_node9"><a xlink:href="arma__main_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc">
-<polygon fill="none" stroke="black" points="554.5,-0.5 554.5,-41.5 661.5,-41.5 661.5,-0.5 554.5,-0.5"/>
-<text text-anchor="start" x="562.5" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="562.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="608" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_main.cc</text>
+<polygon fill="none" stroke="black" points="560.5,-0.5 560.5,-41.5 667.5,-41.5 667.5,-0.5 560.5,-0.5"/>
+<text text-anchor="start" x="568.5" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="568.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="614" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_main.cc</text>
 </a>
 </g>
 </g>
 <!-- Node7&#45;&gt;Node9 -->
 <g id="edge9" class="edge"><title>Node7&#45;&gt;Node9</title>
-<path fill="none" stroke="midnightblue" d="M449.73,-258.091C437.882,-248.357 426.435,-236.163 420,-222 410.072,-200.15 409.448,-189.556 420,-168 449.708,-107.315 518.154,-64.5917 563.739,-41.6406"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="447.886,-261.089 457.94,-264.431 452.165,-255.549 447.886,-261.089"/>
+<path fill="none" stroke="midnightblue" d="M453.388,-257.671C442.452,-247.861 431.877,-235.728 426,-222 416.554,-199.937 415.448,-189.556 426,-168 455.708,-107.315 524.154,-64.5917 569.739,-41.6406"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="451.454,-260.619 461.353,-264.394 455.969,-255.269 451.454,-260.619"/>
 </g>
 <!-- Node10 -->
 <g id="node10" class="node"><title>Node10</title>
 <g id="a_node10"><a xlink:href="arma__realtime__driver_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.hh">
-<polygon fill="none" stroke="black" points="429,-174.5 429,-215.5 553,-215.5 553,-174.5 429,-174.5"/>
-<text text-anchor="start" x="437" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="437" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="491" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_realtime_driver.hh</text>
+<polygon fill="none" stroke="black" points="435,-174.5 435,-215.5 559,-215.5 559,-174.5 435,-174.5"/>
+<text text-anchor="start" x="443" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="443" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="497" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_realtime_driver.hh</text>
 </a>
 </g>
 </g>
 <!-- Node7&#45;&gt;Node10 -->
 <g id="edge10" class="edge"><title>Node7&#45;&gt;Node10</title>
-<path fill="none" stroke="midnightblue" d="M491,-254.33C491,-241.629 491,-227.14 491,-215.78"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="487.5,-254.47 491,-264.47 494.5,-254.47 487.5,-254.47"/>
+<path fill="none" stroke="midnightblue" d="M493.023,-254.33C493.889,-241.629 494.877,-227.14 495.651,-215.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="489.52,-254.255 492.332,-264.47 496.504,-254.731 489.52,-254.255"/>
 </g>
 <!-- Node11 -->
 <g id="node11" class="node"><title>Node11</title>
 <g id="a_node11"><a xlink:href="arma__realtime_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc">
-<polygon fill="none" stroke="black" points="885.5,-0.5 885.5,-41.5 992.5,-41.5 992.5,-0.5 885.5,-0.5"/>
-<text text-anchor="start" x="893.5" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="893.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="939" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_realtime.cc</text>
+<polygon fill="none" stroke="black" points="891.5,-0.5 891.5,-41.5 998.5,-41.5 998.5,-0.5 891.5,-0.5"/>
+<text text-anchor="start" x="899.5" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="899.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="945" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_realtime.cc</text>
 </a>
 </g>
 </g>
 <!-- Node10&#45;&gt;Node11 -->
 <g id="edge11" class="edge"><title>Node10&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M513.492,-166.767C537.449,-139.712 577.929,-99.2775 622,-78 707.809,-36.5707 819.932,-25.4862 885.254,-22.7034"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="510.813,-164.514 506.893,-174.357 516.095,-169.107 510.813,-164.514"/>
+<path fill="none" stroke="midnightblue" d="M519.492,-166.767C543.449,-139.712 583.929,-99.2775 628,-78 713.809,-36.5707 825.932,-25.4862 891.254,-22.7034"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="516.813,-164.514 512.893,-174.357 522.095,-169.107 516.813,-164.514"/>
 </g>
 <!-- Node12 -->
 <g id="node12" class="node"><title>Node12</title>
 <g id="a_node12"><a xlink:href="arma__realtime__driver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.cc">
-<polygon fill="none" stroke="black" points="631,-84.5 631,-125.5 755,-125.5 755,-84.5 631,-84.5"/>
-<text text-anchor="start" x="639" y="-113.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="639" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="693" y="-91.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_realtime_driver.cc</text>
+<polygon fill="none" stroke="black" points="637,-84.5 637,-125.5 761,-125.5 761,-84.5 637,-84.5"/>
+<text text-anchor="start" x="645" y="-113.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="645" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="699" y="-91.5" font-family="Helvetica,sans-Serif" font-size="10.00">/arma_realtime_driver.cc</text>
 </a>
 </g>
 </g>
 <!-- Node10&#45;&gt;Node12 -->
 <g id="edge12" class="edge"><title>Node10&#45;&gt;Node12</title>
-<path fill="none" stroke="midnightblue" d="M545.094,-170.434C577.241,-156.43 617.536,-138.875 647.946,-125.627"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="543.6,-167.267 535.83,-174.47 546.396,-173.685 543.6,-167.267"/>
+<path fill="none" stroke="midnightblue" d="M551.094,-170.434C583.241,-156.43 623.536,-138.875 653.946,-125.627"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="549.6,-167.267 541.83,-174.47 552.396,-173.685 549.6,-167.267"/>
 </g>
 <!-- Node14 -->
 <g id="node14" class="node"><title>Node14</title>
 <g id="a_node14"><a xlink:href="high__amplitude__solver_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_solver.hh">
-<polygon fill="none" stroke="black" points="1709,-169 1709,-221 1831,-221 1831,-169 1709,-169"/>
-<text text-anchor="start" x="1717" y="-209" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1717" y="-198" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1717" y="-187" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/high_amplitude</text>
-<text text-anchor="middle" x="1770" y="-176" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.hh</text>
+<polygon fill="none" stroke="black" points="1569,-169 1569,-221 1691,-221 1691,-169 1569,-169"/>
+<text text-anchor="start" x="1577" y="-209" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1577" y="-198" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="1577" y="-187" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/high_amplitude</text>
+<text text-anchor="middle" x="1630" y="-176" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.hh</text>
 </a>
 </g>
 </g>
 <!-- Node13&#45;&gt;Node14 -->
 <g id="edge14" class="edge"><title>Node13&#45;&gt;Node14</title>
-<path fill="none" stroke="midnightblue" d="M1719.05,-256.585C1728.57,-245.268 1739.53,-232.237 1748.84,-221.166"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1716.18,-254.564 1712.42,-264.47 1721.54,-259.069 1716.18,-254.564"/>
+<path fill="none" stroke="midnightblue" d="M1630,-254.255C1630,-243.506 1630,-231.484 1630,-221.166"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1626.5,-254.47 1630,-264.47 1633.5,-254.47 1626.5,-254.47"/>
 </g>
 <!-- Node15 -->
 <g id="node15" class="node"><title>Node15</title>
 <g id="a_node15"><a xlink:href="common__main_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/common_main.hh">
-<polygon fill="none" stroke="black" points="885.5,-84.5 885.5,-125.5 992.5,-125.5 992.5,-84.5 885.5,-84.5"/>
-<text text-anchor="start" x="893.5" y="-113.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="893.5" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="939" y="-91.5" font-family="Helvetica,sans-Serif" font-size="10.00">/common_main.hh</text>
+<polygon fill="none" stroke="black" points="891.5,-84.5 891.5,-125.5 998.5,-125.5 998.5,-84.5 891.5,-84.5"/>
+<text text-anchor="start" x="899.5" y="-113.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="899.5" y="-102.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="945" y="-91.5" font-family="Helvetica,sans-Serif" font-size="10.00">/common_main.hh</text>
 </a>
 </g>
 </g>
 <!-- Node13&#45;&gt;Node15 -->
 <g id="edge19" class="edge"><title>Node13&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M1695.82,-254.327C1693.93,-227.357 1686.52,-188.712 1661,-168 1609.41,-126.133 1151.32,-111.144 992.743,-107.183"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1692.33,-254.564 1696.32,-264.38 1699.32,-254.221 1692.33,-254.564"/>
+<path fill="none" stroke="midnightblue" d="M1597.91,-257.64C1585.62,-247.017 1571.73,-234.365 1560,-222 1538.88,-199.746 1543.88,-182.793 1517,-168 1428.62,-119.355 1123.57,-108.875 998.818,-106.619"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1595.85,-260.478 1605.73,-264.305 1600.39,-255.152 1595.85,-260.478"/>
 </g>
 <!-- Node17 -->
 <g id="node17" class="node"><title>Node17</title>
 <g id="a_node17"><a xlink:href="linear__solver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/linear_solver.cc">
-<polygon fill="none" stroke="black" points="1923.5,-174.5 1923.5,-215.5 2048.5,-215.5 2048.5,-174.5 1923.5,-174.5"/>
-<text text-anchor="start" x="1931.5" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1931.5" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1986" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/linear_solver.cc</text>
+<polygon fill="none" stroke="black" points="1709.5,-174.5 1709.5,-215.5 1834.5,-215.5 1834.5,-174.5 1709.5,-174.5"/>
+<text text-anchor="start" x="1717.5" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1717.5" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1772" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/linear_solver.cc</text>
 </a>
 </g>
 </g>
 <!-- Node13&#45;&gt;Node17 -->
 <g id="edge20" class="edge"><title>Node13&#45;&gt;Node17</title>
-<path fill="none" stroke="midnightblue" d="M1758.55,-261.119C1761.74,-260.045 1764.9,-258.999 1768,-258 1819.87,-241.281 1879.42,-224.505 1923.16,-212.628"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1757.26,-257.859 1748.94,-264.412 1759.53,-264.48 1757.26,-257.859"/>
+<path fill="none" stroke="midnightblue" d="M1670.05,-259.182C1692.21,-245.449 1719.37,-228.617 1740.08,-215.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1668.17,-256.227 1661.51,-264.47 1671.86,-262.177 1668.17,-256.227"/>
 </g>
 <!-- Node14&#45;&gt;Node15 -->
 <g id="edge15" class="edge"><title>Node14&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M1698.89,-168.862C1697.59,-168.56 1696.29,-168.272 1695,-168 1435.99,-113.4 1117.66,-106.318 992.826,-105.795"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1698.41,-172.35 1708.96,-171.435 1700.14,-165.568 1698.41,-172.35"/>
+<path fill="none" stroke="midnightblue" d="M1558.88,-168.897C1557.58,-168.584 1556.29,-168.284 1555,-168 1352.84,-123.323 1105.75,-110.745 998.697,-107.28"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1558.38,-172.383 1568.94,-171.535 1560.15,-165.612 1558.38,-172.383"/>
 </g>
 <!-- Node16 -->
 <g id="node16" class="node"><title>Node16</title>
 <g id="a_node16"><a xlink:href="high__amplitude__solver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_solver.cc">
-<polygon fill="none" stroke="black" points="1709,-79 1709,-131 1831,-131 1831,-79 1709,-79"/>
-<text text-anchor="start" x="1717" y="-119" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1717" y="-108" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1717" y="-97" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/high_amplitude</text>
-<text text-anchor="middle" x="1770" y="-86" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.cc</text>
+<polygon fill="none" stroke="black" points="1569,-79 1569,-131 1691,-131 1691,-79 1569,-79"/>
+<text text-anchor="start" x="1577" y="-119" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1577" y="-108" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="1577" y="-97" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/high_amplitude</text>
+<text text-anchor="middle" x="1630" y="-86" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.cc</text>
 </a>
 </g>
 </g>
 <!-- Node14&#45;&gt;Node16 -->
 <g id="edge18" class="edge"><title>Node14&#45;&gt;Node16</title>
-<path fill="none" stroke="midnightblue" d="M1770,-158.489C1770,-149.309 1770,-139.616 1770,-131.092"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1766.5,-158.547 1770,-168.547 1773.5,-158.547 1766.5,-158.547"/>
+<path fill="none" stroke="midnightblue" d="M1630,-158.489C1630,-149.309 1630,-139.616 1630,-131.092"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1626.5,-158.547 1630,-168.547 1633.5,-158.547 1626.5,-158.547"/>
 </g>
 <!-- Node15&#45;&gt;Node9 -->
 <g id="edge16" class="edge"><title>Node15&#45;&gt;Node9</title>
-<path fill="none" stroke="midnightblue" d="M875.398,-88.2435C813.392,-72.8827 720.147,-49.7827 661.746,-35.3148"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="874.903,-91.7267 885.451,-90.7341 876.586,-84.9321 874.903,-91.7267"/>
+<path fill="none" stroke="midnightblue" d="M881.398,-88.2435C819.392,-72.8827 726.147,-49.7827 667.746,-35.3148"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="880.903,-91.7267 891.451,-90.7341 882.586,-84.9321 880.903,-91.7267"/>
 </g>
 <!-- Node15&#45;&gt;Node11 -->
 <g id="edge17" class="edge"><title>Node15&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M939,-73.881C939,-63.1328 939,-51.309 939,-41.6671"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="935.5,-74.1501 939,-84.1501 942.5,-74.1501 935.5,-74.1501"/>
+<path fill="none" stroke="midnightblue" d="M945,-73.881C945,-63.1328 945,-51.309 945,-41.6671"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="941.5,-74.1501 945,-84.1501 948.5,-74.1501 941.5,-74.1501"/>
 </g>
 <!-- Node18&#45;&gt;Node15 -->
 <g id="edge22" class="edge"><title>Node18&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M1202.49,-251.522C1193.02,-242.213 1182.91,-231.899 1174,-222 1153.47,-199.199 1156.23,-185.458 1131,-168 1089.38,-139.198 1033.57,-123.157 992.853,-114.648"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1200.31,-254.281 1209.92,-258.746 1205.19,-249.264 1200.31,-254.281"/>
+<path fill="none" stroke="midnightblue" d="M1208.49,-251.522C1199.02,-242.213 1188.91,-231.899 1180,-222 1159.47,-199.199 1162.23,-185.458 1137,-168 1095.38,-139.198 1039.57,-123.157 998.853,-114.648"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1206.31,-254.281 1215.92,-258.746 1211.19,-249.264 1206.31,-254.281"/>
 </g>
 <!-- Node18&#45;&gt;Node19 -->
 <g id="edge23" class="edge"><title>Node18&#45;&gt;Node19</title>
-<path fill="none" stroke="midnightblue" d="M1237,-248.489C1237,-239.309 1237,-229.616 1237,-221.092"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1233.5,-248.547 1237,-258.547 1240.5,-248.547 1233.5,-248.547"/>
+<path fill="none" stroke="midnightblue" d="M1243,-248.489C1243,-239.309 1243,-229.616 1243,-221.092"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1239.5,-248.547 1243,-258.547 1246.5,-248.547 1239.5,-248.547"/>
 </g>
 <!-- Node20&#45;&gt;Node11 -->
 <g id="edge25" class="edge"><title>Node20&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M1368.81,-252.003C1358.36,-242.759 1347.38,-232.358 1338,-222 1318.13,-200.052 1322.29,-186.275 1299,-168 1204.55,-93.8933 1067.4,-52.2562 992.592,-33.7632"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1366.82,-254.909 1376.66,-258.827 1371.41,-249.625 1366.82,-254.909"/>
+<path fill="none" stroke="midnightblue" d="M1374.81,-252.003C1364.36,-242.759 1353.38,-232.358 1344,-222 1324.13,-200.052 1328.29,-186.275 1305,-168 1210.55,-93.8933 1073.4,-52.2562 998.592,-33.7632"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1372.82,-254.909 1382.66,-258.827 1377.41,-249.625 1372.82,-254.909"/>
 </g>
 <!-- Node20&#45;&gt;Node12 -->
 <g id="edge26" class="edge"><title>Node20&#45;&gt;Node12</title>
-<path fill="none" stroke="midnightblue" d="M1455.17,-252.282C1464.42,-243.636 1472.85,-233.447 1478,-222 1487.85,-200.115 1494.46,-185.47 1478,-168 1432.05,-119.224 942.671,-138.718 876,-132 835.611,-127.93 790.454,-121.534 755.102,-116.104"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1452.84,-249.664 1447.62,-258.88 1457.45,-254.936 1452.84,-249.664"/>
+<path fill="none" stroke="midnightblue" d="M1461.17,-252.282C1470.42,-243.636 1478.85,-233.447 1484,-222 1493.85,-200.115 1500.46,-185.47 1484,-168 1438.05,-119.224 948.671,-138.718 882,-132 841.611,-127.93 796.454,-121.534 761.102,-116.104"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1458.84,-249.664 1453.62,-258.88 1463.45,-254.936 1458.84,-249.664"/>
 </g>
 <!-- Node21 -->
 <g id="node21" class="node"><title>Node21</title>
 <g id="a_node21"><a xlink:href="high__amplitude__realtime__solver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_realtime_solver.cc">
-<polygon fill="none" stroke="black" points="1347,-169 1347,-221 1469,-221 1469,-169 1347,-169"/>
-<text text-anchor="start" x="1355" y="-209" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1355" y="-198" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1355" y="-187" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/high_amplitude</text>
-<text text-anchor="middle" x="1408" y="-176" font-family="Helvetica,sans-Serif" font-size="10.00">_realtime_solver.cc</text>
+<polygon fill="none" stroke="black" points="1353,-169 1353,-221 1475,-221 1475,-169 1353,-169"/>
+<text text-anchor="start" x="1361" y="-209" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1361" y="-198" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="1361" y="-187" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/high_amplitude</text>
+<text text-anchor="middle" x="1414" y="-176" font-family="Helvetica,sans-Serif" font-size="10.00">_realtime_solver.cc</text>
 </a>
 </g>
 </g>
 <!-- Node20&#45;&gt;Node21 -->
 <g id="edge27" class="edge"><title>Node20&#45;&gt;Node21</title>
-<path fill="none" stroke="midnightblue" d="M1408,-248.489C1408,-239.309 1408,-229.616 1408,-221.092"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1404.5,-248.547 1408,-258.547 1411.5,-248.547 1404.5,-248.547"/>
+<path fill="none" stroke="midnightblue" d="M1414,-248.489C1414,-239.309 1414,-229.616 1414,-221.092"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1410.5,-248.547 1414,-258.547 1417.5,-248.547 1410.5,-248.547"/>
 </g>
 <!-- Node24 -->
 <g id="node24" class="node"><title>Node24</title>
 <g id="a_node24"><a xlink:href="small__amplitude__solver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/small_amplitude\l_solver.cc">
-<polygon fill="none" stroke="black" points="1525.5,-169 1525.5,-221 1652.5,-221 1652.5,-169 1525.5,-169"/>
-<text text-anchor="start" x="1533.5" y="-209" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1533.5" y="-198" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="start" x="1533.5" y="-187" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/small_amplitude</text>
-<text text-anchor="middle" x="1589" y="-176" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.cc</text>
+<polygon fill="none" stroke="black" points="1852.5,-169 1852.5,-221 1979.5,-221 1979.5,-169 1852.5,-169"/>
+<text text-anchor="start" x="1860.5" y="-209" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1860.5" y="-198" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="start" x="1860.5" y="-187" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/small_amplitude</text>
+<text text-anchor="middle" x="1916" y="-176" font-family="Helvetica,sans-Serif" font-size="10.00">_solver.cc</text>
 </a>
 </g>
 </g>
 <!-- Node23&#45;&gt;Node24 -->
 <g id="edge30" class="edge"><title>Node23&#45;&gt;Node24</title>
-<path fill="none" stroke="midnightblue" d="M1566.68,-249.081C1570.62,-239.726 1574.79,-229.799 1578.45,-221.092"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1563.35,-247.972 1562.7,-258.547 1569.8,-250.685 1563.35,-247.972"/>
+<path fill="none" stroke="midnightblue" d="M1823.37,-253.404C1840.33,-242.894 1859.11,-231.255 1875.3,-221.221"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1821.35,-250.54 1814.69,-258.783 1825.04,-256.49 1821.35,-250.54"/>
 </g>
 <!-- Node25&#45;&gt;Node26 -->
 <g id="edge33" class="edge"><title>Node25&#45;&gt;Node26</title>
-<path fill="none" stroke="midnightblue" d="M714.556,-339.203C710.13,-327.749 705.369,-315.425 701.544,-305.525"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="711.297,-340.48 718.166,-348.547 717.827,-337.957 711.297,-340.48"/>
+<path fill="none" stroke="midnightblue" d="M717.218,-338.859C713.734,-327.503 709.998,-315.326 706.991,-305.525"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="713.911,-340.013 720.19,-348.547 720.603,-337.96 713.911,-340.013"/>
 </g>
 <!-- Node25&#45;&gt;Node30 -->
 <g id="edge39" class="edge"><title>Node25&#45;&gt;Node30</title>
-<path fill="none" stroke="midnightblue" d="M765.265,-342.162C779.564,-329.945 795.452,-316.371 808.026,-305.628"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="762.845,-339.626 757.516,-348.783 767.392,-344.948 762.845,-339.626"/>
+<path fill="none" stroke="midnightblue" d="M767.374,-342.501C782.754,-330.197 799.912,-316.47 813.465,-305.628"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="765.144,-339.803 759.522,-348.783 769.517,-345.269 765.144,-339.803"/>
 </g>
 <!-- Node25&#45;&gt;Node32 -->
 <g id="edge43" class="edge"><title>Node25&#45;&gt;Node32</title>
@@ -730,88 +730,88 @@
 </g>
 <!-- Node26&#45;&gt;Node15 -->
 <g id="edge34" class="edge"><title>Node26&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M752.426,-260.638C792.511,-244.454 839.149,-225.254 843,-222 864.663,-203.695 859.307,-190.165 877,-168 889.156,-152.772 904.656,-137.272 917.117,-125.579"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="750.904,-257.477 742.937,-264.462 753.521,-263.97 750.904,-257.477"/>
+<path fill="none" stroke="midnightblue" d="M759.034,-260.629C798.85,-244.442 845.175,-225.24 849,-222 870.641,-203.669 865.307,-190.165 883,-168 895.156,-152.772 910.656,-137.272 923.117,-125.579"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="757.559,-257.451 749.609,-264.455 760.191,-263.937 757.559,-257.451"/>
 </g>
 <!-- Node26&#45;&gt;Node27 -->
 <g id="edge35" class="edge"><title>Node26&#45;&gt;Node27</title>
-<path fill="none" stroke="midnightblue" d="M675.443,-255.845C666.841,-242.793 656.824,-227.594 649.037,-215.78"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="672.702,-258.046 681.128,-264.47 678.547,-254.194 672.702,-258.046"/>
+<path fill="none" stroke="midnightblue" d="M682.123,-255.845C673.373,-242.793 663.183,-227.594 655.261,-215.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="679.43,-258.113 687.906,-264.47 685.244,-254.215 679.43,-258.113"/>
 </g>
 <!-- Node29 -->
 <g id="node29" class="node"><title>Node29</title>
 <g id="a_node29"><a xlink:href="ar__model_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.cc">
-<polygon fill="none" stroke="black" points="719,-174.5 719,-215.5 835,-215.5 835,-174.5 719,-174.5"/>
-<text text-anchor="start" x="727" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="727" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="777" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/ar_model.cc</text>
+<polygon fill="none" stroke="black" points="725,-174.5 725,-215.5 841,-215.5 841,-174.5 725,-174.5"/>
+<text text-anchor="start" x="733" y="-203.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="733" y="-192.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="783" y="-181.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/ar_model.cc</text>
 </a>
 </g>
 </g>
 <!-- Node26&#45;&gt;Node29 -->
 <g id="edge38" class="edge"><title>Node26&#45;&gt;Node29</title>
-<path fill="none" stroke="midnightblue" d="M719.495,-256.969C732.036,-243.673 746.879,-227.935 758.344,-215.78"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="716.736,-254.794 712.42,-264.47 721.828,-259.597 716.736,-254.794"/>
+<path fill="none" stroke="midnightblue" d="M726.188,-256.969C738.578,-243.673 753.242,-227.935 764.569,-215.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="723.455,-254.768 719.198,-264.47 728.576,-259.54 723.455,-254.768"/>
 </g>
 <!-- Node27&#45;&gt;Node15 -->
 <g id="edge36" class="edge"><title>Node27&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M699.973,-171.197C703.356,-170.093 706.714,-169.02 710,-168 769.592,-149.491 838.853,-131.176 885.467,-119.307"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="698.792,-167.901 690.406,-174.375 700.999,-174.544 698.792,-167.901"/>
+<path fill="none" stroke="midnightblue" d="M705.973,-171.197C709.356,-170.093 712.714,-169.02 716,-168 775.592,-149.491 844.853,-131.176 891.467,-119.307"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="704.792,-167.901 696.406,-174.375 706.999,-174.544 704.792,-167.901"/>
 </g>
 <!-- Node27&#45;&gt;Node28 -->
 <g id="edge37" class="edge"><title>Node27&#45;&gt;Node28</title>
-<path fill="none" stroke="midnightblue" d="M571.715,-171.279C568.101,-170.137 564.511,-169.036 561,-168 497.783,-149.341 424.541,-131.831 373.181,-120.211"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="570.711,-174.633 581.303,-174.377 572.864,-167.972 570.711,-174.633"/>
+<path fill="none" stroke="midnightblue" d="M577.715,-171.279C574.101,-170.137 570.511,-169.036 567,-168 503.783,-149.341 430.541,-131.831 379.181,-120.211"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="576.711,-174.633 587.303,-174.377 578.864,-167.972 576.711,-174.633"/>
 </g>
 <!-- Node30&#45;&gt;Node15 -->
 <g id="edge40" class="edge"><title>Node30&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M852.835,-256.401C860.797,-245.876 869.644,-233.615 877,-222 897.649,-189.398 918.055,-149.287 929.54,-125.79"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="849.991,-254.358 846.686,-264.424 855.547,-258.617 849.991,-254.358"/>
+<path fill="none" stroke="midnightblue" d="M859.314,-256.346C867.098,-245.815 875.761,-233.564 883,-222 903.478,-189.29 923.938,-149.214 935.48,-125.752"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="856.494,-254.274 853.305,-264.377 862.099,-258.468 856.494,-254.274"/>
 </g>
 <!-- Node30&#45;&gt;Node27 -->
 <g id="edge41" class="edge"><title>Node30&#45;&gt;Node27</title>
-<path fill="none" stroke="midnightblue" d="M778.38,-260.254C747.414,-246.279 708.723,-228.819 679.493,-215.627"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="777.169,-263.547 787.723,-264.47 780.048,-257.166 777.169,-263.547"/>
+<path fill="none" stroke="midnightblue" d="M785.11,-260.254C753.986,-246.279 715.096,-228.819 685.716,-215.627"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="783.945,-263.567 794.501,-264.47 786.812,-257.181 783.945,-263.567"/>
 </g>
 <!-- Node30&#45;&gt;Node31 -->
 <g id="edge42" class="edge"><title>Node30&#45;&gt;Node31</title>
-<path fill="none" stroke="midnightblue" d="M884.16,-260.254C915.443,-246.279 954.531,-228.819 984.061,-215.627"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="882.424,-257.196 874.721,-264.47 885.279,-263.587 882.424,-257.196"/>
+<path fill="none" stroke="midnightblue" d="M890.89,-260.254C922.014,-246.279 960.904,-228.819 990.284,-215.627"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="889.188,-257.181 881.499,-264.47 892.055,-263.567 889.188,-257.181"/>
 </g>
 <!-- Node33&#45;&gt;Node15 -->
 <g id="edge48" class="edge"><title>Node33&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M902.519,-338.782C911.466,-281.696 928.843,-170.813 935.904,-125.753"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="899.042,-338.366 900.951,-348.787 905.957,-339.45 899.042,-338.366"/>
+<path fill="none" stroke="midnightblue" d="M903.308,-338.782C913.532,-281.696 933.392,-170.813 941.462,-125.753"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="899.834,-338.327 901.516,-348.787 906.724,-339.561 899.834,-338.327"/>
 </g>
 <!-- Node33&#45;&gt;Node18 -->
 <g id="edge49" class="edge"><title>Node33&#45;&gt;Node18</title>
-<path fill="none" stroke="midnightblue" d="M963.09,-347.842C1044.57,-323.083 1129.64,-305.551 1183.36,-295.476"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="961.699,-344.608 953.173,-350.897 963.761,-351.297 961.699,-344.608"/>
+<path fill="none" stroke="midnightblue" d="M962.824,-347.929C1046.52,-322.697 1134.3,-305.119 1189.24,-295.158"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="961.708,-344.61 953.168,-350.881 963.755,-351.305 961.708,-344.61"/>
 </g>
 <!-- Node33&#45;&gt;Node34 -->
 <g id="edge50" class="edge"><title>Node33&#45;&gt;Node34</title>
-<path fill="none" stroke="midnightblue" d="M962.935,-348.145C1314.04,-274.536 1419.98,-385.958 1767,-312 1770.25,-311.307 1773.55,-310.471 1776.85,-309.53"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="962.057,-344.753 953.006,-350.261 963.516,-351.599 962.057,-344.753"/>
+<path fill="none" stroke="midnightblue" d="M963.318,-348.047C1410.85,-255.895 1543.85,-397.976 1989,-312 1994.22,-310.992 1999.57,-309.664 2004.87,-308.141"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="962.435,-344.656 953.361,-350.125 963.865,-351.508 962.435,-344.656"/>
 </g>
 <!-- Node35&#45;&gt;Node15 -->
 <g id="edge52" class="edge"><title>Node35&#45;&gt;Node15</title>
-<path fill="none" stroke="midnightblue" d="M1170.65,-344.684C1155.76,-294.18 1123.78,-193.703 1098,-168 1069.57,-139.652 1026.69,-123.944 992.625,-115.436"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1167.31,-345.75 1173.48,-354.369 1174.03,-343.789 1167.31,-345.75"/>
+<path fill="none" stroke="midnightblue" d="M1171.54,-344.699C1158.18,-294.219 1129.2,-193.78 1104,-168 1075.94,-139.292 1033.03,-123.605 998.866,-115.197"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1168.15,-345.592 1174.07,-354.38 1174.93,-343.82 1168.15,-345.592"/>
 </g>
 <!-- Node36 -->
 <g id="node36" class="node"><title>Node36</title>
 <g id="a_node36"><a xlink:href="lh__model_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/generator/lh_model.cc">
-<polygon fill="none" stroke="black" points="973,-264.5 973,-305.5 1089,-305.5 1089,-264.5 973,-264.5"/>
-<text text-anchor="start" x="981" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="981" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1031" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/lh_model.cc</text>
+<polygon fill="none" stroke="black" points="979,-264.5 979,-305.5 1095,-305.5 1095,-264.5 979,-264.5"/>
+<text text-anchor="start" x="987" y="-293.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="987" y="-282.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1037" y="-271.5" font-family="Helvetica,sans-Serif" font-size="10.00">/generator/lh_model.cc</text>
 </a>
 </g>
 </g>
 <!-- Node35&#45;&gt;Node36 -->
 <g id="edge53" class="edge"><title>Node35&#45;&gt;Node36</title>
-<path fill="none" stroke="midnightblue" d="M1137.54,-349.345C1114.3,-335.529 1085.72,-318.534 1064.01,-305.627"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1135.77,-352.368 1146.15,-354.47 1139.35,-346.351 1135.77,-352.368"/>
+<path fill="none" stroke="midnightblue" d="M1138.95,-349.182C1116.79,-335.449 1089.63,-318.617 1068.92,-305.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1137.14,-352.177 1147.49,-354.47 1140.83,-346.227 1137.14,-352.177"/>
 </g>
 <!-- Node37&#45;&gt;Node4 -->
 <g id="edge55" class="edge"><title>Node37&#45;&gt;Node4</title>
@@ -820,8 +820,8 @@
 </g>
 <!-- Node37&#45;&gt;Node28 -->
 <g id="edge56" class="edge"><title>Node37&#45;&gt;Node28</title>
-<path fill="none" stroke="midnightblue" d="M406.483,-344.058C403.857,-320.242 398.71,-286.332 389,-258 371.744,-207.649 339.324,-153.832 321.171,-125.711"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="403.024,-344.64 407.52,-354.234 409.988,-343.931 403.024,-344.64"/>
+<path fill="none" stroke="midnightblue" d="M406.24,-344.14C403.478,-320.369 398.266,-286.48 389,-258 372.794,-208.191 342.865,-154.162 326.132,-125.862"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="402.783,-344.73 407.343,-354.293 409.743,-343.974 402.783,-344.73"/>
 </g>
 <!-- Node37&#45;&gt;Node32 -->
 <g id="edge57" class="edge"><title>Node37&#45;&gt;Node32</title>
@@ -865,8 +865,8 @@
 </g>
 <!-- Node40&#45;&gt;Node8 -->
 <g id="edge66" class="edge"><title>Node40&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M117.884,-344.302C117.385,-319.89 119.591,-285.044 133,-258 141.313,-241.234 156.115,-226.563 169.496,-215.707"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="114.39,-344.531 118.257,-354.395 121.386,-344.273 114.39,-344.531"/>
+<path fill="none" stroke="midnightblue" d="M117.575,-344.144C116.89,-319.638 119,-284.743 133,-258 141.956,-240.892 157.741,-226.383 172.156,-215.712"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="114.085,-344.449 118.032,-354.281 121.077,-344.133 114.085,-344.449"/>
 </g>
 <!-- Node40&#45;&gt;Node32 -->
 <g id="edge67" class="edge"><title>Node40&#45;&gt;Node32</title>
@@ -885,8 +885,8 @@
 </g>
 <!-- Node41&#45;&gt;Node42 -->
 <g id="edge71" class="edge"><title>Node41&#45;&gt;Node42</title>
-<path fill="none" stroke="midnightblue" d="M1404.39,-434.33C1406.7,-421.629 1409.34,-407.14 1411.4,-395.78"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1400.9,-434.005 1402.55,-444.47 1407.78,-435.257 1400.9,-434.005"/>
+<path fill="none" stroke="midnightblue" d="M1396.32,-434.71C1400.39,-421.919 1405.06,-407.253 1408.71,-395.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1392.91,-433.879 1393.21,-444.47 1399.58,-436.002 1392.91,-433.879"/>
 </g>
 <!-- Node43&#45;&gt;Node32 -->
 <g id="edge73" class="edge"><title>Node43&#45;&gt;Node32</title>
@@ -895,58 +895,58 @@
 </g>
 <!-- Node44&#45;&gt;Node6 -->
 <g id="edge76" class="edge"><title>Node44&#45;&gt;Node6</title>
-<path fill="none" stroke="midnightblue" d="M1662.92,-522.56C1673.78,-514.346 1683.91,-504.155 1690,-492 1705.99,-460.107 1685.75,-419.418 1670.35,-395.68"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1660.69,-519.845 1654.52,-528.455 1664.71,-525.575 1660.69,-519.845"/>
+<path fill="none" stroke="midnightblue" d="M1612.95,-522.256C1623.37,-513.875 1633.42,-503.675 1640,-492 1657.06,-461.712 1658.47,-420.13 1657.52,-395.856"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1610.82,-519.476 1604.96,-528.304 1615.05,-525.057 1610.82,-519.476"/>
 </g>
 <!-- Node44&#45;&gt;Node34 -->
 <g id="edge82" class="edge"><title>Node44&#45;&gt;Node34</title>
-<path fill="none" stroke="midnightblue" d="M1668.56,-523.172C1682.45,-514.795 1696.45,-504.368 1707,-492 1751.9,-439.388 1726.58,-404.828 1766,-348 1775.39,-334.458 1788.21,-321.686 1800.12,-311.294"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1666.42,-520.366 1659.49,-528.381 1669.91,-526.436 1666.42,-520.366"/>
+<path fill="none" stroke="midnightblue" d="M1634.87,-544.008C1730.12,-537.185 1904.1,-521.112 1959,-492 2006.81,-466.647 2017.23,-450.612 2041,-402 2055.18,-372.994 2059.48,-335.605 2060.69,-311.231"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1634.51,-540.525 1624.78,-544.718 1635,-547.508 1634.51,-540.525"/>
 </g>
 <!-- Node44&#45;&gt;Node35 -->
 <g id="edge77" class="edge"><title>Node44&#45;&gt;Node35</title>
-<path fill="none" stroke="midnightblue" d="M1580.13,-522.212C1537.29,-490.617 1469.46,-440.892 1463,-438 1442.59,-428.867 1314.29,-402.659 1237.29,-387.399"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1578.21,-525.148 1588.33,-528.269 1582.37,-519.515 1578.21,-525.148"/>
+<path fill="none" stroke="midnightblue" d="M1528.67,-522.711C1515.55,-513.859 1501.52,-503.286 1490,-492 1468.85,-471.283 1475.69,-454.341 1451,-438 1433.25,-426.254 1311.68,-401.414 1237.2,-386.995"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1526.85,-525.703 1537.13,-528.27 1530.7,-519.853 1526.85,-525.703"/>
 </g>
 <!-- Node44&#45;&gt;Node41 -->
 <g id="edge78" class="edge"><title>Node44&#45;&gt;Node41</title>
-<path fill="none" stroke="midnightblue" d="M1554.08,-524.874C1521.4,-512.465 1481.56,-497.341 1450.44,-485.529"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1552.95,-528.186 1563.54,-528.463 1555.43,-521.642 1552.95,-528.186"/>
+<path fill="none" stroke="midnightblue" d="M1517.47,-524.144C1490.02,-511.909 1456.99,-497.19 1431.03,-485.623"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1516.37,-527.485 1526.93,-528.359 1519.22,-521.091 1516.37,-527.485"/>
 </g>
 <!-- Node45 -->
 <g id="node45" class="node"><title>Node45</title>
 <g id="a_node45"><a xlink:href="factor__waves_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/factor_waves.hh">
-<polygon fill="none" stroke="black" points="1925.5,-444.5 1925.5,-485.5 2032.5,-485.5 2032.5,-444.5 1925.5,-444.5"/>
-<text text-anchor="start" x="1933.5" y="-473.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1933.5" y="-462.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1979" y="-451.5" font-family="Helvetica,sans-Serif" font-size="10.00">/factor_waves.hh</text>
+<polygon fill="none" stroke="black" points="1843.5,-444.5 1843.5,-485.5 1950.5,-485.5 1950.5,-444.5 1843.5,-444.5"/>
+<text text-anchor="start" x="1851.5" y="-473.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1851.5" y="-462.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1897" y="-451.5" font-family="Helvetica,sans-Serif" font-size="10.00">/factor_waves.hh</text>
 </a>
 </g>
 </g>
 <!-- Node44&#45;&gt;Node45 -->
 <g id="edge79" class="edge"><title>Node44&#45;&gt;Node45</title>
-<path fill="none" stroke="midnightblue" d="M1678.72,-533.645C1748.66,-517.889 1859.71,-492.872 1925.37,-478.082"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1677.7,-530.288 1668.71,-535.901 1679.23,-537.117 1677.7,-530.288"/>
+<path fill="none" stroke="midnightblue" d="M1634.7,-531.977C1695.52,-516.68 1786.13,-493.887 1843.36,-479.493"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1633.68,-528.626 1624.83,-534.459 1635.38,-535.414 1633.68,-528.626"/>
 </g>
 <!-- Node47 -->
 <g id="node47" class="node"><title>Node47</title>
 <g id="a_node47"><a xlink:href="nit__transform_8hh.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/nonlinear/nit_transform.hh">
-<polygon fill="none" stroke="black" points="1549,-444.5 1549,-485.5 1681,-485.5 1681,-444.5 1549,-444.5"/>
-<text text-anchor="start" x="1557" y="-473.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
-<text text-anchor="start" x="1557" y="-462.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="1615" y="-451.5" font-family="Helvetica,sans-Serif" font-size="10.00">/nonlinear/nit_transform.hh</text>
+<polygon fill="none" stroke="black" points="1499,-444.5 1499,-485.5 1631,-485.5 1631,-444.5 1499,-444.5"/>
+<text text-anchor="start" x="1507" y="-473.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
+<text text-anchor="start" x="1507" y="-462.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
+<text text-anchor="middle" x="1565" y="-451.5" font-family="Helvetica,sans-Serif" font-size="10.00">/nonlinear/nit_transform.hh</text>
 </a>
 </g>
 </g>
 <!-- Node44&#45;&gt;Node47 -->
 <g id="edge83" class="edge"><title>Node44&#45;&gt;Node47</title>
-<path fill="none" stroke="midnightblue" d="M1615,-517.881C1615,-507.133 1615,-495.309 1615,-485.667"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1611.5,-518.15 1615,-528.15 1618.5,-518.15 1611.5,-518.15"/>
+<path fill="none" stroke="midnightblue" d="M1568.8,-517.881C1568.01,-507.133 1567.14,-495.309 1566.44,-485.667"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1565.33,-518.432 1569.55,-528.15 1572.31,-517.921 1565.33,-518.432"/>
 </g>
-<!-- Node45&#45;&gt;Node17 -->
-<g id="edge81" class="edge"><title>Node45&#45;&gt;Node17</title>
-<path fill="none" stroke="midnightblue" d="M2014.65,-437.612C2025.17,-427.737 2035.37,-415.58 2041,-402 2065.49,-342.872 2063.71,-317.834 2041,-258 2034.77,-241.588 2021.99,-226.738 2010.31,-215.688"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="2012.16,-435.14 2006.98,-444.386 2016.79,-440.384 2012.16,-435.14"/>
+<!-- Node45&#45;&gt;Node22 -->
+<g id="edge81" class="edge"><title>Node45&#45;&gt;Node22</title>
+<path fill="none" stroke="midnightblue" d="M1900.51,-434.206C1904.83,-397.635 1912.02,-336.653 1915.69,-305.546"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1897.02,-433.93 1899.33,-444.271 1903.98,-434.75 1897.02,-433.93"/>
 </g>
 <!-- Node46 -->
 <g id="node46" class="node"><title>Node46</title>
@@ -960,23 +960,23 @@
 </g>
 <!-- Node45&#45;&gt;Node46 -->
 <g id="edge80" class="edge"><title>Node45&#45;&gt;Node46</title>
-<path fill="none" stroke="midnightblue" d="M1979,-434.33C1979,-421.629 1979,-407.14 1979,-395.78"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1975.5,-434.47 1979,-444.47 1982.5,-434.47 1975.5,-434.47"/>
+<path fill="none" stroke="midnightblue" d="M1922.19,-436.969C1934.58,-423.673 1949.24,-407.935 1960.57,-395.78"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1919.46,-434.768 1915.2,-444.47 1924.58,-439.54 1919.46,-434.768"/>
 </g>
 <!-- Node47&#45;&gt;Node25 -->
 <g id="edge84" class="edge"><title>Node47&#45;&gt;Node25</title>
-<path fill="none" stroke="midnightblue" d="M1538.5,-449.188C1514.42,-444.99 1487.67,-440.805 1463,-438 1183.9,-406.269 1109.7,-444.251 832,-402 816.452,-399.635 799.838,-395.998 784.554,-392.187"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1538.18,-452.686 1548.64,-450.983 1539.4,-445.793 1538.18,-452.686"/>
+<path fill="none" stroke="midnightblue" d="M1488.77,-444.777C1476.21,-442.142 1463.29,-439.747 1451,-438 1178.17,-399.228 1104.42,-443.6 832,-402 816.454,-399.626 799.839,-395.986 784.556,-392.175"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1488.22,-448.24 1498.74,-446.934 1489.7,-441.399 1488.22,-448.24"/>
 </g>
 <!-- Node47&#45;&gt;Node32 -->
 <g id="edge85" class="edge"><title>Node47&#45;&gt;Node32</title>
-<path fill="none" stroke="midnightblue" d="M1598.49,-435.756C1580.32,-407.715 1548.27,-366.341 1508,-348 1382.15,-290.691 399.393,-340.111 264,-312 261.263,-311.432 258.493,-310.756 255.718,-309.996"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1595.61,-437.746 1603.9,-444.346 1601.53,-434.018 1595.61,-437.746"/>
+<path fill="none" stroke="midnightblue" d="M1559.42,-434.362C1552.51,-406.786 1537.79,-367.157 1508,-348 1449.85,-310.603 331.696,-326.056 264,-312 261.263,-311.432 258.493,-310.756 255.718,-309.996"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1556.05,-435.313 1561.71,-444.273 1562.87,-433.742 1556.05,-435.313"/>
 </g>
 <!-- Node47&#45;&gt;Node48 -->
 <g id="edge86" class="edge"><title>Node47&#45;&gt;Node48</title>
-<path fill="none" stroke="midnightblue" d="M1674.6,-440.794C1710.71,-426.732 1756.28,-408.989 1790.59,-395.627"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="1673.21,-437.58 1665.16,-444.47 1675.75,-444.103 1673.21,-437.58"/>
+<path fill="none" stroke="midnightblue" d="M1627.28,-440.973C1665.39,-426.883 1713.63,-409.046 1749.92,-395.627"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="1625.99,-437.719 1617.82,-444.47 1628.41,-444.285 1625.99,-437.719"/>
 </g>
 </g>
 </svg>

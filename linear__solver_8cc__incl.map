@@ -1,19 +1,18 @@
 <map id="/home/travis/build/igankevich/arma/src/velocity/linear_solver.cc" name="/home/travis/build/igankevich/arma/src/velocity/linear_solver.cc">
-<area shape="rect" id="node2" href="$linear__solver_8hh.html" title="linear_solver.hh" alt="" coords="309,109,421,136"/>
-<area shape="rect" id="node13" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="855,499,919,525"/>
-<area shape="rect" id="node26" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1005,184,1157,211"/>
-<area shape="rect" id="node27" href="$derivative_8hh.html" title="derivative.hh" alt="" coords="411,184,507,211"/>
-<area shape="rect" id="node28" href="$interpolate_8hh.html" title="interpolate.hh" alt="" coords="483,259,583,285"/>
-<area shape="rect" id="node29" href="$profile_8hh.html" title="profile.hh" alt="" coords="1056,109,1129,136"/>
-<area shape="rect" id="node30" href="$factor__waves_8hh.html" title="factor_waves.hh" alt="" coords="822,259,940,285"/>
-<area shape="rect" id="node4" href="$basic__solver_8hh.html" title="basic_solver.hh" alt="" coords="622,184,735,211"/>
-<area shape="rect" id="node18" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="310,184,385,211"/>
-<area shape="rect" id="node5" href="$types_8hh.html" title="types.hh" alt="" coords="500,333,572,360"/>
-<area shape="rect" id="node7" href="$domain_8hh.html" title="domain.hh" alt="" coords="837,333,919,360"/>
-<area shape="rect" id="node16" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="659,259,797,285"/>
-<area shape="rect" id="node11" href="$validators_8hh.html" title="validators.hh" alt="" coords="675,416,771,443"/>
-<area shape="rect" id="node17" href="$grid_8hh.html" title="grid.hh" alt="" coords="685,333,747,360"/>
-<area shape="rect" id="node19" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="261,259,408,285"/>
-<area shape="rect" id="node21" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="148,333,327,360"/>
-<area shape="rect" id="node22" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="351,333,476,360"/>
+<area shape="rect" id="node2" href="$linear__solver_8hh.html" title="linear_solver.hh" alt="" coords="386,109,499,136"/>
+<area shape="rect" id="node13" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="920,499,984,525"/>
+<area shape="rect" id="node26" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1141,184,1293,211"/>
+<area shape="rect" id="node27" href="$derivative_8hh.html" title="derivative.hh" alt="" coords="540,259,636,285"/>
+<area shape="rect" id="node28" href="$interpolate_8hh.html" title="interpolate.hh" alt="" coords="835,184,935,211"/>
+<area shape="rect" id="node29" href="$profile_8hh.html" title="profile.hh" alt="" coords="1192,109,1265,136"/>
+<area shape="rect" id="node4" href="$basic__solver_8hh.html" title="basic_solver.hh" alt="" coords="657,184,769,211"/>
+<area shape="rect" id="node18" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="374,184,449,211"/>
+<area shape="rect" id="node5" href="$types_8hh.html" title="types.hh" alt="" coords="612,333,684,360"/>
+<area shape="rect" id="node7" href="$domain_8hh.html" title="domain.hh" alt="" coords="708,333,789,360"/>
+<area shape="rect" id="node16" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="812,259,951,285"/>
+<area shape="rect" id="node11" href="$validators_8hh.html" title="validators.hh" alt="" coords="728,416,824,443"/>
+<area shape="rect" id="node17" href="$grid_8hh.html" title="grid.hh" alt="" coords="851,333,912,360"/>
+<area shape="rect" id="node19" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="311,259,457,285"/>
+<area shape="rect" id="node21" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="409,333,588,360"/>
+<area shape="rect" id="node22" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="177,333,303,360"/>
 </map>

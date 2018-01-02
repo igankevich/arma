@@ -32,11 +32,11 @@
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
-<g id="a_node3"><a xlink:href="linear__solver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/linear_solver.cc">
+<g id="a_node3"><a xlink:href="basic__solver_8cc.html" target="_top" xlink:title="/home/travis/build\l/igankevich/arma/src\l/velocity/basic_solver.cc">
 <polygon fill="none" stroke="black" points="124.5,-0.5 124.5,-41.5 249.5,-41.5 249.5,-0.5 124.5,-0.5"/>
 <text text-anchor="start" x="132.5" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/travis/build</text>
 <text text-anchor="start" x="132.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/igankevich/arma/src</text>
-<text text-anchor="middle" x="187" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/linear_solver.cc</text>
+<text text-anchor="middle" x="187" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/velocity/basic_solver.cc</text>
 </a>
 </g>
 </g>
