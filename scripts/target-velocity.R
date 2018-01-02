@@ -64,7 +64,7 @@ contour(
 
 top_area_x <- c(left_top_x*0.99, zeta_slice$x, right_top_x*1.01)
 top_area_z <- c(left_top_z*1.10, zeta_slice$z, right_top_z*1.10)
-polygon(top_area_x, top_area_z, lwd=4, border=NA, col='white')
+polygon(top_area_x, top_area_z, lwd=4, border='white', col='white')
 lines(zeta_slice$x, zeta_slice$z, lwd=4)
 #image(x, z, u, c(-2,2), col=heat.colors(128))
 box()

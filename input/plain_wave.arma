@@ -1,12 +1,12 @@
 model = plain_wave {
 	out_grid = (200,256,40) : (199,28,28)
-	func = cos
-	waves = [(4,0.035,0,0.5,0)]
+	func = stokes
+	waves = [(2,0.0357143,0,7.27403,0)]
 	output = surface,csv
 }
 
 velocity_potential_solver = linear {
-	wnmax = from (0,0) to (0,0.07) npoints (2,2)
+	wnmax = from (0,0) to (0,0.072) npoints (2,2)
 	depth = 12
 	domain = from (10,-12) to (10,4) npoints (1,128)
 }

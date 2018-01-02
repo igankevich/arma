@@ -1,15 +1,16 @@
 #include "plain_wave_model.hh"
-#include "validators.hh"
-#include "params.hh"
+
 #include "domain.hh"
+#include "params.hh"
 #include "profile.hh"
+#include "validators.hh"
 
 #include <algorithm>
-#include <stdexcept>
-#include <vector>
-#include <iomanip>
 #include <cmath>
+#include <iomanip>
+#include <stdexcept>
 #include <string>
+#include <vector>
 
 namespace {
 
@@ -66,6 +67,69 @@ namespace {
 		}
 	};
 
+	template <class T>
+	inline T
+	sine_wave(
+		const T amplitude,
+		const T kx,
+		const T ky,
+		const T velocity,
+		const T phase,
+		const T x,
+		const T y,
+		const T t
+	) {
+		using arma::constants::_2pi;
+		using std::sin;
+		return amplitude * sin(_2pi<T>*(kx*x + ky*y) - velocity*t + phase);
+	}
+
+	template <class T>
+	inline T
+	cosine_wave(
+		const T amplitude,
+		const T kx,
+		const T ky,
+		const T velocity,
+		const T phase,
+		const T x,
+		const T y,
+		const T t
+	) {
+		using arma::constants::pi_div_2;
+		return sine_wave(
+			amplitude,
+			kx, ky,
+			velocity,
+			phase + pi_div_2<T>,
+			x, y, t
+		);
+	}
+
+	template <class T>
+	inline T
+	stokes_wave(
+		const T amplitude,
+		const T kx,
+		const T ky,
+		const T velocity,
+		const T phase,
+		const T x,
+		const T y,
+		const T t
+	) {
+		using arma::constants::_2pi;
+		using std::cos;
+		using std::sqrt;
+		const T theta = _2pi<T>*(kx*x + ky*y) - velocity*t + phase;
+		const T steepness = _2pi<T> * amplitude * sqrt(kx*kx + ky*ky);
+		return amplitude * (
+			cos(theta)
+			+ T(0.5)*steepness*cos(T(2)*theta)
+			+ (T(3)/T(8))*steepness*steepness*cos(T(3)*theta)
+		);
+	}
+
 }
 
 std::istream&
@@ -76,6 +140,8 @@ arma::generator::operator>>(std::istream& in, Function& rhs) {
 		rhs = Function::Sine;
 	} else if (name == "cos") {
 		rhs = Function::Cosine;
+	} else if (name == "stokes") {
+		rhs = Function::Stokes;
 	} else {
 		in.setstate(std::ios::failbit);
 		std::cerr << "Invalid plain wave function: " << name << std::endl;
@@ -89,6 +155,7 @@ arma::generator::to_string(Function rhs) {
 	switch (rhs) {
 		case Function::Sine: return "sin";
 		case Function::Cosine: return "cos";
+		case Function::Stokes: return "stokes";
 		default: return "UNKNOWN";
 	}
 }
@@ -111,18 +178,27 @@ arma::Array3D<T>
 arma::generator::Plain_wave_model<T>::generate() {
 	Array3D<T> zeta;
 	ARMA_PROFILE_BLOCK("generate_surface",
-		zeta.reference(this->do_generate());
+		switch (this->_func) {
+			case Function::Sine:
+				zeta.reference(this->do_generate(sine_wave<T>));
+				break;
+			case Function::Cosine:
+				zeta.reference(this->do_generate(cosine_wave<T>));
+				break;
+			case Function::Stokes:
+				zeta.reference(this->do_generate(stokes_wave<T>));
+				break;
+			default: throw std::invalid_argument("bad wave profile function");
+		}
 	);
 	return zeta;
 }
 
 template <class T>
+template <class Func>
 arma::Array3D<T>
-arma::generator::Plain_wave_model<T>::do_generate() {
+arma::generator::Plain_wave_model<T>::do_generate(Func elevation) {
 	Array3D<T> zeta(this->grid().num_points());
-	using constants::_2pi;
-	using std::sin;
-	const T shift = get_shift();
 	const int t1 = zeta.extent(0);
 	const int j1 = zeta.extent(1);
 	const int k1 = zeta.extent(2);
@@ -138,9 +214,13 @@ arma::generator::Plain_wave_model<T>::do_generate() {
 				const T y = grid(k, 2);
 				T sum  = 0;
 				for (int i=0; i<nwaves; ++i) {
-					sum += amplitude(i) * sin(
-						_2pi<T>*wavenum_x(i)*x + _2pi<T>*wavenum_y(i)*y
-						- velocity(i)*t + phase(i) + shift
+					sum += elevation(
+						this->amplitude(i),
+						this->wavenum_x(i),
+						this->wavenum_y(i),
+						this->velocity(i),
+						this->phase(i),
+						x, y, t
 					);
 				}
 				zeta(t, j, k) = sum;

@@ -14,7 +14,9 @@ namespace arma {
 
 		enum struct Function {
 			Sine,
-			Cosine
+			Cosine,
+			/// Third-order Stokes wave on deep water
+			Stokes
 		};
 
 		std::istream&
@@ -46,6 +48,7 @@ namespace arma {
 			using typename Basic_model<T>::grid_type;
 
 		private:
+			/// Wave profile function.
 			function_type _func = function_type::Cosine;
 			array_type _waves;
 
@@ -108,8 +111,9 @@ namespace arma {
 			void read(std::istream& in) override;
 
 		private:
+			template <class Func>
 			Array3D<T>
-			do_generate();
+			do_generate(Func elevation);
 
 		};
 
