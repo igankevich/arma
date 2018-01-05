@@ -1,20 +1,17 @@
-model = MA {
-	out_grid = (100,64,20)
+model = AR {
+	out_grid = (50,100,100)
 	acf = {
-		func = propagating_wave
-		grid = (20,20,10) : (10,10,5)
+		func = standing_wave
+		grid = (20,40,5) : (5,10,2.5)
 	}
-	order = (20,20,10)
-	algorithm = fixed_point_iteration
-	max_iterations = 10000
-	eps = 1e-5
-	min_var_wn = 1e-6
-	output = surface,csv
+	order = (20,40,5)
+	least_squares = 0
+	no_seed = 1
+	output = surface,acf,csv,blitz
 	validate = 0
 }
 velocity_potential_solver = high_amplitude {
-#	wnmax = from (0,0) to (0,0.25) npoints (2,2)
 	depth = 12
-	domain = from (10,-12) to (10,3) npoints (1,128)
+	domain = from (20,-12) to (20,3) npoints (1,128)
 }
 

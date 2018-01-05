@@ -29,16 +29,17 @@ arma::ARMA_driver<T>::velocity_potential_grid() const {
 template <class T>
 void
 arma::ARMA_driver<T>::write_wavy_surface() {
-	if (this->_model->writes_in_parallel()) {
-		return;
-	}
 	if (this->oflags().isset(Output_flags::Blitz)) {
 		std::string filename = get_surface_filename(Output_flags::Blitz);
 		std::ofstream(filename) << _zeta;
-	} else if (this->oflags().isset(Output_flags::CSV)) {
+	}
+	if (this->oflags().isset(Output_flags::CSV)) {
 		std::string filename = get_surface_filename(Output_flags::CSV);
+		std::clog << "this->_zeta.grid()=" << this->_zeta.grid() << std::endl;
 		bits::write_csv(filename, _zeta, _zeta.grid());
-	} else if (this->oflags().isset(Output_flags::Binary)) {
+	}
+	if (this->oflags().isset(Output_flags::Binary) &&
+		!this->_model->writes_in_parallel()) {
 		std::string filename = get_surface_filename(Output_flags::Binary);
 		io::Binary_stream out(filename);
 		out.write(this->_zeta);
@@ -51,7 +52,8 @@ arma::ARMA_driver<T>::write_velocity_potentials() {
 	if (this->oflags().isset(Output_flags::Blitz)) {
 		std::string filename = get_velocity_filename(Output_flags::Blitz);
 		std::ofstream(filename) << this->_vpotentials;
-	} else if (this->oflags().isset(Output_flags::CSV)) {
+	}
+	if (this->oflags().isset(Output_flags::CSV)) {
 		std::string filename = get_velocity_filename(Output_flags::CSV);
 		bits::write_4d_csv(
 			filename,
@@ -59,7 +61,8 @@ arma::ARMA_driver<T>::write_velocity_potentials() {
 			this->_solver->domain(),
 			this->_model->grid()
 		);
-	} else if (this->oflags().isset(Output_flags::Binary)) {
+	}
+	if (this->oflags().isset(Output_flags::Binary)) {
 		// TODO
 	}
 }
@@ -67,8 +70,9 @@ arma::ARMA_driver<T>::write_velocity_potentials() {
 template <class T>
 void
 arma::ARMA_driver<T>::generate_wavy_surface() {
-	echo_parameters();
+	this->echo_parameters();
 	this->_zeta.reference(this->_model->generate());
+	this->_zeta.setgrid(this->wavy_surface_grid());
 	#if ARMA_OPENCL
 	this->_zeta.copy_to_host_if_exists();
 	#endif
@@ -78,7 +82,6 @@ arma::ARMA_driver<T>::generate_wavy_surface() {
 template <class T>
 void
 arma::ARMA_driver<T>::compute_velocity_potentials() {
-	_zeta.setgrid(this->wavy_surface_grid());
 	this->_vpotentials.reference(_solver->operator()(_zeta));
 }
 

@@ -99,7 +99,6 @@ arma::velocity::Velocity_potential_solver<T>
 	const Discrete_function<T, 3>& zeta,
 	const int idx_t
 ) {
-	/*
 	using blitz::Range;
 	const T t = zeta.grid()(idx_t, 0);
 	const T dt = zeta.grid().delta(0);
@@ -109,7 +108,6 @@ arma::velocity::Velocity_potential_solver<T>
 		dt
 	);
 	this->_wnmax = domain2_type{{0,0}, T(1) / tmp.lbound(), {2,2}};
-	*/
 	#ifndef NDEBUG
 	std::clog << "this->_wnmax=" << this->_wnmax << std::endl;
 	#endif

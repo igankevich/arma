@@ -62,6 +62,7 @@ arma::generator::MA_model<T>::generate_surface(
 template <class T>
 void
 arma::generator::MA_model<T>::read(std::istream& in) {
+	typedef typename Basic_model<T>::grid_type grid_type;
 	sys::parameter_map params({
 		{"algorithm", sys::make_param(this->_algo)},
 		{"max_iterations", sys::make_param(this->_maxiter, validate_positive<int>)},
@@ -70,6 +71,11 @@ arma::generator::MA_model<T>::read(std::istream& in) {
 	}, true);
 	params.insert(this->parameters());
 	in >> params;
+	// resize output grid to match ACF delta size
+	this->_outgrid = grid_type(
+		this->_outgrid.num_points(),
+		this->_acf.grid().delta() * this->_outgrid.num_patches()
+	);
 	this->_theta.resize(this->order());
 }
 
