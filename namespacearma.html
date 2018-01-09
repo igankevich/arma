@@ -298,6 +298,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ac09689c9738cfe121ae769504791a262"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:ac09689c9738cfe121ae769504791a262"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#ac09689c9738cfe121ae769504791a262">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="classarma_1_1Wave.html">Wave</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;rhs)</td></tr>
 <tr class="separator:ac09689c9738cfe121ae769504791a262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7606fe7fe642c1d1d8b7004beeb57794"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a7606fe7fe642c1d1d8b7004beeb57794"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#a7606fe7fe642c1d1d8b7004beeb57794">solve_yule_walker</a> (<a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; acf, const <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> variance, const int max_order)</td></tr>
+<tr class="memdesc:a7606fe7fe642c1d1d8b7004beeb57794"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute AR model coefficients using an order-recursvive method from <a class="el" href="citelist.html#CITEREF_ByoungSeon1999">ByoungSeon1999</a>.  <a href="#a7606fe7fe642c1d1d8b7004beeb57794">More...</a><br/></td></tr>
+<tr class="separator:a7606fe7fe642c1d1d8b7004beeb57794"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -1155,6 +1159,44 @@ template&lt;class T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7606fe7fe642c1d1d8b7004beeb57794"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">template void arma::solve_yule_walker </td>
+          <td>(</td>
+          <td class="paramtype">Array3D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;&#160;</td>
+          <td class="paramname"><em>acf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td>
+          <td class="paramname"><em>variance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>max_order</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute AR model coefficients using an order-recursvive method from <a class="el" href="citelist.html#CITEREF_ByoungSeon1999">ByoungSeon1999</a>. </p>
+<p>The AR model order is determined automatically. </p>
+<p>Initial stage. </p>
 
 </div>
 </div>

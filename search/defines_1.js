@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['acf',['ACF',['../yule__walker_8cc.html#a25ffdebeaf96183e2a101ee72b62c60a',1,'yule_walker.cc']]],
   ['arma_5fevent_5fend',['ARMA_EVENT_END',['../profile_8hh.html#a35f8010242a51b9c902b96a37287a186',1,'profile.hh']]],
   ['arma_5fevent_5fstart',['ARMA_EVENT_START',['../profile_8hh.html#a66f23c66d05007904d4db05cf178a066',1,'profile.hh']]],
   ['arma_5fprofile_5fblock',['ARMA_PROFILE_BLOCK',['../profile_8hh.html#a799d506fefd91b4c6f7946ea141bd562',1,'profile.hh']]],
