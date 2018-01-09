@@ -56,6 +56,14 @@ namespace linalg {
 		return result;
 	}
 
+	template <int N>
+	double
+	dot(blitz::Array<double,N> lhs, blitz::Array<double,N> rhs) {
+		assert(lhs.numElements() == rhs.numElements());
+		const int n = lhs.numElements();
+		return cblas_ddot(n, lhs.data(), 1, rhs.data(), 1);
+	}
+
 	template <class T>
 	bool
 	is_symmetric(Matrix<T>& rhs);

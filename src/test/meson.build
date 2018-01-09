@@ -134,3 +134,20 @@ test(
 		dependencies: [gtest,libblitz,libgsl] + fourier_deps
 	)
 )
+
+test(
+	'arma::solve_yule_walker',
+	executable(
+		'yule-walker-test',
+		sources: ['yule-walker-test.cc'] + yule_walker_files + linalg_files,
+		include_directories: incdirs,
+		dependencies: [
+			gtest,
+			libblitz,
+			libblas,
+			liblapack,
+			libgsl
+		],
+		link_args: '-llapacke'
+	)
+)

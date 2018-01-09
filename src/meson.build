@@ -27,6 +27,11 @@ output_flags_files = files([
 	'output_flags.cc'
 ])
 
+
+yule_walker_files = files([
+	'yule_walker.cc',
+])
+
 common_src = files([
 	'arma.cc',
 	'params.cc',
@@ -53,7 +58,7 @@ common_src = files([
 	'util.cc',
 	'wave.cc',
 	'factor_waves.cc',
-]) + linalg_files + apmath_files + nonlinear_files + output_flags_files
+]) + linalg_files + apmath_files + nonlinear_files + output_flags_files + yule_walker_files
 
 if get_option('profile')
 	common_src += 'profile.cc'
