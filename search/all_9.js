@@ -19,6 +19,7 @@ var searchData=
   ['interval',['interval',['../classlinalg_1_1Bisection.html#ab2c3fd7b0e90ae23e999f803dddb53dd',1,'linalg::Bisection::interval(T a, T b) noexcept'],['../classlinalg_1_1Bisection.html#af2ea6aff754b66a0e9798b6815db7c36',1,'linalg::Bisection::interval() const noexcept']]],
   ['interval_5ffactor',['interval_factor',['../visual_8cc.html#a018a601b784527f0c375da6b60c74903',1,'visual.cc']]],
   ['inverse',['inverse',['../namespacelinalg.html#a76a1b210bf2cde19b6d403b2cdc14a7a',1,'linalg::inverse(Matrix&lt; float &gt; &amp;A)'],['../namespacelinalg.html#af74cbb098b0b25138076a1784462caa8',1,'linalg::inverse(Matrix&lt; double &gt; &amp;A)'],['../namespacelinalg.html#ac2e60444423805f2a67ec067102af1f4',1,'linalg::inverse(Matrix&lt; T &gt; &amp;A)']]],
+  ['inverse_5fsymmetric',['inverse_symmetric',['../namespacelinalg.html#ac02d9f52c1210b77f8beb570e0d03c28',1,'linalg::inverse_symmetric(Matrix&lt; float &gt; &amp;A)'],['../namespacelinalg.html#a2ce92f135f777d0392c1c102d52aff80',1,'linalg::inverse_symmetric(Matrix&lt; double &gt; &amp;A)'],['../namespacelinalg.html#affc3ff4017b413f0b1ab67e8572ef9b5',1,'linalg::inverse_symmetric(Matrix&lt; T &gt; &amp;A)']]],
   ['is_5fpoint',['is_point',['../classarma_1_1apmath_1_1closed__interval.html#a367052c56460b64786a8bf93bcd7639b',1,'arma::apmath::closed_interval']]],
   ['is_5fpositive_5fdefinite',['is_positive_definite',['../namespacelinalg.html#a73b5ec42de3559e7bb5f277d93286e9f',1,'linalg']]],
   ['is_5fsymmetric',['is_symmetric',['../namespacelinalg.html#a69214c497b39b6fad1afc7cbc5e98bcd',1,'linalg']]],
