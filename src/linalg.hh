@@ -34,9 +34,13 @@ namespace linalg {
 	void
 	inverse(Matrix<T>& A);
 
+	template <class T>
+	void
+	inverse_symmetric(Matrix<T>& A);
+
 	template <int N>
 	blitz::Array<float,N>
-	operator*(Matrix<float> lhs, blitz::Array<float,N> rhs) {
+	multiply_mv(Matrix<float> lhs, blitz::Array<float,N> rhs) {
 		const int m = lhs.rows(), n = lhs.cols();
 		blitz::Array<float,N> result(rhs.shape());
 		result = 0;
@@ -47,7 +51,7 @@ namespace linalg {
 
 	template <int N>
 	blitz::Array<double,N>
-	operator*(Matrix<double> lhs, blitz::Array<double,N> rhs) {
+	multiply_mv(Matrix<double> lhs, blitz::Array<double,N> rhs) {
 		const int m = lhs.rows(), n = lhs.cols();
 		blitz::Array<double,N> result(rhs.shape());
 		result = 0;

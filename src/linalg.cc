@@ -59,7 +59,33 @@ namespace {
 		std::clog << "det=" << det << std::endl;
 		info = getri(LAPACK_ROW_MAJOR, m, A.data(), m, ipiv.data());
 		if (info != 0) {
-			throw std::runtime_error("getrf error");
+			throw std::runtime_error("getri error");
+		}
+	}
+
+	template <class T, class Factor, class Inverse>
+	void
+	do_inverse_symmetric(linalg::Matrix<T>& A, Factor sytrf, Inverse sytri) {
+		assert(A.rows() == A.cols());
+		const int m = A.rows();
+		linalg::Vector<lapack_int> ipiv(m);
+		int info = 0;
+		info = sytrf(LAPACK_ROW_MAJOR, 'U', m, A.data(), m, ipiv.data());
+		if (info != 0) {
+			throw std::runtime_error("sytrf error");
+		}
+		long double det = 1;
+		for (int i=0; i<m; ++i) {
+			if (ipiv(i) != i) {
+				det = -det*A(i,i);
+			} else {
+				det *= A(i,i);
+			}
+		}
+		std::clog << "det=" << det << std::endl;
+		info = sytri(LAPACK_ROW_MAJOR, 'U', m, A.data(), m, ipiv.data());
+		if (info != 0) {
+			throw std::runtime_error("sytri error");
 		}
 	}
 
@@ -91,6 +117,18 @@ namespace linalg {
 		do_inverse<double,LAPACKE_dgetrf,LAPACKE_dgetri>(A);
 	}
 
+
+	template <>
+	void
+	inverse_symmetric(Matrix<float>& A) {
+		do_inverse_symmetric<float>(A,LAPACKE_ssytrf,LAPACKE_ssytri);
+	}
+
+	template <>
+	void
+	inverse_symmetric(Matrix<double>& A) {
+		do_inverse_symmetric<double>(A,LAPACKE_dsytrf,LAPACKE_dsytri);
+	}
 }
 
 

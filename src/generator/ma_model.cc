@@ -251,7 +251,7 @@ arma::generator::MA_model<T>::newton_raphson(
 			//					}
 		}
 		linalg::inverse(tau_matrix);
-		tau -= linalg::operator*(tau_matrix, f);
+		tau -= linalg::multiply_mv(tau_matrix, f);
 		theta = -tau / tau(0, 0, 0);
 		/// 3. Zero out \f$\theta_0\f$.
 		theta(0, 0, 0) = 0;

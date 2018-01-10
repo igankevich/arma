@@ -176,6 +176,7 @@ arma::solve_yule_walker(Array3D<T> acf, const T variance0, const int max_order) 
 	std::clog << "R_0_1=" << R_0_1 << std::endl;
 	matrix_type R_sup_1_1(R_1_1.shape());
 	R_sup_1_1 = R_1_1;
+	assert(linalg::is_symmetric(R_sup_1_1));
 	linalg::inverse(R_sup_1_1);
 	std::clog << "R_1_1^{-1}=" << R_sup_1_1 << std::endl;
 //	std::clog << "R_1_1*R_1_1^{-1}=" << (R_1_1*R_sup_1_1) << std::endl;

@@ -16,7 +16,7 @@ TEST(Multiply, IdentityMatrix) {
 	linalg::Vector<T> rhs(n);
 	lhs = (i == j); // identity matrix
 	rhs = T(1);
-	rhs = linalg::operator*(lhs, rhs);
+	rhs = linalg::multiply_mv(lhs, rhs);
 	EXPECT_TRUE(all(rhs == T(1)));
 }
 
@@ -26,7 +26,7 @@ TEST(Multiply, Matrix2) {
 	linalg::Vector<T> rhs(n);
 	lhs = 1.0, 2.0, 3.0, 4.0;
 	rhs = 1.0, 2.0;
-	rhs = linalg::operator*(lhs, rhs);
+	rhs = linalg::multiply_mv(lhs, rhs);
 	EXPECT_NEAR(rhs(0), T(5), T(1e-3));
 	EXPECT_NEAR(rhs(1), T(11), T(1e-3));
 }
