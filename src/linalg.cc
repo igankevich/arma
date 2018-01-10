@@ -40,9 +40,27 @@ namespace {
 	void
 	do_inverse(linalg::Matrix<T>& A) {
 		const int m = A.rows(), n = A.cols();
-		linalg::Vector<lapack_int> ipiv(std::min(m, n));
-		getrf(LAPACK_ROW_MAJOR, m, n, A.data(), m, ipiv.data());
-		getri(LAPACK_ROW_MAJOR, m, A.data(), m, ipiv.data());
+		assert(m == n);
+		const int k = std::min(m, n);
+		linalg::Vector<lapack_int> ipiv(k);
+		int info = 0;
+		info = getrf(LAPACK_ROW_MAJOR, m, n, A.data(), m, ipiv.data());
+		if (info != 0) {
+			throw std::runtime_error("getrf error");
+		}
+		long double det = 1;
+		for (int i=0; i<k; ++i) {
+			if (ipiv(i) != i) {
+				det = -det*A(i,i);
+			} else {
+				det *= A(i,i);
+			}
+		}
+		std::clog << "det=" << det << std::endl;
+		info = getri(LAPACK_ROW_MAJOR, m, A.data(), m, ipiv.data());
+		if (info != 0) {
+			throw std::runtime_error("getrf error");
+		}
 	}
 
 }

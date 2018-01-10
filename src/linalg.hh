@@ -56,6 +56,32 @@ namespace linalg {
 		return result;
 	}
 
+	inline Matrix<double>
+	multiply(Matrix<double> lhs, Matrix<double> rhs) {
+		assert(lhs.cols() == rhs.rows());
+		const int m = lhs.rows();
+		const int n = rhs.cols();
+		const int k = rhs.rows();
+		Matrix<double> result(blitz::shape(m, n));
+		cblas_dgemm(
+			CblasRowMajor,
+			CblasNoTrans,
+			CblasNoTrans,
+			m,
+			n,
+			k,
+			1.0,
+			lhs.data(),
+			k,
+			rhs.data(),
+			n,
+			0.0,
+			result.data(),
+			n
+		);
+		return result;
+	}
+
 	template <int N>
 	double
 	dot(blitz::Array<double,N> lhs, blitz::Array<double,N> rhs) {
