@@ -12,7 +12,7 @@ namespace arma {
 	The AR model order is determined automatically.
 	*/
 	template <class T>
-	void
+	Array3D<T>
 	solve_yule_walker(Array3D<T> acf, const T variance, const int max_order);
 
 }

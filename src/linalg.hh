@@ -60,6 +60,32 @@ namespace linalg {
 		return result;
 	}
 
+	inline Vector<double>
+	multiply_by_column_vector(Matrix<double> lhs, Vector<double> rhs) {
+		assert(lhs.extent(1) == rhs.extent(0));
+		const int m = lhs.rows();
+		const int n = 1;
+		const int k = rhs.extent(0);
+		Vector<double> result(blitz::shape(m));
+		cblas_dgemm(
+			CblasRowMajor,
+			CblasNoTrans,
+			CblasNoTrans,
+			m,
+			n,
+			k,
+			1.0,
+			lhs.data(),
+			k,
+			rhs.data(),
+			n,
+			0.0,
+			result.data(),
+			n
+		);
+		return result;
+	}
+
 	inline Matrix<double>
 	multiply(Matrix<double> lhs, Matrix<double> rhs) {
 		assert(lhs.cols() == rhs.rows());
@@ -86,9 +112,9 @@ namespace linalg {
 		return result;
 	}
 
-	template <int N>
+	template <int M, int N>
 	double
-	dot(blitz::Array<double,N> lhs, blitz::Array<double,N> rhs) {
+	dot(blitz::Array<double,M> lhs, blitz::Array<double,N> rhs) {
 		assert(lhs.numElements() == rhs.numElements());
 		const int n = lhs.numElements();
 		return cblas_ddot(n, lhs.data(), 1, rhs.data(), 1);

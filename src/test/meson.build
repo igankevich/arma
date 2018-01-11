@@ -139,7 +139,7 @@ test(
 	'arma::solve_yule_walker',
 	executable(
 		'yule-walker-test',
-		sources: ['yule-walker-test.cc'] + yule_walker_files + linalg_files,
+		sources: ['yule-walker-test.cc'] + yule_walker_files + linalg_files + ['../generator/voodoo.cc'],
 		include_directories: incdirs,
 		dependencies: [
 			gtest,
