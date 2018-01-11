@@ -28,6 +28,14 @@ namespace {
 		return blitz::shape(6*a, 3*b*b + 3*b + 1);
 	}
 
+	/**
+	Computes row vector \f$\boldsymbol{\rho}_{i,j,k;d} = \left(
+		\rho_{i-d,j-d,k-d},
+		\boldsymbol{\rho}_{i,j,k;d,1},
+		\ldots,
+		\boldsymbol{\rho}_{i,j,k;d,d}
+	\right)\f$.
+	*/
 	template <class T>
 	inline blitz::Array<T,1>
 	rho_vector(int i, int j, int k, int d, const blitz::Array<T,3>& acf) {
@@ -35,26 +43,74 @@ namespace {
 		typedef blitz::Array<T,1> vector_type;
 		using blitz::Range;
 		vector_type rho_ijkd(vector_shape(d));
-		/// Compute the first element.
 		T* data = rho_ijkd.data();
 		*data++ = ACF(i-d, j-d, k-d);
-		/// Compute row vectors \f$\rho_{i,j,k;d,e}\f$.
+		/**
+		Compute the first element, then for \f$e=1,\ldots,d\f$
+		compute sub-vectors \f$\rho_{i,j,k;d,e} = \left(
+			\boldsymbol{\rho}_{i,j,k;d,e}^{(1)},
+			\ldots,
+			\boldsymbol{\rho}_{i,j,k;d,e}^{(6)}
+		\right)\f$ where
+		*/
 		for (int e=1; e<=d; ++e) {
+			/**
+			\f$\rho_{i,j,k;d,e}^{(1)} = \left(
+				\rho_{i-d+e,j-d,k-d},
+				\ldots,
+				\rho_{i-d+e,j-d+e-1,k-d}
+			\right)\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = ACF(i-d+e, j-d+idx, k-d);
 			}
+			/**
+			\f$\rho_{i,j,k;d,e}^{(2)} = \left(
+				\rho_{i-d+e,j-d+e,k-d},
+				\ldots,
+				\rho_{i-d+1,j-d+e,k-d}
+			\right)\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = ACF(i-d+e-idx, j-d+e, k-d);
 			}
+			/**
+			\f$\rho_{i,j,k;d,e}^{(3)} = \left(
+				\rho_{i-d,j-d+e,k-d},
+				\ldots,
+				\rho_{i-d,j-d+e,k-d+e-1}
+			\right)\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = ACF(i-d, j-d+e, k-d+idx);
 			}
+			/**
+			\f$\rho_{i,j,k;d,e}^{(4)} = \left(
+				\rho_{i-d,j-d+e,k-d+e},
+				\ldots,
+				\rho_{i-d,j-d+1,k-d+e}
+			\right)\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = ACF(i-d, j-d+e-idx, k-d+e);
 			}
+			/**
+			\f$\rho_{i,j,k;d,e}^{(5)} = \left(
+				\rho_{i-d,j-d,k-d+e},
+				\ldots,
+				\rho_{i-d+e-1,j-d,k-d+e}
+			\right)\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = ACF(i-d+idx, j-d, k-d+e);
 			}
+			/**
+			\f$\rho_{i,j,k;d,e}^{(5)} = \left(
+				\rho_{i-d+e,j-d,k-d+e},
+				\ldots,
+				\rho_{i-d+e,j-d,k-d+1}
+			\right)\f$.
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = ACF(i-d+e, j-d, k-d+e-idx);
 			}
@@ -63,7 +119,10 @@ namespace {
 		return rho_ijkd;
 	}
 
-	// For d=0.
+	/**
+	Computes row vector for \f$d=0\f$ as
+	\f$\boldsymbol{\rho}_{i,j,k;0} = \left( \rho_{i,j,k} \right)\f$.
+	*/
 	template <class T>
 	inline T
 	rho_scalar(int i, int j, int k, const blitz::Array<T,3>& acf) {
@@ -72,38 +131,89 @@ namespace {
 		#undef ACF
 	}
 
+	/**
+	Computes a part of Yule---Walker matrix \f$R_{a,b} =
+	\begin{bmatrix}
+	\boldsymbol{\rho}_{a,a,a;b}\\
+	R_{a,b;1}\\
+	\vdots\\
+	R_{a,b;a}\\
+	\end{bmatrix}\f$.
+	*/
 	template <class T>
 	inline blitz::Array<T,2>
 	R_matrix(int a, int b, const blitz::Array<T,3>& acf) {
 		using blitz::Range;
 		typedef blitz::Array<T,2> matrix_type;
 		matrix_type R_ab(matrix_shape(a, b));
-		/// Compute the first row.
 		R_ab(0, Range::all()) = rho_vector(a, a, a, b, acf);
-		/// Compute submatrices \f$\R_{a,b;e}\f$.
+		/**
+		Compute the first row, then for \f$e=1,\ldots,a\f$
+		compute submatrices \f$R_{a,b;e} = \begin{bmatrix}
+		R_{a,b;e}^{(1)}\\
+		\vdots\\
+		R_{a,b;e}^{(6)}\\
+		\end{bmatrix}\f$ where
+		*/
 		int offset = 1;
 		for (int e=1; e<=a; ++e) {
-			/// Compute \f$\R_{a,b;e}^{(1)}\f$.
+			/**
+			\f$R_{a,b;e}^{(1)} = \begin{bmatrix}
+			\boldsymbol{\rho}_{a-e,a,a;b}\\
+			\vdots\\
+			\boldsymbol{\rho}_{a-e,a-e+1,a;b}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				R_ab(offset++, Range::all()) = rho_vector(a-e, a-idx, a, b, acf);
 			}
-			/// Compute \f$\R_{a,b;e}^{(2)}\f$.
+			/**
+			\f$R_{a,b;e}^{(2)} = \begin{bmatrix}
+			\boldsymbol{\rho}_{a-e,a-e,a;b}\\
+			\vdots\\
+			\boldsymbol{\rho}_{a-1,a-e,a;b}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				R_ab(offset++, Range::all()) = rho_vector(a-e+idx, a-e, a, b, acf);
 			}
-			/// Compute \f$\R_{a,b;e}^{(3)}\f$.
+			/**
+			\f$R_{a,b;e}^{(3)} = \begin{bmatrix}
+			\boldsymbol{\rho}_{a,a-e,a;b}\\
+			\vdots\\
+			\boldsymbol{\rho}_{a,a-e,a-e+1;b}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				R_ab(offset++, Range::all()) = rho_vector(a, a-e, a-idx, b, acf);
 			}
-			/// Compute \f$\R_{a,b;e}^{(4)}\f$.
+			/**
+			\f$R_{a,b;e}^{(4)} = \begin{bmatrix}
+			\boldsymbol{\rho}_{a,a-e,a-e;b}\\
+			\vdots\\
+			\boldsymbol{\rho}_{a,a-1,a-e;b}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				R_ab(offset++, Range::all()) = rho_vector(a, a-e+idx, a-e, b, acf);
 			}
-			/// Compute \f$\R_{a,b;e}^{(5)}\f$.
+			/**
+			\f$R_{a,b;e}^{(5)} = \begin{bmatrix}
+			\boldsymbol{\rho}_{a,a,a-e;b}\\
+			\vdots\\
+			\boldsymbol{\rho}_{a-e+1,a,a-e;b}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				R_ab(offset++, Range::all()) = rho_vector(a-idx, a, a-e, b, acf);
 			}
-			/// Compute \f$\R_{a,b;e}^{(6)}\f$.
+			/**
+			\f$R_{a,b;e}^{(6)} = \begin{bmatrix}
+			\boldsymbol{\rho}_{a-e,a,a-e;b}\\
+			\vdots\\
+			\boldsymbol{\rho}_{a-e,a,a-1;b}\\
+			\end{bmatrix}\f$.
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				R_ab(offset++, Range::all()) = rho_vector(a-e, a, a-e+idx, b, acf);
 			}
@@ -111,7 +221,9 @@ namespace {
 		return R_ab;
 	}
 
-	// For b=0.
+	/**
+	Computes a part of Yule---Walker matrix for \f$b=0\f$.
+	*/
 	template <class T>
 	inline blitz::Array<T,1>
 	R_vector_b0(int a, const blitz::Array<T,3>& acf) {
@@ -120,31 +232,73 @@ namespace {
 		typedef blitz::Array<T,1> vector_type;
 		vector_type R_ab(vector_shape(a));
 		T* data = R_ab.data();
-		/// Compute the first row.
+		/**
+		Compute the first row, then for \f$e=1,\ldots,a\f$
+		compute submatrices \f$R_{a,0;e} = \begin{bmatrix}
+		R_{a,0;e}^{(1)}\\
+		\vdots\\
+		R_{a,0;e}^{(6)}\\
+		\end{bmatrix}\f$ where
+		*/
 		*data++ = rho_scalar(a, a, a, acf);
-		/// Compute submatrices \f$\R_{a,0;e}\f$.
 		for (int e=1; e<=a; ++e) {
-			/// Compute \f$\R_{a,0;e}^{(1)}\f$.
+			/**
+			\f$R_{a,0;e}^{(1)} = \begin{bmatrix}
+			\rho_{a-e,a,a}\\
+			\vdots\\
+			\rho_{a-e,a-e+1,a}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = rho_scalar(a-e, a-idx, a, acf);
 			}
-			/// Compute \f$\R_{a,0;e}^{(2)}\f$.
+			/**
+			\f$R_{a,0;e}^{(2)} = \begin{bmatrix}
+			\rho_{a-e,a-e,a}\\
+			\vdots\\
+			\rho_{a-1,a-e,a}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = rho_scalar(a-e+idx, a-e, a, acf);
 			}
-			/// Compute \f$\R_{a,0;e}^{(3)}\f$.
+			/**
+			\f$R_{a,0;e}^{(3)} = \begin{bmatrix}
+			\rho_{a,a-e,a}\\
+			\vdots\\
+			\rho_{a,a-e,a-e+1}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = rho_scalar(a, a-e, a-idx, acf);
 			}
-			/// Compute \f$\R_{a,0;e}^{(4)}\f$.
+			/**
+			\f$R_{a,0;e}^{(4)} = \begin{bmatrix}
+			\rho_{a,a-e,a-e}\\
+			\vdots\\
+			\rho_{a,a-1,a-e}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = rho_scalar(a, a-e+idx, a-e, acf);
 			}
-			/// Compute \f$\R_{a,0;e}^{(5)}\f$.
+			/**
+			\f$R_{a,0;e}^{(5)} = \begin{bmatrix}
+			\rho_{a,a,a-e}\\
+			\vdots\\
+			\rho_{a-e+1,a,a-e}\\
+			\end{bmatrix}\f$,
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = rho_scalar(a-idx, a, a-e, acf);
 			}
-			/// Compute \f$\R_{a,0;e}^{(6)}\f$.
+			/**
+			\f$R_{a,0;e}^{(6)} = \begin{bmatrix}
+			\rho_{a-e,a,a-e}\\
+			\vdots\\
+			\rho_{a-e,a,a-1}\\
+			\end{bmatrix}\f$.
+			*/
 			for (int idx=0; idx<e; ++idx) {
 				*data++ = rho_scalar(a-e, a, a-e+idx, acf);
 			}
@@ -152,13 +306,17 @@ namespace {
 		return R_ab;
 	}
 
-	// For a=0.
+	/**
+	Computes a part of Yule---Walker matrix for \f$a=0\f$:
+	\f$R_{0,b} = \boldsymbol{\rho}_{0,0,0;b} \f$.
+	*/
 	template <class T>
 	inline blitz::Array<T,1>
 	R_vector_a0(int b, blitz::Array<T,3> acf) {
 		return rho_vector(0, 0, 0, b, acf);
 	}
 
+	/// Map result vector back to 3-dimensional array.
 	template <class T>
 	inline blitz::Array<T,3>
 	result_array(blitz::Array<blitz::Array<T,1>,1> beta, int order) {
