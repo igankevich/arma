@@ -1,11 +1,15 @@
 var searchData=
 [
+  ['ijk',['ijk',['../structanonymous__namespace_02ar__model__parallel_8cc_03_1_1Partition.html#ad201739508e89ed9cf32cda3ef55e7c1',1,'anonymous_namespace{ar_model_parallel.cc}::Partition']]],
   ['index_2ehh',['index.hh',['../index_8hh.html',1,'']]],
   ['index_5ftype',['index_type',['../classarma_1_1ARMA__realtime__driver.html#a877d6beb1d2020cc88c37f57bc3b11cb',1,'arma::ARMA_realtime_driver']]],
   ['init',['init',['../classarma_1_1apmath_1_1Fourier__transform.html#a9444982fd784b57394f39f489717029a',1,'arma::apmath::Fourier_transform::init(const shape_type &amp;shp)'],['../classarma_1_1apmath_1_1Fourier__transform.html#a9444982fd784b57394f39f489717029a',1,'arma::apmath::Fourier_transform::init(const shape_type &amp;shp)'],['../structarma_1_1prng_1_1parallel__mt.html#ab8e0d05fb01e2af77e3dc25f59c91ac2',1,'arma::prng::parallel_mt::init()'],['../namespacearma_1_1opencl.html#a30b668f93c6f401eaa983d5e88a45919',1,'arma::opencl::init()']]],
   ['init_5fbuffers',['init_buffers',['../classarma_1_1ARMA__realtime__driver.html#ae2527430fa1c3e9cf4a2465e672eb58f',1,'arma::ARMA_realtime_driver']]],
+  ['init_5fcache_5fdirectory',['init_cache_directory',['../classanonymous__namespace_02opencl_8cc_03_1_1OpenCL.html#a26bd798efc563404c00e3d9dcde80f61',1,'anonymous_namespace{opencl.cc}::OpenCL']]],
+  ['init_5fcounters',['init_counters',['../classanonymous__namespace_02ar__model__bscheduler_8cc_03_1_1ar__master__kernel.html#a2cb75eddb16054243148e832e8c77f33',1,'anonymous_namespace{ar_model_bscheduler.cc}::ar_master_kernel']]],
   ['init_5findices',['init_indices',['../classarma_1_1ARMA__realtime__driver.html#a85fb221a2571fbfa9e13a1dd7ceb1f61',1,'arma::ARMA_realtime_driver']]],
   ['init_5fon_5fdevice',['init_on_device',['../classarma_1_1opencl_1_1Array.html#afd3302b62a477f802a8b4a82e66fe3e3',1,'arma::opencl::Array']]],
+  ['init_5fopencl',['init_opencl',['../classanonymous__namespace_02opencl_8cc_03_1_1OpenCL.html#a8d6a57e376fe189bff01a68462b0a42d',1,'anonymous_namespace{opencl.cc}::OpenCL']]],
   ['init_5fopengl',['init_opengl',['../arma__realtime_8cc.html#a1137af47adfa1f40d871304a42f34b35',1,'arma_realtime.cc']]],
   ['init_5fstate',['init_state',['../structarma_1_1prng_1_1mt__config.html#ab7d1aaece2a7442e1d4b8a48e9396e49',1,'arma::prng::mt_config']]],
   ['initopengl',['initOpenGL',['../visual_8cc.html#a4bbc4d876e33ad2580da08278533e83d',1,'visual.cc']]],

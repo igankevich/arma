@@ -21,5 +21,7 @@ var searchData=
   ['transform_5fwrapper_2ehh',['transform_wrapper.hh',['../transform__wrapper_8hh.html',1,'']]],
   ['transforms_2ehh',['transforms.hh',['../transforms_8hh.html',1,'']]],
   ['triangulation_5ftype',['triangulation_type',['../classarma_1_1Delaunay__interpolation.html#ae93c70f29bf8f00a9b0a203cdd438e7a',1,'arma::Delaunay_interpolation']]],
+  ['trim',['trim',['../namespaceanonymous__namespace_02opencl_8cc_03.html#a32470c9f8fe6ad160f66840f2e3efff4',1,'anonymous_namespace{opencl.cc}']]],
+  ['trim_5fright',['trim_right',['../namespaceanonymous__namespace_02opencl_8cc_03.html#a61c11a6c588141b3514bb1fcf759ab15',1,'anonymous_namespace{opencl.cc}::trim_right()'],['../namespaceanonymous__namespace_02params_8cc_03.html#a18dd03b059d3543cd4db057d4f4d9b9d',1,'anonymous_namespace{params.cc}::trim_right()']]],
   ['types_2ehh',['types.hh',['../types_8hh.html',1,'']]]
 ];

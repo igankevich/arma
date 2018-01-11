@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classarma_1_1io_1_1Binary__stream.html" title="Output stream that writes data in binary format using network byte order. " alt="" coords="6,5,167,32"/>
+<area shape="rect" id="node1" href="$structarma_1_1ARMA__driver.html" title="Control class that generates wavy surface and computes velocity potential field. " alt="" coords="6,12,175,39"/>
+<area shape="rect" id="node2" href="$classarma_1_1ARMA__realtime__driver.html" title="An ARMA_driver suiltable for real&#45;time visualisation. " alt="" coords="225,5,375,46"/>
 </map>

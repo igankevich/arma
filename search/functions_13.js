@@ -7,5 +7,7 @@ var searchData=
   ['transform_5facf',['transform_ACF',['../classarma_1_1nonlinear_1_1NIT__transform.html#ae554ac5c3d1a0bedfc805b556366a702',1,'arma::nonlinear::NIT_transform::transform_ACF()'],['../namespacearma_1_1nonlinear.html#a64e40ee6602206dc4162a19c64ea8d9d',1,'arma::nonlinear::transform_ACF()']]],
   ['transform_5fcdf',['transform_CDF',['../classarma_1_1nonlinear_1_1NIT__transform.html#ad4f831bad61719e592529f446e2e0f78',1,'arma::nonlinear::NIT_transform::transform_CDF()'],['../namespacearma_1_1nonlinear.html#a0c055c7ce4366970b4d34e9a7490385f',1,'arma::nonlinear::transform_CDF()']]],
   ['transform_5fdata',['transform_data',['../namespacearma_1_1nonlinear.html#a061d974018d3eb91684ae8784d28ad38',1,'arma::nonlinear']]],
-  ['transform_5frealisation',['transform_realisation',['../classarma_1_1nonlinear_1_1NIT__transform.html#a7a3f80e58873764a3c546ff30e4767aa',1,'arma::nonlinear::NIT_transform']]]
+  ['transform_5frealisation',['transform_realisation',['../classarma_1_1nonlinear_1_1NIT__transform.html#a7a3f80e58873764a3c546ff30e4767aa',1,'arma::nonlinear::NIT_transform']]],
+  ['trim',['trim',['../namespaceanonymous__namespace_02opencl_8cc_03.html#a32470c9f8fe6ad160f66840f2e3efff4',1,'anonymous_namespace{opencl.cc}']]],
+  ['trim_5fright',['trim_right',['../namespaceanonymous__namespace_02opencl_8cc_03.html#a61c11a6c588141b3514bb1fcf759ab15',1,'anonymous_namespace{opencl.cc}::trim_right()'],['../namespaceanonymous__namespace_02params_8cc_03.html#a18dd03b059d3543cd4db057d4f4d9b9d',1,'anonymous_namespace{params.cc}::trim_right()']]]
 ];

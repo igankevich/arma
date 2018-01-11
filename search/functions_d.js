@@ -1,6 +1,7 @@
 var searchData=
 [
   ['ndrange',['ndrange',['../classarma_1_1opencl_1_1Array.html#a9d8d2208cb006d74b038c41c14986fd5',1,'arma::opencl::Array']]],
+  ['new_5fprogram',['new_program',['../classanonymous__namespace_02opencl_8cc_03_1_1OpenCL.html#a8a068b96b01160decb7c117fe82770ea',1,'anonymous_namespace{opencl.cc}::OpenCL']]],
   ['new_5fworkspace',['new_workspace',['../classarma_1_1apmath_1_1Fourier__transform.html#a322acba609a58737ef0d8592997ab92b',1,'arma::apmath::Fourier_transform::new_workspace() const '],['../classarma_1_1apmath_1_1Fourier__transform.html#a322acba609a58737ef0d8592997ab92b',1,'arma::apmath::Fourier_transform::new_workspace() const ']]],
   ['newseed',['newseed',['../classarma_1_1generator_1_1Basic__model.html#ae8ad49729dcda64cf769b59760f4a084',1,'arma::generator::Basic_model']]],
   ['newton_5fraphson',['newton_raphson',['../structarma_1_1generator_1_1MA__model.html#aecb12774185171bfd948886447f59e13',1,'arma::generator::MA_model']]],

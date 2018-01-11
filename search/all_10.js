@@ -1,6 +1,8 @@
 var searchData=
 [
   ['qdistance',['qdistance',['../structarma_1_1stats_1_1Summary.html#a3ee59adc231dc0a7d0287ebc4ecbc97a',1,'arma::stats::Summary']]],
+  ['qpair',['QPair',['../structanonymous__namespace_02qq__graph_8cc_03_1_1QPair.html',1,'anonymous_namespace{qq_graph.cc}']]],
+  ['qpair',['QPair',['../structanonymous__namespace_02qq__graph_8cc_03_1_1QPair.html#a80a7a4971ca87e026bbb0b43485d6131',1,'anonymous_namespace{qq_graph.cc}::QPair']]],
   ['qq_5fgraph',['QQ_graph',['../structarma_1_1stats_1_1QQ__graph.html',1,'arma::stats']]],
   ['qq_5fgraph',['QQ_graph',['../structarma_1_1stats_1_1QQ__graph.html#a1bf13f2cad742b66e35fe9e878134416',1,'arma::stats::QQ_graph']]],
   ['qq_5fgraph_2ecc',['qq_graph.cc',['../qq__graph_8cc.html',1,'']]],
