@@ -27,7 +27,7 @@ var searchData=
   ['small_5famplitude_5fsolver',['Small_amplitude_solver',['../classarma_1_1velocity_1_1Small__amplitude__solver.html',1,'arma::velocity']]],
   ['small_5famplitude_5fsolver_2ecc',['small_amplitude_solver.cc',['../small__amplitude__solver_8cc.html',1,'']]],
   ['small_5famplitude_5fsolver_2ehh',['small_amplitude_solver.hh',['../small__amplitude__solver_8hh.html',1,'']]],
-  ['solve_5fyule_5fwalker',['solve_yule_walker',['../namespacearma.html#a7606fe7fe642c1d1d8b7004beeb57794',1,'arma']]],
+  ['solve_5fyule_5fwalker',['solve_yule_walker',['../namespacearma.html#a677f738ecb59f9e72842c0b11d1c39a3',1,'arma']]],
   ['solver_5ftype',['solver_type',['../classarma_1_1nonlinear_1_1NIT__transform.html#a71dc8ab9c0ea02fe90b782205c794d96',1,'arma::nonlinear::NIT_transform']]],
   ['sqrt2',['sqrt2',['../namespacearma_1_1constants.html#a32d6121747b33e98b549461ea6232433',1,'arma::constants']]],
   ['sqrt2pi',['sqrt2pi',['../namespacearma_1_1constants.html#a88bd9f16ac692804e325e4a824255038',1,'arma::constants']]],

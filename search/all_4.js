@@ -49,7 +49,7 @@ var searchData=
   ['domain_3c_20t_20_3e',['Domain&lt; T &gt;',['../structarma_1_1Domain.html',1,'arma']]],
   ['domain_3c_20t_2c_202_20_3e',['Domain&lt; T, 2 &gt;',['../structarma_1_1Domain.html',1,'arma']]],
   ['domain_5ftype',['domain_type',['../classarma_1_1apmath_1_1Convolution.html#a227c92f0bf4e38d471b0b53ea9fee8c9',1,'arma::apmath::Convolution']]],
-  ['dot',['dot',['../namespacelinalg.html#acfee6bf7d55dd59464a8078f8dae9e4e',1,'linalg']]],
+  ['dot',['dot',['../namespacelinalg.html#a50b055833789bfd2556de807ccb62412',1,'linalg']]],
   ['dragx',['dragX',['../visual_8cc.html#a7a59bfc15f21ee5713cc1075788a20f2',1,'visual.cc']]],
   ['dragy',['dragY',['../visual_8cc.html#a2755f893c463f800e2bbd6bf59921818',1,'visual.cc']]],
   ['draw_5faxis',['draw_axis',['../visual_8cc.html#a58079bb834cc7a5302affbfed15c0ced',1,'visual.cc']]],

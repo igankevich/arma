@@ -22,6 +22,7 @@ var searchData=
   ['mt_5fconfig',['mt_config',['../structarma_1_1prng_1_1mt__config.html',1,'arma::prng']]],
   ['mt_5fconfig',['mt_config',['../structarma_1_1prng_1_1mt__config.html#a149294e2e3c64697e8c414ddee347e03',1,'arma::prng::mt_config::mt_config()'],['../structarma_1_1prng_1_1mt__config.html#a22a52a2b58f974fbf76293074696a92c',1,'arma::prng::mt_config::mt_config(const mt_config &amp;rhs)']]],
   ['multiply',['multiply',['../namespacelinalg.html#a6bc195eb65e3a60926dc31ec21b656d5',1,'linalg']]],
+  ['multiply_5fby_5fcolumn_5fvector',['multiply_by_column_vector',['../namespacelinalg.html#a4f906dcdceba42f71743df7c8930bc72',1,'linalg']]],
   ['multiply_5ffunctions',['multiply_functions',['../classarma_1_1velocity_1_1High__amplitude__realtime__solver.html#ab104cc69b446ccef15014ea0b26dc19a',1,'arma::velocity::High_amplitude_realtime_solver']]],
   ['multiply_5fmv',['multiply_mv',['../namespacelinalg.html#a5a6a29f8d4ff4fd34cc8bd1d2491eca2',1,'linalg::multiply_mv(Matrix&lt; float &gt; lhs, blitz::Array&lt; float, N &gt; rhs)'],['../namespacelinalg.html#a2b6baf51bd9082bc1871ece2bc5b2cbd',1,'linalg::multiply_mv(Matrix&lt; double &gt; lhs, blitz::Array&lt; double, N &gt; rhs)']]]
 ];
