@@ -9,6 +9,7 @@ var searchData=
   ['validate_5fprocess',['validate_process',['../namespacearma.html#a9bf29617c4bd4732022156a4f7a07f6b',1,'arma']]],
   ['validate_5fshape',['validate_shape',['../namespacearma.html#ae239620f3765a375a516b930af8dffe4',1,'arma']]],
   ['variance',['variance',['../namespacearma_1_1stats.html#ac76596227942b358da4ebe6bbcfa85d5',1,'arma::stats::variance(const float *data, const size_t n)'],['../namespacearma_1_1stats.html#aeb3e348a422d73e81eba3c5ec6af45c7',1,'arma::stats::variance(const double *data, const size_t n)'],['../namespacearma_1_1stats.html#a61879ffa83cc115542b30c296d135851',1,'arma::stats::variance(blitz::Array&lt; T, N &gt; rhs)']]],
+  ['variance_5fhas_5fnot_5fchanged_5fmuch',['variance_has_not_changed_much',['../classarma_1_1Yule__walker__solver.html#a0aa5d99482e8ec43199b0a72ab78a7c5',1,'arma::Yule_walker_solver']]],
   ['vec',['Vec',['../unionarma_1_1opencl_1_1Vec.html#acaa5638c38c3a44366db65ce455af987',1,'arma::opencl::Vec']]],
   ['vector_5fshape',['vector_shape',['../namespaceanonymous__namespace_02yule__walker_8cc_03.html#a43c1d649eee1a916fd93979f31addd69',1,'anonymous_namespace{yule_walker.cc}']]],
   ['velocity',['velocity',['../classarma_1_1generator_1_1Plain__wave__model.html#a5a031d41042c935557d907c82e5e4d8b',1,'arma::generator::Plain_wave_model']]],

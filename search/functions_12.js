@@ -15,7 +15,7 @@ var searchData=
   ['skewness',['skewness',['../classarma_1_1stats_1_1Gram__Charlier.html#aa0910aa51f73dd4d75219c0df62a09bb',1,'arma::stats::Gram_Charlier']]],
   ['slice_5fback',['slice_back',['../structarma_1_1generator_1_1ARMA__model.html#a077b9ff9021fe02960337df213fc836b',1,'arma::generator::ARMA_model']]],
   ['slice_5ffront',['slice_front',['../structarma_1_1generator_1_1ARMA__model.html#a14df56c41dcce715a3070df0a2f48da0',1,'arma::generator::ARMA_model']]],
-  ['solve_5fyule_5fwalker',['solve_yule_walker',['../namespacearma.html#a677f738ecb59f9e72842c0b11d1c39a3',1,'arma']]],
+  ['solve',['solve',['../classarma_1_1Yule__walker__solver.html#ad1c976f8f8a4ec09fbad5c9dfd5e5ed6',1,'arma::Yule_walker_solver']]],
   ['standing_5fwave_5facf',['standing_wave_ACF',['../namespacearma.html#af68498e615cfb9501e9a7842a25f40a4',1,'arma']]],
   ['stdev',['stdev',['../structarma_1_1stats_1_1Gaussian.html#ab22926f417d8dccee736990ad1ab53f6',1,'arma::stats::Gaussian::stdev()'],['../namespacearma_1_1stats.html#a220a566c5d8f89d9a7fb3e51ee5b02fa',1,'arma::stats::stdev(const float *data, const size_t n)'],['../namespacearma_1_1stats.html#aa0d1f54b330054dc4f913f37a228aaa8',1,'arma::stats::stdev(const double *data, const size_t n)'],['../namespacearma_1_1stats.html#addcaf5ddf35e662bce1a999f366bd760',1,'arma::stats::stdev(blitz::Array&lt; T, N &gt; rhs)']]],
   ['stokes_5fwave',['stokes_wave',['../namespaceanonymous__namespace_02plain__wave__model_8cc_03.html#a52e0b886b92d382819110dbe2ada97bf',1,'anonymous_namespace{plain_wave_model.cc}']]],

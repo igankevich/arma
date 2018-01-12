@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['value_5ftype',['value_type',['../classarma_1_1apmath_1_1closed__interval.html#ab15137f37442af77ea5fc20318ac0e97',1,'arma::apmath::closed_interval::value_type()'],['../classarma_1_1Delaunay__interpolation.html#a77e13341828ed4f9ab0f147ce7be1893',1,'arma::Delaunay_interpolation::value_type()']]],
+  ['value_5ftype',['value_type',['../classarma_1_1apmath_1_1closed__interval.html#ab15137f37442af77ea5fc20318ac0e97',1,'arma::apmath::closed_interval::value_type()'],['../classarma_1_1Delaunay__interpolation.html#a77e13341828ed4f9ab0f147ce7be1893',1,'arma::Delaunay_interpolation::value_type()'],['../classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707',1,'arma::Yule_walker_solver::value_type()']]],
   ['vec1d',['Vec1D',['../namespacearma.html#a1fedd208738078be0c77fd9a1b65fc7c',1,'arma']]],
   ['vec2d',['Vec2D',['../namespacearma.html#a6669fe17cc01fa78fba554808f6989cb',1,'arma']]],
   ['vec3d',['Vec3D',['../namespacearma.html#a5fe89fced494b02e9965aa232558b375',1,'arma']]],

@@ -14,5 +14,6 @@ var searchData=
   ['_7emt_5fconfig',['~mt_config',['../structarma_1_1prng_1_1mt__config.html#a046db6e319f415df20494876f5672147',1,'arma::prng::mt_config']]],
   ['_7epolynomial',['~Polynomial',['../classarma_1_1apmath_1_1Polynomial.html#a2b81c8b9e0b1a18b45fad6fd73a2adf5',1,'arma::apmath::Polynomial']]],
   ['_7evec',['~Vec',['../unionarma_1_1opencl_1_1Vec.html#a00dea0e701d52e930687ce97b675f1cf',1,'arma::opencl::Vec']]],
-  ['_7evelocity_5fpotential_5fsolver',['~Velocity_potential_solver',['../classarma_1_1velocity_1_1Velocity__potential__solver.html#af0da5a9e59f81ef0dfbeed84cf4c9c41',1,'arma::velocity::Velocity_potential_solver']]]
+  ['_7evelocity_5fpotential_5fsolver',['~Velocity_potential_solver',['../classarma_1_1velocity_1_1Velocity__potential__solver.html#af0da5a9e59f81ef0dfbeed84cf4c9c41',1,'arma::velocity::Velocity_potential_solver']]],
+  ['_7eyule_5fwalker_5fsolver',['~Yule_walker_solver',['../classarma_1_1Yule__walker__solver.html#a49733b0cb0281d485830294e3134ea67',1,'arma::Yule_walker_solver']]]
 ];

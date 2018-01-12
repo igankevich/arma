@@ -19,6 +19,7 @@ var searchData=
   ['inverse_5fsymmetric',['inverse_symmetric',['../namespacelinalg.html#ac02d9f52c1210b77f8beb570e0d03c28',1,'linalg::inverse_symmetric(Matrix&lt; float &gt; &amp;A)'],['../namespacelinalg.html#a2ce92f135f777d0392c1c102d52aff80',1,'linalg::inverse_symmetric(Matrix&lt; double &gt; &amp;A)'],['../namespacelinalg.html#affc3ff4017b413f0b1ab67e8572ef9b5',1,'linalg::inverse_symmetric(Matrix&lt; T &gt; &amp;A)']]],
   ['is_5fpoint',['is_point',['../classarma_1_1apmath_1_1closed__interval.html#a367052c56460b64786a8bf93bcd7639b',1,'arma::apmath::closed_interval']]],
   ['is_5fpositive_5fdefinite',['is_positive_definite',['../namespacelinalg.html#a73b5ec42de3559e7bb5f277d93286e9f',1,'linalg']]],
+  ['is_5fsquare',['is_square',['../namespaceanonymous__namespace_02yule__walker_8cc_03.html#ae0ef3aed2598f9988d06f21d70dfdc9c',1,'anonymous_namespace{yule_walker.cc}']]],
   ['is_5fsymmetric',['is_symmetric',['../namespacelinalg.html#a69214c497b39b6fad1afc7cbc5e98bcd',1,'linalg']]],
   ['is_5ftoeplitz',['is_toeplitz',['../namespacelinalg.html#a2073765fa1dc4ceb0dd1c5e2ecadc35a',1,'linalg']]],
   ['isfinite',['isfinite',['../namespaceblitz.html#ab20ab27bfb64cd964b1d66eb61e409d5',1,'blitz::isfinite(float rhs) noexcept'],['../namespaceblitz.html#a1e4dd6ca971bf31edb1b1a69b7ba219a',1,'blitz::isfinite(double rhs) noexcept']]],
