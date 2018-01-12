@@ -136,7 +136,7 @@ test(
 )
 
 test(
-	'arma::solve_yule_walker',
+	'arma::Yule_walker_solver',
 	executable(
 		'yule-walker-test',
 		sources: ['yule-walker-test.cc'] + yule_walker_files + linalg_files + ['../generator/voodoo.cc'],

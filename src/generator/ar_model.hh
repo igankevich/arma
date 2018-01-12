@@ -1,6 +1,7 @@
 #ifndef AR_MODEL_HH
 #define AR_MODEL_HH
 
+#include "ar_algorithm.hh"
 #include "arma.hh"
 #include "basic_arma_model.hh"
 #include "discrete_function.hh"
@@ -36,7 +37,8 @@ namespace arma {
 			Shape3D _partition = Shape3D(0,0,0);
 			/// AR coefficients.
 			Array3D<T> _phi;
-			bool _doleastsquares = false;
+			/// The algorithm for determining the coefficients.
+			AR_algorithm _algorithm = AR_algorithm::Choi;
 
 		public:
 			typedef Discrete_function<T,3> acf_type;
@@ -70,11 +72,8 @@ namespace arma {
 			Array3D<T>
 			do_generate() override;
 
-			inline void
-			determine_coefficients() override {
-				// determine_coefficients_iteratively();
-				determine_coefficients_old(_doleastsquares);
-			}
+			void
+			determine_coefficients() override;
 
 			#if ARMA_BSCHEDULER
 			void
@@ -110,16 +109,14 @@ namespace arma {
 			read(std::istream& in) override;
 
 		private:
-			void
-			determine_coefficients_old(bool do_least_squares);
 
-			/**
-			   Darbin algorithm. Partial autocovariation function
-			      \f$\phi_{k,j}\f$,
-			   where k --- AR process order, j --- coefficient index.
-			 */
+			/// Determine coefficients by simple Gauss elimintation.
 			void
-			determine_coefficients_iteratively();
+			determine_coefficients_gauss();
+
+			/// Choi recursive-order algorithm \cite Choi1999.
+			void
+			determine_coefficients_choi();
 
 		};
 

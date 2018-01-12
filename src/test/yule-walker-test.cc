@@ -112,8 +112,8 @@ solve_yule_walker_gauss_elimination(
 	EXPECT_EQ(result.numElements(), rhs.numElements() + 1);
 	result(0,0,0) = 0;
 	std::copy_n(rhs.data(), rhs.numElements(), result.data() + 1);
-	std::clog << "EPS=" << max(abs(linalg::multiply_symmetric_mv(lhs, rhs) - rhs_copy)) << std::endl;
-	std::clog << "EPS_ACTUAL=" << max(abs(linalg::multiply_symmetric_mv(lhs, to_vector(actual)(Range(1, toEnd))) - rhs_copy)) << std::endl;
+	std::clog << "EPS=" << max(abs(linalg::multiply_symmetric_mv(acm, to_vector(result)) - acm(Range::all(),0))) << std::endl;
+	std::clog << "EPS_ACTUAL=" << max(abs(linalg::multiply_symmetric_mv(acm, to_vector(actual)) - acm(Range::all(),0))) << std::endl;
 	return result;
 }
 

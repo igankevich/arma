@@ -5,7 +5,6 @@ model = AR {
 		grid = (20,40,5) : (5,10,2.5)
 	}
 	order = (20,40,5)
-	least_squares = 0
 	no_seed = 1
 	output = surface,acf,csv,blitz
 	validate = 0

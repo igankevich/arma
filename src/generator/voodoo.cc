@@ -57,106 +57,6 @@ namespace {
 
 template <class T>
 arma::Array2D<T>
-arma::generator::AC_matrix_generator_LS<T>::
-AC_matrix_block(int i0, int j0) {
-	const int m = _acf.extent(2);
-	const int n = _arorder(2);
-	Array2D<T> block(blitz::shape(n, n));
-	block = 0;
-	for (int k = 0; k < n; ++k) {
-		for (int i = 0; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				block(k, j) += _acf(i0, j0, std::abs(i - k)) *
-							   _acf(i0, j0, std::abs(i - j));
-			}
-		}
-	}
-	assert(blitz::product(block.shape()) > 0);
-	return block;
-}
-
-template <class T>
-arma::Array2D<T>
-arma::generator::AC_matrix_generator_LS<T>::
-AC_matrix_block(int i0) {
-	const int m = _acf.extent(1);
-	const int n = _arorder(1);
-	// pre-compute all matrix blocks
-	Array2D<Array2D<T>> block(blitz::shape(m, n));
-	for (int i = 0; i < m; ++i) {
-		for (int j = 0; j < n; ++j) {
-			Array2D<T> tmp = AC_matrix_block(i0, std::abs(i - j));
-			block(i, j).resize(tmp.shape());
-			block(i, j) = tmp;
-		}
-	}
-	// reduce matrix size via least squares fitting
-	Array2D<Array2D<T>> small_block(blitz::shape(n, n));
-	for (int k = 0; k < n; ++k) {
-		for (int i = 0; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				Array2D<T> tmp =
-					multiply_matrices(block(i, k), block(i, j));
-				small_block(k, j).resize(tmp.shape());
-				small_block(k, j) = 0;
-				small_block(k, j) += tmp;
-			}
-		}
-	}
-	// flatten block matrix
-	Array2D<T> result;
-	for (int i = 0; i < n; ++i) {
-		Array2D<T> row;
-		for (int j = 0; j < n; ++j) {
-			append_column_block(row, small_block(i, j));
-		}
-		append_row_block(result, row);
-	}
-	return result;
-}
-
-template <class T>
-arma::Array2D<T>
-arma::generator::AC_matrix_generator_LS<T>::
-operator()() {
-	const int m = _acf.extent(0);
-	const int n = _arorder(0);
-	// pre-compute all matrix blocks
-	Array2D<Array2D<T>> block(blitz::shape(m, n));
-	for (int i = 0; i < m; ++i) {
-		for (int j = 0; j < n; ++j) {
-			Array2D<T> tmp = AC_matrix_block(std::abs(i - j));
-			block(i, j).resize(tmp.shape());
-			block(i, j) = tmp;
-		}
-	}
-	// reduce matrix size via least squares fitting
-	Array2D<Array2D<T>> small_block(blitz::shape(n, n));
-	for (int k = 0; k < n; ++k) {
-		for (int i = 0; i < m; ++i) {
-			for (int j = 0; j < n; ++j) {
-				Array2D<T> tmp =
-					multiply_matrices(block(i, k), block(i, j));
-				small_block(k, j).resize(tmp.shape());
-				small_block(k, j) = 0;
-				small_block(k, j) += tmp;
-			}
-		}
-	}
-	// flatten block matrix
-	Array2D<T> result;
-	for (int i = 0; i < n; ++i) {
-		Array2D<T> row;
-		for (int j = 0; j < n; ++j) {
-			append_column_block(row, small_block(i, j));
-		}
-		append_row_block(result, row);
-	}
-	return result;
-}
-
-template <class T>
-arma::Array2D<T>
 arma::generator::AC_matrix_generator<T>::
 AC_matrix_block(int i0, int j0) {
 	const int n = _arorder(2);
@@ -259,6 +159,5 @@ operator()() {
 	return result;
 }
 
-template class arma::generator::AC_matrix_generator_LS<ARMA_REAL_TYPE>;
 template class arma::generator::AC_matrix_generator<ARMA_REAL_TYPE>;
 template class arma::generator::Tau_matrix_generator<ARMA_REAL_TYPE>;

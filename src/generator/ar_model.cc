@@ -1,16 +1,18 @@
 #include "ar_model.hh"
 
-#include "voodoo.hh"
 #include "linalg.hh"
 #include "params.hh"
+#include "util.hh"
+#include "voodoo.hh"
+#include "yule_walker.hh"
 #include "util.hh"
 
 #include <algorithm>
 #include <cassert>
 #include <functional>
 #include <iostream>
-#include <stdexcept>
 #include <random>
+#include <stdexcept>
 
 #include "ar_model_surf.cc"
 
@@ -35,12 +37,12 @@ namespace {
 			const Shape3D guess1 = blitz::max(
 				order * 2,
 				Shape3D(10, 10, 10)
-			);
+			                       );
 			const int npar = std::max(1, 7*int(cbrt(parallelism)));
 			const Shape3D guess2 = blitz::div_ceil(
 				grid_shape,
 				Shape3D(npar, npar, npar)
-			);
+			                       );
 			ret = blitz::min(guess1, guess2) + blitz::abs(guess1 - guess2) / 2;
 		}
 		return ret;
@@ -51,20 +53,23 @@ namespace {
 
 template <class T>
 T
-arma::generator::AR_model<T>::white_noise_variance(Array3D<T> phi) const {
+arma::generator::AR_model<T>
+::white_noise_variance(Array3D<T> phi) const {
 	blitz::RectDomain<3> subdomain(Shape3D(0, 0, 0), phi.shape() - 1);
 	return this->_acf(0,0,0) - blitz::sum(phi * this->_acf(subdomain));
 }
 
 template <class T>
 void
-arma::generator::AR_model<T>::validate() const {
+arma::generator::AR_model<T>
+::validate() const {
 	validate_process(this->_phi);
 }
 
 template <class T>
 void
-arma::generator::AR_model<T>::generate_surface(
+arma::generator::AR_model<T>
+::generate_surface(
 	Array3D<T>& zeta,
 	const Domain3D& subdomain
 ) {
@@ -73,34 +78,37 @@ arma::generator::AR_model<T>::generate_surface(
 
 template <class T>
 void
-arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) {
+arma::generator::AR_model<T>
+::determine_coefficients() {
+	switch (this->_algorithm) {
+		case AR_algorithm::Gauss_elimination:
+			this->determine_coefficients_gauss();
+			break;
+		case AR_algorithm::Choi:
+			this->determine_coefficients_choi();
+			break;
+		default:
+			throw std::runtime_error("bad AR algorithm");
+	}
+}
+
+template <class T>
+void
+arma::generator::AR_model<T>
+::determine_coefficients_gauss() {
 	using blitz::all;
 	if (!all(this->order() <= this->_acf.shape())) {
-		std::cerr << "AR model order is larger than ACF "
-					 "size:\n\tAR model "
-					 "order = "
-				  << this->order() << "\n\tACF size = " << this->_acf.shape()
-				  << std::endl;
 		throw std::runtime_error("bad AR model order");
 	}
-	//_acf = _acf / _acf(0, 0, 0);
 	using blitz::Range;
 	using blitz::toEnd;
-	// normalise Array3D to prevent big numbers when multiplying
-	// matrices
-	std::function<Array2D<T>()> generator;
-	if (do_least_squares) {
-		generator = AC_matrix_generator_LS<T>(this->_acf, this->order());
-	} else {
-		generator = AC_matrix_generator<T>(this->_acf, this->order());
-	}
+	AC_matrix_generator<T> generator(this->_acf, this->order());
 	Array2D<T> acm = generator();
 	const int m = acm.rows() - 1;
 	/**
-	eliminate the first equation and move the first column of the
-	remaining
-	matrix to the right-hand side of the system
-	*/
+	   eliminate the first equation and move the first column of the
+	   remaining matrix to the right-hand side of the system
+	 */
 	Array1D<T> rhs(m);
 	rhs = acm(Range(1, toEnd), 0);
 
@@ -108,6 +116,7 @@ arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) 
 	// column and row
 	Array2D<T> lhs(blitz::shape(m, m));
 	lhs = acm(Range(1, toEnd), Range(1, toEnd));
+	acm.free();
 
 	assert(lhs.extent(0) == m);
 	assert(lhs.extent(1) == m);
@@ -115,109 +124,59 @@ arma::generator::AR_model<T>::determine_coefficients_old(bool do_least_squares) 
 	assert(linalg::is_symmetric(lhs));
 	assert(linalg::is_positive_definite(lhs));
 	linalg::cholesky(lhs, rhs);
-	assert(_phi.numElements() == rhs.numElements() + 1);
-	if (_phi.numElements() > 1) {
-		_phi(0, 0, 0) = 0;
+	assert(this->_phi.numElements() == rhs.numElements() + 1);
+	if (this->_phi.numElements() > 1) {
+		this->_phi(0, 0, 0) = 0;
 	}
-	std::copy_n(rhs.data(), rhs.numElements(), _phi.data() + 1);
+	std::copy_n(rhs.data(), rhs.numElements(), this->_phi.data() + 1);
 }
 
 template <class T>
 void
-arma::generator::AR_model<T>::determine_coefficients_iteratively() {
-	using blitz::all;
-	using blitz::isfinite;
-	using blitz::sum;
-	using blitz::RectDomain;
-	const Shape3D _0(0, 0, 0);
-	Array3D<T> r(this->_acf / this->_acf(0, 0, 0));
-	const Shape3D order = this->order();
-	Array3D<T> phi0(order), phi1(order);
-	phi0 = 0;
-	phi1 = 0;
-	const int max_order = order(0);
-	//			phi0(0, 0, 0) = r(0, 0, 0);
-	for (int p = 1; p < max_order; ++p) {
-		const Shape3D order(p + 1, p + 1, p + 1);
-		/// In three dimensions there are many "last" coefficients. We
-		/// collect all their indices into a container to iterate over
-		/// them.
-		std::vector<Shape3D> indices;
-		// for (int i = 0; i < p; ++i) indices.emplace_back(i, p, p);
-		// for (int i = 0; i < p; ++i) indices.emplace_back(p, i, p);
-		// for (int i = 0; i < p; ++i) indices.emplace_back(p, p, i);
-		indices.emplace_back(p, p, p);
-		/// Compute coefficients on all three borders.
-		for (const Shape3D& idx : indices) {
-			const RectDomain<3> sub1(_0, idx), rsub1(idx, _0);
-			const T sum1 = sum(phi0(sub1) * r(rsub1));
-			const T sum2 = sum(phi0(sub1) * r(sub1));
-			phi0(idx) = (r(idx) - sum1) / (T(1) - sum2);
-		}
-		phi1 = phi0;
-		/// Compute all other coefficients.
-		{
-			using namespace blitz::tensor;
-			const Shape3D idx(p, p, p);
-			const RectDomain<3> sub(_0, idx), rsub(idx, _0);
-			phi1(sub) = phi0(sub) - phi1(p, p, p) * phi0(rsub);
-		}
-		phi0 = phi1;
-
-		/// Validate white noise variance.
-		const T var_wn = white_noise_variance(phi1);
-		if (!std::isfinite(var_wn)) {
-			std::cerr << "bad white noise variance = " << var_wn << std::endl;
-			#ifndef NDEBUG
-			std::clog << "Indices: \n";
-			std::copy(indices.begin(), indices.end(),
-					  std::ostream_iterator<Shape3D>(std::clog, "\n"));
-			std::clog << std::endl;
-			RectDomain<3> subdomain(_0, order - 1);
-			std::clog << "phi1 = \n" << phi1(subdomain) << std::endl;
-			#endif
-			throw std::runtime_error("bad white noise variance");
-		}
-		#ifndef NDEBUG
-		/// Print solver state.
-		std::clog << __func__ << ':' << "Iteration=" << p
-				  << ", var_wn=" << var_wn << std::endl;
-		#endif
-
-		if (!all(isfinite(phi1))) {
-			std::cerr << "bad coefficients = \n" << phi1 << std::endl;
-			throw std::runtime_error("bad AR model coefficients");
-		}
-	}
+arma::generator::AR_model<T>
+::determine_coefficients_choi() {
+	const T variance = this->_acf(0,0,0);
+	this->_acf /= variance;
+	Yule_walker_solver<T> solver(this->_acf, variance);
+	this->_phi.reference(solver.solve());
+	this->_order = this->_phi.shape();
+	this->_acf *= variance;
+	write_key_value(std::clog, "New AR model order", this->_order);
 }
 
 template <class T>
 void
-arma::generator::AR_model<T>::read(std::istream& in) {
+arma::generator::AR_model<T>
+::read(std::istream& in) {
 	typedef typename Basic_model<T>::grid_type grid_type;
-	sys::parameter_map params({
-		{"least_squares", sys::make_param(this->_doleastsquares)},
-		{"partition", sys::make_param(this->_partition, validate_shape<int,3>)},
-	}, true);
+	sys::parameter_map params {
+		{
+			{"algorithm", sys::make_param(this->_algorithm)},
+			{"partition", sys::make_param(this->_partition, validate_shape<int,
+				                                                           3>)},
+		},
+		true
+	};
 	params.insert(this->parameters());
 	in >> params;
 	// resize output grid to match ACF delta size
 	this->_outgrid = grid_type(
 		this->_outgrid.num_points(),
 		this->_acf.grid().delta() * this->_outgrid.num_patches() * T(1.0)
-	);
+	                 );
 	this->_phi.resize(this->order());
 }
 
 template <class T>
 void
-arma::generator::AR_model<T>::write(std::ostream& out) const {
+arma::generator::AR_model<T>
+::write(std::ostream& out) const {
 	out << "grid=" << this->grid()
-		<< ",order=" << this->order()
-		<< ",output=" << this->_oflags
-		<< ",acf.shape=" << this->_acf.shape()
-		<< ",transform=" << this->_nittransform
-		<< ",noseed=" << this->_noseed;
+	    << ",order=" << this->order()
+	    << ",output=" << this->_oflags
+	    << ",acf.shape=" << this->_acf.shape()
+	    << ",transform=" << this->_nittransform
+	    << ",noseed=" << this->_noseed;
 }
 
 #if ARMA_NONE

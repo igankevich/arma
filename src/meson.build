@@ -45,6 +45,7 @@ common_src = files([
 	'generator/basic_arma_model.cc',
 	'generator/voodoo.cc',
 	'generator/basic_model.cc',
+	'generator/ar_algorithm.cc',
 	'ma_algorithm.cc',
 	'interpolate.cc',
 	'stats/qq_graph.cc',

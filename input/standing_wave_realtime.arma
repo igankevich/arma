@@ -4,7 +4,6 @@ model = AR {
 		func = standing_wave
 		grid = (10,10,10) : (2.5,5,5)
 	}
-	least_squares = 0
 	order = (7,7,7)
 	output = waves,acf,surface
 }
