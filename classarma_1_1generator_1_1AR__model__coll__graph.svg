@@ -10,29 +10,29 @@
 <title>arma::generator::AR_model&lt; T &gt;</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<polygon fill="#bfbfbf" stroke="black" points="166.5,-1 166.5,-245 311.5,-245 311.5,-1 166.5,-1"/>
-<text text-anchor="start" x="174.5" y="-233" font-family="Helvetica,sans-Serif" font-size="10.00">arma::generator::AR</text>
+<polygon fill="#bfbfbf" stroke="black" points="164,-1 164,-245 314,-245 314,-1 164,-1"/>
+<text text-anchor="start" x="172" y="-233" font-family="Helvetica,sans-Serif" font-size="10.00">arma::generator::AR</text>
 <text text-anchor="middle" x="239" y="-222" font-family="Helvetica,sans-Serif" font-size="10.00">_model&lt; T &gt;</text>
-<polyline fill="none" stroke="black" points="166.5,-215 311.5,-215 "/>
-<text text-anchor="start" x="174.5" y="-203" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _partition</text>
-<text text-anchor="start" x="174.5" y="-192" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _phi</text>
-<text text-anchor="start" x="174.5" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _doleastsquares</text>
-<polyline fill="none" stroke="black" points="166.5,-174 311.5,-174 "/>
-<text text-anchor="start" x="174.5" y="-162" font-family="Helvetica,sans-Serif" font-size="10.00">+ AR_model()</text>
-<text text-anchor="start" x="174.5" y="-151" font-family="Helvetica,sans-Serif" font-size="10.00">+ AR_model()</text>
-<text text-anchor="start" x="174.5" y="-140" font-family="Helvetica,sans-Serif" font-size="10.00">+ coefficients()</text>
-<text text-anchor="start" x="174.5" y="-129" font-family="Helvetica,sans-Serif" font-size="10.00">+ white_noise_variance()</text>
-<text text-anchor="start" x="174.5" y="-118" font-family="Helvetica,sans-Serif" font-size="10.00">+ writes_in_parallel()</text>
-<text text-anchor="start" x="174.5" y="-107" font-family="Helvetica,sans-Serif" font-size="10.00">+ validate()</text>
-<text text-anchor="start" x="174.5" y="-96" font-family="Helvetica,sans-Serif" font-size="10.00">+ do_generate()</text>
-<text text-anchor="start" x="174.5" y="-85" font-family="Helvetica,sans-Serif" font-size="10.00">+ determine_coefficients()</text>
-<text text-anchor="start" x="174.5" y="-74" font-family="Helvetica,sans-Serif" font-size="10.00"># generate_surface()</text>
-<text text-anchor="start" x="174.5" y="-63" font-family="Helvetica,sans-Serif" font-size="10.00"># white_noise_variance()</text>
-<text text-anchor="start" x="174.5" y="-52" font-family="Helvetica,sans-Serif" font-size="10.00"># write()</text>
-<text text-anchor="start" x="174.5" y="-41" font-family="Helvetica,sans-Serif" font-size="10.00"># read()</text>
-<text text-anchor="start" x="174.5" y="-30" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; determine_coefficients_old()</text>
-<text text-anchor="start" x="174.5" y="-19" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; determine_coefficients</text>
-<text text-anchor="start" x="174.5" y="-8" font-family="Helvetica,sans-Serif" font-size="10.00">_iteratively()</text>
+<polyline fill="none" stroke="black" points="164,-215 314,-215 "/>
+<text text-anchor="start" x="172" y="-203" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _partition</text>
+<text text-anchor="start" x="172" y="-192" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _phi</text>
+<text text-anchor="start" x="172" y="-181" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _algorithm</text>
+<polyline fill="none" stroke="black" points="164,-174 314,-174 "/>
+<text text-anchor="start" x="172" y="-162" font-family="Helvetica,sans-Serif" font-size="10.00">+ AR_model()</text>
+<text text-anchor="start" x="172" y="-151" font-family="Helvetica,sans-Serif" font-size="10.00">+ AR_model()</text>
+<text text-anchor="start" x="172" y="-140" font-family="Helvetica,sans-Serif" font-size="10.00">+ coefficients()</text>
+<text text-anchor="start" x="172" y="-129" font-family="Helvetica,sans-Serif" font-size="10.00">+ white_noise_variance()</text>
+<text text-anchor="start" x="172" y="-118" font-family="Helvetica,sans-Serif" font-size="10.00">+ writes_in_parallel()</text>
+<text text-anchor="start" x="172" y="-107" font-family="Helvetica,sans-Serif" font-size="10.00">+ validate()</text>
+<text text-anchor="start" x="172" y="-96" font-family="Helvetica,sans-Serif" font-size="10.00">+ do_generate()</text>
+<text text-anchor="start" x="172" y="-85" font-family="Helvetica,sans-Serif" font-size="10.00">+ determine_coefficients()</text>
+<text text-anchor="start" x="172" y="-74" font-family="Helvetica,sans-Serif" font-size="10.00"># generate_surface()</text>
+<text text-anchor="start" x="172" y="-63" font-family="Helvetica,sans-Serif" font-size="10.00"># white_noise_variance()</text>
+<text text-anchor="start" x="172" y="-52" font-family="Helvetica,sans-Serif" font-size="10.00"># write()</text>
+<text text-anchor="start" x="172" y="-41" font-family="Helvetica,sans-Serif" font-size="10.00"># read()</text>
+<text text-anchor="start" x="172" y="-30" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; determine_coefficients</text>
+<text text-anchor="start" x="172" y="-19" font-family="Helvetica,sans-Serif" font-size="10.00">_gauss()</text>
+<text text-anchor="start" x="172" y="-8" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; determine_coefficients_choi()</text>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>

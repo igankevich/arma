@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="dynheader">
 Inheritance diagram for arma::generator::AR_model&lt; T &gt;:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classarma_1_1generator_1_1AR__model__inherit__graph.svg" width="203" height="1422"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classarma_1_1generator_1_1AR__model__inherit__graph.svg" width="208" height="1422"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <div class="dynheader">
@@ -209,10 +209,12 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a68a2160b4ab0bff018a6966bf60b2c0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AR__model.html#a68a2160b4ab0bff018a6966bf60b2c0f">determine_coefficients_old</a> (bool do_least_squares)</td></tr>
-<tr class="separator:a68a2160b4ab0bff018a6966bf60b2c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac113d2fe1a91137cf9b0fff7ac9126ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AR__model.html#ac113d2fe1a91137cf9b0fff7ac9126ef">determine_coefficients_iteratively</a> ()</td></tr>
-<tr class="separator:ac113d2fe1a91137cf9b0fff7ac9126ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6eed558c311409f1459a96d41df70342"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AR__model.html#a6eed558c311409f1459a96d41df70342">determine_coefficients_gauss</a> ()</td></tr>
+<tr class="memdesc:a6eed558c311409f1459a96d41df70342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine coefficients by simple Gauss elimintation.  <a href="#a6eed558c311409f1459a96d41df70342">More...</a><br/></td></tr>
+<tr class="separator:a6eed558c311409f1459a96d41df70342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec5d1fd5a7deae049dc6d0e9513509b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AR__model.html#aec5d1fd5a7deae049dc6d0e9513509b7">determine_coefficients_choi</a> ()</td></tr>
+<tr class="memdesc:aec5d1fd5a7deae049dc6d0e9513509b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choi recursive-order algorithm <a class="el" href="citelist.html#CITEREF_Choi1999">Choi1999</a>.  <a href="#aec5d1fd5a7deae049dc6d0e9513509b7">More...</a><br/></td></tr>
+<tr class="separator:aec5d1fd5a7deae049dc6d0e9513509b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -222,8 +224,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ac1f91b8fa15f22739b28c18ba2ac393a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AR__model.html#ac1f91b8fa15f22739b28c18ba2ac393a">_phi</a></td></tr>
 <tr class="memdesc:ac1f91b8fa15f22739b28c18ba2ac393a"><td class="mdescLeft">&#160;</td><td class="mdescRight">AR coefficients.  <a href="#ac1f91b8fa15f22739b28c18ba2ac393a">More...</a><br/></td></tr>
 <tr class="separator:ac1f91b8fa15f22739b28c18ba2ac393a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3436265738c2ecb2a0e48cf73152967a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AR__model.html#a3436265738c2ecb2a0e48cf73152967a">_doleastsquares</a> = false</td></tr>
-<tr class="separator:a3436265738c2ecb2a0e48cf73152967a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa209ba055b7d05c3756642bf8d27add"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#ad271eef6c044203c08d98cf3a80a358d">AR_algorithm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AR__model.html#afa209ba055b7d05c3756642bf8d27add">_algorithm</a> = <a class="el" href="namespacearma.html#ad271eef6c044203c08d98cf3a80a358da619049426254b87c1f4832cfa9914a20">AR_algorithm::Choi</a></td></tr>
+<tr class="memdesc:afa209ba055b7d05c3756642bf8d27add"><td class="mdescLeft">&#160;</td><td class="mdescRight">The algorithm for determining the coefficients.  <a href="#afa209ba055b7d05c3756642bf8d27add">More...</a><br/></td></tr>
+<tr class="separator:afa209ba055b7d05c3756642bf8d27add"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -376,7 +379,7 @@ template&lt;class T &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -387,7 +390,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="ac113d2fe1a91137cf9b0fff7ac9126ef"></a>
+<a class="anchor" id="aec5d1fd5a7deae049dc6d0e9513509b7"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -397,7 +400,7 @@ template&lt;class T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classarma_1_1generator_1_1AR__model.html">arma::generator::AR_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::determine_coefficients_iteratively </td>
+          <td class="memname">void <a class="el" href="classarma_1_1generator_1_1AR__model.html">arma::generator::AR_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::determine_coefficients_choi </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -409,16 +412,12 @@ template&lt;class T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Darbin algorithm. Partial autocovariation function \(\phi_{k,j}\), where k &mdash; AR process order, j &mdash; coefficient index. </p>
-<p>In three dimensions there are many "last" coefficients. We collect all their indices into a container to iterate over them.</p>
-<p>Compute coefficients on all three borders.</p>
-<p>Compute all other coefficients.</p>
-<p>Validate white noise variance.</p>
-<p>Print solver state. </p>
+
+<p>Choi recursive-order algorithm <a class="el" href="citelist.html#CITEREF_Choi1999">Choi1999</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a68a2160b4ab0bff018a6966bf60b2c0f"></a>
+<a class="anchor" id="a6eed558c311409f1459a96d41df70342"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -428,10 +427,9 @@ template&lt;class T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classarma_1_1generator_1_1AR__model.html">arma::generator::AR_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::determine_coefficients_old </td>
+          <td class="memname">void <a class="el" href="classarma_1_1generator_1_1AR__model.html">arma::generator::AR_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::determine_coefficients_gauss </td>
           <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>do_least_squares</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -441,6 +439,8 @@ template&lt;class T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Determine coefficients by simple Gauss elimintation. </p>
 <p>eliminate the first equation and move the first column of the remaining matrix to the right-hand side of the system</p>
 
 </div>
@@ -685,7 +685,7 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a3436265738c2ecb2a0e48cf73152967a"></a>
+<a class="anchor" id="afa209ba055b7d05c3756642bf8d27add"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -695,7 +695,7 @@ template&lt;class T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classarma_1_1generator_1_1AR__model.html">arma::generator::AR_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::_doleastsquares = false</td>
+          <td class="memname"><a class="el" href="namespacearma.html#ad271eef6c044203c08d98cf3a80a358d">AR_algorithm</a> <a class="el" href="classarma_1_1generator_1_1AR__model.html">arma::generator::AR_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::_algorithm = <a class="el" href="namespacearma.html#ad271eef6c044203c08d98cf3a80a358da619049426254b87c1f4832cfa9914a20">AR_algorithm::Choi</a></td>
         </tr>
       </table>
   </td>
@@ -704,6 +704,8 @@ template&lt;class T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The algorithm for determining the coefficients. </p>
 
 </div>
 </div>

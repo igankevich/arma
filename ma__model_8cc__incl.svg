@@ -109,7 +109,7 @@
 </g>
 <!-- Node44 -->
 <g id="node44" class="node"><title>Node44</title>
-<g id="a_node44"><a xlink:href="voodoo_8hh.html" target="_top" xlink:title="Non&#45;optimised parts of the implementation. ">
+<g id="a_node44"><a xlink:href="voodoo_8hh.html" target="_top" xlink:title="Old methods of determining autoregressive model coefficients based on Gauss elimination. ">
 <polygon fill="none" stroke="black" points="2475,-124.5 2475,-143.5 2537,-143.5 2537,-124.5 2475,-124.5"/>
 <text text-anchor="middle" x="2506" y="-131.5" font-family="Helvetica,sans-Serif" font-size="10.00">voodoo.hh</text>
 </a>

@@ -1,9 +1,9 @@
 var searchData=
 [
   ['wavy_20surface_20generation',['Wavy surface generation',['../group__generators.html',1,'']]],
-  ['wave',['Wave',['../classarma_1_1Wave.html',1,'arma']]],
-  ['wave',['Wave',['../structarma_1_1stats_1_1Wave.html#a6e7947df1e10d9e32509e1fec8f919e8',1,'arma::stats::Wave::Wave()=default'],['../structarma_1_1stats_1_1Wave.html#a8d94c14aadbbdabb3e6efe6b231c0a9d',1,'arma::stats::Wave::Wave(T height, T period)'],['../classarma_1_1Wave.html#aab15ec2608659aa6fa38e55be949b179',1,'arma::Wave::Wave()=default'],['../classarma_1_1Wave.html#a05d7bb6a25f154a0e5bc0d6849b6ba76',1,'arma::Wave::Wave(int i, int j, T k, T h, T p) noexcept']]],
   ['wave',['Wave',['../structarma_1_1stats_1_1Wave.html',1,'arma::stats']]],
+  ['wave',['Wave',['../structarma_1_1stats_1_1Wave.html#a6e7947df1e10d9e32509e1fec8f919e8',1,'arma::stats::Wave::Wave()=default'],['../structarma_1_1stats_1_1Wave.html#a8d94c14aadbbdabb3e6efe6b231c0a9d',1,'arma::stats::Wave::Wave(T height, T period)'],['../classarma_1_1Wave.html#aab15ec2608659aa6fa38e55be949b179',1,'arma::Wave::Wave()=default'],['../classarma_1_1Wave.html#a05d7bb6a25f154a0e5bc0d6849b6ba76',1,'arma::Wave::Wave(int i, int j, T k, T h, T p) noexcept']]],
+  ['wave',['Wave',['../classarma_1_1Wave.html',1,'arma']]],
   ['wave_2ecc',['wave.cc',['../wave_8cc.html',1,'']]],
   ['wave_2ehh',['wave.hh',['../wave_8hh.html',1,'']]],
   ['wave_5fcharacteristic_5fdistribution',['Wave_characteristic_distribution',['../structarma_1_1stats_1_1Wave__characteristic__distribution.html#a085af615c55b6c8635a184efa61d1eac',1,'arma::stats::Wave_characteristic_distribution']]],

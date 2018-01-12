@@ -10,76 +10,76 @@
 <title>anonymous_namespace{ar_model_bscheduler.cc}::ar_master_kernel&lt; T &gt;</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<polygon fill="#bfbfbf" stroke="black" points="91,-1 91,-223 219,-223 219,-1 91,-1"/>
-<text text-anchor="start" x="99" y="-211" font-family="Helvetica,sans-Serif" font-size="10.00">anonymous_namespace</text>
-<text text-anchor="start" x="99" y="-200" font-family="Helvetica,sans-Serif" font-size="10.00">{ar_model_bscheduler.cc}</text>
-<text text-anchor="middle" x="155" y="-189" font-family="Helvetica,sans-Serif" font-size="10.00">::ar_master_kernel&lt; T &gt;</text>
-<polyline fill="none" stroke="black" points="91,-182 219,-182 "/>
-<text text-anchor="start" x="99" y="-170" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _counter</text>
-<text text-anchor="start" x="99" y="-159" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _partshape</text>
-<text text-anchor="start" x="99" y="-148" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _nparts</text>
-<text text-anchor="start" x="99" y="-137" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _varwn</text>
-<text text-anchor="start" x="99" y="-126" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _index</text>
-<text text-anchor="start" x="99" y="-115" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _nfinished</text>
-<text text-anchor="start" x="99" y="-104" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _ntotal</text>
-<polyline fill="none" stroke="black" points="91,-97 219,-97 "/>
-<text text-anchor="start" x="99" y="-85" font-family="Helvetica,sans-Serif" font-size="10.00">+ ar_master_kernel()</text>
-<text text-anchor="start" x="99" y="-74" font-family="Helvetica,sans-Serif" font-size="10.00">+ act()</text>
-<text text-anchor="start" x="99" y="-63" font-family="Helvetica,sans-Serif" font-size="10.00">+ react()</text>
-<text text-anchor="start" x="99" y="-52" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; send_subordinate()</text>
-<text text-anchor="start" x="99" y="-41" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; init_counters()</text>
-<text text-anchor="start" x="99" y="-30" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; partition_shape()</text>
-<text text-anchor="start" x="99" y="-19" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; zeta_shape()</text>
-<text text-anchor="start" x="99" y="-8" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; mersenne_twister()</text>
+<polygon fill="#bfbfbf" stroke="black" points="89,-1 89,-223 217,-223 217,-1 89,-1"/>
+<text text-anchor="start" x="97" y="-211" font-family="Helvetica,sans-Serif" font-size="10.00">anonymous_namespace</text>
+<text text-anchor="start" x="97" y="-200" font-family="Helvetica,sans-Serif" font-size="10.00">{ar_model_bscheduler.cc}</text>
+<text text-anchor="middle" x="153" y="-189" font-family="Helvetica,sans-Serif" font-size="10.00">::ar_master_kernel&lt; T &gt;</text>
+<polyline fill="none" stroke="black" points="89,-182 217,-182 "/>
+<text text-anchor="start" x="97" y="-170" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _counter</text>
+<text text-anchor="start" x="97" y="-159" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _partshape</text>
+<text text-anchor="start" x="97" y="-148" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _nparts</text>
+<text text-anchor="start" x="97" y="-137" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _varwn</text>
+<text text-anchor="start" x="97" y="-126" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _index</text>
+<text text-anchor="start" x="97" y="-115" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _nfinished</text>
+<text text-anchor="start" x="97" y="-104" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _ntotal</text>
+<polyline fill="none" stroke="black" points="89,-97 217,-97 "/>
+<text text-anchor="start" x="97" y="-85" font-family="Helvetica,sans-Serif" font-size="10.00">+ ar_master_kernel()</text>
+<text text-anchor="start" x="97" y="-74" font-family="Helvetica,sans-Serif" font-size="10.00">+ act()</text>
+<text text-anchor="start" x="97" y="-63" font-family="Helvetica,sans-Serif" font-size="10.00">+ react()</text>
+<text text-anchor="start" x="97" y="-52" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; send_subordinate()</text>
+<text text-anchor="start" x="97" y="-41" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; init_counters()</text>
+<text text-anchor="start" x="97" y="-30" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; partition_shape()</text>
+<text text-anchor="start" x="97" y="-19" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; zeta_shape()</text>
+<text text-anchor="start" x="97" y="-8" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; mersenne_twister()</text>
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<polygon fill="none" stroke="#bfbfbf" points="83.5,-366.5 83.5,-423.5 148.5,-423.5 148.5,-366.5 83.5,-366.5"/>
-<text text-anchor="middle" x="116" y="-411.5" font-family="Helvetica,sans-Serif" font-size="10.00">bsc::kernel</text>
-<polyline fill="none" stroke="#bfbfbf" points="83.5,-404.5 148.5,-404.5 "/>
-<text text-anchor="middle" x="116" y="-392.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
-<polyline fill="none" stroke="#bfbfbf" points="83.5,-385.5 148.5,-385.5 "/>
-<text text-anchor="middle" x="116" y="-373.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
+<polygon fill="none" stroke="#bfbfbf" points="81.5,-366.5 81.5,-423.5 146.5,-423.5 146.5,-366.5 81.5,-366.5"/>
+<text text-anchor="middle" x="114" y="-411.5" font-family="Helvetica,sans-Serif" font-size="10.00">bsc::kernel</text>
+<polyline fill="none" stroke="#bfbfbf" points="81.5,-404.5 146.5,-404.5 "/>
+<text text-anchor="middle" x="114" y="-392.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
+<polyline fill="none" stroke="#bfbfbf" points="81.5,-385.5 146.5,-385.5 "/>
+<text text-anchor="middle" x="114" y="-373.5" font-family="Helvetica,sans-Serif" font-size="10.00"> </text>
 </g>
 <!-- Node2&#45;&gt;Node1 -->
 <g id="edge1" class="edge"><title>Node2&#45;&gt;Node1</title>
-<path fill="none" stroke="midnightblue" d="M121.233,-356.298C125.968,-322.183 133.181,-270.206 139.727,-223.041"/>
-<polygon fill="none" stroke="midnightblue" points="117.754,-355.901 119.846,-366.288 124.688,-356.864 117.754,-355.901"/>
+<path fill="none" stroke="midnightblue" d="M119.233,-356.298C123.968,-322.183 131.181,-270.206 137.727,-223.041"/>
+<polygon fill="none" stroke="midnightblue" points="115.754,-355.901 117.846,-366.288 122.688,-356.864 115.754,-355.901"/>
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
 <g id="a_node3"><a xlink:href="classarma_1_1generator_1_1AR__model.html" target="_top" xlink:title="Uses autoregressive process, standing waves. ">
-<polygon fill="none" stroke="black" points="166.5,-273 166.5,-517 311.5,-517 311.5,-273 166.5,-273"/>
-<text text-anchor="start" x="174.5" y="-505" font-family="Helvetica,sans-Serif" font-size="10.00">arma::generator::AR</text>
+<polygon fill="none" stroke="black" points="164,-273 164,-517 314,-517 314,-273 164,-273"/>
+<text text-anchor="start" x="172" y="-505" font-family="Helvetica,sans-Serif" font-size="10.00">arma::generator::AR</text>
 <text text-anchor="middle" x="239" y="-494" font-family="Helvetica,sans-Serif" font-size="10.00">_model&lt; T &gt;</text>
-<polyline fill="none" stroke="black" points="166.5,-487 311.5,-487 "/>
-<text text-anchor="start" x="174.5" y="-475" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _partition</text>
-<text text-anchor="start" x="174.5" y="-464" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _phi</text>
-<text text-anchor="start" x="174.5" y="-453" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _doleastsquares</text>
-<polyline fill="none" stroke="black" points="166.5,-446 311.5,-446 "/>
-<text text-anchor="start" x="174.5" y="-434" font-family="Helvetica,sans-Serif" font-size="10.00">+ AR_model()</text>
-<text text-anchor="start" x="174.5" y="-423" font-family="Helvetica,sans-Serif" font-size="10.00">+ AR_model()</text>
-<text text-anchor="start" x="174.5" y="-412" font-family="Helvetica,sans-Serif" font-size="10.00">+ coefficients()</text>
-<text text-anchor="start" x="174.5" y="-401" font-family="Helvetica,sans-Serif" font-size="10.00">+ white_noise_variance()</text>
-<text text-anchor="start" x="174.5" y="-390" font-family="Helvetica,sans-Serif" font-size="10.00">+ writes_in_parallel()</text>
-<text text-anchor="start" x="174.5" y="-379" font-family="Helvetica,sans-Serif" font-size="10.00">+ validate()</text>
-<text text-anchor="start" x="174.5" y="-368" font-family="Helvetica,sans-Serif" font-size="10.00">+ do_generate()</text>
-<text text-anchor="start" x="174.5" y="-357" font-family="Helvetica,sans-Serif" font-size="10.00">+ determine_coefficients()</text>
-<text text-anchor="start" x="174.5" y="-346" font-family="Helvetica,sans-Serif" font-size="10.00"># generate_surface()</text>
-<text text-anchor="start" x="174.5" y="-335" font-family="Helvetica,sans-Serif" font-size="10.00"># white_noise_variance()</text>
-<text text-anchor="start" x="174.5" y="-324" font-family="Helvetica,sans-Serif" font-size="10.00"># write()</text>
-<text text-anchor="start" x="174.5" y="-313" font-family="Helvetica,sans-Serif" font-size="10.00"># read()</text>
-<text text-anchor="start" x="174.5" y="-302" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; determine_coefficients_old()</text>
-<text text-anchor="start" x="174.5" y="-291" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; determine_coefficients</text>
-<text text-anchor="start" x="174.5" y="-280" font-family="Helvetica,sans-Serif" font-size="10.00">_iteratively()</text>
+<polyline fill="none" stroke="black" points="164,-487 314,-487 "/>
+<text text-anchor="start" x="172" y="-475" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _partition</text>
+<text text-anchor="start" x="172" y="-464" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _phi</text>
+<text text-anchor="start" x="172" y="-453" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; _algorithm</text>
+<polyline fill="none" stroke="black" points="164,-446 314,-446 "/>
+<text text-anchor="start" x="172" y="-434" font-family="Helvetica,sans-Serif" font-size="10.00">+ AR_model()</text>
+<text text-anchor="start" x="172" y="-423" font-family="Helvetica,sans-Serif" font-size="10.00">+ AR_model()</text>
+<text text-anchor="start" x="172" y="-412" font-family="Helvetica,sans-Serif" font-size="10.00">+ coefficients()</text>
+<text text-anchor="start" x="172" y="-401" font-family="Helvetica,sans-Serif" font-size="10.00">+ white_noise_variance()</text>
+<text text-anchor="start" x="172" y="-390" font-family="Helvetica,sans-Serif" font-size="10.00">+ writes_in_parallel()</text>
+<text text-anchor="start" x="172" y="-379" font-family="Helvetica,sans-Serif" font-size="10.00">+ validate()</text>
+<text text-anchor="start" x="172" y="-368" font-family="Helvetica,sans-Serif" font-size="10.00">+ do_generate()</text>
+<text text-anchor="start" x="172" y="-357" font-family="Helvetica,sans-Serif" font-size="10.00">+ determine_coefficients()</text>
+<text text-anchor="start" x="172" y="-346" font-family="Helvetica,sans-Serif" font-size="10.00"># generate_surface()</text>
+<text text-anchor="start" x="172" y="-335" font-family="Helvetica,sans-Serif" font-size="10.00"># white_noise_variance()</text>
+<text text-anchor="start" x="172" y="-324" font-family="Helvetica,sans-Serif" font-size="10.00"># write()</text>
+<text text-anchor="start" x="172" y="-313" font-family="Helvetica,sans-Serif" font-size="10.00"># read()</text>
+<text text-anchor="start" x="172" y="-302" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; determine_coefficients</text>
+<text text-anchor="start" x="172" y="-291" font-family="Helvetica,sans-Serif" font-size="10.00">_gauss()</text>
+<text text-anchor="start" x="172" y="-280" font-family="Helvetica,sans-Serif" font-size="10.00">&#45; determine_coefficients_choi()</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node1 -->
 <g id="edge2" class="edge"><title>Node3&#45;&gt;Node1</title>
-<path fill="none" stroke="#404040" d="M202.767,-272.792C198.993,-260.168 195.156,-247.333 191.381,-234.704"/>
-<polygon fill="none" stroke="#404040" points="191.372,-234.673 185.821,-230.07 187.935,-223.176 193.486,-227.779 191.372,-234.673"/>
-<text text-anchor="middle" x="216" y="-245.5" font-family="Helvetica,sans-Serif" font-size="10.00"> &#45;_model</text>
+<path fill="none" stroke="#404040" d="M201.904,-272.792C198.041,-260.168 194.113,-247.333 190.247,-234.704"/>
+<polygon fill="none" stroke="#404040" points="190.231,-234.65 184.65,-230.084 186.719,-223.176 192.3,-227.742 190.231,-234.65"/>
+<text text-anchor="middle" x="215" y="-245.5" font-family="Helvetica,sans-Serif" font-size="10.00"> &#45;_model</text>
 </g>
 <!-- Node4 -->
 <g id="node4" class="node"><title>Node4</title>

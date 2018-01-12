@@ -3,6 +3,8 @@ var searchData=
   ['acf_2ehh',['acf.hh',['../acf_8hh.html',1,'']]],
   ['acf_5fwrapper_2ecc',['acf_wrapper.cc',['../acf__wrapper_8cc.html',1,'']]],
   ['acf_5fwrapper_2ehh',['acf_wrapper.hh',['../acf__wrapper_8hh.html',1,'']]],
+  ['ar_5falgorithm_2ecc',['ar_algorithm.cc',['../ar__algorithm_8cc.html',1,'']]],
+  ['ar_5falgorithm_2ehh',['ar_algorithm.hh',['../ar__algorithm_8hh.html',1,'']]],
   ['ar_5fmodel_2ecc',['ar_model.cc',['../ar__model_8cc.html',1,'']]],
   ['ar_5fmodel_2ehh',['ar_model.hh',['../ar__model_8hh.html',1,'']]],
   ['ar_5fmodel_5fbscheduler_2ecc',['ar_model_bscheduler.cc',['../ar__model__bscheduler_8cc.html',1,'']]],

@@ -17,7 +17,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<g id="a_node2"><a xlink:href="voodoo_8hh.html" target="_top" xlink:title="Non&#45;optimised parts of the implementation. ">
+<g id="a_node2"><a xlink:href="voodoo_8hh.html" target="_top" xlink:title="Old methods of determining autoregressive model coefficients based on Gauss elimination. ">
 <polygon fill="none" stroke="black" points="74,-112.5 74,-131.5 136,-131.5 136,-112.5 74,-112.5"/>
 <text text-anchor="middle" x="105" y="-119.5" font-family="Helvetica,sans-Serif" font-size="10.00">voodoo.hh</text>
 </a>

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['g',['g',['../namespacearma_1_1constants.html#a5a25bb7cab9941f0546f6442a1db3778',1,'arma::constants']]],
+  ['gauss_5felimination',['Gauss_elimination',['../namespacearma.html#ad271eef6c044203c08d98cf3a80a358daf8c4385e79ca3133cca629845bc4c601',1,'arma']]],
   ['gaussian',['Gaussian',['../structarma_1_1stats_1_1Gaussian.html',1,'arma::stats']]],
   ['gaussian',['Gaussian',['../structarma_1_1stats_1_1Gaussian.html#a6cf473035dd6faa6db3950648048bd38',1,'arma::stats::Gaussian::Gaussian()=default'],['../structarma_1_1stats_1_1Gaussian.html#aae407fbd9abd15b0247417083b7084fc',1,'arma::stats::Gaussian::Gaussian(const Gaussian &amp;)=default'],['../structarma_1_1stats_1_1Gaussian.html#a5bacc9d6e8d98da185b3420b8fdf05a0',1,'arma::stats::Gaussian::Gaussian(Gaussian &amp;&amp;)=default'],['../structarma_1_1stats_1_1Gaussian.html#afe79d1d7cebaf570ad84fd39d7e89294',1,'arma::stats::Gaussian::Gaussian(T m, T sigma)']]],
   ['gaussian_2ecc',['gaussian.cc',['../gaussian_8cc.html',1,'']]],

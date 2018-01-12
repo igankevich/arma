@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Non-optimised parts of the implementation.  
+<p>Old methods of determining autoregressive model coefficients based on Gauss elimination.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;assert.h&gt;</code><br/>
 <code>#include &lt;blitz/array.h&gt;</code><br/>
@@ -122,9 +122,6 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AC__matrix__generator__LS.html">arma::generator::AC_matrix_generator_LS&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Autocovariate matrix generator which uses least squares approximations to reduce size of autocovariate function grid.  <a href="classarma_1_1generator_1_1AC__matrix__generator__LS.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1AC__matrix__generator.html">arma::generator::AC_matrix_generator&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Autocovariate matrix generator that reduces the size of ACF to match AR model order.  <a href="classarma_1_1generator_1_1AC__matrix__generator.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,10 +139,10 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Non-optimised parts of the implementation. </p>
+<div class="textblock"><p>Old methods of determining autoregressive model coefficients based on Gauss elimination. </p>
 <dl class="section author"><dt>Author</dt><dd>Ivan Gankevich </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2016-07-26</dd></dl>
-<p>There exist more efficient ways to compute autoregressive model coefficients that take into account autocovariance matrix structure, but they seem complex and not wide-spread. So, we settled on "keep it simple" approach. </p>
+<p>There exist more efficient ways to compute autoregressive model coefficients that take into account autocovariance matrix structure, see <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

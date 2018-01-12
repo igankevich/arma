@@ -104,27 +104,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Computes AR model coefficients using an order-recursvive method from <a class="el" href="citelist.html#CITEREF_ByoungSeon1999">ByoungSeon1999</a>.  
+<p>Computes AR model coefficients using an order-recursvive method from <a class="el" href="citelist.html#CITEREF_Choi1999">Choi1999</a>.  
  <a href="classarma_1_1Yule__walker__solver.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="yule__walker_8hh_source.html">yule_walker.hh</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for arma::Yule_walker_solver&lt; T &gt;:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classarma_1_1Yule__walker__solver__coll__graph.svg" width="243" height="398"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classarma_1_1Yule__walker__solver__coll__graph.svg" width="243" height="339"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a36842a7cde769eb292d1744880da1707"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a></td></tr>
+<tr class="memdesc:a36842a7cde769eb292d1744880da1707"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array element type.  <a href="#a36842a7cde769eb292d1744880da1707">More...</a><br/></td></tr>
 <tr class="separator:a36842a7cde769eb292d1744880da1707"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f911338a637ddc7ce4e3c594d71a656"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a3f911338a637ddc7ce4e3c594d71a656">array_type</a></td></tr>
+<tr class="memdesc:a3f911338a637ddc7ce4e3c594d71a656"><td class="mdescLeft">&#160;</td><td class="mdescRight">Three-dimensional array type.  <a href="#a3f911338a637ddc7ce4e3c594d71a656">More...</a><br/></td></tr>
 <tr class="separator:a3f911338a637ddc7ce4e3c594d71a656"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad7506c468a1098727128b874722057ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ad7506c468a1098727128b874722057ac">Yule_walker_solver</a> (<a class="el" href="classarma_1_1Yule__walker__solver.html#a3f911338a637ddc7ce4e3c594d71a656">array_type</a> acf, const <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> variance)</td></tr>
+<tr class="memdesc:ad7506c468a1098727128b874722057ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a solver with specified auto-correlation function and variance.  <a href="#ad7506c468a1098727128b874722057ac">More...</a><br/></td></tr>
 <tr class="separator:ad7506c468a1098727128b874722057ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49733b0cb0281d485830294e3134ea67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a49733b0cb0281d485830294e3134ea67">~Yule_walker_solver</a> ()=default</td></tr>
 <tr class="separator:a49733b0cb0281d485830294e3134ea67"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,14 +136,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a93edcdfc6b3283e541084a5abf0526e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classarma_1_1Yule__walker__solver.html">Yule_walker_solver</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a93edcdfc6b3283e541084a5abf0526e4">operator=</a> (const <a class="el" href="classarma_1_1Yule__walker__solver.html">Yule_walker_solver</a> &amp;)=delete</td></tr>
 <tr class="separator:a93edcdfc6b3283e541084a5abf0526e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1c976f8f8a4ec09fbad5c9dfd5e5ed6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classarma_1_1Yule__walker__solver.html#a3f911338a637ddc7ce4e3c594d71a656">array_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ad1c976f8f8a4ec09fbad5c9dfd5e5ed6">solve</a> ()</td></tr>
+<tr class="memdesc:ad1c976f8f8a4ec09fbad5c9dfd5e5ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve Yule&mdash;Walker system of equations.  <a href="#ad1c976f8f8a4ec09fbad5c9dfd5e5ed6">More...</a><br/></td></tr>
 <tr class="separator:ad1c976f8f8a4ec09fbad5c9dfd5e5ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a699c7163ad09d8f25ce3ccc98ef04a93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classarma_1_1Yule__walker__solver.html#a3f911338a637ddc7ce4e3c594d71a656">array_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a699c7163ad09d8f25ce3ccc98ef04a93">operator()</a> ()</td></tr>
+<tr class="memdesc:a699c7163ad09d8f25ce3ccc98ef04a93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve Yule&mdash;Walker system of equations.  <a href="#a699c7163ad09d8f25ce3ccc98ef04a93">More...</a><br/></td></tr>
 <tr class="separator:a699c7163ad09d8f25ce3ccc98ef04a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58b3d02e1cfcd32ea19950c892c90051"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a58b3d02e1cfcd32ea19950c892c90051">max_order</a> (int rhs)</td></tr>
 <tr class="separator:a58b3d02e1cfcd32ea19950c892c90051"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc90959f001b03db4c20f9c54d782c5f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#acc90959f001b03db4c20f9c54d782c5f">max_order</a> () const noexcept</td></tr>
+<tr class="memdesc:acc90959f001b03db4c20f9c54d782c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum AR model order.  <a href="#acc90959f001b03db4c20f9c54d782c5f">More...</a><br/></td></tr>
 <tr class="separator:acc90959f001b03db4c20f9c54d782c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05833eb1fbcdcc97ac01872adde35dd0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a05833eb1fbcdcc97ac01872adde35dd0">determine_the_order</a> () const noexcept</td></tr>
+<tr class="memdesc:a05833eb1fbcdcc97ac01872adde35dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the order of AR model automatically by comparing the variance in subsequent algorithm iterations.  <a href="#a05833eb1fbcdcc97ac01872adde35dd0">More...</a><br/></td></tr>
 <tr class="separator:a05833eb1fbcdcc97ac01872adde35dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab47222895d4c0049c239a2776b54e022"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ab47222895d4c0049c239a2776b54e022">determine_the_order</a> (bool rhs) noexcept</td></tr>
 <tr class="separator:ab47222895d4c0049c239a2776b54e022"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,18 +156,30 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a87b046d9b425386d7881dd0aab168051"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a87b046d9b425386d7881dd0aab168051">chop</a> (bool rhs) noexcept</td></tr>
 <tr class="separator:a87b046d9b425386d7881dd0aab168051"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2ae95bfa2924931b144d40a20887e5a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#aa2ae95bfa2924931b144d40a20887e5a">chop</a> () const noexcept</td></tr>
+<tr class="memdesc:aa2ae95bfa2924931b144d40a20887e5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether to chop the result removing adjacent values smaller than \(\epsilon_{\text{chop}}\) from the end of the resulting ACF.  <a href="#aa2ae95bfa2924931b144d40a20887e5a">More...</a><br/></td></tr>
 <tr class="separator:aa2ae95bfa2924931b144d40a20887e5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a633efe69977b8e3bf3f5723441aa2035"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a633efe69977b8e3bf3f5723441aa2035">do_not_chop</a> () noexcept</td></tr>
 <tr class="separator:a633efe69977b8e3bf3f5723441aa2035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9a9cd1760c07fbe237ef43ac67028ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ae9a9cd1760c07fbe237ef43ac67028ec">chop_epsilon</a> () const noexcept</td></tr>
+<tr class="memdesc:ae9a9cd1760c07fbe237ef43ac67028ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum ACF value. Smaller values are considered noughts and are removed from the end of ACF.  <a href="#ae9a9cd1760c07fbe237ef43ac67028ec">More...</a><br/></td></tr>
+<tr class="separator:ae9a9cd1760c07fbe237ef43ac67028ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a904b6c9429d6905b272851e9f03b93dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a904b6c9429d6905b272851e9f03b93dd">chop_epsilon</a> (<a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a> rhs) noexcept</td></tr>
+<tr class="separator:a904b6c9429d6905b272851e9f03b93dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b50a0ec33ad9a1cede2fec7fa5608eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a5b50a0ec33ad9a1cede2fec7fa5608eb">var_epsilon</a> () const noexcept</td></tr>
+<tr class="memdesc:a5b50a0ec33ad9a1cede2fec7fa5608eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum variance difference between subsequent algorithm iterations. The algorithm stops when \(\left|\sigma_{i+1}^2-\sigma_{i}^2\right| \leq\epsilon\).  <a href="#a5b50a0ec33ad9a1cede2fec7fa5608eb">More...</a><br/></td></tr>
+<tr class="separator:a5b50a0ec33ad9a1cede2fec7fa5608eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0f93bb55877966923d1a0e8b02f8fef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#aa0f93bb55877966923d1a0e8b02f8fef">var_epsilon</a> (<a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a> rhs) noexcept</td></tr>
+<tr class="separator:aa0f93bb55877966923d1a0e8b02f8fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a0aa5d99482e8ec43199b0a72ab78a7c5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a0aa5d99482e8ec43199b0a72ab78a7c5">variance_has_not_changed_much</a> (<a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> var0, <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> var1)</td></tr>
-<tr class="separator:a0aa5d99482e8ec43199b0a72ab78a7c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe4ca416f7578a5b78e35c77b586e485"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#afe4ca416f7578a5b78e35c77b586e485">variance_has_not_changed_much</a> (<a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> var0, <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> var1) noexcept</td></tr>
+<tr class="separator:afe4ca416f7578a5b78e35c77b586e485"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:ad1a8beb261ae680a3bb60c7de410ed1b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classarma_1_1Yule__walker__solver.html#a3f911338a637ddc7ce4e3c594d71a656">array_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ad1a8beb261ae680a3bb60c7de410ed1b">_acf</a></td></tr>
+<tr class="memdesc:ad1a8beb261ae680a3bb60c7de410ed1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Three-dimensional auto-correlation function \(\rho\) with \(\rho_{0,0,0}=1\).  <a href="#ad1a8beb261ae680a3bb60c7de410ed1b">More...</a><br/></td></tr>
 <tr class="separator:ad1a8beb261ae680a3bb60c7de410ed1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab654279ed3e84831ee49bae5ed806c7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ab654279ed3e84831ee49bae5ed806c7d">_variance</a> = 0</td></tr>
 <tr class="memdesc:ab654279ed3e84831ee49bae5ed806c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variance of the ACF.  <a href="#ab654279ed3e84831ee49bae5ed806c7d">More...</a><br/></td></tr>
@@ -168,20 +187,26 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a145dffefd4cd8d2f188276a231dd2f90"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a145dffefd4cd8d2f188276a231dd2f90">_maxorder</a> = 0</td></tr>
 <tr class="memdesc:a145dffefd4cd8d2f188276a231dd2f90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum AR model order.  <a href="#a145dffefd4cd8d2f188276a231dd2f90">More...</a><br/></td></tr>
 <tr class="separator:a145dffefd4cd8d2f188276a231dd2f90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af87045f9141523013c482035fdcb53e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#af87045f9141523013c482035fdcb53e8">_epsilon</a> = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1e-5)</td></tr>
-<tr class="separator:af87045f9141523013c482035fdcb53e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44353506aa4d381a7c41ac1a3b85f8cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a44353506aa4d381a7c41ac1a3b85f8cf">_varepsilon</a> = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1e-5)</td></tr>
+<tr class="memdesc:a44353506aa4d381a7c41ac1a3b85f8cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum variance difference between subsequent algorithm iterations. The algorithm stops when \(\left|\sigma_{i+1}^2-\sigma_{i}^2\right| \leq\epsilon\).  <a href="#a44353506aa4d381a7c41ac1a3b85f8cf">More...</a><br/></td></tr>
+<tr class="separator:a44353506aa4d381a7c41ac1a3b85f8cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab05df67318ccb39ac3592526a7a7ed2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ab05df67318ccb39ac3592526a7a7ed2a">_determinetheorder</a> = true</td></tr>
+<tr class="memdesc:ab05df67318ccb39ac3592526a7a7ed2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the order of AR model automatically by comparing the variance in subsequent algorithm iterations.  <a href="#ab05df67318ccb39ac3592526a7a7ed2a">More...</a><br/></td></tr>
 <tr class="separator:ab05df67318ccb39ac3592526a7a7ed2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66fc05013f4c923800e02bb17d27e4a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a66fc05013f4c923800e02bb17d27e4a3">_chopepsilon</a> = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1e-10)</td></tr>
+<tr class="memdesc:a66fc05013f4c923800e02bb17d27e4a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum ACF value. Smaller values are considered noughts and are removed from the end of ACF.  <a href="#a66fc05013f4c923800e02bb17d27e4a3">More...</a><br/></td></tr>
 <tr class="separator:a66fc05013f4c923800e02bb17d27e4a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8616784c122c05405d88d03389e1d73"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ab8616784c122c05405d88d03389e1d73">_chop</a> = true</td></tr>
+<tr class="memdesc:ab8616784c122c05405d88d03389e1d73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether to chop the result removing adjacent values smaller than \(\epsilon_{\text{chop}}\) from the end of the resulting ACF.  <a href="#ab8616784c122c05405d88d03389e1d73">More...</a><br/></td></tr>
 <tr class="separator:ab8616784c122c05405d88d03389e1d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;class T&gt;<br/>
 class arma::Yule_walker_solver&lt; T &gt;</h3>
 
-<p>Computes AR model coefficients using an order-recursvive method from <a class="el" href="citelist.html#CITEREF_ByoungSeon1999">ByoungSeon1999</a>. </p>
+<p>Computes AR model coefficients using an order-recursvive method from <a class="el" href="citelist.html#CITEREF_Choi1999">Choi1999</a>. </p>
+<dl class="section date"><dt>Date</dt><dd>2018-01-12 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Ivan Gankevich</dd></dl>
 <p>The AR model order is determined automatically. The algorithm works for square ACFs (i.e. ACF with the same number of points along each dimension). </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a class="anchor" id="a3f911338a637ddc7ce4e3c594d71a656"></a>
@@ -196,6 +221,8 @@ template&lt;class T&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Three-dimensional array type. </p>
+
 </div>
 </div>
 <a class="anchor" id="a36842a7cde769eb292d1744880da1707"></a>
@@ -209,6 +236,8 @@ template&lt;class T&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Array element type. </p>
 
 </div>
 </div>
@@ -238,6 +267,15 @@ template&lt;class T&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructs a solver with specified auto-correlation function and variance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">acf</td><td>three-dimensional auto-correlation function \(\rho\) with \(\rho_{0,0,0}=1\) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">variance</td><td>desired \(\sigma^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -342,6 +380,61 @@ template&lt;class T&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Determines whether to chop the result removing adjacent values smaller than \(\epsilon_{\text{chop}}\) from the end of the resulting ACF. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae9a9cd1760c07fbe237ef43ac67028ec"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a> <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::chop_epsilon </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum ACF value. Smaller values are considered noughts and are removed from the end of ACF. </p>
+
+</div>
+</div>
+<a class="anchor" id="a904b6c9429d6905b272851e9f03b93dd"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::chop_epsilon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a>&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
 </div>
 </div>
 <a class="anchor" id="a05833eb1fbcdcc97ac01872adde35dd0"></a>
@@ -366,6 +459,8 @@ template&lt;class T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Determine the order of AR model automatically by comparing the variance in subsequent algorithm iterations. </p>
 
 </div>
 </div>
@@ -486,6 +581,8 @@ template&lt;class T&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Maximum AR model order. </p>
+
 </div>
 </div>
 <a class="anchor" id="a699c7163ad09d8f25ce3ccc98ef04a93"></a>
@@ -510,6 +607,9 @@ template&lt;class T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Solve Yule&mdash;Walker system of equations. </p>
+<dl class="section return"><dt>Returns</dt><dd>three-dimensional array of coefficients </dd></dl>
 
 </div>
 </div>
@@ -553,13 +653,69 @@ template&lt;class T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Solve Yule&mdash;Walker system of equations. </p>
+<dl class="section return"><dt>Returns</dt><dd>three-dimensional array of coefficients </dd></dl>
 <p>Initial stage.</p>
 <p>Print solver state.</p>
 <p>Print solver state. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0aa5d99482e8ec43199b0a72ab78a7c5"></a>
+<a class="anchor" id="a5b50a0ec33ad9a1cede2fec7fa5608eb"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a> <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::var_epsilon </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum variance difference between subsequent algorithm iterations. The algorithm stops when \(\left|\sigma_{i+1}^2-\sigma_{i}^2\right| \leq\epsilon\). </p>
+
+</div>
+</div>
+<a class="anchor" id="aa0f93bb55877966923d1a0e8b02f8fef"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::var_epsilon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a>&#160;</td>
+          <td class="paramname"><em>rhs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="afe4ca416f7578a5b78e35c77b586e485"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -588,7 +744,7 @@ template&lt;class T&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -615,6 +771,7 @@ template&lt;class T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Three-dimensional auto-correlation function \(\rho\) with \(\rho_{0,0,0}=1\). </p>
 
 </div>
@@ -638,7 +795,8 @@ template&lt;class T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Chop the result removing adjacent values smaller than \(\epsilon_{\text{chop}}\) from the end of the resulting ACF. </p>
+
+<p>Determines whether to chop the result removing adjacent values smaller than \(\epsilon_{\text{chop}}\) from the end of the resulting ACF. </p>
 
 </div>
 </div>
@@ -661,6 +819,7 @@ template&lt;class T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
 <p>Maximum ACF value. Smaller values are considered noughts and are removed from the end of ACF. </p>
 
 </div>
@@ -684,30 +843,8 @@ template&lt;class T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Determine the order of AR model automatically by comparing the variance in subsequent algorithm iterations. </p>
 
-</div>
-</div>
-<a class="anchor" id="af87045f9141523013c482035fdcb53e8"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::_epsilon = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1e-5)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Maximum variance difference between subsequent algorithm iterations. The algorithm stops when \(\left|\sigma_{i+1}^2-\sigma_{i}^2\right| \leq\epsilon\). </p>
+<p>Determine the order of AR model automatically by comparing the variance in subsequent algorithm iterations. </p>
 
 </div>
 </div>
@@ -732,6 +869,30 @@ template&lt;class T&gt; </div>
 </div><div class="memdoc">
 
 <p>Maximum AR model order. </p>
+
+</div>
+</div>
+<a class="anchor" id="a44353506aa4d381a7c41ac1a3b85f8cf"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::_varepsilon = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1e-5)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maximum variance difference between subsequent algorithm iterations. The algorithm stops when \(\left|\sigma_{i+1}^2-\sigma_{i}^2\right| \leq\epsilon\). </p>
 
 </div>
 </div>
