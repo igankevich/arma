@@ -60,6 +60,17 @@ namespace linalg {
 		return result;
 	}
 
+	template <int N>
+	blitz::Array<double,N>
+	multiply_symmetric_mv(Matrix<double> lhs, blitz::Array<double,N> rhs) {
+		const int m = lhs.rows();
+		blitz::Array<double,N> result(rhs.shape());
+		result = 0;
+		cblas_dsymv(CblasRowMajor, CblasUpper, m, 1.0, lhs.data(), m,
+		     rhs.data(), 1, 0.0, result.data(), 1);
+		return result;
+	}
+
 	inline Vector<double>
 	multiply_by_column_vector(Matrix<double> lhs, Vector<double> rhs) {
 		assert(lhs.extent(1) == rhs.extent(0));

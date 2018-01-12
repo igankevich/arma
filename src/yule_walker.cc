@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cassert>
 #include <fstream>
+#include <stdexcept>
 #include <unordered_map>
 
 #ifndef NDEBUG
@@ -356,6 +357,20 @@ namespace {
 		return linalg::multiply(lhs, rhs);
 	}
 
+	template <class T, int N>
+	inline bool
+	is_square(const blitz::Array<T,N>& rhs) {
+		const int first = rhs.extent(0);
+		bool result = true;
+		for (int i=1; i<rhs.dimensions(); ++i) {
+			if (rhs.extent(i) != first) {
+				result = false;
+				break;
+			}
+		}
+		return result;
+	}
+
 }
 
 namespace std {
@@ -384,8 +399,30 @@ namespace std {
 }
 
 template <class T>
-arma::Array3D<T>
-arma::solve_yule_walker(Array3D<T> acf, const T variance0, const int max_order) {
+arma::Yule_walker_solver<T>
+::Yule_walker_solver(array_type acf, const T variance):
+_acf(acf),
+_variance(variance),
+_maxorder(blitz::max(acf.shape()-1)) {
+	if (!is_square(acf)) {
+		throw std::invalid_argument("ACF is not square");
+	}
+}
+
+template <class T>
+void
+arma::Yule_walker_solver<T>
+::max_order(int rhs) {
+	if (blitz::any(rhs >= this->_acf.shape())) {
+		throw std::invalid_argument("order >= acf.shape()");
+	}
+	this->_maxorder = rhs;
+}
+
+template <class T>
+typename arma::Yule_walker_solver<T>::array_type
+arma::Yule_walker_solver<T>
+::solve() {
 	#define PHI(i,j,k) Phi[std::make_tuple(i,j,k)]
 	typedef blitz::Array<T,2> matrix_type;
 	typedef blitz::Array<T,1> vector_type;
@@ -393,14 +430,16 @@ arma::solve_yule_walker(Array3D<T> acf, const T variance0, const int max_order) 
 	typedef std::unordered_map<key_type,matrix_type> map3d_type;
 	using blitz::Range;
 	using blitz::shape;
+	using blitz::any;
 	/// Initial stage.
+	const int max_order = this->_maxorder;
 	map3d_type Phi;
 	blitz::Array<vector_type,1> Pi_l(shape(max_order+2));
 	blitz::Array<vector_type,1> Pi_lp1(shape(max_order+2));
 	blitz::Array<matrix_type,1> Theta(shape(max_order+2));
-	matrix_type R_1_1 = R_matrix(1, 1, acf);
-	vector_type R_1_0 = R_vector_b0(1, acf);
-	vector_type R_0_1 = R_vector_a0(1, acf);
+	matrix_type R_1_1 = R_matrix(1, 1, this->_acf);
+	vector_type R_1_0 = R_vector_b0(1, this->_acf);
+	vector_type R_0_1 = R_vector_a0(1, this->_acf);
 //	std::clog << "R_1_1=" << R_1_1 << std::endl;
 //	std::clog << "R_1_0=" << R_1_0 << std::endl;
 //	std::clog << "R_0_1=" << R_0_1 << std::endl;
@@ -413,23 +452,27 @@ arma::solve_yule_walker(Array3D<T> acf, const T variance0, const int max_order) 
 	vector_type Pi_2_1(linalg::multiply_mv(R_sup_1_1, R_1_0));
 //	std::clog << "Pi_2_1=" << Pi_2_1 << std::endl;
 	T lambda = T(1) - linalg::dot(R_0_1, Pi_2_1);
-	T variance = variance0*lambda;
+	T var0 = this->_variance;
+	T var = this->_variance*lambda;
 	#ifndef NDEBUG
 	/// Print solver state.
 	std::clog << __func__ << ':' << "order=" << 1
-			  << ",variance=" << variance << std::endl;
+			  << ",var=" << var << std::endl;
 	#endif
 	Pi_l(1).reference(Pi_2_1);
-	PHI(2,1,0).reference(matrix_type(R_sup_1_1*R_matrix(1, 2, acf)));
-	for (int l=2; l<=max_order; ++l) {
-		matrix_type R_l_l = R_matrix(l, l, acf);
-		vector_type R_l_0 = R_vector_b0(l, acf);
+	PHI(2,1,0).reference(matrix_type(R_sup_1_1*R_matrix(1, 2, this->_acf)));
+	int l = 1;
+	do {
+		++l;
+		var0 = var;
+		matrix_type R_l_l = R_matrix(l, l, this->_acf);
+		vector_type R_l_0 = R_vector_b0(l, this->_acf);
 		matrix_type sum1(R_l_l.shape());
 		sum1 = 0;
 		vector_type sum2(R_l_0.shape());
 		sum2 = 0;
 		for (int m=1; m<=l-1; ++m) {
-			matrix_type R_l_m(R_matrix(l, m, acf));
+			matrix_type R_l_m(R_matrix(l, m, this->_acf));
 			sum1 += R_l_m*PHI(l,m,0);
 			sum2 += linalg::multiply_by_column_vector(R_l_m, Pi_l(m));
 		}
@@ -449,20 +492,15 @@ arma::solve_yule_walker(Array3D<T> acf, const T variance0, const int max_order) 
 			));
 		}
 		lambda -= linalg::dot(h_l, Pi_lp1(l));
-		variance = variance0*lambda;
-		#ifndef NDEBUG
-		/// Print solver state.
-		std::clog << __func__ << ':' << "order=" << l
-				  << ",variance=" << variance << std::endl;
-		#endif
+		var = this->_variance*lambda;
 		if (l < max_order) {
-			PHI(2,1,l-1).reference(R_sup_1_1*R_matrix(1, l+1, acf));
+			PHI(2,1,l-1).reference(R_sup_1_1*R_matrix(1, l+1, this->_acf));
 			for (int m=2; m<=l; ++m) {
-				matrix_type R_m_lp1(R_matrix(m,l+1,acf));
+				matrix_type R_m_lp1(R_matrix(m,l+1,this->_acf));
 				matrix_type sum3(R_m_lp1.shape());
 				sum3 = 0;
 				for (int n=1; n<=m-1; ++n) {
-					sum3 += R_matrix(m,n,acf)*PHI(m,n,l-m+1);
+					sum3 += R_matrix(m,n,this->_acf)*PHI(m,n,l-m+1);
 				}
 				PHI(m+1,m,l-m).reference(Theta(m)*matrix_type(R_m_lp1 - sum3));
 				for (int a=1; a<=m-1; ++a) {
@@ -473,15 +511,34 @@ arma::solve_yule_walker(Array3D<T> acf, const T variance0, const int max_order) 
 			}
 		}
 		blitz::cycleArrays(Pi_l, Pi_lp1);
-	}
+		#ifndef NDEBUG
+		/// Print solver state.
+		std::clog << __func__ << ':' << "order=" << l
+				  << ",var=" << var << std::endl;
+		#endif
+	} while (l < max_order && !this->variance_has_not_changed_much(var, var0));
 	#undef PHI
-	return result_array(Pi_lp1, max_order);
+	array_type result = result_array(Pi_l, l);
+	if (this->_chop) {
+		const T eps = this->_chopepsilon;
+		// shrink third dimension
+		int k = result.extent(2) - 1;
+		while (k > 1 && all(result(Range::all(), Range::all(), k) < eps)) {
+			--k;
+		}
+		// shrink second dimension
+		int j = result.extent(1) - 1;
+		while (j > 1 && all(result(Range::all(), j, Range(0,k)) < eps)) {
+			--j;
+		}
+		// shrink first dimension
+		int i = result.extent(0) - 1;
+		while (i > 1 && all(result(i, Range(0,j), Range(0,k)) < eps)) {
+			--i;
+		}
+		result.resizeAndPreserve(i+1, j+1, k+1);
+	}
+	return result;
 }
 
-template arma::Array3D<ARMA_REAL_TYPE>
-arma::solve_yule_walker(
-	Array3D<ARMA_REAL_TYPE> acf,
-	const ARMA_REAL_TYPE,
-	const int max_order
-);
-
+template class arma::Yule_walker_solver<ARMA_REAL_TYPE>;

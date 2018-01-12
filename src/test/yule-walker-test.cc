@@ -42,15 +42,51 @@ standing_wave_ACF(blitz::TinyVector<int,3> shape) {
 		cos(velocity*t*delta[0]) *
 		cos(beta*x*delta[1]) *
 		cos(0*beta*y*delta[2]);
+	acf /= acf(0,0,0);
 	return acf;
 }
 
 template <class T>
 blitz::Array<T,3>
-solve_yule_walker_gauss_elimination(blitz::Array<T,3> acf, int order) {
+propagating_wave_ACF(blitz::TinyVector<int,3> shape) {
+	using blitz::exp;
+	using blitz::cos;
+	blitz::TinyVector<T,3> delta;
+	delta = 1;
+	blitz::firstIndex i;
+	blitz::secondIndex j;
+	blitz::thirdIndex k;
+	// from mathematica
+	T alpha = 0.42, beta = -1.8, gamm = 1.0;
+	T velocity = 1.0;
+	blitz::Array<T,3> acf(shape);
+	acf = gamm*exp(-alpha*(i*delta[0] + j*delta[1] + k*delta[2])) *
+		cos(velocity*i*delta[0] + beta*j*delta[1] + 0*beta*k*delta[2]);
+	acf /= acf(0,0,0);
+	return acf;
+}
+
+template <class T, int N>
+blitz::Array<T,1>
+to_vector(blitz::Array<T,N> rhs) {
+	const int n = rhs.numElements();
+	blitz::Array<T,1> result(n);
+	std::copy_n(rhs.data(), n, result.data());
+	return result;
+}
+
+template <class T>
+blitz::Array<T,3>
+solve_yule_walker_gauss_elimination(
+	blitz::Array<T,3> acf,
+	blitz::TinyVector<int,3> order,
+	blitz::Array<T,3> actual
+) {
 	using blitz::Range;
-	using blitz::toEnd;
+	using blitz::abs;
+	using blitz::max;
 	using blitz::shape;
+	using blitz::toEnd;
 	typedef blitz::Array<T,3> array_type;
 	typedef blitz::Array<T,2> matrix_type;
 	typedef blitz::Array<T,1> vector_type;
@@ -70,11 +106,14 @@ solve_yule_walker_gauss_elimination(blitz::Array<T,3> acf, int order) {
 	EXPECT_EQ(rhs.extent(0), m);
 	EXPECT_TRUE(linalg::is_symmetric(lhs));
 	EXPECT_TRUE(linalg::is_positive_definite(lhs));
+	vector_type rhs_copy(rhs.copy());
 	linalg::cholesky(lhs, rhs);
-	array_type result(shape(order, order, order));
+	array_type result(order);
 	EXPECT_EQ(result.numElements(), rhs.numElements() + 1);
 	result(0,0,0) = 0;
 	std::copy_n(rhs.data(), rhs.numElements(), result.data() + 1);
+	std::clog << "EPS=" << max(abs(linalg::multiply_symmetric_mv(lhs, rhs) - rhs_copy)) << std::endl;
+	std::clog << "EPS_ACTUAL=" << max(abs(linalg::multiply_symmetric_mv(lhs, to_vector(actual)(Range(1, toEnd))) - rhs_copy)) << std::endl;
 	return result;
 }
 
@@ -84,6 +123,8 @@ struct YuleWalkerParams {
 	typedef blitz::TinyVector<int,3> shape_type;
 
 	shape_type order;
+	real_type variance;
+	real_type tolerance;
 	std::function<decltype(exponential_acf<real_type>)> generate_acf;
 	std::string name;
 };
@@ -98,29 +139,40 @@ public ::testing::TestWithParam<YuleWalkerParams>
 {};
 
 TEST_P(YuleWalkerTest, CompareToGaussElimination) {
-	using blitz::max;
 	using blitz::abs;
+	using blitz::all;
+	using blitz::max;
 	using blitz::shape;
 	typedef ARMA_REAL_TYPE T;
-	const T variance = 239.2780;
 	const auto& params = GetParam();
+	const T variance = params.variance;
 	const int order = max(params.order);
-	auto acf = exponential_acf<T>(params.order + 1);
-	auto actual = arma::solve_yule_walker(acf, variance, order);
-	auto expected = solve_yule_walker_gauss_elimination(acf, order);
-	EXPECT_NEAR(max(abs(actual - expected)), 0, 1e-4)
+	auto acf = params.generate_acf(params.order + 1);
+	arma::Yule_walker_solver<T> solver(acf, variance);
+	solver.max_order(order);
+	solver.determine_the_order(false);
+	solver.chop(false);
+	auto actual = solver.solve();
+	auto expected = solve_yule_walker_gauss_elimination(acf, params.order, actual);
+	EXPECT_TRUE(all(actual.shape() == expected.shape()))
+		<< "order=" << order << std::endl
+		<< "actual.shape()=" << actual.shape() << std::endl
+		<< "expected.shape()=" << expected.shape() << std::endl;
+	EXPECT_NEAR(max(abs(actual - expected)), 0, params.tolerance)
 		<< "acf=" << acf << std::endl
 		<< "actual=" << actual << std::endl
 		<< "expected=" << expected << std::endl;
 }
 
+typedef ARMA_REAL_TYPE T;
+
 INSTANTIATE_TEST_CASE_P(
 	SquareExponentialACF,
 	YuleWalkerTest,
 	::testing::Values(
-		YuleWalkerParams{{2,2,2}, exponential_acf<ARMA_REAL_TYPE>, "exponential_acf"},
-		YuleWalkerParams{{3,3,3}, exponential_acf<ARMA_REAL_TYPE>, "exponential_acf"},
-		YuleWalkerParams{{4,4,4}, exponential_acf<ARMA_REAL_TYPE>, "exponential_acf"}
+		YuleWalkerParams{{2,2,2}, T(239.2780), T(1e-4), exponential_acf<T>, "exponential_acf"},
+		YuleWalkerParams{{3,3,3}, T(239.2780), T(1e-4), exponential_acf<T>, "exponential_acf"},
+		YuleWalkerParams{{4,4,4}, T(239.2780), T(1e-4), exponential_acf<T>, "exponential_acf"}
 	)
 );
 
@@ -128,11 +180,56 @@ INSTANTIATE_TEST_CASE_P(
 	SquareStandingWaveACF,
 	YuleWalkerTest,
 	::testing::Values(
-		YuleWalkerParams{{2,2,2}, standing_wave_ACF<ARMA_REAL_TYPE>, "standing_wave_ACF"},
-		YuleWalkerParams{{3,3,3}, standing_wave_ACF<ARMA_REAL_TYPE>, "standing_wave_ACF"},
-		YuleWalkerParams{{4,4,4}, standing_wave_ACF<ARMA_REAL_TYPE>, "standing_wave_ACF"},
-		YuleWalkerParams{{7,7,7}, standing_wave_ACF<ARMA_REAL_TYPE>, "standing_wave_ACF"}
+		YuleWalkerParams{{7,7,7}, T(2), T(1e-2), standing_wave_ACF<T>, "standing_wave_ACF"}
 	)
 );
 
+TEST(YuleWalkerTest, DetermineTheOrder) {
+	using blitz::abs;
+	using blitz::all;
+	using blitz::max;
+	using blitz::shape;
+	typedef ARMA_REAL_TYPE T;
+	YuleWalkerParams params{{10,10,10}, T(239.2780), T(1e-4), exponential_acf<T>, "exponential_acf"};
+	const T variance = params.variance;
+	auto acf = params.generate_acf(params.order + 1);
+	arma::Yule_walker_solver<T> solver(acf, variance);
+	solver.determine_the_order(true);
+	solver.chop(false);
+	auto actual = solver.solve();
+	EXPECT_TRUE(all(actual.shape() == shape(2,2,2)))
+		<< "actual=" << actual << std::endl;
+}
+
+TEST(YuleWalkerTest, Chop) {
+	using blitz::abs;
+	using blitz::all;
+	using blitz::max;
+	using blitz::shape;
+	typedef ARMA_REAL_TYPE T;
+	YuleWalkerParams params{{10,10,10}, T(239.2780), T(1e-4), exponential_acf<T>, "exponential_acf"};
+	const T variance = params.variance;
+	auto acf = params.generate_acf(params.order + 1);
+	arma::Yule_walker_solver<T> solver(acf, variance);
+	solver.determine_the_order(false);
+	solver.chop(true);
+	auto actual = solver.solve();
+	EXPECT_TRUE(all(actual.shape() == shape(2,2,2)))
+		<< "actual=" << actual << std::endl;
+}
+
+TEST(YuleWalkerTest, RealCase) {
+	using blitz::abs;
+	using blitz::all;
+	using blitz::max;
+	using blitz::shape;
+	typedef ARMA_REAL_TYPE T;
+	YuleWalkerParams params{{10,10,10}, T(2), T(1e-2), standing_wave_ACF<T>, "standing_wave_ACF"};
+	const T variance = params.variance;
+	auto acf = params.generate_acf(params.order + 1);
+	arma::Yule_walker_solver<T> solver(acf, variance);
+	auto actual = solver.solve();
+	EXPECT_EQ(actual.extent(2), 2)
+		<< "actual=" << actual << std::endl;
+}
 
