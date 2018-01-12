@@ -103,9 +103,11 @@ endif
 
 fourier_src = []
 fourier_deps = []
+linalg_deps = []
 if get_option('framework') == 'opencl'
 	fourier_src = files(['apmath/fourier_opencl.cc'])
 	fourier_deps = [libOpenCL, libpthread, libclFFT]
+	linalg_deps = [libOpenCL]
 	arma_deps += fourier_deps
 	arma_src += fourier_src
 endif
@@ -126,7 +128,7 @@ if get_option('with_high_amplitude_realtime_solver')
 		'velocity/high_amplitude_realtime_solver.cc',
 	]
 	arma_realtime_cpp_args = arma_cpp_args + ['-DARMA_OPENGL=1']
-	arma_realtime_deps = arma_deps + [libglut, libGLU, libGL, libclFFT]
+	arma_realtime_deps = arma_deps + [libglut, libGL, libclFFT]
 	executable(
 		executable_prefix + '-realtime',
 		sources: arma_realtime_src + [
@@ -153,8 +155,8 @@ executable(
 	sources: 'visual.cc',
 	dependencies: [
 		libblitz,
-		libglut,
-		libGL
+		libGL,
+		libSDL2
 	] + fourier_deps + bscheduler_deps,
 	install: true
 )

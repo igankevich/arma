@@ -31,11 +31,12 @@ void
 rescale() {
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
-	gluLookAt(
-		3, 3, 3,
-		0, 0, 0,
-		0, 0, 1
-	);
+//	gluLookAt(
+//		3, 3, 3,
+//		0, 0, 0,
+//		0, 0, 1
+//	);
+	glTranslatef(0, 0, -100.0f);
 	glRotatef(rotateX, 0, 1, 0);
 	glRotatef(rotateY, 1, 0, 0);
 	glScalef(scaleX, scaleX, scaleX);
@@ -149,7 +150,13 @@ onResize(int w, int h) {
 	glViewport(0, 0, w, h);
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    gluPerspective( 60, float(w) / h, 0.1, 100 );
+	GLfloat zNear = 0.1f;
+	GLfloat zFar = 25500.0f;
+	GLfloat aspect = float(w) / float(h);
+	GLfloat fH = tan(float(60 / 360.0f * 3.14159f)) * zNear;
+	GLfloat fW = fH * aspect;
+	glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+	glMatrixMode(GL_MODELVIEW);
 	rescale();
 }
 

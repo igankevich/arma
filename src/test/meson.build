@@ -147,7 +147,7 @@ test(
 			libblas,
 			liblapack,
 			libgsl
-		],
+		] + linalg_deps,
 		link_args: '-llapacke'
 	)
 )

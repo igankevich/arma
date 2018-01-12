@@ -1,14 +1,23 @@
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <fstream>
 #include <algorithm>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <stdexcept>
 
 #include "opengl.hh"
-#include <GL/freeglut.h>
-#include <GL/freeglut_ext.h>
+
+#include <SDL.h>
 
 #include "types.hh"
+
+#define SDL_CHECK(ret) \
+	if (ret) { \
+		throw ::std::runtime_error(SDL_GetError()); \
+	}
+
+SDL_Window* window = nullptr;
+SDL_GLContext glcontext;
 
 using namespace arma;
 
@@ -31,8 +40,6 @@ const Real ROT_STEP = 90;
 Projection proj = PROJECTION_NONE;
 bool paused = true;
 int timer = 0;
-int dragX = 0;
-int dragY = 0;
 int dimension_order = 0; /// dimension dimension_order
 int part_count = 4;
 Real interval_factor = 0;
@@ -127,8 +134,8 @@ onDisplay() {
 
 	glRasterPos2i(-1, -1);
 	glColor3f(1, 1, 1);
-	glutBitmapString(GLUT_BITMAP_HELVETICA_18,
-	                 (const unsigned char*)str.str().c_str());
+	//glutBitmapString(GLUT_BITMAP_HELVETICA_18,
+	//                 (const unsigned char*)str.str().c_str());
 
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
@@ -136,22 +143,13 @@ onDisplay() {
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 
-	glutSwapBuffers();
-}
-
-void
-onMouseButton(int, int, int x, int y) {
-	dragX = x;
-	dragY = y;
+	SDL_GL_SwapWindow(window);
 }
 
 void
 onMouseDrag(int x, int y) {
-	glRotatef(x - dragX, 0, 1, 0);
-	glRotatef(y - dragY, 1, 0, 0);
-	dragX = x;
-	dragY = y;
-	glutPostRedisplay();
+	glRotatef(x, 0, 1, 0);
+	glRotatef(y, 1, 0, 0);
 }
 
 void
@@ -175,7 +173,7 @@ onResize(int w, int h) {
 }
 
 void
-onKeyPressed(unsigned char key, int, int) {
+onKeyPressed(SDL_Keycode key, Uint16 mods) {
 	if (key == 'q') exit(0);
 	if (key == 32) paused = !paused;
 
@@ -200,48 +198,40 @@ onKeyPressed(unsigned char key, int, int) {
 		dimension_order %= 3;
 		rotate_dimensions();
 	}
-	glutPostRedisplay();
-}
 
-void
-onSpecialKeyPressed(int key, int, int) {
-
-	int mods = glutGetModifiers();
 	float lag = 1.0f;
 
-	if (GLUT_ACTIVE_CTRL == (mods & GLUT_ACTIVE_CTRL)) { lag *= 10.0f; }
+	if (mods & KMOD_CTRL) { lag *= 10.0f; }
 
-	if (key == GLUT_KEY_F1) proj = PROJECTION_NONE;
-	if (key == GLUT_KEY_F2) proj = PROJECTION_X;
-	if (key == GLUT_KEY_F3) proj = PROJECTION_Y;
-	if (key == GLUT_KEY_F4) proj = PROJECTION_T;
-	if (key == GLUT_KEY_F5) resetView();
+	if (key == SDLK_F1) proj = PROJECTION_NONE;
+	if (key == SDLK_F2) proj = PROJECTION_X;
+	if (key == SDLK_F3) proj = PROJECTION_Y;
+	if (key == SDLK_F4) proj = PROJECTION_T;
+	if (key == SDLK_F5) resetView();
 
-	if (key == GLUT_KEY_UP) glScalef(1.5f, 1.5f, 1.5f);
-	if (key == GLUT_KEY_DOWN) glScalef(0.9f, 0.9f, 0.9f);
+	if (key == SDLK_UP) glScalef(1.5f, 1.5f, 1.5f);
+	if (key == SDLK_DOWN) glScalef(0.9f, 0.9f, 0.9f);
 
 	/*
 	    // dim dimension_order
-	    if (GLUT_ACTIVE_SHIFT == (mods & GLUT_ACTIVE_SHIFT)) {
-	        if (key == GLUT_KEY_LEFT)  if (dimension_order > 0) dimension_order--;
-	        if (key == GLUT_KEY_RIGHT) dimension_order++;
+	    if (mods & KMOD_SHIFT) {
+	        if (key == SDLK_LEFT)  if (dimension_order > 0) dimension_order--;
+	        if (key == SDLK_RIGHT) dimension_order++;
 	        dimension_order %= 3;
 	        rotate_dimensions();
 	    }
 	*/
 	if (proj == PROJECTION_NONE) {
 		if (paused) {
-			if (key == GLUT_KEY_LEFT) timer -= lag;
-			if (key == GLUT_KEY_RIGHT) timer += lag;
+			if (key == SDLK_LEFT) timer -= lag;
+			if (key == SDLK_RIGHT) timer += lag;
 			int sz = func.extent(0);
 			if (timer >= sz) timer = sz - 1;
 		}
 	} else {
-		if (key == GLUT_KEY_LEFT) glTranslatef(2.0f, 0.0f, 0.0f);
-		if (key == GLUT_KEY_RIGHT) glTranslatef(-2.0f, 0.0f, 0.0f);
+		if (key == SDLK_LEFT) glTranslatef(2.0f, 0.0f, 0.0f);
+		if (key == SDLK_RIGHT) glTranslatef(-2.0f, 0.0f, 0.0f);
 	}
-
-	glutPostRedisplay();
 }
 
 int
@@ -249,40 +239,38 @@ get_delta_t() {
 	return std::floor(1000.0f * delta[0]);
 }
 
-void
-onTimer(int) {
-	glutTimerFunc(get_delta_t(), onTimer, 0);
+Uint32
+onTimer(Uint32 interval, void*) {
 	if (!paused) timer++;
 	if (timer >= func.extent(0)) timer = 0;
-	glutPostRedisplay();
+	return interval;
 }
 
 void
 initOpenGL(int argc, char** argv) {
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInit(&argc, argv);
-	int wnd_w = 800;
-	int wnd_h = 600;
-	int screen_w = glutGet(GLUT_SCREEN_WIDTH);
-	int screen_h = glutGet(GLUT_SCREEN_HEIGHT);
-	glutInitWindowSize(wnd_w, wnd_h);
-	glutInitWindowPosition((screen_w - wnd_w) / 2, (screen_h - wnd_h) / 2);
-	glutCreateWindow("visual");
-	glutReshapeFunc(onResize);
-	glutDisplayFunc(onDisplay);
-	glutKeyboardFunc(onKeyPressed);
-	glutSpecialFunc(onSpecialKeyPressed);
-	glutMouseFunc(onMouseButton);
-	glutMotionFunc(onMouseDrag);
-	glutTimerFunc(0, onTimer, 0);
-	// glewInit();
+	const int wnd_w = 1280;
+	const int wnd_h = 720;
+	SDL_CHECK(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER));
+    SDL_CHECK(SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1));
+    window = SDL_CreateWindow(
+		"ARMA",
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		wnd_w,
+		wnd_h,
+		SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE
+    );
+    glcontext = SDL_GL_CreateContext(window);
+
 	glEnable(GL_LINE_SMOOTH);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	onResize(800, 600);
+	onResize(wnd_w, wnd_h);
 	resetView();
+
+	SDL_AddTimer(get_delta_t(), onTimer, nullptr);
 }
 
 void
@@ -324,11 +312,50 @@ parse_cmdline(int argc, char** argv) {
 	if (timer >= func.extent(0)) { timer = func.extent(0) - 1; }
 }
 
+void
+main_loop() {
+	SDL_Event event;
+	bool stopped = false;
+	while (!stopped) {
+		while (SDL_PollEvent(&event)) {
+			switch (event.type) {
+				case SDL_QUIT:
+					stopped = true;
+					break;
+				case SDL_WINDOWEVENT:
+					switch (event.window.event) {
+						case SDL_WINDOWEVENT_SIZE_CHANGED:
+							onResize(event.window.data1, event.window.data2);
+							break;
+						case SDL_WINDOWEVENT_CLOSE:
+							event.type = SDL_QUIT;
+							SDL_PushEvent(&event);
+							break;
+					}
+					break;
+				case SDL_KEYDOWN:
+					onKeyPressed(event.key.keysym.sym, event.key.keysym.mod);
+					break;
+				case SDL_MOUSEMOTION:
+					if (event.motion.state & SDL_BUTTON_LMASK) {
+						onMouseDrag(event.motion.xrel, event.motion.yrel);
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		onDisplay();
+	}
+}
+
 int
 main(int argc, char** argv) {
 	parse_cmdline(argc, argv);
 	initOpenGL(argc, argv);
-	glutPostRedisplay();
-	glutMainLoop();
+	main_loop();
+    SDL_GL_DeleteContext(glcontext);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
 	return 0;
 }
