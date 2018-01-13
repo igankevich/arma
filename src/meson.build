@@ -7,6 +7,9 @@ configure_file(
 	configuration: config
 )
 
+imgui_src = []
+subdir('imgui')
+
 linalg_files = files([
 	'linalg.cc',
 	'params.cc',
@@ -152,12 +155,12 @@ executable(
 
 executable(
 	executable_prefix + '-visual',
-	sources: 'visual.cc',
+	sources: ['visual.cc'] + imgui_src + arma_src,
 	dependencies: [
-		libblitz,
 		libGL,
 		libSDL2
-	] + fourier_deps + bscheduler_deps,
+	] + fourier_deps + bscheduler_deps + arma_deps,
+	link_args: '-llapacke',
 	install: true
 )
 

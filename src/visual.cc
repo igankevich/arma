@@ -1,27 +1,71 @@
 #include <algorithm>
+#include <atomic>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <thread>
 
+#include "arma_driver.hh"
+#include "register_all.hh"
 #include "opengl.hh"
+#include "types.hh"
 
 #include <SDL.h>
-
-#include "types.hh"
+#include <imgui/imgui.h>
+#include <imgui/imgui_sdl.h>
 
 #define SDL_CHECK(ret) \
 	if (ret) { \
 		throw ::std::runtime_error(SDL_GetError()); \
 	}
 
+typedef ARMA_REAL_TYPE T;
+
+const int fps = 60;
+
 SDL_Window* window = nullptr;
 SDL_GLContext glcontext;
+std::atomic<bool> running(false);
+std::thread arma_thread;
+char arma_config[4096*4] = R"(
+model = AR {
+	out_grid = (100,40,40)
+	acf = {
+		func = standing_wave
+		grid = (10,10,10) : (2.5,5,5)
+	}
+#	transform = nit {
+#		distribution = gram_charlier {
+#			skewness=3.25
+#			kurtosis=2.4
+#		}
+#		interpolation_nodes = 100
+#		max_interpolation_order = 10
+#		max_expansion_order = 20
+#		cdf_solver = {
+#			interval = [-5,5]
+#			max_iterations = 200
+#		}
+#		acf_solver = {
+#			interval = [-10,10]
+#		}
+#	}
+	order = (20,20,20)
+#	output = waves,acf,surface,csv
+	output = surface
+}
+velocity_potential_solver = linear {
+#	wnmax = from (0,0) to (0,0.25) npoints (2,2)
+	depth = 12
+	domain = from (10,-12) to (10,3) npoints (1,128)
+}
+)";
 
 using namespace arma;
 
-typedef float Real;
+typedef ARMA_REAL_TYPE Real;
 
 enum Projection {
 	PROJECTION_X = 0,
@@ -143,6 +187,43 @@ onDisplay() {
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 
+	ImGui_SDL_NewFrame(window);
+	const int line_height = ImGui::GetTextLineHeight();
+	ImGui::SetNextWindowSize(ImVec2(400, line_height*50), ImGuiSetCond_FirstUseEver);
+	ImGui::Begin("ARMA configuration");
+	if (ImGui::Button("Compute")) {
+		if (!running) {
+			if (arma_thread.joinable()) {
+				arma_thread.join();
+			}
+			running = true;
+			arma_thread = std::thread([&] () {
+				try {
+					ARMA_driver<T> driver;
+					register_all_models<T>(driver);
+					register_all_solvers<T>(driver);
+					std::stringstream cfg;
+					cfg << arma_config;
+					cfg >> driver;
+					driver.generate_wavy_surface();
+					func.reference(driver.wavy_surface());
+				} catch (const std::exception& err) {
+					std::cerr << "Error: " << err.what() << std::endl;
+				}
+				running = false;
+			});
+		}
+	}
+	ImGui::InputTextMultiline(
+		"##source",
+		arma_config,
+		sizeof(arma_config),
+		ImVec2(-1.0f, line_height*40),
+		ImGuiInputTextFlags_AllowTabInput
+	);
+	ImGui::End();
+	ImGui::Render();
+
 	SDL_GL_SwapWindow(window);
 }
 
@@ -201,7 +282,7 @@ onKeyPressed(SDL_Keycode key, Uint16 mods) {
 
 	float lag = 1.0f;
 
-	if (mods & KMOD_CTRL) { lag *= 10.0f; }
+	if (mods & KMOD_SHIFT) { lag *= 10.0f; }
 
 	if (key == SDLK_F1) proj = PROJECTION_NONE;
 	if (key == SDLK_F2) proj = PROJECTION_X;
@@ -261,6 +342,9 @@ initOpenGL(int argc, char** argv) {
 		SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE
     );
     glcontext = SDL_GL_CreateContext(window);
+    SDL_CHECK(SDL_GL_SetSwapInterval(1));
+
+	ImGui_SDL_Init(window);
 
 	glEnable(GL_LINE_SMOOTH);
 	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
@@ -302,7 +386,7 @@ parse_cmdline(int argc, char** argv) {
 		cmdline >> ws;
 	}
 	if (!file_name.empty()) {
-		clog << "reading " << ar << endl;
+		std::clog << "reading " << ar << std::endl;
 		ifstream in(ar.c_str());
 		read_valarray(in);
 	} else {
@@ -334,16 +418,19 @@ main_loop() {
 					}
 					break;
 				case SDL_KEYDOWN:
-					onKeyPressed(event.key.keysym.sym, event.key.keysym.mod);
+					if (event.key.keysym.mod & KMOD_CTRL) {
+						onKeyPressed(event.key.keysym.sym, event.key.keysym.mod);
+					}
 					break;
 				case SDL_MOUSEMOTION:
-					if (event.motion.state & SDL_BUTTON_LMASK) {
+					if (event.motion.state & SDL_BUTTON_MMASK) {
 						onMouseDrag(event.motion.xrel, event.motion.yrel);
 					}
 					break;
 				default:
 					break;
 			}
+			ImGui_SDL_ProcessEvent(&event);
 		}
 		onDisplay();
 	}
@@ -351,9 +438,13 @@ main_loop() {
 
 int
 main(int argc, char** argv) {
+	#if ARMA_PROFILE
+	register_all_counters();
+	#endif
 	parse_cmdline(argc, argv);
 	initOpenGL(argc, argv);
 	main_loop();
+	ImGui_SDL_Shutdown();
     SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(window);
     SDL_Quit();
