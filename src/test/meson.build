@@ -1,17 +1,12 @@
+gtest = dependency('gtest', main: true)
+
 test(
 	'linalg::*',
 	executable(
 		'linalg-test',
-		sources: ['linalg-test.cc'] + linalg_files,
+		sources: ['linalg-test.cc'],
 		include_directories: incdirs,
-		dependencies: [
-			libblitz,
-			libgsl,
-			libblas,
-			liblapack,
-			gtest
-		],
-		link_args: '-llapacke'
+		dependencies: [gtest, libarma],
 	)
 )
 
@@ -59,9 +54,9 @@ test(
 	'arma::apmath::Polynomial',
 	executable(
 		'polynomial-test',
-		sources: ['polynomial-test.cc'] + apmath_files,
+		sources: ['polynomial-test.cc'],
 		include_directories: incdirs,
-		dependencies: [libblitz, gtest]
+		dependencies: [gtest, libarma]
 	)
 )
 
@@ -69,9 +64,9 @@ test(
 	'arma::apmath::hermite_polynomial',
 	executable(
 		'hermite-test',
-		sources: ['hermite-test.cc'] + apmath_files,
+		sources: ['hermite-test.cc'],
 		include_directories: incdirs,
-		dependencies: [libblitz, gtest]
+		dependencies: [gtest, libarma]
 	)
 )
 
@@ -79,9 +74,9 @@ test(
 	'arma::apmath::owen_t',
 	executable(
 		'owen-t-test',
-		sources: ['owen-t-test.cc'] + apmath_files,
+		sources: ['owen-t-test.cc'],
 		include_directories: incdirs,
-		dependencies: [libblitz, gtest]
+		dependencies: [gtest, libarma]
 	)
 )
 
@@ -89,9 +84,9 @@ test(
 	'arma::apmath::Skew_normal',
 	executable(
 		'skew-normal-test',
-		sources: ['skew-normal-test.cc'] + apmath_files,
+		sources: ['skew-normal-test.cc'],
 		include_directories: incdirs,
-		dependencies: [libblitz, libgsl, gtest]
+		dependencies: [gtest, libarma]
 	)
 )
 
@@ -99,9 +94,9 @@ test(
 	'arma::apmath::closed_interval',
 	executable(
 		'closed-interval-test',
-		sources: ['closed-interval-test.cc'] + apmath_files,
+		sources: ['closed-interval-test.cc'],
 		include_directories: incdirs,
-		dependencies: [libblitz, libgsl, gtest]
+		dependencies: [gtest, libarma]
 	)
 )
 
@@ -109,9 +104,9 @@ test(
 	'arma::Output_flags',
 	executable(
 		'output-flags-test',
-		sources: ['output-flags-test.cc'] + output_flags_files,
+		sources: ['output-flags-test.cc'],
 		include_directories: incdirs,
-		dependencies: [gtest]
+		dependencies: [gtest, libarma]
 	)
 )
 
@@ -119,9 +114,9 @@ test(
 	'arma::apmath::Fourier_transform',
 	executable(
 		'fourier-test',
-		sources: ['fourier-test.cc'] + fourier_src + opencl_src,
+		sources: ['fourier-test.cc'],
 		include_directories: incdirs,
-		dependencies: [gtest,libblitz,libgsl] + fourier_deps
+		dependencies: [gtest, libarma]
 	)
 )
 
@@ -129,9 +124,9 @@ test(
 	'arma::apmath::Convolution',
 	executable(
 		'convolution-test',
-		sources: ['convolution-test.cc'] + fourier_src + opencl_src,
+		sources: ['convolution-test.cc'],
 		include_directories: incdirs,
-		dependencies: [gtest,libblitz,libgsl] + fourier_deps
+		dependencies: [gtest, libarma]
 	)
 )
 
@@ -139,15 +134,8 @@ test(
 	'arma::Yule_walker_solver',
 	executable(
 		'yule-walker-test',
-		sources: ['yule-walker-test.cc'] + yule_walker_files + linalg_files + ['../generator/voodoo.cc'],
+		sources: ['yule-walker-test.cc'],
 		include_directories: incdirs,
-		dependencies: [
-			gtest,
-			libblitz,
-			libblas,
-			liblapack,
-			libgsl
-		] + linalg_deps,
-		link_args: '-llapacke'
+		dependencies: [gtest, libarma],
 	)
 )

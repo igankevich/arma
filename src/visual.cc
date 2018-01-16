@@ -30,32 +30,31 @@ SDL_GLContext glcontext;
 std::atomic<bool> running(false);
 std::thread arma_thread;
 char arma_config[4096*4] = R"(
-model = AR {
-	out_grid = (100,40,40)
-	acf = {
-		func = standing_wave
-		grid = (10,10,10) : (2.5,5,5)
-	}
-#	transform = nit {
-#		distribution = gram_charlier {
-#			skewness=3.25
-#			kurtosis=2.4
-#		}
-#		interpolation_nodes = 100
-#		max_interpolation_order = 10
-#		max_expansion_order = 20
-#		cdf_solver = {
-#			interval = [-5,5]
-#			max_iterations = 200
-#		}
-#		acf_solver = {
-#			interval = [-10,10]
-#		}
+#model = AR {
+#	out_grid = (100,40,40)
+#	acf = {
+#		func = standing_wave
+#		grid = (10,10,10) : (2.5,5,5)
 #	}
-	order = (20,20,20)
-#	output = waves,acf,surface,csv
-	output = surface
+#	order = (20,20,20)
+#	output = surface
+#}
+
+model = MA {
+	out_grid = (200,40,40)
+	acf = {
+		func = propagating_wave
+		grid = (20,10,10) : (10,5,5)
+	}
+	order = (20,10,10)
+	algorithm = fixed_point_iteration
+	max_iterations = 1000
+	eps = 1e-5
+	min_var_wn = 1e-6
+	output = none
+	validate = 0
 }
+
 velocity_potential_solver = linear {
 #	wnmax = from (0,0) to (0,0.25) npoints (2,2)
 	depth = 12

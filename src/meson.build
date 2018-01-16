@@ -8,125 +8,68 @@ configure_file(
 )
 
 imgui_src = []
+arma_lib_src = []
+
+arma_cpp_args = []
+
+subdir('bits')
 subdir('imgui')
+subdir('apmath')
+subdir('nonlinear')
+subdir('stats')
+subdir('generator')
+subdir('velocity')
+subdir('opencl')
 
-linalg_files = files([
+arma_lib_src += files([
+	'arma.cc',
+	'arma_driver.cc',
+	'factor_waves.cc',
+	'interpolate.cc',
 	'linalg.cc',
+	'ma_algorithm.cc',
+	'output_flags.cc',
+	'parallel_mt.cc',
 	'params.cc',
-	'apmath/closed_interval.cc',
-])
-apmath_files = files([
-	'apmath/closed_interval.cc',
-	'apmath/hermite.cc',
-	'apmath/owen_t.cc',
-	'apmath/polynomial.cc',
-])
-nonlinear_files = files([
-	'nonlinear/series.cc',
-	'nonlinear/nit_transform.cc',
-])
-
-output_flags_files = files([
-	'output_flags.cc'
-])
-
-
-yule_walker_files = files([
+	'params.cc',
+	'util.cc',
+	'wave.cc',
 	'yule_walker.cc',
 ])
 
-common_src = files([
-	'arma.cc',
-	'params.cc',
-	'parallel_mt.cc',
-	'bits/acf_wrapper.cc',
-	'generator/plain_wave_model.cc',
-	'generator/ar_model.cc',
-	'generator/ma_model.cc',
-	'generator/arma_model.cc',
-	'generator/lh_model.cc',
-	'generator/basic_arma_model.cc',
-	'generator/voodoo.cc',
-	'generator/basic_model.cc',
-	'generator/ar_algorithm.cc',
-	'ma_algorithm.cc',
-	'interpolate.cc',
-	'stats/qq_graph.cc',
-	'stats/summary.cc',
-	'stats/waves.cc',
-	'stats/distribution.cc',
-	'stats/gaussian.cc',
-	'stats/gram_charlier.cc',
-	'stats/skew_normal.cc',
-	'arma_driver.cc',
-	'util.cc',
-	'wave.cc',
-	'factor_waves.cc',
-]) + linalg_files + apmath_files + nonlinear_files + output_flags_files + yule_walker_files
-
 if get_option('profile')
-	common_src += 'profile.cc'
+	arma_lib_src += 'profile.cc'
 endif
 
-opencl_src = []
-if get_option('framework') == 'opencl'
-	opencl_src = files([
-		'opencl/opencl.cc',
-		'opencl/gl_object_guard.cc',
-		'opencl/device_type.cc',
-		'params.cc'
-	])
-	common_src += opencl_src
-endif
-
-arma_src = common_src + [
-	'velocity/basic_solver.cc',
-	'velocity/plain_wave_solver.cc',
-	'velocity/linear_solver.cc',
-	'velocity/high_amplitude_solver.cc',
-]
-
-arma_cpp_args = []
-arma_deps += [
-	libblitz,
-	libgsl,
-	libblas,
-	liblapack,
-	libdcmt,
-]
-
-if get_option('with_small_amplitude_solver')
-	arma_src += [
-		'velocity/small_amplitude_solver.cc',
-		'velocity/delaunay_interpolation.cc',
-	]
-	arma_cpp_args += '-DWITH_SMALL_AMPLITUDE_SOLVER' 
-	arma_deps += [libCGAL, libgmp]
-endif
-
-fourier_src = []
-fourier_deps = []
-linalg_deps = []
-if get_option('framework') == 'opencl'
-	fourier_src = files(['apmath/fourier_opencl.cc'])
-	fourier_deps = [libOpenCL, libpthread, libclFFT]
-	linalg_deps = [libOpenCL]
-	arma_deps += fourier_deps
-	arma_src += fourier_src
-endif
-
-executable(
-	executable_prefix,
-	sources: arma_src + ['arma_main.cc'],
+arma_lib = shared_library(
+	'arma',
+	sources: arma_lib_src,
 	include_directories: incdirs,
 	dependencies: arma_deps,
 	cpp_args: arma_cpp_args,
 	link_args: '-llapacke',
+	version: meson.project_version(),
+	install: true
+)
+
+libarma = declare_dependency(
+	compile_args: arma_cpp_args,
+	link_with: arma_lib,
+	link_args: '-llapacke',
+	include_directories: incdirs,
+	dependencies: arma_deps
+)
+
+executable(
+	executable_prefix,
+	sources: 'arma_main.cc',
+	include_directories: incdirs,
+	dependencies: [libarma],
 	install: true
 )
 
 if get_option('with_high_amplitude_realtime_solver')
-	arma_realtime_src = common_src + [
+	arma_realtime_src = arma_lib_src + [
 		'velocity/basic_solver.cc',
 		'velocity/high_amplitude_realtime_solver.cc',
 	]
@@ -155,12 +98,8 @@ executable(
 
 executable(
 	executable_prefix + '-visual',
-	sources: ['visual.cc'] + imgui_src + arma_src,
-	dependencies: [
-		libGL,
-		libSDL2
-	] + fourier_deps + bscheduler_deps + arma_deps,
-	link_args: '-llapacke',
+	sources: ['visual.cc'] + imgui_src,
+	dependencies: [libGL, libSDL2, libarma, dependency('threads')],
 	install: true
 )
 

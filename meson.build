@@ -17,31 +17,6 @@ libblas = cpp.find_library('blas')
 libGL = cpp.find_library('GL')
 libglut = dependency('freeglut')
 libSDL2 = dependency('sdl2')
-gtest = dependency('gtest', main: true)
-libCGAL = cpp.find_library(
-	'CGAL',
-	required: get_option('with_small_amplitude_solver')
-)
-libgmp = cpp.find_library(
-	'gmp',
-	required: get_option('with_small_amplitude_solver')
-)
-libOpenCL = dependency(
-	'OpenCL',
-	required: get_option('framework') == 'opencl'
-)
-libpthread = dependency(
-	'threads',
-	required: get_option('framework') == 'opencl'
-)
-libclFFT = dependency(
-	'clFFT',
-	required: get_option('framework') == 'opencl'
-)
-libbscheduler_app = dependency(
-	'bscheduler-app',
-	required: get_option('framework') == 'bscheduler'
-)
 
 if not get_option('buildtype').contains('debug')
 	add_global_arguments('-DNDEBUG', language: 'cpp')
@@ -50,8 +25,13 @@ else
 	add_global_arguments('-DBZ_DEBUG', language: 'cpp')
 endif
 
-arma_deps = []
-bscheduler_deps = []
+arma_deps = [
+	libblitz,
+	libgsl,
+	libblas,
+	liblapack,
+	libdcmt,
+]
 framework = get_option('framework')
 if framework == 'openmp'
 	add_global_arguments('-DARMA_OPENMP=1', language: 'cpp')
@@ -61,15 +41,21 @@ if framework == 'openmp'
 	add_global_link_arguments('-fopenmp', language: 'cpp')
 elif framework == 'opencl'
 	add_global_arguments('-DARMA_OPENCL=1', language: 'cpp')
+	arma_deps += [
+		dependency('OpenCL'),
+		dependency('threads'),
+		dependency('clFFT'),
+	]
 elif framework == 'mpi'
 	add_global_arguments('-DARMA_MPI=1', language: 'cpp')
 elif framework == 'bscheduler'
 	add_global_arguments('-DARMA_BSCHEDULER=1', language: 'cpp')
 	# make Blitz++ reference counters thread-safe
 	add_global_arguments('-DBZ_THREADSAFE', language: 'cpp')
-	bscheduler_deps += libbscheduler_app
-	bscheduler_deps += libpthread
-	arma_deps += bscheduler_deps
+	arma_deps += [
+		dependency('bscheduler-app'),
+		dependency('threads'),
+	]
 else
 	add_global_arguments('-DARMA_NONE=1', language: 'cpp')
 endif

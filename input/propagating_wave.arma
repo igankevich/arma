@@ -2,14 +2,15 @@ model = MA {
 	out_grid = (200,40,40)
 	acf = {
 		func = propagating_wave
-		grid = (20,10,10) : (10,5,5)
+		grid = (20,10,2) : (10,5,5)
 	}
-	order = (20,10,10)
+	order = (20,10,2)
 	algorithm = fixed_point_iteration
 	max_iterations = 1000
 	eps = 1e-5
 	min_var_wn = 1e-6
-	output = waves,acf,surface
+	output = surface
+	validate = 0
 }
 velocity_potential_solver = high_amplitude {
 #	wnmax = from (0,0) to (0,0.25) npoints (2,2)
