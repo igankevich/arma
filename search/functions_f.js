@@ -57,7 +57,7 @@ var searchData=
   ['prng_5ferror',['PRNG_error',['../classarma_1_1PRNG__error.html#a3ac5db230388e304df08f7465cf2ae1d',1,'arma::PRNG_error::PRNG_error()=default'],['../classarma_1_1PRNG__error.html#a6d72f0915ecaf01c2b55c93444387936',1,'arma::PRNG_error::PRNG_error(const PRNG_error &amp;)=default'],['../classarma_1_1PRNG__error.html#a732cb1bc72a8a85b5f12066ae78e6ec8',1,'arma::PRNG_error::PRNG_error(PRNG_error &amp;&amp;)=default'],['../classarma_1_1PRNG__error.html#a8c304741d5c874945670be6b6082ba02',1,'arma::PRNG_error::PRNG_error(const char *msg, int nprngs, int nparts)']]],
   ['progress_5ftype',['progress_type',['../structanonymous__namespace_02ar__model__opencl_8cc_03_1_1progress__type.html#a4bf78249bc0fc8e130a8959d333c3025',1,'anonymous_namespace{ar_model_opencl.cc}::progress_type']]],
   ['progressbar',['ProgressBar',['../namespaceImGui.html#a83349d38c7c73f92ae977bc5b530a9e9',1,'ImGui']]],
-  ['propagating_5fwave_5facf',['propagating_wave_ACF',['../namespacearma.html#ad4cca81b73088e4599cb683f1ce2697c',1,'arma']]],
+  ['propagating_5fwave_5facf',['propagating_wave_ACF',['../namespacearma.html#a3457efab69428c8cdcca658f58f1d17f',1,'arma']]],
   ['prune',['prune',['../classarma_1_1Output__flags.html#ae01d075cd3ac6d71c86de55a60f5de40',1,'arma::Output_flags']]],
   ['push_5fback',['push_back',['../classImVector.html#a68387993f2a5f5c3b2a7139d9ab778b8',1,'ImVector']]],
   ['pushallowkeyboardfocus',['PushAllowKeyboardFocus',['../namespaceImGui.html#a981406c4b7aca45c632989315bdfd264',1,'ImGui']]],

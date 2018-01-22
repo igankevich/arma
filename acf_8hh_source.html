@@ -112,71 +112,67 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a></div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="namespacearma.html#af68498e615cfb9501e9a7842a25f40a4">   20</a></span>&#160;    <a class="code" href="namespacearma.html#af68498e615cfb9501e9a7842a25f40a4">standing_wave_ACF</a>(<span class="keyword">const</span> <a class="code" href="namespacearma.html#a5fe89fced494b02e9965aa232558b375">Vec3D&lt;T&gt;</a>&amp; <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a>, <span class="keyword">const</span> <a class="code" href="namespacearma.html#a49dcbdf04c66f8239ac87ff22fac9650">Shape3D</a>&amp; acf_size) {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">using</span> blitz::exp;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">using</span> blitz::cos;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        blitz::firstIndex t;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        blitz::secondIndex x;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        blitz::thirdIndex y;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="comment">// guessed</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> alpha = 0.06;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> beta = 0.8;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> gamm = 1.0;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> velocity = 2*beta;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="comment">// TODO gamma=1 is needed for nonlinear transform</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="comment">// from mathematica</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">//      T alpha = 2.31906, beta = -5.49873, gamm = 0.0680413;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a> acf(acf_size);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        acf = gamm *</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            exp(-alpha*(2*t*delta[0] + x*delta[1] + y*delta[2])) *</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            cos(velocity*t*delta[0]) *</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            cos(beta*x*delta[1]) *</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            cos(0*beta*y*delta[2]);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordflow">return</span> acf;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    Array3D&lt;T&gt;</div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="namespacearma.html#ad4cca81b73088e4599cb683f1ce2697c">   50</a></span>&#160;    <a class="code" href="namespacearma.html#ad4cca81b73088e4599cb683f1ce2697c">propagating_wave_ACF</a>(<span class="keyword">const</span> <a class="code" href="namespacearma.html#a5fe89fced494b02e9965aa232558b375">Vec3D&lt;T&gt;</a>&amp; <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a>, <span class="keyword">const</span> <a class="code" href="namespacearma.html#a49dcbdf04c66f8239ac87ff22fac9650">Shape3D</a>&amp; acf_size) {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="namespacearma.html#aa7501a499050ca1ed17f217132f5cbf4">   20</a></span>&#160;    <a class="code" href="namespacearma.html#aa7501a499050ca1ed17f217132f5cbf4">standing_wave_ACF</a>(</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacearma.html#a5fe89fced494b02e9965aa232558b375">Vec3D&lt;T&gt;</a>&amp; <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>,</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacearma.html#a49dcbdf04c66f8239ac87ff22fac9650">Shape3D</a>&amp; <a class="code" href="visual_8cc.html#a942a8e04bdd42cbd8a5ba792638e489f">acf_size</a>,</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> amplitude,</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> velocity,</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacearma.html#a5fe89fced494b02e9965aa232558b375">Vec3D&lt;T&gt;</a>&amp; alpha,</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacearma.html#a6669fe17cc01fa78fba554808f6989cb">Vec2D&lt;T&gt;</a>&amp; beta</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    ) {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">using</span> blitz::exp;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">using</span> blitz::cos;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        blitz::firstIndex i;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        blitz::secondIndex j;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        blitz::thirdIndex k;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a> acf(acf_size);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        acf = amplitude *</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            exp(-(alpha(0)*i*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(0) + alpha(1)*j*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(1) + alpha(2)*k*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(2))) *</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            cos(velocity*i*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(0)) *</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            cos(beta(0)*j*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(1)) *</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            cos(beta(1)*k*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(2));</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordflow">return</span> acf;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    Array3D&lt;T&gt;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="namespacearma.html#a3457efab69428c8cdcca658f58f1d17f">   44</a></span>&#160;    <a class="code" href="namespacearma.html#a3457efab69428c8cdcca658f58f1d17f">propagating_wave_ACF</a>(</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacearma.html#a5fe89fced494b02e9965aa232558b375">Vec3D&lt;T&gt;</a>&amp; <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacearma.html#a49dcbdf04c66f8239ac87ff22fac9650">Shape3D</a>&amp; <a class="code" href="visual_8cc.html#a942a8e04bdd42cbd8a5ba792638e489f">acf_size</a>,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> amplitude,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> velocity,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacearma.html#a5fe89fced494b02e9965aa232558b375">Vec3D&lt;T&gt;</a>&amp; alpha,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> <a class="code" href="namespacearma.html#a6669fe17cc01fa78fba554808f6989cb">Vec2D&lt;T&gt;</a>&amp; beta</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    ) {</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">using</span> blitz::exp;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">using</span> blitz::cos;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        blitz::firstIndex i;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        blitz::secondIndex j;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        blitz::thirdIndex k;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">// from mathematica</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> alpha = 0.42, beta = -1.8, gamm = 1.0;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> velocity = 1.0;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a> acf(acf_size);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        acf = gamm*exp(-alpha*(i*delta[0] + j*delta[1] + k*delta[2])) *</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            cos(velocity*i*delta[0] + beta*j*delta[1] + 0*beta*k*delta[2]);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordflow">return</span> acf;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif // ACF_HH</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        blitz::firstIndex i;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        blitz::secondIndex j;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        blitz::thirdIndex k;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a> acf(acf_size);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        acf = amplitude *</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            exp(-(alpha(0)*i*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(0) + alpha(1)*j*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(1) + alpha(2)*k*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(2))) *</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            cos(velocity*i*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(0) + beta(0)*j*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(1) + beta(1)*k*<a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>(2));</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> acf;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif // ACF_HH</span></div>
+<div class="ttc" id="visual_8cc_html_a942a8e04bdd42cbd8a5ba792638e489f"><div class="ttname"><a href="visual_8cc.html#a942a8e04bdd42cbd8a5ba792638e489f">acf_size</a></div><div class="ttdeci">Vector&lt; int, 3 &gt; acf_size(20, 20, 20)</div></div>
+<div class="ttc" id="namespacearma_html_aa7501a499050ca1ed17f217132f5cbf4"><div class="ttname"><a href="namespacearma.html#aa7501a499050ca1ed17f217132f5cbf4">arma::standing_wave_ACF</a></div><div class="ttdeci">Array3D&lt; T &gt; standing_wave_ACF(const Vec3D&lt; T &gt; &amp;delta, const Shape3D &amp;acf_size, T amplitude, T velocity, const Vec3D&lt; T &gt; &amp;alpha, const Vec2D&lt; T &gt; &amp;beta)</div><div class="ttdef"><b>Definition:</b> acf.hh:20</div></div>
 <div class="ttc" id="namespacearma_html_a5fe89fced494b02e9965aa232558b375"><div class="ttname"><a href="namespacearma.html#a5fe89fced494b02e9965aa232558b375">arma::Vec3D</a></div><div class="ttdeci">Vector&lt; T, 3 &gt; Vec3D</div><div class="ttdef"><b>Definition:</b> types.hh:19</div></div>
-<div class="ttc" id="namespacearma_html_af68498e615cfb9501e9a7842a25f40a4"><div class="ttname"><a href="namespacearma.html#af68498e615cfb9501e9a7842a25f40a4">arma::standing_wave_ACF</a></div><div class="ttdeci">Array3D&lt; T &gt; standing_wave_ACF(const Vec3D&lt; T &gt; &amp;delta, const Shape3D &amp;acf_size)</div><div class="ttdef"><b>Definition:</b> acf.hh:20</div></div>
-<div class="ttc" id="visual_8cc_html_aa9d3c8fdcdd03a655444028ac6e02167"><div class="ttname"><a href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a></div><div class="ttdeci">Vector&lt; Real, 3 &gt; delta(1.0, 1.0, 1.0)</div></div>
+<div class="ttc" id="namespacearma_html_a6669fe17cc01fa78fba554808f6989cb"><div class="ttname"><a href="namespacearma.html#a6669fe17cc01fa78fba554808f6989cb">arma::Vec2D</a></div><div class="ttdeci">Vector&lt; T, 2 &gt; Vec2D</div><div class="ttdef"><b>Definition:</b> types.hh:21</div></div>
 <div class="ttc" id="namespacearma_html_af7d4db4b1cfb7a98584f1799b785f95c"><div class="ttname"><a href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a></div><div class="ttdeci">Array&lt; T, 3 &gt; Array3D</div><div class="ttdef"><b>Definition:</b> types.hh:36</div></div>
+<div class="ttc" id="namespacearma_html_a3457efab69428c8cdcca658f58f1d17f"><div class="ttname"><a href="namespacearma.html#a3457efab69428c8cdcca658f58f1d17f">arma::propagating_wave_ACF</a></div><div class="ttdeci">Array3D&lt; T &gt; propagating_wave_ACF(const Vec3D&lt; T &gt; &amp;delta, const Shape3D &amp;acf_size, T amplitude, T velocity, const Vec3D&lt; T &gt; &amp;alpha, const Vec2D&lt; T &gt; &amp;beta)</div><div class="ttdef"><b>Definition:</b> acf.hh:44</div></div>
 <div class="ttc" id="grid_8hh_html"><div class="ttname"><a href="grid_8hh.html">grid.hh</a></div></div>
 <div class="ttc" id="params_8hh_html"><div class="ttname"><a href="params_8hh.html">params.hh</a></div></div>
 <div class="ttc" id="discrete__function_8hh_html"><div class="ttname"><a href="discrete__function_8hh.html">discrete_function.hh</a></div></div>
 <div class="ttc" id="namespacearma_html_a49dcbdf04c66f8239ac87ff22fac9650"><div class="ttname"><a href="namespacearma.html#a49dcbdf04c66f8239ac87ff22fac9650">arma::Shape3D</a></div><div class="ttdeci">Vector&lt; int, 3 &gt; Shape3D</div><div class="ttdef"><b>Definition:</b> types.hh:14</div></div>
 <div class="ttc" id="validators_8hh_html"><div class="ttname"><a href="validators_8hh.html">validators.hh</a></div></div>
+<div class="ttc" id="visual_8cc_html_a81af9475d8398d8a4b635c5f906be7d6"><div class="ttname"><a href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a></div><div class="ttdeci">Vector&lt; Real, 3 &gt; delta(0.1, 1.0, 1.0)</div></div>
 <div class="ttc" id="types_8hh_html"><div class="ttname"><a href="types_8hh.html">types.hh</a></div></div>
 <div class="ttc" id="common_8h_html_a25af1c42bcec3ac9b8d7d2846b1f2198"><div class="ttname"><a href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div><div class="ttdeci">ARMA_REAL_TYPE T</div><div class="ttdef"><b>Definition:</b> common.h:8</div></div>
-<div class="ttc" id="namespacearma_html_ad4cca81b73088e4599cb683f1ce2697c"><div class="ttname"><a href="namespacearma.html#ad4cca81b73088e4599cb683f1ce2697c">arma::propagating_wave_ACF</a></div><div class="ttdeci">Array3D&lt; T &gt; propagating_wave_ACF(const Vec3D&lt; T &gt; &amp;delta, const Shape3D &amp;acf_size)</div><div class="ttdef"><b>Definition:</b> acf.hh:50</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -151,7 +151,7 @@ var searchData=
   ['sqrt2',['sqrt2',['../namespacearma_1_1constants.html#a32d6121747b33e98b549461ea6232433',1,'arma::constants']]],
   ['sqrt2pi',['sqrt2pi',['../namespacearma_1_1constants.html#a88bd9f16ac692804e325e4a824255038',1,'arma::constants']]],
   ['stacksizesbackup',['StackSizesBackup',['../structImGuiDrawContext.html#aedfc8e281f1d72c7c1882c36bebb00d1',1,'ImGuiDrawContext']]],
-  ['standing_5fwave_5facf',['standing_wave_ACF',['../namespacearma.html#af68498e615cfb9501e9a7842a25f40a4',1,'arma']]],
+  ['standing_5fwave_5facf',['standing_wave_ACF',['../namespacearma.html#aa7501a499050ca1ed17f217132f5cbf4',1,'arma']]],
   ['startposy',['StartPosY',['../structImGuiListClipper.html#affee91b338520cd4bd59b5b680dcb5ae',1,'ImGuiListClipper']]],
   ['statestorage',['StateStorage',['../structImGuiDrawContext.html#a507947c789f377ba13767061557fd348',1,'ImGuiDrawContext::StateStorage()'],['../structImGuiWindow.html#a2151ab67f2624bd606883ad346179486',1,'ImGuiWindow::StateStorage()']]],
   ['statistics_2ehh',['statistics.hh',['../statistics_8hh.html',1,'']]],

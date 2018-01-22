@@ -362,7 +362,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> max_k,</div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            <span class="keywordtype">int</span> idx_t</div>
 <div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        ) {</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            Vec3D&lt;T&gt; <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a> = z.grid().delta();</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;            Vec3D&lt;T&gt; <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a> = z.grid().delta();</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> nx = z.extent(1);</div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            <span class="keyword">const</span> <span class="keywordtype">int</span> ny = z.extent(2);</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            <a class="code" href="namespacearma.html#a0c9a855cdcc7177fd794f05952eb94b3">Shape2D</a> ksize(blitz::shape(nx, ny));</div>
@@ -411,12 +411,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                krange.lbound(),</div>
 <div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                krange.ubound()</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;            );</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            Array2D&lt;T&gt; wavenum_t = derivative&lt;0&gt;(wavenum, <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a>, idx_t);</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            Array2D&lt;T&gt; wavenum_x = derivative&lt;1&gt;(wavenum, <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a>, idx_t);</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            Array2D&lt;T&gt; zeta_t = derivative&lt;0&gt;(surface, <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a>, idx_t);</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            Array2D&lt;T&gt; alpha = derivative&lt;1&gt;(surface, <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a>, idx_t);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            Array2D&lt;T&gt; alpha_t = derivative&lt;0&gt;(alpha, <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a>, idx_t);</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            Array2D&lt;T&gt; alpha_x = derivative&lt;1&gt;(alpha, <a class="code" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a>, idx_t);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;            Array2D&lt;T&gt; wavenum_t = derivative&lt;0&gt;(wavenum, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            Array2D&lt;T&gt; wavenum_x = derivative&lt;1&gt;(wavenum, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            Array2D&lt;T&gt; zeta_t = derivative&lt;0&gt;(surface, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            Array2D&lt;T&gt; alpha = derivative&lt;1&gt;(surface, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            Array2D&lt;T&gt; alpha_t = derivative&lt;0&gt;(alpha, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;            Array2D&lt;T&gt; alpha_x = derivative&lt;1&gt;(alpha, <a class="code" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a>, idx_t);</div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            std::clog &lt;&lt; <span class="stringliteral">&quot;lambda count = &quot;</span> &lt;&lt; k_count &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            { std::ofstream out(<span class="stringliteral">&quot;alpha&quot;</span>); out &lt;&lt; alpha; }</div>
@@ -467,7 +467,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;}</div>
 <div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
 <div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;<span class="preprocessor">#endif // PRESSURE_HH</span></div>
-<div class="ttc" id="visual_8cc_html_aa9d3c8fdcdd03a655444028ac6e02167"><div class="ttname"><a href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a></div><div class="ttdeci">Vector&lt; Real, 3 &gt; delta(1.0, 1.0, 1.0)</div></div>
 <div class="ttc" id="wave_8hh_html"><div class="ttname"><a href="wave_8hh.html">wave.hh</a></div></div>
 <div class="ttc" id="namespaceblitz_html_a943f9dbc7edf668a374e4387c1b2ee2a"><div class="ttname"><a href="namespaceblitz.html#a943f9dbc7edf668a374e4387c1b2ee2a">blitz::length</a></div><div class="ttdeci">T length(const TinyVector&lt; T, 2 &gt; &amp;rhs) noexcept</div><div class="ttdef"><b>Definition:</b> blitz.hh:42</div></div>
 <div class="ttc" id="namespacearma_1_1constants_html_ab2bbcc62e8925a2093503f7eb18d4aa6"><div class="ttname"><a href="namespacearma_1_1constants.html#ab2bbcc62e8925a2093503f7eb18d4aa6">arma::constants::_2pi</a></div><div class="ttdeci">constexpr const T _2pi</div><div class="ttdef"><b>Definition:</b> physical_constants.hh:15</div></div>
@@ -477,6 +476,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="delaunay__interpolation_8hh_html"><div class="ttname"><a href="delaunay__interpolation_8hh.html">delaunay_interpolation.hh</a></div></div>
 <div class="ttc" id="physical__constants_8hh_html"><div class="ttname"><a href="physical__constants_8hh.html">physical_constants.hh</a></div></div>
 <div class="ttc" id="common_8h_html_a71023f03a34460781c8bf07dcbddebb8"><div class="ttname"><a href="common_8h.html#a71023f03a34460781c8bf07dcbddebb8">Shape3D</a></div><div class="ttdeci">int4 Shape3D</div><div class="ttdef"><b>Definition:</b> common.h:14</div></div>
+<div class="ttc" id="visual_8cc_html_a81af9475d8398d8a4b635c5f906be7d6"><div class="ttname"><a href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a></div><div class="ttdeci">Vector&lt; Real, 3 &gt; delta(0.1, 1.0, 1.0)</div></div>
 <div class="ttc" id="types_8hh_html"><div class="ttname"><a href="types_8hh.html">types.hh</a></div></div>
 <div class="ttc" id="common_8h_html_a25af1c42bcec3ac9b8d7d2846b1f2198"><div class="ttname"><a href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div><div class="ttdeci">ARMA_REAL_TYPE T</div><div class="ttdef"><b>Definition:</b> common.h:8</div></div>
 </div><!-- fragment --></div><!-- contents -->

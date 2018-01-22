@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['acf_5ffunction',['ACF_function',['../namespaceanonymous__namespace_02acf__wrapper_8cc_03.html#aa4eda089be349beac1aa43e4d8692f2a',1,'anonymous_namespace{acf_wrapper.cc}']]],
+  ['acf_5ffunction',['ACF_function',['../namespaceanonymous__namespace_02acf__wrapper_8cc_03.html#aa2916da913165c2e5ae3e6631360366f',1,'anonymous_namespace{acf_wrapper.cc}']]],
   ['acf_5ftype',['acf_type',['../classarma_1_1generator_1_1AR__model.html#af3b44834a4e92f138ded47a5dca377fb',1,'arma::generator::AR_model::acf_type()'],['../structarma_1_1generator_1_1ARMA__model.html#af9d1d3e9337ec6794272ea13af741c73',1,'arma::generator::ARMA_model::acf_type()'],['../classarma_1_1generator_1_1Basic__ARMA__model.html#a83b7c44196255193ab06dd83fa208880',1,'arma::generator::Basic_ARMA_model::acf_type()'],['../structarma_1_1generator_1_1MA__model.html#a23af30ee3d09cf715c8fb04d06ac7e59',1,'arma::generator::MA_model::acf_type()']]],
   ['ar_5fmodel',['ar_model',['../structarma_1_1generator_1_1ARMA__model.html#a130ca60d9a933518ce587d25efcbc007',1,'arma::generator::ARMA_model']]],
   ['array',['Array',['../namespacearma.html#a0feb576e5fc09725e1e91af1f2a69ab4',1,'arma']]],

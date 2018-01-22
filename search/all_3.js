@@ -153,6 +153,7 @@ var searchData=
   ['csv',['CSV',['../classarma_1_1Output__flags.html#a13a7efc9eb216e76d744bb382c090be1adb302dbf561183d3095b12e8336919f6',1,'arma::Output_flags']]],
   ['curlena',['CurLenA',['../structImGuiTextEditState.html#a007dc39101b6b1cfa78dcbad828b8659',1,'ImGuiTextEditState']]],
   ['curlenw',['CurLenW',['../structImGuiTextEditState.html#aee70a14eaf9dfb09bee698aef2de40b2',1,'ImGuiTextEditState']]],
+  ['current_5facf_5findex',['current_acf_index',['../visual_8cc.html#af54ea6537b53957ed2bd114ddff5003c',1,'visual.cc']]],
   ['currentlineheight',['CurrentLineHeight',['../structImGuiDrawContext.html#a950b71358ebfed5a884936f5cafed873',1,'ImGuiDrawContext']]],
   ['currentlinetextbaseoffset',['CurrentLineTextBaseOffset',['../structImGuiDrawContext.html#af6f0a3536765c5f638fd198749bf29f1',1,'ImGuiDrawContext']]],
   ['currentpopupstack',['CurrentPopupStack',['../structImGuiContext.html#a7b2472ca52bcccb98e0db1a8b1b78853',1,'ImGuiContext']]],
