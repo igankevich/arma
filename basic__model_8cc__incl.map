@@ -1,9 +1,9 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/basic_model.cc" name="/home/travis/build/igankevich/arma/src/generator/basic_model.cc">
-<area shape="rect" id="node2" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="255,109,367,136"/>
-<area shape="rect" id="node5" href="$grid_8hh.html" title="grid.hh" alt="" coords="70,184,131,211"/>
-<area shape="rect" id="node12" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="303,184,413,211"/>
-<area shape="rect" id="node16" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="903,184,1005,211"/>
-<area shape="rect" id="node26" href="$types_8hh.html" title="types.hh" alt="" coords="1445,333,1517,360"/>
-<area shape="rect" id="node6" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="191,333,255,360"/>
-<area shape="rect" id="node10" href="$validators_8hh.html" title="validators.hh" alt="" coords="23,259,119,285"/>
+<area shape="rect" id="node2" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="377,109,489,136"/>
+<area shape="rect" id="node5" href="$grid_8hh.html" title="grid.hh" alt="" coords="437,184,499,211"/>
+<area shape="rect" id="node12" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="202,184,312,211"/>
+<area shape="rect" id="node16" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="919,184,1021,211"/>
+<area shape="rect" id="node26" href="$types_8hh.html" title="types.hh" alt="" coords="1141,333,1213,360"/>
+<area shape="rect" id="node7" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="535,333,599,360"/>
+<area shape="rect" id="node10" href="$validators_8hh.html" title="validators.hh" alt="" coords="556,259,652,285"/>
 </map>

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['new_5fvec',['NEW_VEC',['../common_8h.html#a4f92819de8b4cc3aaecdc9a8bf0ed9ec',1,'common.h']]],
-  ['new_5fvec_5fimpl',['NEW_VEC_IMPL',['../common_8h.html#a104991e5dc1176d45fb2392a6da7d044',1,'common.h']]]
+  ['make_5fgl_5ftype',['MAKE_GL_TYPE',['../opengl_8hh.html#a656790f2a0a082d6ae7e7308bde4de81',1,'opengl.hh']]],
+  ['make_5fvector',['MAKE_VECTOR',['../vec_8hh.html#ad059d738ab352e2e5d0e73f03845d743',1,'vec.hh']]]
 ];

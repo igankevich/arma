@@ -92,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
@@ -100,26 +101,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">visual.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;iostream&gt;</code><br/>
-<code>#include &lt;iomanip&gt;</code><br/>
-<code>#include &lt;sstream&gt;</code><br/>
+<div class="textblock"><code>#include &lt;algorithm&gt;</code><br/>
+<code>#include &lt;atomic&gt;</code><br/>
 <code>#include &lt;fstream&gt;</code><br/>
-<code>#include &lt;algorithm&gt;</code><br/>
+<code>#include &lt;iomanip&gt;</code><br/>
+<code>#include &lt;iostream&gt;</code><br/>
+<code>#include &lt;sstream&gt;</code><br/>
+<code>#include &lt;stdexcept&gt;</code><br/>
+<code>#include &lt;thread&gt;</code><br/>
+<code>#include &quot;<a class="el" href="arma__driver_8hh_source.html">arma_driver.hh</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="register__all_8hh_source.html">register_all.hh</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="opengl_8hh_source.html">opengl.hh</a>&quot;</code><br/>
-<code>#include &lt;GL/freeglut.h&gt;</code><br/>
-<code>#include &lt;GL/freeglut_ext.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="types_8hh_source.html">types.hh</a>&quot;</code><br/>
+<code>#include &lt;SDL.h&gt;</code><br/>
+<code>#include &lt;<a class="el" href="imgui_8h_source.html">imgui/imgui.h</a>&gt;</code><br/>
+<code>#include &lt;<a class="el" href="imgui__sdl_8h_source.html">imgui/imgui_sdl.h</a>&gt;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for visual.cc:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="visual_8cc__incl.svg" width="934" height="216"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="visual_8cc__incl.svg" width="2840" height="638"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ae94ee1efd2ea305244b6940eea7b814d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#ae94ee1efd2ea305244b6940eea7b814d">SDL_CHECK</a>(ret)</td></tr>
+<tr class="separator:ae94ee1efd2ea305244b6940eea7b814d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ab685845059e8a2c92743427d9a698c70"><td class="memItemLeft" align="right" valign="top">typedef float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a></td></tr>
-<tr class="separator:ab685845059e8a2c92743427d9a698c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25af1c42bcec3ac9b8d7d2846b1f2198"><td class="memItemLeft" align="right" valign="top">typedef ARMA_REAL_TYPE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></td></tr>
+<tr class="separator:a25af1c42bcec3ac9b8d7d2846b1f2198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b76ac2c126c06f36ce9c673c7fed3c4"><td class="memItemLeft" align="right" valign="top">typedef ARMA_REAL_TYPE&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a></td></tr>
+<tr class="separator:a7b76ac2c126c06f36ce9c673c7fed3c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -132,8 +146,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a81af9475d8398d8a4b635c5f906be7d6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#a4c0996a8daddc2cdffcb1fbd987e2749">Vector</a>&lt; <a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a>, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a81af9475d8398d8a4b635c5f906be7d6">delta</a> (0.1, 1.0, 1.0)</td></tr>
-<tr class="separator:a81af9475d8398d8a4b635c5f906be7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a609e142db3d6577f38467dce2f4cc5e3"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a609e142db3d6577f38467dce2f4cc5e3">running</a> (false)</td></tr>
+<tr class="separator:a609e142db3d6577f38467dce2f4cc5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9d3c8fdcdd03a655444028ac6e02167"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#a4c0996a8daddc2cdffcb1fbd987e2749">Vector</a>&lt; <a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a>, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#aa9d3c8fdcdd03a655444028ac6e02167">delta</a> (1.0, 1.0, 1.0)</td></tr>
+<tr class="separator:aa9d3c8fdcdd03a655444028ac6e02167"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a293b458e48b357e15903a2ad35d2dc7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#a4c0996a8daddc2cdffcb1fbd987e2749">Vector</a>&lt; int, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a293b458e48b357e15903a2ad35d2dc7f">dimensions</a> (blitz::firstDim, blitz::secondDim, blitz::thirdDim)</td></tr>
 <tr class="separator:a293b458e48b357e15903a2ad35d2dc7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d98c752a07bb281cc48c31fe04bc7e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#a4c0996a8daddc2cdffcb1fbd987e2749">Vector</a>&lt; char, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a0d98c752a07bb281cc48c31fe04bc7e1">dimension_names</a> ('t', 'x', 'y')</td></tr>
@@ -153,20 +169,16 @@ Functions</h2></td></tr>
 <tr class="separator:aad0eeca7ffae6b72f89ac604773d2f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa607b54f8683f6b3437b636027dbcc60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#aa607b54f8683f6b3437b636027dbcc60">onDisplay</a> ()</td></tr>
 <tr class="separator:aa607b54f8683f6b3437b636027dbcc60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc6a67d65939ca906cb3ffad7cc92f84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#abc6a67d65939ca906cb3ffad7cc92f84">onMouseButton</a> (int, int, int x, int y)</td></tr>
-<tr class="separator:abc6a67d65939ca906cb3ffad7cc92f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4444167999bf9de9aabf2e1b5339ceb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a4444167999bf9de9aabf2e1b5339ceb3">onMouseDrag</a> (int x, int y)</td></tr>
 <tr class="separator:a4444167999bf9de9aabf2e1b5339ceb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd9e42dbf7e40420080d8b33299dd644"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#afd9e42dbf7e40420080d8b33299dd644">onResize</a> (int w, int h)</td></tr>
 <tr class="separator:afd9e42dbf7e40420080d8b33299dd644"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e08733c1b84c27f4b20927f76ac67e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a7e08733c1b84c27f4b20927f76ac67e9">onKeyPressed</a> (unsigned char key, int, int)</td></tr>
-<tr class="separator:a7e08733c1b84c27f4b20927f76ac67e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e650e8d01e985387d67766a258f243f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a2e650e8d01e985387d67766a258f243f">onSpecialKeyPressed</a> (int key, int, int)</td></tr>
-<tr class="separator:a2e650e8d01e985387d67766a258f243f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8c143c8f0fe832ab42b4f8f9e9846fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#ab8c143c8f0fe832ab42b4f8f9e9846fd">onKeyPressed</a> (SDL_Keycode key, Uint16 mods)</td></tr>
+<tr class="separator:ab8c143c8f0fe832ab42b4f8f9e9846fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b7c70947683d88e227b92764d8bd6ae"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a2b7c70947683d88e227b92764d8bd6ae">get_delta_t</a> ()</td></tr>
 <tr class="separator:a2b7c70947683d88e227b92764d8bd6ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a914af4df36a379e12d41ca33d0fc5979"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a914af4df36a379e12d41ca33d0fc5979">onTimer</a> (int)</td></tr>
-<tr class="separator:a914af4df36a379e12d41ca33d0fc5979"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae58e67be812fbfad8cf32e510e9bf137"><td class="memItemLeft" align="right" valign="top">Uint32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#ae58e67be812fbfad8cf32e510e9bf137">onTimer</a> (Uint32 interval, void *)</td></tr>
+<tr class="separator:ae58e67be812fbfad8cf32e510e9bf137"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bbc4d876e33ad2580da08278533e83d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a4bbc4d876e33ad2580da08278533e83d">initOpenGL</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a4bbc4d876e33ad2580da08278533e83d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9b8df4fef8acd2e547bbe433c8285bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#af9b8df4fef8acd2e547bbe433c8285bb">read_valarray</a> (std::istream &amp;in)</td></tr>
@@ -175,14 +187,26 @@ Functions</h2></td></tr>
 <tr class="separator:af8d016db53b28d3c29ebd9a77b6adfb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38792aaa07639f83942dd08734b07a3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a38792aaa07639f83942dd08734b07a3c">parse_cmdline</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a38792aaa07639f83942dd08734b07a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2deaf0f63ca4a73a37b86d05678fb46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#aa2deaf0f63ca4a73a37b86d05678fb46">main_loop</a> ()</td></tr>
+<tr class="separator:aa2deaf0f63ca4a73a37b86d05678fb46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a918ea2cf64a816663d6daa227e7c7101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt; <a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a918ea2cf64a816663d6daa227e7c7101">func</a></td></tr>
+<tr class="memitem:a8a38e4b2cb4ef9a5d601916bc86bbb72"><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a8a38e4b2cb4ef9a5d601916bc86bbb72">fps</a> = 60</td></tr>
+<tr class="separator:a8a38e4b2cb4ef9a5d601916bc86bbb72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa8e409e04dcf575ef63fd5fb3db06f9"><td class="memItemLeft" align="right" valign="top">SDL_Window *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#aaa8e409e04dcf575ef63fd5fb3db06f9">window</a> = nullptr</td></tr>
+<tr class="separator:aaa8e409e04dcf575ef63fd5fb3db06f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56160be05cdeedb1c5dde8ed68dcf76a"><td class="memItemLeft" align="right" valign="top">SDL_GLContext&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a56160be05cdeedb1c5dde8ed68dcf76a">glcontext</a></td></tr>
+<tr class="separator:a56160be05cdeedb1c5dde8ed68dcf76a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa56424ea978f9a18aebc938ea06db678"><td class="memItemLeft" align="right" valign="top">std::thread&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#aa56424ea978f9a18aebc938ea06db678">arma_thread</a></td></tr>
+<tr class="separator:aa56424ea978f9a18aebc938ea06db678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde5a554d4cb91f1144d57a1b82cdc5d"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#abde5a554d4cb91f1144d57a1b82cdc5d">arma_config</a> [4096 *4]</td></tr>
+<tr class="separator:abde5a554d4cb91f1144d57a1b82cdc5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a918ea2cf64a816663d6daa227e7c7101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt; <a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a918ea2cf64a816663d6daa227e7c7101">func</a></td></tr>
 <tr class="separator:a918ea2cf64a816663d6daa227e7c7101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e5ebdb4df088d43a359c69e29536d86"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a7e5ebdb4df088d43a359c69e29536d86">ROT_STEP</a> = 90</td></tr>
+<tr class="memitem:a7e5ebdb4df088d43a359c69e29536d86"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a7e5ebdb4df088d43a359c69e29536d86">ROT_STEP</a> = 90</td></tr>
 <tr class="separator:a7e5ebdb4df088d43a359c69e29536d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7c0ddda1c7ad97672bf8224e2c6fedc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="visual_8cc.html#a9f7870d8d60a515bd641dadf4629029a">Projection</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#ac7c0ddda1c7ad97672bf8224e2c6fedc">proj</a> = <a class="el" href="visual_8cc.html#a9f7870d8d60a515bd641dadf4629029aa2f9e47f4835c6a8c2ccd8da364f0fe8e">PROJECTION_NONE</a></td></tr>
 <tr class="separator:ac7c0ddda1c7ad97672bf8224e2c6fedc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,27 +214,55 @@ Variables</h2></td></tr>
 <tr class="separator:a1656129c4a4fd8809254194f08f0ac70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2c6087027bfdf561a2b766975b47ee8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#ae2c6087027bfdf561a2b766975b47ee8">timer</a> = 0</td></tr>
 <tr class="separator:ae2c6087027bfdf561a2b766975b47ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a59bfc15f21ee5713cc1075788a20f2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a7a59bfc15f21ee5713cc1075788a20f2">dragX</a> = 0</td></tr>
-<tr class="separator:a7a59bfc15f21ee5713cc1075788a20f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2755f893c463f800e2bbd6bf59921818"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a2755f893c463f800e2bbd6bf59921818">dragY</a> = 0</td></tr>
-<tr class="separator:a2755f893c463f800e2bbd6bf59921818"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab06054009b25ffc2179ad8896d9094f9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#ab06054009b25ffc2179ad8896d9094f9">dimension_order</a> = 0</td></tr>
 <tr class="separator:ab06054009b25ffc2179ad8896d9094f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09b8e05e540e19a4fc675a82590d6979"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a09b8e05e540e19a4fc675a82590d6979">part_count</a> = 4</td></tr>
 <tr class="memdesc:a09b8e05e540e19a4fc675a82590d6979"><td class="mdescLeft">&#160;</td><td class="mdescRight">dimension dimension_order  <a href="#a09b8e05e540e19a4fc675a82590d6979">More...</a><br/></td></tr>
 <tr class="separator:a09b8e05e540e19a4fc675a82590d6979"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a018a601b784527f0c375da6b60c74903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a018a601b784527f0c375da6b60c74903">interval_factor</a> = 0</td></tr>
+<tr class="memitem:a018a601b784527f0c375da6b60c74903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#a018a601b784527f0c375da6b60c74903">interval_factor</a> = 0</td></tr>
 <tr class="separator:a018a601b784527f0c375da6b60c74903"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff39d864a6594bc5f4a5e365282e00fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="visual_8cc.html#aff39d864a6594bc5f4a5e365282e00fe">tail</a> = 0</td></tr>
 <tr class="separator:aff39d864a6594bc5f4a5e365282e00fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ab685845059e8a2c92743427d9a698c70"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ae94ee1efd2ea305244b6940eea7b814d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef float <a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a></td>
+          <td class="memname">#define SDL_CHECK</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ret</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (ret) { \</div>
+<div class="line">        throw ::std::runtime_error(SDL_GetError()); \</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="a7b76ac2c126c06f36ce9c673c7fed3c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef ARMA_REAL_TYPE <a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a25af1c42bcec3ac9b8d7d2846b1f2198"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef ARMA_REAL_TYPE <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -241,15 +293,15 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a81af9475d8398d8a4b635c5f906be7d6"></a>
+<a class="anchor" id="aa9d3c8fdcdd03a655444028ac6e02167"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacearma.html#a4c0996a8daddc2cdffcb1fbd987e2749">Vector</a>&lt;<a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a>, 3&gt; delta </td>
+          <td class="memname"><a class="el" href="namespacearma.html#a4c0996a8daddc2cdffcb1fbd987e2749">Vector</a>&lt;<a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a>, 3&gt; delta </td>
           <td>(</td>
-          <td class="paramtype">0.&#160;</td>
-          <td class="paramname"><em>1</em>, </td>
+          <td class="paramtype">1.&#160;</td>
+          <td class="paramname"><em>0</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -478,6 +530,21 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aa2deaf0f63ca4a73a37b86d05678fb46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void main_loop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="aa607b54f8683f6b3437b636027dbcc60"></a>
 <div class="memitem">
 <div class="memproto">
@@ -493,65 +560,21 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7e08733c1b84c27f4b20927f76ac67e9"></a>
+<a class="anchor" id="ab8c143c8f0fe832ab42b4f8f9e9846fd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void onKeyPressed </td>
           <td>(</td>
-          <td class="paramtype">unsigned char&#160;</td>
+          <td class="paramtype">SDL_Keycode&#160;</td>
           <td class="paramname"><em>key</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="abc6a67d65939ca906cb3ffad7cc92f84"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void onMouseButton </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
+          <td class="paramtype">Uint16&#160;</td>
+          <td class="paramname"><em>mods</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -615,48 +638,26 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2e650e8d01e985387d67766a258f243f"></a>
+<a class="anchor" id="ae58e67be812fbfad8cf32e510e9bf137"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void onSpecialKeyPressed </td>
+          <td class="memname">Uint32 onTimer </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
+          <td class="paramtype">Uint32&#160;</td>
+          <td class="paramname"><em>interval</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype">void *&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a914af4df36a379e12d41ca33d0fc5979"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void onTimer </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -768,7 +769,47 @@ template&lt;class T , int N&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a609e142db3d6577f38467dce2f4cc5e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;bool&gt; running </td>
+          <td>(</td>
+          <td class="paramtype">false&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="abde5a554d4cb91f1144d57a1b82cdc5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char arma_config[4096 *4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa56424ea978f9a18aebc938ea06db678"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::thread arma_thread</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ab06054009b25ffc2179ad8896d9094f9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -781,24 +822,12 @@ template&lt;class T , int N&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a7a59bfc15f21ee5713cc1075788a20f2"></a>
+<a class="anchor" id="a8a38e4b2cb4ef9a5d601916bc86bbb72"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int dragX = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2755f893c463f800e2bbd6bf59921818"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int dragY = 0</td>
+          <td class="memname">const int fps = 60</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -810,7 +839,19 @@ template&lt;class T , int N&gt; </div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt;<a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a>&gt; func</td>
+          <td class="memname"><a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt;<a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a>&gt; func</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a56160be05cdeedb1c5dde8ed68dcf76a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SDL_GLContext glcontext</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -822,7 +863,7 @@ template&lt;class T , int N&gt; </div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a> interval_factor = 0</td>
+          <td class="memname"><a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a> interval_factor = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -872,7 +913,7 @@ template&lt;class T , int N&gt; </div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="visual_8cc.html#ab685845059e8a2c92743427d9a698c70">Real</a> ROT_STEP = 90</td>
+          <td class="memname">const <a class="el" href="visual_8cc.html#a7b76ac2c126c06f36ce9c673c7fed3c4">Real</a> ROT_STEP = 90</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -897,6 +938,18 @@ template&lt;class T , int N&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">int timer = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aaa8e409e04dcf575ef63fd5fb3db06f9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SDL_Window* window = nullptr</td>
         </tr>
       </table>
 </div><div class="memdoc">

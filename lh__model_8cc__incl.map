@@ -1,17 +1,17 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/lh_model.cc" name="/home/travis/build/igankevich/arma/src/generator/lh_model.cc">
-<area shape="rect" id="node2" href="$lh__model_8hh.html" title="lh_model.hh" alt="" coords="394,109,485,136"/>
-<area shape="rect" id="node31" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1611,408,1763,435"/>
-<area shape="rect" id="node32" href="$params_8hh.html" title="params.hh" alt="" coords="1447,109,1528,136"/>
-<area shape="rect" id="node35" href="$profile__counters_8hh.html" title="profile_counters.hh" alt="" coords="1806,109,1937,136"/>
-<area shape="rect" id="node37" href="$white__noise_8hh.html" title="white_noise.hh" alt="" coords="1195,184,1304,211"/>
-<area shape="rect" id="node5" href="$types_8hh.html" title="types.hh" alt="" coords="173,259,245,285"/>
-<area shape="rect" id="node7" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="239,184,377,211"/>
-<area shape="rect" id="node8" href="$grid_8hh.html" title="grid.hh" alt="" coords="427,259,488,285"/>
-<area shape="rect" id="node14" href="$domain_8hh.html" title="domain.hh" alt="" coords="269,259,351,285"/>
-<area shape="rect" id="node16" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="503,184,616,211"/>
-<area shape="rect" id="node9" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="373,408,437,435"/>
-<area shape="rect" id="node12" href="$validators_8hh.html" title="validators.hh" alt="" coords="272,333,368,360"/>
-<area shape="rect" id="node17" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="513,259,623,285"/>
-<area shape="rect" id="node21" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="1078,259,1180,285"/>
-<area shape="rect" id="node36" href="$profile_8hh.html" title="profile.hh" alt="" coords="1835,184,1908,211"/>
+<area shape="rect" id="node2" href="$lh__model_8hh.html" title="lh_model.hh" alt="" coords="426,109,517,136"/>
+<area shape="rect" id="node31" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1872,408,2024,435"/>
+<area shape="rect" id="node32" href="$params_8hh.html" title="params.hh" alt="" coords="1567,109,1648,136"/>
+<area shape="rect" id="node35" href="$profile__counters_8hh.html" title="profile_counters.hh" alt="" coords="1923,109,2055,136"/>
+<area shape="rect" id="node37" href="$white__noise_8hh.html" title="white_noise.hh" alt="" coords="1272,184,1381,211"/>
+<area shape="rect" id="node5" href="$types_8hh.html" title="types.hh" alt="" coords="303,259,375,285"/>
+<area shape="rect" id="node7" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="271,184,409,211"/>
+<area shape="rect" id="node8" href="$grid_8hh.html" title="grid.hh" alt="" coords="399,259,460,285"/>
+<area shape="rect" id="node14" href="$domain_8hh.html" title="domain.hh" alt="" coords="169,259,251,285"/>
+<area shape="rect" id="node16" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="535,184,648,211"/>
+<area shape="rect" id="node10" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="249,408,313,435"/>
+<area shape="rect" id="node12" href="$validators_8hh.html" title="validators.hh" alt="" coords="248,333,344,360"/>
+<area shape="rect" id="node17" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="725,259,835,285"/>
+<area shape="rect" id="node21" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="1139,259,1241,285"/>
+<area shape="rect" id="node36" href="$profile_8hh.html" title="profile.hh" alt="" coords="1952,184,2025,211"/>
 </map>

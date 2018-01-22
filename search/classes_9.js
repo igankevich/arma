@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ma_5fmodel',['MA_model',['../structarma_1_1generator_1_1MA__model.html',1,'arma::generator']]],
-  ['mt_5fconfig',['mt_config',['../structarma_1_1prng_1_1mt__config.html',1,'arma::prng']]]
+  ['linear_5fsolver',['Linear_solver',['../classarma_1_1velocity_1_1Linear__solver.html',1,'arma::velocity']]],
+  ['longuet_5fhiggins_5fmodel',['Longuet_Higgins_model',['../classarma_1_1generator_1_1Longuet__Higgins__model.html',1,'arma::generator']]]
 ];

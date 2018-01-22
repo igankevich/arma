@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['projection',['Projection',['../visual_8cc.html#a9f7870d8d60a515bd641dadf4629029a',1,'visual.cc']]]
+  ['ma_5falgorithm',['MA_algorithm',['../namespacearma.html#a3d01a42e37c100696c1edc5ea686af7a',1,'arma']]]
 ];

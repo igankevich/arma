@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['w',['w',['../structImVec4.html#afeed5acd9f0d2043175f4da229d12a38',1,'ImVec4::w()'],['../structstbrp__rect.html#a248d43f1eb979c1e7b92ba6df431dec5',1,'stbrp_rect::w()'],['../structstbtt____bitmap.html#afbd607426f0a457b1a871ed902eeb926',1,'stbtt__bitmap::w()']]],
+  ['wantcapturekeyboard',['WantCaptureKeyboard',['../structImGuiIO.html#a458e4ca98d896adb16e3a41ec6d2b811',1,'ImGuiIO']]],
+  ['wantcapturemouse',['WantCaptureMouse',['../structImGuiIO.html#af5b8add76c5d833a65df19b5456acd7e',1,'ImGuiIO']]],
+  ['wanttextinput',['WantTextInput',['../structImGuiIO.html#a0e53197e96187a57b2d86720bf163f4d',1,'ImGuiIO']]],
+  ['was_5fpacked',['was_packed',['../structstbrp__rect.html#a74ba347755ce17f2f8a2ea66c612af49',1,'stbrp_rect']]],
+  ['wasactive',['WasActive',['../structImGuiWindow.html#ab346ec3a2f305948af05ec1871610a8f',1,'ImGuiWindow']]],
+  ['weights',['weights',['../namespaceanonymous__namespace_02owen__t_8cc_03.html#a45c7f52edf185175670fdb34de7eeb49',1,'anonymous_namespace{owen_t.cc}']]],
+  ['where',['where',['../structImGuiStb_1_1StbUndoRecord.html#ac61fac97e4770b9f2c85e78eb4657b41',1,'ImGuiStb::StbUndoRecord::where()'],['../structStbUndoRecord.html#a237f3859c0a59902996eaa1873502133',1,'StbUndoRecord::where()']]],
+  ['width',['width',['../structstbrp__context.html#a70cfcb2044ce8397cc440d28b30c09b2',1,'stbrp_context::width()'],['../structstbtt__pack__context.html#a5da0b7b5d3b82d5fc75ea1c8945183fa',1,'stbtt_pack_context::width()'],['../structImGuiSimpleColumns.html#a3b7ed6f3aa04e3ead1ea17e4d9f92767',1,'ImGuiSimpleColumns::Width()']]],
+  ['window',['Window',['../structImGuiPopupRef.html#a471027209038d1d59280a84c8d236f34',1,'ImGuiPopupRef::Window()'],['../visual_8cc.html#aaa8e409e04dcf575ef63fd5fb3db06f9',1,'window():&#160;visual.cc']]],
+  ['windowminsize',['WindowMinSize',['../structImGuiStyle.html#a060b2f743a086d0f0fee4cd5b3f372d4',1,'ImGuiStyle']]],
+  ['windowpadding',['WindowPadding',['../structImGuiStyle.html#a37f156b53e6dcc99ff57366ceafe8b50',1,'ImGuiStyle::WindowPadding()'],['../structImGuiWindow.html#a538d3d70ad8f71a4ec58a6a0560b2f02',1,'ImGuiWindow::WindowPadding()']]],
+  ['windowrectclipped',['WindowRectClipped',['../structImGuiWindow.html#ae0af9ff6c93baad6848143dd9d742ddd',1,'ImGuiWindow']]],
+  ['windowrounding',['WindowRounding',['../structImGuiStyle.html#acd902c2ab4b53d4bb0f64da608320894',1,'ImGuiStyle']]],
+  ['windows',['Windows',['../structImGuiContext.html#a0f59a9a861d097be066c6cc106e40f3e',1,'ImGuiContext']]],
+  ['windowssortbuffer',['WindowsSortBuffer',['../structImGuiContext.html#af33de778de28b057fa7a42e4cbe0017a',1,'ImGuiContext']]],
+  ['windowtitlealign',['WindowTitleAlign',['../structImGuiStyle.html#a3fc57a15ab8f206045f1e5dfccd8b2e7',1,'ImGuiStyle']]]
+];

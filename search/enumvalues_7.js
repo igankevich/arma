@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['projection_5fnone',['PROJECTION_NONE',['../visual_8cc.html#a9f7870d8d60a515bd641dadf4629029aa2f9e47f4835c6a8c2ccd8da364f0fe8e',1,'visual.cc']]],
-  ['projection_5ft',['PROJECTION_T',['../visual_8cc.html#a9f7870d8d60a515bd641dadf4629029aa030b945f8a3321d16f3a87fbdecfd88b',1,'visual.cc']]],
-  ['projection_5fx',['PROJECTION_X',['../visual_8cc.html#a9f7870d8d60a515bd641dadf4629029aa82a5861799874dddbc723b76d6a6edc0',1,'visual.cc']]],
-  ['projection_5fy',['PROJECTION_Y',['../visual_8cc.html#a9f7870d8d60a515bd641dadf4629029aa8bc02f80a0f5fd3ddb0370fcceb5580c',1,'visual.cc']]]
+  ['newton_5fraphson',['Newton_Raphson',['../namespacearma.html#a3d01a42e37c100696c1edc5ea686af7aa6e95985edb7deca2372035ac28edc753',1,'arma']]],
+  ['none',['None',['../classarma_1_1Output__flags.html#a13a7efc9eb216e76d744bb382c090be1af6d43d4cd0eb8a8d9d99c09ef6eaeab0',1,'arma::Output_flags']]]
 ];

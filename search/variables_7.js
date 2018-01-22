@@ -1,5 +1,17 @@
 var searchData=
 [
-  ['ijk',['ijk',['../structanonymous__namespace_02ar__model__parallel_8cc_03_1_1Partition.html#ad201739508e89ed9cf32cda3ef55e7c1',1,'anonymous_namespace{ar_model_parallel.cc}::Partition']]],
-  ['interval_5ffactor',['interval_factor',['../visual_8cc.html#a018a601b784527f0c375da6b60c74903',1,'visual.cc']]]
+  ['g',['g',['../namespacearma_1_1constants.html#a5a25bb7cab9941f0546f6442a1db3778',1,'arma::constants']]],
+  ['getclipboardtextfn',['GetClipboardTextFn',['../structImGuiIO.html#a39bf05f0db23735ea341678a350169c4',1,'ImGuiIO']]],
+  ['gimgui',['GImGui',['../imgui_8cpp.html#a26aa67b834c0453a50c5e3970a8eba07',1,'GImGui():&#160;imgui.cpp'],['../imgui__internal_8h.html#a93caa8df61dac3cb1ab1271a755442a3',1,'GImGui():&#160;imgui.cpp']]],
+  ['glcontext',['glcontext',['../visual_8cc.html#a56160be05cdeedb1c5dde8ed68dcf76a',1,'visual.cc']]],
+  ['glyf',['glyf',['../structstbtt__fontinfo.html#a5de2129e0a415748920f6aa10ceee6e5',1,'stbtt_fontinfo']]],
+  ['glyphextraspacing',['GlyphExtraSpacing',['../structImFontConfig.html#a82db103689b1c434ec92875721967c07',1,'ImFontConfig']]],
+  ['glyphoffset',['GlyphOffset',['../structImFontConfig.html#a290a81956fdcb7ad3b5e3152594db121',1,'ImFontConfig']]],
+  ['glyphranges',['GlyphRanges',['../structImFontConfig.html#aa174ceff80323012cd1b717d864258dd',1,'ImFontConfig']]],
+  ['glyphs',['Glyphs',['../structImFont.html#ae3cbb0fcbd8a4cf8b31f0e75f70c0677',1,'ImFont']]],
+  ['grabminsize',['GrabMinSize',['../structImGuiStyle.html#a04db033d001b343815cdcd2491576ef7',1,'ImGuiStyle']]],
+  ['grabrounding',['GrabRounding',['../structImGuiStyle.html#a42369d83032545066803a7db62936e8f',1,'ImGuiStyle']]],
+  ['groupoffsetx',['GroupOffsetX',['../structImGuiDrawContext.html#a30473e3e4b3eeba6c8d1acdaaedecba9',1,'ImGuiDrawContext']]],
+  ['groupstack',['GroupStack',['../structImGuiDrawContext.html#aa775f16a46bdfe8e131e25cab733afe0',1,'ImGuiDrawContext']]],
+  ['gsubrs',['gsubrs',['../structstbtt__fontinfo.html#afc5bfc4a52ad0e3879f0f81a372da7fb',1,'stbtt_fontinfo']]]
 ];

@@ -182,38 +182,61 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keyword">friend</span> class ::ar_master_kernel;</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">            #endif</span></div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a659c56eae976d5e7f262c04ecb279c6d">generate_surface</a>(<a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a>&amp; zeta, <span class="keyword">const</span> <a class="code" href="namespacearma.html#abd68394a64aae73c6ab26ef12b1f0755">Domain3D</a>&amp; subdomain);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keyword">template</span> &lt;<span class="keyword">class</span> X&gt;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keyword">friend</span> std::ostream&amp;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            operator&lt;&lt;(std::ostream&amp; out, const AR_model&lt;X&gt;&amp; rhs);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a62c69c1d234213e25d11d4bf78c88376">white_noise_variance</a>(<a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a> phi) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#ad7f3d90c31d900d83de3991ccf5f1d86">write</a>(std::ostream&amp; out) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a891cdd8646e7917c4234f02668508484">read</a>(std::istream&amp; in) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keyword">template</span> &lt;<span class="keyword">class</span> X&gt;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            <span class="keyword">friend</span> std::istream&amp;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a24e91f601ad209c570bb2797e031af7d">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classarma_1_1generator_1_1AR__model.html">AR_model&lt;X&gt;</a>&amp; rhs);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a659c56eae976d5e7f262c04ecb279c6d">generate_surface</a>(<a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a>&amp; zeta, <span class="keyword">const</span> <a class="code" href="namespacearma.html#abd68394a64aae73c6ab26ef12b1f0755">Domain3D</a>&amp; subdomain);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a62c69c1d234213e25d11d4bf78c88376">white_noise_variance</a>(<a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a> phi) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a6eed558c311409f1459a96d41df70342">determine_coefficients_gauss</a>();</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#aec5d1fd5a7deae049dc6d0e9513509b7">determine_coefficients_choi</a>();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#ad7f3d90c31d900d83de3991ccf5f1d86">write</a>(std::ostream&amp; out) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a891cdd8646e7917c4234f02668508484">read</a>(std::istream&amp; in) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        };</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#a6eed558c311409f1459a96d41df70342">determine_coefficients_gauss</a>();</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#endif // AR_MODEL_HH</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <a class="code" href="classarma_1_1generator_1_1AR__model.html#aec5d1fd5a7deae049dc6d0e9513509b7">determine_coefficients_choi</a>();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        };</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        std::ostream&amp;</div>
+<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="namespacearma_1_1generator.html#a2b1894a127fb4026f0dd248d2f36b27c">  133</a></span>&#160;        operator&lt;&lt;(std::ostream&amp; out, const AR_model&lt;T&gt;&amp; rhs) {</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            rhs.AR_model&lt;T&gt;::write(out);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        }</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        std::istream&amp;</div>
+<div class="line"><a name="l00140"></a><span class="lineno"><a class="line" href="namespacearma_1_1generator.html#aea7ccb826596752928f2a69cca35711c">  140</a></span>&#160;        <a class="code" href="namespacearma_1_1generator.html#aea7ccb826596752928f2a69cca35711c">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classarma_1_1generator_1_1AR__model.html">AR_model&lt;T&gt;</a>&amp; rhs) {</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;            rhs.AR_model&lt;T&gt;::read(in);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            <span class="keywordflow">return</span> in;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        }</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    }</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;}</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor">#endif // AR_MODEL_HH</span></div>
 <div class="ttc" id="arma_8hh_html"><div class="ttname"><a href="arma_8hh.html">arma.hh</a></div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_a6b90e1d70065ac41b47367fb0b8ffbc9"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#a6b90e1d70065ac41b47367fb0b8ffbc9">arma::generator::AR_model::writes_in_parallel</a></div><div class="ttdeci">bool writes_in_parallel() const noexceptoverride</div><div class="ttdef"><b>Definition:</b> ar_model.hh:65</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_aaec0d7441a8bbbeceb1e0e295c0a310f"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#aaec0d7441a8bbbeceb1e0e295c0a310f">arma::generator::AR_model::AR_model</a></div><div class="ttdeci">AR_model(acf_type acf, Shape3D order)</div><div class="ttdef"><b>Definition:</b> ar_model.hh:49</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_afa209ba055b7d05c3756642bf8d27add"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#afa209ba055b7d05c3756642bf8d27add">arma::generator::AR_model::_algorithm</a></div><div class="ttdeci">AR_algorithm _algorithm</div><div class="ttdoc">The algorithm for determining the coefficients. </div><div class="ttdef"><b>Definition:</b> ar_model.hh:41</div></div>
+<div class="ttc" id="namespacearma_1_1generator_html_aea7ccb826596752928f2a69cca35711c"><div class="ttname"><a href="namespacearma_1_1generator.html#aea7ccb826596752928f2a69cca35711c">arma::generator::operator&gt;&gt;</a></div><div class="ttdeci">std::istream &amp; operator&gt;&gt;(std::istream &amp;in, AR_model&lt; T &gt; &amp;rhs)</div><div class="ttdef"><b>Definition:</b> ar_model.hh:140</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_ab139011ed5ffe43a7e36d0df87c671b7"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#ab139011ed5ffe43a7e36d0df87c671b7">arma::generator::AR_model::_partition</a></div><div class="ttdeci">Shape3D _partition</div><div class="ttdoc">The size of partitions that are computed in parallel. </div><div class="ttdef"><b>Definition:</b> ar_model.hh:37</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_ac1f91b8fa15f22739b28c18ba2ac393a"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#ac1f91b8fa15f22739b28c18ba2ac393a">arma::generator::AR_model::_phi</a></div><div class="ttdeci">Array3D&lt; T &gt; _phi</div><div class="ttdoc">AR coefficients. </div><div class="ttdef"><b>Definition:</b> ar_model.hh:39</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_a8bb984bcccbf0c659383d3525beaa874"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#a8bb984bcccbf0c659383d3525beaa874">arma::generator::AR_model::coefficients</a></div><div class="ttdeci">Array3D&lt; T &gt; coefficients() const </div><div class="ttdef"><b>Definition:</b> ar_model.hh:55</div></div>
@@ -223,6 +246,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_a32cdd12cc914a19671e6eed645b36d33"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#a32cdd12cc914a19671e6eed645b36d33">arma::generator::AR_model::do_generate</a></div><div class="ttdeci">Array3D&lt; T &gt; do_generate() override</div><div class="ttdef"><b>Definition:</b> ar_model_bscheduler.cc:443</div></div>
 <div class="ttc" id="namespacearma_html_af7d4db4b1cfb7a98584f1799b785f95c"><div class="ttname"><a href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a></div><div class="ttdeci">Array&lt; T, 3 &gt; Array3D</div><div class="ttdef"><b>Definition:</b> types.hh:36</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html">arma::generator::AR_model</a></div><div class="ttdoc">Uses autoregressive process, standing waves. </div><div class="ttdef"><b>Definition:</b> ar_model.hh:33</div></div>
+<div class="ttc" id="classarma_1_1generator_1_1AR__model_html_a24e91f601ad209c570bb2797e031af7d"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#a24e91f601ad209c570bb2797e031af7d">arma::generator::AR_model::operator&gt;&gt;</a></div><div class="ttdeci">friend std::istream &amp; operator&gt;&gt;(std::istream &amp;in, AR_model&lt; X &gt; &amp;rhs)</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1Basic__model_html_a8022192ac7464c6224b0d5e2dd93e7c7"><div class="ttname"><a href="classarma_1_1generator_1_1Basic__model.html#a8022192ac7464c6224b0d5e2dd93e7c7">arma::generator::Basic_model::oflags</a></div><div class="ttdeci">Output_flags oflags() const noexcept</div><div class="ttdef"><b>Definition:</b> basic_model.hh:96</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_ada4e63860d59c06ea3d92d46f80096e2"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#ada4e63860d59c06ea3d92d46f80096e2">arma::generator::AR_model::determine_coefficients</a></div><div class="ttdeci">void determine_coefficients() override</div><div class="ttdef"><b>Definition:</b> ar_model.cc:82</div></div>
 <div class="ttc" id="classarma_1_1generator_1_1AR__model_html_ac1b02ce3e8927fbc48027a8593a200fa"><div class="ttname"><a href="classarma_1_1generator_1_1AR__model.html#ac1b02ce3e8927fbc48027a8593a200fa">arma::generator::AR_model::validate</a></div><div class="ttdeci">void validate() const override</div><div class="ttdef"><b>Definition:</b> ar_model.cc:65</div></div>

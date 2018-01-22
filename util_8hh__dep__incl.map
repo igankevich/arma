@@ -1,19 +1,20 @@
 <map id="/home/travis/build/igankevich/arma/src/util.hh" name="/home/travis/build/igankevich/arma/src/util.hh">
-<area shape="rect" id="node2" href="$fourier__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/fourier_opencl.cc" alt="" coords="5,117,176,173"/>
-<area shape="rect" id="node3" href="$arma__driver_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_driver.hh" alt="" coords="201,117,343,173"/>
-<area shape="rect" id="node9" href="$ar__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.cc" alt="" coords="368,117,521,173"/>
-<area shape="rect" id="node10" href="$ar__model__bscheduler_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_bscheduler.cc" alt="" coords="546,117,771,173"/>
-<area shape="rect" id="node11" href="$ar__model__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_opencl.cc" alt="" coords="795,117,993,173"/>
-<area shape="rect" id="node12" href="$ar__model__parallel_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_parallel.cc" alt="" coords="1019,117,1221,173"/>
-<area shape="rect" id="node13" href="$basic__arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_arma\l_model.cc" alt="" coords="1246,110,1396,181"/>
-<area shape="rect" id="node14" href="$nit__transform_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/nonlinear/nit_transform.cc" alt="" coords="1421,117,1597,173"/>
-<area shape="rect" id="node15" href="$opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/opencl.cc" alt="" coords="1622,117,1764,173"/>
-<area shape="rect" id="node16" href="$profile_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/profile.cc" alt="" coords="1789,117,1931,173"/>
-<area shape="rect" id="node17" href="$util_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/util.cc" alt="" coords="1955,117,2097,173"/>
-<area shape="rect" id="node18" href="$high__amplitude__realtime__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_realtime_solver.cc" alt="" coords="2123,110,2285,181"/>
-<area shape="rect" id="node4" href="$arma__driver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_driver.cc" alt="" coords="34,229,176,285"/>
-<area shape="rect" id="node5" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="201,229,343,285"/>
-<area shape="rect" id="node6" href="$arma__realtime__driver_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.hh" alt="" coords="368,229,532,285"/>
-<area shape="rect" id="node7" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="290,333,432,389"/>
-<area shape="rect" id="node8" href="$arma__realtime__driver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.cc" alt="" coords="457,333,621,389"/>
+<area shape="rect" id="node2" href="$fourier__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/fourier_opencl.cc" alt="" coords="65,117,236,173"/>
+<area shape="rect" id="node3" href="$arma__driver_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_driver.hh" alt="" coords="261,117,403,173"/>
+<area shape="rect" id="node10" href="$ar__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.cc" alt="" coords="428,117,581,173"/>
+<area shape="rect" id="node11" href="$ar__model__bscheduler_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_bscheduler.cc" alt="" coords="606,117,831,173"/>
+<area shape="rect" id="node12" href="$ar__model__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_opencl.cc" alt="" coords="855,117,1053,173"/>
+<area shape="rect" id="node13" href="$ar__model__parallel_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_parallel.cc" alt="" coords="1079,117,1281,173"/>
+<area shape="rect" id="node14" href="$basic__arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_arma\l_model.cc" alt="" coords="1306,110,1456,181"/>
+<area shape="rect" id="node15" href="$nit__transform_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/nonlinear/nit_transform.cc" alt="" coords="1481,117,1657,173"/>
+<area shape="rect" id="node16" href="$opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/opencl.cc" alt="" coords="1682,117,1824,173"/>
+<area shape="rect" id="node17" href="$profile_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/profile.cc" alt="" coords="1849,117,1991,173"/>
+<area shape="rect" id="node18" href="$util_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/util.cc" alt="" coords="2015,117,2157,173"/>
+<area shape="rect" id="node19" href="$high__amplitude__realtime__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_realtime_solver.cc" alt="" coords="2183,110,2345,181"/>
+<area shape="rect" id="node4" href="$arma__driver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_driver.cc" alt="" coords="5,229,147,285"/>
+<area shape="rect" id="node5" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="171,229,313,285"/>
+<area shape="rect" id="node6" href="$arma__realtime__driver_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.hh" alt="" coords="339,229,503,285"/>
+<area shape="rect" id="node9" href="$visual_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/visual.cc" alt="" coords="529,229,671,285"/>
+<area shape="rect" id="node7" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="261,333,403,389"/>
+<area shape="rect" id="node8" href="$arma__realtime__driver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.cc" alt="" coords="428,333,592,389"/>
 </map>

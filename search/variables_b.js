@@ -1,7 +1,18 @@
 var searchData=
 [
-  ['second',['second',['../structanonymous__namespace_02ar__model__opencl_8cc_03_1_1progress__type.html#aafaf0f2c140d71f3297b1e48d19fb19e',1,'anonymous_namespace{ar_model_opencl.cc}::progress_type::second()'],['../structanonymous__namespace_02qq__graph_8cc_03_1_1QPair.html#a18ce21a146524814bce668bfd997f64a',1,'anonymous_namespace{qq_graph.cc}::QPair::second()']]],
-  ['shape',['shape',['../structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Wave__height_00_01T_01_4.html#a73d8ae5ea1fd80c5bfe06defa9ccc462',1,'arma::stats::Weibull_shape&lt; Characteristic::Wave_height, T &gt;::shape()'],['../structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Wave__length_00_01T_01_4.html#ae310293fd87341488b709b4fe2c0023e',1,'arma::stats::Weibull_shape&lt; Characteristic::Wave_length, T &gt;::shape()'],['../structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Crest__length_00_01T_01_4.html#aabf933d677faa80f3d322c13375678d2',1,'arma::stats::Weibull_shape&lt; Characteristic::Crest_length, T &gt;::shape()'],['../structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Wave__period_00_01T_01_4.html#a44754dbce25aff7b14ee9d4587de6d52',1,'arma::stats::Weibull_shape&lt; Characteristic::Wave_period, T &gt;::shape()'],['../structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Wave__slope_00_01T_01_4.html#a7d9c469c0850ad40ed65b1d5280381d9',1,'arma::stats::Weibull_shape&lt; Characteristic::Wave_slope, T &gt;::shape()'],['../structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Threedimensionality_00_01T_01_4.html#a4d17c7c12e8060fd48d997e8c7108388',1,'arma::stats::Weibull_shape&lt; Characteristic::Threedimensionality, T &gt;::shape()'],['../structarma_1_1stats_1_1Wave__characteristic__distribution.html#a1f0a77def0f6deca61c3f18665a9f6c1',1,'arma::stats::Wave_characteristic_distribution::shape()']]],
-  ['sqrt2',['sqrt2',['../namespacearma_1_1constants.html#a32d6121747b33e98b549461ea6232433',1,'arma::constants']]],
-  ['sqrt2pi',['sqrt2pi',['../namespacearma_1_1constants.html#a88bd9f16ac692804e325e4a824255038',1,'arma::constants']]]
+  ['lastframeactive',['LastFrameActive',['../structImGuiWindow.html#a6f3c194efabb4fd0a99be45fa5fe26f1',1,'ImGuiWindow']]],
+  ['lastitemhoveredandusable',['LastItemHoveredAndUsable',['../structImGuiDrawContext.html#a310c64f6827857ffa1f97dd3bc8d632d',1,'ImGuiDrawContext']]],
+  ['lastitemhoveredrect',['LastItemHoveredRect',['../structImGuiDrawContext.html#a9cf48e982940adb6b758faeefb78551d',1,'ImGuiDrawContext']]],
+  ['lastitemid',['LastItemId',['../structImGuiDrawContext.html#ad864847097dd259ce9cb69558173fe45',1,'ImGuiDrawContext']]],
+  ['lastitemrect',['LastItemRect',['../structImGuiDrawContext.html#a214683a9c08e5812a492881791cd2f51',1,'ImGuiDrawContext']]],
+  ['layouttype',['LayoutType',['../structImGuiDrawContext.html#a8516b32e30504c3037d34e93b7988d83',1,'ImGuiDrawContext']]],
+  ['length',['length',['../structImGuiStb_1_1StbFindState.html#a255b330cee989cac3fea58afd6f08c3d',1,'ImGuiStb::StbFindState']]],
+  ['loca',['loca',['../structstbtt__fontinfo.html#a15344195b181b50bde4f59ae7ca248c0',1,'stbtt_fontinfo']]],
+  ['logautoexpandmaxdepth',['LogAutoExpandMaxDepth',['../structImGuiContext.html#a153d8c6eee2acdd3676ca55aec7b1079',1,'ImGuiContext']]],
+  ['logclipboard',['LogClipboard',['../structImGuiContext.html#a676007461d3ce20e50a092573dc05064',1,'ImGuiContext']]],
+  ['logenabled',['LogEnabled',['../structImGuiContext.html#a2508bec1862aa4477eca2c79d6924b82',1,'ImGuiContext']]],
+  ['logfile',['LogFile',['../structImGuiContext.html#a73a73a599720fb933e4fb5e673dde131',1,'ImGuiContext']]],
+  ['logfilename',['LogFilename',['../structImGuiIO.html#ae77a1beed11820366800645232a6ad1c',1,'ImGuiIO']]],
+  ['loglineposy',['LogLinePosY',['../structImGuiDrawContext.html#a4060735d06c860014c5359bcf76b1112',1,'ImGuiDrawContext']]],
+  ['logstartdepth',['LogStartDepth',['../structImGuiContext.html#a6ac157821b3a0eb9d0411bc477df8665',1,'ImGuiContext']]]
 ];

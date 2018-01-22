@@ -1,4 +1,32 @@
 var searchData=
 [
-  ['elevation',['elevation',['../structanonymous__namespace_02factor__waves_8cc_03_1_1Event.html#ac51dc81d9f4f5dcfea4d60855cad73f7',1,'anonymous_namespace{factor_waves.cc}::Event']]]
+  ['data',['data',['../structstbtt____buf.html#a376d8cdacbc8295a7e88567ad52a0ac4',1,'stbtt__buf::data()'],['../structstbtt__fontinfo.html#af348db379cf0e0e71a68603d00501d41',1,'stbtt_fontinfo::data()'],['../classImVector.html#ac0e46e8b30cb079d93c8f0aad7d7cbd0',1,'ImVector::Data()'],['../structImGuiStorage.html#aab0b9789fac598a34c500459259fde42',1,'ImGuiStorage::Data()']]],
+  ['dc',['DC',['../structImGuiWindow.html#a3a20c68996093058481ae8e174258a04',1,'ImGuiWindow']]],
+  ['default_5fabsolute_5ferror',['default_absolute_error',['../classarma_1_1nonlinear_1_1NIT__transform.html#aeb831aa30a1bd94b66c5a29f9356771f',1,'arma::nonlinear::NIT_transform']]],
+  ['default_5fgram_5fcharlier_5forder',['default_gram_charlier_order',['../classarma_1_1nonlinear_1_1NIT__transform.html#a137fcbe7cf5c9aaa4dacf8e6efe0a659',1,'arma::nonlinear::NIT_transform']]],
+  ['default_5finterpolation_5forder',['default_interpolation_order',['../classarma_1_1nonlinear_1_1NIT__transform.html#a77bed2e848fc353f200cf0d590bbe320',1,'arma::nonlinear::NIT_transform']]],
+  ['default_5fniterations',['default_niterations',['../classarma_1_1nonlinear_1_1NIT__transform.html#af98fa521c60450b727202580ab307f52',1,'arma::nonlinear::NIT_transform']]],
+  ['delete_5flength',['delete_length',['../structImGuiStb_1_1StbUndoRecord.html#aca8b20387e3b7d890a21638109574279',1,'ImGuiStb::StbUndoRecord::delete_length()'],['../structStbUndoRecord.html#ad81789175cef417a0fe58204277fd735',1,'StbUndoRecord::delete_length()']]],
+  ['deltatime',['DeltaTime',['../structImGuiIO.html#a5068d5414a19c2a1bf58029bd732a7c7',1,'ImGuiIO']]],
+  ['descent',['Descent',['../structImFont.html#abcca12aa908bf7105433e7db6088a5e5',1,'ImFont']]],
+  ['desiredsize',['DesiredSize',['../structImGuiSizeConstraintCallbackData.html#a1080a748a1769de07c5ae1e98de99ea3',1,'ImGuiSizeConstraintCallbackData']]],
+  ['dim',['dim',['../structanonymous__namespace_02fourier__opencl_8cc_03_1_1clfft__traits_3_011_01_4.html#a777f52d69c33fb0a18f5d81770780712',1,'anonymous_namespace{fourier_opencl.cc}::clfft_traits&lt; 1 &gt;::dim()'],['../structanonymous__namespace_02fourier__opencl_8cc_03_1_1clfft__traits_3_012_01_4.html#a596d4ff4fb9e9470e244e7965d801eb4',1,'anonymous_namespace{fourier_opencl.cc}::clfft_traits&lt; 2 &gt;::dim()'],['../structanonymous__namespace_02fourier__opencl_8cc_03_1_1clfft__traits_3_013_01_4.html#a47bca4d10175bb6c2a1027858592560d',1,'anonymous_namespace{fourier_opencl.cc}::clfft_traits&lt; 3 &gt;::dim()']]],
+  ['dimension_5forder',['dimension_order',['../visual_8cc.html#ab06054009b25ffc2179ad8896d9094f9',1,'visual.cc']]],
+  ['displayend',['DisplayEnd',['../structImGuiListClipper.html#aa49e30d04ad8f8b95fbaa62dfbb4ea3e',1,'ImGuiListClipper']]],
+  ['displayframebufferscale',['DisplayFramebufferScale',['../structImGuiIO.html#a703cad6bd4c9e8972d056116104d27e8',1,'ImGuiIO']]],
+  ['displayoffset',['DisplayOffset',['../structImFont.html#af9b95f3df0b6d45f45903d82301d7f84',1,'ImFont']]],
+  ['displaysafeareapadding',['DisplaySafeAreaPadding',['../structImGuiStyle.html#a8dd02a6a031ec8667e76aab1e28755bd',1,'ImGuiStyle']]],
+  ['displaysize',['DisplaySize',['../structImGuiIO.html#a042cfb90bdc9ccfe37f86b92ade759fd',1,'ImGuiIO']]],
+  ['displaystart',['DisplayStart',['../structImGuiListClipper.html#a9d096e06e5633fd77a8a209c00fe454a',1,'ImGuiListClipper']]],
+  ['displayvisiblemax',['DisplayVisibleMax',['../structImGuiIO.html#a9bb46e8da3da68b83c66219beb861cb1',1,'ImGuiIO']]],
+  ['displayvisiblemin',['DisplayVisibleMin',['../structImGuiIO.html#a45b49309f2f8765622962ed7f286674d',1,'ImGuiIO']]],
+  ['displaywindowpadding',['DisplayWindowPadding',['../structImGuiStyle.html#ab06d6f0c6c5f36ab0c14688448de66f6',1,'ImGuiStyle']]],
+  ['dragcurrentvalue',['DragCurrentValue',['../structImGuiContext.html#a96ed5993aaddb183dc36244912ea261f',1,'ImGuiContext']]],
+  ['draglastmousedelta',['DragLastMouseDelta',['../structImGuiContext.html#a804ee75ff62a35d2955ecf7917e704f9',1,'ImGuiContext']]],
+  ['dragspeeddefaultratio',['DragSpeedDefaultRatio',['../structImGuiContext.html#aea2d961c03a1d0879088385d8cf602dd',1,'ImGuiContext']]],
+  ['dragspeedscalefast',['DragSpeedScaleFast',['../structImGuiContext.html#ac12072b2fbfca44e4d8b9775cb8cfa21',1,'ImGuiContext']]],
+  ['dragspeedscaleslow',['DragSpeedScaleSlow',['../structImGuiContext.html#a69df3a201fa28cf99b6a442d506806a0',1,'ImGuiContext']]],
+  ['drawlist',['DrawList',['../structImGuiWindow.html#a39de4668b09754136c6fd7ab89ab674a',1,'ImGuiWindow']]],
+  ['driver_5fptr',['driver_ptr',['../arma__realtime_8cc.html#adf94bf313b2052499884b3750212d1d6',1,'arma_realtime.cc']]],
+  ['dstfont',['DstFont',['../structImFontConfig.html#a561773c311f6cf6de00642c2801e7b92',1,'ImFontConfig']]]
 ];

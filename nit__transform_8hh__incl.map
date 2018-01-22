@@ -1,13 +1,13 @@
 <map id="/home/travis/build/igankevich/arma/src/nonlinear/nit_transform.hh" name="/home/travis/build/igankevich/arma/src/nonlinear/nit_transform.hh">
-<area shape="rect" id="node4" href="$gaussian_8hh.html" title="stats/gaussian.hh" alt="" coords="273,184,399,211"/>
-<area shape="rect" id="node6" href="$skew__normal_8hh.html" title="stats/skew_normal.hh" alt="" coords="261,109,411,136"/>
-<area shape="rect" id="node8" href="$gram__charlier_8hh.html" title="stats/gram_charlier.hh" alt="" coords="474,184,624,211"/>
-<area shape="rect" id="node11" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="1363,109,1433,136"/>
-<area shape="rect" id="node17" href="$types_8hh.html" title="types.hh" alt="" coords="1604,109,1676,136"/>
-<area shape="rect" id="node18" href="$domain_8hh.html" title="domain.hh" alt="" coords="772,109,853,136"/>
-<area shape="rect" id="node7" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="69,184,197,211"/>
-<area shape="rect" id="node10" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="549,259,701,285"/>
-<area shape="rect" id="node16" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="893,184,1067,211"/>
-<area shape="rect" id="node20" href="$validators_8hh.html" title="validators.hh" alt="" coords="1092,184,1188,211"/>
-<area shape="rect" id="node22" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="1116,259,1180,285"/>
+<area shape="rect" id="node4" href="$gaussian_8hh.html" title="stats/gaussian.hh" alt="" coords="23,184,148,211"/>
+<area shape="rect" id="node6" href="$skew__normal_8hh.html" title="stats/skew_normal.hh" alt="" coords="213,109,363,136"/>
+<area shape="rect" id="node8" href="$gram__charlier_8hh.html" title="stats/gram_charlier.hh" alt="" coords="429,184,579,211"/>
+<area shape="rect" id="node11" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="1369,109,1439,136"/>
+<area shape="rect" id="node17" href="$types_8hh.html" title="types.hh" alt="" coords="1609,109,1681,136"/>
+<area shape="rect" id="node18" href="$domain_8hh.html" title="domain.hh" alt="" coords="768,109,849,136"/>
+<area shape="rect" id="node7" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="223,184,352,211"/>
+<area shape="rect" id="node10" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="417,259,569,285"/>
+<area shape="rect" id="node16" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="898,184,1072,211"/>
+<area shape="rect" id="node20" href="$validators_8hh.html" title="validators.hh" alt="" coords="1097,184,1193,211"/>
+<area shape="rect" id="node22" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="1121,259,1185,285"/>
 </map>

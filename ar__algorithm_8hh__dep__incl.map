@@ -1,10 +1,12 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ar_algorithm.hh" name="/home/travis/build/igankevich/arma/src/generator/ar_algorithm.hh">
-<area shape="rect" id="node2" href="$ar__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.hh" alt="" coords="205,109,359,165"/>
-<area shape="rect" id="node9" href="$ar__algorithm_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_algorithm.cc" alt="" coords="384,109,557,165"/>
-<area shape="rect" id="node3" href="$common__main_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/common_main.hh" alt="" coords="87,317,229,373"/>
-<area shape="rect" id="node6" href="$arma__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.hh" alt="" coords="196,213,369,269"/>
-<area shape="rect" id="node8" href="$ar__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.cc" alt="" coords="393,213,547,269"/>
-<area shape="rect" id="node4" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="5,421,147,477"/>
-<area shape="rect" id="node5" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="171,421,313,477"/>
-<area shape="rect" id="node7" href="$arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.cc" alt="" coords="255,317,428,373"/>
+<area shape="rect" id="node2" href="$ar__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.hh" alt="" coords="288,109,441,165"/>
+<area shape="rect" id="node11" href="$ar__algorithm_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_algorithm.cc" alt="" coords="467,109,640,165"/>
+<area shape="rect" id="node3" href="$register__all_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/register_all.hh" alt="" coords="170,317,312,373"/>
+<area shape="rect" id="node8" href="$arma__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.hh" alt="" coords="279,213,452,269"/>
+<area shape="rect" id="node10" href="$ar__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.cc" alt="" coords="476,213,629,269"/>
+<area shape="rect" id="node4" href="$common__main_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/common_main.hh" alt="" coords="87,421,229,477"/>
+<area shape="rect" id="node7" href="$visual_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/visual.cc" alt="" coords="254,421,396,477"/>
+<area shape="rect" id="node5" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="5,525,147,581"/>
+<area shape="rect" id="node6" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="171,525,313,581"/>
+<area shape="rect" id="node9" href="$arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.cc" alt="" coords="337,317,511,373"/>
 </map>
