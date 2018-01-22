@@ -74,7 +74,7 @@ enum Projection {
 };
 
 Array3D<Real> func;
-Vector<Real, 3> delta(0.1, 1.0, 1.0);
+Vector<Real, 3> delta(1.0, 1.0, 1.0);
 Vector<int, 3> dimensions(blitz::firstDim, blitz::secondDim, blitz::thirdDim);
 Vector<char, 3> dimension_names('t', 'x', 'y');
 

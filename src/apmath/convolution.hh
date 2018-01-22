@@ -82,7 +82,9 @@ namespace arma {
 				if (!all(bs <= limit)) {
 					throw std::length_error("bad block size");
 				}
+				#ifndef NDEBUG
 				std::clog << "all_parts=" << all_parts << std::endl;
+				#endif
 				array_type out_signal(limit);
 				#if ARMA_OPENMP
 				#pragma omp parallel
@@ -143,8 +145,10 @@ namespace arma {
 
 			inline void
 			check() {
+				#ifndef NDEBUG
 				std::clog << "this->_blocksize=" << this->_blocksize << std::endl;
 				std::clog << "this->_padding=" << this->_padding << std::endl;
+				#endif
 				using blitz::all;
 				if (!all(this->_padding >= 0)) {
 					throw std::length_error("bad padding");

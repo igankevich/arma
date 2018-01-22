@@ -95,6 +95,14 @@ namespace arma {
 			friend class ::ar_master_kernel;
 			#endif
 
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const AR_model<X>& rhs);
+
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, AR_model<X>& rhs);
+
 		protected:
 			void
 			generate_surface(Array3D<T>& zeta, const Domain3D& subdomain);
@@ -119,6 +127,20 @@ namespace arma {
 			determine_coefficients_choi();
 
 		};
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const AR_model<T>& rhs) {
+			rhs.AR_model<T>::write(out);
+			return out;
+		}
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, AR_model<T>& rhs) {
+			rhs.AR_model<T>::read(in);
+			return in;
+		}
 
 	}
 

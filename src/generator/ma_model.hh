@@ -56,6 +56,14 @@ namespace arma {
 			void
 			determine_coefficients() override;
 
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const MA_model<X>& rhs);
+
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, MA_model<X>& rhs);
+
 		protected:
 			void
 			generate_surface(
@@ -105,6 +113,20 @@ namespace arma {
 			T _eps = T(1e-5);
 			T _minvarwn = T(1e-6);
 		};
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const MA_model<T>& rhs) {
+			rhs.MA_model<T>::write(out);
+			return out;
+		}
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, MA_model<T>& rhs) {
+			rhs.MA_model<T>::read(in);
+			return in;
+		}
 
 
 	}

@@ -28,8 +28,19 @@ TEST(GridTest, ZeroPatchSize) {
 	EXPECT_FALSE(grid.patch_size(0) < 0.0f);
 	EXPECT_FALSE(grid.patch_size(0) > 0.0f);
 	EXPECT_GE(grid.patch_size(1), 0.0f);
+	EXPECT_EQ(1, grid.num_points(0));
+	EXPECT_EQ(5, grid.num_points(1));
+	EXPECT_EQ(1, grid.num_patches(0));
+	EXPECT_EQ(4, grid.num_patches(1));
 }
 
+TEST(GridTest, OnePoint) {
+	arma::Grid<float, 2> grid{
+		{1, 5},
+		{2.0f, 10.0f}
+	};
+	std::clog << "grid.patch_size()=" << grid.patch_size() << std::endl;
+}
 
 TEST(Array, ViewAssign) {
 	using namespace blitz;

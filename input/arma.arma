@@ -1,0 +1,32 @@
+model = ARMA {
+
+	out_grid = (100,40,40)
+	acf = {
+		func = propagating_wave
+		grid = (20,10,10) : (10,5,5)
+	}
+	order = (20,10,10)
+
+	ar_model = {
+		order = (1,10,10)
+		algorithm = gauss_elimination
+	}
+
+	ma_model = {
+		order = (20,1,1)
+		algorithm = fixed_point_iteration
+		max_iterations = 1000
+		eps = 1e-5
+		min_var_wn = 1e-6
+		validate = 0
+	}
+
+	output = surface
+
+}
+
+velocity_potential_solver = high_amplitude {
+	depth = 12
+	domain = from (10,-12) to (10,3) npoints (1,128)
+}
+

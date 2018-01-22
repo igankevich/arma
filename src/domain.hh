@@ -1,9 +1,11 @@
 #ifndef DOMAIN_HH
 #define DOMAIN_HH
 
+#include <cmath>
+#include <iomanip>
 #include <istream>
 #include <ostream>
-#include <iomanip>
+
 #include <blitz/array.h>
 
 #if ARMA_BSCHEDULER
@@ -99,12 +101,12 @@ namespace arma {
 
 		int
 		num_patches(int i) const {
-			return _npoints(i) - 1;
+			return std::max(this->_npoints(i) - 1, 1);
 		}
 
 		size_type
 		num_patches() const {
-			return _npoints - 1;
+			return blitz::max(this->_npoints - 1, 1);
 		}
 
 		length_type

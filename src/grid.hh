@@ -1,6 +1,7 @@
 #ifndef GRID_HH
 #define GRID_HH
 
+#include <cmath>
 #include <istream>
 
 #include "blitz.hh"
@@ -76,12 +77,12 @@ namespace arma {
 
 		inline int
 		num_patches(int i) const noexcept {
-			return _npoints(i) - 1;
+			return std::max(this->_npoints(i) - 1, 1);
 		}
 
 		inline size_type
 		num_patches() const noexcept {
-			return _npoints - 1;
+			return blitz::max(this->_npoints - 1, 1);
 		}
 
 		inline T

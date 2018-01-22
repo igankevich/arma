@@ -21,7 +21,7 @@ print_exception_and_terminate() {
 		#endif
 		} catch (const std::exception& e) {
 			std::cerr << "ERROR: " << e.what() << std::endl;
-			std::abort();
+			std::exit(1);
 		} catch (...) {
 			std::cerr << "UNKNOWN ERROR. Aborting." << std::endl;
 		}

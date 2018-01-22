@@ -10,7 +10,7 @@ arma::operator>>(std::istream& in, AR_algorithm& rhs) {
 	in >> std::ws >> name;
 	if (name == "gauss_elimination") {
 		rhs = AR_algorithm::Gauss_elimination;
-	} else if (name == "choi") {
+	} else if (name == "choi_recursive") {
 		rhs = AR_algorithm::Choi;
 	} else {
 		in.setstate(std::ios::failbit);
@@ -24,7 +24,7 @@ const char*
 arma::to_string(AR_algorithm rhs) {
 	switch (rhs) {
 		case AR_algorithm::Gauss_elimination: return "gauss_elimination";
-		case AR_algorithm::Choi: return "choi";
+		case AR_algorithm::Choi: return "choi_recursive";
 		default: return "UNKNOWN";
 	}
 }

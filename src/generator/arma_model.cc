@@ -52,15 +52,16 @@ arma::generator::ARMA_model<T>::generate_surface(
 template <class T>
 void
 arma::generator::ARMA_model<T>::read(std::istream& in) {
+	using blitz::shape;
 	bits::ACF_wrapper<T> acf_wrapper(this->_acf_orig);
 	sys::parameter_map params({
 		{"ar_model", sys::make_param(static_cast<AR_model<T>&>(*this))},
 		{"ma_model", sys::make_param(static_cast<MA_model<T>&>(*this))},
 	}, true);
-	params.insert(this->AR_model<T>::parameters());
 	params.insert({
 		{"acf", sys::make_param(acf_wrapper)},
 	});
+	params.insert(this->AR_model<T>::parameters());
 	in >> params;
 	validate_shape(this->_acf_orig.shape(), "arma_model.acf_orig.shape");
 	this->AR_model<T>::setacf(ARMA_model<T>::slice_front(
@@ -68,11 +69,13 @@ arma::generator::ARMA_model<T>::read(std::istream& in) {
 		this->AR_model<T>::order()
 	));
 	this->AR_model<T>::setgrid(this->ARMA_model<T>::grid());
-	this->MA_model<T>::setacf(ARMA_model<T>::slice_back(
+	this->MA_model<T>::setacf(ARMA_model<T>::slice_front(
 		this->_acf_orig,
 		this->MA_model<T>::order()
 	));
 	this->MA_model<T>::setgrid(this->ARMA_model<T>::grid());
+	std::clog << "ar_model" << static_cast<const AR_model<T>&>(*this) << std::endl;
+	std::clog << "ma_model" << static_cast<const MA_model<T>&>(*this) << std::endl;
 }
 
 template <class T>

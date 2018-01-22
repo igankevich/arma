@@ -41,9 +41,9 @@ model = AR {
 		grid = (10,10,10) : (2.5,5,5)
 	}
 	# The algorithm of determining AR model coefficients. Possible values:
-	# - gauss
-	# - choi
-	algorithm = choi
+	# - gauss_elimination
+	# - choi_recursive
+	algorithm = choi_recursive
 	# AR model order
 	order = (7,7,7)
 	# Whether seed PRNG or not.

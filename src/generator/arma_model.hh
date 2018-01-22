@@ -77,6 +77,14 @@ namespace arma {
 
 			#endif
 
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const ARMA_model<X>& rhs);
+
+			template <class X>
+			friend std::istream&
+			operator>>(std::istream& in, ARMA_model<X>& rhs);
+
 		protected:
 			T
 			white_noise_variance(Array3D<T> phi, Array3D<T> theta) const;
@@ -120,6 +128,20 @@ namespace arma {
 
 			acf_type _acf_orig;
 		};
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const ARMA_model<T>& rhs) {
+			rhs.ARMA_model<T>::write(out);
+			return out;
+		}
+
+		template <class T>
+		std::istream&
+		operator>>(std::istream& in, ARMA_model<T>& rhs) {
+			rhs.ARMA_model<T>::read(in);
+			return in;
+		}
 
 	}
 

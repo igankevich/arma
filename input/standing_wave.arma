@@ -1,9 +1,11 @@
 model = AR {
 	out_grid = (100,40,40)
 	acf = {
-		func = standing_wave
-		grid = (10,10,10) : (2.5,5,5)
+		func = propagating_wave
+		grid = (1,10,10) : (2.5,5,5)
 	}
+	order = (1,10,10)
+	algorithm = gauss_elimination
 #	transform = nit {
 #		distribution = gram_charlier {
 #			skewness=3.25
@@ -20,7 +22,6 @@ model = AR {
 #			interval = [-10,10]
 #		}
 #	}
-	order = (20,20,20)
 #	output = waves,acf,surface,csv
 	output = surface
 }
