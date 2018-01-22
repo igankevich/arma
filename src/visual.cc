@@ -74,9 +74,19 @@ enum Projection {
 };
 
 Array3D<Real> func;
-Vector<Real, 3> delta(1.0, 1.0, 1.0);
+Vector<Real, 3> delta(0.1, 1.0, 1.0);
 Vector<int, 3> dimensions(blitz::firstDim, blitz::secondDim, blitz::thirdDim);
 Vector<char, 3> dimension_names('t', 'x', 'y');
+
+
+// ACF parameters
+const char* acf_names[] = {"standing_wave", "propagating_wave"};
+int current_acf_index = 0;
+float acf_amplitude = 1;
+float acf_velocity = 1;
+Vector<float,3> acf_alpha(0.24f,0.06f,0.06f);
+Vector<float,2> acf_beta(0.8f,0.0f);
+Vector<int,3> acf_size(20,20,20);
 
 const Real ROT_STEP = 90;
 
@@ -87,6 +97,42 @@ int dimension_order = 0; /// dimension dimension_order
 int part_count = 4;
 Real interval_factor = 0;
 int tail = 0;
+
+void
+generate_configuration(std::stringstream& result) {
+	const bool standing =
+		acf_names[current_acf_index] == std::string("standing_wave");
+	if (standing) {
+		result << "model = AR {\n";
+		result << "algorithm = choi_recursive\n";
+	} else {
+		result << "model = MA {\n";
+		result << "algorithm = fixed_point_iteration\n";
+		result << "validate = 0\n";
+	}
+	result << "acf = {\n";
+	if (standing) {
+		result << "grid = " << acf_size << " : (5,10,10)\n";
+	} else {
+		result << "grid = " << acf_size << " : (10,5,5)\n";
+	}
+	result << "amplitude = " << acf_amplitude << "\n";
+	result << "velocity = " << acf_velocity << "\n";
+	result << "alpha = " << acf_alpha << "\n";
+	result << "beta = " << acf_beta << "\n";
+	result << "func = " << acf_names[current_acf_index] << "\n";
+	result << "}\n";
+	result << "order = " << acf_size << "\n";
+	result << "out_grid = (100,40,40)\n";
+	result << "output = none\n";
+	result << "}\n";
+	result << R"(
+velocity_potential_solver = high_amplitude {
+	depth = 12
+	domain = from (10,-12) to (10,3) npoints (1,128)
+}
+)";
+}
 
 void
 draw_vertex(const Shape3D& c, const Shape3D& offset, float alpha) {
@@ -190,7 +236,7 @@ onDisplay() {
 	const int line_height = ImGui::GetTextLineHeight();
 	ImGui::SetNextWindowSize(ImVec2(400, line_height*50), ImGuiSetCond_FirstUseEver);
 	ImGui::Begin("ARMA configuration");
-	if (ImGui::Button("Compute")) {
+	if (ImGui::Button(running ? "Please, wait..." : "Compute")) {
 		if (!running) {
 			if (arma_thread.joinable()) {
 				arma_thread.join();
@@ -202,7 +248,7 @@ onDisplay() {
 					register_all_models<T>(driver);
 					register_all_solvers<T>(driver);
 					std::stringstream cfg;
-					cfg << arma_config;
+					generate_configuration(cfg);
 					cfg >> driver;
 					driver.generate_wavy_surface();
 					func.reference(driver.wavy_surface());
@@ -213,13 +259,22 @@ onDisplay() {
 			});
 		}
 	}
-	ImGui::InputTextMultiline(
-		"##source",
-		arma_config,
-		sizeof(arma_config),
-		ImVec2(-1.0f, line_height*40),
-		ImGuiInputTextFlags_AllowTabInput
-	);
+
+	ImGui::Combo("ACF type", &current_acf_index, acf_names, 2);
+	ImGui::SliderFloat("amplitude", &acf_amplitude, 0.1f, 10.0f, "%.2f");
+	ImGui::SliderFloat("velocity", &acf_velocity, -10.0f, 10.0f, "%.2f");
+	ImGui::SliderFloat("alpha_t", &acf_alpha(0), 0.0f, 10.0f, "%.2f");
+	ImGui::SliderFloat("alpha_x", &acf_alpha(1), 0.0f, 10.0f, "%.2f");
+	ImGui::SliderFloat("alpha_y", &acf_alpha(2), 0.0f, 10.0f, "%.2f");
+	ImGui::SliderFloat("kx", &acf_beta(0), -10.0f, 10.0f, "%.2f");
+	ImGui::SliderFloat("ky", &acf_beta(1), -10.0f, 10.0f, "%.2f");
+//	ImGui::InputTextMultiline(
+//		"##source",
+//		arma_config,
+//		sizeof(arma_config),
+//		ImVec2(-1.0f, line_height*40),
+//		ImGuiInputTextFlags_AllowTabInput
+//	);
 	ImGui::End();
 	ImGui::Render();
 

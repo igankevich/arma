@@ -2,9 +2,13 @@ model = MA {
 	out_grid = (200,40,40)
 	acf = {
 		func = propagating_wave
-		grid = (20,1,1) : (10,5,5)
+		amplitude = 1
+		alpha = (0.42,0.42,0.42)
+		velocity = 1
+		beta = (-1.8,0)
+		grid = (20,10,10) : (10,5,5)
 	}
-	order = (20,1,1)
+	order = (20,10,10)
 	algorithm = fixed_point_iteration
 	max_iterations = 1000
 	eps = 1e-5

@@ -13,7 +13,7 @@ model = ARMA {
 	}
 
 	ma_model = {
-		order = (20,1,1)
+		order = (20,1,10)
 		algorithm = fixed_point_iteration
 		max_iterations = 1000
 		eps = 1e-5

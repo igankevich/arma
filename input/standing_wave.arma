@@ -1,11 +1,15 @@
 model = AR {
 	out_grid = (100,40,40)
 	acf = {
-		func = propagating_wave
-		grid = (1,10,10) : (2.5,5,5)
+		func = standing_wave
+		amplitude = 1
+		alpha = (0.24,0.06,0.06)
+		velocity = 1.6
+		beta = (0.8,0)
+		grid = (20,20,20) : (5,10,10)
 	}
-	order = (1,10,10)
-	algorithm = gauss_elimination
+	order = (20,20,20)
+	algorithm = choi_recursive
 #	transform = nit {
 #		distribution = gram_charlier {
 #			skewness=3.25
@@ -23,7 +27,7 @@ model = AR {
 #		}
 #	}
 #	output = waves,acf,surface,csv
-	output = surface
+	output = surface,acf
 }
 velocity_potential_solver = linear {
 #	wnmax = from (0,0) to (0,0.25) npoints (2,2)

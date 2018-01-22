@@ -300,6 +300,20 @@ INSTANTIATE_TEST_CASE_P(
 			shape(400,8,8),
 			shape(100,8,8),
 			shape(8,8,8)
+		},
+		// 2 dimensions
+		ConvolutionParams<3>{
+			shape(8,8,1),
+			shape(400,8,1),
+			shape(100,8,1),
+			shape(8,8,1)
+		},
+		// 1 dimension
+		ConvolutionParams<3>{
+			shape(8,1,1),
+			shape(400,1,1),
+			shape(100,1,1),
+			shape(8,1,1)
 		}
 	)
 );
