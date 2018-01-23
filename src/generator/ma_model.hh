@@ -48,7 +48,7 @@ namespace arma {
 			*/
 			inline T
 			white_noise_variance() const override {
-				return white_noise_variance(_theta);
+				return this->_varwn;
 			}
 
 			void validate() const override;
@@ -112,6 +112,8 @@ namespace arma {
 			int _maxiter = 1000;
 			T _eps = T(1e-5);
 			T _minvarwn = T(1e-6);
+			/// White noise variance.
+			T _varwn = T(0);
 		};
 
 		template <class T>

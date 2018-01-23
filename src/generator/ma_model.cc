@@ -12,6 +12,11 @@
 #include <random>
 #include <complex>
 
+#ifndef NDEBUG
+#include <iostream>
+#include <iomanip>
+#endif
+
 template <class T>
 T
 arma::generator::MA_model<T>::white_noise_variance(
@@ -100,6 +105,7 @@ arma::generator::MA_model<T>::determine_coefficients() {
 			newton_raphson(_maxiter, _eps, _minvarwn);
 			break;
 	}
+	this->_varwn = this->white_noise_variance(this->_theta);
 }
 
 template <class T>
@@ -117,7 +123,7 @@ arma::generator::MA_model<T>::fixed_point_iteration(
 	const int order_x = order(1);
 	const int order_y = order(2);
 	/// 1. Precompute white noise variance for the first iteration.
-	T var_wn = this->_acf(0, 0, 0);
+	T var_wn = this->_acf(0,0,0);
 	T old_var_wn = 0;
 	int it = 0;
 	do {
@@ -148,15 +154,30 @@ arma::generator::MA_model<T>::fixed_point_iteration(
 			}
 		}
 		/// 3. Zero out \f$\theta_0\f$.
-		theta(0, 0, 0) = 0;
-		/// 4. Validate coefficients.
+		theta(0,0,0) = 0;
+		/// 4. Calculate residual.
+		Array3D<T> residual(order);
+		for (int i=0; i<order_t; ++i) {
+			for (int j=0; j<order_x; ++j) {
+				for (int k=0; k<order_y; ++k) {
+					const Shape3D ijk(i,j,k);
+					RectDomain<3> sub1(ijk, order-1);
+					RectDomain<3> sub2(Shape3D(0,0,0), order-ijk-1);
+					residual(i,j,k) = this->_acf(i,j,k)
+						- blitz::sum(theta(sub1) * theta(sub2))*var_wn;
+				}
+			}
+		}
+		const T res = blitz::max(blitz::abs(residual));
+		const T res2 = this->_acf(0,0,0) - blitz::sum(blitz::pow(theta, 2)) * var_wn;
+		/// 5. Validate coefficients.
 		if (!blitz::all(blitz::isfinite(theta))) {
 			std::cerr << __func__
 					  << ": bad coefficients = \n" << theta
 					  << std::endl;
 			throw std::runtime_error("bad MA model coefficients");
 		}
-		/// 5. Compute white noise variance by calling
+		/// 6. Compute white noise variance by calling
 		/// \link MA_model::white_noise_variance \endlink.
 		old_var_wn = var_wn;
 		var_wn = white_noise_variance(theta);
@@ -167,15 +188,19 @@ arma::generator::MA_model<T>::fixed_point_iteration(
 					  << std::endl;
 			throw std::runtime_error("bad white noise variance");
 		}
-		#ifndef NDEBUG
-		/// 7. Print solver state.
+		//#ifndef NDEBUG
+		/// 8. Print solver state.
 		std::clog << __func__ << ':' << "Iteration=" << it
-				  << ", var_wn=" << var_wn << std::endl;
-		#endif
+				  << ",var_wn=" << var_wn
+				  << ",resudual=" << res
+				  << ",resudual2=" << res2
+				  << ",theta(0,0,0)=" << theta(0,0,0)
+				  << std::endl;
+		//#endif
 		++it;
 	} while (it < max_iterations &&
 			 std::abs(var_wn - old_var_wn) > eps);
-	_theta = theta;
+	this->_theta = theta;
 }
 
 template <class T>
