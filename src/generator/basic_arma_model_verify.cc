@@ -96,10 +96,16 @@ namespace {
 template <class T>
 void
 arma::generator::Basic_ARMA_model<T>::verify(Array3D<T> zeta) const {
+	using blitz::RectDomain;
 	if (this->_oflags.isset(Output_flags::Summary) ||
 		this->_oflags.isset(Output_flags::Quantile))
 	{
-		show_statistics(this->_acf, zeta, *this, this->_oflags);
+		show_statistics(
+			this->_acf,
+			zeta(RectDomain<3>(zeta.shape()/2, zeta.shape()-1)),
+			*this,
+			this->_oflags
+		);
 	}
 	if (this->_oflags.isset(Output_flags::Waves)) {
 		write_everything_to_files(this->_acf, zeta);

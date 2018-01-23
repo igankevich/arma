@@ -126,22 +126,24 @@ arma::generator::AR_model<T>
 	linalg::cholesky(lhs, rhs);
 	assert(this->_phi.numElements() == rhs.numElements() + 1);
 	if (this->_phi.numElements() > 1) {
-		this->_phi(0, 0, 0) = 0;
+		this->_phi(0,0,0) = 0;
 	}
 	std::copy_n(rhs.data(), rhs.numElements(), this->_phi.data() + 1);
+	this->_varwn = T(2)*this->white_noise_variance(this->_phi);
+	{ std::ofstream("gauss") << this->_phi; }
 }
 
 template <class T>
 void
 arma::generator::AR_model<T>
 ::determine_coefficients_choi() {
-	const T variance = this->_acf(0,0,0);
-	this->_acf /= variance;
-	Yule_walker_solver<T> solver(this->_acf, variance);
+	Yule_walker_solver<T> solver(this->_acf);
 	this->_phi.reference(solver.solve());
 	this->_order = this->_phi.shape();
-	this->_acf *= variance;
+//	this->_varwn = T(4)*solver.white_noise_variance();
+	this->_varwn = T(2)*this->white_noise_variance(this->_phi);
 	write_key_value(std::clog, "New AR model order", this->_order);
+	{ std::ofstream("choi") << this->_phi; }
 }
 
 template <class T>

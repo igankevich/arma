@@ -410,6 +410,12 @@ _maxorder(blitz::max(acf.shape()-1)) {
 }
 
 template <class T>
+arma::Yule_walker_solver<T>
+::Yule_walker_solver(array_type acf):
+Yule_walker_solver(array_type(acf/acf(0,0,0)), acf(0,0,0))
+{}
+
+template <class T>
 void
 arma::Yule_walker_solver<T>
 ::max_order(int rhs) {
@@ -454,13 +460,14 @@ arma::Yule_walker_solver<T>
 	T lambda = T(1) - linalg::dot(R_0_1, Pi_2_1);
 	T var0 = this->_variance;
 	T var = this->_variance*lambda;
-	#ifndef NDEBUG
+//	#ifndef NDEBUG
 	/// Print solver state.
 	std::clog << __func__ << ':' << "order=" << 1
 			  << ",var=" << var << std::endl;
-	#endif
+//	#endif
 	Pi_l(1).reference(Pi_2_1);
 	PHI(2,1,0).reference(matrix_type(R_sup_1_1*R_matrix(1, 2, this->_acf)));
+	bool changed = false;
 	int l = 1;
 	do {
 		++l;
@@ -511,14 +518,22 @@ arma::Yule_walker_solver<T>
 			}
 		}
 		blitz::cycleArrays(Pi_l, Pi_lp1);
-		#ifndef NDEBUG
+//		#ifndef NDEBUG
 		/// Print solver state.
 		std::clog << __func__ << ':' << "order=" << l
 				  << ",var=" << var << std::endl;
-		#endif
-	} while (l < max_order && !this->variance_has_not_changed_much(var, var0));
+//		#endif
+		changed = !this->variance_has_not_changed_much(var, var0);
+	} while (l < max_order && changed);
 	#undef PHI
-	array_type result = result_array(Pi_l, l);
+	array_type result;
+	if (changed) {
+		this->_varwn = var;
+		result.reference(result_array(Pi_l, l));
+	} else {
+		this->_varwn = var0;
+		result.reference(result_array(Pi_lp1, l));
+	}
 	if (this->_chop) {
 		const T eps = this->_chopepsilon;
 		// shrink third dimension

@@ -64,6 +64,8 @@ namespace arma {
 		   resulting ACF.
 		 */
 		bool _chop = true;
+		/// White noise variance, calculated by the algorithm.
+		T _varwn = T(0);
 
 	public:
 
@@ -77,6 +79,16 @@ namespace arma {
 		   \param[in] variance desired \f$\sigma^2\f$
 		 */
 		Yule_walker_solver(array_type acf, const T variance);
+
+		/**
+		   \brief
+		   Constructs a solver with specified auto-covariation function.
+
+		   \param[in] acf three-dimensional auto-covariation function \f$\gamma\f$
+		              with \f$\gamma{0,0,0}=\sigma^2\f$
+		 */
+		explicit
+		Yule_walker_solver(array_type acf);
 
 		~Yule_walker_solver() = default;
 
@@ -159,6 +171,12 @@ namespace arma {
 		inline void
 		var_epsilon(value_type rhs) noexcept {
 			this->_varepsilon = rhs;
+		}
+
+		/// \copydoc _varwn
+		inline value_type
+		white_noise_variance() const noexcept {
+			return this->_varwn;
 		}
 
 	private:

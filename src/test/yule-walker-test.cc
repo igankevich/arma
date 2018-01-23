@@ -147,8 +147,8 @@ TEST_P(YuleWalkerTest, CompareToGaussElimination) {
 	const auto& params = GetParam();
 	const T variance = params.variance;
 	const int order = max(params.order);
-	auto acf = params.generate_acf(params.order + 1);
-	arma::Yule_walker_solver<T> solver(acf, variance);
+	blitz::Array<T,3> acf(params.variance*params.generate_acf(params.order + 1));
+	arma::Yule_walker_solver<T> solver(acf);
 	solver.max_order(order);
 	solver.determine_the_order(false);
 	solver.chop(false);
@@ -192,8 +192,8 @@ TEST(YuleWalkerTest, DetermineTheOrder) {
 	typedef ARMA_REAL_TYPE T;
 	YuleWalkerParams params{{10,10,10}, T(239.2780), T(1e-4), exponential_acf<T>, "exponential_acf"};
 	const T variance = params.variance;
-	auto acf = params.generate_acf(params.order + 1);
-	arma::Yule_walker_solver<T> solver(acf, variance);
+	blitz::Array<T,3> acf(params.variance*params.generate_acf(params.order + 1));
+	arma::Yule_walker_solver<T> solver(acf);
 	solver.determine_the_order(true);
 	solver.chop(false);
 	auto actual = solver.solve();
@@ -209,8 +209,8 @@ TEST(YuleWalkerTest, Chop) {
 	typedef ARMA_REAL_TYPE T;
 	YuleWalkerParams params{{10,10,10}, T(239.2780), T(1e-4), exponential_acf<T>, "exponential_acf"};
 	const T variance = params.variance;
-	auto acf = params.generate_acf(params.order + 1);
-	arma::Yule_walker_solver<T> solver(acf, variance);
+	blitz::Array<T,3> acf(params.variance*params.generate_acf(params.order + 1));
+	arma::Yule_walker_solver<T> solver(acf);
 	solver.determine_the_order(false);
 	solver.chop(true);
 	auto actual = solver.solve();
@@ -226,8 +226,8 @@ TEST(YuleWalkerTest, RealCase) {
 	typedef ARMA_REAL_TYPE T;
 	YuleWalkerParams params{{10,10,10}, T(2), T(1e-2), standing_wave_ACF<T>, "standing_wave_ACF"};
 	const T variance = params.variance;
-	auto acf = params.generate_acf(params.order + 1);
-	arma::Yule_walker_solver<T> solver(acf, variance);
+	blitz::Array<T,3> acf(params.variance*params.generate_acf(params.order + 1));
+	arma::Yule_walker_solver<T> solver(acf);
 	auto actual = solver.solve();
 	EXPECT_EQ(actual.extent(2), 2)
 		<< "actual=" << actual << std::endl;

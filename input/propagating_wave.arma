@@ -13,7 +13,7 @@ model = MA {
 	max_iterations = 1000
 	eps = 1e-5
 	min_var_wn = 1e-6
-	output = surface
+	output = surface,summary
 	validate = 0
 }
 velocity_potential_solver = high_amplitude {

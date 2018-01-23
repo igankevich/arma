@@ -39,6 +39,8 @@ namespace arma {
 			Array3D<T> _phi;
 			/// The algorithm for determining the coefficients.
 			AR_algorithm _algorithm = AR_algorithm::Choi;
+			/// White noise variance, obtained during coefficient determination.
+			T _varwn = T(0);
 
 		public:
 			typedef Discrete_function<T,3> acf_type;
@@ -58,7 +60,7 @@ namespace arma {
 
 			inline T
 			white_noise_variance() const override {
-				return white_noise_variance(_phi);
+				return this->_varwn;
 			}
 
 			inline bool
