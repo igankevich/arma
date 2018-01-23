@@ -111,7 +111,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="dynheader">
 Collaboration diagram for arma::Yule_walker_solver&lt; T &gt;:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classarma_1_1Yule__walker__solver__coll__graph.svg" width="243" height="339"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classarma_1_1Yule__walker__solver__coll__graph.svg" width="243" height="352"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <table class="memberdecls">
@@ -129,6 +129,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad7506c468a1098727128b874722057ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ad7506c468a1098727128b874722057ac">Yule_walker_solver</a> (<a class="el" href="classarma_1_1Yule__walker__solver.html#a3f911338a637ddc7ce4e3c594d71a656">array_type</a> acf, const <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> variance)</td></tr>
 <tr class="memdesc:ad7506c468a1098727128b874722057ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a solver with specified auto-correlation function and variance.  <a href="#ad7506c468a1098727128b874722057ac">More...</a><br/></td></tr>
 <tr class="separator:ad7506c468a1098727128b874722057ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68405ad580246f0507561ec1315ab71f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a68405ad580246f0507561ec1315ab71f">Yule_walker_solver</a> (<a class="el" href="classarma_1_1Yule__walker__solver.html#a3f911338a637ddc7ce4e3c594d71a656">array_type</a> acf)</td></tr>
+<tr class="memdesc:a68405ad580246f0507561ec1315ab71f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a solver with specified auto-covariation function.  <a href="#a68405ad580246f0507561ec1315ab71f">More...</a><br/></td></tr>
+<tr class="separator:a68405ad580246f0507561ec1315ab71f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49733b0cb0281d485830294e3134ea67"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a49733b0cb0281d485830294e3134ea67">~Yule_walker_solver</a> ()=default</td></tr>
 <tr class="separator:a49733b0cb0281d485830294e3134ea67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8bafe374606f0ba075e6c82392c475d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a8bafe374606f0ba075e6c82392c475d4">Yule_walker_solver</a> (const <a class="el" href="classarma_1_1Yule__walker__solver.html">Yule_walker_solver</a> &amp;)=delete</td></tr>
@@ -170,6 +173,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5b50a0ec33ad9a1cede2fec7fa5608eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0f93bb55877966923d1a0e8b02f8fef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#aa0f93bb55877966923d1a0e8b02f8fef">var_epsilon</a> (<a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a> rhs) noexcept</td></tr>
 <tr class="separator:aa0f93bb55877966923d1a0e8b02f8fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a321e73cd0a1c8b7759c329779906edf3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#a321e73cd0a1c8b7759c329779906edf3">white_noise_variance</a> () const noexcept</td></tr>
+<tr class="memdesc:a321e73cd0a1c8b7759c329779906edf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">White noise variance, calculated by the algorithm.  <a href="#a321e73cd0a1c8b7759c329779906edf3">More...</a><br/></td></tr>
+<tr class="separator:a321e73cd0a1c8b7759c329779906edf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -199,6 +205,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ab8616784c122c05405d88d03389e1d73"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ab8616784c122c05405d88d03389e1d73">_chop</a> = true</td></tr>
 <tr class="memdesc:ab8616784c122c05405d88d03389e1d73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether to chop the result removing adjacent values smaller than \(\epsilon_{\text{chop}}\) from the end of the resulting ACF.  <a href="#ab8616784c122c05405d88d03389e1d73">More...</a><br/></td></tr>
 <tr class="separator:ab8616784c122c05405d88d03389e1d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab15a511d8181c58f5505bc314bc383dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1Yule__walker__solver.html#ab15a511d8181c58f5505bc314bc383dc">_varwn</a> = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(0)</td></tr>
+<tr class="memdesc:ab15a511d8181c58f5505bc314bc383dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">White noise variance, calculated by the algorithm.  <a href="#ab15a511d8181c58f5505bc314bc383dc">More...</a><br/></td></tr>
+<tr class="separator:ab15a511d8181c58f5505bc314bc383dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;class T&gt;<br/>
@@ -273,6 +282,40 @@ template&lt;class T&gt; </div>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">acf</td><td>three-dimensional auto-correlation function \(\rho\) with \(\rho_{0,0,0}=1\) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">variance</td><td>desired \(\sigma^2\) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a68405ad580246f0507561ec1315ab71f"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::<a class="el" href="classarma_1_1Yule__walker__solver.html">Yule_walker_solver</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classarma_1_1Yule__walker__solver.html#a3f911338a637ddc7ce4e3c594d71a656">array_type</a>&#160;</td>
+          <td class="paramname"><em>acf</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a solver with specified auto-covariation function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">acf</td><td>three-dimensional auto-covariation function \(\gamma\) with \(\gamma{0,0,0}=\sigma^2\) </td></tr>
   </table>
   </dd>
 </dl>
@@ -751,6 +794,33 @@ template&lt;class T&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a321e73cd0a1c8b7759c329779906edf3"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classarma_1_1Yule__walker__solver.html#a36842a7cde769eb292d1744880da1707">value_type</a> <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::white_noise_variance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>White noise variance, calculated by the algorithm. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a class="anchor" id="ad1a8beb261ae680a3bb60c7de410ed1b"></a>
 <div class="memitem">
@@ -917,6 +987,30 @@ template&lt;class T&gt; </div>
 </div><div class="memdoc">
 
 <p>Variance of the ACF. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab15a511d8181c58f5505bc314bc383dc"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> <a class="el" href="classarma_1_1Yule__walker__solver.html">arma::Yule_walker_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::_varwn = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(0)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>White noise variance, calculated by the algorithm. </p>
 
 </div>
 </div>
