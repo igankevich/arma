@@ -1,7 +1,7 @@
 <map id="arma::generator::ARMA_model&lt; T &gt;" name="arma::generator::ARMA_model&lt; T &gt;">
-<area shape="rect" id="node2" href="$classarma_1_1generator_1_1AR__model.html" title="Uses autoregressive process, standing waves. " alt="" coords="5,1032,204,1373"/>
+<area shape="rect" id="node2" href="$classarma_1_1generator_1_1AR__model.html" title="Uses autoregressive process, standing waves. " alt="" coords="5,1040,204,1381"/>
 <area shape="rect" id="node3" href="$classarma_1_1generator_1_1Basic__ARMA__model.html" title="Base class for AR, MA and ARMA models. " alt="" coords="192,656,365,968"/>
-<area shape="rect" id="node9" href="$structarma_1_1generator_1_1MA__model.html" title="Uses moving average process, propagating waves. " alt="" coords="229,1032,403,1373"/>
+<area shape="rect" id="node9" href="$structarma_1_1generator_1_1MA__model.html" title="Uses moving average process, propagating waves. " alt="" coords="229,1033,403,1389"/>
 <area shape="rect" id="node4" href="$classarma_1_1generator_1_1Basic__model.html" title="A base class for all generators. " alt="" coords="180,309,333,592"/>
 <area shape="rect" id="node5" href="$structarma_1_1Grid.html" title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ num_patches()\l+ num_patches()\land 12 more...\l}" alt="" coords="47,6,176,245"/>
 <area shape="rect" id="node6" href="$classarma_1_1Output__flags.html" title="Flags that determine what and how is written to disk. " alt="" coords="201,57,335,193"/>

@@ -113,13 +113,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="dynheader">
 Inheritance diagram for arma::generator::MA_model&lt; T &gt;:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="structarma_1_1generator_1_1MA__model__inherit__graph.svg" width="184" height="1435"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="structarma_1_1generator_1_1MA__model__inherit__graph.svg" width="184" height="1451"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <div class="dynheader">
 Collaboration diagram for arma::generator::MA_model&lt; T &gt;:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="structarma_1_1generator_1_1MA__model__coll__graph.svg" width="484" height="1366"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="structarma_1_1generator_1_1MA__model__coll__graph.svg" width="484" height="1382"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 <table class="memberdecls">
@@ -229,6 +229,9 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a1bbba6c35bfdf4472660f82e545f3801"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae0f5898589225f0c3441f1bd1ec7329"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarma_1_1generator_1_1MA__model.html#aae0f5898589225f0c3441f1bd1ec7329">_minvarwn</a> = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(1e-6)</td></tr>
 <tr class="separator:aae0f5898589225f0c3441f1bd1ec7329"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb4c53867fbc931d086afb1523883392"><td class="memItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarma_1_1generator_1_1MA__model.html#acb4c53867fbc931d086afb1523883392">_varwn</a> = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(0)</td></tr>
+<tr class="memdesc:acb4c53867fbc931d086afb1523883392"><td class="mdescLeft">&#160;</td><td class="mdescRight">White noise variance.  <a href="#acb4c53867fbc931d086afb1523883392">More...</a><br/></td></tr>
+<tr class="separator:acb4c53867fbc931d086afb1523883392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -486,8 +489,11 @@ template&lt;class T &gt; </div>
 </p>
  Here \(\theta_{0,0,0} \equiv 0\).</li>
 <li>Zero out \(\theta_0\).</li>
+<li>Calculate residual.</li>
 <li>Validate coefficients.</li>
 <li>Compute white noise variance by calling <a class="el" href="structarma_1_1generator_1_1MA__model.html#a739451edf3c37abc189f1c5261f5f938">MA_model::white_noise_variance</a>.</li>
+</ol>
+<ol type="1">
 <li>Validate white noise variance.</li>
 <li>Print solver state. </li>
 </ol>
@@ -952,6 +958,30 @@ template&lt;class T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="acb4c53867fbc931d086afb1523883392"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> <a class="el" href="structarma_1_1generator_1_1MA__model.html">arma::generator::MA_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;::_varwn = <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(0)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>White noise variance. </p>
 
 </div>
 </div>
