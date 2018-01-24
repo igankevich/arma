@@ -104,6 +104,9 @@ namespace arma {
 			newton_raphson(int max_iterations, T eps, T min_var_wn);
 
 			void
+			newton_raphson_2();
+
+			void
 			recompute_acf(Array3D<T> acf_orig, Array3D<T> phi);
 
 		private:

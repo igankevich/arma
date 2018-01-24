@@ -10,6 +10,7 @@ model = MA {
 	}
 	order = (20,10,10)
 	algorithm = fixed_point_iteration
+#	algorithm = newton_raphson
 	max_iterations = 1000
 	eps = 1e-5
 	min_var_wn = 1e-6

@@ -6,6 +6,7 @@ arma_lib_src += files([
 	'basic_model.cc',
 	'lh_model.cc',
 	'ma_model.cc',
+	'ma_root_solver.cc',
 	'plain_wave_model.cc',
 	'voodoo.cc',
 ])

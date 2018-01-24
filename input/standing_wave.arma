@@ -1,5 +1,5 @@
 model = AR {
-	out_grid = (10000,40,40)
+	out_grid = (200,40,40)
 	acf = {
 		func = standing_wave
 		amplitude = 2

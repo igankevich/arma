@@ -1,11 +1,12 @@
 #include "ma_model.hh"
 
-#include "linalg.hh"
-#include "voodoo.hh"
-#include "validators.hh"
-#include "params.hh"
 #include "apmath/convolution.hh"
+#include "linalg.hh"
+#include "ma_root_solver.hh"
+#include "params.hh"
 #include "profile.hh"
+#include "validators.hh"
+#include "voodoo.hh"
 
 #include <cassert>
 #include <algorithm>
@@ -97,12 +98,13 @@ arma::generator::MA_model<T>::write(std::ostream& out) const {
 template <class T>
 void
 arma::generator::MA_model<T>::determine_coefficients() {
-	switch (_algo) {
+	switch (this->_algo) {
 		case MA_algorithm::Fixed_point_iteration:
-			fixed_point_iteration(_maxiter, _eps, _minvarwn);
+			this->fixed_point_iteration(_maxiter, _eps, _minvarwn);
 			break;
 		case MA_algorithm::Newton_Raphson:
-			newton_raphson(_maxiter, _eps, _minvarwn);
+//			newton_raphson(_maxiter, _eps, _minvarwn);
+			this->newton_raphson_2();
 			break;
 	}
 	this->_varwn = this->white_noise_variance(this->_theta);
@@ -354,6 +356,16 @@ arma::generator::MA_model<T>::recompute_acf(
 			}
 		}
 	}
+}
+
+template <class T>
+void
+arma::generator::MA_model<T>
+::newton_raphson_2() {
+	MA_root_solver<T> solver(this->_acf);
+	solver.max_iterations(this->_maxiter);
+	solver.max_residual(this->_eps);
+	this->_theta.reference(solver.solve());
 }
 
 template class arma::generator::MA_model<ARMA_REAL_TYPE>;

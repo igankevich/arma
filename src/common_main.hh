@@ -36,7 +36,8 @@ print_error_and_continue(
 	int line,
 	int gsl_errno
 ) {
-	std::cerr << "GSL error reason: " << reason << '.' << std::endl;
+	std::cerr << "GSL error: " << file << ':' << reason << '.' << std::endl;
+	throw std::runtime_error(reason);
 }
 
 #if ARMA_OPENGL
