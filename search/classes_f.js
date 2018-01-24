@@ -2,8 +2,8 @@ var searchData=
 [
   ['skew_5fnormal',['Skew_normal',['../classarma_1_1stats_1_1Skew__normal.html',1,'arma::stats']]],
   ['small_5famplitude_5fsolver',['Small_amplitude_solver',['../classarma_1_1velocity_1_1Small__amplitude__solver.html',1,'arma::velocity']]],
-  ['stb_5ftexteditstate',['STB_TexteditState',['../structImGuiStb_1_1STB__TexteditState.html',1,'ImGuiStb']]],
   ['stb_5ftexteditstate',['STB_TexteditState',['../structSTB__TexteditState.html',1,'']]],
+  ['stb_5ftexteditstate',['STB_TexteditState',['../structImGuiStb_1_1STB__TexteditState.html',1,'ImGuiStb']]],
   ['stbfindstate',['StbFindState',['../structImGuiStb_1_1StbFindState.html',1,'ImGuiStb']]],
   ['stbrp_5fcontext',['stbrp_context',['../structstbrp__context.html',1,'']]],
   ['stbrp_5fnode',['stbrp_node',['../structstbrp__node.html',1,'']]],
@@ -19,8 +19,8 @@ var searchData=
   ['stbtt_5fpack_5frange',['stbtt_pack_range',['../structstbtt__pack__range.html',1,'']]],
   ['stbtt_5fpackedchar',['stbtt_packedchar',['../structstbtt__packedchar.html',1,'']]],
   ['stbtt_5fvertex',['stbtt_vertex',['../structstbtt__vertex.html',1,'']]],
-  ['stbundorecord',['StbUndoRecord',['../structStbUndoRecord.html',1,'']]],
   ['stbundorecord',['StbUndoRecord',['../structImGuiStb_1_1StbUndoRecord.html',1,'ImGuiStb']]],
+  ['stbundorecord',['StbUndoRecord',['../structStbUndoRecord.html',1,'']]],
   ['stbundostate',['StbUndoState',['../structStbUndoState.html',1,'']]],
   ['stbundostate',['StbUndoState',['../structImGuiStb_1_1StbUndoState.html',1,'ImGuiStb']]],
   ['summary',['Summary',['../structarma_1_1stats_1_1Summary.html',1,'arma::stats']]]

@@ -133,101 +133,102 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">int</span> line,</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">int</span> gsl_errno</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;) {</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    std::cerr &lt;&lt; <span class="stringliteral">&quot;GSL error reason: &quot;</span> &lt;&lt; reason &lt;&lt; <span class="charliteral">&#39;.&#39;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#if ARMA_OPENGL</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor"></span><span class="keywordtype">void</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<a class="code" href="arma__realtime_8cc.html#a1137af47adfa1f40d871304a42f34b35">init_opengl</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7">   48</a></span>&#160;<a class="code" href="common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7">arma_init</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor">    #if ARMA_PROFILE</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span>    <a class="code" href="register__all_8hh.html#a74c0c25b01ac157353a61e43d95d358b">register_all_counters</a>();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor"></span>    gsl_set_error_handler(<a class="code" href="common__main_8hh.html#a121ac69c4cd73f0be66f128db511c30c">print_error_and_continue</a>);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    std::set_terminate(<a class="code" href="common__main_8hh.html#a22257ed136973250d5ac63254bd3cddd">print_exception_and_terminate</a>);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="preprocessor">    #if ARMA_OPENGL</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor"></span>    <a class="code" href="arma__realtime_8cc.html#a1137af47adfa1f40d871304a42f34b35">init_opengl</a>(argc, argv);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #if ARMA_OPENCL</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span>    <a class="code" href="namespacearma_1_1opencl.html#a30b668f93c6f401eaa983d5e88a45919">::arma::opencl::init</a>();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor"></span>}</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e">   65</a></span>&#160;<a class="code" href="common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e">arma_finalise</a>() {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">    #if ARMA_PROFILE</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor"></span>    arma::print_counters(std::clog);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #if defined(ARMA_CLFFT)</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #define CHECK(x) ::cl::detail::errHandler((x), #x);</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor"></span>    <a class="code" href="fourier__opencl_8cc.html#a763ffd798508592c5092ac77daa5a659">CHECK</a>(clfftTeardown());</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">    #undef CHECK</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor"></span>}</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="common__main_8hh.html#a4907135737e2fb22dcde4be8474bcab1">   77</a></span>&#160;<a class="code" href="common__main_8hh.html#a4907135737e2fb22dcde4be8474bcab1">usage</a>(<span class="keywordtype">char</span>* argv0) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    std::cout</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        &lt;&lt; <span class="stringliteral">&quot;usage: &quot;</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        &lt;&lt; (argv0 == <span class="keyword">nullptr</span> ? <span class="stringliteral">&quot;arma&quot;</span> : argv0)</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        &lt;&lt; <span class="stringliteral">&quot; [-h] INPUTFILE\n&quot;</span>;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">void</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<a class="code" href="common__main_8hh.html#a79ecccdf2a0d65b696fd52dbc5a370eb">run_arma</a>(<span class="keyword">const</span> std::string&amp; input_filename);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">int</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97">   89</a></span>&#160;<a class="code" href="common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <a class="code" href="profile_8hh.html#a66f23c66d05007904d4db05cf178a066">ARMA_EVENT_START</a>(<span class="stringliteral">&quot;programme&quot;</span>, <span class="stringliteral">&quot;main&quot;</span>, 0);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7">arma_init</a>(argc, argv);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    std::string input_filename;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">bool</span> help_requested = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">int</span> opt = 0;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordflow">while</span> ((opt = ::getopt(argc, argv, <span class="stringliteral">&quot;h&quot;</span>)) != -1) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordflow">switch</span> (opt) {</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;h&#39;</span>:</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                help_requested = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">if</span> (argc - ::optind &gt; 1) {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Only one file argument is allowed.&quot;</span> &lt;&lt; std::endl;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">if</span> (input_filename.empty() &amp;&amp; ::optind &lt; argc) {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        input_filename = argv[::optind];</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordflow">if</span> (help_requested || input_filename.empty()) {</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="common__main_8hh.html#a4907135737e2fb22dcde4be8474bcab1">usage</a>(argv[0]);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keyword">typedef</span> ARMA_REAL_TYPE <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        run_arma&lt;T&gt;(input_filename);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    }</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <a class="code" href="common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e">arma_finalise</a>();</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="profile_8hh.html#a35f8010242a51b9c902b96a37287a186">ARMA_EVENT_END</a>(<span class="stringliteral">&quot;programme&quot;</span>, <span class="stringliteral">&quot;main&quot;</span>, 0);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;}</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#endif // COMMON_MAIN_HH</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    std::cerr &lt;&lt; <span class="stringliteral">&quot;GSL error: &quot;</span> &lt;&lt; file &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; reason &lt;&lt; <span class="charliteral">&#39;.&#39;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">throw</span> std::runtime_error(reason);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#if ARMA_OPENGL</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor"></span><span class="keywordtype">void</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<a class="code" href="arma__realtime_8cc.html#a1137af47adfa1f40d871304a42f34b35">init_opengl</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7">   49</a></span>&#160;<a class="code" href="common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7">arma_init</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">    #if ARMA_PROFILE</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor"></span>    <a class="code" href="register__all_8hh.html#a74c0c25b01ac157353a61e43d95d358b">register_all_counters</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor"></span>    gsl_set_error_handler(<a class="code" href="common__main_8hh.html#a121ac69c4cd73f0be66f128db511c30c">print_error_and_continue</a>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    std::set_terminate(<a class="code" href="common__main_8hh.html#a22257ed136973250d5ac63254bd3cddd">print_exception_and_terminate</a>);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">    #if ARMA_OPENGL</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor"></span>    <a class="code" href="arma__realtime_8cc.html#a1137af47adfa1f40d871304a42f34b35">init_opengl</a>(argc, argv);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #if ARMA_OPENCL</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor"></span>    <a class="code" href="namespacearma_1_1opencl.html#a30b668f93c6f401eaa983d5e88a45919">::arma::opencl::init</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor"></span>}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e">   66</a></span>&#160;<a class="code" href="common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e">arma_finalise</a>() {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">    #if ARMA_PROFILE</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor"></span>    arma::print_counters(std::clog);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #if defined(ARMA_CLFFT)</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #define CHECK(x) ::cl::detail::errHandler((x), #x);</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span>    <a class="code" href="fourier__opencl_8cc.html#a763ffd798508592c5092ac77daa5a659">CHECK</a>(clfftTeardown());</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">    #undef CHECK</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span>}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="common__main_8hh.html#a4907135737e2fb22dcde4be8474bcab1">   78</a></span>&#160;<a class="code" href="common__main_8hh.html#a4907135737e2fb22dcde4be8474bcab1">usage</a>(<span class="keywordtype">char</span>* argv0) {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    std::cout</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        &lt;&lt; <span class="stringliteral">&quot;usage: &quot;</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        &lt;&lt; (argv0 == <span class="keyword">nullptr</span> ? <span class="stringliteral">&quot;arma&quot;</span> : argv0)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        &lt;&lt; <span class="stringliteral">&quot; [-h] INPUTFILE\n&quot;</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keywordtype">void</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<a class="code" href="common__main_8hh.html#a79ecccdf2a0d65b696fd52dbc5a370eb">run_arma</a>(<span class="keyword">const</span> std::string&amp; input_filename);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">int</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97">   90</a></span>&#160;<a class="code" href="common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>* argv[]) {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="profile_8hh.html#a66f23c66d05007904d4db05cf178a066">ARMA_EVENT_START</a>(<span class="stringliteral">&quot;programme&quot;</span>, <span class="stringliteral">&quot;main&quot;</span>, 0);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <a class="code" href="common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7">arma_init</a>(argc, argv);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    std::string input_filename;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">bool</span> help_requested = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">int</span> opt = 0;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordflow">while</span> ((opt = ::getopt(argc, argv, <span class="stringliteral">&quot;h&quot;</span>)) != -1) {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keywordflow">switch</span> (opt) {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keywordflow">case</span> <span class="charliteral">&#39;h&#39;</span>:</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                help_requested = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keywordflow">if</span> (argc - ::optind &gt; 1) {</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        std::cerr &lt;&lt; <span class="stringliteral">&quot;Only one file argument is allowed.&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">if</span> (input_filename.empty() &amp;&amp; ::optind &lt; argc) {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        input_filename = argv[::optind];</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">if</span> (help_requested || input_filename.empty()) {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <a class="code" href="common__main_8hh.html#a4907135737e2fb22dcde4be8474bcab1">usage</a>(argv[0]);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keyword">typedef</span> ARMA_REAL_TYPE <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        run_arma&lt;T&gt;(input_filename);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e">arma_finalise</a>();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <a class="code" href="profile_8hh.html#a35f8010242a51b9c902b96a37287a186">ARMA_EVENT_END</a>(<span class="stringliteral">&quot;programme&quot;</span>, <span class="stringliteral">&quot;main&quot;</span>, 0);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#endif // COMMON_MAIN_HH</span></div>
 <div class="ttc" id="arma__realtime_8cc_html_a1137af47adfa1f40d871304a42f34b35"><div class="ttname"><a href="arma__realtime_8cc.html#a1137af47adfa1f40d871304a42f34b35">init_opengl</a></div><div class="ttdeci">void init_opengl(int, char **)</div><div class="ttdef"><b>Definition:</b> arma_realtime.cc:196</div></div>
-<div class="ttc" id="common__main_8hh_html_a4907135737e2fb22dcde4be8474bcab1"><div class="ttname"><a href="common__main_8hh.html#a4907135737e2fb22dcde4be8474bcab1">usage</a></div><div class="ttdeci">void usage(char *argv0)</div><div class="ttdef"><b>Definition:</b> common_main.hh:77</div></div>
+<div class="ttc" id="common__main_8hh_html_a4907135737e2fb22dcde4be8474bcab1"><div class="ttname"><a href="common__main_8hh.html#a4907135737e2fb22dcde4be8474bcab1">usage</a></div><div class="ttdeci">void usage(char *argv0)</div><div class="ttdef"><b>Definition:</b> common_main.hh:78</div></div>
 <div class="ttc" id="namespacearma_1_1opencl_html_a30b668f93c6f401eaa983d5e88a45919"><div class="ttname"><a href="namespacearma_1_1opencl.html#a30b668f93c6f401eaa983d5e88a45919">arma::opencl::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition:</b> opencl.cc:436</div></div>
 <div class="ttc" id="common__main_8hh_html_a121ac69c4cd73f0be66f128db511c30c"><div class="ttname"><a href="common__main_8hh.html#a121ac69c4cd73f0be66f128db511c30c">print_error_and_continue</a></div><div class="ttdeci">void print_error_and_continue(const char *reason, const char *file, int line, int gsl_errno)</div><div class="ttdef"><b>Definition:</b> common_main.hh:33</div></div>
 <div class="ttc" id="common__main_8hh_html_a79ecccdf2a0d65b696fd52dbc5a370eb"><div class="ttname"><a href="common__main_8hh.html#a79ecccdf2a0d65b696fd52dbc5a370eb">run_arma</a></div><div class="ttdeci">void run_arma(const std::string &amp;input_filename)</div><div class="ttdef"><b>Definition:</b> arma_main.cc:92</div></div>
 <div class="ttc" id="common__main_8hh_html_a22257ed136973250d5ac63254bd3cddd"><div class="ttname"><a href="common__main_8hh.html#a22257ed136973250d5ac63254bd3cddd">print_exception_and_terminate</a></div><div class="ttdeci">void print_exception_and_terminate()</div><div class="ttdef"><b>Definition:</b> common_main.hh:13</div></div>
-<div class="ttc" id="common__main_8hh_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> common_main.hh:89</div></div>
+<div class="ttc" id="common__main_8hh_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> common_main.hh:90</div></div>
 <div class="ttc" id="profile_8hh_html_a35f8010242a51b9c902b96a37287a186"><div class="ttname"><a href="profile_8hh.html#a35f8010242a51b9c902b96a37287a186">ARMA_EVENT_END</a></div><div class="ttdeci">#define ARMA_EVENT_END(name, thread_name, thread_no)</div><div class="ttdef"><b>Definition:</b> profile.hh:110</div></div>
 <div class="ttc" id="fourier__opencl_8cc_html_a763ffd798508592c5092ac77daa5a659"><div class="ttname"><a href="fourier__opencl_8cc.html#a763ffd798508592c5092ac77daa5a659">CHECK</a></div><div class="ttdeci">#define CHECK(x)</div><div class="ttdef"><b>Definition:</b> fourier_opencl.cc:7</div></div>
 <div class="ttc" id="common_8h_html_a25af1c42bcec3ac9b8d7d2846b1f2198"><div class="ttname"><a href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div><div class="ttdeci">ARMA_REAL_TYPE T</div><div class="ttdef"><b>Definition:</b> common.h:8</div></div>
-<div class="ttc" id="common__main_8hh_html_a87e5e06f972d921168b6b2dc927496c7"><div class="ttname"><a href="common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7">arma_init</a></div><div class="ttdeci">void arma_init(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> common_main.hh:48</div></div>
+<div class="ttc" id="common__main_8hh_html_a87e5e06f972d921168b6b2dc927496c7"><div class="ttname"><a href="common__main_8hh.html#a87e5e06f972d921168b6b2dc927496c7">arma_init</a></div><div class="ttdeci">void arma_init(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> common_main.hh:49</div></div>
 <div class="ttc" id="profile_8hh_html_a66f23c66d05007904d4db05cf178a066"><div class="ttname"><a href="profile_8hh.html#a66f23c66d05007904d4db05cf178a066">ARMA_EVENT_START</a></div><div class="ttdeci">#define ARMA_EVENT_START(name, thread_name, thread_no)</div><div class="ttdef"><b>Definition:</b> profile.hh:109</div></div>
 <div class="ttc" id="register__all_8hh_html_a74c0c25b01ac157353a61e43d95d358b"><div class="ttname"><a href="register__all_8hh.html#a74c0c25b01ac157353a61e43d95d358b">register_all_counters</a></div><div class="ttdeci">void register_all_counters()</div><div class="ttdef"><b>Definition:</b> register_all.hh:33</div></div>
 <div class="ttc" id="register__all_8hh_html"><div class="ttname"><a href="register__all_8hh.html">register_all.hh</a></div></div>
-<div class="ttc" id="common__main_8hh_html_a8ee753385a32014fd0e306e3bcad7e9e"><div class="ttname"><a href="common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e">arma_finalise</a></div><div class="ttdeci">void arma_finalise()</div><div class="ttdef"><b>Definition:</b> common_main.hh:65</div></div>
+<div class="ttc" id="common__main_8hh_html_a8ee753385a32014fd0e306e3bcad7e9e"><div class="ttname"><a href="common__main_8hh.html#a8ee753385a32014fd0e306e3bcad7e9e">arma_finalise</a></div><div class="ttdeci">void arma_finalise()</div><div class="ttdef"><b>Definition:</b> common_main.hh:66</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

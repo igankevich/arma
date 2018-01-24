@@ -18,6 +18,7 @@ var searchData=
   ['_7eimguitextfilter',['~ImGuiTextFilter',['../structImGuiTextFilter.html#acaf7fdcdc879c7938d195714609aac87',1,'ImGuiTextFilter']]],
   ['_7eimguiwindow',['~ImGuiWindow',['../structImGuiWindow.html#a8e81d730c3a39a71e6b6ca4654451c53',1,'ImGuiWindow']]],
   ['_7eimvector',['~ImVector',['../classImVector.html#a9b782359ca26eaa1a6a6138fcf341c54',1,'ImVector']]],
+  ['_7ema_5froot_5fsolver',['~MA_root_solver',['../classarma_1_1generator_1_1MA__root__solver.html#a718c06e298580e1aaf78304e1c00169b',1,'arma::generator::MA_root_solver']]],
   ['_7emt_5fconfig',['~mt_config',['../structarma_1_1prng_1_1mt__config.html#a046db6e319f415df20494876f5672147',1,'arma::prng::mt_config']]],
   ['_7epolynomial',['~Polynomial',['../classarma_1_1apmath_1_1Polynomial.html#a2b81c8b9e0b1a18b45fad6fd73a2adf5',1,'arma::apmath::Polynomial']]],
   ['_7evec',['~Vec',['../unionarma_1_1opencl_1_1Vec.html#a00dea0e701d52e930687ce97b675f1cf',1,'arma::opencl::Vec']]],

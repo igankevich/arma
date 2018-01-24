@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Crest__length_00_01T_01_4.html" title="Determines Weibull distribution shape parameter for different wave characteristics. " alt="" coords="5,4,163,60"/>
+<area shape="rect" id="node1" href="$structarma_1_1stats_1_1Weibull.html" title="Weibull distribution. " alt="" coords="5,12,176,39"/>
+<area shape="rect" id="node2" href="$structarma_1_1stats_1_1Wave__characteristic__distribution.html" title="Distribution function of wave height, period, length etc. " alt="" coords="225,5,439,46"/>
 </map>

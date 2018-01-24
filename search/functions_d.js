@@ -7,6 +7,7 @@ var searchData=
   ['newline',['NewLine',['../namespaceImGui.html#a77f8b0a33e5335f98661f99e720411da',1,'ImGui']]],
   ['newseed',['newseed',['../classarma_1_1generator_1_1Basic__model.html#ae8ad49729dcda64cf769b59760f4a084',1,'arma::generator::Basic_model']]],
   ['newton_5fraphson',['newton_raphson',['../structarma_1_1generator_1_1MA__model.html#aecb12774185171bfd948886447f59e13',1,'arma::generator::MA_model']]],
+  ['newton_5fraphson_5f2',['newton_raphson_2',['../structarma_1_1generator_1_1MA__model.html#a74315651a3b999a1b6d1788c6d6d9bd4',1,'arma::generator::MA_model']]],
   ['nextcolumn',['NextColumn',['../namespaceImGui.html#a8f97746d6a9d59c8400c26fb7613a2ff',1,'ImGui']]],
   ['ngenerators',['ngenerators',['../classarma_1_1PRNG__error.html#ad97067696f379afa31fdc6c73ffb3702',1,'arma::PRNG_error']]],
   ['nit_5ftransform',['NIT_transform',['../classarma_1_1nonlinear_1_1NIT__transform.html#a0d2a54f4e24e42fabd04bbd21f5a19a8',1,'arma::nonlinear::NIT_transform']]],

@@ -69,6 +69,6 @@ var searchData=
   ['trim',['trim',['../namespaceanonymous__namespace_02opencl_8cc_03.html#a32470c9f8fe6ad160f66840f2e3efff4',1,'anonymous_namespace{opencl.cc}']]],
   ['trim_5fblanks',['trim_blanks',['../structImGuiTextFilter_1_1TextRange.html#aa3bbd8b17b528f548d73c0936228dc85',1,'ImGuiTextFilter::TextRange']]],
   ['trim_5fright',['trim_right',['../namespaceanonymous__namespace_02opencl_8cc_03.html#a61c11a6c588141b3514bb1fcf759ab15',1,'anonymous_namespace{opencl.cc}::trim_right()'],['../namespaceanonymous__namespace_02params_8cc_03.html#a18dd03b059d3543cd4db057d4f4d9b9d',1,'anonymous_namespace{params.cc}::trim_right()']]],
-  ['type',['type',['../structstbtt__vertex.html#aa325b3707b88e7e104c0de46bb2bf395',1,'stbtt_vertex::type()'],['../structImGuiStyleVarInfo.html#a62f42d2bb7b71b7530493e16e622cb81',1,'ImGuiStyleVarInfo::Type()'],['../structImGuiMouseCursorData.html#ab58df812a8caf8741415053515b8f347',1,'ImGuiMouseCursorData::Type()']]],
+  ['type',['Type',['../structImGuiStyleVarInfo.html#a62f42d2bb7b71b7530493e16e622cb81',1,'ImGuiStyleVarInfo::Type()'],['../structImGuiMouseCursorData.html#ab58df812a8caf8741415053515b8f347',1,'ImGuiMouseCursorData::Type()'],['../structstbtt__vertex.html#aa325b3707b88e7e104c0de46bb2bf395',1,'stbtt_vertex::type()']]],
   ['types_2ehh',['types.hh',['../types_8hh.html',1,'']]]
 ];

@@ -10,11 +10,11 @@
 <title>Graphical Class Hierarchy</title>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<g id="a_node1"><a xlink:href="structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Wave__height_00_01T_01_4.html" target="_top" xlink:title="Determines Weibull distribution shape parameter for different wave characteristics. ">
+<g id="a_node1"><a xlink:href="structarma_1_1stats_1_1Weibull__shape_3_01Characteristic_1_1Crest__length_00_01T_01_4.html" target="_top" xlink:title="Determines Weibull distribution shape parameter for different wave characteristics. ">
 <polygon fill="none" stroke="black" points="0,0.5 0,-40.5 118,-40.5 118,0.5 0,0.5"/>
 <text text-anchor="start" x="8" y="-28.5" font-family="Helvetica,sans-Serif" font-size="10.00">arma::stats::Weibull</text>
 <text text-anchor="start" x="8" y="-17.5" font-family="Helvetica,sans-Serif" font-size="10.00">_shape&lt; Characteristic</text>
-<text text-anchor="middle" x="59" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Wave_height, T &gt;</text>
+<text text-anchor="middle" x="59" y="-6.5" font-family="Helvetica,sans-Serif" font-size="10.00">::Crest_length, T &gt;</text>
 </a>
 </g>
 </g>
