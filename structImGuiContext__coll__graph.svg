@@ -1050,7 +1050,7 @@
 </g>
 <!-- Node22 -->
 <g id="node22" class="node"><title>Node22</title>
-<g id="a_node22"><a xlink:href="structImGuiStorage_1_1Pair.html" target="_top" xlink:title="{ImGuiStorage::Pair\n|+ key\l+ val_i\l+ val_f\l+ val_p\l+ @3\l|+ Pair()\l+ Pair()\l+ Pair()\l}">
+<g id="a_node22"><a xlink:href="structImGuiStorage_1_1Pair.html" target="_top" xlink:title="{ImGuiStorage::Pair\n|+ key\l+ val_i\l+ val_f\l+ val_p\l+ @1\l|+ Pair()\l+ Pair()\l+ Pair()\l}">
 <polygon fill="none" stroke="black" points="1684,-2455.5 1684,-2578.5 1784,-2578.5 1784,-2455.5 1684,-2455.5"/>
 <text text-anchor="middle" x="1734" y="-2566.5" font-family="Helvetica,sans-Serif" font-size="10.00">ImGuiStorage::Pair</text>
 <polyline fill="none" stroke="black" points="1684,-2559.5 1784,-2559.5 "/>
@@ -1058,7 +1058,7 @@
 <text text-anchor="start" x="1692" y="-2536.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ val_i</text>
 <text text-anchor="start" x="1692" y="-2525.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ val_f</text>
 <text text-anchor="start" x="1692" y="-2514.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ val_p</text>
-<text text-anchor="start" x="1692" y="-2503.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ @3</text>
+<text text-anchor="start" x="1692" y="-2503.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ @1</text>
 <polyline fill="none" stroke="black" points="1684,-2496.5 1784,-2496.5 "/>
 <text text-anchor="start" x="1692" y="-2484.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ Pair()</text>
 <text text-anchor="start" x="1692" y="-2473.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ Pair()</text>
@@ -1642,14 +1642,14 @@
 </g>
 <!-- Node50 -->
 <g id="node50" class="node"><title>Node50</title>
-<g id="a_node50"><a xlink:href="structImGuiStyleMod.html" target="_top" xlink:title="{ImGuiStyleMod\n|+ VarIdx\l+ BackupInt\l+ BackupFloat\l+ @5\l|+ ImGuiStyleMod()\l+ ImGuiStyleMod()\l+ ImGuiStyleMod()\l}">
+<g id="a_node50"><a xlink:href="structImGuiStyleMod.html" target="_top" xlink:title="{ImGuiStyleMod\n|+ VarIdx\l+ BackupInt\l+ BackupFloat\l+ @3\l|+ ImGuiStyleMod()\l+ ImGuiStyleMod()\l+ ImGuiStyleMod()\l}">
 <polygon fill="none" stroke="black" points="2879.5,-617 2879.5,-729 2978.5,-729 2978.5,-617 2879.5,-617"/>
 <text text-anchor="middle" x="2929" y="-717" font-family="Helvetica,sans-Serif" font-size="10.00">ImGuiStyleMod</text>
 <polyline fill="none" stroke="black" points="2879.5,-710 2978.5,-710 "/>
 <text text-anchor="start" x="2887.5" y="-698" font-family="Helvetica,sans-Serif" font-size="10.00">+ VarIdx</text>
 <text text-anchor="start" x="2887.5" y="-687" font-family="Helvetica,sans-Serif" font-size="10.00">+ BackupInt</text>
 <text text-anchor="start" x="2887.5" y="-676" font-family="Helvetica,sans-Serif" font-size="10.00">+ BackupFloat</text>
-<text text-anchor="start" x="2887.5" y="-665" font-family="Helvetica,sans-Serif" font-size="10.00">+ @5</text>
+<text text-anchor="start" x="2887.5" y="-665" font-family="Helvetica,sans-Serif" font-size="10.00">+ @3</text>
 <polyline fill="none" stroke="black" points="2879.5,-658 2978.5,-658 "/>
 <text text-anchor="start" x="2887.5" y="-646" font-family="Helvetica,sans-Serif" font-size="10.00">+ ImGuiStyleMod()</text>
 <text text-anchor="start" x="2887.5" y="-635" font-family="Helvetica,sans-Serif" font-size="10.00">+ ImGuiStyleMod()</text>

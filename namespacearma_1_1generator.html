@@ -114,11 +114,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1Longuet__Higgins__model.html">Longuet_Higgins_model</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses Longuet&mdash;Higgins model, small-amplitude waves.  <a href="classarma_1_1generator_1_1Longuet__Higgins__model.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarma_1_1generator_1_1MA__model.html">MA_model</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses moving average process, propagating waves.  <a href="structarma_1_1generator_1_1MA__model.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1MA__coefficient__solver.html">MA_coefficient_solver</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi-dimensional solver that determines MA model coefficients from ACF.  <a href="classarma_1_1generator_1_1MA__coefficient__solver.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1MA__root__solver.html">MA_root_solver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi-dimensional solver that determines MA model coefficients from ACF.  <a href="classarma_1_1generator_1_1MA__root__solver.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1MA__model.html">MA_model</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses moving average process, propagating waves.  <a href="classarma_1_1generator_1_1MA__model.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1generator_1_1Plain__wave__model.html">Plain_wave_model</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses a simple sum of sines and cosines, small-amplitude waves.Individual amplitudes, wave numbers, phases and velocities are set via configuration file.  <a href="classarma_1_1generator_1_1Plain__wave__model.html#details">More...</a><br/></td></tr>
@@ -152,11 +152,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a7c57ed3e941e792fe7b748c363df76ab"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a7c57ed3e941e792fe7b748c363df76ab"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1generator.html#a7c57ed3e941e792fe7b748c363df76ab">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="structarma_1_1generator_1_1ARMA__model.html">ARMA_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;rhs)</td></tr>
 <tr class="separator:a7c57ed3e941e792fe7b748c363df76ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa26d439d7288554b55f6832abdc76b7a"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:aa26d439d7288554b55f6832abdc76b7a"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1generator.html#aa26d439d7288554b55f6832abdc76b7a">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classarma_1_1generator_1_1MA__coefficient__solver.html">MA_coefficient_solver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;rhs)</td></tr>
+<tr class="separator:aa26d439d7288554b55f6832abdc76b7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc9eb9a26468669a9af59de07c751ac8"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:acc9eb9a26468669a9af59de07c751ac8"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1generator.html#acc9eb9a26468669a9af59de07c751ac8">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="structarma_1_1generator_1_1MA__model.html">MA_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;rhs)</td></tr>
+<tr class="memitem:acc9eb9a26468669a9af59de07c751ac8"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1generator.html#acc9eb9a26468669a9af59de07c751ac8">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="classarma_1_1generator_1_1MA__model.html">MA_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;rhs)</td></tr>
 <tr class="separator:acc9eb9a26468669a9af59de07c751ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7c404fd9a953d2867ac1f74ae7db602"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:af7c404fd9a953d2867ac1f74ae7db602"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1generator.html#af7c404fd9a953d2867ac1f74ae7db602">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="structarma_1_1generator_1_1MA__model.html">MA_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;rhs)</td></tr>
+<tr class="memitem:af7c404fd9a953d2867ac1f74ae7db602"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1generator.html#af7c404fd9a953d2867ac1f74ae7db602">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classarma_1_1generator_1_1MA__model.html">MA_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;rhs)</td></tr>
 <tr class="separator:af7c404fd9a953d2867ac1f74ae7db602"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff8f6ec8ab3cbb2f756a952fed0b8187"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma_1_1generator.html#aff8f6ec8ab3cbb2f756a952fed0b8187">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="namespacearma_1_1generator.html#aaccb22c6cd1221c82b10444d5839fda9">Function</a> &amp;rhs)</td></tr>
 <tr class="separator:aff8f6ec8ab3cbb2f756a952fed0b8187"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -260,34 +263,6 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a320f8435129024e39a3c022f917bb387"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; arma::generator::operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>out</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const ARMA_model&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a2b1894a127fb4026f0dd248d2f36b27c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -304,6 +279,34 @@ template&lt;class T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const AR_model&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a320f8435129024e39a3c022f917bb387"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; arma::generator::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ARMA_model&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>rhs</em>&#160;</td>
         </tr>
         <tr>
@@ -370,14 +373,14 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a7c57ed3e941e792fe7b748c363df76ab"></a>
+<a class="anchor" id="aa26d439d7288554b55f6832abdc76b7a"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::istream&amp; arma::generator::operator&gt;&gt; </td>
+          <td class="memname">template std::istream &amp; arma::generator::operator&gt;&gt; </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em>, </td>
@@ -385,7 +388,7 @@ template&lt;class T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ARMA_model&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">MA_coefficient_solver&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>rhs</em>&#160;</td>
         </tr>
         <tr>
@@ -414,6 +417,34 @@ template&lt;class T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">AR_model&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a7c57ed3e941e792fe7b748c363df76ab"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::istream&amp; arma::generator::operator&gt;&gt; </td>
+          <td>(</td>
+          <td class="paramtype">std::istream &amp;&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ARMA_model&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>rhs</em>&#160;</td>
         </tr>
         <tr>

@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classarma_1_1Delaunay__interpolation.html" title="Interpolates function values on irregular grid. " alt="" coords="6,5,229,32"/>
+<area shape="rect" id="node2" href="$classarma_1_1Discrete__function.html" title="Multidimensional array with a grid. " alt="" coords="107,5,269,46"/>
+<area shape="rect" id="node3" href="$classarma_1_1Discrete__function.html" title="arma::Discrete_function\l\&lt; T, 3 \&gt;" alt="" coords="107,70,269,111"/>
 </map>

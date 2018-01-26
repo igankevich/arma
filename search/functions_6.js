@@ -8,7 +8,7 @@ var searchData=
   ['findrenderedtextend',['FindRenderedTextEnd',['../namespaceImGui.html#a7671e1dbc803a31b06081b52a771d83f',1,'ImGui']]],
   ['findwindowbyname',['FindWindowByName',['../namespaceImGui.html#abca25f22c02e73d5eb2e9c72c4557813',1,'ImGui']]],
   ['first',['first',['../classarma_1_1apmath_1_1closed__interval.html#ad52e5eb1f89913fb1343180e747a278e',1,'arma::apmath::closed_interval']]],
-  ['fixed_5fpoint_5fiteration',['fixed_point_iteration',['../structarma_1_1generator_1_1MA__model.html#aa03e3ff1ad9f52b31b2b4fe6b4577cbd',1,'arma::generator::MA_model']]],
+  ['fixed_5fpoint_5fiteration',['fixed_point_iteration',['../classarma_1_1generator_1_1MA__model.html#ac3a817b07553527095a9abf6ca36afc3',1,'arma::generator::MA_model']]],
   ['floor',['Floor',['../structImRect.html#a8fdf75a0c64ff29f65113cd9f8be77ab',1,'ImRect']]],
   ['focusableitemregister',['FocusableItemRegister',['../namespaceImGui.html#ab3eda948fa5b3faf9ee49b59821071d6',1,'ImGui']]],
   ['focusableitemunregister',['FocusableItemUnregister',['../namespaceImGui.html#a390518fcaef04b4d399d2475d4d84df7',1,'ImGui']]],

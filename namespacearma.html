@@ -243,6 +243,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a9e0adb4276e8261293b12a669227d1dd"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a9e0adb4276e8261293b12a669227d1dd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#a9e0adb4276e8261293b12a669227d1dd">approx_wave_period</a> (<a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> variance)</td></tr>
 <tr class="separator:a9e0adb4276e8261293b12a669227d1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e9ca2a5ae62fd7e2a8e4426a95c0f20"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a0e9ca2a5ae62fd7e2a8e4426a95c0f20"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#a0e9ca2a5ae62fd7e2a8e4426a95c0f20">MA_white_noise_variance</a> (const <a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;acf, const <a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;theta)</td></tr>
+<tr class="separator:a0e9ca2a5ae62fd7e2a8e4426a95c0f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa76afb9615d176164bbd1555a8daf180"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:aa76afb9615d176164bbd1555a8daf180"><td class="memTemplItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma.html#aa76afb9615d176164bbd1555a8daf180">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="structarma_1_1ARMA__driver.html">ARMA_driver</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;m)</td></tr>
 <tr class="separator:aa76afb9615d176164bbd1555a8daf180"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -979,6 +982,39 @@ template&lt;class T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0e9ca2a5ae62fd7e2a8e4426a95c0f20"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">template ARMA_REAL_TYPE arma::MA_white_noise_variance </td>
+          <td>(</td>
+          <td class="paramtype">const Array3D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>acf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Array3D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>theta</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compute white noise variance via the formula </p>
+<p class="formulaDsp">
+\[ \sigma_\alpha^2 = \frac{\gamma_0}{ \sum\limits_{i=0}^{n_1} \sum\limits_{i=0}^{n_2} \sum\limits_{k=0}^{n_3} \theta_{i,j,k}^2 } \]
+</p>
+<p> assuming \(\theta_0 \equiv -1\). </p>
 
 </div>
 </div>

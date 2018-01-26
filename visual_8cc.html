@@ -953,7 +953,36 @@ template&lt;class T , int N&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">= R<span class="stringliteral">&quot;(</span></div>
+<div class="line"><span class="stringliteral">#model = AR {</span></div>
+<div class="line"><span class="stringliteral">#   out_grid = (100,40,40)</span></div>
+<div class="line"><span class="stringliteral">#   acf = {</span></div>
+<div class="line"><span class="stringliteral">#       func = standing_wave</span></div>
+<div class="line"><span class="stringliteral">#       grid = (10,10,10) : (2.5,5,5)</span></div>
+<div class="line"><span class="stringliteral">#   }</span></div>
+<div class="line"><span class="stringliteral">#   order = (20,20,20)</span></div>
+<div class="line"><span class="stringliteral">#   output = surface</span></div>
+<div class="line"><span class="stringliteral">#}</span></div>
+<div class="line"><span class="stringliteral"></span></div>
+<div class="line"><span class="stringliteral">model = MA {</span></div>
+<div class="line"><span class="stringliteral">    out_grid = (200,40,40)</span></div>
+<div class="line"><span class="stringliteral">    acf = {</span></div>
+<div class="line"><span class="stringliteral">        func = propagating_wave</span></div>
+<div class="line"><span class="stringliteral">        grid = (20,10,10) : (10,5,5)</span></div>
+<div class="line"><span class="stringliteral">    }</span></div>
+<div class="line"><span class="stringliteral">    order = (20,10,10)</span></div>
+<div class="line"><span class="stringliteral">    algorithm = fixed_point_iteration</span></div>
+<div class="line"><span class="stringliteral">    output = none</span></div>
+<div class="line"><span class="stringliteral">    validate = 0</span></div>
+<div class="line"><span class="stringliteral">}</span></div>
+<div class="line"><span class="stringliteral"></span></div>
+<div class="line"><span class="stringliteral">velocity_potential_solver = linear {</span></div>
+<div class="line"><span class="stringliteral">#   wnmax = from (0,0) to (0,0.25) npoints (2,2)</span></div>
+<div class="line"><span class="stringliteral">    depth = 12</span></div>
+<div class="line"><span class="stringliteral">    domain = from (10,-12) to (10,3) npoints (1,128)</span></div>
+<div class="line"><span class="stringliteral">}</span></div>
+<div class="line"><span class="stringliteral">)&quot;</span></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a class="anchor" id="aa56424ea978f9a18aebc938ea06db678"></a>

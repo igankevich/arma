@@ -78,7 +78,7 @@ var searchData=
   ['cnt_5fharts_5fg2',['CNT_HARTS_G2',['../profile__counters_8hh.html#ae89119bc9297110f629c22f66e8732ec',1,'profile_counters.hh']]],
   ['cnt_5fwrite_5fsurface',['CNT_WRITE_SURFACE',['../profile__counters_8hh.html#ac2537a08655c970f9546d8fdab990bdb',1,'profile_counters.hh']]],
   ['codepoint',['Codepoint',['../structImFont_1_1Glyph.html#a9d612199d341de86cb7b0c33539b4830',1,'ImFont::Glyph']]],
-  ['coefficients',['coefficients',['../classarma_1_1generator_1_1AR__model.html#a8bb984bcccbf0c659383d3525beaa874',1,'arma::generator::AR_model::coefficients()'],['../structarma_1_1generator_1_1MA__model.html#aa31b28c4009324b680434c67806a0011',1,'arma::generator::MA_model::coefficients()']]],
+  ['coefficients',['coefficients',['../classarma_1_1generator_1_1AR__model.html#a8bb984bcccbf0c659383d3525beaa874',1,'arma::generator::AR_model::coefficients()'],['../classarma_1_1generator_1_1MA__model.html#aa31b28c4009324b680434c67806a0011',1,'arma::generator::MA_model::coefficients()']]],
   ['col',['col',['../structImDrawVert.html#ab98ba53ce2690b56f5ba94682ed83940',1,'ImDrawVert::col()'],['../structImGuiColMod.html#aaa66ad29c378b8800098ab4d4e1c91a6',1,'ImGuiColMod::Col()']]],
   ['collapsed',['Collapsed',['../structImGuiIniData.html#a299660ea0cab78a8cbefa02314c8cf47',1,'ImGuiIniData::Collapsed()'],['../structImGuiWindow.html#a04e6b533b2401d1c7e78b47e31538e7b',1,'ImGuiWindow::Collapsed()']]],
   ['collapsingheader',['CollapsingHeader',['../namespaceImGui.html#ab52f9e08698c9d64abb05b98f5355146',1,'ImGui::CollapsingHeader(const char *label, ImGuiTreeNodeFlags flags=0)'],['../namespaceImGui.html#a19f369fc61f49ab7995ebb4da99028db',1,'ImGui::CollapsingHeader(const char *label, bool *p_open, ImGuiTreeNodeFlags flags=0)']]],

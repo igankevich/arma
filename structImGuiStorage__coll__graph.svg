@@ -62,7 +62,7 @@
 </g>
 <!-- Node3 -->
 <g id="node3" class="node"><title>Node3</title>
-<g id="a_node3"><a xlink:href="structImGuiStorage_1_1Pair.html" target="_top" xlink:title="{ImGuiStorage::Pair\n|+ key\l+ val_i\l+ val_f\l+ val_p\l+ @3\l|+ Pair()\l+ Pair()\l+ Pair()\l}">
+<g id="a_node3"><a xlink:href="structImGuiStorage_1_1Pair.html" target="_top" xlink:title="{ImGuiStorage::Pair\n|+ key\l+ val_i\l+ val_f\l+ val_p\l+ @1\l|+ Pair()\l+ Pair()\l+ Pair()\l}">
 <polygon fill="none" stroke="black" points="12,-488.5 12,-611.5 112,-611.5 112,-488.5 12,-488.5"/>
 <text text-anchor="middle" x="62" y="-599.5" font-family="Helvetica,sans-Serif" font-size="10.00">ImGuiStorage::Pair</text>
 <polyline fill="none" stroke="black" points="12,-592.5 112,-592.5 "/>
@@ -70,7 +70,7 @@
 <text text-anchor="start" x="20" y="-569.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ val_i</text>
 <text text-anchor="start" x="20" y="-558.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ val_f</text>
 <text text-anchor="start" x="20" y="-547.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ val_p</text>
-<text text-anchor="start" x="20" y="-536.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ @3</text>
+<text text-anchor="start" x="20" y="-536.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ @1</text>
 <polyline fill="none" stroke="black" points="12,-529.5 112,-529.5 "/>
 <text text-anchor="start" x="20" y="-517.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ Pair()</text>
 <text text-anchor="start" x="20" y="-506.5" font-family="Helvetica,sans-Serif" font-size="10.00">+ Pair()</text>

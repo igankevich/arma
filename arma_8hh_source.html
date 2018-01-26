@@ -131,7 +131,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div>
 <div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="namespacearma.html#a5d82797b5a67439600753e62b9207dc3">   40</a></span>&#160;    <a class="code" href="namespacearma.html#a5d82797b5a67439600753e62b9207dc3">ACF_variance</a>(<span class="keyword">const</span> <a class="code" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">Array3D&lt;T&gt;</a>&amp; acf) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">return</span> acf(0, 0, 0);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">return</span> acf(0,0,0);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    }</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
@@ -146,10 +146,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>(4.8) * std::sqrt(<a class="code" href="namespacearma.html#a191379ad041815726556d493bbbc69fb">approx_wave_height</a>(variance));</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif // ARMA_HH</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="namespacearma.html#a0e9ca2a5ae62fd7e2a8e4426a95c0f20">MA_white_noise_variance</a>(<span class="keyword">const</span> Array3D&lt;T&gt;&amp; acf, <span class="keyword">const</span> Array3D&lt;T&gt;&amp; theta);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif // ARMA_HH</span></div>
 <div class="ttc" id="namespacearma_html_a9bf29617c4bd4732022156a4f7a07f6b"><div class="ttname"><a href="namespacearma.html#a9bf29617c4bd4732022156a4f7a07f6b">arma::validate_process</a></div><div class="ttdeci">void validate_process(blitz::Array&lt; T, N &gt; _phi)</div><div class="ttdoc">Check AR (MA) process stationarity (invertibility). </div><div class="ttdef"><b>Definition:</b> arma.cc:8</div></div>
+<div class="ttc" id="namespacearma_html_a0e9ca2a5ae62fd7e2a8e4426a95c0f20"><div class="ttname"><a href="namespacearma.html#a0e9ca2a5ae62fd7e2a8e4426a95c0f20">arma::MA_white_noise_variance</a></div><div class="ttdeci">T MA_white_noise_variance(const Array3D&lt; T &gt; &amp;acf, const Array3D&lt; T &gt; &amp;theta)</div><div class="ttdef"><b>Definition:</b> arma.cc:55</div></div>
 <div class="ttc" id="namespacearma_html_af7d4db4b1cfb7a98584f1799b785f95c"><div class="ttname"><a href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a></div><div class="ttdeci">Array&lt; T, 3 &gt; Array3D</div><div class="ttdef"><b>Definition:</b> types.hh:36</div></div>
 <div class="ttc" id="statistics_8hh_html"><div class="ttname"><a href="statistics_8hh.html">statistics.hh</a></div></div>
 <div class="ttc" id="qq__graph_8hh_html"><div class="ttname"><a href="qq__graph_8hh.html">qq_graph.hh</a></div></div>

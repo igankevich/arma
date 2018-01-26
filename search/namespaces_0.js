@@ -11,7 +11,6 @@ var searchData=
   ['anonymous_5fnamespace_7bfourier_5fopencl_2ecc_7d',['anonymous_namespace{fourier_opencl.cc}',['../namespaceanonymous__namespace_02fourier__opencl_8cc_03.html',1,'']]],
   ['anonymous_5fnamespace_7bhigh_5famplitude_5frealtime_5fsolver_2ecc_7d',['anonymous_namespace{high_amplitude_realtime_solver.cc}',['../namespaceanonymous__namespace_02high__amplitude__realtime__solver_8cc_03.html',1,'']]],
   ['anonymous_5fnamespace_7blinalg_2ecc_7d',['anonymous_namespace{linalg.cc}',['../namespaceanonymous__namespace_02linalg_8cc_03.html',1,'']]],
-  ['anonymous_5fnamespace_7bma_5froot_5fsolver_2ecc_7d',['anonymous_namespace{ma_root_solver.cc}',['../namespaceanonymous__namespace_02ma__root__solver_8cc_03.html',1,'']]],
   ['anonymous_5fnamespace_7bnit_5ftransform_2ecc_7d',['anonymous_namespace{nit_transform.cc}',['../namespaceanonymous__namespace_02nit__transform_8cc_03.html',1,'']]],
   ['anonymous_5fnamespace_7bopencl_2ecc_7d',['anonymous_namespace{opencl.cc}',['../namespaceanonymous__namespace_02opencl_8cc_03.html',1,'']]],
   ['anonymous_5fnamespace_7boutput_5fflags_2ecc_7d',['anonymous_namespace{output_flags.cc}',['../namespaceanonymous__namespace_02output__flags_8cc_03.html',1,'']]],

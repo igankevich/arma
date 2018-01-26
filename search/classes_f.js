@@ -8,8 +8,8 @@ var searchData=
   ['stbrp_5fcontext',['stbrp_context',['../structstbrp__context.html',1,'']]],
   ['stbrp_5fnode',['stbrp_node',['../structstbrp__node.html',1,'']]],
   ['stbrp_5frect',['stbrp_rect',['../structstbrp__rect.html',1,'']]],
-  ['stbtexteditrow',['StbTexteditRow',['../structStbTexteditRow.html',1,'']]],
   ['stbtexteditrow',['StbTexteditRow',['../structImGuiStb_1_1StbTexteditRow.html',1,'ImGuiStb']]],
+  ['stbtexteditrow',['StbTexteditRow',['../structStbTexteditRow.html',1,'']]],
   ['stbtt_5f_5fbitmap',['stbtt__bitmap',['../structstbtt____bitmap.html',1,'']]],
   ['stbtt_5f_5fbuf',['stbtt__buf',['../structstbtt____buf.html',1,'']]],
   ['stbtt_5faligned_5fquad',['stbtt_aligned_quad',['../structstbtt__aligned__quad.html',1,'']]],
@@ -19,9 +19,9 @@ var searchData=
   ['stbtt_5fpack_5frange',['stbtt_pack_range',['../structstbtt__pack__range.html',1,'']]],
   ['stbtt_5fpackedchar',['stbtt_packedchar',['../structstbtt__packedchar.html',1,'']]],
   ['stbtt_5fvertex',['stbtt_vertex',['../structstbtt__vertex.html',1,'']]],
-  ['stbundorecord',['StbUndoRecord',['../structImGuiStb_1_1StbUndoRecord.html',1,'ImGuiStb']]],
   ['stbundorecord',['StbUndoRecord',['../structStbUndoRecord.html',1,'']]],
-  ['stbundostate',['StbUndoState',['../structStbUndoState.html',1,'']]],
+  ['stbundorecord',['StbUndoRecord',['../structImGuiStb_1_1StbUndoRecord.html',1,'ImGuiStb']]],
   ['stbundostate',['StbUndoState',['../structImGuiStb_1_1StbUndoState.html',1,'ImGuiStb']]],
+  ['stbundostate',['StbUndoState',['../structStbUndoState.html',1,'']]],
   ['summary',['Summary',['../structarma_1_1stats_1_1Summary.html',1,'arma::stats']]]
 ];
