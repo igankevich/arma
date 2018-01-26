@@ -26,6 +26,8 @@ namespace arma {
 			acf_type _acf;
 			/// Process order.
 			Shape3D _order = Shape3D(0,0,0);
+			/// White noise variance, obtained during coefficient determination.
+			T _varwn = T(0);
 			transform_type _nittransform;
 			bool _linear = true;
 			/// Perform AR/MA process validation or not.
@@ -81,8 +83,10 @@ namespace arma {
 
 			#endif
 
-			virtual T
-			white_noise_variance() const = 0;
+			inline T
+			white_noise_variance() const noexcept {
+				return this->_varwn;
+			}
 
 			virtual void
 			determine_coefficients() = 0;

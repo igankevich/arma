@@ -5,16 +5,6 @@
 #include "validators.hh"
 
 template <class T>
-T
-arma::generator::ARMA_model<T>
-::white_noise_variance() const {
-	return white_noise_variance(
-		AR_model<T>::coefficients(),
-		MA_model<T>::coefficients()
-	);
-}
-
-template <class T>
 void
 arma::generator::ARMA_model<T>
 ::validate() const {
@@ -33,6 +23,7 @@ arma::generator::ARMA_model<T>
 	}
 //	ma_model::recompute_acf(_acf_orig, ar_model::coefficients());
 	MA_model<T>::determine_coefficients();
+	// TODO: set white noise variance
 }
 
 template <class T>

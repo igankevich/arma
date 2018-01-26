@@ -41,9 +41,6 @@ namespace arma {
 				return ar_model::order() + ma_model::order();
 			}
 
-			T
-			white_noise_variance() const override;
-
 			void
 			validate() const override;
 

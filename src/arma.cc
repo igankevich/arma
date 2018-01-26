@@ -49,6 +49,21 @@ arma::validate_process(blitz::Array<T, N> _phi) {
 	}
 }
 
+
+template <class T>
+T
+arma::MA_white_noise_variance(const Array3D<T>& acf, const Array3D<T>& theta) {
+	using blitz::sum;
+	using blitz::pow2;
+	return ACF_variance(acf) / sum(pow2(theta));
+}
+
 template void arma::validate_process<ARMA_REAL_TYPE,3>(
 	blitz::Array<ARMA_REAL_TYPE,3> _phi
+);
+
+template ARMA_REAL_TYPE
+arma::MA_white_noise_variance(
+	const Array3D<ARMA_REAL_TYPE>& acf,
+	const Array3D<ARMA_REAL_TYPE>& theta
 );

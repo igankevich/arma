@@ -96,13 +96,6 @@ model = MA {
 	# - newton_raphson
 	# As of 2016-08-16 newton_raphson is broken.
 	algorithm = fixed_point_iteration
-	# Maximal no. of iteration for the algorithm.
-	max_iterations = 1000
-	# Maximal difference between values of white
-	# noise variance in successive iterations.
-	eps = 1e-5
-	# Maximal value of white noise variance considered to be nought.
-	min_var_wn = 1e-6
 	# Whether seed PRNG or not.
 	no_seed = 0
 	transform = none

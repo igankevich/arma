@@ -38,7 +38,7 @@ namespace arma {
 	template <class T>
 	T
 	ACF_variance(const Array3D<T>& acf) {
-		return acf(0, 0, 0);
+		return acf(0,0,0);
 	}
 
 	template <class T>
@@ -52,6 +52,22 @@ namespace arma {
 	approx_wave_period(T variance) {
 		return T(4.8) * std::sqrt(approx_wave_height(variance));
 	}
+
+	/**
+	Compute white noise variance via the formula
+	\f[
+	    \sigma_\alpha^2 = \frac{\gamma_0}{
+	        \sum\limits_{i=0}^{n_1}
+	        \sum\limits_{i=0}^{n_2}
+	        \sum\limits_{k=0}^{n_3}
+	        \theta_{i,j,k}^2
+	    }
+	\f]
+	assuming \f$\theta_0 \equiv -1\f$.
+	*/
+	template <class T>
+	T
+	MA_white_noise_variance(const Array3D<T>& acf, const Array3D<T>& theta);
 
 }
 
