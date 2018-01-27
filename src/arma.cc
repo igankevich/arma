@@ -5,9 +5,12 @@
 
 template <class T, int N>
 void
-arma::validate_process(blitz::Array<T, N> _phi) {
+arma
+::validate_process(blitz::Array<T, N> _phi) {
 	typedef blitz::Array<std::complex<double>, 1> result_type;
-	if (blitz::product(_phi.shape()) <= 1) { return; }
+	if (blitz::product(_phi.shape()) <= 1) {
+		return;
+	}
 	/// 1. Find roots of the polynomial
 	/// \f$P_n(\Phi)=1-\Phi_1 x-\Phi_2 x^2 - ... -\Phi_n x^n\f$.
 	blitz::Array<double, N> phi(_phi.shape());
@@ -16,14 +19,20 @@ arma::validate_process(blitz::Array<T, N> _phi) {
 	result_type result(phi.numElements());
 	gsl_poly_complex_workspace* w =
 		gsl_poly_complex_workspace_alloc(result.size());
-	int ret = gsl_poly_complex_solve(phi.data(), result.size(), w,
-									 (gsl_complex_packed_ptr)result.data());
+	int ret =
+		gsl_poly_complex_solve(
+			phi.data(),
+			result.size(),
+			w,
+			(gsl_complex_packed_ptr)result.data()
+		);
 	gsl_poly_complex_workspace_free(w);
 	if (ret != GSL_SUCCESS) {
 		std::cerr << "GSL error: " << gsl_strerror(ret) << '.' << std::endl;
 		throw std::runtime_error(
-			"Can not find roots of the polynomial to "
-			"verify AR/MA model stationarity/invertibility.");
+				  "Can not find roots of the polynomial to "
+				  "verify AR/MA model stationarity/invertibility."
+		);
 	}
 	/// 2. Check if some roots do not lie outside the unit circle.
 	int num_bad_roots = 0;
@@ -44,26 +53,67 @@ arma::validate_process(blitz::Array<T, N> _phi) {
 	if (num_bad_roots > 0) {
 		std::cerr << "No. of bad roots = " << num_bad_roots << std::endl;
 		throw std::runtime_error(
-			"AR/MA process is not stationary/invertible: some roots lie "
-			"inside unit circle or on its borderline.");
+				  "AR/MA process is not stationary/invertible: some roots lie "
+				  "inside unit circle or on its borderline."
+		);
 	}
 }
 
-
 template <class T>
 T
-arma::MA_white_noise_variance(const Array3D<T>& acf, const Array3D<T>& theta) {
+arma
+::MA_white_noise_variance(const Array3D<T>& acf, const Array3D<T>& theta) {
 	using blitz::sum;
 	using blitz::pow2;
 	return ACF_variance(acf) / sum(pow2(theta));
 }
 
-template void arma::validate_process<ARMA_REAL_TYPE,3>(
-	blitz::Array<ARMA_REAL_TYPE,3> _phi
-);
+template <class T>
+arma::Array3D<T>
+arma
+::auto_covariance(const Array3D<T>& rhs) {
+	const Shape3D& shp = rhs.shape();
+	const T m = blitz::mean(rhs);
+	const int ni = shp(0);
+	const int nj = shp(1);
+	const int nk = shp(2);
+	Array3D<T> result(rhs.shape());
+	#if ARMA_OPENMP
+	#pragma omp parallel for collapse(3)
+	#endif
+	for (int i=0; i<ni; ++i) {
+		for (int j=0; j<nj; ++j) {
+			for (int k=0; k<nk; ++k) {
+				const T rhs_ijk = rhs(i,j,k) - m;
+				const int mi = i+1;
+				const int mj = j+1;
+				const int mk = k+1;
+				T sum = 0;
+				for (int i1=0; i1<mi; ++i1) {
+					for (int j1=0; j1<mj; ++j1) {
+						for (int k1=0; k1<mk; ++k1) {
+							sum += rhs_ijk*(rhs(i-i1,j-j1,k-k1) - m);
+						}
+					}
+				}
+				result(i,j,k) = sum;
+			}
+		}
+	}
+	return result;
+}
+
+template void
+arma
+::validate_process<ARMA_REAL_TYPE,3>(blitz::Array<ARMA_REAL_TYPE,3> _phi);
 
 template ARMA_REAL_TYPE
-arma::MA_white_noise_variance(
+arma
+::MA_white_noise_variance(
 	const Array3D<ARMA_REAL_TYPE>& acf,
 	const Array3D<ARMA_REAL_TYPE>& theta
 );
+
+template arma::Array3D<ARMA_REAL_TYPE>
+arma
+::auto_covariance(const Array3D<ARMA_REAL_TYPE>& rhs);

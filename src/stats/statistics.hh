@@ -106,6 +106,7 @@ namespace arma {
 		stdev(blitz::Array<T, N> rhs) {
 			return stdev(rhs.data(), rhs.numElements());
 		}
+
 	}
 
 }

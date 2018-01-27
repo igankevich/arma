@@ -69,6 +69,10 @@ namespace arma {
 	T
 	MA_white_noise_variance(const Array3D<T>& acf, const Array3D<T>& theta);
 
+	template <class T>
+	Array3D<T>
+	auto_covariance(const Array3D<T>& rhs);
+
 }
 
 #endif // ARMA_HH
