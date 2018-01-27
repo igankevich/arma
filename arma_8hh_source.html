@@ -150,16 +150,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="namespacearma.html#a0e9ca2a5ae62fd7e2a8e4426a95c0f20">MA_white_noise_variance</a>(<span class="keyword">const</span> Array3D&lt;T&gt;&amp; acf, <span class="keyword">const</span> Array3D&lt;T&gt;&amp; theta);</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif // ARMA_HH</span></div>
-<div class="ttc" id="namespacearma_html_a9bf29617c4bd4732022156a4f7a07f6b"><div class="ttname"><a href="namespacearma.html#a9bf29617c4bd4732022156a4f7a07f6b">arma::validate_process</a></div><div class="ttdeci">void validate_process(blitz::Array&lt; T, N &gt; _phi)</div><div class="ttdoc">Check AR (MA) process stationarity (invertibility). </div><div class="ttdef"><b>Definition:</b> arma.cc:8</div></div>
-<div class="ttc" id="namespacearma_html_a0e9ca2a5ae62fd7e2a8e4426a95c0f20"><div class="ttname"><a href="namespacearma.html#a0e9ca2a5ae62fd7e2a8e4426a95c0f20">arma::MA_white_noise_variance</a></div><div class="ttdeci">T MA_white_noise_variance(const Array3D&lt; T &gt; &amp;acf, const Array3D&lt; T &gt; &amp;theta)</div><div class="ttdef"><b>Definition:</b> arma.cc:55</div></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    Array3D&lt;T&gt;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="namespacearma.html#a268366e47e37b4b72c7967cc48f12d90">auto_covariance</a>(<span class="keyword">const</span> Array3D&lt;T&gt;&amp; rhs);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif // ARMA_HH</span></div>
+<div class="ttc" id="namespacearma_html_a9bf29617c4bd4732022156a4f7a07f6b"><div class="ttname"><a href="namespacearma.html#a9bf29617c4bd4732022156a4f7a07f6b">arma::validate_process</a></div><div class="ttdeci">void validate_process(blitz::Array&lt; T, N &gt; _phi)</div><div class="ttdoc">Check AR (MA) process stationarity (invertibility). </div><div class="ttdef"><b>Definition:</b> arma.cc:9</div></div>
+<div class="ttc" id="namespacearma_html_a0e9ca2a5ae62fd7e2a8e4426a95c0f20"><div class="ttname"><a href="namespacearma.html#a0e9ca2a5ae62fd7e2a8e4426a95c0f20">arma::MA_white_noise_variance</a></div><div class="ttdeci">T MA_white_noise_variance(const Array3D&lt; T &gt; &amp;acf, const Array3D&lt; T &gt; &amp;theta)</div><div class="ttdef"><b>Definition:</b> arma.cc:65</div></div>
 <div class="ttc" id="namespacearma_html_af7d4db4b1cfb7a98584f1799b785f95c"><div class="ttname"><a href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a></div><div class="ttdeci">Array&lt; T, 3 &gt; Array3D</div><div class="ttdef"><b>Definition:</b> types.hh:36</div></div>
 <div class="ttc" id="statistics_8hh_html"><div class="ttname"><a href="statistics_8hh.html">statistics.hh</a></div></div>
 <div class="ttc" id="qq__graph_8hh_html"><div class="ttname"><a href="qq__graph_8hh.html">qq_graph.hh</a></div></div>
 <div class="ttc" id="blitz_8hh_html"><div class="ttname"><a href="blitz_8hh.html">blitz.hh</a></div></div>
 <div class="ttc" id="namespacearma_1_1stats_html_ac76596227942b358da4ebe6bbcfa85d5"><div class="ttname"><a href="namespacearma_1_1stats.html#ac76596227942b358da4ebe6bbcfa85d5">arma::stats::variance</a></div><div class="ttdeci">float variance(const float *data, const size_t n)</div><div class="ttdef"><b>Definition:</b> statistics.hh:31</div></div>
+<div class="ttc" id="namespacearma_html_a268366e47e37b4b72c7967cc48f12d90"><div class="ttname"><a href="namespacearma.html#a268366e47e37b4b72c7967cc48f12d90">arma::auto_covariance</a></div><div class="ttdeci">Array3D&lt; T &gt; auto_covariance(const Array3D&lt; T &gt; &amp;rhs)</div></div>
 <div class="ttc" id="distribution_8hh_html"><div class="ttname"><a href="distribution_8hh.html">distribution.hh</a></div></div>
 <div class="ttc" id="namespacearma_html_a9e0adb4276e8261293b12a669227d1dd"><div class="ttname"><a href="namespacearma.html#a9e0adb4276e8261293b12a669227d1dd">arma::approx_wave_period</a></div><div class="ttdeci">T approx_wave_period(T variance)</div><div class="ttdef"><b>Definition:</b> arma.hh:52</div></div>
 <div class="ttc" id="types_8hh_html"><div class="ttname"><a href="types_8hh.html">types.hh</a></div></div>
