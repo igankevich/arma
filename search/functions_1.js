@@ -45,8 +45,6 @@ var searchData=
   ['append_5frow_5fblock',['append_row_block',['../namespaceanonymous__namespace_02voodoo_8cc_03.html#a6eb82f0b4ff4634f7ba62e70401555bb',1,'anonymous_namespace{voodoo.cc}']]],
   ['appendv',['appendv',['../structImGuiTextBuffer.html#aeb9702dcb536ffc5919954e0f45a4c30',1,'ImGuiTextBuffer']]],
   ['approx_5fspectrum',['approx_spectrum',['../classarma_1_1generator_1_1Longuet__Higgins__model.html#ab3ccfb8c385a48f9b73f5089b853e53b',1,'arma::generator::Longuet_Higgins_model']]],
-  ['approx_5fwave_5fheight',['approx_wave_height',['../namespacearma.html#a191379ad041815726556d493bbbc69fb',1,'arma']]],
-  ['approx_5fwave_5fperiod',['approx_wave_period',['../namespacearma.html#a9e0adb4276e8261293b12a669227d1dd',1,'arma']]],
   ['approximate_5fspectrum',['approximate_spectrum',['../classarma_1_1generator_1_1Longuet__Higgins__model.html#af2ed8fc6bf22caa228392b1f78f32ade',1,'arma::generator::Longuet_Higgins_model']]],
   ['ar_5fgenerate_5fsurface',['ar_generate_surface',['../namespaceanonymous__namespace_02ar__model__surf_8cc_03.html#ad6a668b1a87a508cff8894afd0fa8316',1,'anonymous_namespace{ar_model_surf.cc}']]],
   ['ar_5fmaster_5fkernel',['ar_master_kernel',['../classanonymous__namespace_02ar__model__bscheduler_8cc_03_1_1ar__master__kernel.html#a1f1ecc6b800e7330aec44a905b8b2098',1,'anonymous_namespace{ar_model_bscheduler.cc}::ar_master_kernel']]],
