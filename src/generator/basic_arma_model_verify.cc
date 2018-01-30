@@ -41,15 +41,15 @@ namespace {
 		stats::Wave_lengths_dist<T> lengths_y_dist(stats::mean(lengths_y));
 		std::vector<Summary<T>> stats = {
 			make_summary(zeta, T(0), var_elev, elev_dist, "elevation"),
-			make_summary(heights_x, approx_wave_height(var_elev), T(0),
+			make_summary(heights_x, T(0), T(0),
 					   heights_x_dist, "wave height x"),
-			make_summary(heights_y, approx_wave_height(var_elev), T(0),
+			make_summary(heights_y, T(0), T(0),
 					   heights_y_dist, "wave height y"),
 			make_summary(lengths_x, T(0), T(0), lengths_x_dist,
 					   "wave length x"),
 			make_summary(lengths_y, T(0), T(0), lengths_y_dist,
 					   "wave length y"),
-			make_summary(periods, approx_wave_period(var_elev), T(0),
+			make_summary(periods, T(0), T(0),
 					   periods_dist, "wave period"),
 		};
 		if (oflags.isset(Output_flags::Summary)) {

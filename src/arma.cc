@@ -73,10 +73,11 @@ arma::Array3D<T>
 arma
 ::auto_covariance(const Array3D<T>& rhs) {
 	const Shape3D& shp = rhs.shape();
-	const T m = blitz::mean(rhs);
+//	const T m = blitz::mean(rhs);
 	const int ni = shp(0);
 	const int nj = shp(1);
 	const int nk = shp(2);
+	const int nall = rhs.numElements();
 	Array3D<T> result(rhs.shape());
 	#if ARMA_OPENMP
 	#pragma omp parallel for collapse(3)
@@ -84,19 +85,16 @@ arma
 	for (int i=0; i<ni; ++i) {
 		for (int j=0; j<nj; ++j) {
 			for (int k=0; k<nk; ++k) {
-				const T rhs_ijk = rhs(i,j,k) - m;
-				const int mi = i+1;
-				const int mj = j+1;
-				const int mk = k+1;
 				T sum = 0;
-				for (int i1=0; i1<mi; ++i1) {
-					for (int j1=0; j1<mj; ++j1) {
-						for (int k1=0; k1<mk; ++k1) {
-							sum += rhs_ijk*(rhs(i-i1,j-j1,k-k1) - m);
+				for (int i1=0; i1<ni; ++i1) {
+					for (int j1=0; j1<nj; ++j1) {
+						for (int k1=0; k1<nk; ++k1) {
+							sum += rhs(i1,j1,k1) *
+								   rhs((i+i1)%ni,(j+j1)%nj,(k+k1)%nk);
 						}
 					}
 				}
-				result(i,j,k) = sum;
+				result(i,j,k) = sum / nall;
 			}
 		}
 	}

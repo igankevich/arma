@@ -139,3 +139,13 @@ test(
 		dependencies: [gtest, libarma],
 	)
 )
+
+test(
+	'arma::auto_covariance',
+	executable(
+		'auto-covariance-test',
+		sources: ['auto-covariance-test.cc'],
+		include_directories: incdirs,
+		dependencies: [gtest, libarma],
+	)
+)

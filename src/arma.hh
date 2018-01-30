@@ -41,25 +41,13 @@ namespace arma {
 		return acf(0,0,0);
 	}
 
-	template <class T>
-	T
-	approx_wave_height(T variance) {
-		return std::sqrt(T(2) * M_PI * variance);
-	}
-
-	template <class T>
-	T
-	approx_wave_period(T variance) {
-		return T(4.8) * std::sqrt(approx_wave_height(variance));
-	}
-
 	/**
 	Compute white noise variance via the formula
 	\f[
 	    \sigma_\alpha^2 = \frac{\gamma_0}{
-	        \sum\limits_{i=0}^{n_1}
-	        \sum\limits_{i=0}^{n_2}
-	        \sum\limits_{k=0}^{n_3}
+	        \sum\limits_{i=0}^{n_1-1}
+	        \sum\limits_{i=0}^{n_2-1}
+	        \sum\limits_{k=0}^{n_3-1}
 	        \theta_{i,j,k}^2
 	    }
 	\f]
@@ -69,6 +57,25 @@ namespace arma {
 	T
 	MA_white_noise_variance(const Array3D<T>& acf, const Array3D<T>& theta);
 
+	/**
+	\brief Computes auto-covariance function of three-dimensional field.
+	\date 2018-01-30
+	\author Ivan Gankevich
+	\param[in] rhs symmetric three-dimensional field
+
+	Uses the following formula. Does not subtract mean value. Does not divide by
+	the variance.
+	\f[
+		\gamma_{i,j,k} =
+			\frac{1}{n_1 n_2 n_3}
+	        \sum\limits_{i_1=0}^{n_1-1}
+	        \sum\limits_{i_1=0}^{n_2-1}
+	        \sum\limits_{k_1=0}^{n_3-1}
+			\zeta_{i_1,j_1,k_1}
+			\zeta_{(i_1+i) \bmod n_1,(j_1+i) \bmod n_2,(k_1+k) \bmod n_3}
+	\f]
+	Assumes, that the field is symmetric in each dimension.
+	*/
 	template <class T>
 	Array3D<T>
 	auto_covariance(const Array3D<T>& rhs);
