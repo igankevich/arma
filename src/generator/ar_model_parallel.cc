@@ -76,7 +76,7 @@ namespace {
 template <class T>
 arma::Array3D<T>
 arma::generator::AR_model<T>::do_generate() {
-	const T var_wn = this->white_noise_variance();
+	const T var_wn = this->_varwn;
 	write_key_value(std::clog, "White noise variance", var_wn);
 	if (var_wn < T(0)) {
 		throw std::invalid_argument("variance is less than zero");

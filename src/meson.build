@@ -24,6 +24,7 @@ subdir('opencl')
 arma_lib_src += files([
 	'arma.cc',
 	'arma_driver.cc',
+	'chop.cc',
 	'factor_waves.cc',
 	'interpolate.cc',
 	'linalg.cc',

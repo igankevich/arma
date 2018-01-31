@@ -149,3 +149,13 @@ test(
 		dependencies: [gtest, libarma],
 	)
 )
+
+test(
+	'arma::generator::acf_generator',
+	executable(
+		'acf-generator-test',
+		sources: ['acf-generator-test.cc'],
+		include_directories: incdirs,
+		dependencies: [gtest, libarma],
+	)
+)

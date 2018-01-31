@@ -83,7 +83,7 @@ arma::generator::MA_coefficient_solver<T>
 		/// 3. Ensure that coefficients are finite.
 		if (!all(isfinite(theta))) {
 			std::cerr << __func__
-			          << ": bad coefficients = \n" << theta
+			          << ": bad coefficients"
 			          << std::endl;
 			throw std::runtime_error("bad MA model coefficients");
 		}
@@ -116,14 +116,14 @@ arma::generator::MA_coefficient_solver<T>
 			          << std::endl;
 			throw std::runtime_error("bad white noise variance");
 		}
-		#ifndef NDEBUG
+//		#ifndef NDEBUG
 		/// 8. Print solver state.
 		std::clog << __func__ << ':' << "Iteration=" << it
 		          << ",var_wn=" << var_wn
 		          << ",resudual=" << residual
 		          << ",theta(0,0,0)=" << theta(0,0,0)
 		          << std::endl;
-		#endif
+//		#endif
 		++it;
 	} while ((it < max_iterations) &&
 	         abs(var_wn - old_var_wn) > eps &&

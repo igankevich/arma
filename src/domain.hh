@@ -79,6 +79,11 @@ namespace arma {
 			return _npoints;
 		}
 
+		const size_type&
+		shape() const {
+			return _npoints;
+		}
+
 		const length_type&
 		lbound() const {
 			return _lbound;
