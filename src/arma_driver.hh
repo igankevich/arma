@@ -1,6 +1,7 @@
 #ifndef ARMA_DRIVER_HH
 #define ARMA_DRIVER_HH
 
+#include <functional>
 #include <istream>
 #include <ostream>
 #include <string>

@@ -1,7 +1,14 @@
 #include "arma.hh"
+
 #ifndef NDEBUG
 #include <fstream>
 #endif
+
+#include <gsl/gsl_complex.h>
+#include <gsl/gsl_errno.h>
+#include <gsl/gsl_poly.h>
+
+#include "fourier.hh"
 
 template <class T, int N>
 void
@@ -72,33 +79,21 @@ template <class T>
 arma::Array3D<T>
 arma
 ::auto_covariance(const Array3D<T>& rhs) {
-	const Shape3D& shp = rhs.shape();
-//	const T m = blitz::mean(rhs);
-	const int ni = shp(0);
-	const int nj = shp(1);
-	const int nk = shp(2);
-	const int nall = rhs.numElements();
-	Array3D<T> result(rhs.shape());
-	#if ARMA_OPENMP
-	#pragma omp parallel for collapse(3)
-	#endif
-	for (int i=0; i<ni; ++i) {
-		for (int j=0; j<nj; ++j) {
-			for (int k=0; k<nk; ++k) {
-				T sum = 0;
-				for (int i1=0; i1<ni; ++i1) {
-					for (int j1=0; j1<nj; ++j1) {
-						for (int k1=0; k1<nk; ++k1) {
-							sum += rhs(i1,j1,k1) *
-								   rhs((i+i1)%ni,(j+j1)%nj,(k+k1)%nk);
-						}
-					}
-				}
-				result(i,j,k) = sum / nall;
-			}
-		}
-	}
-	return result;
+	using arma::apmath::Fourier_transform;
+	using arma::apmath::Fourier_workspace;
+	using blitz::abs;
+	using blitz::pow2;
+	using blitz::real;
+	typedef std::complex<T> C;
+	Fourier_transform<C,3> fft(rhs.shape());
+	Fourier_workspace<C,3> workspace(rhs.shape());
+	const int n = rhs.numElements();
+	blitz::Array<C,3> cwave(rhs.shape());
+	cwave = rhs;
+	cwave = pow2(abs(fft.forward(cwave, workspace)));
+	return blitz::Array<T,3>(
+		real(fft.backward(cwave, workspace)) / n / n
+	);
 }
 
 template void
