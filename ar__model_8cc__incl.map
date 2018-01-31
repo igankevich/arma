@@ -1,23 +1,26 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ar_model.cc" name="/home/travis/build/igankevich/arma/src/generator/ar_model.cc">
-<area shape="rect" id="node2" href="$ar__model_8hh.html" title="ar_model.hh" alt="" coords="1697,109,1791,136"/>
-<area shape="rect" id="node34" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="2157,333,2227,360"/>
-<area shape="rect" id="node38" href="$params_8hh.html" title="params.hh" alt="" coords="2684,259,2765,285"/>
-<area shape="rect" id="node41" href="$util_8hh.html" title="util.hh" alt="" coords="2739,109,2796,136"/>
-<area shape="rect" id="node45" href="$voodoo_8hh.html" title="Old methods of determining autoregressive model coefficients based on Gauss elimination. " alt="" coords="2379,259,2460,285"/>
-<area shape="rect" id="node48" href="$yule__walker_8hh.html" title="yule_walker.hh" alt="" coords="1769,259,1879,285"/>
-<area shape="rect" id="node50" href="$ar__model__surf_8cc.html" title="ar_model_surf.cc" alt="" coords="2917,109,3040,136"/>
-<area shape="rect" id="node3" href="$ar__algorithm_8hh.html" title="ar_algorithm.hh" alt="" coords="2133,408,2243,435"/>
-<area shape="rect" id="node6" href="$arma_8hh.html" title="arma.hh" alt="" coords="1183,259,1252,285"/>
-<area shape="rect" id="node19" href="$types_8hh.html" title="types.hh" alt="" coords="1640,333,1712,360"/>
-<area shape="rect" id="node28" href="$basic__arma__model_8hh.html" title="basic_arma_model.hh" alt="" coords="1941,184,2089,211"/>
-<area shape="rect" id="node32" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="1607,259,1745,285"/>
-<area shape="rect" id="node21" href="$statistics_8hh.html" title="stats/statistics.hh" alt="" coords="138,408,264,435"/>
-<area shape="rect" id="node24" href="$distribution_8hh.html" title="stats/distribution.hh" alt="" coords="1084,333,1219,360"/>
-<area shape="rect" id="node25" href="$qq__graph_8hh.html" title="stats/qq_graph.hh" alt="" coords="189,333,315,360"/>
-<area shape="rect" id="node26" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="1245,333,1320,360"/>
-<area shape="rect" id="node27" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="1317,408,1381,435"/>
-<area shape="rect" id="node30" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="1986,259,2099,285"/>
-<area shape="rect" id="node33" href="$nit__transform_8hh.html" title="nonlinear/nit_transform.hh" alt="" coords="2123,259,2295,285"/>
-<area shape="rect" id="node31" href="$grid_8hh.html" title="grid.hh" alt="" coords="1736,333,1797,360"/>
-<area shape="rect" id="node37" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="1882,408,2056,435"/>
+<area shape="rect" id="node2" href="$ar__model_8hh.html" title="ar_model.hh" alt="" coords="2657,109,2751,136"/>
+<area shape="rect" id="node32" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="837,333,907,360"/>
+<area shape="rect" id="node39" href="$params_8hh.html" title="params.hh" alt="" coords="845,259,927,285"/>
+<area shape="rect" id="node42" href="$util_8hh.html" title="util.hh" alt="" coords="3389,333,3445,360"/>
+<area shape="rect" id="node45" href="$voodoo_8hh.html" title="Old methods of determining autoregressive model coefficients based on Gauss elimination. " alt="" coords="3104,259,3185,285"/>
+<area shape="rect" id="node47" href="$yule__walker_8hh.html" title="yule_walker.hh" alt="" coords="1112,259,1221,285"/>
+<area shape="rect" id="node50" href="$ar__model__surf_8cc.html" title="ar_model_surf.cc" alt="" coords="3587,109,3709,136"/>
+<area shape="rect" id="node3" href="$ar__algorithm_8hh.html" title="ar_algorithm.hh" alt="" coords="1155,408,1265,435"/>
+<area shape="rect" id="node6" href="$arma_8hh.html" title="arma.hh" alt="" coords="2707,184,2776,211"/>
+<area shape="rect" id="node7" href="$types_8hh.html" title="types.hh" alt="" coords="2759,333,2831,360"/>
+<area shape="rect" id="node9" href="$basic__arma__model_8hh.html" title="basic_arma_model.hh" alt="" coords="1771,184,1919,211"/>
+<area shape="rect" id="node27" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="2593,259,2732,285"/>
+<area shape="rect" id="node11" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="1923,259,2036,285"/>
+<area shape="rect" id="node28" href="$nit__transform_8hh.html" title="nonlinear/nit_transform.hh" alt="" coords="1399,259,1571,285"/>
+<area shape="rect" id="node12" href="$grid_8hh.html" title="grid.hh" alt="" coords="2673,333,2735,360"/>
+<area shape="rect" id="node18" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="2189,333,2299,360"/>
+<area shape="rect" id="node22" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="1929,333,2031,360"/>
+<area shape="rect" id="node14" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="3056,483,3120,509"/>
+<area shape="rect" id="node16" href="$validators_8hh.html" title="validators.hh" alt="" coords="2933,408,3029,435"/>
+<area shape="rect" id="node29" href="$gaussian_8hh.html" title="stats/gaussian.hh" alt="" coords="1392,408,1517,435"/>
+<area shape="rect" id="node30" href="$skew__normal_8hh.html" title="stats/skew_normal.hh" alt="" coords="1297,333,1447,360"/>
+<area shape="rect" id="node31" href="$gram__charlier_8hh.html" title="stats/gram_charlier.hh" alt="" coords="929,408,1079,435"/>
+<area shape="rect" id="node37" href="$domain_8hh.html" title="domain.hh" alt="" coords="2567,333,2648,360"/>
+<area shape="rect" id="node36" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="345,408,519,435"/>
 </map>

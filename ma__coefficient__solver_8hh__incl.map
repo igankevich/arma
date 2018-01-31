@@ -1,18 +1,4 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ma_coefficient_solver.hh" name="/home/travis/build/igankevich/arma/src/generator/ma_coefficient_solver.hh">
-<area shape="rect" id="node2" href="$arma_8hh.html" title="arma.hh" alt="" coords="1421,125,1491,152"/>
-<area shape="rect" id="node16" href="$types_8hh.html" title="types.hh" alt="" coords="680,357,752,384"/>
-<area shape="rect" id="node18" href="$statistics_8hh.html" title="stats/statistics.hh" alt="" coords="1115,275,1241,301"/>
-<area shape="rect" id="node21" href="$distribution_8hh.html" title="stats/distribution.hh" alt="" coords="1388,200,1523,227"/>
-<area shape="rect" id="node30" href="$qq__graph_8hh.html" title="stats/qq_graph.hh" alt="" coords="1047,200,1173,227"/>
-<area shape="rect" id="node31" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="483,200,559,227"/>
-<area shape="rect" id="node39" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="900,200,964,227"/>
-<area shape="rect" id="node22" href="$gaussian_8hh.html" title="gaussian.hh" alt="" coords="1851,357,1943,384"/>
-<area shape="rect" id="node25" href="$weibull_8hh.html" title="weibull.hh" alt="" coords="1696,357,1775,384"/>
-<area shape="rect" id="node26" href="$gram__charlier_8hh.html" title="gram_charlier.hh" alt="" coords="1447,275,1565,301"/>
-<area shape="rect" id="node28" href="$skew__normal_8hh.html" title="skew_normal.hh" alt="" coords="1839,275,1955,301"/>
-<area shape="rect" id="node27" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1317,357,1469,384"/>
-<area shape="rect" id="node29" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="2019,357,2148,384"/>
-<area shape="rect" id="node32" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="403,275,549,301"/>
-<area shape="rect" id="node35" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="331,357,509,384"/>
-<area shape="rect" id="node36" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="99,357,224,384"/>
+<area shape="rect" id="node2" href="$arma_8hh.html" title="arma.hh" alt="" coords="55,125,124,152"/>
+<area shape="rect" id="node3" href="$types_8hh.html" title="types.hh" alt="" coords="53,200,125,227"/>
 </map>

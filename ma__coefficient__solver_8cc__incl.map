@@ -1,21 +1,8 @@
 <map id="/home/travis/build/igankevich/arma/src/generator/ma_coefficient_solver.cc" name="/home/travis/build/igankevich/arma/src/generator/ma_coefficient_solver.cc">
-<area shape="rect" id="node2" href="$ma__coefficient__solver_8hh.html" title="ma_coefficient_solver.hh" alt="" coords="1093,125,1259,152"/>
-<area shape="rect" id="node40" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="811,275,875,301"/>
-<area shape="rect" id="node43" href="$params_8hh.html" title="params.hh" alt="" coords="1283,125,1364,152"/>
-<area shape="rect" id="node46" href="$validators_8hh.html" title="validators.hh" alt="" coords="795,200,891,227"/>
-<area shape="rect" id="node3" href="$arma_8hh.html" title="arma.hh" alt="" coords="1175,200,1244,227"/>
-<area shape="rect" id="node17" href="$types_8hh.html" title="types.hh" alt="" coords="1924,432,1996,459"/>
-<area shape="rect" id="node19" href="$statistics_8hh.html" title="stats/statistics.hh" alt="" coords="1767,349,1893,376"/>
-<area shape="rect" id="node22" href="$distribution_8hh.html" title="stats/distribution.hh" alt="" coords="596,275,731,301"/>
-<area shape="rect" id="node31" href="$qq__graph_8hh.html" title="stats/qq_graph.hh" alt="" coords="1767,275,1893,301"/>
-<area shape="rect" id="node32" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="2071,275,2147,301"/>
-<area shape="rect" id="node23" href="$gaussian_8hh.html" title="gaussian.hh" alt="" coords="110,432,201,459"/>
-<area shape="rect" id="node26" href="$weibull_8hh.html" title="weibull.hh" alt="" coords="5,432,84,459"/>
-<area shape="rect" id="node27" href="$gram__charlier_8hh.html" title="gram_charlier.hh" alt="" coords="601,349,719,376"/>
-<area shape="rect" id="node29" href="$skew__normal_8hh.html" title="skew_normal.hh" alt="" coords="284,349,400,376"/>
-<area shape="rect" id="node28" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="584,432,736,459"/>
-<area shape="rect" id="node30" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="278,432,407,459"/>
-<area shape="rect" id="node33" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="2107,349,2253,376"/>
-<area shape="rect" id="node36" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="2303,432,2481,459"/>
-<area shape="rect" id="node37" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="2153,432,2279,459"/>
+<area shape="rect" id="node2" href="$ma__coefficient__solver_8hh.html" title="ma_coefficient_solver.hh" alt="" coords="5,125,171,152"/>
+<area shape="rect" id="node9" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="441,200,505,227"/>
+<area shape="rect" id="node12" href="$params_8hh.html" title="params.hh" alt="" coords="605,125,687,152"/>
+<area shape="rect" id="node16" href="$validators_8hh.html" title="validators.hh" alt="" coords="420,125,516,152"/>
+<area shape="rect" id="node3" href="$arma_8hh.html" title="arma.hh" alt="" coords="80,200,149,227"/>
+<area shape="rect" id="node4" href="$types_8hh.html" title="types.hh" alt="" coords="160,275,232,301"/>
 </map>
