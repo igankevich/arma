@@ -1,18 +1,17 @@
 model = AR {
-	out_grid = (200,40,40)
+	out_grid = (200,200,200)
 	acf = {
 		func = standing_wave
-		amplitude = 2
-		alpha = (0.12,0.06,0.06)
-		velocity = 1.8
-		beta = (0.8,0)
-		grid = (10,10,10) : (2.5,5,5)
+		amplitude = 4
+		alpha = (2,2,2)
+		velocity = 1
+		beta = (0.5,0)
+		nwaves = 1.5
 	}
-	order = (10,10,10)
 	algorithm = choi_recursive
 #	order = (7,7,2)
 #	algorithm = gauss_elimination
-	output = surface,summary
+	output = surface,summary,acf
 }
 velocity_potential_solver = linear {
 #	wnmax = from (0,0) to (0,0.25) npoints (2,2)

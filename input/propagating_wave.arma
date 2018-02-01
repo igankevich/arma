@@ -1,17 +1,15 @@
-model = AR {
+model = MA {
 	out_grid = (200,200,200)
 	acf = {
-		func = standing_wave
+		func = cos
 		amplitude = 4
 		alpha = (2,2,2)
 		velocity = 1
 		beta = (0.5,0)
 		nwaves = 1.5
-#		grid = (20,10,10) : (10,5,5)
 	}
-#	order = (10,10,10)
-#	algorithm = fixed_point_iteration
-	algorithm = choi_recursive
+	order = (3,3,3)
+	algorithm = fixed_point_iteration
 	output = surface,summary,acf
 	validate = 1
 }
