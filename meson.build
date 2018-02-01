@@ -17,6 +17,7 @@ libblas = cpp.find_library('blas')
 libGL = cpp.find_library('GL')
 libglut = dependency('freeglut')
 libSDL2 = dependency('sdl2')
+libdlib = dependency('dlib-1')
 
 if not get_option('buildtype').contains('debug')
 	add_global_arguments('-DNDEBUG', language: 'cpp')
@@ -31,6 +32,7 @@ arma_deps = [
 	libblas,
 	liblapack,
 	libdcmt,
+	libdlib,
 ]
 framework = get_option('framework')
 if framework == 'openmp'

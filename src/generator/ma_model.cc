@@ -154,7 +154,11 @@ template <class T>
 void
 arma::generator::MA_model<T>
 ::fixed_point_iteration() {
-	MA_coefficient_solver<T> solver(this->_acf, this->_order);
+	using blitz::RectDomain;
+	MA_coefficient_solver<T> solver(
+		Array3D<T>(this->_acf),
+		this->_order
+	);
 	this->_theta.reference(solver.solve());
 	this->_varwn = solver.white_noise_variance(this->_theta);
 }
