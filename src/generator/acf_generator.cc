@@ -152,6 +152,7 @@ arma::generator::ACF_generator<T>
 	array_type result;
 	result.reference(acf);
 	result.setgrid(Grid<T,3>{acf.shape(), {r,r,r}});
+	std::clog << "wave grid = " << result.grid() << std::endl;
 	return result;
 }
 

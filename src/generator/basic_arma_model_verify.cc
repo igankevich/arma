@@ -1,12 +1,14 @@
-#include "stats/statistics.hh"
-#include "stats/distribution.hh"
-#include "stats/summary.hh"
-#include "stats/waves.hh"
-#include "grid.hh"
 #include <fstream>
 #include <string>
 #include <algorithm>
 #include <iterator>
+
+#include "grid.hh"
+#include "stats/distribution.hh"
+#include "stats/statistics.hh"
+#include "stats/summary.hh"
+#include "stats/waves.hh"
+#include "util.hh"
 
 namespace {
 
@@ -58,6 +60,14 @@ namespace {
 				stats.end(),
 				std::ostream_iterator<Summary<T>>(std::clog, "\n")
 			);
+			std::clog
+				<< "Wave height to length ratio x: 1 to "
+				<< (stats::mean(lengths_x) / stats::mean(heights_x))
+				<< std::endl;
+			std::clog
+				<< "Wave height to length ratio y: 1 to "
+				<< (stats::mean(lengths_y) / stats::mean(heights_y))
+				<< std::endl;
 		}
 		if (oflags.isset(Output_flags::Quantile)) {
 			std::for_each(

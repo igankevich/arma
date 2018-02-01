@@ -1,15 +1,15 @@
 model = AR {
-	out_grid = (200,200,200)
+	out_grid = (100,400,100)
 	acf = {
 		func = standing_wave
-		amplitude = 4
+		amplitude = 2
 		alpha = (2,2,2)
-		velocity = 1
-		beta = (0.5,0)
+		velocity = 1.1
+		beta = (0.125,0)
 		nwaves = 1.5
 	}
 	algorithm = choi_recursive
-#	order = (7,7,2)
+#	order = (8,8,8)
 #	algorithm = gauss_elimination
 	output = surface,summary,acf
 }

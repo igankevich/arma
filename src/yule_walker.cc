@@ -420,10 +420,7 @@ template <class T>
 void
 arma::Yule_walker_solver<T>
 ::max_order(int rhs) {
-	if (blitz::any(rhs >= this->_acf.shape())) {
-		throw std::invalid_argument("order >= acf.shape()");
-	}
-	this->_maxorder = rhs;
+	this->_maxorder = std::min(rhs, blitz::max(this->_acf.shape())-1);
 }
 
 template <class T>
