@@ -26,10 +26,22 @@ template <class T>
 std::ostream&
 arma::stats::operator<<(std::ostream& out, const Summary<T>& rhs) {
 	out.precision(5);
-	out << std::setw(colw + 2) << rhs._name << std::setw(colw)
-		<< rhs._mean << std::setw(colw) << rhs._variance
-		<< std::setw(colw) << rhs._expected_mean << std::setw(colw)
-		<< rhs._expected_variance << std::setw(colw) << rhs.qdistance();
+	out << std::setw(colw + 2) << rhs._name;
+	out << std::setw(colw) << rhs._mean;
+	out << std::setw(colw);
+	if (rhs._needvariance) {
+		out << rhs._variance;
+	} else {
+		out << '-';
+	}
+	out << std::setw(colw) << rhs._expected_mean;
+	out << std::setw(colw);
+	if (rhs._needvariance) {
+		out << rhs._expected_variance;
+	} else {
+		out << '-';
+	}
+	out << std::setw(colw) << rhs.qdistance();
 	return out;
 }
 

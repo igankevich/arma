@@ -169,7 +169,7 @@ arma::generator::ACF_generator<T>
 	Shape3D wave_shape(2,2,2);
 	Array3D<T> surface;
 	Domain<T,3> grid;
-	while (all(wave_shape < 128)) {
+	while (all(wave_shape < 64)) {
 		grid = Domain<T,3>{{-r,-r,-r}, {r,r,r}, wave_shape+1};
 		surface.reference(
 			generate_wavy_surface(
@@ -245,10 +245,24 @@ arma::generator::operator>>(std::istream& in, ACF_generator<T>& rhs) {
 	return in;
 }
 
+template <class T>
+std::ostream&
+arma::generator::operator<<(std::ostream& out, const ACF_generator<T>& rhs) {
+	return out
+		<< "func=" << rhs._func
+		<< ",nwaves=" << rhs._nwaves;
+}
+
 template class arma::generator::ACF_generator<ARMA_REAL_TYPE>;
 
 template std::istream&
 arma::generator::operator>>(
 	std::istream& in,
 	ACF_generator<ARMA_REAL_TYPE>& rhs
+);
+
+template std::ostream&
+arma::generator::operator<<(
+	std::ostream& out,
+	const ACF_generator<ARMA_REAL_TYPE>& rhs
 );

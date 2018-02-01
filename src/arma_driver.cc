@@ -101,11 +101,6 @@ arma::ARMA_driver<T>::echo_parameters() {
 			"Output grid size",
 			this->_model->grid().size()
 		);
-		write_key_value(
-			std::clog,
-			"Output grid patch size",
-			this->_model->grid().patch_size()
-		);
 		write_key_value(std::clog, "Model", *this->_model);
 	}
 	if (this->_solver) {

@@ -1,6 +1,5 @@
 #include "basic_arma_model.hh"
 
-#include "acf_generator.hh"
 #include "arma.hh"
 #include "bits/acf_wrapper.hh"
 #include "bits/transform_wrapper.hh"
@@ -13,44 +12,10 @@
 
 #include <random>
 
-namespace {
-
-	template <class T>
-	class ACF_generator_wrapper: public arma::generator::ACF_generator<T> {
-
-	public:
-		typedef arma::Discrete_function<T,3> result_type;
-		typedef arma::Shape3D shape_type;
-
-	private:
-		result_type& _acf;
-		shape_type& _order;
-
-	public:
-
-		inline explicit
-		ACF_generator_wrapper(result_type& acf, shape_type& order):
-		_acf(acf),
-		_order(order)
-		{}
-
-		friend std::istream&
-		operator>>(std::istream& in, ACF_generator_wrapper& rhs) {
-			in >> static_cast<arma::generator::ACF_generator<T>&>(rhs);
-			rhs._acf.reference(rhs.generate());
-			rhs._order = rhs._acf.shape();
-			return in;
-		}
-
-	};
-
-}
-
 template <class T>
 sys::parameter_map::map_type
 arma::generator::Basic_ARMA_model<T>::parameters() {
 	typedef bits::Transform_wrapper<transform_type> nit_wrapper;
-	typedef ACF_generator_wrapper<T> acf_wrapper;
 	return {
 		{"out_grid", sys::make_param(this->_outgrid, validate_grid<T,3>)},
 		{"no_seed", sys::make_param(this->_noseed)},
@@ -58,7 +23,7 @@ arma::generator::Basic_ARMA_model<T>::parameters() {
 			this->_nittransform,
 			this->_linear
 		))},
-		{"acf", sys::wrap_param(acf_wrapper(this->_acf, this->_order))},
+		{"acf", sys::make_param(this->_acfgen)},
 		{"output", sys::make_param(this->_oflags)},
 		{"order", sys::make_param(this->_order, validate_shape<int,3>)},
 		{"validate", sys::make_param(this->_validate)},
@@ -85,6 +50,27 @@ arma::generator::Basic_ARMA_model<T>::generate_white_noise() {
 template <class T>
 arma::Array3D<T>
 arma::generator::Basic_ARMA_model<T>::generate() {
+	using blitz::all;
+	using constants::_2pi;
+	typedef typename Basic_model<T>::grid_type grid_type;
+	ARMA_PROFILE_BLOCK("generate_acf",
+		this->_acf.reference(this->_acfgen.generate());
+		if (all(this->_order) == 0) {
+			this->_order = this->_acf.shape();
+		}
+		// resize output grid to match ACF delta size
+		this->_outgrid =
+			grid_type(
+				this->_outgrid.num_points(),
+				this->_acf.grid().delta() * this->_outgrid.num_patches() * _2pi<T>
+			);
+		write_key_value(std::clog, "Output grid", this->grid());
+		write_key_value(
+			std::clog,
+			"Output grid patch size",
+			this->grid().patch_size()
+		);
+	);
 	ARMA_PROFILE_BLOCK("nit_acf",
 		if (!this->_linear) {
 			auto copy = this->_acf.copy();

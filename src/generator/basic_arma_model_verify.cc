@@ -17,18 +17,23 @@ namespace {
 	show_statistics(
 		arma::Array3D<T> acf,
 		arma::Array3D<T> zeta,
-		const arma::Grid<T,3>& grid,
 		const arma::generator::Basic_ARMA_model<T>& model,
 		arma::Output_flags oflags
 	) {
 		using namespace arma;
 		using stats::Summary;
 		using stats::Wave_field;
+		Array1D<T> slice_x(zeta(
+			zeta.extent(0)-1,
+			blitz::Range::all(),
+			zeta.extent(2)-1
+		));
+		std::clog << "slice_x=" << slice_x << std::endl;
 		const T var_wn = model.white_noise_variance();
 		Summary<T>::print_header(std::clog);
 		std::clog << std::endl;
 		T var_elev = acf(0, 0, 0);
-		Wave_field<T> wave_field(zeta, grid);
+		Wave_field<T> wave_field(zeta, model.grid());
 		Array1D<T> heights_x = wave_field.heights_x();
 		Array1D<T> heights_y = wave_field.heights_y();
 		Array1D<T> periods = wave_field.periods();
@@ -44,16 +49,36 @@ namespace {
 		stats::Wave_lengths_dist<T> lengths_y_dist(stats::mean(lengths_y));
 		std::vector<Summary<T>> stats = {
 			make_summary(zeta, T(0), var_elev, elev_dist, "elevation"),
-			make_summary(heights_x, T(0), T(0),
-					   heights_x_dist, "wave height x"),
-			make_summary(heights_y, T(0), T(0),
-					   heights_y_dist, "wave height y"),
-			make_summary(lengths_x, T(0), T(0), lengths_x_dist,
-					   "wave length x"),
-			make_summary(lengths_y, T(0), T(0), lengths_y_dist,
-					   "wave length y"),
-			make_summary(periods, T(0), T(0),
-					   periods_dist, "wave period"),
+			make_summary(
+				heights_x,
+				model.acf_generator().wave_height(),
+				heights_x_dist,
+				"wave height x"
+			),
+			make_summary(
+				heights_y,
+				model.acf_generator().wave_height(),
+				heights_y_dist,
+				"wave height y"
+			),
+			make_summary(
+				lengths_x,
+				model.acf_generator().wave_length_x(),
+				lengths_x_dist,
+				"wave length x"
+			),
+			make_summary(
+				lengths_y,
+				model.acf_generator().wave_length_y(),
+				lengths_y_dist,
+				"wave length y"
+			),
+			make_summary(
+				periods,
+				model.acf_generator().wave_period(),
+				periods_dist,
+				"wave period"
+			),
 		};
 		if (oflags.isset(Output_flags::Summary)) {
 			std::copy(
@@ -118,7 +143,6 @@ arma::generator::Basic_ARMA_model<T>::verify(Array3D<T> zeta) const {
 		show_statistics(
 			this->_acf,
 			zeta(RectDomain<3>(zeta.shape()/2, zeta.shape()-1)),
-			this->_outgrid,
 			*this,
 			this->_oflags
 		);

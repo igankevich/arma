@@ -22,13 +22,21 @@ namespace arma {
 		struct Summary {
 
 			template <int N, class D>
-			Summary(blitz::Array<T, N> rhs, T m, T var, D dist, std::string name):
+			Summary(
+				blitz::Array<T, N> rhs,
+				T m,
+				T var,
+				D dist,
+				std::string name,
+				bool needsvariance
+			):
 			_expected_mean(m),
 			_mean(stats::mean(rhs)),
 			_expected_variance(var),
 			_variance(stats::variance(rhs)),
 			_graph(dist, rhs),
-			_name(name)
+			_name(name),
+			_needvariance(needsvariance)
 			{}
 
 			inline T
@@ -53,6 +61,7 @@ namespace arma {
 			T _variance;
 			stats::QQ_graph<T> _graph;
 			std::string _name;
+			bool _needvariance = true;
 		};
 
 		template <class T>
@@ -62,7 +71,13 @@ namespace arma {
 		template <class T, int N, class D>
 		Summary<T>
 		make_summary(blitz::Array<T, N> rhs, T m, T var, D dist, std::string name) {
-			return Summary<T>(rhs, m, var, dist, name);
+			return Summary<T>(rhs, m, var, dist, name, true);
+		}
+
+		template <class T, int N, class D>
+		Summary<T>
+		make_summary(blitz::Array<T, N> rhs, T m, D dist, std::string name) {
+			return Summary<T>(rhs, m, T(0), dist, name, false);
 		}
 
 	}

@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "acf_generator.hh"
 #include "basic_model.hh"
 #include "discrete_function.hh"
 #include "nonlinear/nit_transform.hh"
@@ -14,14 +15,15 @@ namespace arma {
 
 		/// Base class for AR, MA and ARMA models.
 		template <class T>
-		class Basic_ARMA_model:
-			public virtual Basic_model<T>{
+		class Basic_ARMA_model: public virtual Basic_model<T> {
 
 		public:
 			typedef Discrete_function<T,3> acf_type;
 			typedef nonlinear::NIT_transform<T> transform_type;
 
 		protected:
+			/// Autocovariate function generator.
+			ACF_generator<T> _acfgen;
 			/// Autocovariate function (ACF) of the process.
 			acf_type _acf;
 			/// Process order.
@@ -56,6 +58,11 @@ namespace arma {
 			inline const acf_type&
 			acf() const noexcept {
 				return this->_acf;
+			}
+
+			inline const ACF_generator<T>&
+			acf_generator() const noexcept {
+				return this->_acfgen;
 			}
 
 			inline T

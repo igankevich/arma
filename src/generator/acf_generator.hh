@@ -5,6 +5,7 @@
 
 #include "discrete_function.hh"
 #include "domain.hh"
+#include "physical_constants.hh"
 #include "plain_wave_profile.hh"
 
 namespace arma {
@@ -55,8 +56,6 @@ namespace arma {
 			ACF_generator&
 			operator=(ACF_generator&&) = default;
 
-		public:
-
 			inline array_type
 			operator()() {
 				return this->generate();
@@ -65,9 +64,41 @@ namespace arma {
 			array_type
 			generate();
 
+			inline T
+			amplitude() const noexcept {
+				return this->_amplitude;
+			}
+
+			inline T
+			wave_height() const noexcept {
+				return T(2)*this->_amplitude;
+			}
+
+			inline T
+			wave_length_x() const noexcept {
+				using constants::_2pi;
+				return _2pi<T> / this->_wavenum(0);
+			}
+
+			inline T
+			wave_length_y() const noexcept {
+				using constants::_2pi;
+				return _2pi<T> / this->_wavenum(1);
+			}
+
+			inline T
+			wave_period() const noexcept {
+				using constants::_2pi;
+				return _2pi<T> / this->_velocity;
+			}
+
 			template <class X>
 			friend std::istream&
 			operator>>(std::istream& in, ACF_generator<X>& rhs);
+
+			template <class X>
+			friend std::ostream&
+			operator<<(std::ostream& out, const ACF_generator<X>& rhs);
 
 		private:
 
@@ -92,6 +123,10 @@ namespace arma {
 		template <class T>
 		std::istream&
 		operator>>(std::istream& in, ACF_generator<T>& rhs);
+
+		template <class T>
+		std::ostream&
+		operator<<(std::ostream& out, const ACF_generator<T>& rhs);
 
 	}
 

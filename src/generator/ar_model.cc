@@ -81,6 +81,7 @@ template <class T>
 void
 arma::generator::AR_model<T>
 ::determine_coefficients() {
+	this->_phi.resize(this->order());
 	switch (this->_algorithm) {
 	case AR_algorithm::Gauss_elimination:
 		this->determine_coefficients_gauss();
@@ -157,27 +158,21 @@ template <class T>
 void
 arma::generator::AR_model<T>
 ::read(std::istream& in) {
-	using constants::_2pi;
-	typedef typename Basic_model<T>::grid_type grid_type;
 	sys::parameter_map params {
 		{
-			{"algorithm", sys::make_param(this->_algorithm)},
-			{"partition", sys::make_param(
-				 this->_partition,
-				 validate_shape<int, 3>
-			 )},
+			{
+				"algorithm",
+				sys::make_param(this->_algorithm)
+			},
+			{
+				"partition",
+				sys::make_param(this->_partition, validate_shape<int, 3>)
+			},
 		},
 		true
 	};
 	params.insert(this->parameters());
 	in >> params;
-	// resize output grid to match ACF delta size
-	this->_outgrid =
-		grid_type(
-			this->_outgrid.num_points(),
-			this->_acf.grid().delta() * this->_outgrid.num_patches() * _2pi<T>
-		);
-	this->_phi.resize(this->order());
 }
 
 template <class T>
