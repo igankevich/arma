@@ -17,6 +17,7 @@ namespace {
 	show_statistics(
 		arma::Array3D<T> acf,
 		arma::Array3D<T> zeta,
+		const arma::Grid<T,3>& grid,
 		const arma::generator::Basic_ARMA_model<T>& model,
 		arma::Output_flags oflags
 	) {
@@ -27,7 +28,7 @@ namespace {
 		Summary<T>::print_header(std::clog);
 		std::clog << std::endl;
 		T var_elev = acf(0, 0, 0);
-		Wave_field<T> wave_field(zeta);
+		Wave_field<T> wave_field(zeta, grid);
 		Array1D<T> heights_x = wave_field.heights_x();
 		Array1D<T> heights_y = wave_field.heights_y();
 		Array1D<T> periods = wave_field.periods();
@@ -91,8 +92,12 @@ namespace {
 
 	template <class T>
 	void
-	write_everything_to_files(arma::Array3D<T> acf, arma::Array3D<T> zeta) {
-		arma::stats::Wave_field<T> wave_field(zeta);
+	write_everything_to_files(
+		arma::Array3D<T> acf,
+		arma::Array3D<T> zeta,
+		const arma::Grid<T,3>& grid
+	) {
+		arma::stats::Wave_field<T> wave_field(zeta, grid);
 		write_raw("heights_x", wave_field.heights_x());
 		write_raw("heights_y", wave_field.heights_y());
 		write_raw("periods", wave_field.periods());
@@ -113,11 +118,12 @@ arma::generator::Basic_ARMA_model<T>::verify(Array3D<T> zeta) const {
 		show_statistics(
 			this->_acf,
 			zeta(RectDomain<3>(zeta.shape()/2, zeta.shape()-1)),
+			this->_outgrid,
 			*this,
 			this->_oflags
 		);
 	}
 	if (this->_oflags.isset(Output_flags::Waves)) {
-		write_everything_to_files(this->_acf, zeta);
+		write_everything_to_files(this->_acf, zeta, this->_outgrid);
 	}
 }

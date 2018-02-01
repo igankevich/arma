@@ -3,13 +3,13 @@ model = AR {
 	acf = {
 		func = standing_wave
 		amplitude = 2
-		alpha = (2,2,2)
+		alpha = (2,1,1)
 		velocity = 1.1
-		beta = (0.125,0)
+		beta = (0.0625,0)
 		nwaves = 1.5
 	}
 	algorithm = choi_recursive
-#	order = (8,8,8)
+	order = (3,3,3)
 #	algorithm = gauss_elimination
 	output = surface,summary,acf
 }

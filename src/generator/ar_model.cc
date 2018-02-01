@@ -2,6 +2,7 @@
 
 #include "linalg.hh"
 #include "params.hh"
+#include "physical_constants.hh"
 #include "util.hh"
 #include "util.hh"
 #include "voodoo.hh"
@@ -156,6 +157,7 @@ template <class T>
 void
 arma::generator::AR_model<T>
 ::read(std::istream& in) {
+	using constants::_2pi;
 	typedef typename Basic_model<T>::grid_type grid_type;
 	sys::parameter_map params {
 		{
@@ -173,7 +175,7 @@ arma::generator::AR_model<T>
 	this->_outgrid =
 		grid_type(
 			this->_outgrid.num_points(),
-			this->_acf.grid().delta() * this->_outgrid.num_patches() * T(1.0)
+			this->_acf.grid().delta() * this->_outgrid.num_patches() * _2pi<T>
 		);
 	this->_phi.resize(this->order());
 }

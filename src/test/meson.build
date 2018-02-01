@@ -159,3 +159,13 @@ test(
 		dependencies: [gtest, libarma],
 	)
 )
+
+test(
+	'arma::stats::waves',
+	executable(
+		'factor-waves-test',
+		sources: ['factor-waves-test.cc'],
+		include_directories: incdirs,
+		dependencies: [gtest, libarma],
+	)
+)

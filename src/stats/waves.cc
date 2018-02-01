@@ -1,5 +1,7 @@
 #include "waves.hh"
 
+#include <ostream>
+
 namespace {
 
 	template <class T, class Result>
@@ -133,16 +135,23 @@ namespace {
 		}
 	}
 
+	template <class C1, class C2>
+	void
+	push_back_all(C1& lhs, const C2& rhs) {
+		lhs.insert(lhs.end(), rhs.begin(), rhs.end());
+	}
+
 }
 
 
 template <class T>
-arma::stats::Wave_field<T>::Wave_field(Array3D<T> elevation) {
-	extract_waves_t(elevation);
-	extract_waves_x(elevation);
-	extract_waves_y(elevation);
-	extract_waves_x2(elevation);
-	extract_waves_y2(elevation);
+arma::stats::Wave_field<T>::Wave_field(
+	Array3D<T> elevation,
+	const Grid<T, 3>& grid
+) {
+	extract_waves_t(elevation, grid);
+	extract_waves_x(elevation, grid);
+	extract_waves_y(elevation, grid);
 }
 
 template <class T>
@@ -156,24 +165,24 @@ arma::stats::Wave_field<T>::periods() const {
 template <class T>
 arma::Array1D<T>
 arma::stats::Wave_field<T>::lengths() const {
-	Array1D<T> result(_wavesx2.size() + _wavesy2.size());
-	getperiods<T>(_wavesy2, getperiods<T>(_wavesx2, result.begin()));
+	Array1D<T> result(this->_wavesx.size() + this->_wavesy.size());
+	getperiods<T>(this->_wavesy, getperiods<T>(this->_wavesx, result.begin()));
 	return result;
 }
 
 template <class T>
 arma::Array1D<T>
 arma::stats::Wave_field<T>::lengths_x() const {
-	Array1D<T> result(_wavesx2.size());
-	getperiods<T>(_wavesx2, result.begin());
+	Array1D<T> result(this->_wavesx.size());
+	getperiods<T>(this->_wavesx, result.begin());
 	return result;
 }
 
 template <class T>
 arma::Array1D<T>
 arma::stats::Wave_field<T>::lengths_y() const {
-	Array1D<T> result(_wavesy2.size());
-	getperiods<T>(_wavesy2, result.begin());
+	Array1D<T> result(this->_wavesy.size());
+	getperiods<T>(this->_wavesy, result.begin());
 	return result;
 }
 
@@ -203,79 +212,154 @@ arma::stats::Wave_field<T>::heights_y() const {
 
 template <class T>
 void
-arma::stats::Wave_field<T>::extract_waves_t(Array3D<T> elevation) {
+arma::stats::Wave_field<T>::extract_waves_t(
+	Array3D<T> elevation,
+	const Grid<T,3>& grid
+) {
 	using blitz::Range;
 	const int nx = elevation.extent(1);
 	const int ny = elevation.extent(2);
-	auto ins = std::back_inserter(_wavest);
+	const Grid<T,1> grid1d{{grid.num_points(0)}, {grid.length(0)}};
 	for (int i = 0; i < nx; ++i) {
 		for (int j = 0; j < ny; ++j) {
-			Array1D<T> elev1d = elevation(Range::all(), i, j);
-			copy_waves_t(elev1d.data(), elev1d.numElements(), ins);
+			push_back_all(
+				this->_wavest,
+				factor_waves(find_extrema(
+					elevation(Range::all(), i, j),
+					grid1d
+				))
+			);
 		}
 	}
 }
 
 template <class T>
 void
-arma::stats::Wave_field<T>::extract_waves_x(Array3D<T> elevation) {
+arma::stats::Wave_field<T>::extract_waves_x(
+	Array3D<T> elevation,
+	const Grid<T, 3>& grid
+) {
 	using blitz::Range;
 	const int nt = elevation.extent(0);
 	const int ny = elevation.extent(2);
-	auto ins = std::back_inserter(_wavesx);
+	const Grid<T,1> grid1d{{grid.num_points(1)}, {grid.length(1)}};
 	for (int i = 0; i < nt; ++i) {
 		for (int j = 0; j < ny; ++j) {
-			Array1D<T> elev1d = elevation(i, Range::all(), j);
-			copy_waves_x(elev1d.data(), elev1d.numElements(), ins);
+			push_back_all(
+				this->_wavesx,
+				factor_waves(find_extrema(
+					elevation(i, Range::all(), j),
+					grid1d
+				))
+			);
 		}
 	}
 }
 
 template <class T>
 void
-arma::stats::Wave_field<T>::extract_waves_y(Array3D<T> elevation) {
+arma::stats::Wave_field<T>::extract_waves_y(
+	Array3D<T> elevation,
+	const Grid<T, 3>& grid
+) {
 	using blitz::Range;
 	const int nt = elevation.extent(0);
 	const int nx = elevation.extent(1);
-	auto ins = std::back_inserter(_wavesy);
+	const Grid<T,1> grid1d{{grid.num_points(2)}, {grid.length(2)}};
 	for (int i = 0; i < nt; ++i) {
 		for (int j = 0; j < nx; ++j) {
-			Array1D<T> elev1d = elevation(i, j, Range::all());
-			copy_waves_x(elev1d.data(), elev1d.numElements(), ins);
+			push_back_all(
+				this->_wavesy,
+				factor_waves(find_extrema(
+					elevation(i, j, Range::all()),
+					grid1d
+				))
+			);
 		}
 	}
 }
 
 template <class T>
-void
-arma::stats::Wave_field<T>::extract_waves_x2(Array3D<T> elevation) {
-	using blitz::Range;
-	const int nt = elevation.extent(0);
-	const int ny = elevation.extent(2);
-	auto ins = std::back_inserter(_wavesx2);
-	for (int i = 0; i < nt; ++i) {
-		for (int j = 0; j < ny; ++j) {
-			Array1D<T> elev1d = elevation(i, Range::all(), j);
-			copy_waves_t(elev1d.data(), elev1d.numElements(), ins);
+std::vector<arma::stats::Wave_feature<T>>
+arma::stats::find_extrema(Array1D<T> elevation, const Grid<T,1>& grid) {
+	std::vector<Wave_feature<T>> result;
+	const int n = elevation.numElements();
+	if (n < 3) {
+		return result;
+	}
+	for (int i=1; i<n-1; ++i) {
+		const T x0 = grid(i-1, 0);
+		const T x1 = grid(i, 0);
+		const T x2 = grid(i+1, 0);
+		const T z0 = elevation(i-1);
+		const T z1 = elevation(i);
+		const T z2 = elevation(i+1);
+		if ((z1 > z0 && z1 > z2) || (z1 < z0 && z1 < z2)) {
+			// approximate three points with a parabola
+			const T denominator = ((x0-x1) * (x0-x2) * (x1-x2));
+			const T a = (x0*(z2-z1) + x1*(z0-z2) + x2*(z1-z0)) /
+				denominator;
+			const T b = (x0*x0*(z1-z2) + x1*x1*(z2-z0) + x2*x2*(z0-z1)) /
+				denominator;
+			const T c = (z0*(x1*x1*x2 - x1*x2*x2) +
+					z1*(x0*x2*x2 - x0*x0*x2) +
+					z2*(x0*x0*x1 - x0*x1*x1)) / denominator;
+			// find parabola vertex
+			const T vx = -b / (T(2)*a);
+			const T vz = -(b*b - T(4)*a*c) / (T(4)*a);
+			const Wave_feature_type type =
+				z1 > z0 ? Wave_feature_type::Crest : Wave_feature_type::Trough;
+			result.emplace_back(vx, vz, type);
 		}
 	}
+	return result;
 }
 
 template <class T>
-void
-arma::stats::Wave_field<T>::extract_waves_y2(Array3D<T> elevation) {
-	using blitz::Range;
-	const int nt = elevation.extent(0);
-	const int nx = elevation.extent(1);
-	auto ins = std::back_inserter(_wavesy2);
-	for (int i = 0; i < nt; ++i) {
-		for (int j = 0; j < nx; ++j) {
-			Array1D<T> elev1d = elevation(i, j, Range::all());
-			copy_waves_t(elev1d.data(), elev1d.numElements(), ins);
-		}
+std::vector<arma::stats::Wave<T>>
+arma::stats::factor_waves(const std::vector<Wave_feature<T>>& features) {
+	using std::abs;
+	std::vector<Wave<T>> result;
+	if (features.empty()) {
+		return result;
 	}
+	const int n = features.size();
+	Wave_feature<T> f0 = features[0];
+	for (int i=1; i<n; ++i) {
+		Wave_feature<T> fi = features[i];
+		if (fi.type != f0.type) {
+			const T length = T(2)*abs(f0.x - fi.x);
+			const T height = abs(f0.z - fi.z);
+			result.emplace_back(height, length);
+		}
+		f0 = fi;
+	}
+	return result;
 }
 
+template <class T>
+std::ostream&
+arma::stats::operator<<(std::ostream& out, const Wave_feature<T>& rhs) {
+	out << '(' << rhs.x << ',' << rhs.z << ',' << int(rhs.type) << ')';
+	return out;
+}
 
 template class arma::stats::Wave<ARMA_REAL_TYPE>;
 template class arma::stats::Wave_field<ARMA_REAL_TYPE>;
+
+template std::vector<arma::stats::Wave_feature<ARMA_REAL_TYPE>>
+arma::stats::find_extrema(
+	Array1D<ARMA_REAL_TYPE> elevation,
+	const Grid<ARMA_REAL_TYPE, 1>& grid
+);
+
+template std::vector<arma::stats::Wave<ARMA_REAL_TYPE>>
+arma::stats::factor_waves(
+	const std::vector<Wave_feature<ARMA_REAL_TYPE>>& features
+);
+
+template std::ostream&
+arma::stats::operator<<(
+	std::ostream& out,
+	const Wave_feature<ARMA_REAL_TYPE>& rhs
+);
