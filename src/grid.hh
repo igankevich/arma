@@ -115,6 +115,16 @@ namespace arma {
 			return _length;
 		}
 
+		inline T
+		ubound(int i) const noexcept {
+			return _length(i);
+		}
+
+		inline const length_type&
+		ubound() const noexcept {
+			return _length;
+		}
+
 		inline length_type
 		operator()(const size_type& i) const noexcept {
 			return delta() * i;

@@ -70,6 +70,12 @@ namespace blitz {
 		}
 	}
 
+	template <class T, int N>
+	inline T
+	scale(const Array<T,N> data) {
+		return max(data) - min(data);
+	}
+
 	#if ARMA_BSCHEDULER
 	template <class T, int N>
 	sys::pstream&

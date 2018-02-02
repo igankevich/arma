@@ -23,16 +23,10 @@ namespace {
 		using namespace arma;
 		using stats::Summary;
 		using stats::Wave_field;
-		Array1D<T> slice_x(zeta(
-			zeta.extent(0)-1,
-			blitz::Range::all(),
-			zeta.extent(2)-1
-		));
-		std::clog << "slice_x=" << slice_x << std::endl;
 		const T var_wn = model.white_noise_variance();
 		Summary<T>::print_header(std::clog);
 		std::clog << std::endl;
-		T var_elev = acf(0, 0, 0);
+		T var_elev = acf(0,0,0);
 		Wave_field<T> wave_field(zeta, model.grid());
 		Array1D<T> heights_x = wave_field.heights_x();
 		Array1D<T> heights_y = wave_field.heights_y();
@@ -93,6 +87,18 @@ namespace {
 			std::clog
 				<< "Wave height to length ratio y: 1 to "
 				<< (stats::mean(lengths_y) / stats::mean(heights_y))
+				<< std::endl;
+			std::clog
+				<< "Min/Max wave height x: "
+				<< blitz::min(heights_x)
+				<< " / "
+				<< blitz::max(heights_x)
+				<< std::endl;
+			std::clog
+				<< "Min/Max wave height y: "
+				<< blitz::min(heights_y)
+				<< " / "
+				<< blitz::max(heights_y)
 				<< std::endl;
 		}
 		if (oflags.isset(Output_flags::Quantile)) {

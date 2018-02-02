@@ -34,7 +34,7 @@ namespace arma {
 			/// Exponential decay factor (t,x,y).
 			Vec3D<T> _alpha = Vec3D<T>(0.06, 0.06, 0.06);
 			/// The number of waves in the wave group. Might be a fraction.
-			T _nwaves = 1.5;
+			Vec3D<T> _nwaves = Vec3D<T>(1.5, 1.5, 1.5);
 			/// Maximum variance difference when finding optimal
 			/// wavy surface size.
 			T _varepsilon = T(1e-3);
@@ -117,6 +117,27 @@ namespace arma {
 				Array3D<T> surface,
 				const domain_type& domain
 			);
+
+			inline Grid<T,3>
+			acf_grid(const Shape3D& shape) const noexcept {
+				const Vec3D<T> k(
+					this->_velocity,
+					this->_wavenum(0),
+					this->_wavenum(1)
+				);
+				return Grid<T,3>{shape, this->_nwaves};
+			}
+
+			inline Domain<T,3>
+			acf_domain(const Shape3D& wave_shape) const noexcept {
+				const Vec3D<T>& r = this->_nwaves;
+//				const Vec3D<T> k(
+//					this->_velocity,
+//					this->_wavenum(0),
+//					this->_wavenum(1)
+//				);
+				return Domain<T,3>{-r, r, wave_shape+1};
+			}
 
 		};
 

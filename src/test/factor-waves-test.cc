@@ -1,10 +1,13 @@
+#include <complex>
 #include <fstream>
 #include <sstream>
 
 #include <gtest/gtest.h>
 
-#include "stats/waves.hh"
+#include "apmath/convolution.hh"
+#include "domain.hh"
 #include "physical_constants.hh"
+#include "stats/waves.hh"
 
 typedef ARMA_REAL_TYPE T;
 
@@ -25,7 +28,7 @@ TEST(Waves, Features) {
 	for (const auto& f : features) {
 		std::clog << "f=" << f << std::endl;
 	}
-	auto waves = arma::stats::factor_waves(features);
+	auto waves = arma::stats::find_waves(features);
 	for (const auto& w : waves) {
 		std::clog << "w=" << w.height() << ',' << w.period() << std::endl;
 	}
@@ -40,14 +43,22 @@ TEST(Waves, FeaturesRealWave) {
 		str >> elevation;
 	}
 	const int n = elevation.numElements();
-	arma::Grid<T,1> grid({n}, {T(209.44)});
+	arma::Domain<T,1> grid({T(0)}, {T(209.44)}, {n});
+	{
+		std::ofstream out("elev0");
+		for (int i=0; i<n; ++i) {
+			out << grid(i,0) << '\t' << elevation(i) << std::endl;
+		}
+	}
+	auto waves0 = arma::stats::find_waves(elevation.copy(), grid, 11);
+	arma::stats::smooth_elevation(elevation, grid, 11);
 	{
 		std::ofstream out("elev");
 		for (int i=0; i<n; ++i) {
 			out << grid(i,0) << '\t' << elevation(i) << std::endl;
 		}
 	}
-	std::clog << "elevation=" << elevation << std::endl;
+//	std::clog << "elevation=" << elevation << std::endl;
 	std::clog << "grid=" << grid << std::endl;
 	std::clog << "grid.patch_size(0)=" << grid.patch_size(0) << std::endl;
 	auto features = arma::stats::find_extrema(elevation, grid);
@@ -58,8 +69,16 @@ TEST(Waves, FeaturesRealWave) {
 			std::clog << "f=" << f << std::endl;
 		}
 	}
-	auto waves = arma::stats::factor_waves(features);
+	auto waves = arma::stats::find_waves(features);
+	T avg_height = 0;
+	T avg_length = 0;
 	for (const auto& w : waves) {
+		avg_height += w.height();
+		avg_length += w.period();
 		std::clog << "w=" << w.height() << ',' << w.period() << std::endl;
 	}
+	avg_height /= waves.size();
+	avg_length /= waves.size();
+	std::clog << "avg_height=" << avg_height << std::endl;
+	std::clog << "avg_length=" << avg_length << std::endl;
 }

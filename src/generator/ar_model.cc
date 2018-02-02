@@ -131,8 +131,7 @@ arma::generator::AR_model<T>
 		this->_phi(0,0,0) = 0;
 	}
 	std::copy_n(rhs.data(), rhs.numElements(), this->_phi.data() + 1);
-	this->_varwn = T(2)*this->white_noise_variance(this->_phi);
-	{ std::ofstream("gauss") << this->_phi; }
+	this->_varwn = this->white_noise_variance(this->_phi);
 }
 
 template <class T>
@@ -142,6 +141,7 @@ arma::generator::AR_model<T>
 	using blitz::all;
 	using blitz::max;
 	Yule_walker_solver<T> solver(this->_acf);
+//	solver.determine_the_order(false);
 	solver.var_epsilon(T(1e-6));
 	if (all(this->_order) > 0) {
 		solver.max_order(max(this->_order));
@@ -151,7 +151,6 @@ arma::generator::AR_model<T>
 //	this->_varwn = solver.white_noise_variance();
 	this->_varwn = this->white_noise_variance(this->_phi);
 	write_key_value(std::clog, "New AR model order", this->_order);
-	{ std::ofstream("choi") << this->_phi; }
 }
 
 template <class T>
