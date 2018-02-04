@@ -45,7 +45,7 @@ endif
 arma_lib = shared_library(
 	'arma',
 	sources: arma_lib_src,
-	include_directories: incdirs,
+	include_directories: src,
 	dependencies: arma_deps,
 	cpp_args: arma_cpp_args,
 	link_args: '-llapacke',
@@ -57,14 +57,14 @@ libarma = declare_dependency(
 	compile_args: arma_cpp_args,
 	link_with: arma_lib,
 	link_args: '-llapacke',
-	include_directories: incdirs,
+	include_directories: src,
 	dependencies: arma_deps
 )
 
 executable(
 	executable_prefix,
 	sources: 'arma_main.cc',
-	include_directories: incdirs,
+	include_directories: src,
 	dependencies: [libarma],
 	install: true
 )
@@ -82,7 +82,7 @@ if get_option('with_high_amplitude_realtime_solver')
 			'arma_realtime.cc',
 			'arma_realtime_driver.cc'
 		],
-		include_directories: incdirs,
+		include_directories: src,
 		dependencies: arma_realtime_deps,
 		cpp_args: arma_realtime_cpp_args,
 		link_args: '-llapacke',
