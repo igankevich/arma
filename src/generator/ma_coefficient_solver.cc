@@ -27,8 +27,8 @@ template <class T>
 arma::Array3D<T>
 arma::generator::MA_coefficient_solver<T>
 ::solve() {
-//	return this->solve_fixed_point_iteration();
-	return this->solve_non_convex();
+	return this->solve_fixed_point_iteration();
+//	return this->solve_non_convex();
 //	return this->solve_bisection();
 }
 
@@ -79,7 +79,8 @@ arma::generator::MA_coefficient_solver<T>
 					const Shape3D ijk(i,j,k);
 					RectDomain<3> sub1(ijk, order - 1);
 					RectDomain<3> sub2(Shape3D(0,0,0), order - ijk - 1);
-					theta(i, j, k) =
+//					theta(i,j,k) = T(0);
+					theta(i,j,k) =
 						-this->_acf(i,j,k) / var_wn +
 						sum(theta(sub1)*theta(sub2));
 				}
@@ -151,8 +152,9 @@ arma::generator::MA_coefficient_solver<T>
 ::solve_non_convex() {
 	using blitz::RectDomain;
 	const Array3D<T> acf(
-		this->_acf(RectDomain<3>{{0,0,0}, this->_order-1}) / this->_acf(0,0,0)
+		this->_acf(RectDomain<3>{{0,0,0}, this->_order-1})
 	);
+	{ std::ofstream("acf333") << acf; }
 	const int n = acf.numElements();
 	const int m = n-1;
 	auto objective = [this,n,m,&acf] (const column_vector<T>& theta_in) {
@@ -166,10 +168,11 @@ arma::generator::MA_coefficient_solver<T>
 		const int nk = shp(2);
 		Array3D<T> theta(shp);
 		theta(0,0,0) = T(-1);
+		T var_wn = T(1e-10);
 		for (int i=0; i<m; ++i) {
 			*(theta.data() + i + 1) = theta_in(i);
 		}
-		const T denominator = sum(pow2(theta));
+//		const T denominator = sum(pow2(theta));
 		Array3D<T> residual(shp);
 		for (int i=0; i<ni; ++i) {
 			for (int j=0; j<nj; ++j) {
@@ -178,7 +181,7 @@ arma::generator::MA_coefficient_solver<T>
 					RectDomain<3> sub2(Shape3D(0, 0, 0),
 									   shp - Shape3D(i, j, k) - 1);
 					T numerator = blitz::sum(theta(sub1) * theta(sub2));
-					T elem = std::abs(numerator/denominator - acf(i,j,k));
+					T elem = std::abs(numerator*var_wn - acf(i,j,k));
 					residual(i,j,k) = elem;
 				}
 			}
@@ -188,6 +191,7 @@ arma::generator::MA_coefficient_solver<T>
 			<< ",theta(0,0,0)=" << theta(0,0,0)
 			<< ",acf(0,0,0)=" << acf(0,0,0)
 			<< ",residual(0,0,0)=" << residual(0,0,0)
+			<< ",var_wn=" << var_wn
 			<< std::endl;
 		return max_residual;
 	};
@@ -195,6 +199,8 @@ arma::generator::MA_coefficient_solver<T>
 	column_vector<T> theta_max(m);
 	theta_min = T(-1);
 	theta_max = T(1);
+//	theta_min(m) = T(0);
+//	theta_max(m) = T(0.1);//this->_acf(0,0,0);
 	auto res = dlib::find_min_global(
 		objective,
 		theta_min,
@@ -207,6 +213,8 @@ arma::generator::MA_coefficient_solver<T>
 		*(result.data() + i + 1) = res.x(i);
 	}
 	std::clog << "result=" << result << std::endl;
+	const T var_wn = res.x(m);
+	std::clog << "var_wn=" << var_wn << std::endl;
 	return result;
 }
 

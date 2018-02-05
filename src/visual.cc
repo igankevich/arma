@@ -427,11 +427,13 @@ parse_cmdline(int argc, char** argv) {
 	string file_name;
 	string ar;
 	while (!(cmdline >> ar).eof()) {
-		if (ar == "-r")
+		if (ar == "-r") {
 			cmdline >> tail;
-		else if (ar == "-t")
+		} else if (ar == "-t") {
 			cmdline >> timer;
-		else {
+		} else if (ar == "-n") {
+			delta = 1;
+		} else {
 			file_name = ar;
 		}
 		cmdline >> ws;

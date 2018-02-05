@@ -140,6 +140,7 @@ arma::generator::ACF_generator<T>
 	auto p = this->generate_optimal_wavy_surface();
 	wave.reference(p.first);
 	domain = p.second;
+	{ std::ofstream("wave") << wave; }
 	wave.reference(this->add_exponential_decay(wave, domain));
 	{ std::ofstream("wave_exp") << wave; }
 	std::clog << "variance(wave)=" << variance(wave) << std::endl;
@@ -168,7 +169,7 @@ arma::generator::ACF_generator<T>
 	Shape3D wave_shape(2,2,2);
 	Array3D<T> surface;
 	Domain<T,3> grid;
-	while (all(wave_shape < 64)) {
+	while (all(wave_shape < 128)) {
 		grid = this->acf_domain(wave_shape);
 		surface.reference(
 			generate_wavy_surface(
@@ -192,7 +193,7 @@ arma::generator::ACF_generator<T>
 		    << std::endl;
 //		#endif
 		if (!(var0 < T(0)) && std::abs(var-var0) < eps) {
-			break;
+//			break;
 		}
 		wave_shape *= 2;
 	}

@@ -18,6 +18,7 @@ all_tests = [
 	['arma::auto_covariance', 'auto-covariance-test', [libarma]],
 	['arma::generator::acf_generator', 'acf-generator-test', [libarma]],
 	['arma::stats::waves', 'factor-waves-test', [libarma]],
+	['arma::stats::MA_coefficient_solver', 'ma-coefficient-solver-test', [libarma]],
 ]
 
 foreach t : all_tests
