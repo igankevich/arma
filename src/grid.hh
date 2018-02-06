@@ -62,17 +62,22 @@ namespace arma {
 
 		inline int
 		num_points(int i) const noexcept {
-			return _npoints(i);
+			return this->_npoints(i);
 		}
 
 		inline const size_type&
 		num_points() const noexcept {
-			return _npoints;
+			return this->_npoints;
 		}
 
 		inline const size_type&
 		size() const noexcept {
-			return _npoints;
+			return this->_npoints;
+		}
+
+		inline const size_type&
+		shape() const noexcept {
+			return this->_npoints;
 		}
 
 		inline int

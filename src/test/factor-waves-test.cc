@@ -82,3 +82,35 @@ TEST(Waves, FeaturesRealWave) {
 	std::clog << "avg_height=" << avg_height << std::endl;
 	std::clog << "avg_length=" << avg_length << std::endl;
 }
+
+TEST(Waves, FrequencyAmplitudeSpectrum) {
+	using arma::Array3D;
+	using arma::Grid;
+	using arma::constants::_2pi;
+	using arma::Shape3D;
+	using arma::Vec3D;
+	Grid<T,3> grid{{129,129,129},{_2pi<T>*T(1), T(32), T(32)}};
+	const int ni = grid.num_points(0);
+	const int nj = grid.num_points(1);
+	const int nk = grid.num_points(2);
+	Array3D<T> signal(grid.shape());
+	blitz::firstIndex i;
+	blitz::secondIndex j;
+	blitz::thirdIndex k;
+	const T amplitude = T(1);
+	signal = amplitude*blitz::cos(i*grid.delta(0) + _2pi<T>*(j/T(nj-1) + k/T(nk-1)));
+	{ std::ofstream("signal") << signal; }
+	Array3D<T> spectrum = arma::stats::frequency_amplitude_spectrum(signal, grid);
+	T avg_amplitude;
+	Shape3D idx;
+	auto max_elem = blitz::max_element(spectrum);
+	idx = max_elem.position();
+	avg_amplitude = *max_elem;
+	Vec3D<T> vec = T(2)*grid(idx);
+	std::clog << "idx=" << idx << std::endl;
+	std::clog << "grid(idx)=" << vec << std::endl;
+	EXPECT_NEAR(avg_amplitude, amplitude, T(1e-3));
+	EXPECT_NEAR(vec(0), grid.length(0), T(1e-3));
+	EXPECT_NEAR(vec(1), grid.length(1), T(1e-3));
+	EXPECT_NEAR(vec(2), grid.length(2), T(1e-3));
+}

@@ -76,6 +76,12 @@ namespace blitz {
 		return max(data) - min(data);
 	}
 
+	template <class T>
+	inline typename blitz::Array<T,3>::const_iterator
+	max_element(const blitz::Array<T,3>& rhs) {
+		return std::max_element(rhs.begin(), rhs.end());
+	}
+
 	#if ARMA_BSCHEDULER
 	template <class T, int N>
 	sys::pstream&

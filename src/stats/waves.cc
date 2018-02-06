@@ -251,8 +251,8 @@ arma::stats::frequency_amplitude_spectrum(Array3D<T> rhs, const Grid<T,3>& grid)
 	Fourier_transform<C,3> fft(rhs.shape());
 	fft.forward(rhs_copy);
 	const int n = rhs.numElements();
-	const RectDomain<3> domain(Shape3D(0,0,0), rhs.shape()/2);
-	return Array3D<T>(T(8) * abs(rhs_copy(domain)) / n);
+	const RectDomain<3> domain(rhs.shape()/2, rhs.shape()-1);
+	return Array3D<T>(T(2) * abs(rhs_copy(domain)) / n);
 }
 
 template class arma::stats::Wave<ARMA_REAL_TYPE>;

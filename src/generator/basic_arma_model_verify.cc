@@ -110,6 +110,18 @@ namespace {
 				<< "Average amplitude: "
 				<< blitz::max(spectrum)
 				<< std::endl;
+			std::clog
+				<< "Average wave number x: "
+				<< Vec3D<T>(
+					blitz::max_element(spectrum).position()*model.grid().delta()
+				)
+				<< std::endl;
+			std::clog
+				<< "Min/Max z: "
+				<< blitz::min(zeta)
+				<< " / "
+				<< blitz::max(zeta)
+				<< std::endl;
 		}
 		if (oflags.isset(Output_flags::Quantile)) {
 			std::for_each(
