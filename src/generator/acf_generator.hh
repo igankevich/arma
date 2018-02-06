@@ -39,6 +39,7 @@ namespace arma {
 			/// wavy surface size.
 			T _varepsilon = T(1e-3);
 			T _chopepsilon = T(1e-10);
+			Shape3D _acfshape = Shape3D(16,16,16);
 
 		public:
 
@@ -77,19 +78,22 @@ namespace arma {
 			inline T
 			wave_length_x() const noexcept {
 				using constants::_2pi;
-				return _2pi<T> / this->_wavenum(0);
+				using std::abs;
+				return _2pi<T> / abs(this->_wavenum(0));
 			}
 
 			inline T
 			wave_length_y() const noexcept {
 				using constants::_2pi;
-				return _2pi<T> / this->_wavenum(1);
+				using std::abs;
+				return _2pi<T> / abs(this->_wavenum(1));
 			}
 
 			inline T
 			wave_period() const noexcept {
 				using constants::_2pi;
-				return _2pi<T> / this->_velocity;
+				using std::abs;
+				return _2pi<T> / abs(this->_velocity);
 			}
 
 			template <class X>
@@ -120,22 +124,24 @@ namespace arma {
 
 			inline Grid<T,3>
 			acf_grid(const Shape3D& shape) const noexcept {
-				const Vec3D<T> k(
-					this->_velocity,
-					this->_wavenum(0),
-					this->_wavenum(1)
-				);
-				return Grid<T,3>{shape, this->_nwaves};
-			}
-
-			inline Domain<T,3>
-			acf_domain(const Shape3D& wave_shape) const noexcept {
-				const Vec3D<T>& r = this->_nwaves;
 //				const Vec3D<T> k(
 //					this->_velocity,
 //					this->_wavenum(0),
 //					this->_wavenum(1)
 //				);
+				return Grid<T,3>{shape, this->_nwaves};
+			}
+
+			inline Domain<T,3>
+			acf_domain(const Shape3D& wave_shape) const noexcept {
+				Vec3D<T> r = this->_nwaves;
+//				const Vec3D<T> k(
+//					this->_velocity,
+//					this->_wavenum(0),
+//					this->_wavenum(1)
+//				);
+//				r /= k;
+//				r = blitz::where(blitz::isfinite(r), r, this->_nwaves);
 				return Domain<T,3>{-r, r, wave_shape+1};
 			}
 

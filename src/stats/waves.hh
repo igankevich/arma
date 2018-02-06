@@ -216,6 +216,10 @@ namespace arma {
 			int r
 		);
 
+		template <class T>
+		Array3D<T>
+		frequency_amplitude_spectrum(Array3D<T> rhs, const Grid<T,3>& grid);
+
 	}
 
 }

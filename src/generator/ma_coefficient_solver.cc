@@ -29,7 +29,7 @@ arma::generator::MA_coefficient_solver<T>
 ::solve() {
 	return this->solve_fixed_point_iteration();
 //	return this->solve_non_convex();
-//	return this->solve_bisection();
+//	return this->solve_bisection(theta);
 }
 
 template <class T>
@@ -58,6 +58,7 @@ arma::generator::MA_coefficient_solver<T>
 	T old_var_wn = 0;
 	T residual = 0;
 	int it = 0;
+	std::ofstream out("theta_all");
 	do {
 		/**
 		   2. Update coefficients from back to front using the
@@ -79,13 +80,18 @@ arma::generator::MA_coefficient_solver<T>
 					const Shape3D ijk(i,j,k);
 					RectDomain<3> sub1(ijk, order - 1);
 					RectDomain<3> sub2(Shape3D(0,0,0), order - ijk - 1);
-//					theta(i,j,k) = T(0);
 					theta(i,j,k) =
 						-this->_acf(i,j,k) / var_wn +
 						sum(theta(sub1)*theta(sub2));
 				}
 			}
 		}
+		theta(0,0,0) = -1;
+		for (T t : theta) {
+			out << t << '\n';
+		}
+		out << "\n\n";
+		out << std::flush;
 		/// 3. Ensure that coefficients are finite.
 		if (!all(isfinite(theta))) {
 			std::cerr << __func__
@@ -221,22 +227,27 @@ arma::generator::MA_coefficient_solver<T>
 template <class T>
 arma::Array3D<T>
 arma::generator::MA_coefficient_solver<T>
-::solve_bisection() {
+::solve_bisection(Array3D<T> theta) {
 	Array3D<T> a(this->_order);
 	Array3D<T> b(this->_order);
 	Array3D<T> c(this->_order);
 	Array3D<T> fc(this->_order);
 	Array3D<T> fa(this->_order);
 	Array3D<T> fb(this->_order);
+	a = theta;
+	b = theta;
+	/*
 	std::default_random_engine rng;
 	std::uniform_real_distribution<T> dist(T(-1), T(1));
 	std::generate_n(a.data(), a.numElements(), std::bind(dist, rng));
 	std::generate_n(b.data(), b.numElements(), std::bind(dist, rng));
+	*/
 	a += T(-10);
 	b += T(10);
 	a(0,0,0) = -1;
 	b(0,0,0) = -1;
-	auto func = [this] (const Array3D<T>& theta) {
+	const T var_wn = this->white_noise_variance(theta);
+	auto func = [this,var_wn] (const Array3D<T>& theta) {
 		using blitz::RectDomain;
 		using blitz::sum;
 		using blitz::pow2;
@@ -246,7 +257,7 @@ arma::generator::MA_coefficient_solver<T>
 		const int ni = shp(0);
 		const int nj = shp(1);
 		const int nk = shp(2);
-		const T denominator = sum(pow2(theta));
+		//const T denominator = sum(pow2(theta));
 		Array3D<T> residual(shp);
 		for (int i=0; i<ni; ++i) {
 			for (int j=0; j<nj; ++j) {
@@ -255,18 +266,18 @@ arma::generator::MA_coefficient_solver<T>
 					RectDomain<3> sub2(Shape3D(0, 0, 0),
 									   shp - Shape3D(i, j, k) - 1);
 					T numerator = sum(theta(sub1) * theta(sub2));
-					T elem = numerator/denominator - acf(i,j,k) / acf(0,0,0);
+					T elem = numerator*var_wn - acf(i,j,k);
 					residual(i,j,k) = elem;
 				}
 			}
 		}
-		const T max_residual = blitz::max(abs(residual));
-		std::clog << "max_residual=" << max_residual
-			<< ",theta(0,0,0)=" << theta(0,0,0)
-			<< ",acf(0,0,0)=" << acf(0,0,0)
-			<< ",residual(0,0,0)=" << residual(0,0,0)
-//			<< ",theta=" << theta
-			<< std::endl;
+//		const T max_residual = blitz::max(abs(residual));
+//		std::clog << "max_residual=" << max_residual
+//			<< ",theta(0,0,0)=" << theta(0,0,0)
+//			<< ",acf(0,0,0)=" << acf(0,0,0)
+//			<< ",residual(0,0,0)=" << residual(0,0,0)
+////			<< ",theta=" << theta
+//			<< std::endl;
 		return residual;
 	};
 	for (int i=0; i<100; ++i) {

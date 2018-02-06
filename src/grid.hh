@@ -155,6 +155,19 @@ namespace arma {
 			return operator()(num_patches());
 		}
 
+		inline Grid<T,1>
+		subgrid(const int dim) const noexcept {
+			return Grid<T,1>{{this->_npoints(dim)}, {this->_length(dim)}};
+		}
+
+		inline Grid<T,2>
+		subgrid(const int dim1, const int dim2) const noexcept {
+			return Grid<T,2>{
+				{this->_npoints(dim1), this->_npoints(dim2)},
+				{this->_length(dim1), this->_length(dim2)}
+			};
+		}
+
 		friend std::ostream&
 		operator<<(std::ostream& out, const Grid& rhs) {
 			return out << rhs._npoints << ':' << rhs._length;

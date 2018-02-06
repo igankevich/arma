@@ -3,15 +3,16 @@ model = MA {
 	acf = {
 		func = cos
 		amplitude = 2
-		alpha = (6,1,0)
+		alpha = (1,1,0)
 		velocity = 0.1
-		beta = (0.25,0)
-		nwaves = (1.5,4.5,1.5)
+		beta = (0.1,0)
+		nwaves = (12.5,12.5,12.5)
+		shape = (32,32,1)
 	}
-	order = (32,1,1)
+	order = (32,32,1)
 	algorithm = fixed_point_iteration
 	output = surface,summary,acf
-	validate = 1
+	validate = 0
 }
 velocity_potential_solver = high_amplitude {
 #	wnmax = from (0,0) to (0,0.25) npoints (2,2)

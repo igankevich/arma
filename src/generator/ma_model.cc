@@ -161,6 +161,21 @@ arma::generator::MA_model<T>
 	);
 	this->_theta.reference(solver.solve());
 	this->_varwn = solver.white_noise_variance(this->_theta);
+	{ std::ofstream("theta") << this->_theta; }
+	{
+		std::ofstream out("theta.dat");
+		const int ni = this->_theta.extent(0);
+		const int nj = this->_theta.extent(1);
+		const int nk = this->_theta.extent(2);
+		for (int i=0; i<ni; ++i) {
+			for (int j=0; j<nj; ++j) {
+				for (int k=0; k<nk; ++k) {
+					out << this->_theta(i,j,k) << ' ';
+				}
+			}
+				out << '\n';
+		}
+	}
 }
 
 template class arma::generator::MA_model<ARMA_REAL_TYPE>;

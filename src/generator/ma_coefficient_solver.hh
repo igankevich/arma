@@ -127,7 +127,7 @@ namespace arma {
 			solve_non_convex();
 
 			Array3D<T>
-			solve_bisection();
+			solve_bisection(Array3D<T> theta);
 
 		};
 

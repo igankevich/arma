@@ -24,6 +24,12 @@ namespace {
 		using stats::Summary;
 		using stats::Wave_field;
 		const T var_wn = model.white_noise_variance();
+		Array3D<T> spectrum =
+			arma::stats::frequency_amplitude_spectrum(zeta, model.grid());
+		{
+			std::ofstream out("spectrum");
+			out << spectrum;
+		}
 		Summary<T>::print_header(std::clog);
 		std::clog << std::endl;
 		T var_elev = acf(0,0,0);
@@ -100,6 +106,10 @@ namespace {
 				<< " / "
 				<< blitz::max(heights_y)
 				<< std::endl;
+			std::clog
+				<< "Average amplitude: "
+				<< blitz::max(spectrum)
+				<< std::endl;
 		}
 		if (oflags.isset(Output_flags::Quantile)) {
 			std::for_each(
@@ -146,6 +156,25 @@ arma::generator::Basic_ARMA_model<T>::verify(Array3D<T> zeta) const {
 	if (this->_oflags.isset(Output_flags::Summary) ||
 		this->_oflags.isset(Output_flags::Quantile))
 	{
+		{
+			using blitz::Range;
+			std::ofstream out("slice_tx");
+			const int ni = zeta.extent(0);
+			const int nj = zeta.extent(1);
+			const int k = zeta.extent(2)/2;
+			Array3D<T> slice(zeta(
+				Range::all(),
+				Range::all(),
+				Range(k, k)
+			));
+			for (int i=0; i<ni; ++i) {
+				Array1D<T> slice_x(slice(i, Range::all()));
+				Domain<T,1> subdomain{{T(0)}, {this->_outgrid.ubound(1)}, {nj}};
+				arma::stats::smooth_elevation(slice_x, subdomain, 11);
+				slice(i, Range::all()) = slice_x;
+			}
+			out << slice;
+		}
 		show_statistics(
 			this->_acf,
 			zeta(RectDomain<3>(zeta.shape()/2, zeta.shape()-1)),

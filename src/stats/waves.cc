@@ -4,6 +4,7 @@
 #include <stdexcept>
 
 #include "apmath/convolution.hh"
+#include "physical_constants.hh"
 #include "statistics.hh"
 
 namespace {
@@ -236,6 +237,24 @@ arma::stats
 	grid.translate({-r});
 }
 
+template <class T>
+arma::Array3D<T>
+arma::stats::frequency_amplitude_spectrum(Array3D<T> rhs, const Grid<T,3>& grid) {
+	using arma::apmath::Fourier_transform;
+	using blitz::RectDomain;
+	using blitz::abs;
+	using blitz::product;
+	using arma::constants::sqrt2pi;
+	typedef std::complex<T> C;
+	Array3D<C> rhs_copy(rhs.shape());
+	rhs_copy = rhs;
+	Fourier_transform<C,3> fft(rhs.shape());
+	fft.forward(rhs_copy);
+	const int n = rhs.numElements();
+	const RectDomain<3> domain(Shape3D(0,0,0), rhs.shape()/2);
+	return Array3D<T>(T(8) * abs(rhs_copy(domain)) / n);
+}
+
 template class arma::stats::Wave<ARMA_REAL_TYPE>;
 template class arma::stats::Wave_field<ARMA_REAL_TYPE>;
 
@@ -281,4 +300,10 @@ template std::ostream&
 arma::stats::operator<<(
 	std::ostream& out,
 	const Wave_feature<ARMA_REAL_TYPE>& rhs
+);
+
+template arma::Array3D<ARMA_REAL_TYPE>
+arma::stats::frequency_amplitude_spectrum(
+	Array3D<ARMA_REAL_TYPE> rhs,
+	const Grid<ARMA_REAL_TYPE, 3>& grid
 );

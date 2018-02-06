@@ -169,7 +169,8 @@ arma::generator::ACF_generator<T>
 	Shape3D wave_shape(2,2,2);
 	Array3D<T> surface;
 	Domain<T,3> grid;
-	while (all(wave_shape < 128)) {
+	if (all(this->_acfshape) > 0) {
+		wave_shape = 2*this->_acfshape;
 		grid = this->acf_domain(wave_shape);
 		surface.reference(
 			generate_wavy_surface(
@@ -182,20 +183,35 @@ arma::generator::ACF_generator<T>
 				T(0)
 			)
 		);
-		var0 = var;
-		var = variance(surface);
-//		#ifndef NDEBUG
-		std::clog
-		    << __func__
-		    << ": var=" << var
-		    << ",shape=" << wave_shape
-		    << ",eps=" << std::abs(var-var0)
-		    << std::endl;
-//		#endif
-		if (!(var0 < T(0)) && std::abs(var-var0) < eps) {
-//			break;
+	} else {
+		while (all(wave_shape < 64)) {
+			grid = this->acf_domain(wave_shape);
+			surface.reference(
+				generate_wavy_surface(
+					this->_func,
+					grid,
+					this->_amplitude,
+					this->_wavenum(0),
+					this->_wavenum(1),
+					this->_velocity,
+					T(0)
+				)
+			);
+			var0 = var;
+			var = variance(surface);
+			#ifndef NDEBUG
+			std::clog
+				<< __func__
+				<< ": var=" << var
+				<< ",shape=" << wave_shape
+				<< ",eps=" << std::abs(var-var0)
+				<< std::endl;
+			#endif
+			if (!(var0 < T(0)) && std::abs(var-var0) < eps) {
+				break;
+			}
+			wave_shape *= 2;
 		}
-		wave_shape *= 2;
 	}
 	std::clog
 	    << "wave shape = " << grid.shape()
@@ -238,6 +254,7 @@ arma::generator::operator>>(std::istream& in, ACF_generator<T>& rhs) {
 			{"alpha", sys::make_param(rhs._alpha)},
 			{"beta", sys::make_param(rhs._wavenum)},
 			{"nwaves", sys::make_param(rhs._nwaves)},
+			{"shape", sys::make_param(rhs._acfshape)},
 		},
 		true
 	};
