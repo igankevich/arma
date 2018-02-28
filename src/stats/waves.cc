@@ -28,7 +28,8 @@ namespace {
 	extract_waves(
 		arma::Array3D<T> elevation,
 		const arma::Grid<T,3>& grid,
-		int dimension
+		int dimension,
+		int kradius
 	) {
 		using blitz::Range;
 		using arma::Domain;
@@ -48,7 +49,11 @@ namespace {
 				for (int j = 0; j < ny; ++j) {
 					push_back_all(
 						result,
-						find_waves(elevation(Range::all(), i, j), grid1d)
+						find_waves(
+							elevation(Range::all(), i, j),
+							grid1d,
+							kradius
+						)
 					);
 				}
 			}
@@ -57,7 +62,11 @@ namespace {
 				for (int j = 0; j < ny; ++j) {
 					push_back_all(
 						result,
-						find_waves(elevation(i, Range::all(), j), grid1d)
+						find_waves(
+							elevation(i, Range::all(), j),
+							grid1d,
+							kradius
+						)
 					);
 				}
 			}
@@ -66,7 +75,11 @@ namespace {
 				for (int j = 0; j < nx; ++j) {
 					push_back_all(
 						result,
-						find_waves(elevation(i, j, Range::all()), grid1d)
+						find_waves(
+							elevation(i, j, Range::all()),
+							grid1d,
+							kradius
+						)
 					);
 				}
 			}
@@ -83,11 +96,12 @@ template <class T>
 arma::stats::Wave_field<T>
 ::Wave_field(
 	Array3D<T> elevation,
-	const Grid<T, 3>& grid
+	const Grid<T, 3>& grid,
+	int kradius
 ):
-_wavest(extract_waves(elevation, grid, 0)),
-_wavesx(extract_waves(elevation, grid, 1)),
-_wavesy(extract_waves(elevation, grid, 2))
+_wavest(extract_waves(elevation, grid, 0, kradius)),
+_wavesx(extract_waves(elevation, grid, 1, kradius)),
+_wavesy(extract_waves(elevation, grid, 2, kradius))
 {}
 
 template <class T>

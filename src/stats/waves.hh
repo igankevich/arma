@@ -80,8 +80,13 @@ namespace arma {
 
 		public:
 
+			/// \param kradius The size of Gaussian kernel.
 			explicit
-			Wave_field(Array3D<T> elevation, const Grid<T,3>& grid);
+			Wave_field(
+				Array3D<T> elevation,
+				const Grid<T, 3>& grid,
+				int kradius
+			);
 
 			inline Array1D<T>
 			periods() const {

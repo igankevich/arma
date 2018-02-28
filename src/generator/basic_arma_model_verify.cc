@@ -52,7 +52,8 @@ namespace {
 			out << spectrum;
 		}
 		T var_elev = acf(0,0,0);
-		Wave_field<T> wave_field(zeta, model.grid());
+		const T r = 5;
+		Wave_field<T> wave_field(zeta, model.grid(), r);
 		Array1D<T> heights_x = wave_field.heights_x();
 		Array1D<T> heights_y = wave_field.heights_y();
 		Array1D<T> periods = wave_field.periods();
@@ -80,7 +81,7 @@ namespace {
 				model.acf_generator().wave_period(),
 				periods_dist,
 				"wave period",
-				model.grid().delta(0)
+				r*model.grid().delta(0)
 			),
 		};
 		if (model.acf_generator().has_x()) {
@@ -100,7 +101,7 @@ namespace {
 				lengths_x_dist,
 				"wave length x",
 				false,
-				model.grid().delta(1)
+				r*model.grid().delta(1)
 			);
 		}
 		if (model.acf_generator().has_y()) {
@@ -120,7 +121,7 @@ namespace {
 				lengths_y_dist,
 				"wave length y",
 				false,
-				model.grid().delta(2)
+				r*model.grid().delta(2)
 			);
 		}
 		/*
@@ -190,6 +191,9 @@ namespace {
 			);
 		}
 		if (oflags.isset(Output_flags::Summary)) {
+			std::clog << "No. of waves = "
+				<< Shape3D(periods.size(), lengths_x.size(), lengths_y.size())
+				<< std::endl;
 			auto oldf = std::clog.flags();
 			std::clog.setf(std::ios::fixed, std::ios::floatfield);
 			std::clog.setf(std::ios::boolalpha);
@@ -264,7 +268,7 @@ namespace {
 		arma::Array3D<T> zeta,
 		const arma::Grid<T,3>& grid
 	) {
-		arma::stats::Wave_field<T> wave_field(zeta, grid);
+		arma::stats::Wave_field<T> wave_field(zeta, grid, 11);
 		write_raw("heights_x", wave_field.heights_x());
 		write_raw("heights_y", wave_field.heights_y());
 		write_raw("periods", wave_field.periods());
