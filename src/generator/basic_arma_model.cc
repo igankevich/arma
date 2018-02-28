@@ -99,6 +99,11 @@ arma::generator::Basic_ARMA_model<T>::generate() {
 	ARMA_PROFILE_BLOCK("generate_surface",
 		zeta.reference(this->do_generate());
 	);
+	// compensate for not using exponents in ACF
+	using arma::stats::variance;
+	using std::sqrt;
+	using blitz::RectDomain;
+	zeta *= sqrt(this->_acf(0,0,0) / variance(zeta(RectDomain<3>(zeta.shape()/2, zeta.shape()-1))));
 	ARMA_PROFILE_BLOCK("nit_realisation",
 		if (!this->_linear) {
 			this->_nittransform.transform_realisation(this->_acf, zeta);

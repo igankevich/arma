@@ -52,7 +52,7 @@ namespace {
 			out << spectrum;
 		}
 		T var_elev = acf(0,0,0);
-		const T r = 5;
+		const T r = 9;
 		Wave_field<T> wave_field(zeta, model.grid(), r);
 		Array1D<T> heights_x = wave_field.heights_x();
 		Array1D<T> heights_y = wave_field.heights_y();
