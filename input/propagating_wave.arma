@@ -3,13 +3,13 @@ model = MA {
 	acf = {
 		func = cos
 		amplitude = 2
-		alpha = (1,1,0)
-		velocity = 0.1
+		alpha = (1,0,0)
+		velocity = 0.01
 		beta = (0.1,0)
 		nwaves = (12.5,12.5,12.5)
-		shape = (32,32,1)
+		shape = (32,1,1)
 	}
-	order = (32,32,1)
+	order = (32,1,1)
 	algorithm = fixed_point_iteration
 	output = surface,summary,acf
 	validate = 0

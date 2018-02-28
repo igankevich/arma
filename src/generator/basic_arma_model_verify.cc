@@ -1,7 +1,8 @@
-#include <fstream>
-#include <string>
 #include <algorithm>
+#include <fstream>
 #include <iterator>
+#include <string>
+#include <vector>
 
 #include "grid.hh"
 #include "stats/distribution.hh"
@@ -11,6 +12,26 @@
 #include "util.hh"
 
 namespace {
+
+	template <class T>
+	void
+	print_indicator(
+		std::string prefix,
+		std::string name,
+		T expected,
+		T actual,
+		bool ok
+	) {
+		std::clog
+			<< std::left
+			<< std::setw(15) << prefix
+			<< std::setw(20) << name
+			<< std::right
+			<< std::setw(10) << expected
+			<< std::setw(10) << actual
+			<< std::setw(10) << (ok ? "ok" : "wrong")
+			<< std::endl;
+	}
 
 	template <class T>
 	void
@@ -30,8 +51,6 @@ namespace {
 			std::ofstream out("spectrum");
 			out << spectrum;
 		}
-		Summary<T>::print_header(std::clog);
-		std::clog << std::endl;
 		T var_elev = acf(0,0,0);
 		Wave_field<T> wave_field(zeta, model.grid());
 		Array1D<T> heights_x = wave_field.heights_x();
@@ -48,39 +67,66 @@ namespace {
 		stats::Wave_lengths_dist<T> lengths_x_dist(stats::mean(lengths_x));
 		stats::Wave_lengths_dist<T> lengths_y_dist(stats::mean(lengths_y));
 		std::vector<Summary<T>> stats = {
-			make_summary(zeta, T(0), var_elev, elev_dist, "elevation"),
 			make_summary(
-				heights_x,
-				model.acf_generator().wave_height(),
-				heights_x_dist,
-				"wave height x"
-			),
-			make_summary(
-				heights_y,
-				model.acf_generator().wave_height(),
-				heights_y_dist,
-				"wave height y"
-			),
-			make_summary(
-				lengths_x,
-				model.acf_generator().wave_length_x(),
-				lengths_x_dist,
-				"wave length x"
-			),
-			make_summary(
-				lengths_y,
-				model.acf_generator().wave_length_y(),
-				lengths_y_dist,
-				"wave length y"
+				zeta,
+				T(0),
+				var_elev,
+				elev_dist,
+				"elevation",
+				T(0.1)
 			),
 			make_summary(
 				periods,
 				model.acf_generator().wave_period(),
 				periods_dist,
-				"wave period"
+				"wave period",
+				model.grid().delta(0)
 			),
 		};
+		if (model.acf_generator().has_x()) {
+			stats.emplace_back(
+				heights_x,
+				model.acf_generator().wave_height_x(),
+				T(0),
+				heights_x_dist,
+				"wave height x",
+				false,
+				T(0.5)
+			);
+			stats.emplace_back(
+				lengths_x,
+				model.acf_generator().wave_length_x(),
+				T(0),
+				lengths_x_dist,
+				"wave length x",
+				false,
+				model.grid().delta(1)
+			);
+		}
+		if (model.acf_generator().has_y()) {
+			stats.emplace_back(
+				heights_y,
+				model.acf_generator().wave_height_y(),
+				T(0),
+				heights_y_dist,
+				"wave height y",
+				false,
+				T(0.5)
+			);
+			stats.emplace_back(
+				lengths_y,
+				model.acf_generator().wave_length_y(),
+				T(0),
+				lengths_y_dist,
+				"wave length y",
+				false,
+				model.grid().delta(2)
+			);
+		}
+		/*
 		if (oflags.isset(Output_flags::Summary)) {
+			Summary<T>::print_header(std::clog);
+			std::clog << std::endl;
 			std::copy(
 				stats.begin(),
 				stats.end(),
@@ -107,6 +153,18 @@ namespace {
 				<< blitz::max(heights_y)
 				<< std::endl;
 			std::clog
+				<< "Min/Max wave length x: "
+				<< blitz::min(lengths_x)
+				<< " / "
+				<< blitz::max(lengths_x)
+				<< std::endl;
+			std::clog
+				<< "Min/Max wave length y: "
+				<< blitz::min(lengths_y)
+				<< " / "
+				<< blitz::max(lengths_y)
+				<< std::endl;
+			std::clog
 				<< "Average amplitude: "
 				<< blitz::max(spectrum)
 				<< std::endl;
@@ -123,12 +181,68 @@ namespace {
 				<< blitz::max(zeta)
 				<< std::endl;
 		}
+		*/
 		if (oflags.isset(Output_flags::Quantile)) {
 			std::for_each(
 				stats.begin(),
 				stats.end(),
 				std::mem_fn(&Summary<T>::write_quantile_graph)
 			);
+		}
+		if (oflags.isset(Output_flags::Summary)) {
+			auto oldf = std::clog.flags();
+			std::clog.setf(std::ios::fixed, std::ios::floatfield);
+			std::clog.setf(std::ios::boolalpha);
+			std::clog.precision(3);
+			for (const Summary<T>& s : stats) {
+				print_indicator(
+					"mean",
+					s.name(),
+					s.expected_mean(),
+					s.mean(),
+					s.mean_ok()
+				);
+				if (s.has_variance()) {
+					print_indicator(
+						"variance",
+						s.name(),
+						s.expected_variance(),
+						s.variance(),
+						s.variance_ok()
+					);
+				}
+			}
+			for (const Summary<T>& s : stats) {
+				print_indicator(
+					"qdistance",
+					s.name(),
+					T(0),
+					s.qdistance(),
+					s.qdistance_ok()
+				);
+			}
+
+			if (model.acf_generator().has_x()) {
+				const T r = stats::mean(lengths_x) / stats::mean(heights_x);
+				print_indicator(
+					"ratio",
+					"height to length x",
+					T(7),
+					r,
+					r > T(7) && r < T(40)
+				);
+			}
+			if (model.acf_generator().has_y()) {
+				const T r = stats::mean(lengths_y) / stats::mean(heights_y);
+				print_indicator(
+					"ratio",
+					"height to length y",
+					T(7),
+					r,
+					r > T(7) && r < T(40)
+				);
+			}
+			std::clog.setf(oldf);
 		}
 	}
 
@@ -168,6 +282,7 @@ arma::generator::Basic_ARMA_model<T>::verify(Array3D<T> zeta) const {
 	if (this->_oflags.isset(Output_flags::Summary) ||
 		this->_oflags.isset(Output_flags::Quantile))
 	{
+		/*
 		{
 			using blitz::Range;
 			std::ofstream out("slice_tx");
@@ -187,6 +302,7 @@ arma::generator::Basic_ARMA_model<T>::verify(Array3D<T> zeta) const {
 			}
 			out << slice;
 		}
+		*/
 		show_statistics(
 			this->_acf,
 			zeta(RectDomain<3>(zeta.shape()/2, zeta.shape()-1)),

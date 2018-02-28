@@ -1,6 +1,7 @@
 #ifndef GENERATOR_ACF_GENERATOR_HH
 #define GENERATOR_ACF_GENERATOR_HH
 
+#include <cmath>
 #include <iosfwd>
 
 #include "discrete_function.hh"
@@ -76,6 +77,16 @@ namespace arma {
 			}
 
 			inline T
+			wave_height_x() const noexcept {
+				return this->has_x() ?  this->wave_height() : T(1) / T(0);
+			}
+
+			inline T
+			wave_height_y() const noexcept {
+				return this->has_y() ?  this->wave_height() : T(1) / T(0);
+			}
+
+			inline T
 			wave_length_x() const noexcept {
 				using constants::_2pi;
 				using std::abs;
@@ -94,6 +105,16 @@ namespace arma {
 				using constants::_2pi;
 				using std::abs;
 				return _2pi<T> / abs(this->_velocity);
+			}
+
+			inline bool
+			has_x() const {
+				return std::isfinite(this->wave_length_x());
+			}
+
+			inline bool
+			has_y() const {
+				return std::isfinite(this->wave_length_y());
 			}
 
 			template <class X>

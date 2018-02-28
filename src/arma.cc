@@ -48,7 +48,8 @@ arma
 		const double val = std::abs(result(i));
 		if (!(val > 1.0)) {
 			++num_bad_roots;
-			std::cerr << "Root #" << i << '=' << result(i) << std::endl;
+			std::cerr << "Root #" << i << '=' << result(i)
+				<< " abs=" << val << std::endl;
 		}
 	}
 	#ifndef NDEBUG

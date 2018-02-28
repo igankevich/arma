@@ -416,7 +416,7 @@ read_valarray(std::istream& in) {
 void
 read_delta() {
 	std::ifstream in("zdelta");
-	if (in.is_open()) { in >> delta; }
+	if (in.is_open()) { in >> delta; delta(0) = 0.1f; }
 }
 
 void

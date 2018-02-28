@@ -44,6 +44,7 @@ arma::ARMA_driver<T>::write_wavy_surface() {
 		io::Binary_stream out(filename);
 		out.write(this->_zeta);
 	}
+	//{ std::ofstream("zdelta") << this->_zeta.grid().patch_size(); }
 }
 
 template <class T>
