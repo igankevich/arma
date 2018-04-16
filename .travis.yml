@@ -5,7 +5,7 @@ python:
   - "3.6"
 before_install:
 - sudo apt-get update -qq
-- sudo apt-get install -qq -y doxygen zlib1g-dev graphviz
+- sudo apt-get install -qq -y python3.6 doxygen zlib1g-dev graphviz
 script: "./deploy/cibuild"
 after_success: "./deploy/cideploy"
 branches:
