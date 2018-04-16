@@ -1,17 +1,10 @@
 #!/bin/sh
 
 set -e
-
-virtualenv py3 --python=/usr/bin/python3
-. py3/bin/activate
-pip3 install --upgrade meson ninja
-
+pip3 install --user --upgrade meson ninja
 export MESON_SOURCE_ROOT=$(pwd)
 export MESON_BUILD_ROOT=$MESON_SOURCE_ROOT/build
 mkdir -p $MESON_BUILD_ROOT
 cd $MESON_BUILD_ROOT
 doxygen $MESON_SOURCE_ROOT/Doxyfile
 cd -
-
-deactivate
-rm -rf py3
