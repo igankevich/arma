@@ -1,10 +1,10 @@
 #!/bin/sh
 
-set -e
-pip3 install --user --upgrade meson ninja
+set -ex
+
+dnf install -y meson ninja-build doxygen graphviz
+
 export MESON_SOURCE_ROOT=$(pwd)
 export MESON_BUILD_ROOT=$MESON_SOURCE_ROOT/build
-mkdir -p $MESON_BUILD_ROOT
-cd $MESON_BUILD_ROOT
+
 doxygen $MESON_SOURCE_ROOT/Doxyfile
-cd -

@@ -1,13 +1,12 @@
 sudo: required
 dist: trusty
 language: cpp
-python:
-  - "3.6"
-before_install:
-- sudo apt-get update -qq
-- sudo apt-get install -qq -y python3.6 doxygen zlib1g-dev graphviz
-script: "./deploy/cibuild"
-after_success: "./deploy/cideploy"
+services:
+  - docker
+script:
+  - docker run -v $PWD:/mnt docker.io/fedora sh -c 'cd /mnt; ./deploy/cibuild'
+after_success:
+  - "./deploy/cideploy"
 branches:
   only:
   - master
