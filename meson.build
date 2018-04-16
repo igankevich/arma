@@ -12,8 +12,6 @@ cpp = meson.get_compiler('cpp')
 libdcmt = cpp.find_library('dcmt')
 libblitz = dependency('blitz')
 libgsl = dependency('gsl')
-liblapack = cpp.find_library('lapack')
-libblas = cpp.find_library('blas')
 
 if not get_option('buildtype').contains('debug')
 	add_global_arguments('-DNDEBUG', language: 'cpp')
@@ -22,20 +20,52 @@ else
 	add_global_arguments('-DBZ_DEBUG', language: 'cpp')
 endif
 
-arma_deps = [
-	libblitz,
-	libgsl,
-	libblas,
-	liblapack,
-	libdcmt,
-]
+arma_deps = [libblitz, libgsl, libdcmt]
+
+if get_option('blas') == 'openblas'
+	arma_deps += cpp.find_library('blas')
+endif
+
+if get_option('lapack') == 'netlib'
+	arma_deps += cpp.find_library('lapack')
+	arma_deps += cpp.find_library('lapacke')
+endif
+
+if get_option('blas') == 'mkl' or get_option('lapack') == 'mkl'
+	if (cpp.get_id() == 'intel')
+		if get_option('framework') == 'openmp'
+			libmkl = declare_dependency(link_args: ['-mkl=parallel'])
+		else
+			libmkl = declare_dependency(link_args: '-mkl=sequential')
+		endif
+	else
+		libmkl = declare_dependency(
+			link_args: [
+				'-lmkl_intel_lp64',
+				'-lmkl_intel_thread',
+				'-lmkl_core',
+				'-liomp5',
+				'-lpthread',
+				'-lm',
+				'-ldl',
+			],
+		)
+	endif
+	arma_deps += libmkl
+endif
+
 framework = get_option('framework')
 if framework == 'openmp'
 	add_global_arguments('-DARMA_OPENMP=1', language: 'cpp')
-	add_global_arguments('-fopenmp', language: 'cpp')
+	if cpp.get_id() == 'gcc'
+		add_global_arguments('-fopenmp', language: 'cpp')
+		add_global_link_arguments('-fopenmp', language: 'cpp')
+	elif cpp.get_id() == 'intel'
+		add_global_arguments('-qopenmp', language: 'cpp')
+		add_global_link_arguments('-qopenmp', language: 'cpp')
+	endif
 	# make Blitz++ reference counters thread-safe
 	add_global_arguments('-DBZ_THREADSAFE', language: 'cpp')
-	add_global_link_arguments('-fopenmp', language: 'cpp')
 elif framework == 'opencl'
 	add_global_arguments('-DARMA_OPENCL=1', language: 'cpp')
 	arma_deps += [

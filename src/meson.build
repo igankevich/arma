@@ -1,5 +1,9 @@
 arma_dcmt_name = executable_prefix + '-dcmt'
 config.set('arma_dcmt_name', arma_dcmt_name)
+config.set('ARMA_BLAS_OPENBLAS', get_option('blas') == 'openblas')
+config.set('ARMA_BLAS_MKL', get_option('blas') == 'mkl')
+config.set('ARMA_LAPACK_NETLIB', get_option('lapack') == 'netlib')
+config.set('ARMA_LAPACK_MKL', get_option('lapack') == 'mkl')
 
 configure_file(
 	input: 'config.hh.in',
@@ -47,7 +51,7 @@ arma_lib = shared_library(
 	include_directories: incdirs,
 	dependencies: arma_deps,
 	cpp_args: arma_cpp_args,
-	link_args: '-llapacke',
+#	link_args: '-llapacke',
 	version: meson.project_version(),
 	install: true
 )
@@ -55,7 +59,7 @@ arma_lib = shared_library(
 libarma = declare_dependency(
 	compile_args: arma_cpp_args,
 	link_with: arma_lib,
-	link_args: '-llapacke',
+#	link_args: '-llapacke',
 	include_directories: incdirs,
 	dependencies: arma_deps
 )

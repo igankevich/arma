@@ -117,8 +117,8 @@ namespace arma {
 			T max_k,
 			int t
 		) {
+			using namespace constants;
 			using std::abs;
-			using constants::_2pi;
 			const Shape3D& zsize = z.shape();
 			const Vec3D<T> zdelta = z.grid().delta();
 			const T dt = zdelta(0);
@@ -189,8 +189,8 @@ namespace arma {
 			T max_k,
 			int t
 		) {
+			using namespace constants;
 			using std::abs;
-			using constants::_2pi;
 			const Shape3D& zsize = z.shape();
 			const Vec3D<T> zdelta = z.grid().delta();
 			const T dt = zdelta(0);
@@ -299,7 +299,7 @@ namespace arma {
 			int idx_t,
 			int idx_y
 		) {
-			using constants::_2pi;
+			using namespace constants;
 			const Vec3D<T>& delta = surface.grid().delta();
 			const Shape3D& size = surface.shape();
 			const int k_count = 40;

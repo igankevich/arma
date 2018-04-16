@@ -126,11 +126,11 @@ arma::velocity::Linear_solver<T>::low_amp_window_function(
 	const Domain<T,2>& wngrid,
 	const T z
 ) {
+	using namespace constants;
 	using std::cosh;
 	using std::exp;
 	using std::isfinite;
 	using blitz::length;
-	using constants::_2pi;
 	const T h = this->_depth;
 	Array2D<T> result(wngrid.num_points());
 	const int nx = wngrid.num_points(0);

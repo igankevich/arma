@@ -11,7 +11,7 @@ arma::velocity::Plain_wave_solver<T>::compute_velocity_field_2d(
 	const T z,
 	const int idx_t
 ) {
-	using constants::_2pi;
+	using namespace constants;
 	using std::cos;
 	using std::sinh;
 	using std::sqrt;

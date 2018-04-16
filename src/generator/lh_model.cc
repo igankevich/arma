@@ -130,7 +130,7 @@ arma::generator::Longuet_Higgins_model<T>::generate_surface(
 ) {
 	using std::cos;
 	using std::sin;
-	using constants::g;
+	using namespace constants;
 	using blitz::product;
 	const Shape3D& lbound = subdomain.lbound();
 	const Shape3D& ubound = subdomain.ubound();
@@ -207,7 +207,7 @@ arma::generator::Longuet_Higgins_model<T>::generate() {
 template <class T>
 void
 arma::generator::Longuet_Higgins_model<T>::generate_white_noise() {
-	using constants::_2pi;
+	using namespace constants;
 	this->_eps.reference(prng::generate_white_noise<T,2>(
 		this->_spec_domain.num_points(),
 		this->_noseed,

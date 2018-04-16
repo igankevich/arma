@@ -93,10 +93,10 @@ arma::velocity::High_amplitude_realtime_solver<T>::setup(
 	const Grid<T, 3>& grid,
 	const Grid<T, 3>& wngrid
 ) {
+	using namespace constants;
 	using opencl::context;
 	using opencl::command_queue;
 	using blitz::product;
-	using constants::_2pi;
 	if (!this->_wfunc()) {
 		this->_wfunc = cl::Buffer(
 			context(),

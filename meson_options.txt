@@ -42,3 +42,19 @@ option(
 	value: '',
 	description: 'path to OpenCL kernels source code'
 )
+
+option(
+	'blas',
+	type: 'combo',
+	value: 'openblas',
+	choices: ['openblas', 'mkl'],
+	description: 'basic linear algebra library'
+)
+
+option(
+	'lapack',
+	type: 'combo',
+	value: 'netlib',
+	choices: ['netlib', 'mkl'],
+	description: 'linear algebra library'
+)

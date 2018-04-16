@@ -4,6 +4,8 @@
 #include <fstream>
 #endif
 
+#include <stdexcept>
+
 #include <gsl/gsl_complex.h>
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_poly.h>

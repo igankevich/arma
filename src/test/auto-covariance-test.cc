@@ -47,7 +47,7 @@ typedef std::complex<T> C;
 typedef std::chrono::high_resolution_clock clock_type;
 
 TEST(AutoCovariance, CosineNoDecay) {
-	using arma::constants::_2pi;
+	using namespace arma::constants;
 	using arma::stats::variance;
 	using blitz::abs;
 	const T r = T(4.5);

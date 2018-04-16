@@ -36,13 +36,10 @@ namespace {
 }
 
 template <class T>
-#if defined(__GNUG__)
-[[gnu::optimize("unroll-loops")]]
-#endif
 T
 arma::apmath::owen_t(T h, T alpha)
 {
-	using arma::constants::_2pi;
+	using namespace arma::constants;
 	using std::exp;
 	T result = 0;
 	const T a2 = alpha*alpha;

@@ -13,7 +13,6 @@ namespace {
 		Event(int i, int j, T p, T z):
 		x(i), y(j), period(p), elevation(z)
 		{}
-		T frequency() const noexcept { return T(1) / period; }
 		int x, y;
 		T period, elevation;
 	};
@@ -22,9 +21,8 @@ namespace {
 	std::pair<T,T>
 	factor_waves_dim(blitz::Array<T, 2> z, int t, T dt) {
 		using namespace arma;
+		using namespace constants;
 		using std::abs;
-		using constants::_2pi;
-		using constants::g;
 		const Shape2D& zsize = z.shape();
 		T min_k = std::numeric_limits<T>::max();
 		T max_k = std::numeric_limits<T>::min();

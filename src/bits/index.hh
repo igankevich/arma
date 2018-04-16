@@ -35,7 +35,7 @@ namespace arma {
 				return idx;
 			}
 
-			const int
+			int
 			num_elements() const noexcept {
 				return blitz::product(this->_shape);
 			}

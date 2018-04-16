@@ -9,4 +9,10 @@
 #mesondefine ARMA_HART_SOLVER
 #mesondefine ARMA_SIMULATE_FAILURES
 
+#mesondefine ARMA_BLAS_OPENBLAS
+#mesondefine ARMA_BLAS_MKL
+
+#mesondefine ARMA_LAPACK_NETLIB
+#mesondefine ARMA_LAPACK_MKL
+
 #endif // CONFIG_HH

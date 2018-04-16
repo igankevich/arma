@@ -31,6 +31,9 @@ namespace arma {
 			void
 			precompute(const Discrete_function<T,3>& zeta, const int idx_t) override;
 
+			void
+			precompute(const Discrete_function<T,3>& zeta) override;
+
 		};
 
 	}

@@ -60,7 +60,7 @@ namespace arma {
 
 			inline T
 			get_shift() const noexcept {
-				using constants::pi_div_2;
+				using namespace constants;
 				return (this->_func == function_type::Cosine)
 					? pi_div_2<T>
 					: T(0);

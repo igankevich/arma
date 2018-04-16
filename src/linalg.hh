@@ -3,9 +3,17 @@
 
 #include <cassert>
 #include <blitz/array.h>
-#include <lapacke/lapacke.h>
-#include <openblas/cblas.h>
+
+#include "config.hh"
 #include "apmath/closed_interval.hh"
+
+#if defined(ARMA_BLAS_OPENBLAS)
+#include <openblas/cblas.h>
+#elif defined(ARMA_BLAS_MKL)
+#include <mkl.h>
+#else
+#error "no BLAS library is specified in the configuration"
+#endif
 
 /**
 \brief Linear algebra subroutines.

@@ -76,7 +76,7 @@ namespace {
 template <class T>
 arma::Array3D<T>
 arma::generator::AR_model<T>::do_generate() {
-	const T var_wn = this->white_noise_variance();
+	const T var_wn = this->Basic_ARMA_model<T>::white_noise_variance();
 	write_key_value(std::clog, "White noise variance", var_wn);
 	if (var_wn < T(0)) {
 		throw std::invalid_argument("variance is less than zero");
@@ -178,7 +178,7 @@ arma::generator::AR_model<T>::do_generate() {
 			parts.erase(result);
 			lock.unlock();
 			ARMA_EVENT_START("generate_surface", "omp", thread_no);
-			zeta(part.rect) = generate_white_noise(
+			zeta(part.rect) = ::generate_white_noise(
 				part.shape(),
 				var_wn,
 				std::ref(mt)

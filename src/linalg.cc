@@ -1,4 +1,13 @@
 #include "linalg.hh"
+
+#if defined(ARMA_LAPACK_NETLIB)
+#include <lapacke/lapacke.h>
+#elif defined(ARMA_LAPACK_MKL)
+#include <mkl.h>
+#else
+#error "no LAPACK library is specified in the configuration"
+#endif
+
 #include "params.hh"
 #include "validators.hh"
 

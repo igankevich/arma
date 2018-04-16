@@ -79,7 +79,7 @@ namespace {
 		const T y,
 		const T t
 	) {
-		using arma::constants::_2pi;
+		using namespace arma::constants;
 		using std::sin;
 		return amplitude * sin(_2pi<T>*(kx*x + ky*y) - velocity*t + phase);
 	}
@@ -96,7 +96,7 @@ namespace {
 		const T y,
 		const T t
 	) {
-		using arma::constants::pi_div_2;
+		using namespace arma::constants;
 		return sine_wave(
 			amplitude,
 			kx, ky,
@@ -118,7 +118,7 @@ namespace {
 		const T y,
 		const T t
 	) {
-		using arma::constants::_2pi;
+		using namespace arma::constants;
 		using std::cos;
 		using std::sqrt;
 		const T theta = _2pi<T>*(kx*x + ky*y) - velocity*t + phase;

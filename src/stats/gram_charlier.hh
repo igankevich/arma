@@ -37,9 +37,7 @@ namespace arma {
 
 			inline T
 			cdf(T x) const noexcept {
-				using constants::_2pi;
-				using constants::sqrt2pi;
-				using constants::sqrt2;
+				using namespace constants;
 				return std::exp(T(-0.5)*x*x)*(_kurtosis*(T(3)*x - x*x*x)
 					+ _skewness*(T(4) - T(4)*x*x) + T(3)*x*x*x - T(9)*x)
 					/ (T(24)*sqrt2pi<T>) + T(0.5)*std::erf(x/sqrt2<T>) + T(0.5);

@@ -22,4 +22,12 @@ arma::velocity::High_amplitude_solver<T>::precompute(
 	this->compute_wave_number_range_from_surface(zeta, idx_t);
 }
 
+template <class T>
+void
+arma::velocity::High_amplitude_solver<T>::precompute(
+	const Discrete_function<T,3>& zeta
+) {
+	Linear_solver<T>::precompute(zeta);
+}
+
 template class arma::velocity::High_amplitude_solver<ARMA_REAL_TYPE>;
