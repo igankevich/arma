@@ -2,16 +2,9 @@
 
 set -e
 
-virtualenv py3 --python=/usr/bin/python3.4
+virtualenv py3 --python=/usr/bin/python3
 . py3/bin/activate
-pip3 install -q meson
-
-wget -O /tmp/ninja.zip https://github.com/ninja-build/ninja/releases/download/v1.7.1/ninja-linux.zip
-unzip -d py3/bin /tmp/ninja.zip
-
-# build documentation
-#meson . build
-#ninja -C build doc
+pip3 install --upgrade meson ninja
 
 export MESON_SOURCE_ROOT=$(pwd)
 export MESON_BUILD_ROOT=$MESON_SOURCE_ROOT/build
