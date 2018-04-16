@@ -1,12 +1,12 @@
-<map id="/home/travis/build/igankevich/arma/src/generator/ar_algorithm.hh" name="/home/travis/build/igankevich/arma/src/generator/ar_algorithm.hh">
-<area shape="rect" id="node2" href="$ar__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.hh" alt="" coords="288,109,441,165"/>
-<area shape="rect" id="node11" href="$ar__algorithm_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_algorithm.cc" alt="" coords="467,109,640,165"/>
-<area shape="rect" id="node3" href="$register__all_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/register_all.hh" alt="" coords="170,317,312,373"/>
-<area shape="rect" id="node8" href="$arma__model_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.hh" alt="" coords="279,213,452,269"/>
-<area shape="rect" id="node10" href="$ar__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model.cc" alt="" coords="476,213,629,269"/>
-<area shape="rect" id="node4" href="$common__main_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/common_main.hh" alt="" coords="87,421,229,477"/>
-<area shape="rect" id="node7" href="$visual_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/visual.cc" alt="" coords="254,421,396,477"/>
-<area shape="rect" id="node5" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="5,525,147,581"/>
-<area shape="rect" id="node6" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="171,525,313,581"/>
-<area shape="rect" id="node9" href="$arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.cc" alt="" coords="337,317,511,373"/>
+<map id="src/generator/ar_algorithm.hh" name="src/generator/ar_algorithm.hh">
+<area shape="rect" id="node2" href="$ar__model_8hh.html" title="src/generator/ar_model.hh" alt="" coords="237,80,410,107"/>
+<area shape="rect" id="node11" href="$ar__algorithm_8cc.html" title="src/generator/ar_algorithm.cc" alt="" coords="435,80,625,107"/>
+<area shape="rect" id="node3" href="$register__all_8hh.html" title="src/register_all.hh" alt="" coords="158,251,283,278"/>
+<area shape="rect" id="node8" href="$arma__model_8hh.html" title="src/generator/arma\l_model.hh" alt="" coords="258,155,389,196"/>
+<area shape="rect" id="node10" href="$ar__model_8cc.html" title="src/generator/ar_model.cc" alt="" coords="413,162,586,189"/>
+<area shape="rect" id="node4" href="$common__main_8hh.html" title="src/common_main.hh" alt="" coords="75,333,222,360"/>
+<area shape="rect" id="node7" href="$visual_8cc.html" title="src/visual.cc" alt="" coords="246,333,342,360"/>
+<area shape="rect" id="node5" href="$arma__main_8cc.html" title="src/arma_main.cc" alt="" coords="5,408,132,435"/>
+<area shape="rect" id="node6" href="$arma__realtime_8cc.html" title="src/arma_realtime.cc" alt="" coords="157,408,301,435"/>
+<area shape="rect" id="node9" href="$arma__model_8cc.html" title="src/generator/arma\l_model.cc" alt="" coords="307,244,438,285"/>
 </map>

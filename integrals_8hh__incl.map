@@ -1,6 +1,6 @@
-<map id="/home/travis/build/igankevich/arma/src/velocity/small_amplitude_solver/integrals.hh" name="/home/travis/build/igankevich/arma/src/velocity/small_amplitude_solver/integrals.hh">
-<area shape="rect" id="node6" href="$delaunay__interpolation_8hh.html" title="delaunay_interpolation.hh" alt="" coords="570,125,739,152"/>
-<area shape="rect" id="node14" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="393,125,545,152"/>
-<area shape="rect" id="node15" href="$types_8hh.html" title="types.hh" alt="" coords="891,125,963,152"/>
-<area shape="rect" id="node17" href="$wave_8hh.html" title="wave.hh" alt="" coords="1242,125,1312,152"/>
+<map id="src/velocity/small_amplitude_solver/integrals.hh" name="src/velocity/small_amplitude_solver/integrals.hh">
+<area shape="rect" id="node6" href="$delaunay__interpolation_8hh.html" title="delaunay_interpolation.hh" alt="" coords="570,95,739,121"/>
+<area shape="rect" id="node14" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="393,95,545,121"/>
+<area shape="rect" id="node15" href="$types_8hh.html" title="types.hh" alt="" coords="1015,95,1087,121"/>
+<area shape="rect" id="node17" href="$wave_8hh.html" title="wave.hh" alt="" coords="1241,95,1311,121"/>
 </map>

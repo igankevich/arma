@@ -1,8 +1,8 @@
-<map id="/home/travis/build/igankevich/arma/src/arma.cc" name="/home/travis/build/igankevich/arma/src/arma.cc">
-<area shape="rect" id="node2" href="$arma_8hh.html" title="arma.hh" alt="" coords="148,184,217,211"/>
-<area shape="rect" id="node9" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="526,109,601,136"/>
-<area shape="rect" id="node3" href="$types_8hh.html" title="types.hh" alt="" coords="244,259,316,285"/>
-<area shape="rect" id="node10" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="465,184,612,211"/>
-<area shape="rect" id="node13" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="568,259,747,285"/>
-<area shape="rect" id="node14" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="771,259,896,285"/>
+<map id="src/arma.cc" name="src/arma.cc">
+<area shape="rect" id="node2" href="$arma_8hh.html" title="arma.hh" alt="" coords="74,155,144,181"/>
+<area shape="rect" id="node10" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="625,80,700,107"/>
+<area shape="rect" id="node3" href="$types_8hh.html" title="types.hh" alt="" coords="318,229,390,256"/>
+<area shape="rect" id="node11" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="558,155,705,181"/>
+<area shape="rect" id="node14" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="654,229,833,256"/>
+<area shape="rect" id="node15" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="857,229,982,256"/>
 </map>

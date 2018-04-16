@@ -1,5 +1,5 @@
-<map id="/home/travis/build/igankevich/arma/src/interpolate.hh" name="/home/travis/build/igankevich/arma/src/interpolate.hh">
-<area shape="rect" id="node2" href="$interpolate_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/interpolate.cc" alt="" coords="5,109,147,165"/>
-<area shape="rect" id="node3" href="$basic__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/basic_solver.cc" alt="" coords="171,109,337,165"/>
-<area shape="rect" id="node4" href="$linear__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/linear_solver.cc" alt="" coords="362,109,528,165"/>
+<map id="src/interpolate.hh" name="src/interpolate.hh">
+<area shape="rect" id="node2" href="$interpolate_8cc.html" title="src/interpolate.cc" alt="" coords="5,87,128,114"/>
+<area shape="rect" id="node3" href="$basic__solver_8cc.html" title="src/velocity/basic\l_solver.cc" alt="" coords="153,80,277,121"/>
+<area shape="rect" id="node4" href="$linear__solver_8cc.html" title="src/velocity/linear\l_solver.cc" alt="" coords="301,80,425,121"/>
 </map>

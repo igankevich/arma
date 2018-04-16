@@ -1,9 +1,9 @@
-<map id="/home/travis/build/igankevich/arma/src/opencl/opencl.hh" name="/home/travis/build/igankevich/arma/src/opencl/opencl.hh">
-<area shape="rect" id="node2" href="$fourier__opencl_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/fourier_opencl.hh" alt="" coords="5,109,176,165"/>
-<area shape="rect" id="node3" href="$fourier__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/fourier_opencl.cc" alt="" coords="15,213,187,269"/>
-<area shape="rect" id="node4" href="$ar__model__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_opencl.cc" alt="" coords="233,213,432,269"/>
-<area shape="rect" id="node5" href="$array_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/array.hh" alt="" coords="303,109,445,165"/>
-<area shape="rect" id="node6" href="$gl__object__guard_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/gl_object_guard.hh" alt="" coords="470,109,647,165"/>
-<area shape="rect" id="node8" href="$opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/opencl.cc" alt="" coords="671,109,813,165"/>
-<area shape="rect" id="node7" href="$gl__object__guard_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/gl_object_guard.cc" alt="" coords="470,213,647,269"/>
+<map id="src/opencl/opencl.hh" name="src/opencl/opencl.hh">
+<area shape="rect" id="node2" href="$fourier__opencl_8hh.html" title="src/apmath/fourier\l_opencl.hh" alt="" coords="5,80,132,121"/>
+<area shape="rect" id="node3" href="$fourier__opencl_8cc.html" title="src/apmath/fourier\l_opencl.cc" alt="" coords="25,169,152,211"/>
+<area shape="rect" id="node4" href="$ar__model__opencl_8cc.html" title="src/generator/ar_model\l_opencl.cc" alt="" coords="217,169,371,211"/>
+<area shape="rect" id="node5" href="$array_8hh.html" title="src/opencl/array.hh" alt="" coords="259,87,391,114"/>
+<area shape="rect" id="node6" href="$gl__object__guard_8hh.html" title="src/opencl/gl_object\l_guard.hh" alt="" coords="415,80,554,121"/>
+<area shape="rect" id="node8" href="$opencl_8cc.html" title="src/opencl/opencl.cc" alt="" coords="579,87,721,114"/>
+<area shape="rect" id="node7" href="$gl__object__guard_8cc.html" title="src/opencl/gl_object\l_guard.cc" alt="" coords="415,169,554,211"/>
 </map>

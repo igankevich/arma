@@ -1,7 +1,7 @@
-<map id="/home/travis/build/igankevich/arma/src/apmath/polynomial.hh" name="/home/travis/build/igankevich/arma/src/apmath/polynomial.hh">
-<area shape="rect" id="node2" href="$hermite_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/hermite.hh" alt="" coords="62,109,204,165"/>
-<area shape="rect" id="node4" href="$series_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/nonlinear/series.cc" alt="" coords="171,213,313,269"/>
-<area shape="rect" id="node5" href="$polynomial_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/polynomial.cc" alt="" coords="281,109,433,165"/>
-<area shape="rect" id="node6" href="$test_2polynomial_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/test/polynomial.hh" alt="" coords="458,109,600,165"/>
-<area shape="rect" id="node3" href="$hermite_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/hermite.cc" alt="" coords="5,213,147,269"/>
+<map id="src/apmath/polynomial.hh" name="src/apmath/polynomial.hh">
+<area shape="rect" id="node2" href="$hermite_8hh.html" title="src/apmath/hermite.hh" alt="" coords="69,80,221,107"/>
+<area shape="rect" id="node4" href="$series_8cc.html" title="src/nonlinear/series.cc" alt="" coords="182,155,335,181"/>
+<area shape="rect" id="node5" href="$polynomial_8cc.html" title="src/apmath/polynomial.cc" alt="" coords="296,80,467,107"/>
+<area shape="rect" id="node6" href="$test_2polynomial_8hh.html" title="src/test/polynomial.hh" alt="" coords="491,80,642,107"/>
+<area shape="rect" id="node3" href="$hermite_8cc.html" title="src/apmath/hermite.cc" alt="" coords="5,155,157,181"/>
 </map>

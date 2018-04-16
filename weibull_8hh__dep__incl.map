@@ -1,6 +1,6 @@
-<map id="/home/travis/build/igankevich/arma/src/stats/weibull.hh" name="/home/travis/build/igankevich/arma/src/stats/weibull.hh">
-<area shape="rect" id="node2" href="$distribution_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/stats/distribution.hh" alt="" coords="94,109,236,165"/>
-<area shape="rect" id="node3" href="$basic__arma__model__verify_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_arma\l_model_verify.cc" alt="" coords="5,214,155,285"/>
-<area shape="rect" id="node5" href="$distribution_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/stats/distribution.cc" alt="" coords="179,221,321,277"/>
-<area shape="rect" id="node4" href="$basic__arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_arma\l_model.cc" alt="" coords="5,334,155,405"/>
+<map id="src/stats/weibull.hh" name="src/stats/weibull.hh">
+<area shape="rect" id="node2" href="$distribution_8hh.html" title="src/stats/distribution.hh" alt="" coords="95,80,253,107"/>
+<area shape="rect" id="node3" href="$basic__arma__model__verify_8cc.html" title="src/generator/basic\l_arma_model_verify.cc" alt="" coords="5,155,161,196"/>
+<area shape="rect" id="node5" href="$distribution_8cc.html" title="src/stats/distribution.cc" alt="" coords="185,162,344,189"/>
+<area shape="rect" id="node4" href="$basic__arma__model_8cc.html" title="src/generator/basic\l_arma_model.cc" alt="" coords="17,244,150,285"/>
 </map>

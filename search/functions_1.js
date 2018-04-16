@@ -3,7 +3,7 @@ var searchData=
   ['abs_5fmax',['abs_max',['../namespaceanonymous__namespace_02qq__graph_8cc_03.html#ad8a595f7d41c4bcbffd462894a2508b2',1,'anonymous_namespace{qq_graph.cc}']]],
   ['ac_5fmatrix_5fblock',['AC_matrix_block',['../classarma_1_1generator_1_1AC__matrix__generator.html#ae566d1d355724aab8b32ef3a5dfa535a',1,'arma::generator::AC_matrix_generator::AC_matrix_block(int i0, int j0)'],['../classarma_1_1generator_1_1AC__matrix__generator.html#a095ad68081176169b4ca817d66722d30',1,'arma::generator::AC_matrix_generator::AC_matrix_block(int i0)']]],
   ['ac_5fmatrix_5fgenerator',['AC_matrix_generator',['../classarma_1_1generator_1_1AC__matrix__generator.html#ae98da53c7d7e8999a925d694f98beeb4',1,'arma::generator::AC_matrix_generator']]],
-  ['acf',['acf',['../structarma_1_1generator_1_1ARMA__model.html#a51a93815d6b63323249ef6fb6340331b',1,'arma::generator::ARMA_model::acf()'],['../classarma_1_1generator_1_1Basic__ARMA__model.html#abc9ff159adf802358c5029ac9a80c4e5',1,'arma::generator::Basic_ARMA_model::acf()']]],
+  ['acf',['acf',['../structarma_1_1generator_1_1ARMA__model.html#af10f5dda7ede76b3a82d4cb17d573b49',1,'arma::generator::ARMA_model::acf()'],['../classarma_1_1generator_1_1Basic__ARMA__model.html#abc9ff159adf802358c5029ac9a80c4e5',1,'arma::generator::Basic_ARMA_model::acf()']]],
   ['acf_5falpha',['acf_alpha',['../visual_8cc.html#a270faeffd62c9d9e49a9d69603d70016',1,'visual.cc']]],
   ['acf_5fbeta',['acf_beta',['../visual_8cc.html#aff434f45e27b3691d6eed90af108f2c3',1,'visual.cc']]],
   ['acf_5fsize',['acf_size',['../visual_8cc.html#a942a8e04bdd42cbd8a5ba792638e489f',1,'visual.cc']]],

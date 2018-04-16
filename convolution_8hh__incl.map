@@ -1,9 +1,9 @@
-<map id="/home/travis/build/igankevich/arma/src/apmath/convolution.hh" name="/home/travis/build/igankevich/arma/src/apmath/convolution.hh">
-<area shape="rect" id="node2" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="410,109,485,136"/>
-<area shape="rect" id="node13" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="687,109,751,136"/>
-<area shape="rect" id="node16" href="$index_8hh.html" title="bits/index.hh" alt="" coords="863,184,959,211"/>
-<area shape="rect" id="node3" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="287,184,433,211"/>
-<area shape="rect" id="node6" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="183,259,361,285"/>
-<area shape="rect" id="node7" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="385,259,511,285"/>
-<area shape="rect" id="node11" href="$types_8hh.html" title="types.hh" alt="" coords="535,259,607,285"/>
+<map id="src/apmath/convolution.hh" name="src/apmath/convolution.hh">
+<area shape="rect" id="node2" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="501,80,575,107"/>
+<area shape="rect" id="node13" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="687,80,751,107"/>
+<area shape="rect" id="node16" href="$index_8hh.html" title="bits/index.hh" alt="" coords="863,155,959,181"/>
+<area shape="rect" id="node3" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="287,155,434,181"/>
+<area shape="rect" id="node6" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="183,229,362,256"/>
+<area shape="rect" id="node7" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="386,229,511,256"/>
+<area shape="rect" id="node11" href="$types_8hh.html" title="types.hh" alt="" coords="535,229,607,256"/>
 </map>

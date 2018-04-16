@@ -1,12 +1,12 @@
-<map id="/home/travis/build/igankevich/arma/src/opencl/cl.hh" name="/home/travis/build/igankevich/arma/src/opencl/cl.hh">
-<area shape="rect" id="node2" href="$opencl_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/opencl.hh" alt="" coords="303,109,445,165"/>
-<area shape="rect" id="node10" href="$device__type_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/device_type.hh" alt="" coords="665,109,820,165"/>
-<area shape="rect" id="node3" href="$fourier__opencl_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/fourier_opencl.hh" alt="" coords="5,213,176,269"/>
-<area shape="rect" id="node4" href="$fourier__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/apmath/fourier_opencl.cc" alt="" coords="17,317,188,373"/>
-<area shape="rect" id="node5" href="$ar__model__opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_opencl.cc" alt="" coords="235,317,433,373"/>
-<area shape="rect" id="node6" href="$array_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/array.hh" alt="" coords="303,213,445,269"/>
-<area shape="rect" id="node7" href="$gl__object__guard_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/gl_object_guard.hh" alt="" coords="470,213,647,269"/>
-<area shape="rect" id="node9" href="$opencl_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/opencl.cc" alt="" coords="671,213,813,269"/>
-<area shape="rect" id="node8" href="$gl__object__guard_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/gl_object_guard.cc" alt="" coords="470,317,647,373"/>
-<area shape="rect" id="node11" href="$device__type_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/opencl/device_type.cc" alt="" coords="838,213,993,269"/>
+<map id="src/opencl/cl.hh" name="src/opencl/cl.hh">
+<area shape="rect" id="node2" href="$opencl_8hh.html" title="src/opencl/opencl.hh" alt="" coords="253,80,396,107"/>
+<area shape="rect" id="node10" href="$device__type_8hh.html" title="src/opencl/device_type.hh" alt="" coords="563,80,737,107"/>
+<area shape="rect" id="node3" href="$fourier__opencl_8hh.html" title="src/apmath/fourier\l_opencl.hh" alt="" coords="5,155,132,196"/>
+<area shape="rect" id="node4" href="$fourier__opencl_8cc.html" title="src/apmath/fourier\l_opencl.cc" alt="" coords="25,244,152,285"/>
+<area shape="rect" id="node5" href="$ar__model__opencl_8cc.html" title="src/generator/ar_model\l_opencl.cc" alt="" coords="217,244,371,285"/>
+<area shape="rect" id="node6" href="$array_8hh.html" title="src/opencl/array.hh" alt="" coords="259,162,391,189"/>
+<area shape="rect" id="node7" href="$gl__object__guard_8hh.html" title="src/opencl/gl_object\l_guard.hh" alt="" coords="415,155,554,196"/>
+<area shape="rect" id="node9" href="$opencl_8cc.html" title="src/opencl/opencl.cc" alt="" coords="579,162,721,189"/>
+<area shape="rect" id="node8" href="$gl__object__guard_8cc.html" title="src/opencl/gl_object\l_guard.cc" alt="" coords="415,244,554,285"/>
+<area shape="rect" id="node11" href="$device__type_8cc.html" title="src/opencl/device_type.cc" alt="" coords="745,162,920,189"/>
 </map>

@@ -1,5 +1,5 @@
-<map id="/home/travis/build/igankevich/arma/src/bits/byte_swap.hh" name="/home/travis/build/igankevich/arma/src/bits/byte_swap.hh">
-<area shape="rect" id="node2" href="$binary__stream_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/io/binary_stream.hh" alt="" coords="103,109,245,165"/>
-<area shape="rect" id="node3" href="$arma__driver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_driver.cc" alt="" coords="5,213,147,269"/>
-<area shape="rect" id="node4" href="$ar__model__parallel_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_parallel.cc" alt="" coords="172,213,375,269"/>
+<map id="src/bits/byte_swap.hh" name="src/bits/byte_swap.hh">
+<area shape="rect" id="node2" href="$binary__stream_8hh.html" title="src/io/binary_stream.hh" alt="" coords="73,80,232,107"/>
+<area shape="rect" id="node3" href="$arma__driver_8cc.html" title="src/arma_driver.cc" alt="" coords="5,162,135,189"/>
+<area shape="rect" id="node4" href="$ar__model__parallel_8cc.html" title="src/generator/ar_model\l_parallel.cc" alt="" coords="159,155,314,196"/>
 </map>

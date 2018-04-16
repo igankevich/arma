@@ -1,5 +1,5 @@
-<map id="/home/travis/build/igankevich/arma/src/bits/acf_wrapper.hh" name="/home/travis/build/igankevich/arma/src/bits/acf_wrapper.hh">
-<area shape="rect" id="node2" href="$acf__wrapper_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/bits/acf_wrapper.cc" alt="" coords="5,117,147,173"/>
-<area shape="rect" id="node3" href="$arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/arma_model.cc" alt="" coords="172,117,345,173"/>
-<area shape="rect" id="node4" href="$basic__arma__model_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/basic_arma\l_model.cc" alt="" coords="370,110,520,181"/>
+<map id="src/bits/acf_wrapper.hh" name="src/bits/acf_wrapper.hh">
+<area shape="rect" id="node2" href="$acf__wrapper_8cc.html" title="src/bits/acf_wrapper.cc" alt="" coords="5,87,163,114"/>
+<area shape="rect" id="node3" href="$arma__model_8cc.html" title="src/generator/arma\l_model.cc" alt="" coords="187,80,317,121"/>
+<area shape="rect" id="node4" href="$basic__arma__model_8cc.html" title="src/generator/basic\l_arma_model.cc" alt="" coords="341,80,475,121"/>
 </map>

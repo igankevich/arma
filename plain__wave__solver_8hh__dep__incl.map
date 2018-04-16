@@ -1,8 +1,8 @@
-<map id="/home/travis/build/igankevich/arma/src/velocity/plain_wave_solver.hh" name="/home/travis/build/igankevich/arma/src/velocity/plain_wave_solver.hh">
-<area shape="rect" id="node2" href="$register__all_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/register_all.hh" alt="" coords="170,133,312,189"/>
-<area shape="rect" id="node7" href="$plain__wave__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/plain_wave\l_solver.cc" alt="" coords="337,126,479,197"/>
-<area shape="rect" id="node3" href="$common__main_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/common_main.hh" alt="" coords="87,245,229,301"/>
-<area shape="rect" id="node6" href="$visual_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/visual.cc" alt="" coords="254,245,396,301"/>
-<area shape="rect" id="node4" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="5,349,147,405"/>
-<area shape="rect" id="node5" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="171,349,313,405"/>
+<map id="src/velocity/plain_wave_solver.hh" name="src/velocity/plain_wave_solver.hh">
+<area shape="rect" id="node2" href="$register__all_8hh.html" title="src/register_all.hh" alt="" coords="158,102,283,129"/>
+<area shape="rect" id="node7" href="$plain__wave__solver_8cc.html" title="src/velocity/plain\l_wave_solver.cc" alt="" coords="307,95,427,136"/>
+<area shape="rect" id="node3" href="$common__main_8hh.html" title="src/common_main.hh" alt="" coords="75,184,222,211"/>
+<area shape="rect" id="node6" href="$visual_8cc.html" title="src/visual.cc" alt="" coords="246,184,342,211"/>
+<area shape="rect" id="node4" href="$arma__main_8cc.html" title="src/arma_main.cc" alt="" coords="5,259,132,285"/>
+<area shape="rect" id="node5" href="$arma__realtime_8cc.html" title="src/arma_realtime.cc" alt="" coords="157,259,301,285"/>
 </map>

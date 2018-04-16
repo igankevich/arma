@@ -50,7 +50,7 @@ var searchData=
   ['_5fgaussian',['_gaussian',['../classarma_1_1stats_1_1Skew__normal.html#a2779638b91fa4a203d97926c9ee8fc71',1,'arma::stats::Skew_normal']]],
   ['_5fgenerator',['_generator',['../classanonymous__namespace_02ar__model__bscheduler_8cc_03_1_1ar__partition__kernel.html#ad55dda7ffb1e22712bac375b83532afc',1,'anonymous_namespace{ar_model_bscheduler.cc}::ar_partition_kernel']]],
   ['_5fglphi',['_glphi',['../classarma_1_1velocity_1_1High__amplitude__realtime__solver.html#ac078f0f5648cf4b30d309ad650c765a8',1,'arma::velocity::High_amplitude_realtime_solver']]],
-  ['_5fglsharing',['_glsharing',['../classarma_1_1opencl_1_1GL__object__guard.html#a57ac8de44d3f86e8fd0a793ae7dee775',1,'arma::opencl::GL_object_guard::_glsharing()'],['../gl__object__guard_8cc.html#a6d8cb499d22880ab5a1fd71e272c267b',1,'_glsharing():&#160;gl_object_guard.cc']]],
+  ['_5fglsharing',['_glsharing',['../classarma_1_1opencl_1_1GL__object__guard.html#a57ac8de44d3f86e8fd0a793ae7dee775',1,'arma::opencl::GL_object_guard']]],
   ['_5fgramcharlier',['_gramcharlier',['../classarma_1_1nonlinear_1_1NIT__transform.html#a907e7610d6a94b44b60b2cffeb95465a',1,'arma::nonlinear::NIT_transform']]],
   ['_5fgraph',['_graph',['../structarma_1_1stats_1_1Summary.html#a56c46d71e0c30704d03b5872fcc90aa6',1,'arma::stats::Summary']]],
   ['_5fgrid',['_grid',['../classarma_1_1Discrete__function.html#a0f0dcf6e349f935c6c8476ab6d3286f7',1,'arma::Discrete_function']]],

@@ -1,10 +1,10 @@
-<map id="/home/travis/build/igankevich/arma/src/velocity/linear_solver.hh" name="/home/travis/build/igankevich/arma/src/velocity/linear_solver.hh">
-<area shape="rect" id="node2" href="$high__amplitude__solver_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_solver.hh" alt="" coords="279,110,441,181"/>
-<area shape="rect" id="node3" href="$register__all_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/register_all.hh" alt="" coords="170,237,312,293"/>
-<area shape="rect" id="node9" href="$linear__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/linear_solver.cc" alt="" coords="466,117,632,173"/>
-<area shape="rect" id="node8" href="$high__amplitude__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_solver.cc" alt="" coords="337,230,500,301"/>
-<area shape="rect" id="node4" href="$common__main_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/common_main.hh" alt="" coords="87,349,229,405"/>
-<area shape="rect" id="node7" href="$visual_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/visual.cc" alt="" coords="254,349,396,405"/>
-<area shape="rect" id="node5" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="5,453,147,509"/>
-<area shape="rect" id="node6" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="171,453,313,509"/>
+<map id="src/velocity/linear_solver.hh" name="src/velocity/linear_solver.hh">
+<area shape="rect" id="node2" href="$high__amplitude__solver_8hh.html" title="src/velocity/high_amplitude\l_solver.hh" alt="" coords="259,95,439,136"/>
+<area shape="rect" id="node3" href="$register__all_8hh.html" title="src/register_all.hh" alt="" coords="158,191,283,218"/>
+<area shape="rect" id="node9" href="$linear__solver_8cc.html" title="src/velocity/linear\l_solver.cc" alt="" coords="463,95,587,136"/>
+<area shape="rect" id="node8" href="$high__amplitude__solver_8cc.html" title="src/velocity/high_amplitude\l_solver.cc" alt="" coords="308,184,488,225"/>
+<area shape="rect" id="node4" href="$common__main_8hh.html" title="src/common_main.hh" alt="" coords="75,273,222,300"/>
+<area shape="rect" id="node7" href="$visual_8cc.html" title="src/visual.cc" alt="" coords="246,273,342,300"/>
+<area shape="rect" id="node5" href="$arma__main_8cc.html" title="src/arma_main.cc" alt="" coords="5,348,132,375"/>
+<area shape="rect" id="node6" href="$arma__realtime_8cc.html" title="src/arma_realtime.cc" alt="" coords="157,348,301,375"/>
 </map>

@@ -1,7 +1,7 @@
-<map id="/home/travis/build/igankevich/arma/src/bits/bscheduler_io.hh" name="/home/travis/build/igankevich/arma/src/bits/bscheduler_io.hh">
-<area shape="rect" id="node3" href="$domain_8hh.html" title="domain.hh" alt="" coords="224,109,305,136"/>
-<area shape="rect" id="node13" href="$grid_8hh.html" title="grid.hh" alt="" coords="92,109,153,136"/>
-<area shape="rect" id="node14" href="$types_8hh.html" title="types.hh" alt="" coords="537,259,609,285"/>
-<area shape="rect" id="node9" href="$validators_8hh.html" title="validators.hh" alt="" coords="132,184,228,211"/>
-<area shape="rect" id="node11" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="56,259,120,285"/>
+<map id="src/bits/bscheduler_io.hh" name="src/bits/bscheduler_io.hh">
+<area shape="rect" id="node3" href="$domain_8hh.html" title="domain.hh" alt="" coords="224,95,307,121"/>
+<area shape="rect" id="node13" href="$grid_8hh.html" title="grid.hh" alt="" coords="91,95,152,121"/>
+<area shape="rect" id="node14" href="$types_8hh.html" title="types.hh" alt="" coords="537,244,609,271"/>
+<area shape="rect" id="node9" href="$validators_8hh.html" title="validators.hh" alt="" coords="132,169,228,196"/>
+<area shape="rect" id="node11" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="56,244,120,271"/>
 </map>

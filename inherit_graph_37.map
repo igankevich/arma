@@ -1,10 +1,10 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$structarma_1_1opengl_1_1GL__type_3_01GLbyte_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="176,5,331,46"/>
-<area shape="rect" id="node3" href="$structarma_1_1opengl_1_1GL__type_3_01GLdouble_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="176,70,331,111"/>
-<area shape="rect" id="node4" href="$structarma_1_1opengl_1_1GL__type_3_01GLfloat_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="176,135,331,177"/>
-<area shape="rect" id="node5" href="$structarma_1_1opengl_1_1GL__type_3_01GLint_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="176,201,331,242"/>
-<area shape="rect" id="node6" href="$structarma_1_1opengl_1_1GL__type_3_01GLshort_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="176,266,331,307"/>
-<area shape="rect" id="node7" href="$structarma_1_1opengl_1_1GL__type_3_01GLubyte_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="176,331,331,373"/>
-<area shape="rect" id="node8" href="$structarma_1_1opengl_1_1GL__type_3_01GLuint_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="176,397,331,438"/>
-<area shape="rect" id="node9" href="$structarma_1_1opengl_1_1GL__type_3_01GLushort_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="176,462,331,503"/>
+<area shape="rect" id="node2" href="$structarma_1_1opengl_1_1GL__type_3_01GLbyte_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="175,5,329,47"/>
+<area shape="rect" id="node3" href="$structarma_1_1opengl_1_1GL__type_3_01GLdouble_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="175,71,329,112"/>
+<area shape="rect" id="node4" href="$structarma_1_1opengl_1_1GL__type_3_01GLfloat_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="175,136,329,177"/>
+<area shape="rect" id="node5" href="$structarma_1_1opengl_1_1GL__type_3_01GLint_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="175,201,329,243"/>
+<area shape="rect" id="node6" href="$structarma_1_1opengl_1_1GL__type_3_01GLshort_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="175,267,329,308"/>
+<area shape="rect" id="node7" href="$structarma_1_1opengl_1_1GL__type_3_01GLubyte_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="175,332,329,373"/>
+<area shape="rect" id="node8" href="$structarma_1_1opengl_1_1GL__type_3_01GLuint_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="175,397,329,439"/>
+<area shape="rect" id="node9" href="$structarma_1_1opengl_1_1GL__type_3_01GLushort_01_4.html" title="Maps GL* types to the corresponding GLenum constants. " alt="" coords="175,463,329,504"/>
 </map>

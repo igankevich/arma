@@ -1,6 +1,6 @@
-<map id="/home/travis/build/igankevich/arma/src/stats/skew_normal.cc" name="/home/travis/build/igankevich/arma/src/stats/skew_normal.cc">
-<area shape="rect" id="node2" href="$skew__normal_8hh.html" title="skew_normal.hh" alt="" coords="197,109,313,136"/>
-<area shape="rect" id="node8" href="$params_8hh.html" title="params.hh" alt="" coords="417,109,499,136"/>
-<area shape="rect" id="node5" href="$gaussian_8hh.html" title="gaussian.hh" alt="" coords="210,184,301,211"/>
-<area shape="rect" id="node7" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="5,184,133,211"/>
+<map id="src/stats/skew_normal.cc" name="src/stats/skew_normal.cc">
+<area shape="rect" id="node2" href="$skew__normal_8hh.html" title="skew_normal.hh" alt="" coords="198,80,315,107"/>
+<area shape="rect" id="node8" href="$params_8hh.html" title="params.hh" alt="" coords="418,80,501,107"/>
+<area shape="rect" id="node5" href="$gaussian_8hh.html" title="gaussian.hh" alt="" coords="211,155,303,181"/>
+<area shape="rect" id="node7" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="5,155,135,181"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="arma::generator::Longuet_Higgins_model&lt; T &gt;" name="arma::generator::Longuet_Higgins_model&lt; T &gt;">
-<area shape="rect" id="node2" href="$classarma_1_1generator_1_1Basic__model.html" title="A base class for all generators. " alt="" coords="71,309,224,592"/>
-<area shape="rect" id="node3" href="$structarma_1_1Grid.html" title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ num_patches()\l+ num_patches()\land 12 more...\l}" alt="" coords="5,6,135,245"/>
-<area shape="rect" id="node4" href="$classarma_1_1Output__flags.html" title="Flags that determine what and how is written to disk. " alt="" coords="160,57,293,193"/>
-<area shape="rect" id="node5" href="$structarma_1_1Domain.html" title="{arma::Domain\&lt; T, 2 \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ operator=()\l+ num_points()\land 16 more...\l}" alt="" coords="250,324,400,577"/>
+<area shape="rect" id="node2" href="$classarma_1_1generator_1_1Basic__model.html" title="A base class for all generators. " alt="" coords="70,307,225,589"/>
+<area shape="rect" id="node3" href="$structarma_1_1Grid.html" title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ num_patches()\l+ num_patches()\land 12 more...\l}" alt="" coords="5,5,135,244"/>
+<area shape="rect" id="node4" href="$classarma_1_1Output__flags.html" title="Flags that determine what and how is written to disk. " alt="" coords="159,57,293,193"/>
+<area shape="rect" id="node5" href="$structarma_1_1Domain.html" title="{arma::Domain\&lt; T, 2 \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ operator=()\l+ num_points()\land 16 more...\l}" alt="" coords="249,321,400,575"/>
 </map>

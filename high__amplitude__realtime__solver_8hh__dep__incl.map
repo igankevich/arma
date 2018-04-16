@@ -1,5 +1,5 @@
-<map id="/home/travis/build/igankevich/arma/src/velocity/high_amplitude_realtime_solver.hh" name="/home/travis/build/igankevich/arma/src/velocity/high_amplitude_realtime_solver.hh">
-<area shape="rect" id="node2" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="5,133,147,189"/>
-<area shape="rect" id="node3" href="$arma__realtime__driver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.cc" alt="" coords="172,133,336,189"/>
-<area shape="rect" id="node4" href="$high__amplitude__realtime__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/high_amplitude\l_realtime_solver.cc" alt="" coords="361,126,524,197"/>
+<map id="src/velocity/high_amplitude_realtime_solver.hh" name="src/velocity/high_amplitude_realtime_solver.hh">
+<area shape="rect" id="node2" href="$arma__realtime_8cc.html" title="src/arma_realtime.cc" alt="" coords="5,102,149,129"/>
+<area shape="rect" id="node3" href="$arma__realtime__driver_8cc.html" title="src/arma_realtime_driver.cc" alt="" coords="174,102,357,129"/>
+<area shape="rect" id="node4" href="$high__amplitude__realtime__solver_8cc.html" title="src/velocity/high_amplitude\l_realtime_solver.cc" alt="" coords="381,95,561,136"/>
 </map>

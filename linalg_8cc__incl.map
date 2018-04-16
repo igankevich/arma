@@ -1,7 +1,7 @@
-<map id="/home/travis/build/igankevich/arma/src/linalg.cc" name="/home/travis/build/igankevich/arma/src/linalg.cc">
-<area shape="rect" id="node2" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="382,109,452,136"/>
-<area shape="rect" id="node11" href="$params_8hh.html" title="params.hh" alt="" coords="876,109,957,136"/>
-<area shape="rect" id="node15" href="$validators_8hh.html" title="validators.hh" alt="" coords="668,109,764,136"/>
-<area shape="rect" id="node7" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="150,184,324,211"/>
-<area shape="rect" id="node17" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="641,184,705,211"/>
+<map id="src/linalg.cc" name="src/linalg.cc">
+<area shape="rect" id="node2" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="301,80,372,107"/>
+<area shape="rect" id="node10" href="$params_8hh.html" title="params.hh" alt="" coords="679,80,762,107"/>
+<area shape="rect" id="node14" href="$validators_8hh.html" title="validators.hh" alt="" coords="471,80,567,107"/>
+<area shape="rect" id="node6" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="5,155,180,181"/>
+<area shape="rect" id="node16" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="445,155,509,181"/>
 </map>

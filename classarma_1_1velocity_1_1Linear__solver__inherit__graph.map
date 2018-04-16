@@ -1,4 +1,4 @@
 <map id="arma::velocity::Linear_solver&lt; T &gt;" name="arma::velocity::Linear_solver&lt; T &gt;">
-<area shape="rect" id="node3" href="$classarma_1_1velocity_1_1High__amplitude__solver.html" title="Uses analytic formula based on Fourier transforms, arbitrary amplitude waves. " alt="" coords="23,625,181,717"/>
-<area shape="rect" id="node2" href="$classarma_1_1velocity_1_1Velocity__potential__solver.html" title="Base class for all velocity potential field solvers. " alt="" coords="5,6,200,362"/>
+<area shape="rect" id="node3" href="$classarma_1_1velocity_1_1High__amplitude__solver.html" title="Uses analytic formula based on Fourier transforms, arbitrary amplitude waves. " alt="" coords="23,623,182,729"/>
+<area shape="rect" id="node2" href="$classarma_1_1velocity_1_1Velocity__potential__solver.html" title="Base class for all velocity potential field solvers. " alt="" coords="5,5,200,361"/>
 </map>

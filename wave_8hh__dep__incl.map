@@ -1,5 +1,5 @@
-<map id="/home/travis/build/igankevich/arma/src/wave.hh" name="/home/travis/build/igankevich/arma/src/wave.hh">
-<area shape="rect" id="node2" href="$integrals_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/small_amplitude\l_solver/integrals.hh" alt="" coords="5,110,173,181"/>
-<area shape="rect" id="node4" href="$wave_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/wave.cc" alt="" coords="198,117,340,173"/>
-<area shape="rect" id="node3" href="$small__amplitude__solver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/velocity/small_amplitude\l_solver.cc" alt="" coords="5,230,173,301"/>
+<map id="src/wave.hh" name="src/wave.hh">
+<area shape="rect" id="node2" href="$integrals_8hh.html" title="src/velocity/small\l_amplitude_solver/integrals.hh" alt="" coords="5,80,204,121"/>
+<area shape="rect" id="node4" href="$wave_8cc.html" title="src/wave.cc" alt="" coords="229,87,322,114"/>
+<area shape="rect" id="node3" href="$small__amplitude__solver_8cc.html" title="src/velocity/small\l_amplitude_solver.cc" alt="" coords="33,169,177,211"/>
 </map>

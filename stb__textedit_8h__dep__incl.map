@@ -1,5 +1,5 @@
-<map id="/home/travis/build/igankevich/arma/src/imgui/stb_textedit.h" name="/home/travis/build/igankevich/arma/src/imgui/stb_textedit.h">
-<area shape="rect" id="node2" href="$imgui__internal_8h.html" title="/home/travis/build\l/igankevich/arma/src\l/imgui/imgui_internal.h" alt="" coords="113,109,265,165"/>
-<area shape="rect" id="node3" href="$imgui_8cpp.html" title="/home/travis/build\l/igankevich/arma/src\l/imgui/imgui.cpp" alt="" coords="5,213,147,269"/>
-<area shape="rect" id="node4" href="$imgui__draw_8cpp.html" title="/home/travis/build\l/igankevich/arma/src\l/imgui/imgui_draw.cpp" alt="" coords="172,213,324,269"/>
+<map id="src/imgui/stb_textedit.h" name="src/imgui/stb_textedit.h">
+<area shape="rect" id="node2" href="$imgui__internal_8h.html" title="src/imgui/imgui_internal.h" alt="" coords="110,80,281,107"/>
+<area shape="rect" id="node3" href="$imgui_8cpp.html" title="src/imgui/imgui.cpp" alt="" coords="5,155,140,181"/>
+<area shape="rect" id="node4" href="$imgui__draw_8cpp.html" title="src/imgui/imgui_draw.cpp" alt="" coords="164,155,333,181"/>
 </map>

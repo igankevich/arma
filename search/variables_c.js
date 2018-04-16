@@ -1,8 +1,8 @@
 var searchData=
 [
   ['max',['Max',['../structImRect.html#aad58c13340d320b350a72a037e3f7628',1,'ImRect']]],
-  ['memallocfn',['MemAllocFn',['../structImGuiIO.html#ace5d1fc61fdf88ea0b13dc07c70242c6',1,'ImGuiIO']]],
-  ['memfreefn',['MemFreeFn',['../structImGuiIO.html#a9485f3212e9d05fe94121b44e4775f92',1,'ImGuiIO']]],
+  ['memallocfn',['MemAllocFn',['../structImGuiIO.html#a352f6f0770974ee173f84d99d9e50a6e',1,'ImGuiIO']]],
+  ['memfreefn',['MemFreeFn',['../structImGuiIO.html#adb56df4e96ab8a9f1aefe8dd474ba0f5',1,'ImGuiIO']]],
   ['menubarappending',['MenuBarAppending',['../structImGuiDrawContext.html#a01e52aff3f5efc13fcf6af213cf417c2',1,'ImGuiDrawContext']]],
   ['menubaroffsetx',['MenuBarOffsetX',['../structImGuiDrawContext.html#a18a950aff641d2a87a3057e9449fdf36',1,'ImGuiDrawContext']]],
   ['menucolumns',['MenuColumns',['../structImGuiWindow.html#a9207bb87da58863ce60c08679ef19977',1,'ImGuiWindow']]],

@@ -1,6 +1,6 @@
-<map id="/home/travis/build/igankevich/arma/src/errors.hh" name="/home/travis/build/igankevich/arma/src/errors.hh">
-<area shape="rect" id="node2" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="5,109,147,165"/>
-<area shape="rect" id="node3" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="171,109,313,165"/>
-<area shape="rect" id="node4" href="$ar__model__parallel_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/generator/ar_model_parallel.cc" alt="" coords="339,109,541,165"/>
-<area shape="rect" id="node5" href="$parallel__mt_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/parallel_mt.cc" alt="" coords="566,109,708,165"/>
+<map id="src/errors.hh" name="src/errors.hh">
+<area shape="rect" id="node2" href="$arma__main_8cc.html" title="src/arma_main.cc" alt="" coords="5,87,132,114"/>
+<area shape="rect" id="node3" href="$arma__realtime_8cc.html" title="src/arma_realtime.cc" alt="" coords="157,87,301,114"/>
+<area shape="rect" id="node4" href="$ar__model__parallel_8cc.html" title="src/generator/ar_model\l_parallel.cc" alt="" coords="325,80,479,121"/>
+<area shape="rect" id="node5" href="$parallel__mt_8cc.html" title="src/parallel_mt.cc" alt="" coords="503,87,629,114"/>
 </map>

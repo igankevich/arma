@@ -1,5 +1,5 @@
-<map id="/home/travis/build/igankevich/arma/src/apmath/fourier_opencl.hh" name="/home/travis/build/igankevich/arma/src/apmath/fourier_opencl.hh">
-<area shape="rect" id="node7" href="$opencl_8hh.html" title="opencl/opencl.hh" alt="" coords="507,109,627,136"/>
-<area shape="rect" id="node10" href="$fourier__direction_8hh.html" title="fourier_direction.hh" alt="" coords="651,109,783,136"/>
-<area shape="rect" id="node8" href="$cl_8hh_source.html" title="cl.hh" alt="" coords="541,184,592,211"/>
+<map id="src/apmath/fourier_opencl.hh" name="src/apmath/fourier_opencl.hh">
+<area shape="rect" id="node7" href="$opencl_8hh.html" title="opencl/opencl.hh" alt="" coords="507,95,627,121"/>
+<area shape="rect" id="node10" href="$fourier__direction_8hh.html" title="fourier_direction.hh" alt="" coords="651,95,783,121"/>
+<area shape="rect" id="node8" href="$cl_8hh_source.html" title="cl.hh" alt="" coords="541,169,592,196"/>
 </map>

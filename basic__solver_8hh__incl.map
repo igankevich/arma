@@ -1,8 +1,8 @@
-<map id="/home/travis/build/igankevich/arma/src/velocity/basic_solver.hh" name="/home/travis/build/igankevich/arma/src/velocity/basic_solver.hh">
-<area shape="rect" id="node2" href="$types_8hh.html" title="types.hh" alt="" coords="80,184,152,211"/>
-<area shape="rect" id="node4" href="$domain_8hh.html" title="domain.hh" alt="" coords="176,184,257,211"/>
-<area shape="rect" id="node13" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="241,109,380,136"/>
-<area shape="rect" id="node9" href="$validators_8hh.html" title="validators.hh" alt="" coords="413,259,509,285"/>
-<area shape="rect" id="node11" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="463,333,527,360"/>
-<area shape="rect" id="node14" href="$grid_8hh.html" title="grid.hh" alt="" coords="431,184,492,211"/>
+<map id="src/velocity/basic_solver.hh" name="src/velocity/basic_solver.hh">
+<area shape="rect" id="node2" href="$types_8hh.html" title="types.hh" alt="" coords="79,169,151,196"/>
+<area shape="rect" id="node4" href="$domain_8hh.html" title="domain.hh" alt="" coords="175,169,258,196"/>
+<area shape="rect" id="node13" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="241,95,379,121"/>
+<area shape="rect" id="node9" href="$validators_8hh.html" title="validators.hh" alt="" coords="413,244,509,271"/>
+<area shape="rect" id="node11" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="462,319,526,345"/>
+<area shape="rect" id="node14" href="$grid_8hh.html" title="grid.hh" alt="" coords="430,169,491,196"/>
 </map>

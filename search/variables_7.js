@@ -1,7 +1,7 @@
 var searchData=
 [
   ['g',['g',['../namespacearma_1_1constants.html#a5a25bb7cab9941f0546f6442a1db3778',1,'arma::constants']]],
-  ['getclipboardtextfn',['GetClipboardTextFn',['../structImGuiIO.html#a39bf05f0db23735ea341678a350169c4',1,'ImGuiIO']]],
+  ['getclipboardtextfn',['GetClipboardTextFn',['../structImGuiIO.html#ab7face2b2efef720a22a7fb2143d415c',1,'ImGuiIO']]],
   ['gimgui',['GImGui',['../imgui_8cpp.html#a26aa67b834c0453a50c5e3970a8eba07',1,'GImGui():&#160;imgui.cpp'],['../imgui__internal_8h.html#a93caa8df61dac3cb1ab1271a755442a3',1,'GImGui():&#160;imgui.cpp']]],
   ['glcontext',['glcontext',['../visual_8cc.html#a56160be05cdeedb1c5dde8ed68dcf76a',1,'visual.cc']]],
   ['glyf',['glyf',['../structstbtt__fontinfo.html#a5de2129e0a415748920f6aa10ceee6e5',1,'stbtt_fontinfo']]],

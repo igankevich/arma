@@ -1,7 +1,7 @@
-<map id="/home/travis/build/igankevich/arma/src/imgui/imconfig.h" name="/home/travis/build/igankevich/arma/src/imgui/imconfig.h">
-<area shape="rect" id="node2" href="$imgui_8h.html" title="/home/travis/build\l/igankevich/arma/src\l/imgui/imgui.h" alt="" coords="262,109,404,165"/>
-<area shape="rect" id="node3" href="$imgui_8cpp.html" title="/home/travis/build\l/igankevich/arma/src\l/imgui/imgui.cpp" alt="" coords="5,213,147,269"/>
-<area shape="rect" id="node4" href="$imgui__draw_8cpp.html" title="/home/travis/build\l/igankevich/arma/src\l/imgui/imgui_draw.cpp" alt="" coords="172,213,324,269"/>
-<area shape="rect" id="node5" href="$imgui__sdl_8cpp.html" title="/home/travis/build\l/igankevich/arma/src\l/imgui/imgui_sdl.cpp" alt="" coords="349,213,491,269"/>
-<area shape="rect" id="node6" href="$visual_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/visual.cc" alt="" coords="515,213,657,269"/>
+<map id="src/imgui/imconfig.h" name="src/imgui/imconfig.h">
+<area shape="rect" id="node2" href="$imgui_8h.html" title="src/imgui/imgui.h" alt="" coords="281,80,403,107"/>
+<area shape="rect" id="node3" href="$imgui_8cpp.html" title="src/imgui/imgui.cpp" alt="" coords="5,155,140,181"/>
+<area shape="rect" id="node4" href="$imgui__draw_8cpp.html" title="src/imgui/imgui_draw.cpp" alt="" coords="164,155,333,181"/>
+<area shape="rect" id="node5" href="$imgui__sdl_8cpp.html" title="src/imgui/imgui_sdl.cpp" alt="" coords="357,155,516,181"/>
+<area shape="rect" id="node6" href="$visual_8cc.html" title="src/visual.cc" alt="" coords="541,155,637,181"/>
 </map>

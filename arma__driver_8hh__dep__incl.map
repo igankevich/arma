@@ -1,8 +1,8 @@
-<map id="/home/travis/build/igankevich/arma/src/arma_driver.hh" name="/home/travis/build/igankevich/arma/src/arma_driver.hh">
-<area shape="rect" id="node2" href="$arma__driver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_driver.cc" alt="" coords="5,109,147,165"/>
-<area shape="rect" id="node3" href="$arma__main_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_main.cc" alt="" coords="171,109,313,165"/>
-<area shape="rect" id="node4" href="$arma__realtime__driver_8hh.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.hh" alt="" coords="339,109,503,165"/>
-<area shape="rect" id="node7" href="$visual_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/visual.cc" alt="" coords="529,109,671,165"/>
-<area shape="rect" id="node5" href="$arma__realtime_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime.cc" alt="" coords="261,213,403,269"/>
-<area shape="rect" id="node6" href="$arma__realtime__driver_8cc.html" title="/home/travis/build\l/igankevich/arma/src\l/arma_realtime_driver.cc" alt="" coords="428,213,592,269"/>
+<map id="src/arma_driver.hh" name="src/arma_driver.hh">
+<area shape="rect" id="node2" href="$arma__driver_8cc.html" title="src/arma_driver.cc" alt="" coords="5,80,135,107"/>
+<area shape="rect" id="node3" href="$arma__main_8cc.html" title="src/arma_main.cc" alt="" coords="159,80,285,107"/>
+<area shape="rect" id="node4" href="$arma__realtime__driver_8hh.html" title="src/arma_realtime_driver.hh" alt="" coords="309,80,492,107"/>
+<area shape="rect" id="node7" href="$visual_8cc.html" title="src/visual.cc" alt="" coords="517,80,613,107"/>
+<area shape="rect" id="node5" href="$arma__realtime_8cc.html" title="src/arma_realtime.cc" alt="" coords="234,155,378,181"/>
+<area shape="rect" id="node6" href="$arma__realtime__driver_8cc.html" title="src/arma_realtime_driver.cc" alt="" coords="403,155,585,181"/>
 </map>
