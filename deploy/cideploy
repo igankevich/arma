@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -x
+set -ex
 
 # decrypt and add key to ssh-agent
 eval $(ssh-agent -s)
