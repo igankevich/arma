@@ -69,6 +69,8 @@ executable(
 )
 
 if get_option('with_high_amplitude_realtime_solver')
+	libGL = cpp.find_library('GL')
+	libglut = dependency('freeglut')
 	arma_realtime_src = arma_lib_src + [
 		'velocity/basic_solver.cc',
 		'velocity/high_amplitude_realtime_solver.cc',
@@ -96,11 +98,15 @@ executable(
 	install: true
 )
 
-executable(
-	executable_prefix + '-visual',
-	sources: ['visual.cc'] + imgui_src,
-	dependencies: [libGL, libSDL2, libarma, dependency('threads')],
-	install: true
-)
+libGL = cpp.find_library('GL', required: false)
+libSDL2 = dependency('sdl2', required: false)
+if libGL.found() and libSDL2.found()
+	executable(
+		executable_prefix + '-visual',
+		sources: ['visual.cc'] + imgui_src,
+		dependencies: [libGL, libSDL2, libarma, dependency('threads')],
+		install: true
+	)
+endif
 
 subdir('test')
