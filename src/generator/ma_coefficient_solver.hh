@@ -123,12 +123,6 @@ namespace arma {
 			Array3D<T>
 			solve_fixed_point_iteration();
 
-			Array3D<T>
-			solve_non_convex();
-
-			Array3D<T>
-			solve_bisection(Array3D<T> theta);
-
 		};
 
 		template <class T>

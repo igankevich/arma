@@ -2,8 +2,9 @@
 
 #include "errors.hh"
 
-#include <random>
 #include <chrono>
+#include <random>
+#include <sstream>
 
 std::ostream&
 arma::prng::operator<<(std::ostream& out, const parallel_mt& rhs) {
@@ -28,7 +29,10 @@ std::vector<arma::prng::parallel_mt>
 arma::prng::read_parallel_mts(const char* filename, size_t n, bool noseed) {
 	std::ifstream in(filename);
 	if (!in.is_open()) {
-		throw std::runtime_error("bad file");
+		std::stringstream msg;
+		msg << "Mersenne Twister configuration file not found: "
+			<< filename;
+		throw std::runtime_error(msg.str());
 	}
 	// generate seeds
 	std::vector<parallel_mt::result_type> seeds(n);

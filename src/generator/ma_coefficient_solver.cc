@@ -1,12 +1,11 @@
 #include "ma_coefficient_solver.hh"
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <limits>
 #include <random>
 #include <stdexcept>
-
-#include <dlib/global_optimization.h>
 
 #include "blitz.hh"
 #include "params.hh"
@@ -28,8 +27,6 @@ arma::Array3D<T>
 arma::generator::MA_coefficient_solver<T>
 ::solve() {
 	return this->solve_fixed_point_iteration();
-//	return this->solve_non_convex();
-//	return this->solve_bisection(theta);
 }
 
 template <class T>
@@ -147,159 +144,6 @@ arma::generator::MA_coefficient_solver<T>
 	          << "\n\tmax(residual) = " << residual
 	          << std::endl;
 	return theta;
-}
-
-template <class T>
-using column_vector = dlib::matrix<T,0,1>;
-
-template <class T>
-arma::Array3D<T>
-arma::generator::MA_coefficient_solver<T>
-::solve_non_convex() {
-	using blitz::RectDomain;
-	const Array3D<T> acf(
-		this->_acf(RectDomain<3>{{0,0,0}, this->_order-1})
-	);
-	{ std::ofstream("acf333") << acf; }
-	const int n = acf.numElements();
-	const int m = n-1;
-	auto objective = [this,n,m,&acf] (const column_vector<T>& theta_in) {
-		using blitz::sum;
-		using blitz::pow2;
-		using blitz::mean;
-		using std::sqrt;
-		const Shape3D& shp = acf.shape();
-		const int ni = shp(0);
-		const int nj = shp(1);
-		const int nk = shp(2);
-		Array3D<T> theta(shp);
-		theta(0,0,0) = T(-1);
-		T var_wn = T(1e-10);
-		for (int i=0; i<m; ++i) {
-			*(theta.data() + i + 1) = theta_in(i);
-		}
-//		const T denominator = sum(pow2(theta));
-		Array3D<T> residual(shp);
-		for (int i=0; i<ni; ++i) {
-			for (int j=0; j<nj; ++j) {
-				for (int k=0; k<nk; ++k) {
-					RectDomain<3> sub1(Shape3D(i, j, k), shp - 1);
-					RectDomain<3> sub2(Shape3D(0, 0, 0),
-									   shp - Shape3D(i, j, k) - 1);
-					T numerator = blitz::sum(theta(sub1) * theta(sub2));
-					T elem = std::abs(numerator*var_wn - acf(i,j,k));
-					residual(i,j,k) = elem;
-				}
-			}
-		}
-		const T max_residual = sqrt(mean(pow2(residual)));
-		std::clog << "max_residual=" << max_residual
-			<< ",theta(0,0,0)=" << theta(0,0,0)
-			<< ",acf(0,0,0)=" << acf(0,0,0)
-			<< ",residual(0,0,0)=" << residual(0,0,0)
-			<< ",var_wn=" << var_wn
-			<< std::endl;
-		return max_residual;
-	};
-	column_vector<T> theta_min(m);
-	column_vector<T> theta_max(m);
-	theta_min = T(-1);
-	theta_max = T(1);
-//	theta_min(m) = T(0);
-//	theta_max(m) = T(0.1);//this->_acf(0,0,0);
-	auto res = dlib::find_min_global(
-		objective,
-		theta_min,
-		theta_max,
-		dlib::max_function_calls(200)
-	);
-	Array3D<T> result(acf.shape());
-	result(0,0,0) = -1;
-	for (int i=0; i<m; ++i) {
-		*(result.data() + i + 1) = res.x(i);
-	}
-	std::clog << "result=" << result << std::endl;
-	const T var_wn = res.x(m);
-	std::clog << "var_wn=" << var_wn << std::endl;
-	return result;
-}
-
-template <class T>
-arma::Array3D<T>
-arma::generator::MA_coefficient_solver<T>
-::solve_bisection(Array3D<T> theta) {
-	Array3D<T> a(this->_order);
-	Array3D<T> b(this->_order);
-	Array3D<T> c(this->_order);
-	Array3D<T> fc(this->_order);
-	Array3D<T> fa(this->_order);
-	Array3D<T> fb(this->_order);
-	a = theta;
-	b = theta;
-	/*
-	std::default_random_engine rng;
-	std::uniform_real_distribution<T> dist(T(-1), T(1));
-	std::generate_n(a.data(), a.numElements(), std::bind(dist, rng));
-	std::generate_n(b.data(), b.numElements(), std::bind(dist, rng));
-	*/
-	a += T(-10);
-	b += T(10);
-	a(0,0,0) = -1;
-	b(0,0,0) = -1;
-	const T var_wn = this->white_noise_variance(theta);
-	auto func = [this,var_wn] (const Array3D<T>& theta) {
-		using blitz::RectDomain;
-		using blitz::sum;
-		using blitz::pow2;
-		using blitz::mean;
-		const Array3D<T>& acf = this->_acf;
-		const Shape3D& shp = theta.shape();
-		const int ni = shp(0);
-		const int nj = shp(1);
-		const int nk = shp(2);
-		//const T denominator = sum(pow2(theta));
-		Array3D<T> residual(shp);
-		for (int i=0; i<ni; ++i) {
-			for (int j=0; j<nj; ++j) {
-				for (int k=0; k<nk; ++k) {
-					RectDomain<3> sub1(Shape3D(i, j, k), shp - 1);
-					RectDomain<3> sub2(Shape3D(0, 0, 0),
-									   shp - Shape3D(i, j, k) - 1);
-					T numerator = sum(theta(sub1) * theta(sub2));
-					T elem = numerator*var_wn - acf(i,j,k);
-					residual(i,j,k) = elem;
-				}
-			}
-		}
-//		const T max_residual = blitz::max(abs(residual));
-//		std::clog << "max_residual=" << max_residual
-//			<< ",theta(0,0,0)=" << theta(0,0,0)
-//			<< ",acf(0,0,0)=" << acf(0,0,0)
-//			<< ",residual(0,0,0)=" << residual(0,0,0)
-////			<< ",theta=" << theta
-//			<< std::endl;
-		return residual;
-	};
-	for (int i=0; i<100; ++i) {
-		c = T(0.5)*(a + b);
-		c(0,0,0) = -1;
-		fc = func(c);
-		fa = func(a);
-		fb = func(b);
-		b = blitz::where(fa*fc < T(0), c, b);
-		a = blitz::where(fb*fc < T(0), c, a);
-//		std::clog << __func__ << ": "
-//			<< "fa=" << fa
-//			<< ",fc=" << fc
-//			<< ",fb=" << fb
-//			<< std::endl;
-		std::clog << __func__ << ": "
-			<< ",a=" << a
-			<< ",c=" << c
-			<< ",b=" << b
-			<< std::endl;
-	}
-	return c;
 }
 
 template <class T>

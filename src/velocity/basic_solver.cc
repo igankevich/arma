@@ -108,11 +108,7 @@ arma::velocity::Velocity_potential_solver<T>
 		dt
 	);
 	this->_wnmax = domain2_type{{0,0}, T(1) / tmp.lbound(), {2,2}};
-	#ifndef NDEBUG
-	std::clog << "this->_wnmax=" << this->_wnmax << std::endl;
-	#endif
 	validate_domain<T,2>(this->_wnmax, "wnmax");
-
 }
 
 template class arma::velocity::Velocity_potential_solver<ARMA_REAL_TYPE>;
