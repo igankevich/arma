@@ -25,5 +25,5 @@ var searchData=
   ['totalvtxcount',['TotalVtxCount',['../structImDrawData.html#af0035b52cdf91932b25eaf2da853965a',1,'ImDrawData']]],
   ['touchextrapadding',['TouchExtraPadding',['../structImGuiStyle.html#ab518a0a67df8f14765acc491d7b460f4',1,'ImGuiStyle']]],
   ['treedepth',['TreeDepth',['../structImGuiDrawContext.html#a08d8578fe382425a67b4f5e5257b5436',1,'ImGuiDrawContext']]],
-  ['type',['type',['../structstbtt__vertex.html#aa325b3707b88e7e104c0de46bb2bf395',1,'stbtt_vertex::type()'],['../structarma_1_1stats_1_1Wave__feature.html#a39092b6d78474c52ed616e1567776479',1,'arma::stats::Wave_feature::type()'],['../structImGuiStyleVarInfo.html#a62f42d2bb7b71b7530493e16e622cb81',1,'ImGuiStyleVarInfo::Type()'],['../structImGuiMouseCursorData.html#ab58df812a8caf8741415053515b8f347',1,'ImGuiMouseCursorData::Type()']]]
+  ['type',['Type',['../structImGuiStyleVarInfo.html#a62f42d2bb7b71b7530493e16e622cb81',1,'ImGuiStyleVarInfo::Type()'],['../structImGuiMouseCursorData.html#ab58df812a8caf8741415053515b8f347',1,'ImGuiMouseCursorData::Type()'],['../structstbtt__vertex.html#aa325b3707b88e7e104c0de46bb2bf395',1,'stbtt_vertex::type()'],['../structarma_1_1stats_1_1Wave__feature.html#a39092b6d78474c52ed616e1567776479',1,'arma::stats::Wave_feature::type()']]]
 ];

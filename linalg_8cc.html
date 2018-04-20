@@ -17,7 +17,7 @@
     extensions: ["tex2jax.js"],
     jax: ["input/TeX","output/HTML-CSS"],
 });
-</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+</script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -87,23 +87,12 @@ Include dependency graph for linalg.cc:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:namespaceanonymous__namespace_02linalg_8cc_03"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02linalg_8cc_03.html">anonymous_namespace{linalg.cc}</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacelinalg"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelinalg.html">linalg</a></td></tr>
 <tr class="memdesc:namespacelinalg"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear algebra subroutines. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a074ae8a2376cc05ff7987b215a2b36a5"><td class="memTemplParams" colspan="2">template&lt;class T , lapack_int(*)(int matrix_layout, char uplo, lapack_int n, lapack_int nrhs, T *a, lapack_int lda, lapack_int *ipiv, T *b, lapack_int ldb) sysv&gt; </td></tr>
-<tr class="memitem:a074ae8a2376cc05ff7987b215a2b36a5"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02linalg_8cc_03.html#a074ae8a2376cc05ff7987b215a2b36a5">anonymous_namespace{linalg.cc}::do_cholesky</a> (<a class="el" href="namespacelinalg.html#a9aff9c7a8d2015d69f0e703c5e2e712f">linalg::Matrix</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;A, <a class="el" href="namespacelinalg.html#a529cfc738fd5d707c84d1f4b9df7369e">linalg::Vector</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;b)</td></tr>
-<tr class="separator:a074ae8a2376cc05ff7987b215a2b36a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0c5b5a8509140bca87a2fd44d491ee3"><td class="memTemplParams" colspan="2">template&lt;class T , lapack_int(*)(int matrix_layout, lapack_int m, lapack_int n, T *a, lapack_int lda, lapack_int *ipiv) getrf, lapack_int(*)(int matrix_layout, lapack_int n, T *a, lapack_int lda, const lapack_int *ipiv) getri&gt; </td></tr>
-<tr class="memitem:ad0c5b5a8509140bca87a2fd44d491ee3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02linalg_8cc_03.html#ad0c5b5a8509140bca87a2fd44d491ee3">anonymous_namespace{linalg.cc}::do_inverse</a> (<a class="el" href="namespacelinalg.html#a9aff9c7a8d2015d69f0e703c5e2e712f">linalg::Matrix</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;A)</td></tr>
-<tr class="separator:ad0c5b5a8509140bca87a2fd44d491ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a036bdbd86544ef44f8f1ead661a3a615"><td class="memTemplParams" colspan="2">template&lt;class T , class Factor , class Inverse &gt; </td></tr>
-<tr class="memitem:a036bdbd86544ef44f8f1ead661a3a615"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02linalg_8cc_03.html#a036bdbd86544ef44f8f1ead661a3a615">anonymous_namespace{linalg.cc}::do_inverse_symmetric</a> (<a class="el" href="namespacelinalg.html#a9aff9c7a8d2015d69f0e703c5e2e712f">linalg::Matrix</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;A, Factor sytrf, Inverse sytri)</td></tr>
-<tr class="separator:a036bdbd86544ef44f8f1ead661a3a615"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2d89434e5be75140c29fdc15ceb73b3"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
 <tr class="memitem:ac2d89434e5be75140c29fdc15ceb73b3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacelinalg.html#ac2d89434e5be75140c29fdc15ceb73b3">linalg::cholesky&lt; float &gt;</a> (Matrix&lt; float &gt; &amp;A, Vector&lt; float &gt; &amp;b)</td></tr>
 <tr class="separator:ac2d89434e5be75140c29fdc15ceb73b3"><td class="memSeparator" colspan="2">&#160;</td></tr>

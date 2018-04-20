@@ -1,9 +1,7 @@
 var searchData=
 [
   ['k',['K',['../classarma_1_1Delaunay__interpolation.html#afac94f0909c81c34f080341555129059',1,'arma::Delaunay_interpolation']]],
-  ['keepaliveid',['KeepAliveID',['../namespaceImGui.html#a85a245c78a9f7c351636bdad6e60c488',1,'ImGui']]],
   ['kern',['kern',['../structstbtt__fontinfo.html#a57cc83512daea60e97ed49354d634d37',1,'stbtt_fontinfo']]],
-  ['kernel_5fcallback',['kernel_callback',['../namespaceanonymous__namespace_02ar__model__opencl_8cc_03.html#a7d74a6daf8bcb905d30ba02bdf1cd390',1,'anonymous_namespace{ar_model_opencl.cc}']]],
   ['key',['key',['../structImGuiStorage_1_1Pair.html#a5b37b692d2eacc7f4f5b6f233359e6ce',1,'ImGuiStorage::Pair']]],
   ['keyalt',['KeyAlt',['../structImGuiIO.html#a1e64ef08a4448a2cac874496130992cb',1,'ImGuiIO']]],
   ['keyctrl',['KeyCtrl',['../structImGuiIO.html#a51de8f65dcabb80ef4e0d3c759ffcd7f',1,'ImGuiIO']]],

@@ -5,8 +5,6 @@ var searchData=
   ['fallbackxadvance',['FallbackXAdvance',['../structImFont.html#a882786c01a146b8ece8fa47c72bc6219',1,'ImFont']]],
   ['fdselect',['fdselect',['../structstbtt__fontinfo.html#a4e06b1c29295a9aba529105e88fe1d71',1,'stbtt_fontinfo']]],
   ['filters',['Filters',['../structImGuiTextFilter.html#a5a930a339a9384e6bfadfa56a7c111fd',1,'ImGuiTextFilter']]],
-  ['first',['first',['../structanonymous__namespace_02ar__model__opencl_8cc_03_1_1progress__type.html#afc8c7dd7604102cd80bc95aaf4119112',1,'anonymous_namespace{ar_model_opencl.cc}::progress_type::first()'],['../structanonymous__namespace_02qq__graph_8cc_03_1_1QPair.html#aa44229799d40a46bdc5c2134558fa71a',1,'anonymous_namespace{qq_graph.cc}::QPair::first()']]],
-  ['first_5fchar',['first_char',['../structImGuiStb_1_1StbFindState.html#a6ad39fc199ae5e89b565a6abf35fefd7',1,'ImGuiStb::StbFindState']]],
   ['first_5funicode_5fcodepoint_5fin_5frange',['first_unicode_codepoint_in_range',['../structstbtt__pack__range.html#a3b414cbee1e164c29dd138e0ae3d5759',1,'stbtt_pack_range']]],
   ['flags',['Flags',['../structImGuiTextEditCallbackData.html#a6ffea1ffba5aaa267937ea362b844e8c',1,'ImGuiTextEditCallbackData::Flags()'],['../structImGuiWindow.html#a7c29e810a533b9a647cce5d93d45057f',1,'ImGuiWindow::Flags()']]],
   ['focusedwindow',['FocusedWindow',['../structImGuiContext.html#a65c21e441ba381a4979b0b1f40b03cd1',1,'ImGuiContext']]],

@@ -2,12 +2,8 @@ var searchData=
 [
   ['name',['name',['../structarma_1_1stats_1_1Summary.html#a4689f8d6bedc869eb2f73b9f547692e6',1,'arma::stats::Summary']]],
   ['ndrange',['ndrange',['../classarma_1_1opencl_1_1Array.html#a9d8d2208cb006d74b038c41c14986fd5',1,'arma::opencl::Array']]],
-  ['new_5fprogram',['new_program',['../classanonymous__namespace_02opencl_8cc_03_1_1OpenCL.html#a8a068b96b01160decb7c117fe82770ea',1,'anonymous_namespace{opencl.cc}::OpenCL']]],
   ['new_5fworkspace',['new_workspace',['../classarma_1_1apmath_1_1Fourier__transform.html#a6930a2c4f3b080e47325e87bb96b99c3',1,'arma::apmath::Fourier_transform::new_workspace() const'],['../classarma_1_1apmath_1_1Fourier__transform.html#a6930a2c4f3b080e47325e87bb96b99c3',1,'arma::apmath::Fourier_transform::new_workspace() const']]],
-  ['newframe',['NewFrame',['../namespaceImGui.html#ab3f1fc018f903b7ad79fd10663375774',1,'ImGui']]],
-  ['newline',['NewLine',['../namespaceImGui.html#a77f8b0a33e5335f98661f99e720411da',1,'ImGui']]],
   ['newseed',['newseed',['../classarma_1_1generator_1_1Basic__model.html#ae8ad49729dcda64cf769b59760f4a084',1,'arma::generator::Basic_model']]],
-  ['nextcolumn',['NextColumn',['../namespaceImGui.html#a8f97746d6a9d59c8400c26fb7613a2ff',1,'ImGui']]],
   ['ngenerators',['ngenerators',['../classarma_1_1PRNG__error.html#ad97067696f379afa31fdc6c73ffb3702',1,'arma::PRNG_error']]],
   ['nit_5ftransform',['NIT_transform',['../classarma_1_1nonlinear_1_1NIT__transform.html#a0d2a54f4e24e42fabd04bbd21f5a19a8',1,'arma::nonlinear::NIT_transform']]],
   ['normalise',['normalise',['../classarma_1_1apmath_1_1Polynomial.html#a7631c729d59dd7614b1af8498e471270',1,'arma::apmath::Polynomial']]],

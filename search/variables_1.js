@@ -1,10 +1,8 @@
 var searchData=
 [
   ['a',['a',['../classarma_1_1apmath_1_1Polynomial.html#a01b34cc6f133263d9468c8c3284bb8b1',1,'arma::apmath::Polynomial']]],
-  ['abscissas',['abscissas',['../namespaceanonymous__namespace_02owen__t_8cc_03.html#a6ea425333d911d9e8308de6882f7b5cb',1,'anonymous_namespace{owen_t.cc}']]],
   ['accessed',['Accessed',['../structImGuiWindow.html#ae57daacbc89e06bca5bc335dbca3ad15',1,'ImGuiWindow']]],
   ['acf_5famplitude',['acf_amplitude',['../visual_8cc.html#a3fe59763c3ec7ba30cb4c995e969e79e',1,'visual.cc']]],
-  ['acf_5ffunctions',['acf_functions',['../namespaceanonymous__namespace_02acf__wrapper_8cc_03.html#a4bd86a93bc15965a37f969cd0fd829fa',1,'anonymous_namespace{acf_wrapper.cc}']]],
   ['acf_5fnames',['acf_names',['../visual_8cc.html#af98446b6f73f84eef19a1229723800ee',1,'visual.cc']]],
   ['acf_5fvelocity',['acf_velocity',['../visual_8cc.html#ac1220a2b161f331a55d22ccdc762f3c3',1,'visual.cc']]],
   ['active',['Active',['../structImGuiWindow.html#a42f141fa0eed059176cb4360df1b1eb2',1,'ImGuiWindow']]],
@@ -18,7 +16,6 @@ var searchData=
   ['activeidwindow',['ActiveIdWindow',['../structImGuiContext.html#a95a35b5d82d3fdea28b71580dc6a9618',1,'ImGuiContext']]],
   ['advancecursor',['AdvanceCursor',['../structImGuiGroupData.html#a2bfc0ee6236ec2ace16634a34eda72d7',1,'ImGuiGroupData']]],
   ['align',['align',['../structstbrp__context.html#ae36053e2001a725aec2b5756dc990481',1,'stbrp_context']]],
-  ['all_5fflags',['all_flags',['../namespaceanonymous__namespace_02output__flags_8cc_03.html#a3b845aa193f03c643b1d5cf6fdb54a57',1,'anonymous_namespace{output_flags.cc}']]],
   ['allowkeyboardfocus',['AllowKeyboardFocus',['../structImGuiDrawContext.html#acebacb2f5ebfeaf5616d9a04ca3c9efb',1,'ImGuiDrawContext']]],
   ['allowkeyboardfocusstack',['AllowKeyboardFocusStack',['../structImGuiDrawContext.html#a8cfb71e8b9b055aa3358103a166d9d78',1,'ImGuiDrawContext']]],
   ['alpha',['Alpha',['../structImGuiStyle.html#a993312606e9dcb7ca165245150a4da72',1,'ImGuiStyle']]],

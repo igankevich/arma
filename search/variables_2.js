@@ -12,7 +12,7 @@ var searchData=
   ['backupint',['BackupInt',['../structImGuiStyleMod.html#a60491c95989b2a866ebb76403a562f6f',1,'ImGuiStyleMod']]],
   ['backuploglineposy',['BackupLogLinePosY',['../structImGuiGroupData.html#af67f52c70f74a3b7bce8ce46affc856b',1,'ImGuiGroupData']]],
   ['backupvalue',['BackupValue',['../structImGuiColMod.html#a7c23f178bbf5cbdb1333332bb84f73c9',1,'ImGuiColMod']]],
-  ['baseline_5fy_5fdelta',['baseline_y_delta',['../structImGuiStb_1_1StbTexteditRow.html#a0a5d9561ecf2294b3341935f85b476a5',1,'ImGuiStb::StbTexteditRow::baseline_y_delta()'],['../structStbTexteditRow.html#ad2d72b74b1a61e331949c7f7ec311880',1,'StbTexteditRow::baseline_y_delta()']]],
+  ['baseline_5fy_5fdelta',['baseline_y_delta',['../structStbTexteditRow.html#ad2d72b74b1a61e331949c7f7ec311880',1,'StbTexteditRow']]],
   ['begincount',['BeginCount',['../structImGuiWindow.html#aa27229a425dc17303be1cd8f4a61c17f',1,'ImGuiWindow']]],
   ['bordersize',['BorderSize',['../structImGuiWindow.html#a925e24aba3aa638813057fb7e2038c14',1,'ImGuiWindow']]],
   ['buf',['Buf',['../structImGuiTextBuffer.html#aa6de034b1920cdae5505cc58abf14240',1,'ImGuiTextBuffer::Buf()'],['../structImGuiTextEditCallbackData.html#aecd0741ee3feccbb5482e308292611bc',1,'ImGuiTextEditCallbackData::Buf()']]],

@@ -6,7 +6,6 @@ var searchData=
   ['lastitemid',['LastItemId',['../structImGuiDrawContext.html#ad864847097dd259ce9cb69558173fe45',1,'ImGuiDrawContext']]],
   ['lastitemrect',['LastItemRect',['../structImGuiDrawContext.html#a214683a9c08e5812a492881791cd2f51',1,'ImGuiDrawContext']]],
   ['layouttype',['LayoutType',['../structImGuiDrawContext.html#a8516b32e30504c3037d34e93b7988d83',1,'ImGuiDrawContext']]],
-  ['length',['length',['../structImGuiStb_1_1StbFindState.html#a255b330cee989cac3fea58afd6f08c3d',1,'ImGuiStb::StbFindState']]],
   ['loca',['loca',['../structstbtt__fontinfo.html#a15344195b181b50bde4f59ae7ca248c0',1,'stbtt_fontinfo']]],
   ['logautoexpandmaxdepth',['LogAutoExpandMaxDepth',['../structImGuiContext.html#a153d8c6eee2acdd3676ca55aec7b1079',1,'ImGuiContext']]],
   ['logclipboard',['LogClipboard',['../structImGuiContext.html#a676007461d3ce20e50a092573dc05064',1,'ImGuiContext']]],
