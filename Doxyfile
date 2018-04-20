@@ -48,7 +48,7 @@ EXTRACT_PACKAGE        = NO
 EXTRACT_STATIC         = NO
 EXTRACT_LOCAL_CLASSES  = YES
 EXTRACT_LOCAL_METHODS  = NO
-EXTRACT_ANON_NSPACES   = YES
+EXTRACT_ANON_NSPACES   = NO
 HIDE_UNDOC_MEMBERS     = NO
 HIDE_UNDOC_CLASSES     = NO
 HIDE_FRIEND_COMPOUNDS  = NO
@@ -99,7 +99,9 @@ EXCLUDE_SYMBOLS        = \
 	linalg::bits \
 	cl \
 	int3_union \
-	T3_union
+	T3_union \
+	ImGui \
+	ImGuiStb
 EXAMPLE_PATH           =
 EXAMPLE_PATTERNS       =
 EXAMPLE_RECURSIVE      = NO
@@ -166,7 +168,7 @@ FORMULA_FONTSIZE       = 10
 FORMULA_TRANSPARENT    = YES
 USE_MATHJAX            = YES
 MATHJAX_FORMAT         = HTML-CSS
-MATHJAX_RELPATH        = http://cdn.mathjax.org/mathjax/latest
+MATHJAX_RELPATH        = https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js
 MATHJAX_EXTENSIONS     =
 MATHJAX_CODEFILE       =
 SEARCHENGINE           = YES
