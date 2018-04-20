@@ -135,5 +135,5 @@ config.set('ARMA_CLFFT', get_option('framework') == 'opencl')
 config.set('ARMA_HART_SOLVER', get_option('with_high_amplitude_realtime_solver'))
 config.set('ARMA_SIMULATE_FAILURES', get_option('simulate_failures'))
 
-incdirs = include_directories('src')
+src = include_directories('src')
 subdir('src')

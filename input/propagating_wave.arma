@@ -1,16 +1,17 @@
 model = MA {
-	out_grid = (200,40,40)
+	out_grid = (100,200,100)
 	acf = {
-		func = propagating_wave
-		amplitude = 1
-		alpha = (0.42,0.42,0.42)
-		velocity = 1
-		beta = (-1.8,0)
-		grid = (20,10,10) : (10,5,5)
+		func = cos
+		amplitude = 2
+		alpha = (1,0,0)
+		velocity = 0.01
+		beta = (0.1,0)
+		nwaves = (12.5,12.5,12.5)
+		shape = (32,1,1)
 	}
-	order = (20,10,10)
+	order = (32,1,1)
 	algorithm = fixed_point_iteration
-	output = surface,summary
+	output = surface,summary,acf
 	validate = 0
 }
 velocity_potential_solver = high_amplitude {

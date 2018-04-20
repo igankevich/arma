@@ -10,6 +10,7 @@
 #include <iostream>
 #endif
 
+#include "chop.hh"
 #include "linalg.hh"
 
 namespace {
@@ -419,10 +420,7 @@ template <class T>
 void
 arma::Yule_walker_solver<T>
 ::max_order(int rhs) {
-	if (blitz::any(rhs >= this->_acf.shape())) {
-		throw std::invalid_argument("order >= acf.shape()");
-	}
-	this->_maxorder = rhs;
+	this->_maxorder = std::min(rhs, blitz::max(this->_acf.shape())-1);
 }
 
 template <class T>
@@ -535,23 +533,7 @@ arma::Yule_walker_solver<T>
 		result.reference(result_array(Pi_lp1, l));
 	}
 	if (this->_chop) {
-		const T eps = this->_chopepsilon;
-		// shrink third dimension
-		int k = result.extent(2) - 1;
-		while (k > 1 && all(result(Range::all(), Range::all(), k) < eps)) {
-			--k;
-		}
-		// shrink second dimension
-		int j = result.extent(1) - 1;
-		while (j > 1 && all(result(Range::all(), j, Range(0,k)) < eps)) {
-			--j;
-		}
-		// shrink first dimension
-		int i = result.extent(0) - 1;
-		while (i > 1 && all(result(i, Range(0,j), Range(0,k)) < eps)) {
-			--i;
-		}
-		result.resizeAndPreserve(i+1, j+1, k+1);
+		result.resizeAndPreserve(chop_right(result, this->_chopepsilon));
 	}
 	return result;
 }

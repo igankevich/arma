@@ -2,6 +2,7 @@
 
 #include "domain.hh"
 #include "params.hh"
+#include "plain_wave.hh"
 #include "profile.hh"
 #include "validators.hh"
 
@@ -132,34 +133,6 @@ namespace {
 
 }
 
-std::istream&
-arma::generator::operator>>(std::istream& in, Function& rhs) {
-	std::string name;
-	in >> std::ws >> name;
-	if (name == "sin") {
-		rhs = Function::Sine;
-	} else if (name == "cos") {
-		rhs = Function::Cosine;
-	} else if (name == "stokes") {
-		rhs = Function::Stokes;
-	} else {
-		in.setstate(std::ios::failbit);
-		std::cerr << "Invalid plain wave function: " << name << std::endl;
-		throw std::runtime_error("bad function");
-	}
-	return in;
-}
-
-const char*
-arma::generator::to_string(Function rhs) {
-	switch (rhs) {
-		case Function::Sine: return "sin";
-		case Function::Cosine: return "cos";
-		case Function::Stokes: return "stokes";
-		default: return "UNKNOWN";
-	}
-}
-
 template <class T>
 void
 arma::generator::Plain_wave_model<T>::validate() const {
@@ -179,13 +152,13 @@ arma::generator::Plain_wave_model<T>::generate() {
 	Array3D<T> zeta;
 	ARMA_PROFILE_BLOCK("generate_surface",
 		switch (this->_func) {
-			case Function::Sine:
+			case Plain_wave_profile::Sine:
 				zeta.reference(this->do_generate(sine_wave<T>));
 				break;
-			case Function::Cosine:
+			case Plain_wave_profile::Cosine:
 				zeta.reference(this->do_generate(cosine_wave<T>));
 				break;
-			case Function::Stokes:
+			case Plain_wave_profile::Stokes:
 				zeta.reference(this->do_generate(stokes_wave<T>));
 				break;
 			default: throw std::invalid_argument("bad wave profile function");

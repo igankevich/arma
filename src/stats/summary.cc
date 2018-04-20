@@ -1,7 +1,8 @@
 #include "summary.hh"
 
-#include <fstream>
 #include <algorithm>
+#include <cmath>
+#include <fstream>
 #include <iomanip>
 #include <ostream>
 
@@ -13,10 +14,13 @@ namespace {
 
 template <class T>
 void
-arma::stats::Summary<T>::write_quantile_graph() {
+arma::stats::Summary<T>
+::write_quantile_graph() {
 	std::string filename;
 	std::transform(
-		_name.begin(), _name.end(), std::back_inserter(filename),
+		_name.begin(),
+		_name.end(),
+		std::back_inserter(filename),
 		[](char ch) { return !std::isalnum(ch) ? '-' : ch; });
 	std::ofstream out(filename);
 	out << _graph;
@@ -26,23 +30,34 @@ template <class T>
 std::ostream&
 arma::stats::operator<<(std::ostream& out, const Summary<T>& rhs) {
 	out.precision(5);
-	out << std::setw(colw + 2) << rhs._name << std::setw(colw)
-		<< rhs._mean << std::setw(colw) << rhs._variance
-		<< std::setw(colw) << rhs._expected_mean << std::setw(colw)
-		<< rhs._expected_variance << std::setw(colw) << rhs.qdistance();
+	out << std::setw(colw + 2) << rhs._name;
+	out << std::setw(colw) << rhs._mean;
+	out << std::setw(colw);
+	if (rhs._needvariance) {
+		out << rhs._variance;
+	} else {
+		out << '-';
+	}
+	out << std::setw(colw) << rhs._expected_mean;
+	out << std::setw(colw);
+	if (rhs._needvariance) {
+		out << rhs._expected_variance;
+	} else {
+		out << '-';
+	}
+	out << std::setw(colw) << rhs.qdistance();
 	return out;
 }
 
-
 template <class T>
 void
-arma::stats::Summary<T>::print_header(std::ostream& out) {
+arma::stats::Summary<T>
+::print_header(std::ostream& out) {
 	out << std::setw(colw + 2) << "Property" << std::setw(colw)
-		<< "Mean" << std::setw(colw) << "Var" << std::setw(colw)
-		<< "ModelMean" << std::setw(colw) << "ModelVar"
-		<< std::setw(colw) << "QDistance";
+	    << "Mean" << std::setw(colw) << "Var" << std::setw(colw)
+	    << "ModelMean" << std::setw(colw) << "ModelVar"
+	    << std::setw(colw) << "QDistance";
 }
-
 
 template class arma::stats::Summary<ARMA_REAL_TYPE>;
 

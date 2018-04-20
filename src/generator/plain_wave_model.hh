@@ -3,33 +3,16 @@
 
 #include <istream>
 #include <ostream>
-#include "types.hh"
-#include "discrete_function.hh"
+
 #include "basic_model.hh"
+#include "discrete_function.hh"
 #include "physical_constants.hh"
+#include "plain_wave_profile.hh"
+#include "types.hh"
 
 namespace arma {
 
 	namespace generator {
-
-		enum struct Function {
-			Sine,
-			Cosine,
-			/// Third-order Stokes wave on deep water
-			Stokes
-		};
-
-		std::istream&
-		operator>>(std::istream& in, Function& rhs);
-
-		const char*
-		to_string(Function rhs);
-
-		inline std::ostream&
-		operator<<(std::ostream& out, const Function& rhs) {
-			return out << to_string(rhs);
-		}
-
 
 		/**
 		\brief Uses a simple sum of sines and cosines, small-amplitude waves.
@@ -44,7 +27,7 @@ namespace arma {
 		public:
 			typedef blitz::TinyVector<T,5> wave_type;
 			typedef Array1D<wave_type> array_type;
-			typedef Function function_type;
+			typedef Plain_wave_profile function_type;
 			using typename Basic_model<T>::grid_type;
 
 		private:

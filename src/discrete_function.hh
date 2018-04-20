@@ -36,6 +36,17 @@ namespace arma {
 			return *this;
 		}
 
+		inline void
+		reference(const base_type& rhs) {
+			base_type::reference(static_cast<const base_type&>(rhs));
+		}
+
+		inline void
+		reference(const Discrete_function& rhs) {
+			base_type::reference(static_cast<const base_type&>(rhs));
+			this->_grid = rhs._grid;
+		}
+
 		#if ARMA_BSCHEDULER
 		inline friend sys::pstream&
 		operator<<(sys::pstream& out, const Discrete_function& rhs) {

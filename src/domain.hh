@@ -12,6 +12,7 @@
 #include <unistdx/net/pstream>
 #endif
 
+#include "grid.hh"
 #include "validators.hh"
 
 namespace arma {
@@ -59,10 +60,25 @@ namespace arma {
 		_ubound(npts - 1)
 		{}
 
+		explicit
+		Domain(const Grid<T,N>& rhs):
+		_lbound(),
+		_ubound(rhs.length()),
+		_npoints(rhs.num_points())
+		{}
+
 		~Domain() = default;
 
 		Domain&
 		operator=(const Domain&) = default;
+
+		Domain&
+		operator=(const Grid<T,N>& rhs) {
+			this->_lbound = T(0);
+			this->_ubound = rhs.ubound();
+			this->_npoints = rhs.num_points();
+			return *this;
+		}
 
 		int
 		num_points(int i) const {
@@ -76,6 +92,11 @@ namespace arma {
 
 		const size_type&
 		size() const {
+			return _npoints;
+		}
+
+		const size_type&
+		shape() const {
 			return _npoints;
 		}
 
@@ -149,6 +170,19 @@ namespace arma {
 		T
 		operator()(const int idx, const int dim) const noexcept {
 			return _lbound(dim) + delta(dim) * idx;
+		}
+
+		/**
+		\brief
+		Translate lower and upper domain bounds by specified number of points.
+		\date 2018-02-02
+		\author Ivan Gankevich
+		*/
+		inline void
+		translate(const size_type& shift) {
+			const length_type d(shift*delta());
+			this->_lbound += d;
+			this->_ubound += d;
 		}
 
 		friend std::ostream&

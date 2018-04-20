@@ -1,7 +1,10 @@
 #include "ma_coefficient_solver.hh"
 
+#include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <limits>
+#include <random>
 #include <stdexcept>
 
 #include "blitz.hh"
@@ -52,14 +55,14 @@ arma::generator::MA_coefficient_solver<T>
 	T old_var_wn = 0;
 	T residual = 0;
 	int it = 0;
+	std::ofstream out("theta_all");
 	do {
 		/**
 		   2. Update coefficients from back to front using the
 		   following formula (adapted from G. Box and G. Jenkins (1970)
 		   "Time Series Analysis: Forecasting and Control", pp. 226--227).
 		   \f[
-		    \theta_{i,j,k} = -\frac{\gamma_0}{\sigma_\alpha^2}
-		 +
+		    \theta_{i,j,k} = -\frac{\gamma_0}{\sigma_\alpha^2} +
 		        \sum\limits_{l=i}^{n_1}
 		        \sum\limits_{m=j}^{n_2}
 		        \sum\limits_{n=k}^{n_3}
@@ -74,16 +77,22 @@ arma::generator::MA_coefficient_solver<T>
 					const Shape3D ijk(i,j,k);
 					RectDomain<3> sub1(ijk, order - 1);
 					RectDomain<3> sub2(Shape3D(0,0,0), order - ijk - 1);
-					theta(i, j, k) =
+					theta(i,j,k) =
 						-this->_acf(i,j,k) / var_wn +
 						sum(theta(sub1)*theta(sub2));
 				}
 			}
 		}
+		theta(0,0,0) = -1;
+		for (T t : theta) {
+			out << t << '\n';
+		}
+		out << "\n\n";
+		out << std::flush;
 		/// 3. Ensure that coefficients are finite.
 		if (!all(isfinite(theta))) {
 			std::cerr << __func__
-			          << ": bad coefficients = \n" << theta
+			          << ": bad coefficients"
 			          << std::endl;
 			throw std::runtime_error("bad MA model coefficients");
 		}
@@ -116,14 +125,14 @@ arma::generator::MA_coefficient_solver<T>
 			          << std::endl;
 			throw std::runtime_error("bad white noise variance");
 		}
-		#ifndef NDEBUG
+//		#ifndef NDEBUG
 		/// 8. Print solver state.
 		std::clog << __func__ << ':' << "Iteration=" << it
 		          << ",var_wn=" << var_wn
 		          << ",resudual=" << residual
 		          << ",theta(0,0,0)=" << theta(0,0,0)
 		          << std::endl;
-		#endif
+//		#endif
 		++it;
 	} while ((it < max_iterations) &&
 	         abs(var_wn - old_var_wn) > eps &&

@@ -82,9 +82,6 @@ namespace arma {
 				if (!all(bs <= limit)) {
 					throw std::length_error("bad block size");
 				}
-				#ifndef NDEBUG
-				std::clog << "all_parts=" << all_parts << std::endl;
-				#endif
 				array_type out_signal(limit);
 				#if ARMA_OPENMP
 				#pragma omp parallel
@@ -104,13 +101,6 @@ namespace arma {
 						const shape_type to = min(limit, offset+bs) - 1;
 						const domain_type part_domain(from, to);
 						const domain_type dom_to(from-offset, to-offset);
-						#ifndef NDEBUG
-						std::clog << "copy from signal "
-							<< part_domain
-							<< " to part "
-							<< dom_to
-							<< std::endl;
-						#endif
 						array_type padded_part(padded_block);
 						padded_part(dom_to) = signal(part_domain);
 						/// Take forward FFT of each padded part.
@@ -123,13 +113,6 @@ namespace arma {
 						/// Copy padded part back overlapping it with adjacent parts.
 						const domain_type padded_from(from, min(to+pad, limit-1));
 						const domain_type padded_to(from-offset, padded_from.ubound()-offset);
-						#ifndef NDEBUG
-						std::clog << "copy from part "
-							<< padded_to
-							<< " to signal "
-							<< padded_from
-							<< std::endl;
-						#endif
 						#if ARMA_OPENMP
 						#pragma omp critical
 						#endif
@@ -145,10 +128,6 @@ namespace arma {
 
 			inline void
 			check() {
-				#ifndef NDEBUG
-				std::clog << "this->_blocksize=" << this->_blocksize << std::endl;
-				std::clog << "this->_padding=" << this->_padding << std::endl;
-				#endif
 				using blitz::all;
 				if (!all(this->_padding >= 0)) {
 					throw std::length_error("bad padding");

@@ -62,17 +62,22 @@ namespace arma {
 
 		inline int
 		num_points(int i) const noexcept {
-			return _npoints(i);
+			return this->_npoints(i);
 		}
 
 		inline const size_type&
 		num_points() const noexcept {
-			return _npoints;
+			return this->_npoints;
 		}
 
 		inline const size_type&
 		size() const noexcept {
-			return _npoints;
+			return this->_npoints;
+		}
+
+		inline const size_type&
+		shape() const noexcept {
+			return this->_npoints;
 		}
 
 		inline int
@@ -115,6 +120,16 @@ namespace arma {
 			return _length;
 		}
 
+		inline T
+		ubound(int i) const noexcept {
+			return _length(i);
+		}
+
+		inline const length_type&
+		ubound() const noexcept {
+			return _length;
+		}
+
 		inline length_type
 		operator()(const size_type& i) const noexcept {
 			return delta() * i;
@@ -143,6 +158,19 @@ namespace arma {
 		inline length_type
 		max() const noexcept {
 			return operator()(num_patches());
+		}
+
+		inline Grid<T,1>
+		subgrid(const int dim) const noexcept {
+			return Grid<T,1>{{this->_npoints(dim)}, {this->_length(dim)}};
+		}
+
+		inline Grid<T,2>
+		subgrid(const int dim1, const int dim2) const noexcept {
+			return Grid<T,2>{
+				{this->_npoints(dim1), this->_npoints(dim2)},
+				{this->_length(dim1), this->_length(dim2)}
+			};
 		}
 
 		friend std::ostream&

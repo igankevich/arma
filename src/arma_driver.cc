@@ -44,6 +44,7 @@ arma::ARMA_driver<T>::write_wavy_surface() {
 		io::Binary_stream out(filename);
 		out.write(this->_zeta);
 	}
+	//{ std::ofstream("zdelta") << this->_zeta.grid().patch_size(); }
 }
 
 template <class T>
@@ -100,11 +101,6 @@ arma::ARMA_driver<T>::echo_parameters() {
 			std::clog,
 			"Output grid size",
 			this->_model->grid().size()
-		);
-		write_key_value(
-			std::clog,
-			"Output grid patch size",
-			this->_model->grid().patch_size()
 		);
 		write_key_value(std::clog, "Model", *this->_model);
 	}

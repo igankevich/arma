@@ -2,10 +2,11 @@
 
 #include "linalg.hh"
 #include "params.hh"
+#include "physical_constants.hh"
+#include "util.hh"
 #include "util.hh"
 #include "voodoo.hh"
 #include "yule_walker.hh"
-#include "util.hh"
 
 #include <algorithm>
 #include <cassert>
@@ -80,15 +81,16 @@ template <class T>
 void
 arma::generator::AR_model<T>
 ::determine_coefficients() {
+	this->_phi.resize(this->order());
 	switch (this->_algorithm) {
-		case AR_algorithm::Gauss_elimination:
-			this->determine_coefficients_gauss();
-			break;
-		case AR_algorithm::Choi:
-			this->determine_coefficients_choi();
-			break;
-		default:
-			throw std::runtime_error("bad AR algorithm");
+	case AR_algorithm::Gauss_elimination:
+		this->determine_coefficients_gauss();
+		break;
+	case AR_algorithm::Choi:
+		this->determine_coefficients_choi();
+		break;
+	default:
+		throw std::runtime_error("bad AR algorithm");
 	}
 }
 
@@ -129,44 +131,47 @@ arma::generator::AR_model<T>
 		this->_phi(0,0,0) = 0;
 	}
 	std::copy_n(rhs.data(), rhs.numElements(), this->_phi.data() + 1);
-	this->_varwn = T(2)*this->white_noise_variance(this->_phi);
-	{ std::ofstream("gauss") << this->_phi; }
+	this->_varwn = this->white_noise_variance(this->_phi);
 }
 
 template <class T>
 void
 arma::generator::AR_model<T>
 ::determine_coefficients_choi() {
+	using blitz::all;
+	using blitz::max;
 	Yule_walker_solver<T> solver(this->_acf);
+//	solver.determine_the_order(false);
+	solver.var_epsilon(T(1e-6));
+	if (all(this->_order) > 0) {
+		solver.max_order(max(this->_order));
+	}
 	this->_phi.reference(solver.solve());
 	this->_order = this->_phi.shape();
-//	this->_varwn = T(4)*solver.white_noise_variance();
-	this->_varwn = T(2)*this->white_noise_variance(this->_phi);
+//	this->_varwn = solver.white_noise_variance();
+	this->_varwn = this->white_noise_variance(this->_phi);
 	write_key_value(std::clog, "New AR model order", this->_order);
-	{ std::ofstream("choi") << this->_phi; }
 }
 
 template <class T>
 void
 arma::generator::AR_model<T>
 ::read(std::istream& in) {
-	typedef typename Basic_model<T>::grid_type grid_type;
 	sys::parameter_map params {
 		{
-			{"algorithm", sys::make_param(this->_algorithm)},
-			{"partition", sys::make_param(this->_partition, validate_shape<int,
-				                                                           3>)},
+			{
+				"algorithm",
+				sys::make_param(this->_algorithm)
+			},
+			{
+				"partition",
+				sys::make_param(this->_partition, validate_shape<int, 3>)
+			},
 		},
 		true
 	};
 	params.insert(this->parameters());
 	in >> params;
-	// resize output grid to match ACF delta size
-	this->_outgrid = grid_type(
-		this->_outgrid.num_points(),
-		this->_acf.grid().delta() * this->_outgrid.num_patches() * T(1.0)
-	                 );
-	this->_phi.resize(this->order());
 }
 
 template <class T>
