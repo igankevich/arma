@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['_7eacf_5fgenerator',['~ACF_generator',['../classarma_1_1generator_1_1ACF__generator.html#afdd944fd02519307eb3ec3f409177e1a',1,'arma::generator::ACF_generator']]],
   ['_7earma_5fdriver',['~ARMA_driver',['../structarma_1_1ARMA__driver.html#a65651a7e578e20a1897275bb26a11c55',1,'arma::ARMA_driver']]],
   ['_7earma_5frealtime_5fdriver',['~ARMA_realtime_driver',['../classarma_1_1ARMA__realtime__driver.html#a251e0c6fc59f8a630260da8c7bf574de',1,'arma::ARMA_realtime_driver']]],
   ['_7earray',['~Array',['../classarma_1_1opencl_1_1Array.html#a471e7357a0f3965fbcc8650193c7bac8',1,'arma::opencl::Array']]],

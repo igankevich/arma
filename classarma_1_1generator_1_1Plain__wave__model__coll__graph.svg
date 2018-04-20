@@ -70,7 +70,7 @@
 <!-- Node4 -->
 <g id="node3" class="node">
 <title>Node4</title>
-<g id="a_node3"><a xlink:href="structarma_1_1Grid.html" target="_top" xlink:title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ num_patches()\l+ num_patches()\land 12 more...\l}">
+<g id="a_node3"><a xlink:href="structarma_1_1Grid.html" target="_top" xlink:title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ shape()\l+ num_patches()\land 17 more...\l}">
 <polygon fill="none" stroke="#000000" points="0,-530.5 0,-708.5 97,-708.5 97,-530.5 0,-530.5"/>
 <text text-anchor="middle" x="48.5" y="-696.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">arma::Grid&lt; T, 3 &gt;</text>
 <polyline fill="none" stroke="#000000" points="0,-689.5 97,-689.5 "/>
@@ -85,9 +85,9 @@
 <text text-anchor="start" x="8" y="-592.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_points()</text>
 <text text-anchor="start" x="8" y="-581.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_points()</text>
 <text text-anchor="start" x="8" y="-570.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ size()</text>
-<text text-anchor="start" x="8" y="-559.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_patches()</text>
+<text text-anchor="start" x="8" y="-559.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ shape()</text>
 <text text-anchor="start" x="8" y="-548.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_patches()</text>
-<text text-anchor="start" x="8" y="-537.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">and 12 more...</text>
+<text text-anchor="start" x="8" y="-537.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">and 17 more...</text>
 </a>
 </g>
 </g>

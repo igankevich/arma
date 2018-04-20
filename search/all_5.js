@@ -25,10 +25,8 @@ var searchData=
   ['eventflag',['EventFlag',['../structImGuiTextEditCallbackData.html#aee2fa13574284d68d4025a26d32eba55',1,'ImGuiTextEditCallbackData']]],
   ['eventkey',['EventKey',['../structImGuiTextEditCallbackData.html#a476e640ad7f2f18ae5518dbc7cc33c55',1,'ImGuiTextEditCallbackData']]],
   ['expand',['Expand',['../structImRect.html#af33a7424c3341d08acd69da30c27c753',1,'ImRect::Expand(const float amount)'],['../structImRect.html#ac0b0b88fe65725b4694cd7d91d42d382',1,'ImRect::Expand(const ImVec2 &amp;amount)']]],
+  ['expected_5fmean',['expected_mean',['../structarma_1_1stats_1_1Summary.html#af09e3272a0f11b444621f6d904de3ef6',1,'arma::stats::Summary']]],
+  ['expected_5fvariance',['expected_variance',['../structarma_1_1stats_1_1Summary.html#a94ad1cadd910c61380de467a1cba34f7',1,'arma::stats::Summary']]],
   ['extra',['extra',['../structstbrp__context.html#a0b80e1fbdac125427526f3500d4e7624',1,'stbrp_context']]],
-  ['extract_5fwaves_5ft',['extract_waves_t',['../structarma_1_1stats_1_1Wave__field.html#abc6887fd88c734fa74847d8eab87c29b',1,'arma::stats::Wave_field']]],
-  ['extract_5fwaves_5fx',['extract_waves_x',['../structarma_1_1stats_1_1Wave__field.html#a55487f62914b8b893d4ab1ada896965f',1,'arma::stats::Wave_field']]],
-  ['extract_5fwaves_5fx2',['extract_waves_x2',['../structarma_1_1stats_1_1Wave__field.html#a6bcdd30903ddb336d0d32f7517e12372',1,'arma::stats::Wave_field']]],
-  ['extract_5fwaves_5fy',['extract_waves_y',['../structarma_1_1stats_1_1Wave__field.html#a88f7528d3cb4d10f90f5a7db335effe5',1,'arma::stats::Wave_field']]],
-  ['extract_5fwaves_5fy2',['extract_waves_y2',['../structarma_1_1stats_1_1Wave__field.html#aea8c896cc8c9671053d7b39c0286bc56',1,'arma::stats::Wave_field']]]
+  ['extract_5fwaves',['extract_waves',['../namespaceanonymous__namespace_02waves_8cc_03.html#a1068b0082d49131e4a0bb40131412ec1',1,'anonymous_namespace{waves.cc}']]]
 ];

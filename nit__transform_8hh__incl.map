@@ -2,12 +2,13 @@
 <area shape="rect" id="node4" href="$gaussian_8hh.html" title="stats/gaussian.hh" alt="" coords="23,155,148,181"/>
 <area shape="rect" id="node6" href="$skew__normal_8hh.html" title="stats/skew_normal.hh" alt="" coords="265,80,415,107"/>
 <area shape="rect" id="node8" href="$gram__charlier_8hh.html" title="stats/gram_charlier.hh" alt="" coords="429,155,579,181"/>
-<area shape="rect" id="node11" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="1266,80,1337,107"/>
-<area shape="rect" id="node16" href="$types_8hh.html" title="types.hh" alt="" coords="1423,80,1495,107"/>
-<area shape="rect" id="node17" href="$domain_8hh.html" title="domain.hh" alt="" coords="748,80,831,107"/>
+<area shape="rect" id="node11" href="$linalg_8hh.html" title="linalg.hh" alt="" coords="1282,80,1353,107"/>
+<area shape="rect" id="node16" href="$types_8hh.html" title="types.hh" alt="" coords="1464,304,1536,331"/>
+<area shape="rect" id="node17" href="$domain_8hh.html" title="domain.hh" alt="" coords="763,80,845,107"/>
 <area shape="rect" id="node7" href="$owen__t_8hh.html" title="apmath/owen_t.hh" alt="" coords="173,155,302,181"/>
-<area shape="rect" id="node10" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="417,229,569,256"/>
+<area shape="rect" id="node10" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="571,304,723,331"/>
 <area shape="rect" id="node15" href="$closed__interval_8hh.html" title="apmath/closed_interval.hh" alt="" coords="898,155,1073,181"/>
-<area shape="rect" id="node19" href="$validators_8hh.html" title="validators.hh" alt="" coords="1097,155,1193,181"/>
-<area shape="rect" id="node21" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="1021,229,1085,256"/>
+<area shape="rect" id="node19" href="$grid_8hh.html" title="grid.hh" alt="" coords="1097,155,1159,181"/>
+<area shape="rect" id="node22" href="$validators_8hh.html" title="validators.hh" alt="" coords="1113,229,1209,256"/>
+<area shape="rect" id="node20" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="1041,304,1105,331"/>
 </map>

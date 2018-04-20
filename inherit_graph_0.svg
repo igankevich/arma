@@ -8,9 +8,9 @@
  viewBox="0.00 0.00 215.00 110.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 106)">
 <title>Graphical Class Hierarchy</title>
-<!-- Node63 -->
+<!-- Node64 -->
 <g id="node1" class="node">
-<title>Node63</title>
+<title>Node64</title>
 <polygon fill="none" stroke="#bfbfbf" points="0,-41.5 0,-60.5 43,-60.5 43,-41.5 0,-41.5"/>
 <text text-anchor="middle" x="21.5" y="-48.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">kernel</text>
 </g>
@@ -25,15 +25,15 @@
 </a>
 </g>
 </g>
-<!-- Node63&#45;&gt;Node0 -->
+<!-- Node64&#45;&gt;Node0 -->
 <g id="edge1" class="edge">
-<title>Node63&#45;&gt;Node0</title>
+<title>Node64&#45;&gt;Node0</title>
 <path fill="none" stroke="#191970" d="M53.1569,-58.8165C61.1501,-60.7901 70.0229,-62.981 78.9908,-65.1953"/>
 <polygon fill="#191970" stroke="#191970" points="53.7692,-55.3627 43.2218,-56.3634 52.0912,-62.1586 53.7692,-55.3627"/>
 </g>
-<!-- Node65 -->
+<!-- Node66 -->
 <g id="node3" class="node">
-<title>Node65</title>
+<title>Node66</title>
 <g id="a_node3"><a xlink:href="classanonymous__namespace_02ar__model__bscheduler_8cc_03_1_1ar__partition__kernel.html" target="_top" xlink:title="anonymous_namespace\l\{ar_model_bscheduler.cc\}\l::ar_partition_kernel\&lt; T \&gt;">
 <polygon fill="none" stroke="#000000" points="79,-.5 79,-41.5 207,-41.5 207,-.5 79,-.5"/>
 <text text-anchor="start" x="87" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">anonymous_namespace</text>
@@ -42,9 +42,9 @@
 </a>
 </g>
 </g>
-<!-- Node63&#45;&gt;Node65 -->
+<!-- Node64&#45;&gt;Node66 -->
 <g id="edge2" class="edge">
-<title>Node63&#45;&gt;Node65</title>
+<title>Node64&#45;&gt;Node66</title>
 <path fill="none" stroke="#191970" d="M53.1569,-43.1835C61.1501,-41.2099 70.0229,-39.019 78.9908,-36.8047"/>
 <polygon fill="#191970" stroke="#191970" points="52.0912,-39.8414 43.2218,-45.6366 53.7692,-46.6373 52.0912,-39.8414"/>
 </g>

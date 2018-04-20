@@ -70,21 +70,26 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">waves.hh File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="types_8hh_source.html">types.hh</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="domain_8hh_source.html">domain.hh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="grid_8hh_source.html">grid.hh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="types_8hh_source.html">types.hh</a>&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;iosfwd&gt;</code><br />
 <code>#include &lt;iterator&gt;</code><br />
 <code>#include &lt;tuple&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for waves.hh:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="waves_8hh__incl.svg" width="519" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="waves_8hh__incl.svg" width="927" height="411"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -98,11 +103,14 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarma_1_1stats_1_1Wave__feature.html">arma::stats::Wave_feature&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wavy surface extrema locations.  <a href="structarma_1_1stats_1_1Wave__feature.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarma_1_1stats_1_1Wave.html">arma::stats::Wave&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A wave with height and period.  <a href="structarma_1_1stats_1_1Wave.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarma_1_1stats_1_1Wave__field.html">arma::stats::Wave_field&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts individual <a class="el" href="structarma_1_1stats_1_1Wave.html">waves </a> along each dimension.  <a href="structarma_1_1stats_1_1Wave__field.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1stats_1_1Wave__field.html">arma::stats::Wave_field&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts individual <a class="el" href="structarma_1_1stats_1_1Wave.html">waves </a> along each dimension.  <a href="classarma_1_1stats_1_1Wave__field.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -113,7 +121,93 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacearma_1_1stats"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html">arma::stats</a></td></tr>
 <tr class="memdesc:namespacearma_1_1stats"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience mappings of C++ templates to GSL functions. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a1d3e6fc4fac426a6dce841ee4c2655c3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a1d3e6fc4fac426a6dce841ee4c2655c3">arma::stats::Wave_feature_type</a> { <a class="el" href="namespacearma_1_1stats.html#a1d3e6fc4fac426a6dce841ee4c2655c3afab5ad8b0b394703426f40fa0a3b4548">arma::stats::Wave_feature_type::Crest</a>, 
+<a class="el" href="namespacearma_1_1stats.html#a1d3e6fc4fac426a6dce841ee4c2655c3a9182254340ce405d5ae132132b1a22d6">arma::stats::Wave_feature_type::Trough</a>
+ }<tr class="memdesc:a1d3e6fc4fac426a6dce841ee4c2655c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wavy surface extrema type.  <a href="namespacearma_1_1stats.html#a1d3e6fc4fac426a6dce841ee4c2655c3">More...</a><br /></td></tr>
+</td></tr>
+<tr class="separator:a1d3e6fc4fac426a6dce841ee4c2655c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a957aa92a4bc6b674fc52d5df6d66abb7"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a957aa92a4bc6b674fc52d5df6d66abb7"><td class="memTemplItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a957aa92a4bc6b674fc52d5df6d66abb7">arma::stats::operator&lt;&lt;</a> (std::ostream &amp;out, const Wave_feature&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;rhs)</td></tr>
+<tr class="separator:a957aa92a4bc6b674fc52d5df6d66abb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49e5f914a587794d3c86d953180d61ac"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a49e5f914a587794d3c86d953180d61ac"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; Wave_feature&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a49e5f914a587794d3c86d953180d61ac">arma::stats::find_extrema</a> (Array1D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; elevation, const Domain&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, 1 &gt; &amp;grid)</td></tr>
+<tr class="memdesc:a49e5f914a587794d3c86d953180d61ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find locations of wave crests and troughs.  <a href="namespacearma_1_1stats.html#a49e5f914a587794d3c86d953180d61ac">More...</a><br /></td></tr>
+<tr class="separator:a49e5f914a587794d3c86d953180d61ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf769ff6fb3a720ad251f08b9cf98c59"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:aaf769ff6fb3a720ad251f08b9cf98c59"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; Wave_feature&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#aaf769ff6fb3a720ad251f08b9cf98c59">arma::stats::find_extrema</a> (Array1D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; elevation, const Grid&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, 1 &gt; &amp;grid)</td></tr>
+<tr class="memdesc:aaf769ff6fb3a720ad251f08b9cf98c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find locations of wave crests and troughs.  <a href="namespacearma_1_1stats.html#aaf769ff6fb3a720ad251f08b9cf98c59">More...</a><br /></td></tr>
+<tr class="separator:aaf769ff6fb3a720ad251f08b9cf98c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a127d16108c7348c0343b2e64f84810"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a2a127d16108c7348c0343b2e64f84810"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; Wave&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a2a127d16108c7348c0343b2e64f84810">arma::stats::find_waves</a> (const std::vector&lt; Wave_feature&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;&gt; &amp;features)</td></tr>
+<tr class="memdesc:a2a127d16108c7348c0343b2e64f84810"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform wave features (extremas) to individual waves.  <a href="namespacearma_1_1stats.html#a2a127d16108c7348c0343b2e64f84810">More...</a><br /></td></tr>
+<tr class="separator:a2a127d16108c7348c0343b2e64f84810"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35d1f7df5cea92c81fd3cc5ccd5fd67b"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a35d1f7df5cea92c81fd3cc5ccd5fd67b"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; Wave&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a35d1f7df5cea92c81fd3cc5ccd5fd67b">arma::stats::find_waves</a> (Array1D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; elevation, Domain&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, 1 &gt; grid, int r=11)</td></tr>
+<tr class="memdesc:a35d1f7df5cea92c81fd3cc5ccd5fd67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract individual waves by smoothing the wavy surface and finding all extrema.  <a href="namespacearma_1_1stats.html#a35d1f7df5cea92c81fd3cc5ccd5fd67b">More...</a><br /></td></tr>
+<tr class="separator:a35d1f7df5cea92c81fd3cc5ccd5fd67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f5c766f04f06e20caec0b6efb9fa1a1"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a1f5c766f04f06e20caec0b6efb9fa1a1"><td class="memTemplItemLeft" align="right" valign="top">Array1D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a1f5c766f04f06e20caec0b6efb9fa1a1">arma::stats::gaussian_kernel</a> (int r, <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> sigma)</td></tr>
+<tr class="memdesc:a1f5c766f04f06e20caec0b6efb9fa1a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate <a class="el" href="structarma_1_1stats_1_1Gaussian.html" title="Normal distribution. ">Gaussian</a> kernel with radius \(r\) and standard deviation \(\sigma\).  <a href="namespacearma_1_1stats.html#a1f5c766f04f06e20caec0b6efb9fa1a1">More...</a><br /></td></tr>
+<tr class="separator:a1f5c766f04f06e20caec0b6efb9fa1a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bde35921f70cbe80a83d69845f2fdbc"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a9bde35921f70cbe80a83d69845f2fdbc"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacearma.html#a98beee481b2d81a2b2d86b67e9383405">arma::Array1D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a9bde35921f70cbe80a83d69845f2fdbc">arma::stats::gaussian_kernel</a> (int r)</td></tr>
+<tr class="memdesc:a9bde35921f70cbe80a83d69845f2fdbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The same as <a class="el" href="namespacearma_1_1stats.html#a1f5c766f04f06e20caec0b6efb9fa1a1">gaussian_kernel</a> but with \(\sigma=r/2\).  <a href="namespacearma_1_1stats.html#a9bde35921f70cbe80a83d69845f2fdbc">More...</a><br /></td></tr>
+<tr class="separator:a9bde35921f70cbe80a83d69845f2fdbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8521f7c112919d0b60049f4e0f6ab74"><td class="memTemplParams" colspan="2">template&lt;class T , int N&gt; </td></tr>
+<tr class="memitem:ad8521f7c112919d0b60049f4e0f6ab74"><td class="memTemplItemLeft" align="right" valign="top">blitz::Array&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#ad8521f7c112919d0b60049f4e0f6ab74">arma::stats::filter</a> (blitz::Array&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt; data, blitz::Array&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt; kernel)</td></tr>
+<tr class="memdesc:ad8521f7c112919d0b60049f4e0f6ab74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convolve the signal with the kernel taking real part of the result.  <a href="namespacearma_1_1stats.html#ad8521f7c112919d0b60049f4e0f6ab74">More...</a><br /></td></tr>
+<tr class="separator:ad8521f7c112919d0b60049f4e0f6ab74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39d2db834a413eb5aa86685a02b5ef9c"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a39d2db834a413eb5aa86685a02b5ef9c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a39d2db834a413eb5aa86685a02b5ef9c">arma::stats::smooth_elevation</a> (Array1D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;elevation, Domain&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, 1 &gt; &amp;grid, int r)</td></tr>
+<tr class="memdesc:a39d2db834a413eb5aa86685a02b5ef9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smooth elevation field by convolving with <a class="el" href="structarma_1_1stats_1_1Gaussian.html" title="Normal distribution. ">Gaussian</a> kernel with radius \(r\).  <a href="namespacearma_1_1stats.html#a39d2db834a413eb5aa86685a02b5ef9c">More...</a><br /></td></tr>
+<tr class="separator:a39d2db834a413eb5aa86685a02b5ef9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42ccc0981cbdd823fba4595691cd3c53"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a42ccc0981cbdd823fba4595691cd3c53"><td class="memTemplItemLeft" align="right" valign="top">Array3D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearma_1_1stats.html#a42ccc0981cbdd823fba4595691cd3c53">arma::stats::frequency_amplitude_spectrum</a> (Array3D&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; rhs, const Grid&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, 3 &gt; &amp;grid)</td></tr>
+<tr class="separator:a42ccc0981cbdd823fba4595691cd3c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebc78d10f1a5dcae1bcf9e63965713b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="waves_8hh.html#aebc78d10f1a5dcae1bcf9e63965713b0">BZ_DECLARE_MULTICOMPONENT_TYPE</a> (::<a class="el" href="structarma_1_1stats_1_1Wave.html">arma::stats::Wave</a>&lt; ARMA_REAL_TYPE &gt;, ARMA_REAL_TYPE, 2)</td></tr>
+<tr class="separator:aebc78d10f1a5dcae1bcf9e63965713b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="aebc78d10f1a5dcae1bcf9e63965713b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebc78d10f1a5dcae1bcf9e63965713b0">&#9670;&nbsp;</a></span>BZ_DECLARE_MULTICOMPONENT_TYPE()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BZ_DECLARE_MULTICOMPONENT_TYPE </td>
+          <td>(</td>
+          <td class="paramtype">::<a class="el" href="structarma_1_1stats_1_1Wave.html">arma::stats::Wave</a>&lt; ARMA_REAL_TYPE &gt;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ARMA_REAL_TYPE&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">2&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

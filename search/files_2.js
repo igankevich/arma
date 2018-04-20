@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['chop_2ecc',['chop.cc',['../chop_8cc.html',1,'']]],
+  ['chop_2ehh',['chop.hh',['../chop_8hh.html',1,'']]],
   ['cl_2ehh',['cl.hh',['../cl_8hh.html',1,'']]],
   ['closed_5finterval_2ecc',['closed_interval.cc',['../closed__interval_8cc.html',1,'']]],
   ['closed_5finterval_2ehh',['closed_interval.hh',['../closed__interval_8hh.html',1,'']]],

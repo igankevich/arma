@@ -39,7 +39,8 @@ var searchData=
   ['timer',['timer',['../visual_8cc.html#ae2c6087027bfdf561a2b766975b47ee8',1,'visual.cc']]],
   ['titlebarheight',['TitleBarHeight',['../structImGuiWindow.html#ad1580cc8b5bdf981c6ed2eb22ecd7dbb',1,'ImGuiWindow']]],
   ['titlebarrect',['TitleBarRect',['../structImGuiWindow.html#a06884e1bc80e460e51e1626b5b976196',1,'ImGuiWindow']]],
-  ['to_5fstring',['to_string',['../namespacearma.html#acd2802f91670ac672efc5865816bf9c2',1,'arma::to_string()'],['../namespacearma_1_1generator.html#aa633833560997c9de9c43f1a61f02e72',1,'arma::generator::to_string()'],['../namespacearma.html#ae2f2bcfbf5c9983037ef07a3d97a4bc4',1,'arma::to_string()'],['../namespacearma_1_1nonlinear.html#aab3b5902982a491af6c962e6f4d7b2f6',1,'arma::nonlinear::to_string()'],['../namespacearma_1_1opencl.html#ac732b47eea90aded96f2c47fab6046d8',1,'arma::opencl::to_string()']]],
+  ['to_5fstring',['to_string',['../namespacearma.html#acd2802f91670ac672efc5865816bf9c2',1,'arma::to_string()'],['../namespacearma_1_1generator.html#acf8850a1465c29b6b237a2c6406a3bad',1,'arma::generator::to_string()'],['../namespacearma.html#ae2f2bcfbf5c9983037ef07a3d97a4bc4',1,'arma::to_string()'],['../namespacearma_1_1nonlinear.html#aab3b5902982a491af6c962e6f4d7b2f6',1,'arma::nonlinear::to_string()'],['../namespacearma_1_1opencl.html#ac732b47eea90aded96f2c47fab6046d8',1,'arma::opencl::to_string()']]],
+  ['to_5fwaves',['to_waves',['../namespaceanonymous__namespace_02waves_8cc_03.html#a043ce79536e107ec8bd03b16fd4957a2',1,'anonymous_namespace{waves.cc}']]],
   ['tooltipoverridecount',['TooltipOverrideCount',['../structImGuiContext.html#a1c6e3c1b866fa1abf473d3cd9eafce0f',1,'ImGuiContext']]],
   ['totalidxcount',['TotalIdxCount',['../structImDrawData.html#a1ac8a5d441f464628295ef91a0602fc5',1,'ImDrawData']]],
   ['totalvtxcount',['TotalVtxCount',['../structImDrawData.html#af0035b52cdf91932b25eaf2da853965a',1,'ImDrawData']]],
@@ -52,6 +53,7 @@ var searchData=
   ['transform_5ftype',['transform_type',['../classarma_1_1apmath_1_1Convolution.html#adcaf44ed3b74476e009c6f2545d91c4d',1,'arma::apmath::Convolution::transform_type()'],['../classarma_1_1apmath_1_1Fourier__transform.html#a7f0615fd00e79b03a7c7f54b9b604842',1,'arma::apmath::Fourier_transform::transform_type()'],['../classarma_1_1generator_1_1Basic__ARMA__model.html#a2840d36658505b2d65eca5211858e61d',1,'arma::generator::Basic_ARMA_model::transform_type()'],['../classarma_1_1velocity_1_1Linear__solver.html#a534b551e5a502615db9b86fa8512bff3',1,'arma::velocity::Linear_solver::transform_type()']]],
   ['transform_5fwrapper_2ehh',['transform_wrapper.hh',['../transform__wrapper_8hh.html',1,'']]],
   ['transforms_2ehh',['transforms.hh',['../transforms_8hh.html',1,'']]],
+  ['translate',['translate',['../structarma_1_1Domain.html#ad3568b93c6260216dd37e8a5b451ae91',1,'arma::Domain']]],
   ['treeadvancetolabelpos',['TreeAdvanceToLabelPos',['../namespaceImGui.html#a54e15c2f65cea3aeddd66b5dcfb45716',1,'ImGui']]],
   ['treedepth',['TreeDepth',['../structImGuiDrawContext.html#a08d8578fe382425a67b4f5e5257b5436',1,'ImGuiDrawContext']]],
   ['treenode',['TreeNode',['../namespaceImGui.html#a4dff507ce8bbe0da9556bb50b1e60d7f',1,'ImGui::TreeNode(const char *label)'],['../namespaceImGui.html#afc058e02b4baab2df1ab1db814e24ecb',1,'ImGui::TreeNode(const char *str_id, const char *fmt,...)'],['../namespaceImGui.html#a7d59ec50d632e2399d5a3fc53b82fab4',1,'ImGui::TreeNode(const void *ptr_id, const char *fmt,...)']]],
@@ -67,6 +69,7 @@ var searchData=
   ['trim',['trim',['../namespaceanonymous__namespace_02opencl_8cc_03.html#a32470c9f8fe6ad160f66840f2e3efff4',1,'anonymous_namespace{opencl.cc}']]],
   ['trim_5fblanks',['trim_blanks',['../structImGuiTextFilter_1_1TextRange.html#aa3bbd8b17b528f548d73c0936228dc85',1,'ImGuiTextFilter::TextRange']]],
   ['trim_5fright',['trim_right',['../namespaceanonymous__namespace_02opencl_8cc_03.html#a61c11a6c588141b3514bb1fcf759ab15',1,'anonymous_namespace{opencl.cc}::trim_right()'],['../namespaceanonymous__namespace_02params_8cc_03.html#a18dd03b059d3543cd4db057d4f4d9b9d',1,'anonymous_namespace{params.cc}::trim_right()']]],
-  ['type',['Type',['../structImGuiStyleVarInfo.html#a62f42d2bb7b71b7530493e16e622cb81',1,'ImGuiStyleVarInfo::Type()'],['../structImGuiMouseCursorData.html#ab58df812a8caf8741415053515b8f347',1,'ImGuiMouseCursorData::Type()'],['../structstbtt__vertex.html#aa325b3707b88e7e104c0de46bb2bf395',1,'stbtt_vertex::type()']]],
+  ['trough',['Trough',['../namespacearma_1_1stats.html#a1d3e6fc4fac426a6dce841ee4c2655c3a9182254340ce405d5ae132132b1a22d6',1,'arma::stats']]],
+  ['type',['type',['../structstbtt__vertex.html#aa325b3707b88e7e104c0de46bb2bf395',1,'stbtt_vertex::type()'],['../structarma_1_1stats_1_1Wave__feature.html#a39092b6d78474c52ed616e1567776479',1,'arma::stats::Wave_feature::type()'],['../structImGuiStyleVarInfo.html#a62f42d2bb7b71b7530493e16e622cb81',1,'ImGuiStyleVarInfo::Type()'],['../structImGuiMouseCursorData.html#ab58df812a8caf8741415053515b8f347',1,'ImGuiMouseCursorData::Type()']]],
   ['types_2ehh',['types.hh',['../types_8hh.html',1,'']]]
 ];

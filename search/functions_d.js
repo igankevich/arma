@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['name',['name',['../structarma_1_1stats_1_1Summary.html#a4689f8d6bedc869eb2f73b9f547692e6',1,'arma::stats::Summary']]],
   ['ndrange',['ndrange',['../classarma_1_1opencl_1_1Array.html#a9d8d2208cb006d74b038c41c14986fd5',1,'arma::opencl::Array']]],
   ['new_5fprogram',['new_program',['../classanonymous__namespace_02opencl_8cc_03_1_1OpenCL.html#a8a068b96b01160decb7c117fe82770ea',1,'anonymous_namespace{opencl.cc}::OpenCL']]],
   ['new_5fworkspace',['new_workspace',['../classarma_1_1apmath_1_1Fourier__transform.html#a6930a2c4f3b080e47325e87bb96b99c3',1,'arma::apmath::Fourier_transform::new_workspace() const'],['../classarma_1_1apmath_1_1Fourier__transform.html#a6930a2c4f3b080e47325e87bb96b99c3',1,'arma::apmath::Fourier_transform::new_workspace() const']]],

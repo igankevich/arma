@@ -1,7 +1,7 @@
 var searchData=
 [
   ['nabscissas',['nabscissas',['../namespaceanonymous__namespace_02owen__t_8cc_03.html#a380c6e00241cb2af4062ef3e2571b3d8',1,'anonymous_namespace{owen_t.cc}']]],
-  ['name',['Name',['../structImFontConfig.html#abcd5db10139b42fbac90e31512c64f08',1,'ImFontConfig::Name()'],['../structImGuiIniData.html#aef4db96cc7332d492bba873028a00f66',1,'ImGuiIniData::Name()'],['../structImGuiWindow.html#ab44252eb7d02d3f38249f5bac605037c',1,'ImGuiWindow::Name()']]],
+  ['name',['Name',['../structImFontConfig.html#abcd5db10139b42fbac90e31512c64f08',1,'ImFontConfig::Name()'],['../structImGuiIniData.html#aef4db96cc7332d492bba873028a00f66',1,'ImGuiIniData::Name()'],['../structImGuiWindow.html#ab44252eb7d02d3f38249f5bac605037c',1,'ImGuiWindow::Name()'],['../structarma_1_1stats_1_1Summary.html#a4689f8d6bedc869eb2f73b9f547692e6',1,'arma::stats::Summary::name()']]],
   ['ndrange',['ndrange',['../classarma_1_1opencl_1_1Array.html#a9d8d2208cb006d74b038c41c14986fd5',1,'arma::opencl::Array']]],
   ['new_5fprogram',['new_program',['../classanonymous__namespace_02opencl_8cc_03_1_1OpenCL.html#a8a068b96b01160decb7c117fe82770ea',1,'anonymous_namespace{opencl.cc}::OpenCL']]],
   ['new_5fvec',['NEW_VEC',['../common_8h.html#a4f92819de8b4cc3aaecdc9a8bf0ed9ec',1,'common.h']]],

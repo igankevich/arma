@@ -1,9 +1,9 @@
 <map id="arma::generator::ARMA_model&lt; T &gt;" name="arma::generator::ARMA_model&lt; T &gt;">
-<area shape="rect" id="node2" href="$classarma_1_1generator_1_1AR__model.html" title="Uses autoregressive process, standing waves. " alt="" coords="5,1041,204,1353"/>
-<area shape="rect" id="node3" href="$classarma_1_1generator_1_1Basic__ARMA__model.html" title="Base class for AR, MA and ARMA models. " alt="" coords="204,652,376,979"/>
-<area shape="rect" id="node9" href="$classarma_1_1generator_1_1MA__model.html" title="Uses moving average process, propagating waves. " alt="" coords="228,1063,400,1331"/>
+<area shape="rect" id="node2" href="$classarma_1_1generator_1_1AR__model.html" title="Uses autoregressive process, standing waves. " alt="" coords="5,1071,204,1383"/>
+<area shape="rect" id="node3" href="$classarma_1_1generator_1_1Basic__ARMA__model.html" title="Base class for AR, MA and ARMA models. " alt="" coords="204,652,376,1008"/>
+<area shape="rect" id="node9" href="$classarma_1_1generator_1_1MA__model.html" title="Uses moving average process, propagating waves. " alt="" coords="228,1093,400,1361"/>
 <area shape="rect" id="node4" href="$classarma_1_1generator_1_1Basic__model.html" title="A base class for all generators. " alt="" coords="178,307,333,589"/>
-<area shape="rect" id="node5" href="$structarma_1_1Grid.html" title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ num_patches()\l+ num_patches()\land 12 more...\l}" alt="" coords="47,5,176,244"/>
+<area shape="rect" id="node5" href="$structarma_1_1Grid.html" title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ shape()\l+ num_patches()\land 17 more...\l}" alt="" coords="47,5,176,244"/>
 <area shape="rect" id="node6" href="$classarma_1_1Output__flags.html" title="Flags that determine what and how is written to disk. " alt="" coords="201,57,334,193"/>
-<area shape="rect" id="node7" href="$classarma_1_1Discrete__function.html" title="{arma::Discrete_function\l\&lt; T, 3 \&gt;\n|&#45; _grid\l|+ grid()\l+ setgrid()\l+ operator=()\l}" alt="" coords="357,387,519,509"/>
+<area shape="rect" id="node7" href="$classarma_1_1Discrete__function.html" title="{arma::Discrete_function\l\&lt; T, 3 \&gt;\n|&#45; _grid\l|+ grid()\l+ setgrid()\l+ operator=()\l+ reference()\l+ reference()\l}" alt="" coords="357,373,519,523"/>
 </map>

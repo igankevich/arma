@@ -1,13 +1,13 @@
 <map id="src/velocity/linear_solver.hh" name="src/velocity/linear_solver.hh">
-<area shape="rect" id="node3" href="$basic__solver_8hh.html" title="basic_solver.hh" alt="" coords="497,95,609,121"/>
-<area shape="rect" id="node17" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="757,95,832,121"/>
-<area shape="rect" id="node4" href="$types_8hh.html" title="types.hh" alt="" coords="571,244,643,271"/>
-<area shape="rect" id="node6" href="$domain_8hh.html" title="domain.hh" alt="" coords="171,244,253,271"/>
-<area shape="rect" id="node15" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="431,169,569,196"/>
-<area shape="rect" id="node11" href="$validators_8hh.html" title="validators.hh" alt="" coords="360,326,456,353"/>
-<area shape="rect" id="node13" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="512,408,576,435"/>
-<area shape="rect" id="node16" href="$grid_8hh.html" title="grid.hh" alt="" coords="463,244,524,271"/>
-<area shape="rect" id="node18" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="745,169,892,196"/>
-<area shape="rect" id="node20" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="995,244,1173,271"/>
-<area shape="rect" id="node21" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="763,244,888,271"/>
+<area shape="rect" id="node3" href="$basic__solver_8hh.html" title="basic_solver.hh" alt="" coords="389,95,501,121"/>
+<area shape="rect" id="node17" href="$fourier_8hh.html" title="fourier.hh" alt="" coords="637,95,712,121"/>
+<area shape="rect" id="node4" href="$types_8hh.html" title="types.hh" alt="" coords="472,244,544,271"/>
+<area shape="rect" id="node6" href="$domain_8hh.html" title="domain.hh" alt="" coords="208,169,291,196"/>
+<area shape="rect" id="node16" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="332,169,471,196"/>
+<area shape="rect" id="node11" href="$grid_8hh.html" title="grid.hh" alt="" coords="320,244,381,271"/>
+<area shape="rect" id="node14" href="$validators_8hh.html" title="validators.hh" alt="" coords="208,326,304,353"/>
+<area shape="rect" id="node12" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="291,408,355,435"/>
+<area shape="rect" id="node18" href="$apmath_2fourier__gsl_8hh.html" title="apmath/fourier_gsl.hh" alt="" coords="620,169,767,196"/>
+<area shape="rect" id="node20" href="$fourier__direction_8hh.html" title="apmath/fourier_direction.hh" alt="" coords="747,244,925,271"/>
+<area shape="rect" id="node21" href="$bits_2fourier__gsl_8hh.html" title="bits/fourier_gsl.hh" alt="" coords="949,244,1075,271"/>
 </map>

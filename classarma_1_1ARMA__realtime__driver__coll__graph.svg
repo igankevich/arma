@@ -103,7 +103,7 @@
 <!-- Node5 -->
 <g id="node4" class="node">
 <title>Node5</title>
-<g id="a_node4"><a xlink:href="structarma_1_1Domain.html" target="_top" xlink:title="{arma::Domain\&lt; T \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ operator=()\l+ num_points()\land 16 more...\l}">
+<g id="a_node4"><a xlink:href="structarma_1_1Domain.html" target="_top" xlink:title="{arma::Domain\&lt; T \&gt;\n|&#45; _lbound\l&#45; _ubound\l&#45; _npoints\l|+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ Domain()\l+ ~Domain()\l+ operator=()\land 20 more...\l}">
 <polygon fill="none" stroke="#000000" points="13,-789.5 13,-978.5 115,-978.5 115,-789.5 13,-789.5"/>
 <text text-anchor="middle" x="64" y="-966.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">arma::Domain&lt; T &gt;</text>
 <polyline fill="none" stroke="#000000" points="13,-959.5 115,-959.5 "/>
@@ -118,10 +118,10 @@
 <text text-anchor="start" x="21" y="-862.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ Domain()</text>
 <text text-anchor="start" x="21" y="-851.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ Domain()</text>
 <text text-anchor="start" x="21" y="-840.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ Domain()</text>
-<text text-anchor="start" x="21" y="-829.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ ~Domain()</text>
-<text text-anchor="start" x="21" y="-818.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ operator=()</text>
-<text text-anchor="start" x="21" y="-807.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_points()</text>
-<text text-anchor="start" x="21" y="-796.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">and 16 more...</text>
+<text text-anchor="start" x="21" y="-829.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ Domain()</text>
+<text text-anchor="start" x="21" y="-818.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ ~Domain()</text>
+<text text-anchor="start" x="21" y="-807.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ operator=()</text>
+<text text-anchor="start" x="21" y="-796.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">and 20 more...</text>
 </a>
 </g>
 </g>
@@ -170,7 +170,7 @@
 <!-- Node7 -->
 <g id="node6" class="node">
 <title>Node7</title>
-<g id="a_node6"><a xlink:href="structarma_1_1Grid.html" target="_top" xlink:title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ num_patches()\l+ num_patches()\land 12 more...\l}">
+<g id="a_node6"><a xlink:href="structarma_1_1Grid.html" target="_top" xlink:title="{arma::Grid\&lt; T, 3 \&gt;\n|&#45; _npoints\l&#45; _length\l|+ Grid()\l+ Grid()\l+ Grid()\l+ Grid()\l+ ~Grid()\l+ num_points()\l+ num_points()\l+ size()\l+ shape()\l+ num_patches()\land 17 more...\l}">
 <polygon fill="none" stroke="#000000" points="133.5,-795 133.5,-973 230.5,-973 230.5,-795 133.5,-795"/>
 <text text-anchor="middle" x="182" y="-961" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">arma::Grid&lt; T, 3 &gt;</text>
 <polyline fill="none" stroke="#000000" points="133.5,-954 230.5,-954 "/>
@@ -185,9 +185,9 @@
 <text text-anchor="start" x="141.5" y="-857" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_points()</text>
 <text text-anchor="start" x="141.5" y="-846" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_points()</text>
 <text text-anchor="start" x="141.5" y="-835" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ size()</text>
-<text text-anchor="start" x="141.5" y="-824" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_patches()</text>
+<text text-anchor="start" x="141.5" y="-824" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ shape()</text>
 <text text-anchor="start" x="141.5" y="-813" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ num_patches()</text>
-<text text-anchor="start" x="141.5" y="-802" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">and 12 more...</text>
+<text text-anchor="start" x="141.5" y="-802" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">and 17 more...</text>
 </a>
 </g>
 </g>
@@ -225,24 +225,26 @@
 <!-- Node9 -->
 <g id="node8" class="node">
 <title>Node9</title>
-<g id="a_node8"><a xlink:href="classarma_1_1Discrete__function.html" target="_top" xlink:title="{arma::Discrete_function\l\&lt; T, 3 \&gt;\n|&#45; _grid\l|+ grid()\l+ setgrid()\l+ operator=()\l}">
-<polygon fill="none" stroke="#000000" points="349.5,-563.5 349.5,-653.5 470.5,-653.5 470.5,-563.5 349.5,-563.5"/>
-<text text-anchor="start" x="357.5" y="-641.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">arma::Discrete_function</text>
-<text text-anchor="middle" x="410" y="-630.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">&lt; T, 3 &gt;</text>
-<polyline fill="none" stroke="#000000" points="349.5,-623.5 470.5,-623.5 "/>
-<text text-anchor="start" x="357.5" y="-611.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">&#45; _grid</text>
-<polyline fill="none" stroke="#000000" points="349.5,-604.5 470.5,-604.5 "/>
-<text text-anchor="start" x="357.5" y="-592.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ grid()</text>
-<text text-anchor="start" x="357.5" y="-581.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ setgrid()</text>
-<text text-anchor="start" x="357.5" y="-570.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ operator=()</text>
+<g id="a_node8"><a xlink:href="classarma_1_1Discrete__function.html" target="_top" xlink:title="{arma::Discrete_function\l\&lt; T, 3 \&gt;\n|&#45; _grid\l|+ grid()\l+ setgrid()\l+ operator=()\l+ reference()\l+ reference()\l}">
+<polygon fill="none" stroke="#000000" points="349.5,-552.5 349.5,-664.5 470.5,-664.5 470.5,-552.5 349.5,-552.5"/>
+<text text-anchor="start" x="357.5" y="-652.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">arma::Discrete_function</text>
+<text text-anchor="middle" x="410" y="-641.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">&lt; T, 3 &gt;</text>
+<polyline fill="none" stroke="#000000" points="349.5,-634.5 470.5,-634.5 "/>
+<text text-anchor="start" x="357.5" y="-622.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">&#45; _grid</text>
+<polyline fill="none" stroke="#000000" points="349.5,-615.5 470.5,-615.5 "/>
+<text text-anchor="start" x="357.5" y="-603.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ grid()</text>
+<text text-anchor="start" x="357.5" y="-592.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ setgrid()</text>
+<text text-anchor="start" x="357.5" y="-581.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ operator=()</text>
+<text text-anchor="start" x="357.5" y="-570.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ reference()</text>
+<text text-anchor="start" x="357.5" y="-559.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">+ reference()</text>
 </a>
 </g>
 </g>
 <!-- Node9&#45;&gt;Node3 -->
 <g id="edge7" class="edge">
 <title>Node9&#45;&gt;Node3</title>
-<path fill="none" stroke="#404040" d="M385.7681,-563.4192C369.2098,-532.6144 346.3788,-490.1397 324.4786,-449.3969"/>
-<polygon fill="none" stroke="#404040" points="324.4669,-449.3751 318.1029,-445.9841 318.7854,-438.8053 325.1494,-442.1964 324.4669,-449.3751"/>
+<path fill="none" stroke="#404040" d="M379.7583,-552.2387C363.8929,-522.7228 343.7652,-485.2774 324.3761,-449.2062"/>
+<polygon fill="none" stroke="#404040" points="324.3422,-449.1431 317.9782,-445.752 318.6607,-438.5733 325.0247,-441.9643 324.3422,-449.1431"/>
 <text text-anchor="middle" x="349.5" y="-460" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000"> #_zeta</text>
 </g>
 <!-- Node10 -->
@@ -258,7 +260,7 @@
 <!-- Node10&#45;&gt;Node9 -->
 <g id="edge8" class="edge">
 <title>Node10&#45;&gt;Node9</title>
-<path fill="none" stroke="#191970" d="M417.7309,-845.1528C416.0876,-794.8489 413.2282,-707.3193 411.4855,-653.9733"/>
+<path fill="none" stroke="#191970" d="M417.7328,-845.2091C416.1962,-798.1734 413.5945,-718.5323 411.8379,-664.759"/>
 <polygon fill="none" stroke="#191970" points="414.2376,-845.416 418.0623,-855.2963 421.2338,-845.1873 414.2376,-845.416"/>
 </g>
 </g>

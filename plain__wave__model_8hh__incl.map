@@ -1,11 +1,12 @@
 <map id="src/generator/plain_wave_model.hh" name="src/generator/plain_wave_model.hh">
-<area shape="rect" id="node4" href="$types_8hh.html" title="types.hh" alt="" coords="300,169,372,196"/>
-<area shape="rect" id="node6" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="369,95,508,121"/>
-<area shape="rect" id="node13" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="533,95,646,121"/>
-<area shape="rect" id="node28" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="5,319,157,345"/>
-<area shape="rect" id="node7" href="$grid_8hh.html" title="grid.hh" alt="" coords="404,169,465,196"/>
-<area shape="rect" id="node9" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="297,319,361,345"/>
-<area shape="rect" id="node11" href="$validators_8hh.html" title="validators.hh" alt="" coords="333,244,429,271"/>
-<area shape="rect" id="node14" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="514,169,625,196"/>
-<area shape="rect" id="node18" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="1174,169,1277,196"/>
+<area shape="rect" id="node4" href="$basic__model_8hh.html" title="basic_model.hh" alt="" coords="463,95,577,121"/>
+<area shape="rect" id="node26" href="$types_8hh.html" title="types.hh" alt="" coords="227,169,299,196"/>
+<area shape="rect" id="node27" href="$discrete__function_8hh.html" title="discrete_function.hh" alt="" coords="300,95,439,121"/>
+<area shape="rect" id="node28" href="$physical__constants_8hh.html" title="physical_constants.hh" alt="" coords="1301,319,1453,345"/>
+<area shape="rect" id="node29" href="$plain__wave__profile_8hh.html" title="plain_wave_profile.hh" alt="" coords="5,95,152,121"/>
+<area shape="rect" id="node5" href="$grid_8hh.html" title="grid.hh" alt="" coords="373,169,435,196"/>
+<area shape="rect" id="node12" href="$output__flags_8hh.html" title="output_flags.hh" alt="" coords="486,169,597,196"/>
+<area shape="rect" id="node16" href="$parallel__mt_8hh.html" title="parallel_mt.hh" alt="" coords="1034,169,1137,196"/>
+<area shape="rect" id="node7" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="303,319,367,345"/>
+<area shape="rect" id="node10" href="$validators_8hh.html" title="validators.hh" alt="" coords="320,244,416,271"/>
 </map>

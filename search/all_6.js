@@ -11,7 +11,10 @@ var searchData=
   ['fallbackxadvance',['FallbackXAdvance',['../structImFont.html#a882786c01a146b8ece8fa47c72bc6219',1,'ImFont']]],
   ['fdselect',['fdselect',['../structstbtt__fontinfo.html#a4e06b1c29295a9aba529105e88fe1d71',1,'stbtt_fontinfo']]],
   ['fft',['fft',['../classarma_1_1velocity_1_1High__amplitude__realtime__solver.html#ad5317e1a6eebc7517df291113316ea68',1,'arma::velocity::High_amplitude_realtime_solver']]],
+  ['filter',['filter',['../namespacearma_1_1stats.html#ad8521f7c112919d0b60049f4e0f6ab74',1,'arma::stats']]],
   ['filters',['Filters',['../structImGuiTextFilter.html#a5a930a339a9384e6bfadfa56a7c111fd',1,'ImGuiTextFilter']]],
+  ['find_5fextrema',['find_extrema',['../namespacearma_1_1stats.html#a49e5f914a587794d3c86d953180d61ac',1,'arma::stats::find_extrema(Array1D&lt; T &gt; elevation, const Domain&lt; T, 1 &gt; &amp;grid)'],['../namespacearma_1_1stats.html#aaf769ff6fb3a720ad251f08b9cf98c59',1,'arma::stats::find_extrema(Array1D&lt; T &gt; elevation, const Grid&lt; T, 1 &gt; &amp;grid)']]],
+  ['find_5fwaves',['find_waves',['../namespacearma_1_1stats.html#a2a127d16108c7348c0343b2e64f84810',1,'arma::stats::find_waves(const std::vector&lt; Wave_feature&lt; T &gt;&gt; &amp;features)'],['../namespacearma_1_1stats.html#a35d1f7df5cea92c81fd3cc5ccd5fd67b',1,'arma::stats::find_waves(Array1D&lt; T &gt; elevation, Domain&lt; T, 1 &gt; grid, int r=11)']]],
   ['findglyph',['FindGlyph',['../structImFont.html#ace8dda318d44dd145f9206203bdfbf55',1,'ImFont']]],
   ['findrenderedtextend',['FindRenderedTextEnd',['../namespaceImGui.html#a7671e1dbc803a31b06081b52a771d83f',1,'ImGui']]],
   ['findwindowbyname',['FindWindowByName',['../namespaceImGui.html#abca25f22c02e73d5eb2e9c72c4557813',1,'ImGui']]],
@@ -72,8 +75,8 @@ var searchData=
   ['framerounding',['FrameRounding',['../structImGuiStyle.html#a15402cededdef985487e986ccce73ad2',1,'ImGuiStyle']]],
   ['free_5fhead',['free_head',['../structstbrp__context.html#a1336ae32373663847866cc65904c2839',1,'stbrp_context']]],
   ['free_5fstate',['free_state',['../structarma_1_1prng_1_1mt__config.html#a28a91ec30053e1b5f6d10d943c397c47',1,'arma::prng::mt_config']]],
+  ['frequency_5famplitude_5fspectrum',['frequency_amplitude_spectrum',['../namespacearma_1_1stats.html#a42ccc0981cbdd823fba4595691cd3c53',1,'arma::stats']]],
   ['front',['front',['../classImVector.html#a5b0108d6b1a4a11609723f8305fb9011',1,'ImVector::front()'],['../classImVector.html#a76dc6bb045574ba79b15a1941b662597',1,'ImVector::front() const'],['../structImGuiTextFilter_1_1TextRange.html#a7d0b405b4db5d33351812b4b3b6e9107',1,'ImGuiTextFilter::TextRange::front()']]],
   ['func',['func',['../visual_8cc.html#a918ea2cf64a816663d6daa227e7c7101',1,'visual.cc']]],
-  ['function',['Function',['../namespacearma_1_1generator.html#aaccb22c6cd1221c82b10444d5839fda9',1,'arma::generator']]],
-  ['function_5ftype',['function_type',['../classarma_1_1generator_1_1Plain__wave__model.html#a1b028c05957302c79a15e8fcb6f63d83',1,'arma::generator::Plain_wave_model']]]
+  ['function_5ftype',['function_type',['../classarma_1_1generator_1_1Plain__wave__model.html#a1387c3f4b55b3a6dca4663359392cf25',1,'arma::generator::Plain_wave_model']]]
 ];

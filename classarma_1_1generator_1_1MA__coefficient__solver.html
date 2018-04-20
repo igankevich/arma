@@ -694,13 +694,11 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 <ol type="1">
-<li>Precompute white noise variance for the first iteration.<ol type="a">
+<li>Precompute white noise variance for the first iteration.</li>
 <li>Update coefficients from back to front using the following formula (adapted from G. Box and G. Jenkins (1970) "Time Series Analysis: Forecasting and Control", pp. 226&ndash;227). <p class="formulaDsp">
 \[ \theta_{i,j,k} = -\frac{\gamma_0}{\sigma_\alpha^2} + \sum\limits_{l=i}^{n_1} \sum\limits_{m=j}^{n_2} \sum\limits_{n=k}^{n_3} \theta_{l,m,n} \theta_{l-i,m-j,n-k} \]
 </p>
  Here \(\theta_{0,0,0} \equiv 0\).</li>
-</ol>
-</li>
 <li>Ensure that coefficients are finite.</li>
 <li>Calculate residual. Here \(\theta_{0,0,0} \equiv -1\).</li>
 <li>Compute white noise variance by calling <a class="el" href="classarma_1_1generator_1_1MA__coefficient__solver.html#a46f940bdbee9670f741b96989bc4f8c9">MA_coefficient_solver::white_noise_variance</a>.</li>

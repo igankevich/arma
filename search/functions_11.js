@@ -15,7 +15,7 @@ var searchData=
   ['recompute_5facf',['recompute_acf',['../classarma_1_1generator_1_1MA__model.html#a32bec73f8dfc0288a57aa88ee2e156c7',1,'arma::generator::MA_model']]],
   ['rect',['Rect',['../structImGuiWindow.html#a147da28bf5d167cbe0a363c4a578dea1',1,'ImGuiWindow']]],
   ['reduce',['Reduce',['../structImRect.html#a0904de81ac85f4d5d380dcdb4f1b68e0',1,'ImRect']]],
-  ['reference',['reference',['../classarma_1_1opencl_1_1Array.html#a5957abd29d22129732e821ccbb08b8ed',1,'arma::opencl::Array']]],
+  ['reference',['reference',['../classarma_1_1Discrete__function.html#aefe6827818bd2c243e0919e045e3354e',1,'arma::Discrete_function::reference(const base_type &amp;rhs)'],['../classarma_1_1Discrete__function.html#a7a5a58ade41e62ab272289c88b525165',1,'arma::Discrete_function::reference(const Discrete_function &amp;rhs)'],['../classarma_1_1opencl_1_1Array.html#a5957abd29d22129732e821ccbb08b8ed',1,'arma::opencl::Array::reference()']]],
   ['register_5fall_5fcounters',['register_all_counters',['../register__all_8hh.html#a74c0c25b01ac157353a61e43d95d358b',1,'register_all.hh']]],
   ['register_5fall_5fmodels',['register_all_models',['../register__all_8hh.html#a7c55b567a372a3e32f4469500b76829e',1,'register_all.hh']]],
   ['register_5fall_5fsolvers',['register_all_solvers',['../register__all_8hh.html#a126c9f267a00367a06719b5e5b5d60f6',1,'register_all.hh']]],

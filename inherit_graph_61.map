@@ -1,3 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classarma_1_1Yule__walker__solver.html" title="Computes AR model coefficients using an order&#45;recursvive method from . " alt="" coords="5,5,208,32"/>
+<area shape="rect" id="node1" href="$classarma_1_1velocity_1_1Velocity__potential__solver.html" title="Base class for all velocity potential field solvers. " alt="" coords="5,104,164,145"/>
+<area shape="rect" id="node2" href="$classarma_1_1velocity_1_1High__amplitude__realtime__solver.html" title="A version of High_amplitude_solver with shared OpenCL/OpenGL buffers for real&#45;time rendering..." alt="" coords="212,5,424,47"/>
+<area shape="rect" id="node3" href="$classarma_1_1velocity_1_1Linear__solver.html" title="Uses linear wave theory formula, small&#45;amplitude waves. " alt="" coords="245,71,391,112"/>
+<area shape="rect" id="node5" href="$classarma_1_1velocity_1_1Plain__wave__solver.html" title="Uses analytic formulae from linear wave theory, sine and cosine waves. " alt="" coords="247,136,389,177"/>
+<area shape="rect" id="node6" href="$classarma_1_1velocity_1_1Small__amplitude__solver.html" title="Uses analytic formulae for small&#45;amplitude waves (WIP). " alt="" coords="239,201,397,243"/>
+<area shape="rect" id="node4" href="$classarma_1_1velocity_1_1High__amplitude__solver.html" title="Uses analytic formula based on Fourier transforms, arbitrary amplitude waves. " alt="" coords="472,71,631,112"/>
 </map>

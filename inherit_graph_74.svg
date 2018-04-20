@@ -11,9 +11,9 @@
 <!-- Node0 -->
 <g id="node1" class="node">
 <title>Node0</title>
-<g id="a_node1"><a xlink:href="structImGuiContext.html" target="_top" xlink:title="ImGuiContext">
+<g id="a_node1"><a xlink:href="structImGuiColMod.html" target="_top" xlink:title="ImGuiColMod">
 <polygon fill="none" stroke="#000000" points="0,-.5 0,-19.5 77,-19.5 77,-.5 0,-.5"/>
-<text text-anchor="middle" x="38.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ImGuiContext</text>
+<text text-anchor="middle" x="38.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ImGuiColMod</text>
 </a>
 </g>
 </g>

@@ -17,7 +17,7 @@ var searchData=
   ['stbtt_5fpack_5frange',['stbtt_pack_range',['../structstbtt__pack__range.html',1,'']]],
   ['stbtt_5fpackedchar',['stbtt_packedchar',['../structstbtt__packedchar.html',1,'']]],
   ['stbtt_5fvertex',['stbtt_vertex',['../structstbtt__vertex.html',1,'']]],
-  ['stbundorecord',['StbUndoRecord',['../structImGuiStb_1_1StbUndoRecord.html',1,'ImGuiStb::StbUndoRecord'],['../structStbUndoRecord.html',1,'StbUndoRecord']]],
-  ['stbundostate',['StbUndoState',['../structImGuiStb_1_1StbUndoState.html',1,'ImGuiStb::StbUndoState'],['../structStbUndoState.html',1,'StbUndoState']]],
+  ['stbundorecord',['StbUndoRecord',['../structStbUndoRecord.html',1,'StbUndoRecord'],['../structImGuiStb_1_1StbUndoRecord.html',1,'ImGuiStb::StbUndoRecord']]],
+  ['stbundostate',['StbUndoState',['../structStbUndoState.html',1,'StbUndoState'],['../structImGuiStb_1_1StbUndoState.html',1,'ImGuiStb::StbUndoState']]],
   ['summary',['Summary',['../structarma_1_1stats_1_1Summary.html',1,'arma::stats']]]
 ];

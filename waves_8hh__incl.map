@@ -1,3 +1,7 @@
 <map id="src/stats/waves.hh" name="src/stats/waves.hh">
-<area shape="rect" id="node2" href="$types_8hh.html" title="types.hh" alt="" coords="14,80,86,107"/>
+<area shape="rect" id="node2" href="$domain_8hh.html" title="domain.hh" alt="" coords="232,80,315,107"/>
+<area shape="rect" id="node8" href="$grid_8hh.html" title="grid.hh" alt="" coords="379,155,440,181"/>
+<area shape="rect" id="node13" href="$types_8hh.html" title="types.hh" alt="" coords="469,229,541,256"/>
+<area shape="rect" id="node11" href="$validators_8hh.html" title="validators.hh" alt="" coords="349,229,445,256"/>
+<area shape="rect" id="node9" href="$blitz_8hh.html" title="blitz.hh" alt="" coords="285,304,349,331"/>
 </map>

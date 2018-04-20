@@ -1,6 +1,7 @@
 var searchData=
 [
   ['ac_5fmatrix_5fgenerator',['AC_matrix_generator',['../classarma_1_1generator_1_1AC__matrix__generator.html',1,'arma::generator']]],
+  ['acf_5fgenerator',['ACF_generator',['../classarma_1_1generator_1_1ACF__generator.html',1,'arma::generator']]],
   ['ar_5fmaster_5fkernel',['ar_master_kernel',['../classanonymous__namespace_02ar__model__bscheduler_8cc_03_1_1ar__master__kernel.html',1,'anonymous_namespace{ar_model_bscheduler.cc}']]],
   ['ar_5fmodel',['AR_model',['../classarma_1_1generator_1_1AR__model.html',1,'arma::generator']]],
   ['ar_5fpartition_5fkernel',['ar_partition_kernel',['../classanonymous__namespace_02ar__model__bscheduler_8cc_03_1_1ar__partition__kernel.html',1,'anonymous_namespace{ar_model_bscheduler.cc}']]],

@@ -70,5 +70,6 @@ var searchData=
   ['byte_5fswap_2ehh',['byte_swap.hh',['../byte__swap_8hh.html',1,'']]],
   ['bz_5fdeclare_5ffunction',['BZ_DECLARE_FUNCTION',['../namespaceblitz.html#a196e6e1926a4621157892d96bf8b7ca3',1,'blitz']]],
   ['bz_5fdeclare_5ffunction2',['BZ_DECLARE_FUNCTION2',['../namespaceblitz.html#a7fb9e50fb9dd08773226eef386c33f3f',1,'blitz']]],
+  ['bz_5fdeclare_5fmulticomponent_5ftype',['BZ_DECLARE_MULTICOMPONENT_TYPE',['../waves_8hh.html#aebc78d10f1a5dcae1bcf9e63965713b0',1,'waves.hh']]],
   ['bibliography',['Bibliography',['../citelist.html',1,'']]]
 ];

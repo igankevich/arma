@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['sine',['Sine',['../namespacearma_1_1generator.html#aaccb22c6cd1221c82b10444d5839fda9a6ca9e2d793f678aba7c1b19526592a46',1,'arma::generator']]],
+  ['sine',['Sine',['../namespacearma_1_1generator.html#a7e94c8fe6f5de538416fc3218651118da6ca9e2d793f678aba7c1b19526592a46',1,'arma::generator']]],
   ['skew_5fnormal',['Skew_normal',['../namespacearma_1_1nonlinear.html#a5cc8430500d6e063c266a7ade2592381a7ab8ca58cd8eac58c57c14104db73c2a',1,'arma::nonlinear']]],
+  ['standing_5fwave',['Standing_wave',['../namespacearma_1_1generator.html#a7e94c8fe6f5de538416fc3218651118da973d429e1d4e8ee647da75cfbf247d67',1,'arma::generator']]],
   ['stbrp_5fheuristic_5fskyline_5fbf_5fsortheight',['STBRP_HEURISTIC_Skyline_BF_sortHeight',['../stb__rect__pack_8h.html#adc29c2ff13d900c2f185ee95427fb06ca11d62749c4405a231a6fd1dd9d46615c',1,'stb_rect_pack.h']]],
   ['stbrp_5fheuristic_5fskyline_5fbl_5fsortheight',['STBRP_HEURISTIC_Skyline_BL_sortHeight',['../stb__rect__pack_8h.html#adc29c2ff13d900c2f185ee95427fb06ca13530b067fb1f9707dc0f9d51f8b074a',1,'stb_rect_pack.h']]],
   ['stbrp_5fheuristic_5fskyline_5fdefault',['STBRP_HEURISTIC_Skyline_default',['../stb__rect__pack_8h.html#adc29c2ff13d900c2f185ee95427fb06ca5e4dd0b1cbee654bbfeebc5311f03525',1,'stb_rect_pack.h']]],
@@ -56,7 +57,7 @@ var searchData=
   ['stbtt_5fvcurve',['STBTT_vcurve',['../stb__truetype_8h.html#a61dadd085c1777f559549e05962b2c9eab9ac3e527ce18873abeab556f6768ce4',1,'stb_truetype.h']]],
   ['stbtt_5fvline',['STBTT_vline',['../stb__truetype_8h.html#a61dadd085c1777f559549e05962b2c9eade4bb6465c32e56588f35e5120769e2e',1,'stb_truetype.h']]],
   ['stbtt_5fvmove',['STBTT_vmove',['../stb__truetype_8h.html#a61dadd085c1777f559549e05962b2c9eab335ba97e1798b621313de85a9a6e69d',1,'stb_truetype.h']]],
-  ['stokes',['Stokes',['../namespacearma_1_1generator.html#aaccb22c6cd1221c82b10444d5839fda9a494c75f34b48754c9a28701cfce41fe3',1,'arma::generator']]],
+  ['stokes',['Stokes',['../namespacearma_1_1generator.html#a7e94c8fe6f5de538416fc3218651118da494c75f34b48754c9a28701cfce41fe3',1,'arma::generator']]],
   ['summary',['Summary',['../classarma_1_1Output__flags.html#a13a7efc9eb216e76d744bb382c090be1ad96c7ce4850f291f505f914e77c92843',1,'arma::Output_flags']]],
   ['surface',['Surface',['../classarma_1_1Output__flags.html#a13a7efc9eb216e76d744bb382c090be1a3985fc2960f661bda88c946bdc93acf3',1,'arma::Output_flags']]]
 ];

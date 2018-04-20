@@ -75,19 +75,21 @@ $(function() {
 <div class="title">basic_arma_model_verify.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="statistics_8hh_source.html">stats/statistics.hh</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;iterator&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &quot;<a class="el" href="grid_8hh_source.html">grid.hh</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="distribution_8hh_source.html">stats/distribution.hh</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="statistics_8hh_source.html">stats/statistics.hh</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="summary_8hh_source.html">stats/summary.hh</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="waves_8hh_source.html">stats/waves.hh</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="grid_8hh_source.html">grid.hh</a>&quot;</code><br />
-<code>#include &lt;fstream&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
-<code>#include &lt;algorithm&gt;</code><br />
-<code>#include &lt;iterator&gt;</code><br />
+<code>#include &quot;<a class="el" href="util_8hh_source.html">util.hh</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for basic_arma_model_verify.cc:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="basic__arma__model__verify_8cc__incl.svg" width="2011" height="366"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="basic__arma__model__verify_8cc__incl.svg" width="1778" height="515"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -104,15 +106,18 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a4f6463b566008b917364494239ca21fb"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a4f6463b566008b917364494239ca21fb"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02basic__arma__model__verify_8cc_03.html#a4f6463b566008b917364494239ca21fb">anonymous_namespace{basic_arma_model_verify.cc}::print_indicator</a> (std::string prefix, std::string name, <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> expected, <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> actual, bool ok)</td></tr>
+<tr class="separator:a4f6463b566008b917364494239ca21fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96b3823b1053209a1ebd267736274f34"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a96b3823b1053209a1ebd267736274f34"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02basic__arma__model__verify_8cc_03.html#a96b3823b1053209a1ebd267736274f34">anonymous_namespace{basic_arma_model_verify.cc}::show_statistics</a> (<a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; acf, <a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; zeta, const <a class="el" href="classarma_1_1generator_1_1Basic__ARMA__model.html">arma::generator::Basic_ARMA_model</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; &amp;model, <a class="el" href="classarma_1_1Output__flags.html">arma::Output_flags</a> oflags)</td></tr>
 <tr class="separator:a96b3823b1053209a1ebd267736274f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07387a4fe12b0d549306385e9c84804b"><td class="memTemplParams" colspan="2">template&lt;class T , int N&gt; </td></tr>
 <tr class="memitem:a07387a4fe12b0d549306385e9c84804b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02basic__arma__model__verify_8cc_03.html#a07387a4fe12b0d549306385e9c84804b">anonymous_namespace{basic_arma_model_verify.cc}::write_raw</a> (const char *filename, const blitz::Array&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt; &amp;x)</td></tr>
 <tr class="separator:a07387a4fe12b0d549306385e9c84804b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a416f6763b0139be05491f2892d977d60"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a416f6763b0139be05491f2892d977d60"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02basic__arma__model__verify_8cc_03.html#a416f6763b0139be05491f2892d977d60">anonymous_namespace{basic_arma_model_verify.cc}::write_everything_to_files</a> (<a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; acf, <a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; zeta)</td></tr>
-<tr class="separator:a416f6763b0139be05491f2892d977d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d1cf1a98407606b2efc548791de505f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a4d1cf1a98407606b2efc548791de505f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceanonymous__namespace_02basic__arma__model__verify_8cc_03.html#a4d1cf1a98407606b2efc548791de505f">anonymous_namespace{basic_arma_model_verify.cc}::write_everything_to_files</a> (<a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; acf, <a class="el" href="namespacearma.html#af7d4db4b1cfb7a98584f1799b785f95c">arma::Array3D</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a> &gt; zeta, const <a class="el" href="structarma_1_1Grid.html">arma::Grid</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, 3 &gt; &amp;grid)</td></tr>
+<tr class="separator:a4d1cf1a98407606b2efc548791de505f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -23,7 +23,7 @@ var searchData=
   ['redo_5fchar_5fpoint',['redo_char_point',['../structImGuiStb_1_1StbUndoState.html#a78a5419b9c8278da078ed7acd2daac23',1,'ImGuiStb::StbUndoState::redo_char_point()'],['../structStbUndoState.html#a928f655e4af8945a14d99e944441704a',1,'StbUndoState::redo_char_point()']]],
   ['redo_5fpoint',['redo_point',['../structImGuiStb_1_1StbUndoState.html#a6562a15b41f003f411253fe34ca81612',1,'ImGuiStb::StbUndoState::redo_point()'],['../structStbUndoState.html#a719ba014b2db8a8ea55739664b445af0',1,'StbUndoState::redo_point()']]],
   ['reduce',['Reduce',['../structImRect.html#a0904de81ac85f4d5d380dcdb4f1b68e0',1,'ImRect']]],
-  ['reference',['reference',['../classarma_1_1opencl_1_1Array.html#a5957abd29d22129732e821ccbb08b8ed',1,'arma::opencl::Array']]],
+  ['reference',['reference',['../classarma_1_1Discrete__function.html#aefe6827818bd2c243e0919e045e3354e',1,'arma::Discrete_function::reference(const base_type &amp;rhs)'],['../classarma_1_1Discrete__function.html#a7a5a58ade41e62ab272289c88b525165',1,'arma::Discrete_function::reference(const Discrete_function &amp;rhs)'],['../classarma_1_1opencl_1_1Array.html#a5957abd29d22129732e821ccbb08b8ed',1,'arma::opencl::Array::reference()']]],
   ['refframe',['RefFrame',['../structImGuiOnceUponAFrame.html#a2d44776b8e7bdeec217f88be9f832e08',1,'ImGuiOnceUponAFrame']]],
   ['register_5fall_2ehh',['register_all.hh',['../register__all_8hh.html',1,'']]],
   ['register_5fall_5fcounters',['register_all_counters',['../register__all_8hh.html#a74c0c25b01ac157353a61e43d95d358b',1,'register_all.hh']]],
