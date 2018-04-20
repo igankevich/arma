@@ -4,7 +4,7 @@ language: cpp
 services:
   - docker
 script:
-  - "docker run -v $PWD:/mnt docker.io/fedora sh -c 'cd /mnt; ./deploy/cibuild'"
+  - "docker run -v $PWD:/mnt igankevich/fedora-meson sh -c 'cd /mnt; ./deploy/cibuild'"
   - "sudo chown -R $USER: build"
 after_success:
   - "./deploy/cideploy"
