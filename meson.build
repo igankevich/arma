@@ -96,7 +96,6 @@ if get_option('profile')
 	add_global_arguments('-DARMA_PROFILE=1', language: 'cpp')
 endif
 
-run_target('doc', command: 'scripts/generate-docs')
 run_target('graphs', command: [
 	'gnuplot',
 	'--persist',
@@ -137,3 +136,13 @@ config.set('ARMA_SIMULATE_FAILURES', get_option('simulate_failures'))
 
 src = include_directories('src')
 subdir('src')
+
+# doxygen {{{
+doxygen = find_program('doxygen', required: false)
+if doxygen.found()
+	run_target(
+		'doc',
+		command: [doxygen, join_paths(meson.source_root(), 'Doxyfile')]
+	)
+endif
+# }}}
