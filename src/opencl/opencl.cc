@@ -90,7 +90,7 @@ namespace {
 		init_opencl() {
 			try {
 				do_init_opencl();
-			} catch (cl::Error err) {
+			} catch (const cl::Error& err) {
 				print_error_and_exit(err);
 			}
 		}
@@ -173,7 +173,7 @@ namespace {
 			};
 			try {
 				_context = cl::Context(cl_device_type(device_type), props);
-			} catch (cl::Error err) {
+			} catch (const cl::Error& err) {
 				cl_context_properties newprops[] = {
 					CL_CONTEXT_PLATFORM, (cl_context_properties) (*result)(),
 					0

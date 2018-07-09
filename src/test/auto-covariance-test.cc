@@ -56,11 +56,11 @@ TEST(AutoCovariance, CosineNoDecay) {
 		shp = std::atoi(size);
 		std::clog << "shp=" << shp << std::endl;
 	}
-	blitz::Array<T,3> wave(shp), wave_exp(shp);
+	arma::Array3D<T> wave(shp), wave_exp(shp);
 	blitz::firstIndex i;
 	blitz::secondIndex j;
 	blitz::thirdIndex k;
-	blitz::Array<T,1> ts(shp(0)), xs(shp(1)), ys(shp(2));
+	arma::Array1D<T> ts(shp(0)), xs(shp(1)), ys(shp(2));
 	ts = -r + T(2)*r*i/(shp(0)-1);
 	xs = -r + T(2)*r*i/(shp(1)-1);
 	ys = -r + T(2)*r*i/(shp(2)-1);
@@ -75,7 +75,7 @@ TEST(AutoCovariance, CosineNoDecay) {
 		<< "acf(0,0,0)=" << acf(0,0,0) << std::endl
 		<< "acf_exp(0,0,0)=" << acf_exp(0,0,0) << std::endl;
 	const auto t2 = clock_type::now();
-	blitz::Array<T,3> acf_ref = auto_covariance_ref(wave);
+	arma::Array3D<T> acf_ref = auto_covariance_ref(wave);
 	const auto t3 = clock_type::now();
 	EXPECT_NEAR(max(abs(acf - acf_ref)), T(0), T(1e-3))
 		<< "acf(0,0,0)=" << acf(0,0,0) << std::endl

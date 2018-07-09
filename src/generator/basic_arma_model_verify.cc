@@ -309,7 +309,7 @@ arma::generator::Basic_ARMA_model<T>::verify(Array3D<T> zeta) const {
 		*/
 		show_statistics(
 			this->_acf,
-			zeta(RectDomain<3>(zeta.shape()/2, zeta.shape()-1)),
+			Array3D<T>(zeta(RectDomain<3>(zeta.shape()/2, zeta.shape()-1))),
 			*this,
 			this->_oflags
 		);

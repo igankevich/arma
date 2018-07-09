@@ -50,7 +50,7 @@ namespace {
 					push_back_all(
 						result,
 						find_waves(
-							elevation(Range::all(), i, j),
+							arma::Array1D<T>(elevation(Range::all(), i, j)),
 							grid1d,
 							kradius
 						)
@@ -63,7 +63,7 @@ namespace {
 					push_back_all(
 						result,
 						find_waves(
-							elevation(i, Range::all(), j),
+							arma::Array1D<T>(elevation(i, Range::all(), j)),
 							grid1d,
 							kradius
 						)
@@ -76,7 +76,7 @@ namespace {
 					push_back_all(
 						result,
 						find_waves(
-							elevation(i, j, Range::all()),
+							arma::Array1D<T>(elevation(i, j, Range::all())),
 							grid1d,
 							kradius
 						)
