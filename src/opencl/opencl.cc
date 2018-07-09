@@ -345,7 +345,7 @@ namespace {
 				program = cl::Program(_context, src);
 				try {
 					program.build({_devices[0]}, _options.data());
-				} catch (cl::Error err) {
+				} catch (const cl::Error& err) {
 					if (err.err() == CL_BUILD_PROGRAM_FAILURE) {
 						std::string log = program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(
 							_devices[0]
