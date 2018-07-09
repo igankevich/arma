@@ -8,7 +8,13 @@
 #include "apmath/closed_interval.hh"
 
 #if defined(ARMA_BLAS_OPENBLAS)
+#if defined(ARMA_OPENBLAS_CBLAS_H)
 #include <openblas/cblas.h>
+#elif defined(ARMA_CBLAS_H)
+#include <cblas.h>
+#else
+#error "no cblas.h"
+#endif
 #elif defined(ARMA_BLAS_MKL)
 #include <mkl.h>
 #else

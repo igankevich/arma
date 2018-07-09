@@ -18,4 +18,8 @@
 #mesondefine ARMA_LAPACKE_LAPACKE_H
 #mesondefine ARMA_LAPACKE_H
 
+#mesondefine ARMA_OPENBLAS_CBLAS_H
+#mesondefine ARMA_CBLAS_H
+
+
 #endif // CONFIG_HH

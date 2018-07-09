@@ -138,6 +138,11 @@ if cpp.has_header('lapacke.h')
 elif cpp.has_header('lapacke/lapacke.h')
 	config.set('ARMA_LAPACKE_LAPACKE_H', true)
 endif
+if cpp.has_header('cblas.h')
+	config.set('ARMA_CBLAS_H', true)
+elif cpp.has_header('openblas/cblas.h')
+	config.set('ARMA_OPENBLAS_CBLAS_H', true)
+endif
 
 src = include_directories('src')
 subdir('src')
