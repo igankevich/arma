@@ -133,6 +133,11 @@ config.set('opencl_srcdir', opencl_srcdir)
 config.set('ARMA_CLFFT', get_option('framework') == 'opencl')
 config.set('ARMA_HART_SOLVER', get_option('with_high_amplitude_realtime_solver'))
 config.set('ARMA_SIMULATE_FAILURES', get_option('simulate_failures'))
+if cpp.has_header('lapacke.h')
+	config.set('ARMA_LAPACKE_H', true)
+elif cpp.has_header('lapacke/lapacke.h')
+	config.set('ARMA_LAPACKE_LAPACKE_H', true)
+endif
 
 src = include_directories('src')
 subdir('src')

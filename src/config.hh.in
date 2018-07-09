@@ -15,4 +15,7 @@
 #mesondefine ARMA_LAPACK_NETLIB
 #mesondefine ARMA_LAPACK_MKL
 
+#mesondefine ARMA_LAPACKE_LAPACKE_H
+#mesondefine ARMA_LAPACKE_H
+
 #endif // CONFIG_HH

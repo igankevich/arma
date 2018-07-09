@@ -1,7 +1,13 @@
 #include "linalg.hh"
 
 #if defined(ARMA_LAPACK_NETLIB)
+#if defined(ARMA_LAPACKE_LAPACKE_H)
 #include <lapacke/lapacke.h>
+#elif defined(ARMA_LAPACKE_H)
+#include <lapacke.h>
+#else
+#error "no lapacke.h"
+#endif
 #elif defined(ARMA_LAPACK_MKL)
 #include <mkl.h>
 #else
