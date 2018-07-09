@@ -27,8 +27,15 @@ if get_option('blas') == 'openblas'
 endif
 
 if get_option('lapack') == 'netlib'
-	arma_deps += cpp.find_library('lapack')
+	lapackdep = dependency('lapack-netlib', required: false)
+	lapacklib = cpp.find_library('lapack')
+	if lapackdep.found()
+		arma_deps += lapackdep
+	else 
+		arma_deps += lapacklib
+	endif
 	arma_deps += cpp.find_library('lapacke')
+	arma_deps += cpp.find_library('gfortran')
 endif
 
 if get_option('blas') == 'mkl' or get_option('lapack') == 'mkl'

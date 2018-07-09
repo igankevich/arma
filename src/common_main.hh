@@ -15,7 +15,7 @@ print_exception_and_terminate() {
 		try {
 			std::rethrow_exception(ptr);
 		#if ARMA_OPENCL
-		} catch (cl::Error err) {
+		} catch (const cl::Error& err) {
 			std::cerr << err << std::endl;
 			std::abort();
 		#endif
