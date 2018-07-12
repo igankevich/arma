@@ -1,18 +1,21 @@
-#include <iostream>
-#include "apmath/convolution.hh"
-#include "types.hh"
-#include <gtest/gtest.h>
-#include <cmath>
-#include <random>
 #include <algorithm>
-#include <functional>
+#include <cmath>
 #include <fstream>
+#include <functional>
+#include <iostream>
+#include <random>
+
+#include <gtest/gtest.h>
+
+#include "apmath/convolution.hh"
+#include "config.hh"
+#include "types.hh"
 
 using namespace arma;
 using blitz::shape;
 
 template <class T>
-void
+ARMA_OPTIMIZE void
 generate_surface(
 	Array3D<T>& zeta,
 	Array3D<T>& eps,
@@ -50,11 +53,11 @@ generate_surface(
 }
 
 template <class T>
-void
+ARMA_OPTIMIZE void
 reference_convolve(
-	Array3D<T>& zeta,
-	Array3D<T>& eps,
-	Array3D<T>& kernel
+	blitz::Array<T,3>& zeta,
+	blitz::Array<T,3>& eps,
+	blitz::Array<T,3>& kernel
 ) {
 	const Shape3D fsize = kernel.shape();
 	const int t1 = zeta.extent(0);
@@ -82,11 +85,11 @@ reference_convolve(
 }
 
 template <class T>
-void
+ARMA_OPTIMIZE void
 reference_convolve(
-	Array2D<T>& zeta,
-	Array2D<T>& eps,
-	Array2D<T>& kernel
+	blitz::Array<T,2>& zeta,
+	blitz::Array<T,2>& eps,
+	blitz::Array<T,2>& kernel
 ) {
 	const Domain2D subdomain = zeta.domain();
 	const Shape2D fsize = kernel.shape();
@@ -108,11 +111,11 @@ reference_convolve(
 }
 
 template <class T>
-void
+ARMA_OPTIMIZE void
 reference_convolve(
-	Array1D<T>& zeta,
-	Array1D<T>& eps,
-	Array1D<T>& kernel
+	blitz::Array<T,1>& zeta,
+	blitz::Array<T,1>& eps,
+	blitz::Array<T,1>& kernel
 ) {
 	const Domain1D subdomain = zeta.domain();
 	const Shape1D fsize = kernel.shape();
@@ -167,9 +170,6 @@ write_to_files(const X& output, X& actual) {
 }
 
 TEST(ConvolutionTest, Exceptions) {
-	#if ARMA_OPENCL
-	::arma::opencl::init();
-	#endif
 	typedef arma::apmath::Convolution<C,1> convolution_type;
 	EXPECT_NO_THROW(convolution_type(20, 10));
 	EXPECT_THROW(convolution_type(0, 10), std::length_error);
@@ -202,14 +202,8 @@ class GenerateSurfaceTest:
 public ::testing::TestWithParam<ConvolutionParams<3>>
 {};
 
-#if ARMA_OPENCL
-TEST_P(GenerateSurfaceTest, DISABLED_ThreeDim) {
-#else
+#if !ARMA_OPENCL
 TEST_P(GenerateSurfaceTest, ThreeDim) {
-#endif
-	#if ARMA_OPENCL
-	::arma::opencl::init();
-	#endif
 	typedef arma::apmath::Convolution<C,3> convolution_type;
 	typedef typename convolution_type::array_type array_type;
 	using blitz::max;
@@ -231,6 +225,7 @@ TEST_P(GenerateSurfaceTest, ThreeDim) {
 	EXPECT_NEAR(max(abs(actual - output)), 0, 1e-4);
 	write_to_files(output, actual);
 }
+#endif
 
 INSTANTIATE_TEST_CASE_P(
 	Instance,
@@ -250,14 +245,8 @@ class Convolution3DTest:
 public ::testing::TestWithParam<ConvolutionParams<3>>
 {};
 
-#if ARMA_OPENCL
-TEST_P(Convolution3DTest, DISABLED_ThreeDim) {
-#else
+#if !ARMA_OPENCL
 TEST_P(Convolution3DTest, ThreeDim) {
-#endif
-	#if ARMA_OPENCL
-	::arma::opencl::init();
-	#endif
 	typedef arma::apmath::Convolution<C,3> convolution_type;
 	typedef typename convolution_type::array_type array_type;
 	using blitz::max;
@@ -276,6 +265,7 @@ TEST_P(Convolution3DTest, ThreeDim) {
 	EXPECT_NEAR(max(abs(actual - output)), 0, 1e-4);
 	//write_to_files(output, actual);
 }
+#endif
 
 INSTANTIATE_TEST_CASE_P(
 	Instance,
@@ -323,9 +313,6 @@ public ::testing::TestWithParam<ConvolutionParams<2>>
 {};
 
 TEST_P(Convolution2DTest, TwoDim) {
-	#if ARMA_OPENCL
-	::arma::opencl::init();
-	#endif
 	typedef arma::apmath::Convolution<C,2> convolution_type;
 	typedef typename convolution_type::array_type array_type;
 	using blitz::abs;
@@ -363,9 +350,6 @@ public ::testing::TestWithParam<blitz::TinyVector<int,4>>
 {};
 
 TEST_P(Convolution1DTest, OneDim) {
-	#if ARMA_OPENCL
-	::arma::opencl::init();
-	#endif
 	typedef arma::apmath::Convolution<C,1> convolution_type;
 	typedef typename convolution_type::shape_type shape_type;
 	typedef typename convolution_type::array_type array_type;

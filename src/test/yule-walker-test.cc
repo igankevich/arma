@@ -78,18 +78,18 @@ to_vector(blitz::Array<T,N> rhs) {
 template <class T>
 blitz::Array<T,3>
 solve_yule_walker_gauss_elimination(
-	blitz::Array<T,3> acf,
+	arma::Array3D<T> acf,
 	blitz::TinyVector<int,3> order,
-	blitz::Array<T,3> actual
+	arma::Array3D<T> actual
 ) {
 	using blitz::Range;
 	using blitz::abs;
 	using blitz::max;
 	using blitz::shape;
 	using blitz::toEnd;
-	typedef blitz::Array<T,3> array_type;
-	typedef blitz::Array<T,2> matrix_type;
-	typedef blitz::Array<T,1> vector_type;
+	typedef arma::Array3D<T> array_type;
+	typedef arma::Array2D<T> matrix_type;
+	typedef arma::Array1D<T> vector_type;
 	arma::generator::AC_matrix_generator<T> gen(acf, order);
 	matrix_type acm(gen());
 	const int m = acm.rows() - 1;
@@ -147,7 +147,7 @@ TEST_P(YuleWalkerTest, CompareToGaussElimination) {
 	const auto& params = GetParam();
 	const T variance = params.variance;
 	const int order = max(params.order);
-	blitz::Array<T,3> acf(params.variance*params.generate_acf(params.order + 1));
+	arma::Array3D<T> acf(params.variance*params.generate_acf(params.order + 1));
 	arma::Yule_walker_solver<T> solver(acf);
 	solver.max_order(order);
 	solver.determine_the_order(false);

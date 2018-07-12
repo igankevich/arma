@@ -5,6 +5,7 @@ arma_lib_src += files([
 	'polynomial.cc',
 ])
 
-if get_option('framework') == 'opencl'
-	arma_lib_src += files(['fourier_opencl.cc'])
-endif
+# disable opencl until it works
+#if get_option('framework') == 'opencl'
+#	arma_lib_src += files(['fourier_opencl.cc'])
+#endif

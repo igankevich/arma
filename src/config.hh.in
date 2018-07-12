@@ -21,5 +21,16 @@
 #mesondefine ARMA_OPENBLAS_CBLAS_H
 #mesondefine ARMA_CBLAS_H
 
+#if defined(__clang__) || defined (__GNUC__)
+#define ARMA_NO_SANITIZE_ADDRESS [[gnu::no_sanitize_address]]
+#else
+#define ARMA_NO_SANITIZE_ADDRESS
+#endif
+
+#if defined(__GNUC__)
+#define ARMA_OPTIMIZE [[gnu::optimize("-O3")]]
+#else
+#define ARMA_OPTIMIZE
+#endif
 
 #endif // CONFIG_HH

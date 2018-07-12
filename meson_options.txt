@@ -1,7 +1,7 @@
 option(
 	'framework',
 	type: 'combo',
-	choices: ['none', 'openmp', 'opencl', 'mpi', 'bscheduler'],
+	choices: ['none', 'openmp', 'opencl', 'bscheduler'],
 	value: 'none'
 )
 

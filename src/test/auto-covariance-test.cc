@@ -5,13 +5,13 @@
 
 #include <blitz/array.h>
 
+#include "config.hh"
 #include "arma.hh"
 #include "physical_constants.hh"
 #include "stats/statistics.hh"
 
-
 template <class T>
-arma::Array3D<T>
+ARMA_OPTIMIZE arma::Array3D<T>
 auto_covariance_ref(const arma::Array3D<T>& rhs) {
 	using namespace arma;
 	const Shape3D& shp = rhs.shape();

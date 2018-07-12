@@ -6,6 +6,8 @@ project(
 	default_options: ['cpp_std=c++14']
 )
 
+framework = get_option('framework')
+
 executable_prefix = 'arma'
 
 cpp = meson.get_compiler('cpp')
@@ -40,7 +42,7 @@ endif
 
 if get_option('blas') == 'mkl' or get_option('lapack') == 'mkl'
 	if (cpp.get_id() == 'intel')
-		if get_option('framework') == 'openmp'
+		if framework == 'openmp'
 			libmkl = declare_dependency(link_args: ['-mkl=parallel'])
 		else
 			libmkl = declare_dependency(link_args: '-mkl=sequential')
@@ -61,8 +63,7 @@ if get_option('blas') == 'mkl' or get_option('lapack') == 'mkl'
 	arma_deps += libmkl
 endif
 
-framework = get_option('framework')
-if framework == 'openmp'
+if framework == 'openmp' or framework == 'opencl'
 	add_global_arguments('-DARMA_OPENMP=1', language: 'cpp')
 	if cpp.get_id() == 'gcc'
 		add_global_arguments('-fopenmp', language: 'cpp')
@@ -73,16 +74,16 @@ if framework == 'openmp'
 	endif
 	# make Blitz++ reference counters thread-safe
 	add_global_arguments('-DBZ_THREADSAFE', language: 'cpp')
-elif framework == 'opencl'
+endif
+if framework == 'opencl'
 	add_global_arguments('-DARMA_OPENCL=1', language: 'cpp')
 	arma_deps += [
 		dependency('OpenCL'),
 		dependency('threads'),
 		dependency('clFFT'),
 	]
-elif framework == 'mpi'
-	add_global_arguments('-DARMA_MPI=1', language: 'cpp')
-elif framework == 'bscheduler'
+endif
+if framework == 'bscheduler'
 	add_global_arguments('-DARMA_BSCHEDULER=1', language: 'cpp')
 	# make Blitz++ reference counters thread-safe
 	add_global_arguments('-DBZ_THREADSAFE', language: 'cpp')
@@ -90,7 +91,8 @@ elif framework == 'bscheduler'
 		dependency('bscheduler-app'),
 		dependency('threads'),
 	]
-else
+endif
+if framework == 'none'
 	add_global_arguments('-DARMA_NONE=1', language: 'cpp')
 endif
 
@@ -137,7 +139,7 @@ config = configuration_data()
 config.set('mt_config_file', 'mt.dat')
 config.set('datadir', datadir)
 config.set('opencl_srcdir', opencl_srcdir)
-config.set('ARMA_CLFFT', get_option('framework') == 'opencl')
+config.set('ARMA_CLFFT', framework == 'opencl')
 config.set('ARMA_HART_SOLVER', get_option('with_high_amplitude_realtime_solver'))
 config.set('ARMA_SIMULATE_FAILURES', get_option('simulate_failures'))
 if cpp.has_header('lapacke.h')

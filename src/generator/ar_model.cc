@@ -188,10 +188,10 @@ arma::generator::AR_model<T>
 
 #if ARMA_NONE
 #include "ar_model_sequential.cc"
-#elif ARMA_OPENMP
-#include "ar_model_parallel.cc"
 #elif ARMA_OPENCL
 #include "ar_model_opencl.cc"
+#elif ARMA_OPENMP
+#include "ar_model_parallel.cc"
 #elif ARMA_BSCHEDULER
 #include "ar_model_bscheduler.cc"
 #endif
