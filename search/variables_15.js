@@ -7,7 +7,7 @@ var searchData=
   ['was_5fpacked',['was_packed',['../structstbrp__rect.html#a74ba347755ce17f2f8a2ea66c612af49',1,'stbrp_rect']]],
   ['wasactive',['WasActive',['../structImGuiWindow.html#ab346ec3a2f305948af05ec1871610a8f',1,'ImGuiWindow']]],
   ['where',['where',['../structStbUndoRecord.html#a237f3859c0a59902996eaa1873502133',1,'StbUndoRecord']]],
-  ['width',['width',['../structstbrp__context.html#a70cfcb2044ce8397cc440d28b30c09b2',1,'stbrp_context::width()'],['../structstbtt__pack__context.html#a5da0b7b5d3b82d5fc75ea1c8945183fa',1,'stbtt_pack_context::width()'],['../structImGuiSimpleColumns.html#a3b7ed6f3aa04e3ead1ea17e4d9f92767',1,'ImGuiSimpleColumns::Width()']]],
+  ['width',['Width',['../structImGuiSimpleColumns.html#a3b7ed6f3aa04e3ead1ea17e4d9f92767',1,'ImGuiSimpleColumns::Width()'],['../structstbrp__context.html#a70cfcb2044ce8397cc440d28b30c09b2',1,'stbrp_context::width()'],['../structstbtt__pack__context.html#a5da0b7b5d3b82d5fc75ea1c8945183fa',1,'stbtt_pack_context::width()']]],
   ['window',['Window',['../structImGuiPopupRef.html#a471027209038d1d59280a84c8d236f34',1,'ImGuiPopupRef::Window()'],['../visual_8cc.html#aaa8e409e04dcf575ef63fd5fb3db06f9',1,'window():&#160;visual.cc']]],
   ['windowminsize',['WindowMinSize',['../structImGuiStyle.html#a060b2f743a086d0f0fee4cd5b3f372d4',1,'ImGuiStyle']]],
   ['windowpadding',['WindowPadding',['../structImGuiStyle.html#a37f156b53e6dcc99ff57366ceafe8b50',1,'ImGuiStyle::WindowPadding()'],['../structImGuiWindow.html#a538d3d70ad8f71a4ec58a6a0560b2f02',1,'ImGuiWindow::WindowPadding()']]],

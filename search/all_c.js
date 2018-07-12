@@ -10,7 +10,7 @@ var searchData=
   ['ma_5fmodel_2ecc',['ma_model.cc',['../ma__model_8cc.html',1,'']]],
   ['ma_5fmodel_2ehh',['ma_model.hh',['../ma__model_8hh.html',1,'']]],
   ['ma_5fwhite_5fnoise_5fvariance',['MA_white_noise_variance',['../namespacearma.html#a0e9ca2a5ae62fd7e2a8e4426a95c0f20',1,'arma']]],
-  ['main',['main',['../common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;common_main.hh'],['../dcmt_8cc.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;dcmt.cc'],['../visual_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;visual.cc']]],
+  ['main',['main',['../common__main_8hh.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;common_main.hh'],['../dcmt_8cc.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;dcmt.cc'],['../arma__test__main_8cc.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;arma_test_main.cc'],['../visual_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;visual.cc']]],
   ['main_5floop',['main_loop',['../visual_8cc.html#aa2deaf0f63ca4a73a37b86d05678fb46',1,'visual.cc']]],
   ['make_5fgl_5ftype',['MAKE_GL_TYPE',['../opengl_8hh.html#a656790f2a0a082d6ae7e7308bde4de81',1,'opengl.hh']]],
   ['make_5fparam',['make_param',['../namespacesys.html#ae4875551c9702dc9b6150aa0c7e77da7',1,'sys::make_param(T &amp;val)'],['../namespacesys.html#a1c13bacad51b5e859a14816179a2aec9',1,'sys::make_param(T &amp;val, Validate validate)']]],

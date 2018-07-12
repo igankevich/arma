@@ -10,6 +10,6 @@ var searchData=
   ['user_5fallocator_5fcontext',['user_allocator_context',['../structstbtt__pack__context.html#a45fddc4d4adfcef58aa08ad2874cedc0',1,'stbtt_pack_context']]],
   ['usercallback',['UserCallback',['../structImDrawCmd.html#ad26dac4e939f5c4bb892cbca0f9e3af8',1,'ImDrawCmd']]],
   ['usercallbackdata',['UserCallbackData',['../structImDrawCmd.html#ae2f5a0baf4a0b25942237b8ce6adb42d',1,'ImDrawCmd']]],
-  ['userdata',['userdata',['../structstbtt__fontinfo.html#a9c81078df96a7a3f730137151efab285',1,'stbtt_fontinfo::userdata()'],['../structImGuiIO.html#a8c5e74fd39c2655455329e09529da7d3',1,'ImGuiIO::UserData()'],['../structImGuiTextEditCallbackData.html#aaf4994a17aefa6ace9cf8f7c2fa06cf7',1,'ImGuiTextEditCallbackData::UserData()'],['../structImGuiSizeConstraintCallbackData.html#a3b2fb1bd849f82edc78377f361433eac',1,'ImGuiSizeConstraintCallbackData::UserData()']]],
+  ['userdata',['UserData',['../structImGuiIO.html#a8c5e74fd39c2655455329e09529da7d3',1,'ImGuiIO::UserData()'],['../structImGuiTextEditCallbackData.html#aaf4994a17aefa6ace9cf8f7c2fa06cf7',1,'ImGuiTextEditCallbackData::UserData()'],['../structImGuiSizeConstraintCallbackData.html#a3b2fb1bd849f82edc78377f361433eac',1,'ImGuiSizeConstraintCallbackData::UserData()'],['../structstbtt__fontinfo.html#a9c81078df96a7a3f730137151efab285',1,'stbtt_fontinfo::userdata()']]],
   ['uv',['uv',['../structImDrawVert.html#abdf3183529055a6c3f709b23a4bf06b1',1,'ImDrawVert']]]
 ];

@@ -9,6 +9,7 @@ var searchData=
   ['tail',['tail',['../visual_8cc.html#aff39d864a6594bc5f4a5e365282e00fe',1,'visual.cc']]],
   ['tau_5fmatrix_5fblock',['tau_matrix_block',['../classarma_1_1generator_1_1Tau__matrix__generator.html#aadaf1efb0266823ddc5d940d2fbd4434',1,'arma::generator::Tau_matrix_generator::tau_matrix_block(int i0, int j0)'],['../classarma_1_1generator_1_1Tau__matrix__generator.html#a26f3bb4d7e95b817ec1dd2135b10fdd6',1,'arma::generator::Tau_matrix_generator::tau_matrix_block(int i0)']]],
   ['tau_5fmatrix_5fgenerator',['Tau_matrix_generator',['../classarma_1_1generator_1_1Tau__matrix__generator.html',1,'arma::generator::Tau_matrix_generator&lt; T &gt;'],['../classarma_1_1generator_1_1Tau__matrix__generator.html#ae8ddfa7db0a2e7c5c94bf78b757211b1',1,'arma::generator::Tau_matrix_generator::Tau_matrix_generator()']]],
+  ['teardown',['TearDown',['../classARMA__environment.html#a34eab8586755a191c59c4f7180949253',1,'ARMA_environment']]],
   ['tempbuffer',['TempBuffer',['../structImGuiContext.html#a875033fc5c10bc1e050f8701055ae93b',1,'ImGuiContext']]],
   ['temptextbuffer',['TempTextBuffer',['../structImGuiTextEditState.html#a299fd7f0af7c81eae119d304bd0beaca',1,'ImGuiTextEditState']]],
   ['texdesiredwidth',['TexDesiredWidth',['../structImFontAtlas.html#aa1d62d7da5633f894dbe881547e9de7c',1,'ImFontAtlas']]],
@@ -49,6 +50,6 @@ var searchData=
   ['triangulation_5ftype',['triangulation_type',['../classarma_1_1Delaunay__interpolation.html#ae93c70f29bf8f00a9b0a203cdd438e7a',1,'arma::Delaunay_interpolation']]],
   ['trim_5fblanks',['trim_blanks',['../structImGuiTextFilter_1_1TextRange.html#aa3bbd8b17b528f548d73c0936228dc85',1,'ImGuiTextFilter::TextRange']]],
   ['trough',['Trough',['../namespacearma_1_1stats.html#a1d3e6fc4fac426a6dce841ee4c2655c3a9182254340ce405d5ae132132b1a22d6',1,'arma::stats']]],
-  ['type',['Type',['../structImGuiStyleVarInfo.html#a62f42d2bb7b71b7530493e16e622cb81',1,'ImGuiStyleVarInfo::Type()'],['../structImGuiMouseCursorData.html#ab58df812a8caf8741415053515b8f347',1,'ImGuiMouseCursorData::Type()'],['../structstbtt__vertex.html#aa325b3707b88e7e104c0de46bb2bf395',1,'stbtt_vertex::type()'],['../structarma_1_1stats_1_1Wave__feature.html#a39092b6d78474c52ed616e1567776479',1,'arma::stats::Wave_feature::type()']]],
+  ['type',['type',['../structstbtt__vertex.html#aa325b3707b88e7e104c0de46bb2bf395',1,'stbtt_vertex::type()'],['../structarma_1_1stats_1_1Wave__feature.html#a39092b6d78474c52ed616e1567776479',1,'arma::stats::Wave_feature::type()'],['../structImGuiStyleVarInfo.html#a62f42d2bb7b71b7530493e16e622cb81',1,'ImGuiStyleVarInfo::Type()'],['../structImGuiMouseCursorData.html#ab58df812a8caf8741415053515b8f347',1,'ImGuiMouseCursorData::Type()']]],
   ['types_2ehh',['types.hh',['../types_8hh.html',1,'']]]
 ];

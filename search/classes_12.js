@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['wave',['Wave',['../structarma_1_1stats_1_1Wave.html',1,'arma::stats::Wave&lt; T &gt;'],['../classarma_1_1Wave.html',1,'arma::Wave&lt; T &gt;']]],
+  ['wave',['Wave',['../classarma_1_1Wave.html',1,'arma::Wave&lt; T &gt;'],['../structarma_1_1stats_1_1Wave.html',1,'arma::stats::Wave&lt; T &gt;']]],
   ['wave_5fcharacteristic_5fdistribution',['Wave_characteristic_distribution',['../structarma_1_1stats_1_1Wave__characteristic__distribution.html',1,'arma::stats']]],
   ['wave_5ffeature',['Wave_feature',['../structarma_1_1stats_1_1Wave__feature.html',1,'arma::stats']]],
   ['wave_5ffield',['Wave_field',['../classarma_1_1stats_1_1Wave__field.html',1,'arma::stats']]],

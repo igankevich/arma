@@ -14,7 +14,7 @@ var searchData=
   ['sethsv',['SetHSV',['../structImColor.html#afcff20160db703b956d56e5a9fa88e24',1,'ImColor']]],
   ['setint',['SetInt',['../structImGuiStorage.html#af83975ca841a9bd0e06a6ea0a41bf159',1,'ImGuiStorage']]],
   ['settexid',['SetTexID',['../structImFontAtlas.html#a96ffd1956c11dac4f79b43c095828445',1,'ImFontAtlas']]],
-  ['setup',['setup',['../classarma_1_1velocity_1_1High__amplitude__realtime__solver.html#a55a84cc845c7bd263ac39f3c3ae16feb',1,'arma::velocity::High_amplitude_realtime_solver']]],
+  ['setup',['SetUp',['../classARMA__environment.html#a6baffefffe4eeec79ffd31e5a10741e4',1,'ARMA_environment::SetUp()'],['../classarma_1_1velocity_1_1High__amplitude__realtime__solver.html#a55a84cc845c7bd263ac39f3c3ae16feb',1,'arma::velocity::High_amplitude_realtime_solver::setup()']]],
   ['setvoidptr',['SetVoidPtr',['../structImGuiStorage.html#a55f840086b3ec9cf63c67f02d159204a',1,'ImGuiStorage']]],
   ['shape',['shape',['../classarma_1_1apmath_1_1Fourier__workspace.html#a51979944b300b8b2fc98775fdb7176c4',1,'arma::apmath::Fourier_workspace::shape()'],['../classarma_1_1apmath_1_1Fourier__transform.html#a4a7caef8cf224cdba3ff12bc652e9ad3',1,'arma::apmath::Fourier_transform::shape()'],['../classarma_1_1apmath_1_1Fourier__workspace.html#a51979944b300b8b2fc98775fdb7176c4',1,'arma::apmath::Fourier_workspace::shape()'],['../classarma_1_1apmath_1_1Fourier__transform.html#a4a7caef8cf224cdba3ff12bc652e9ad3',1,'arma::apmath::Fourier_transform::shape()'],['../structarma_1_1Domain.html#a5256a2fc2511f2911ed359e476c8b850',1,'arma::Domain::shape()'],['../structarma_1_1Grid.html#a09a68223d9b2885bc30bc94090806339',1,'arma::Grid::shape()']]],
   ['sine_5fwave',['sine_wave',['../namespacearma_1_1generator.html#a3fe81a021dbf36cab0035a3397f5a1cc',1,'arma::generator']]],
