@@ -328,41 +328,7 @@ arma::velocity::High_amplitude_realtime_solver<T>::compute_second_function(
             cl::NullRange,
             cl::NDRange(shp(0), shp(1), shp(2))
     );
-	/*
 	
-	Array3D<T> zeta_t(zeta.shape());
-	for (int i = 0; i < nt; ++i)
-	{
-		using blitz::Range;
-		zeta_t(i, Range::all(), Range::all()) = -derivative<0, T>(
-			zeta,
-			zeta.grid().delta(),
-			i);
-		cl::copy(
-                opencl::command_queue(),
-                zeta_t.data(),
-                zeta_t.data() + zeta_t.numElements(),
-                this->_sfunc
-			);
-        }
-*/
-	/*
-	const int nt = this->_domain.num_points(0);
-	Array3D<std::complex<T>> zeta_t(shape(nz, nx, ny));
-	zeta_t(0, Range::all(), Range::all()) = -derivative<0, T>(
-		zeta,
-		zeta.grid().delta(),
-		idx_t);
-	for (int i = 1; i < nz; ++i)
-	{
-		zeta_t(i, Range::all(), Range::all()) = zeta_t(0, Range::all(), Range::all());
-		}
-		cl::copy(
-			opencl::command_queue(),
-			zeta_t.data(),
-			zeta_t.data() + zeta_t.numElements(),
-			this->_phi);
-*/
 #if ARMA_DEBUG_FFT
 	std::ofstream("zeta_t_opencl")
 		<< blitz::real(zeta_t(0, Range::all(), Range::all()));
