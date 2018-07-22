@@ -1,16 +1,16 @@
-#include "opencl.hh"
+#include "opencl/opencl.hh"
 #include <GL/gl.h>
 #include <clFFT.h>
-#include "high_amplitude_realtime_solver.hh"
+#include "velocity/high_amplitude_realtime_solver.hh"
 #include "opencl/vec.hh"
 #include "profile.hh"
 #include "derivative.hh"
 #include <gtest/gtest.h>
 #include <cmath>
-#include "array.hh"
+#include "opencl/array.hh"
 #include "discrete_function.hh"
-#include "cl.hh"
-#include "device_type.hh"
+#include "opencl/cl.hh"
+#include "opencl/device_type.hh"
 
 using namespace arma;
 
@@ -18,7 +18,7 @@ typedef double T;
 
 arma::Array3D<T> fill_sin(int nx, int ny, int nz)
 {
-    arma::Array3D<T> zeta(nx, ny, nz);
+    arma::Array3D<T> zeta(blitz::shape(nx, ny, nz));
     for (int i = 0; i < nx; i++)
         for (int j = 0; j < ny; j++)
             for (int k = 0; k < nz; k++)
@@ -28,7 +28,6 @@ arma::Array3D<T> fill_sin(int nx, int ny, int nz)
 
 
 TEST(Derivatives, Accuracy) {
-    ::arma::opencl::init();
     const int nx = 30;
     const int ny = 20;
     const int nz = 25;
@@ -84,9 +83,3 @@ TEST(Derivatives, Accuracy) {
     EXPECT_NEAR(max, T(0), T(1e-3));
 }
 
-
-int main(int argc, char *argv[])
-{
-   ::testing::InitGoogleTest(&argc, argv);
-   return RUN_ALL_TESTS();
-}
