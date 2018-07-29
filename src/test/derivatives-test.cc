@@ -1,20 +1,21 @@
-#include "opencl/opencl.hh"
-#include <GL/gl.h>
-#include <clFFT.h>
-#include "velocity/high_amplitude_realtime_solver.hh"
-#include "opencl/vec.hh"
-#include "profile.hh"
-#include "derivative.hh"
 #include <gtest/gtest.h>
+
 #include <cmath>
-#include "opencl/array.hh"
+
+#include "derivative.hh"
 #include "discrete_function.hh"
+#include "opencl/array.hh"
 #include "opencl/cl.hh"
 #include "opencl/device_type.hh"
+#include "opencl/opencl.hh"
+#include "opencl/vec.hh"
+#include "opengl.hh"
+#include "profile.hh"
+#include "velocity/high_amplitude_realtime_solver.hh"
 
 using namespace arma;
 
-typedef double T;
+typedef ARMA_REAL_TYPE T;
 
 arma::Array3D<T> fill_sin(int nx, int ny, int nz)
 {
@@ -22,64 +23,47 @@ arma::Array3D<T> fill_sin(int nx, int ny, int nz)
     for (int i = 0; i < nx; i++)
         for (int j = 0; j < ny; j++)
             for (int k = 0; k < nz; k++)
-                zeta(i, j, k) = sin(T(i + j +k) / T(100));
+                zeta(i, j, k) = sin(T(i + j + k) / T(100));
     return zeta;
 }
 
-
-TEST(Derivatives, Accuracy) {
-    const int nx = 30;
-    const int ny = 20;
-    const int nz = 25;
-    arma::Array3D<T> zeta = fill_sin(nx, ny, nz);
-
-    cl::Buffer bzeta(
-        opencl::context(),
-        const_cast<T *>(zeta.data()),
-        const_cast<T *>(zeta.data() + zeta.numElements()),
-        CL_MEM_READ_WRITE, CL_MEM_USE_HOST_PTR);
-    T *data = new T[nx * ny * nz];
-    cl::Buffer _phi(opencl::context(),
-                    data,
-                    data + nx * ny * nz,
-                    CL_MEM_READ_WRITE, CL_MEM_USE_HOST_PTR);
+TEST(Derivatives, Accuracy)
+{
+    const int nt = 10;
+    const int nx = 10;
+    const int ny = 10;
+    arma::Array3D<T> zeta = fill_sin(nt, nx, ny);
+    zeta.copy_to_device();
+    arma::Array3D<T> dzeta(blitz::shape(nt, nx, ny));
+    dzeta = 0;
+    dzeta.copy_to_device();
     size_t max_memory = opencl::devices()[0].getInfo<CL_DEVICE_LOCAL_MEM_SIZE>();
     cl::Kernel kernel = opencl::get_kernel("compute_second_function");
-    T delta[] = {T(0.01), T(0.01), T(0.01)};
-    cl::Buffer bdelta(
-        opencl::context(),
-        delta,
-        delta + 3,
-        CL_MEM_READ_WRITE, CL_MEM_USE_HOST_PTR);
+    T delta = T(0.01);
 
-    kernel.setArg(0, bzeta);
-    kernel.setArg(1, bdelta);
+    kernel.setArg(0, zeta.buffer());
+    kernel.setArg(1, delta);
     kernel.setArg(2, 0); // t derivative
-    kernel.setArg(3, _phi);
+    kernel.setArg(3, dzeta.buffer());
     kernel.setArg(4, max_memory, NULL);
 
-    opencl::command_queue().enqueueNDRangeKernel(
-        kernel,
-        cl::NullRange,
-        cl::NDRange(nx, ny, nz));
+    zeta.compute(kernel);
 
-    opencl::command_queue().enqueueReadBuffer(_phi, CL_TRUE, 0, nx * ny * nz, data);
-    T max = 0;
+    dzeta.copy_to_host();
 
-    for (int i = 0; i < nx; i++)
+    T max_residual = 0;
+
+    for (int i = 0; i < nt; i++)
     {
-        for (int j = 0; j < ny; j++)
-        {
-            for (int k = 0; k < nz; k++)
-            {
-                Array2D<T> real_derivative = 
-                    derivative<0, T>(zeta, arma::Vec3D<T>(0.01, 0.01, 0.01), i);
-                int id = i * ny * nz + j * nz + k;
-                if (std::isnan(data[id])) std::cout << id << std::endl;
-                max = std::max(std::abs(data[id] - real_derivative(j, k)), max);
-            }
-        }
+        using blitz::abs;
+        using blitz::max;
+        using blitz::min;
+        using blitz::Range;
+        Array2D<T> tmp(dzeta(i, Range::all(), Range::all()));
+        Array2D<T> real_derivative =
+            derivative<0, T>(zeta, arma::Vec3D<T>(0.01, 0.01, 0.01), i);
+        T residual = min(abs(real_derivative - dzeta(i, Range::all(), Range::all())));
+        max_residual = std::max(residual, max_residual);
     }
-    EXPECT_NEAR(max, T(0), T(1e-3));
+    EXPECT_NEAR(max_residual, T(0), T(1e-3));
 }
-
