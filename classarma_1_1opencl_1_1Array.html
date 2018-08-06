@@ -149,6 +149,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9d8d2208cb006d74b038c41c14986fd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fca4b9baa3b17dc509619bc523fc85b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1opencl_1_1Array.html#a3fca4b9baa3b17dc509619bc523fc85b">compute</a> (cl::Kernel kernel)</td></tr>
 <tr class="separator:a3fca4b9baa3b17dc509619bc523fc85b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74f5f4cc985467717158ebefab7ec635"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classarma_1_1opencl_1_1Array.html#a74f5f4cc985467717158ebefab7ec635">compute</a> (cl::Kernel kernel, <a class="el" href="classarma_1_1opencl_1_1Array.html#a8edbede8b0483eadfc1ffbe570378b3c">shape_type</a> const &amp;local, <a class="el" href="classarma_1_1opencl_1_1Array.html#a8edbede8b0483eadfc1ffbe570378b3c">shape_type</a> const &amp;global)</td></tr>
+<tr class="separator:a74f5f4cc985467717158ebefab7ec635"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -464,7 +466,7 @@ template&lt;class T , int N&gt; </div>
 </div>
 </div>
 <a id="a3fca4b9baa3b17dc509619bc523fc85b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fca4b9baa3b17dc509619bc523fc85b">&#9670;&nbsp;</a></span>compute()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fca4b9baa3b17dc509619bc523fc85b">&#9670;&nbsp;</a></span>compute() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,6 +482,50 @@ template&lt;class T , int N&gt; </div>
           <td class="paramtype">cl::Kernel&#160;</td>
           <td class="paramname"><em>kernel</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a74f5f4cc985467717158ebefab7ec635"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74f5f4cc985467717158ebefab7ec635">&#9670;&nbsp;</a></span>compute() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , int N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classarma_1_1opencl_1_1Array.html">arma::opencl::Array</a>&lt; <a class="el" href="common_8h.html#a25af1c42bcec3ac9b8d7d2846b1f2198">T</a>, N &gt;::compute </td>
+          <td>(</td>
+          <td class="paramtype">cl::Kernel&#160;</td>
+          <td class="paramname"><em>kernel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classarma_1_1opencl_1_1Array.html#a8edbede8b0483eadfc1ffbe570378b3c">shape_type</a> const &amp;&#160;</td>
+          <td class="paramname"><em>local</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classarma_1_1opencl_1_1Array.html#a8edbede8b0483eadfc1ffbe570378b3c">shape_type</a> const &amp;&#160;</td>
+          <td class="paramname"><em>global</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
