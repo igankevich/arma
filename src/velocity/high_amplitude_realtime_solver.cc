@@ -317,16 +317,29 @@ arma::velocity::High_amplitude_realtime_solver<T>::compute_second_function(
             true
     );
 	size_t max_memory = opencl::devices()[0].getInfo<CL_DEVICE_LOCAL_MEM_SIZE>();
-    cl::Kernel kernel = opencl::get_kernel(__func__);
+    int workgroup = opencl::devices()[0].getInfo<CL_DEVICE_MAX_WORK_GROUP_SIZE>();
+    
+	int lx = 8; 
+    int ly = 8;
+    int lt = std::min(workgroup / lx / ly, (int)(max_memory / lx / ly / sizeof(T) - 8 ));
+    int gt = ((shp(0) - 1) / lt + 1) * lt;
+    int gx = ((shp(1) - 1) / lx + 1) * lx;
+    int gy = ((shp(2) - 1) / ly + 1) * ly;
+
+	cl::Kernel kernel = opencl::get_kernel(__func__);
     kernel.setArg(0, bzeta);
-    kernel.setArg(1, Vec3(zeta.grid().length()));
+    kernel.setArg(1, 1);
     kernel.setArg(2, 0); // t derivative
     kernel.setArg(3, this->_phi);
 	kernel.setArg(4, max_memory, nullptr);
+	kernel.setArg(5, shp(0));
+	kernel.setArg(6, shp(1));
+	kernel.setArg(7, shp(2));
     opencl::command_queue().enqueueNDRangeKernel(
             kernel,
             cl::NullRange,
-            cl::NDRange(shp(0), shp(1), shp(2))
+            cl::NDRange(gt, gx, gy),
+            cl::NDRange(lt, lx, ly)
     );
 	
 #if ARMA_DEBUG_FFT
