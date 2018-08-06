@@ -201,7 +201,15 @@ namespace arma {
 					this->ndrange()
 				);
 			}
-
+			inline void
+			compute(cl::Kernel kernel, shape_type const & local, shape_type const & global) {
+				command_queue().enqueueNDRangeKernel(
+					kernel,
+					cl::NullRange,
+					::arma::bits::make_ndrange(global),
+					::arma::bits::make_ndrange(local)
+				);
+			}
 		};
 
 	}

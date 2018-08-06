@@ -34,6 +34,7 @@ all_tests = [
 	['arma::generator::acf_generator', 'acf-generator-test', [arma_test_main]],
 	['arma::stats::waves', 'factor-waves-test', [arma_test_main]],
 	['arma::stats::MA_coefficient_solver', 'ma-coefficient-solver-test', [arma_test_main]],
+	['arma::derivatives', 'derivatives-test', [arma_test_main]],
 ]
 
 foreach t : all_tests

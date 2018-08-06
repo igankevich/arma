@@ -50,7 +50,7 @@ namespace arma {
 					Shape3D idx2(idx1);
 					--idx2(dimension);
 					result(i,j) = T(0.5)
-						* (rhs(idx) - T(4)*rhs(idx1) + rhs(idx2))
+						* (T(3)*rhs(idx) - T(4)*rhs(idx1) + rhs(idx2))
 						/ delta(dimension);
 				} else {
 					/**

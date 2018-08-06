@@ -1,6 +1,6 @@
 #ifndef KERNELS_COMMON_H
 #define KERNELS_COMMON_H
-
+#pragma OPENCL EXTENSION cl_khr_fp64 : enable
 
 #define NEW_VEC_IMPL(x,y) x##y
 #define NEW_VEC(x,y) NEW_VEC_IMPL(x, y)
